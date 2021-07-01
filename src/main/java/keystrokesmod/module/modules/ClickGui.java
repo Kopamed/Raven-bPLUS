@@ -82,16 +82,11 @@ public class ClickGui extends GuiScreen {
          this.drawHorizontalLine(wd + 10, wd + 10 - r, h + 42, -1);
       }
 
-      Iterator var11 = c4tL1st.iterator();
-
-      while(var11.hasNext()) {
-         cm c = (cm)var11.next();
+      for (cm c : c4tL1st) {
          c.rf(this.fontRendererObj);
          c.up(x, y);
-         Iterator var9 = c.gc().iterator();
 
-         while(var9.hasNext()) {
-            b m = (b)var9.next();
+         for (b m : c.gc()) {
             m.uu(x, y);
          }
       }
@@ -161,10 +156,7 @@ public class ClickGui extends GuiScreen {
             } while(!c4t.fv());
          } while(c4t.gc().isEmpty());
 
-         Iterator var6 = c4t.gc().iterator();
-
-         while(var6.hasNext()) {
-            b c = (b)var6.next();
+         for (b c : c4t.gc()) {
             c.onCl1ck(x, y, m);
          }
       }
@@ -193,10 +185,7 @@ public class ClickGui extends GuiScreen {
                } while(!c4t.fv());
             } while(c4t.gc().isEmpty());
 
-            Iterator var6 = c4t.gc().iterator();
-
-            while(var6.hasNext()) {
-               b c = (b)var6.next();
+            for (b c : c4t.gc()) {
                c.mr(x, y, s);
             }
          }
@@ -213,31 +202,26 @@ public class ClickGui extends GuiScreen {
             cm c4t;
             do {
                do {
-                  do {
-                     if (!var3.hasNext()) {
-                        if (CommandLine.a) {
-                           String cm = this.c.getText();
-                           if (k == 28 && !cm.isEmpty()) {
-                              gc.rCMD(this.c.getText());
-                              this.c.setText("");
-                              return;
-                           }
-
-                           this.c.textboxKeyTyped(t, k);
+                  if (!var3.hasNext()) {
+                     if (CommandLine.a) {
+                        String cm = this.c.getText();
+                        if (k == 28 && !cm.isEmpty()) {
+                           gc.rCMD(this.c.getText());
+                           this.c.setText("");
+                           return;
                         }
 
-                        return;
+                        this.c.textboxKeyTyped(t, k);
                      }
 
-                     c4t = (cm)var3.next();
-                  } while(!c4t.fv());
-               } while(k == 1);
+                     return;
+                  }
+
+                  c4t = (cm)var3.next();
+               } while(!c4t.fv());
             } while(c4t.gc().isEmpty());
 
-            Iterator var5 = c4t.gc().iterator();
-
-            while(var5.hasNext()) {
-               b c = (b)var5.next();
+            for (b c : c4t.gc()) {
                c.ky(t, k);
             }
          }
