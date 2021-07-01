@@ -4,7 +4,7 @@
 > This repo is for educational purposes only. I am NOT responsible for ANY consequences of it use/distribute !
 
 ## Time taken :
-4 hours of remapping, 15min of bugfixing
+5 hours of remapping, 15min of bugfixing
 
 ## Summary :
 Raven b3 is a FORGE 1.8.9 ghost client !
