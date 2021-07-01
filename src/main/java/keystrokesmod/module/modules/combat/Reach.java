@@ -30,13 +30,13 @@ public class Reach extends Module {
    public static ModuleSetting f;
 
    public Reach() {
-      super(new char[]{'R', 'e', 'a', 'c', 'h'}, Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'M', 'i', 'n'}, 3.1D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'M', 'a', 'x'}, 3.3D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(c = new ModuleSetting(new char[]{'W', 'e', 'a', 'p', 'o', 'n', ' ', 'o', 'n', 'l', 'y'}, false));
-      this.registerSetting(d = new ModuleSetting(new char[]{'M', 'o', 'v', 'i', 'n', 'g', ' ', 'o', 'n', 'l', 'y'}, false));
-      this.registerSetting(e = new ModuleSetting(new char[]{'S', 'p', 'r', 'i', 'n', 't', ' ', 'o', 'n', 'l', 'y'}, false));
-      this.registerSetting(f = new ModuleSetting(new char[]{'H', 'i', 't', ' ', 't', 'h', 'r', 'o', 'u', 'g', 'h', ' ', 'b', 'l', 'o', 'c', 'k', 's'}, false));
+      super("Reach", Module.category.combat, 0);
+      this.registerSetting(a = new ModuleSetting2("Min", 3.1D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(b = new ModuleSetting2("Max", 3.3D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(c = new ModuleSetting("Weapon only", false));
+      this.registerSetting(d = new ModuleSetting("Moving only", false));
+      this.registerSetting(e = new ModuleSetting("Sprint only", false));
+      this.registerSetting(f = new ModuleSetting("Hit through blocks", false));
    }
 
    public void guiUpdate() {

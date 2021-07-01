@@ -24,14 +24,14 @@ public class AimAssist extends Module {
    public static ModuleSetting blatantMode;
 
    public AimAssist() {
-      super(new char[]{'A', 'i', 'm', 'A', 's', 's', 'i', 's', 't'}, Module.category.combat, 0);
-      this.registerSetting(speed = new ModuleSetting2(new char[]{'S', 'p', 'e', 'e', 'd'}, 45.0D, 1.0D, 100.0D, 1.0D));
-      this.registerSetting(fov = new ModuleSetting2(new char[]{'F', 'O', 'V'}, 90.0D, 15.0D, 180.0D, 1.0D));
-      this.registerSetting(distance = new ModuleSetting2(new char[]{'D', 'i', 's', 't', 'a', 'n', 'c', 'e'}, 4.5D, 1.0D, 10.0D, 0.5D));
-      this.registerSetting(clickAim = new ModuleSetting(new char[]{'C', 'l', 'i', 'c', 'k', ' ', 'a', 'i', 'm'}, true));
-      this.registerSetting(weaponOnly = new ModuleSetting(new char[]{'W', 'e', 'a', 'p', 'o', 'n', ' ', 'o', 'n', 'l', 'y'}, false));
-      this.registerSetting(aimInvis = new ModuleSetting(new char[]{'A', 'i', 'm', ' ', 'i', 'n', 'v', 'i', 's'}, false));
-      this.registerSetting(blatantMode = new ModuleSetting(new char[]{'B', 'l', 'a', 't', 'a', 'n', 't', ' ', 'm', 'o', 'd', 'e'}, false));
+      super("AimAssist", Module.category.combat, 0);
+      this.registerSetting(speed = new ModuleSetting2("Speed", 45.0D, 1.0D, 100.0D, 1.0D));
+      this.registerSetting(fov = new ModuleSetting2("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
+      this.registerSetting(distance = new ModuleSetting2("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(clickAim = new ModuleSetting("Click aim", true));
+      this.registerSetting(weaponOnly = new ModuleSetting("Weapon only", false));
+      this.registerSetting(aimInvis = new ModuleSetting("Aim invis", false));
+      this.registerSetting(blatantMode = new ModuleSetting("Blatant mode", false));
    }
 
    public void update() {

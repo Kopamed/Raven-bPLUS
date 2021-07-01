@@ -13,14 +13,14 @@ public class Fly extends Module {
    public static ModuleDesc dc;
    public static ModuleSetting2 a;
    public static ModuleSetting2 b;
-   private static final String c1 = new String(new char[]{'V', 'a', 'n', 'i', 'l', 'l', 'a'});
-   private static final String c2 = new String(new char[]{'G', 'l', 'i', 'd', 'e'});
+   private static final String c1 = "Vanilla";
+   private static final String c2 = "Glide";
 
    public Fly() {
-      super(new char[]{'F', 'l', 'y'}, Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'V', 'a', 'l', 'u', 'e'}, 1.0D, 1.0D, 2.0D, 1.0D));
+      super("Fly", Module.category.movement, 0);
+      this.registerSetting(a = new ModuleSetting2("Value", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(dc = new ModuleDesc(ay.md + c1));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'S', 'p', 'e', 'e', 'd'}, 2.0D, 1.0D, 5.0D, 0.1D));
+      this.registerSetting(b = new ModuleSetting2("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
    }
 
    public void onEnable() {
@@ -91,7 +91,7 @@ public class Fly extends Module {
                }
 
                double s = 1.94D * Fly.b.getInput();
-               double r = Math.toRadians((double)(Module.mc.thePlayer.rotationYaw + 90.0F));
+               double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                Module.mc.thePlayer.motionX = s * Math.cos(r);
                Module.mc.thePlayer.motionZ = s * Math.sin(r);
             }

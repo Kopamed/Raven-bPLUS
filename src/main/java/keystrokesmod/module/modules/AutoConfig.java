@@ -35,7 +35,7 @@ public class AutoConfig extends b {
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
       if (/*this.p.mod instanceof AutoConfig*/1>2) {
-         this.dr(new String(new char[]{'A', 'u', 't', 'o', '-', 'c', 'o', 'n', 'f', 'i', 'g', 'u', 'r', 'e', ' ', 'm', 'o', 'd', 'u', 'l', 'e', 's', '.'}));
+         this.dr("Auto-configure modules.");
          GL11.glPopMatrix();
       } else {
          this.dr(this.isBinding ? BindKey.binding : BindKey.bind + ": " + Keyboard.getKeyName(this.p.mod.getKeycode()));
@@ -57,7 +57,7 @@ public class AutoConfig extends b {
    }
 
    public void ky(char t, int keybind) {
-      if (!this.p.mod.getName().equalsIgnoreCase(new String(new char[]{'A', 'u', 't', 'o', 'C', 'o', 'n', 'f', 'i', 'g'}))) {
+      if (!this.p.mod.getName().equalsIgnoreCase("AutoConfig")) {
          if (this.isBinding) {
             if (keybind == 11) {
                if (this.p.mod instanceof Gui) {

@@ -24,21 +24,21 @@ public class MurderMystery extends Module {
    public static ModuleSetting a;
    public static ModuleSetting b;
    public static ModuleSetting c;
-   private static List<EntityPlayer> mur = new ArrayList();
-   private static List<EntityPlayer> det = new ArrayList();
-   private final String c1 = new String(new char[]{'M', 'U', 'R', 'D', 'E', 'R'});
-   private final String c2 = new String(new char[]{'M', 'Y', 'S', 'T', 'E', 'R', 'Y'});
-   private final String c3 = new String(new char[]{'R', 'o', 'l', 'e', ':'});
-   private final String c4 = new String(new char[]{'&', '7', '[', '&', 'c', 'A', 'L', 'E', 'R', 'T', '&', '7', ']'});
-   private final String c5 = new String(new char[]{'n', 'o', 't', 'e', '.', 'p', 'l', 'i', 'n', 'g'});
-   private final String c6 = new String(new char[]{'i', 's', ' ', 'a', ' ', 'm', 'u', 'r', 'd', 'e', 'r', 'e', 'r', '!'});
-   private final String c7 = new String(new char[]{'h', 'a', 's', ' ', 'a', ' ', 'b', 'o', 'w', '!'});
+   private static final List<EntityPlayer> mur = new ArrayList();
+   private static final List<EntityPlayer> det = new ArrayList();
+   private final String c1 = "MURDER";
+   private final String c2 = "MYSTERY";
+   private final String c3 = "Role:";
+   private final String c4 = "&7[&cALERT&7]";
+   private final String c5 = "note.pling";
+   private final String c6 = "is a murderer!";
+   private final String c7 = "has a bow!";
 
    public MurderMystery() {
-      super(new char[]{'M', 'u', 'r', 'd', 'e', 'r', ' ', 'M', 'y', 's', 't', 'e', 'r', 'y'}, Module.category.minigames, 0);
-      this.registerSetting(a = new ModuleSetting(new char[]{'A', 'l', 'e', 'r', 't'}, true));
-      this.registerSetting(b = new ModuleSetting(new char[]{'S', 'e', 'a', 'r', 'c', 'h', ' ', 'd', 'e', 't', 'e', 'c', 't', 'i', 'v', 'e', 's'}, true));
-      this.registerSetting(c = new ModuleSetting(new char[]{'A', 'n', 'n', 'o', 'u', 'n', 'c', 'e', ' ', 'm', 'u', 'r', 'd', 'e', 'r', 'e', 'r'}, false));
+      super("Murder Mystery", Module.category.minigames, 0);
+      this.registerSetting(a = new ModuleSetting("Alert", true));
+      this.registerSetting(b = new ModuleSetting("Search detectives", true));
+      this.registerSetting(c = new ModuleSetting("Announce murderer", false));
    }
 
    @SubscribeEvent

@@ -31,15 +31,15 @@ public class ClickAssist extends Module {
    private boolean ignNR = false;
 
    public ClickAssist() {
-      super(new char[]{'C', 'l', 'i', 'c', 'k', 'A', 's', 's', 'i', 's', 't'}, Module.category.combat, 0);
-      this.registerSetting(a = new ModuleDesc(new String(new char[]{'B', 'o', 'o', 's', 't', ' ', 'y', 'o', 'u', 'r', ' ', 'C', 'P', 'S', '.'})));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'C', 'h', 'a', 'n', 'c', 'e'}, 80.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(L = new ModuleSetting(new char[]{'L', 'e', 'f', 't', ' ', 'c', 'l', 'i', 'c', 'k'}, true));
-      this.registerSetting(d = new ModuleSetting(new char[]{'W', 'e', 'a', 'p', 'o', 'n', ' ', 'o', 'n', 'l', 'y'}, true));
-      this.registerSetting(e = new ModuleSetting(new char[]{'O', 'n', 'l', 'y', ' ', 'w', 'h', 'i', 'l', 'e', ' ', 't', 'a', 'r', 'g', 'e', 't', 'i', 'n', 'g'}, false));
-      this.registerSetting(R = new ModuleSetting(new char[]{'R', 'i', 'g', 'h', 't', ' ', 'c', 'l', 'i', 'c', 'k'}, false));
-      this.registerSetting(c = new ModuleSetting(new char[]{'B', 'l', 'o', 'c', 'k', 's', ' ', 'o', 'n', 'l', 'y'}, true));
-      this.registerSetting(f = new ModuleSetting(new char[]{'A', 'b', 'o', 'v', 'e', ' ', '5', ' ', 'c', 'p', 's'}, false));
+      super("ClickAssist", Module.category.combat, 0);
+      this.registerSetting(a = new ModuleDesc("Boost your CPS."));
+      this.registerSetting(b = new ModuleSetting2("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(L = new ModuleSetting("Left click", true));
+      this.registerSetting(d = new ModuleSetting("Weapon only", true));
+      this.registerSetting(e = new ModuleSetting("Only while targeting", false));
+      this.registerSetting(R = new ModuleSetting("Right click", false));
+      this.registerSetting(c = new ModuleSetting("Blocks only", true));
+      this.registerSetting(f = new ModuleSetting("Above 5 cps", false));
    }
 
    public void onEnable() {
@@ -60,7 +60,7 @@ public class ClickAssist extends Module {
    @SubscribeEvent(
       priority = EventPriority.HIGH
    )
-   public void e(MouseEvent ev) {
+   public void onMouseUpdate(MouseEvent ev) {
       if (ev.button >= 0 && ev.buttonstate && b.getInput() != 0.0D && ay.isPlayerInGame()) {
          if (mc.currentScreen == null && !mc.thePlayer.isEating()) {
             double ch;

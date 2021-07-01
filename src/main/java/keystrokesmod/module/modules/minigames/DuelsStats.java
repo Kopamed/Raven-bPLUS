@@ -28,11 +28,11 @@ public class DuelsStats extends Module {
    private List<String> q = new ArrayList();
 
    public DuelsStats() {
-      super(new char[]{'D', 'u', 'e', 'l', 's', ' ', 'S', 't', 'a', 't', 's'}, Module.category.minigames, 0);
-      this.registerSetting(value = new ModuleSetting2(new char[]{'V', 'a', 'l', 'u', 'e'}, 1.0D, 1.0D, 7.0D, 1.0D));
+      super("Duels Stats", Module.category.minigames, 0);
+      this.registerSetting(value = new ModuleSetting2("Value", 1.0D, 1.0D, 7.0D, 1.0D));
       this.registerSetting(moduleDesc = new ModuleDesc("Mode: OVERALL"));
-      this.registerSetting(a = new ModuleSetting(new char[]{'S', 'e', 'n', 'd', ' ', 'i', 'g', 'n', ' ', 'o', 'n', ' ', 'j', 'o', 'i', 'n'}, false));
-      this.registerSetting(threatLevel = new ModuleSetting(new char[]{'T', 'h', 'r', 'e', 'a', 't', ' ', 'L', 'e', 'v', 'e', 'l'}, true));
+      this.registerSetting(a = new ModuleSetting("Send ign on join", false));
+      this.registerSetting(threatLevel = new ModuleSetting("Threat Level", true));
    }
 
    public void onEnable() {

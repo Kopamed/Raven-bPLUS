@@ -23,8 +23,8 @@ public class WaterBucket extends Module {
    private boolean handling;
 
    public WaterBucket() {
-      super(new char[]{'W', 'a', 't', 'e', 'r', ' ', 'b', 'u', 'c', 'k', 'e', 't'}, Module.category.other, 0);
-      this.registerSetting(a = new ModuleDesc(new String(new char[]{'C', 'r', 'e', 'd', 'i', 't', 's', ':', ' ', 'a', 'y', 'c', 'y'})));
+      super("Water bucket", Module.category.other, 0);
+      this.registerSetting(a = new ModuleDesc("Credits: aycy"));
    }
 
    @SubscribeEvent

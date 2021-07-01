@@ -24,9 +24,9 @@ public class Fun {
       private float yaw;
 
       public Spin() {
-         super(new char[]{'S', 'p', 'i', 'n'}, Module.category.fun, 0);
-         this.registerSetting(a = new ModuleSetting2(new char[]{'R', 'o', 't', 'a', 't', 'i', 'o', 'n'}, 360.0D, 30.0D, 360.0D, 1.0D));
-         this.registerSetting(b = new ModuleSetting2(new char[]{'S', 'p', 'e', 'e', 'd'}, 25.0D, 1.0D, 60.0D, 1.0D));
+         super("Spin", Module.category.fun, 0);
+         this.registerSetting(a = new ModuleSetting2("Rotation", 360.0D, 30.0D, 360.0D, 1.0D));
+         this.registerSetting(b = new ModuleSetting2("Speed", 25.0D, 1.0D, 60.0D, 1.0D));
       }
 
       public void onEnable() {
@@ -64,12 +64,12 @@ public class Fun {
       private boolean s = false;
 
       public SlyPort() {
-         super(new char[]{'S', 'l', 'y', 'P', 'o', 'r', 't'}, Module.category.fun, 0);
-         this.registerSetting(f = new ModuleDesc(new String(new char[]{'T', 'e', 'l', 'e', 'p', 'o', 'r', 't', ' ', 'b', 'e', 'h', 'i', 'n', 'd', ' ', 'e', 'n', 'e', 'm', 'i', 'e', 's', '.'})));
-         this.registerSetting(r = new ModuleSetting2(new char[]{'R', 'a', 'n', 'g', 'e'}, 6.0D, 2.0D, 15.0D, 1.0D));
-         this.registerSetting(e = new ModuleSetting(new char[]{'A', 'i', 'm'}, true));
-         this.registerSetting(b = new ModuleSetting(new char[]{'P', 'l', 'a', 'y', ' ', 's', 'o', 'u', 'n', 'd'}, true));
-         this.registerSetting(d = new ModuleSetting(new char[]{'P', 'l', 'a', 'y', 'e', 'r', 's', ' ', 'o', 'n', 'l', 'y'}, true));
+         super("SlyPort", Module.category.fun, 0);
+         this.registerSetting(f = new ModuleDesc(new String("Teleport behind enemies.")));
+         this.registerSetting(r = new ModuleSetting2("Range", 6.0D, 2.0D, 15.0D, 1.0D));
+         this.registerSetting(e = new ModuleSetting("Aim", true));
+         this.registerSetting(b = new ModuleSetting("Play sound", true));
+         this.registerSetting(d = new ModuleSetting("Players only", true));
       }
 
       public void onEnable() {
@@ -133,7 +133,7 @@ public class Fun {
       public static ModuleSetting2 a;
 
       public FlameTrail() {
-         super(new char[]{'F', 'l', 'a', 'm', 'e', ' ', 'T', 'r', 'a', 'i', 'l'}, Module.category.fun, 0);
+         super("Flame Trail", Module.category.fun, 0);
       }
 
       public void update() {
@@ -150,8 +150,8 @@ public class Fun {
       private boolean b;
 
       public ExtraBobbing() {
-         super(new char[]{'E', 'x', 't', 'r', 'a', ' ', 'B', 'o', 'b', 'b', 'i', 'n', 'g'}, Module.category.fun, 0);
-         this.registerSetting(a = new ModuleSetting2(new char[]{'L', 'e', 'v', 'e', 'l'}, 1.0D, 0.0D, 8.0D, 0.1D));
+         super("Extra Bobbing", Module.category.fun, 0);
+         this.registerSetting(a = new ModuleSetting2("Level", 1.0D, 0.0D, 8.0D, 0.1D));
       }
 
       public void onEnable() {

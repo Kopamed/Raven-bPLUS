@@ -14,8 +14,8 @@ public class AutoJump extends Module {
    private boolean c = false;
 
    public AutoJump() {
-      super(new char[]{'A', 'u', 't', 'o', 'J', 'u', 'm', 'p'}, Module.category.player, 0);
-      this.registerSetting(b = new ModuleSetting(new char[]{'C', 'a', 'n', 'c', 'e', 'l', ' ', 'w', 'h', 'e', 'n', ' ', 's', 'h', 'i', 'f', 't', 'i', 'n', 'g'}, true));
+      super("AutoJump", Module.category.player, 0);
+      this.registerSetting(b = new ModuleSetting("Cancel when shifting", true));
    }
 
    public void onDisable() {

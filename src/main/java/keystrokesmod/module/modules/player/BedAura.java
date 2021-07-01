@@ -19,8 +19,8 @@ public class BedAura extends Module {
    private final long per = 600L;
 
    public BedAura() {
-      super(new char[]{'B', 'e', 'd', 'A', 'u', 'r', 'a'}, Module.category.player, 0);
-      this.registerSetting(r = new ModuleSetting2(new char[]{'R', 'a', 'n', 'g', 'e'}, 5.0D, 2.0D, 10.0D, 1.0D));
+      super("BedAura", Module.category.player, 0);
+      this.registerSetting(r = new ModuleSetting2("Range", 5.0D, 2.0D, 10.0D, 1.0D));
    }
 
    public void onEnable() {
@@ -38,7 +38,7 @@ public class BedAura extends Module {
    }
 
    public TimerTask t() {
-      TimerTask t = new TimerTask() {
+      return new TimerTask() {
          public void run() {
             int ra = (int)BedAura.r.getInput();
 
@@ -62,7 +62,6 @@ public class BedAura extends Module {
 
          }
       };
-      return t;
    }
 
    private void mi(BlockPos p) {

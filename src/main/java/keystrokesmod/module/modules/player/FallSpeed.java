@@ -10,10 +10,10 @@ public class FallSpeed extends Module {
    public static ModuleSetting b;
 
    public FallSpeed() {
-      super(new char[]{'F', 'a', 'l', 'l', 'S', 'p', 'e', 'e', 'd'}, Module.category.player, 0);
-      this.registerSetting(dc = new ModuleDesc(new String(new char[]{'V', 'a', 'n', 'i', 'l', 'l', 'a', ' ', 'm', 'a', 'x', ':', ' ', '3', '.', '9', '2'})));
-      this.registerSetting(a = new ModuleSetting2(new char[]{'M', 'o', 't', 'i', 'o', 'n'}, 5.0D, 0.0D, 8.0D, 0.1D));
-      this.registerSetting(b = new ModuleSetting(new char[]{'D', 'i', 's', 'a', 'b', 'l', 'e', ' ', 'X', 'Z', ' ', 'm', 'o', 't', 'i', 'o', 'n'}, true));
+      super("FallSpeed", Module.category.player, 0);
+      this.registerSetting(dc = new ModuleDesc("Vanilla max: 3.92"));
+      this.registerSetting(a = new ModuleSetting2("Motion", 5.0D, 0.0D, 8.0D, 0.1D));
+      this.registerSetting(b = new ModuleSetting("Disable XZ motion", true));
    }
 
    public void update() {

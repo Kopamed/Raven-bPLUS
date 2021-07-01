@@ -32,14 +32,14 @@ public class BridgeInfo extends Module {
    public static ModuleDesc a;
    public static ModuleSetting ep;
    private static final int rgb = (new Color(0, 200, 200)).getRGB();
-   private final String bd = new String(new char[]{'t', 'h', 'e', ' ', 'b', 'r', 'i', 'd'});
-   private final String g1t = new String(new char[]{'D', 'e', 'f', 'e', 'n', 'd', '!'});
-   private final String g2t = new String(new char[]{'J', 'u', 'm', 'p', ' ', 'i', 'n', ' ', 't', 'o', ' ', 's', 'c', 'o', 'r', 'e', '!'});
-   private final String qt = new String(new char[]{'F', 'i', 'r', 's', 't', ' ', 'p', 'l', 'a', 'y', 'e', 'r', ' ', 't', 'o', ' ', 's', 'c', 'o', 'r', 'e', ' ', '5', ' ', 'g', 'o', 'a', 'l', 's', ' ', 'w', 'i', 'n', 's'});
-   private final String t1 = new String(new char[]{'E', 'n', 'e', 'm', 'y', ':', ' '});
-   private final String t2 = new String(new char[]{'D', 'i', 's', 't', 'a', 'n', 'c', 'e', ' ', 't', 'o', ' ', 'g', 'o', 'a', 'l', ':', ' '});
-   private final String t3 = new String(new char[]{'E', 'n', 'e', 'm', 'y', ' ', 'd', 'i', 's', 't', 'a', 'n', 'c', 'e', ' ', 't', 'o', ' ', 'g', 'o', 'a', 'l', ':', ' '});
-   private final String t4 = new String(new char[]{'B', 'l', 'o', 'c', 'k', 's', ':', ' '});
+   private final String bd = new String("the brid");
+   private final String g1t = new String("Defend!");
+   private final String g2t = new String("Jump in to score!");
+   private final String qt = new String("First player to score 5 goals wins");
+   private final String t1 = new String("Enemy: ");
+   private final String t2 = new String("Distance to goal: ");
+   private final String t3 = new String("Enemy distance to goal: ");
+   private final String t4 = new String("Blocks: ");
    private static int hudX = 5;
    private static int hudY = 70;
    private String en = "";
@@ -51,9 +51,9 @@ public class BridgeInfo extends Module {
    private int blc = 0;
 
    public BridgeInfo() {
-      super(new char[]{'B', 'r', 'i', 'd', 'g', 'e', ' ', 'I', 'n', 'f', 'o'}, Module.category.minigames, 0);
-      this.registerSetting(a = new ModuleDesc(new String(new char[]{'O', 'n', 'l', 'y', ' ', 'f', 'o', 'r', ' ', 's', 'o', 'l', 'o', 's', '.'})));
-      this.registerSetting(ep = new ModuleSetting(new char[]{'E', 'd', 'i', 't', ' ', 'p', 'o', 's', 'i', 't', 'i', 'o', 'n'}, false));
+      super("Bridge Info", Module.category.minigames, 0);
+      this.registerSetting(a = new ModuleDesc(new String("Only for solos.")));
+      this.registerSetting(ep = new ModuleSetting("Edit position", false));
    }
 
    public void onDisable() {
@@ -184,7 +184,7 @@ public class BridgeInfo extends Module {
    }
 
    static class eh extends GuiScreen {
-      final String a = new String(new char[]{'E', 'n', 'e', 'm', 'y', ':', ' ', 'P', 'l', 'a', 'y', 'e', 'r', '1', '2', '3', '-', 'D', 'i', 's', 't', 'a', 'n', 'c', 'e', ' ', 't', 'o', ' ', 'g', 'o', 'a', 'l', ':', ' ', '1', '7', '.', '2', '-', 'E', 'n', 'e', 'm', 'y', ' ', 'd', 'i', 's', 't', 'a', 'n', 'c', 'e', ' ', 't', 'o', ' ', 'g', 'o', 'a', 'l', ':', ' ', '1', '6', '.', '3', '-', 'B', 'l', 'o', 'c', 'k', 's', ':', ' ', '9', '8'});
+      final String a = new String("Enemy: Player123-Distance to goal: 17.2-Enemy distance to goal: 16.3-Blocks: 98");
       GuiButtonExt rp;
       boolean d = false;
       int miX = 0;
@@ -200,7 +200,7 @@ public class BridgeInfo extends Module {
 
       public void initGui() {
          super.initGui();
-         this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String(new char[]{'R', 'e', 's', 'e', 't', ' ', 'p', 'o', 's', 'i', 't', 'i', 'o', 'n'})));
+         this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String("Reset position")));
          this.aX = BridgeInfo.hudX;
          this.aY = BridgeInfo.hudY;
       }

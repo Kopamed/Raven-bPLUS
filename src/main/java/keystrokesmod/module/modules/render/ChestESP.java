@@ -23,11 +23,11 @@ public class ChestESP extends Module {
    public static ModuleSetting d;
 
    public ChestESP() {
-      super(new char[]{'C', 'h', 'e', 's', 't', 'E', 'S', 'P'}, Module.category.render, 0);
-      a = new ModuleSetting2(new char[]{'R', 'e', 'd'}, 0.0D, 0.0D, 255.0D, 1.0D);
-      b = new ModuleSetting2(new char[]{'G', 'r', 'e', 'e', 'n'}, 0.0D, 0.0D, 255.0D, 1.0D);
-      c = new ModuleSetting2(new char[]{'B', 'l', 'u', 'e'}, 255.0D, 0.0D, 255.0D, 1.0D);
-      d = new ModuleSetting(new char[]{'R', 'a', 'i', 'n', 'b', 'o', 'w'}, false);
+      super("ChestESP", Module.category.render, 0);
+      a = new ModuleSetting2("Red", 0.0D, 0.0D, 255.0D, 1.0D);
+      b = new ModuleSetting2("Green", 0.0D, 0.0D, 255.0D, 1.0D);
+      c = new ModuleSetting2("Blue", 255.0D, 0.0D, 255.0D, 1.0D);
+      d = new ModuleSetting("Rainbow", false);
       this.registerSetting(a);
       this.registerSetting(b);
       this.registerSetting(c);

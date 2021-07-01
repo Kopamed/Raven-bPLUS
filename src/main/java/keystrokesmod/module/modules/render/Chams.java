@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Chams extends Module {
    public Chams() {
-      super(new char[]{'C', 'h', 'a', 'm', 's'}, Module.category.render, 0);
+      super("Chams", Module.category.render, 0);
    }
 
    @SubscribeEvent

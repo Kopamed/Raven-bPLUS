@@ -9,8 +9,8 @@ public class VClip extends Module {
    public static ModuleSetting2 a;
 
    public VClip() {
-      super(new char[]{'V', 'C', 'l', 'i', 'p'}, Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'D', 'i', 's', 't', 'a', 'c', 'e'}, 2.0D, -10.0D, 10.0D, 0.5D));
+      super("VClip", Module.category.movement, 0);
+      this.registerSetting(a = new ModuleSetting2("Distace", 2.0D, -10.0D, 10.0D, 0.5D));
    }
 
    public void onEnable() {

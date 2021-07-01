@@ -32,9 +32,9 @@ public class HitBox extends Module {
    private static MovingObjectPosition mv;
 
    public HitBox() {
-      super(new char[]{'H', 'i', 't', 'B', 'o', 'x'}, Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'M', 'u', 'l', 't', 'i', 'p', 'l', 'i', 'e', 'r'}, 1.2D, 1.0D, 5.0D, 0.05D));
-      this.registerSetting(b = new ModuleSetting(new char[]{'S', 'h', 'o', 'w', ' ', 'n', 'e', 'w', ' ', 'h', 'i', 't', 'b', 'o', 'x'}, false));
+      super("HitBox", Module.category.combat, 0);
+      this.registerSetting(a = new ModuleSetting2("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
+      this.registerSetting(b = new ModuleSetting("Show new hitbox", false));
    }
 
    public void update() {
@@ -54,11 +54,8 @@ public class HitBox extends Module {
    @SubscribeEvent
    public void r1(RenderWorldLastEvent e) {
       if (b.isToggled() && ay.isPlayerInGame()) {
-         Iterator var2 = mc.theWorld.loadedEntityList.iterator();
-
-         while(var2.hasNext()) {
-            Entity en = (Entity)var2.next();
-            if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase)en).deathTime == 0 && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
+         for (Entity en : mc.theWorld.loadedEntityList) {
+            if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase) en).deathTime == 0 && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
                this.rh(en, Color.WHITE);
             }
          }
@@ -89,11 +86,11 @@ public class HitBox extends Module {
          List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.getRenderViewEntity(), mc.getRenderViewEntity().getEntityBoundingBox().addCoord(vec4.xCoord * d0, vec4.yCoord * d0, vec4.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
          double d3 = d2;
 
-         for(int i = 0; i < list.size(); ++i) {
-            Entity entity = (Entity)list.get(i);
+         for (Object o : list) {
+            Entity entity = (Entity) o;
             if (entity.canBeCollidedWith()) {
-               float ex = (float)((double)entity.getCollisionBorderSize() * exp(entity));
-               AxisAlignedBB ax = entity.getEntityBoundingBox().expand((double)ex, (double)ex, (double)ex);
+               float ex = (float) ((double) entity.getCollisionBorderSize() * exp(entity));
+               AxisAlignedBB ax = entity.getEntityBoundingBox().expand((double) ex, (double) ex, (double) ex);
                MovingObjectPosition mop = ax.calculateIntercept(vec3, vec5);
                if (ax.isVecInside(vec3)) {
                   if (0.0D < d3 || d3 == 0.0D) {
@@ -130,7 +127,7 @@ public class HitBox extends Module {
    }
 
    private void rh(Entity e, Color c) {
-      if (e != null && e instanceof EntityLivingBase) {
+      if (e instanceof EntityLivingBase) {
          double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosX;
          double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosY;
          double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosZ;

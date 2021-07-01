@@ -14,8 +14,8 @@ public class Gui extends Module {
    public static ModuleDesc b;
 
    public Gui() {
-      super(new char[]{'G', 'u', 'i'}, Module.category.client, 54);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'T', 'h', 'e', 'm', 'e'}, 3.0D, 1.0D, 3.0D, 1.0D));
+      super("Gui", Module.category.client, 54);
+      this.registerSetting(a = new ModuleSetting2("Theme", 3.0D, 1.0D, 3.0D, 1.0D));
       this.registerSetting(b = new ModuleDesc(ay.md + "b" + 3));
    }
 

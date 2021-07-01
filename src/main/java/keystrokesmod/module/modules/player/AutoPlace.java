@@ -31,10 +31,10 @@ public class AutoPlace extends Module {
    private BlockPos lp = null;
 
    public AutoPlace() {
-      super(new char[]{'A', 'u', 't', 'o', 'P', 'l', 'a', 'c', 'e'}, Module.category.player, 0);
-      this.registerSetting(ds = new ModuleDesc(new String(new char[]{'F', 'D', ':', ' ', 'F', 'P', 'S', '/', '8', '0'})));
-      this.registerSetting(c = new ModuleSetting2(new char[]{'F', 'r', 'a', 'm', 'e', ' ', 'd', 'e', 'l', 'a', 'y'}, 8.0D, 0.0D, 30.0D, 1.0D));
-      this.registerSetting(a = new ModuleSetting(new char[]{'H', 'o', 'l', 'd', ' ', 'r', 'i', 'g', 'h', 't'}, true));
+      super("AutoPlace", Module.category.player, 0);
+      this.registerSetting(ds = new ModuleDesc("FD: FPS/80"));
+      this.registerSetting(c = new ModuleSetting2("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
+      this.registerSetting(a = new ModuleSetting("Hold right", true));
    }
 
    public void guiUpdate() {
@@ -112,10 +112,8 @@ public class AutoPlace extends Module {
          if (FastPlace.r != null) {
             FastPlace.r.set(mc, i);
          }
-      } catch (IllegalAccessException var3) {
-      } catch (IndexOutOfBoundsException var4) {
+      } catch (IllegalAccessException | IndexOutOfBoundsException var3) {
       }
-
    }
 
    private void rv() {

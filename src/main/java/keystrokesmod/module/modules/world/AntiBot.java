@@ -20,8 +20,8 @@ public class AntiBot extends Module {
    public static ModuleSetting a;
 
    public AntiBot() {
-      super(new char[]{'A', 'n', 't', 'i', 'B', 'o', 't'}, Module.category.world, 0);
-      this.registerSetting(a = new ModuleSetting(new char[]{'W', 'a', 'i', 't', ' ', '8', '0', ' ', 't', 'i', 'c', 'k', 's'}, false));
+      super("AntiBot", Module.category.world, 0);
+      this.registerSetting(a = new ModuleSetting("Wait 80 ticks", false));
    }
 
    public void onDisable() {
@@ -70,7 +70,6 @@ public class AntiBot extends Module {
                int num = 0;
                int let = 0;
                char[] var4 = n.toCharArray();
-               int var5 = var4.length;
 
                for (char c : var4) {
                   if (Character.isLetter(c)) {

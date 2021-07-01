@@ -25,12 +25,12 @@ public class Nametags extends Module {
    public static ModuleSetting e;
 
    public Nametags() {
-      super(new char[]{'N', 'a', 'm', 'e', 't', 'a', 'g', 's'}, Module.category.render, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'O', 'f', 'f', 's', 'e', 't'}, 0.0D, -40.0D, 40.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting(new char[]{'R', 'e', 'c', 't'}, true));
-      this.registerSetting(c = new ModuleSetting(new char[]{'S', 'h', 'o', 'w', ' ', 'h', 'e', 'a', 'l', 't', 'h'}, true));
-      this.registerSetting(d = new ModuleSetting(new char[]{'S', 'h', 'o', 'w', ' ', 'i', 'n', 'v', 'i', 's'}, true));
-      this.registerSetting(rm = new ModuleSetting(new char[]{'R', 'e', 'm', 'o', 'v', 'e', ' ', 't', 'a', 'g', 's'}, false));
+      super("Nametags", Module.category.render, 0);
+      this.registerSetting(a = new ModuleSetting2("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
+      this.registerSetting(b = new ModuleSetting("Rect", true));
+      this.registerSetting(c = new ModuleSetting("Show health", true));
+      this.registerSetting(d = new ModuleSetting("Show invis", true));
+      this.registerSetting(rm = new ModuleSetting("Remove tags", false));
    }
 
    @SubscribeEvent

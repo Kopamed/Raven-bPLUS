@@ -16,10 +16,10 @@ public class Boost extends Module {
    private boolean t = false;
 
    public Boost() {
-      super(new char[]{'B', 'o', 'o', 's', 't'}, Module.category.movement, 0);
-      this.registerSetting(c = new ModuleDesc(new String(new char[]{'2', '0', ' ', 't', 'i', 'c', 'k', 's', ' ', 'a', 'r', 'e', ' ', 'i', 'n', ' ', '1', ' ', 's', 'e', 'c', 'o', 'n', 'd'})));
-      this.registerSetting(a = new ModuleSetting2(new char[]{'M', 'u', 'l', 't', 'i', 'p', 'l', 'i', 'e', 'r'}, 2.0D, 1.0D, 3.0D, 0.05D));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'T', 'i', 'm', 'e', ' ', '(', 't', 'i', 'c', 'k', 's', ')'}, 15.0D, 1.0D, 80.0D, 1.0D));
+      super("Boost", Module.category.movement, 0);
+      this.registerSetting(c = new ModuleDesc("20 ticks are in 1 second"));
+      this.registerSetting(a = new ModuleSetting2("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
+      this.registerSetting(b = new ModuleSetting2("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
    }
 
    public void onEnable() {

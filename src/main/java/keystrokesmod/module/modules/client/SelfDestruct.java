@@ -10,7 +10,7 @@ public class SelfDestruct extends Module {
    public static boolean destructed = false;
 
    public SelfDestruct() {
-      super(new char[]{'S', 'e', 'l', 'f', ' ', 'D', 'e', 's', 't', 'r', 'u', 'c', 't'}, Module.category.client, 0);
+      super("Self Destruct", Module.category.client, 0);
    }
 
    public void onEnable() {

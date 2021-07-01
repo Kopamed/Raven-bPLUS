@@ -13,17 +13,15 @@ public class NoSlow extends Module {
    public static ModuleSetting2 b;
 
    public NoSlow() {
-      super(new char[]{'N', 'o', 'S', 'l', 'o', 'w'}, Module.category.movement, 0);
-      this.registerSetting(a = new ModuleDesc(new String(new char[]{'D', 'e', 'f', 'a', 'u', 'l', 't', ' ', 'i', 's', ' ', '8', '0', '%', ' ', 'm', 'o', 't', 'i', 'o', 'n', ' ', 'r', 'e', 'd', 'u', 'c', 't', 'i', 'o', 'n', '.'})));
-      this.registerSetting(c = new ModuleDesc(new String(new char[]{'H', 'y', 'p', 'i', 'x', 'e', 'l', ' ', 'm', 'a', 'x', ':', ' ', '2', '2', '%'})));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'S', 'l', 'o', 'w', ' ', '%'}, 80.0D, 0.0D, 80.0D, 1.0D));
+      super("NoSlow", Module.category.movement, 0);
+      this.registerSetting(a = new ModuleDesc("Default is 80% motion reduction."));
+      this.registerSetting(c = new ModuleDesc("Hypixel max: 22%"));
+      this.registerSetting(b = new ModuleSetting2("Slow %", 80.0D, 0.0D, 80.0D, 1.0D));
    }
 
    public static void sl() {
       float val = (100.0F - (float)b.getInput()) / 100.0F;
-      MovementInput var10000 = mc.thePlayer.movementInput;
-      var10000.moveStrafe *= val;
-      var10000 = mc.thePlayer.movementInput;
-      var10000.moveForward *= val;
+      mc.thePlayer.movementInput.moveStrafe *= val;
+      mc.thePlayer.movementInput.moveForward *= val;
    }
 }

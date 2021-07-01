@@ -25,7 +25,7 @@ public class SumoFences extends Module {
    public static ModuleSetting2 b;
    public static ModuleSetting2 c;
    private java.util.Timer t;
-   private final List<String> m = Arrays.asList(new String(new char[]{'S', 'u', 'm', 'o'}), new String(new char[]{'S', 'p', 'a', 'c', 'e', ' ', 'M', 'i', 'n', 'e'}), new String(new char[]{'W', 'h', 'i', 't', 'e', ' ', 'C', 'r', 'y', 's', 't', 'a', 'l'}));
+   private final List<String> m = Arrays.asList("Sumo", "Space Mine", "White Crystal");
    private IBlockState f;
    private static final List<BlockPos> f_p = Arrays.asList(new BlockPos(9, 65, -2), new BlockPos(9, 65, -1), new BlockPos(9, 65, 0), new BlockPos(9, 65, 1), new BlockPos(9, 65, 2), new BlockPos(9, 65, 3), new BlockPos(8, 65, 3), new BlockPos(8, 65, 4), new BlockPos(8, 65, 5), new BlockPos(7, 65, 5), new BlockPos(7, 65, 6), new BlockPos(7, 65, 7), new BlockPos(6, 65, 7), new BlockPos(5, 65, 7), new BlockPos(5, 65, 8), new BlockPos(4, 65, 8), new BlockPos(3, 65, 8), new BlockPos(3, 65, 9), new BlockPos(2, 65, 9), new BlockPos(1, 65, 9), new BlockPos(0, 65, 9), new BlockPos(-1, 65, 9), new BlockPos(-2, 65, 9), new BlockPos(-3, 65, 9), new BlockPos(-3, 65, 8), new BlockPos(-4, 65, 8), new BlockPos(-5, 65, 8), new BlockPos(-5, 65, 7), new BlockPos(-6, 65, 7), new BlockPos(-7, 65, 7), new BlockPos(-7, 65, 6), new BlockPos(-7, 65, 5), new BlockPos(-8, 65, 5), new BlockPos(-8, 65, 4), new BlockPos(-8, 65, 3), new BlockPos(-9, 65, 3), new BlockPos(-9, 65, 2), new BlockPos(-9, 65, 1), new BlockPos(-9, 65, 0), new BlockPos(-9, 65, -1), new BlockPos(-9, 65, -2), new BlockPos(-9, 65, -3), new BlockPos(-8, 65, -3), new BlockPos(-8, 65, -4), new BlockPos(-8, 65, -5), new BlockPos(-7, 65, -5), new BlockPos(-7, 65, -6), new BlockPos(-7, 65, -7), new BlockPos(-6, 65, -7), new BlockPos(-5, 65, -7), new BlockPos(-5, 65, -8), new BlockPos(-4, 65, -8), new BlockPos(-3, 65, -8), new BlockPos(-3, 65, -9), new BlockPos(-2, 65, -9), new BlockPos(-1, 65, -9), new BlockPos(0, 65, -9), new BlockPos(1, 65, -9), new BlockPos(2, 65, -9), new BlockPos(3, 65, -9), new BlockPos(3, 65, -8), new BlockPos(4, 65, -8), new BlockPos(5, 65, -8), new BlockPos(5, 65, -7), new BlockPos(6, 65, -7), new BlockPos(7, 65, -7), new BlockPos(7, 65, -6), new BlockPos(7, 65, -5), new BlockPos(8, 65, -5), new BlockPos(8, 65, -4), new BlockPos(8, 65, -3), new BlockPos(9, 65, -3));
    private final String c1;
@@ -35,16 +35,16 @@ public class SumoFences extends Module {
    private final String c5;
 
    public SumoFences() {
-      super(new char[]{'S', 'u', 'm', 'o', ' ', 'F', 'e', 'n', 'c', 'e', 's'}, Module.category.minigames, 0);
+      super("Sumo Fences", Module.category.minigames, 0);
       this.f = Blocks.oak_fence.getDefaultState();
-      this.c1 = new String(new char[]{'M', 'o', 'd', 'e', ':', ' ', 'S', 'u', 'm', 'o', ' ', 'D', 'u', 'e', 'l'});
-      this.c2 = new String(new char[]{'O', 'a', 'k', ' ', 'f', 'e', 'n', 'c', 'e'});
-      this.c3 = new String(new char[]{'L', 'e', 'a', 'v', 'e', 's'});
-      this.c4 = new String(new char[]{'G', 'l', 'a', 's', 's'});
-      this.c5 = new String(new char[]{'B', 'a', 'r', 'r', 'i', 'e', 'r'});
-      this.registerSetting(a = new ModuleDesc(new String(new char[]{'F', 'e', 'n', 'c', 'e', 's', ' ', 'f', 'o', 'r', ' ', 'H', 'y', 'p', 'i', 'x', 'e', 'l', ' ', 's', 'u', 'm', 'o', '.'})));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'F', 'e', 'n', 'c', 'e', ' ', 'h', 'e', 'i', 'g', 'h', 't'}, 4.0D, 1.0D, 6.0D, 1.0D));
-      this.registerSetting(c = new ModuleSetting2(new char[]{'B', 'l', 'o', 'c', 'k', ' ', 't', 'y', 'p', 'e'}, 1.0D, 1.0D, 4.0D, 1.0D));
+      this.c1 = "Mode: Sumo Duel";
+      this.c2 = "Oak fence";
+      this.c3 = "Leaves";
+      this.c4 = "Glass";
+      this.c5 = "Barrier";
+      this.registerSetting(a = new ModuleDesc("Fences for Hypixel sumo."));
+      this.registerSetting(b = new ModuleSetting2("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
+      this.registerSetting(c = new ModuleSetting2("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(d = new ModuleDesc(ay.md + this.c2));
    }
 

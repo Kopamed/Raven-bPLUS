@@ -12,8 +12,8 @@ public class CommandLine extends Module {
    public static ModuleSetting animate;
 
    public CommandLine() {
-      super(new char[]{'C', 'o', 'm', 'm', 'a', 'n', 'd', ' ', 'l', 'i', 'n', 'e'}, Module.category.client, 0);
-      this.registerSetting(animate = new ModuleSetting(new char[]{'A', 'n', 'i', 'm', 'a', 't', 'e'}, true));
+      super("Command line", Module.category.client, 0);
+      this.registerSetting(animate = new ModuleSetting("Animate", true));
    }
 
    public void onEnable() {

@@ -46,22 +46,22 @@ public class AutoClicker extends Module {
    private boolean hol;
 
    public AutoClicker() {
-      super(new char[]{'A', 'u', 't', 'o', 'C', 'l', 'i', 'c', 'k', 'e', 'r'}, Module.category.combat, 0);
-      this.registerSetting(bestWithDelayRemover = new ModuleDesc(new String(new char[]{'B', 'e', 's', 't', ' ', 'w', 'i', 't', 'h', ' ', 'd', 'e', 'l', 'a', 'y', ' ', 'r', 'e', 'm', 'o', 'v', 'e', 'r', '.'})));
-      this.registerSetting(minCPS = new ModuleSetting2(new char[]{'M', 'i', 'n', ' ', 'C', 'P', 'S'}, 9.0D, 1.0D, 20.0D, 0.5D));
-      this.registerSetting(maxCPS = new ModuleSetting2(new char[]{'M', 'a', 'x', ' ', 'C', 'P', 'S'}, 12.0D, 1.0D, 20.0D, 0.5D));
-      this.registerSetting(jitter = new ModuleSetting2(new char[]{'J', 'i', 't', 't', 'e', 'r'}, 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(leftClick = new ModuleSetting(new char[]{'L', 'e', 'f', 't', ' ', 'c', 'l', 'i', 'c', 'k'}, true));
-      this.registerSetting(rightClick = new ModuleSetting(new char[]{'R', 'i', 'g', 'h', 't', ' ', 'c', 'l', 'i', 'c', 'k'}, false));
-      this.registerSetting(inventoryFill = new ModuleSetting(new char[]{'I', 'n', 'v', 'e', 'n', 't', 'o', 'r', 'y', ' ', 'f', 'i', 'l', 'l'}, false));
-      this.registerSetting(weaponOnly = new ModuleSetting(new char[]{'W', 'e', 'a', 'p', 'o', 'n', ' ', 'o', 'n', 'l', 'y'}, false));
-      this.registerSetting(breakBlocks = new ModuleSetting(new char[]{'B', 'r', 'e', 'a', 'k', ' ', 'b', 'l', 'o', 'c', 'k', 's'}, false));
+      super("AutoClicker", Module.category.combat, 0);
+      this.registerSetting(bestWithDelayRemover = new ModuleDesc("Best with delay remover."));
+      this.registerSetting(minCPS = new ModuleSetting2("Min CPS", 9.0D, 1.0D, 20.0D, 0.5D));
+      this.registerSetting(maxCPS = new ModuleSetting2("Max CPS", 12.0D, 1.0D, 20.0D, 0.5D));
+      this.registerSetting(jitter = new ModuleSetting2("Jitter", 0.0D, 0.0D, 3.0D, 0.1D));
+      this.registerSetting(leftClick = new ModuleSetting("Left click", true));
+      this.registerSetting(rightClick = new ModuleSetting("Right click", false));
+      this.registerSetting(inventoryFill = new ModuleSetting("Inventory fill", false));
+      this.registerSetting(weaponOnly = new ModuleSetting("Weapon only", false));
+      this.registerSetting(breakBlocks = new ModuleSetting("Break blocks", false));
 
       try {
-         this.gs = GuiScreen.class.getDeclaredMethod(new String(new char[]{'f', 'u', 'n', 'c', '_', '7', '3', '8', '6', '4', '_', 'a'}), Integer.TYPE, Integer.TYPE, Integer.TYPE);
+         this.gs = GuiScreen.class.getDeclaredMethod("func_73864_a", Integer.TYPE, Integer.TYPE, Integer.TYPE);
       } catch (Exception var4) {
          try {
-            this.gs = GuiScreen.class.getDeclaredMethod(new String(new char[]{'m', 'o', 'u', 's', 'e', 'C', 'l', 'i', 'c', 'k', 'e', 'd'}), Integer.TYPE, Integer.TYPE, Integer.TYPE);
+            this.gs = GuiScreen.class.getDeclaredMethod("mouseClicked", Integer.TYPE, Integer.TYPE, Integer.TYPE);
          } catch (Exception var3) {
          }
       }

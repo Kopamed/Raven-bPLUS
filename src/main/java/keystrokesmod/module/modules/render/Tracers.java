@@ -28,13 +28,13 @@ public class Tracers extends Module {
    private int rgb_c = 0;
 
    public Tracers() {
-      super(new char[]{'T', 'r', 'a', 'c', 'e', 'r', 's'}, Module.category.render, 0);
-      this.registerSetting(a = new ModuleSetting(new char[]{'S', 'h', 'o', 'w', ' ', 'i', 'n', 'v', 'i', 's'}, true));
-      this.registerSetting(f = new ModuleSetting2(new char[]{'L', 'i', 'n', 'e', ' ', 'W', 'i', 'd', 't', 'h'}, 1.0D, 1.0D, 5.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'R', 'e', 'd'}, 0.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(c = new ModuleSetting2(new char[]{'G', 'r', 'e', 'e', 'n'}, 255.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(d = new ModuleSetting2(new char[]{'B', 'l', 'u', 'e'}, 0.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(e = new ModuleSetting(new char[]{'R', 'a', 'i', 'n', 'b', 'o', 'w'}, false));
+      super("Tracers", Module.category.render, 0);
+      this.registerSetting(a = new ModuleSetting("Show invis", true));
+      this.registerSetting(f = new ModuleSetting2("Line Width", 1.0D, 1.0D, 5.0D, 1.0D));
+      this.registerSetting(b = new ModuleSetting2("Red", 0.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(c = new ModuleSetting2("Green", 255.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(d = new ModuleSetting2("Blue", 0.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(e = new ModuleSetting("Rainbow", false));
    }
 
    public void onEnable() {

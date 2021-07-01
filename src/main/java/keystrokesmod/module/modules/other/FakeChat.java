@@ -11,10 +11,10 @@ public class FakeChat extends Module {
    public static ModuleDesc a;
    public static String msg = "&eThis is a fake chat message.";
    public static final String command = "fakechat";
-   public static final String c4 = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 'm', 'e', 's', 's', 'a', 'g', 'e', '.'});
+   public static final String c4 = "&cInvalid message.";
 
    public FakeChat() {
-      super(new char[]{'F', 'a', 'k', 'e', ' ', 'C', 'h', 'a', 't'}, Module.category.other, 0);
+      super("Fake Chat", Module.category.other, 0);
       this.registerSetting(a = new ModuleDesc(ay.uf("command") + ": " + command + " [msg]"));
    }
 

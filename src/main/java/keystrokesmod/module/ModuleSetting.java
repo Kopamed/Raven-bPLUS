@@ -4,9 +4,9 @@ public class ModuleSetting extends ModuleSettingsList {
    private String name;
    private boolean isEnabled;
 
-   public ModuleSetting(char[] name, boolean isEnabled) {
-      super(new String(name));
-      this.name = new String(name);
+   public ModuleSetting(String name, boolean isEnabled) {
+      super(name);
+      this.name = name;
       this.isEnabled = isEnabled;
    }
 

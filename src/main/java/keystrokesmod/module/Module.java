@@ -19,8 +19,8 @@ public class Module {
    protected static Minecraft mc;
    private boolean isToggled = false;
 
-   public Module(char[] moduleName, Module.category moduleCategory, int keycode) {
-      this.moduleName = new String(moduleName);
+   public Module(String moduleName, Module.category moduleCategory, int keycode) {
+      this.moduleName = moduleName;
       this.moduleCategory = moduleCategory;
       this.keycode = keycode;
       this.enabled = false;

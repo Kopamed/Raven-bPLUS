@@ -30,10 +30,10 @@ public class HUD extends Module {
    private static int hudY = 70;
 
    public HUD() {
-      super(new char[]{'H', 'U', 'D'}, Module.category.render, 0);
-      this.registerSetting(ep = new ModuleSetting(new char[]{'E', 'd', 'i', 't', ' ', 'p', 'o', 's', 'i', 't', 'i', 'o', 'n'}, false));
-      this.registerSetting(sh = new ModuleSetting(new char[]{'D', 'r', 'o', 'p', ' ', 's', 'h', 'a', 'd', 'o', 'w'}, true));
-      this.registerSetting(al = new ModuleSetting(new char[]{'A', 'l', 'p', 'h', 'a', 'b', 'e', 't', 'i', 'c', 'a', 'l', ' ', 's', 'o', 'r', 't'}, false));
+      super("HUD", Module.category.render, 0);
+      this.registerSetting(ep = new ModuleSetting("Edit position", false));
+      this.registerSetting(sh = new ModuleSetting("Drop shadow", true));
+      this.registerSetting(al = new ModuleSetting("Alphabetical sort", false));
    }
 
    public void onEnable() {
@@ -75,7 +75,7 @@ public class HUD extends Module {
    }
 
    static class eh extends GuiScreen {
-      final String a = new String(new char[]{'T', 'h', 'i', 's', ' ', 'i', 's', ' ', 'a', 'n', '-', 'E', 'x', 'a', 'm', 'p', 'l', 'e', '-', 'H', 'U', 'D'});
+      final String a = new String("This is an-Example-HUD");
       GuiButtonExt rp;
       boolean d = false;
       int miX = 0;
@@ -91,7 +91,7 @@ public class HUD extends Module {
 
       public void initGui() {
          super.initGui();
-         this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String(new char[]{'R', 'e', 's', 'e', 't', ' ', 'p', 'o', 's', 'i', 't', 'i', 'o', 'n'})));
+         this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String("Reset position")));
          this.aX = HUD.hudX;
          this.aY = HUD.hudY;
       }
@@ -126,11 +126,9 @@ public class HUD extends Module {
          int x = this.miX;
          int y = this.miY;
          String[] var5 = t.split("-");
-         int var6 = var5.length;
 
-         for(int var7 = 0; var7 < var6; ++var7) {
-            String s = var5[var7];
-            fr.drawString(s, (float)x, (float)y, Color.white.getRGB(), HUD.sh.isToggled());
+         for (String s : var5) {
+            fr.drawString(s, (float) x, (float) y, Color.white.getRGB(), HUD.sh.isToggled());
             y += fr.FONT_HEIGHT + 2;
          }
 

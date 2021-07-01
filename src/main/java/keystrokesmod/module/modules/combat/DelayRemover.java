@@ -16,16 +16,16 @@ public class DelayRemover extends Module {
    private Field l = null;
 
    public DelayRemover() {
-      super(new char[]{'D', 'e', 'l', 'a', 'y', ' ', 'R', 'e', 'm', 'o', 'v', 'e', 'r'}, Module.category.combat, 0);
-      this.registerSetting(a = new ModuleDesc(new String(new char[]{'G', 'i', 'v', 'e', 's', ' ', 'y', 'o', 'u', ' ', '1', '.', '7', ' ', 'h', 'i', 't', 'r', 'e', 'g', '.'})));
+      super("Delay Remover", Module.category.combat, 0);
+      this.registerSetting(a = new ModuleDesc("Gives you 1.7 hitreg."));
    }
 
    public void onEnable() {
       try {
-         this.l = Minecraft.class.getDeclaredField(new String(new char[]{'f', 'i', 'e', 'l', 'd', '_', '7', '1', '4', '2', '9', '_', 'W'}));
+         this.l = Minecraft.class.getDeclaredField("field_71429_W");
       } catch (Exception var4) {
          try {
-            this.l = Minecraft.class.getDeclaredField(new String(new char[]{'l', 'e', 'f', 't', 'C', 'l', 'i', 'c', 'k', 'C', 'o', 'u', 'n', 't', 'e', 'r'}));
+            this.l = Minecraft.class.getDeclaredField("leftClickCounter");
          } catch (Exception var3) {
          }
       }
@@ -47,8 +47,7 @@ public class DelayRemover extends Module {
 
          try {
             this.l.set(mc, 0);
-         } catch (IllegalAccessException var3) {
-         } catch (IndexOutOfBoundsException var4) {
+         } catch (IllegalAccessException | IndexOutOfBoundsException var3) {
          }
       }
 

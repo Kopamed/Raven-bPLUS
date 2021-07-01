@@ -33,16 +33,16 @@ public class Xray extends Module {
    private final long per = 200L;
 
    public Xray() {
-      super(new char[]{'X', 'r', 'a', 'y'}, Module.category.render, 0);
-      this.registerSetting(r = new ModuleSetting2(new char[]{'R', 'a', 'n', 'g', 'e'}, 20.0D, 5.0D, 50.0D, 1.0D));
-      this.registerSetting(a = new ModuleSetting(new char[]{'I', 'r', 'o', 'n'}, true));
-      this.registerSetting(b = new ModuleSetting(new char[]{'G', 'o', 'l', 'd'}, true));
-      this.registerSetting(c = new ModuleSetting(new char[]{'D', 'i', 'a', 'm', 'o', 'n', 'd'}, true));
-      this.registerSetting(d = new ModuleSetting(new char[]{'E', 'm', 'e', 'r', 'a', 'l', 'd'}, true));
-      this.registerSetting(e = new ModuleSetting(new char[]{'L', 'a', 'p', 'i', 's'}, true));
-      this.registerSetting(f = new ModuleSetting(new char[]{'R', 'e', 'd', 's', 't', 'o', 'n', 'e'}, true));
-      this.registerSetting(g = new ModuleSetting(new char[]{'C', 'o', 'a', 'l'}, true));
-      this.registerSetting(h = new ModuleSetting(new char[]{'S', 'p', 'a', 'w', 'n', 'e', 'r'}, true));
+      super("Xray", Module.category.render, 0);
+      this.registerSetting(r = new ModuleSetting2("Range", 20.0D, 5.0D, 50.0D, 1.0D));
+      this.registerSetting(a = new ModuleSetting("Iron", true));
+      this.registerSetting(b = new ModuleSetting("Gold", true));
+      this.registerSetting(c = new ModuleSetting("Diamond", true));
+      this.registerSetting(d = new ModuleSetting("Emerald", true));
+      this.registerSetting(e = new ModuleSetting("Lapis", true));
+      this.registerSetting(f = new ModuleSetting("Redstone", true));
+      this.registerSetting(g = new ModuleSetting("Coal", true));
+      this.registerSetting(h = new ModuleSetting("Spawner", true));
    }
 
    public void onEnable() {

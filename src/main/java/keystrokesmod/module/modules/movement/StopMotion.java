@@ -11,10 +11,10 @@ public class StopMotion extends Module {
    public static ModuleSetting c;
 
    public StopMotion() {
-      super(new char[]{'S', 't', 'o', 'p', ' ', 'M', 'o', 't', 'i', 'o', 'n'}, Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting(new char[]{'S', 't', 'o', 'p', ' ', 'X'}, true));
-      this.registerSetting(b = new ModuleSetting(new char[]{'S', 't', 'o', 'p', ' ', 'Y'}, true));
-      this.registerSetting(c = new ModuleSetting(new char[]{'S', 't', 'o', 'p', ' ', 'Z'}, true));
+      super("Stop Motion", Module.category.movement, 0);
+      this.registerSetting(a = new ModuleSetting("Stop X", true));
+      this.registerSetting(b = new ModuleSetting("Stop Y", true));
+      this.registerSetting(c = new ModuleSetting("Stop Z", true));
    }
 
    public void onEnable() {

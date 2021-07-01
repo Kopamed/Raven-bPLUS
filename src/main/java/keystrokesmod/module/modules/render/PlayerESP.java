@@ -37,22 +37,22 @@ public class PlayerESP extends Module {
    private int rgb_c = 0;
 
    public PlayerESP() {
-      super(new char[]{'P', 'l', 'a', 'y', 'e', 'r', 'E', 'S', 'P'}, Module.category.render, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'R', 'e', 'd'}, 0.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'G', 'r', 'e', 'e', 'n'}, 255.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(c = new ModuleSetting2(new char[]{'B', 'l', 'u', 'e'}, 0.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(d = new ModuleSetting(new char[]{'R', 'a', 'i', 'n', 'b', 'o', 'w'}, false));
-      this.registerSetting(g = new ModuleDesc(new String(new char[]{'E', 'S', 'P', ' ', 'T', 'y', 'p', 'e', 's'})));
-      this.registerSetting(t3 = new ModuleSetting(new char[]{'2', 'D'}, false));
-      this.registerSetting(t5 = new ModuleSetting(new char[]{'A', 'r', 'r', 'o', 'w'}, false));
-      this.registerSetting(t1 = new ModuleSetting(new char[]{'B', 'o', 'x'}, false));
-      this.registerSetting(t4 = new ModuleSetting(new char[]{'H', 'e', 'a', 'l', 't', 'h'}, true));
-      this.registerSetting(t6 = new ModuleSetting(new char[]{'R', 'i', 'n', 'g'}, false));
-      this.registerSetting(t2 = new ModuleSetting(new char[]{'S', 'h', 'a', 'd', 'e', 'd'}, false));
-      this.registerSetting(i = new ModuleSetting2(new char[]{'E', 'x', 'p', 'a', 'n', 'd'}, 0.0D, -0.3D, 2.0D, 0.1D));
-      this.registerSetting(j = new ModuleSetting2(new char[]{'X', '-', 'S', 'h', 'i', 'f', 't'}, 0.0D, -35.0D, 10.0D, 1.0D));
-      this.registerSetting(f = new ModuleSetting(new char[]{'S', 'h', 'o', 'w', ' ', 'i', 'n', 'v', 'i', 's'}, true));
-      this.registerSetting(h = new ModuleSetting(new char[]{'R', 'e', 'd', ' ', 'o', 'n', ' ', 'd', 'a', 'm', 'a', 'g', 'e'}, true));
+      super("PlayerESP", Module.category.render, 0);
+      this.registerSetting(a = new ModuleSetting2("Red", 0.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(b = new ModuleSetting2("Green", 255.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(c = new ModuleSetting2("Blue", 0.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(d = new ModuleSetting("Rainbow", false));
+      this.registerSetting(g = new ModuleDesc(new String("ESP Types")));
+      this.registerSetting(t3 = new ModuleSetting("2D", false));
+      this.registerSetting(t5 = new ModuleSetting("Arrow", false));
+      this.registerSetting(t1 = new ModuleSetting("Box", false));
+      this.registerSetting(t4 = new ModuleSetting("Health", true));
+      this.registerSetting(t6 = new ModuleSetting("Ring", false));
+      this.registerSetting(t2 = new ModuleSetting("Shaded", false));
+      this.registerSetting(i = new ModuleSetting2("Expand", 0.0D, -0.3D, 2.0D, 0.1D));
+      this.registerSetting(j = new ModuleSetting2("X-Shift", 0.0D, -35.0D, 10.0D, 1.0D));
+      this.registerSetting(f = new ModuleSetting("Show invis", true));
+      this.registerSetting(h = new ModuleSetting("Red on damage", true));
    }
 
    public void onDisable() {

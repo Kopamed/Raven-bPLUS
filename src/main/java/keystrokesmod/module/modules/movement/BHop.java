@@ -13,8 +13,8 @@ public class BHop extends Module {
    private final double bspd = 0.0025D;
 
    public BHop() {
-      super(new char[]{'B', 'h', 'o', 'p'}, Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'S', 'p', 'e', 'e', 'd'}, 2.0D, 1.0D, 15.0D, 0.2D));
+      super("Bhop", Module.category.movement, 0);
+      this.registerSetting(a = new ModuleSetting2("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 
    public void update() {

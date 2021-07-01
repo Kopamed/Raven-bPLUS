@@ -21,10 +21,10 @@ public class RodAimbot extends Module {
    public static ModuleSetting c;
 
    public RodAimbot() {
-      super(new char[]{'R', 'o', 'd', 'A', 'i', 'm', 'b', 'o', 't'}, Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'F', 'O', 'V'}, 90.0D, 15.0D, 360.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting2(new char[]{'D', 'i', 's', 't', 'a', 'n', 'c', 'e'}, 4.5D, 1.0D, 10.0D, 0.5D));
-      this.registerSetting(c = new ModuleSetting(new char[]{'A', 'i', 'm', ' ', 'i', 'n', 'v', 'i', 's'}, false));
+      super("RodAimbot", Module.category.combat, 0);
+      this.registerSetting(a = new ModuleSetting2("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
+      this.registerSetting(b = new ModuleSetting2("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(c = new ModuleSetting("Aim invis", false));
    }
 
    @SubscribeEvent

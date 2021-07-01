@@ -20,15 +20,15 @@ public class FastPlace extends Module {
    public static Field r = null;
 
    public FastPlace() {
-      super(new char[]{'F', 'a', 's', 't', 'P', 'l', 'a', 'c', 'e'}, Module.category.player, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'D', 'e', 'l', 'a', 'y'}, 0.0D, 0.0D, 4.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting(new char[]{'B', 'l', 'o', 'c', 'k', 's', ' ', 'o', 'n', 'l', 'y'}, true));
+      super("FastPlace", Module.category.player, 0);
+      this.registerSetting(a = new ModuleSetting2("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
+      this.registerSetting(b = new ModuleSetting("Blocks only", true));
 
       try {
-         r = mc.getClass().getDeclaredField(new String(new char[]{'f', 'i', 'e', 'l', 'd', '_', '7', '1', '4', '6', '7', '_', 'a', 'c'}));
+         r = mc.getClass().getDeclaredField("field_71467_ac");
       } catch (Exception var4) {
          try {
-            r = mc.getClass().getDeclaredField(new String(new char[]{'r', 'i', 'g', 'h', 't', 'C', 'l', 'i', 'c', 'k', 'D', 'e', 'l', 'a', 'y', 'T', 'i', 'm', 'e', 'r'}));
+            r = mc.getClass().getDeclaredField("rightClickDelayTimer");
          } catch (Exception var3) {
          }
       }

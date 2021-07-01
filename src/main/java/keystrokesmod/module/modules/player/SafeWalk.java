@@ -18,9 +18,9 @@ public class SafeWalk extends Module {
    private static boolean d = false;
 
    public SafeWalk() {
-      super(new char[]{'S', 'a', 'f', 'e', 'W', 'a', 'l', 'k'}, Module.category.player, 0);
-      this.registerSetting(a = new ModuleSetting(new char[]{'S', 'h', 'i', 'f', 't'}, false));
-      this.registerSetting(b = new ModuleSetting(new char[]{'B', 'l', 'o', 'c', 'k', 's', ' ', 'o', 'n', 'l', 'y'}, true));
+      super("SafeWalk", Module.category.player, 0);
+      this.registerSetting(a = new ModuleSetting("Shift", false));
+      this.registerSetting(b = new ModuleSetting("Blocks only", true));
    }
 
    public void onDisable() {

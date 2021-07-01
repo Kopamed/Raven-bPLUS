@@ -10,9 +10,9 @@ public class ModuleSetting2 extends ModuleSettingsList {
    private double m;
    private double i;
 
-   public ModuleSetting2(char[] settingName, double defaultValue, double min, double max, double intervals) {
-      super(new String(settingName));
-      this.n = new String(settingName);
+   public ModuleSetting2(String settingName, double defaultValue, double min, double max, double intervals) {
+      super(settingName);
+      this.n = settingName;
       this.v = defaultValue;
       this.m = min;
       this.a = max;

@@ -14,8 +14,8 @@ public class Sprint extends Module {
    public static ModuleSetting a;
 
    public Sprint() {
-      super(new char[]{'S', 'p', 'r', 'i', 'n', 't'}, Module.category.movement, 0);
-      a = new ModuleSetting(new char[]{'O', 'm', 'n', 'i', 'S', 'p', 'r', 'i', 'n', 't'}, false);
+      super("Sprint", Module.category.movement, 0);
+      a = new ModuleSetting("OmniSprint", false);
       this.registerSetting(a);
    }
 

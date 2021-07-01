@@ -9,10 +9,10 @@ import keystrokesmod.module.modules.minigames.DuelsStats;
 
 public class NameHider extends Module {
    public static ModuleDesc a;
-   public static String n = new String(new char[]{'r', 'a', 'v', 'e', 'n'});
+   public static String n = new String("raven");
 
    public NameHider() {
-      super(new char[]{'N', 'a', 'm', 'e', ' ', 'H', 'i', 'd', 'e', 'r'}, Module.category.other, 0);
+      super("Name Hider", Module.category.other, 0);
       this.registerSetting(a = new ModuleDesc(ay.uf("command") + ": cname [name]"));
    }
 

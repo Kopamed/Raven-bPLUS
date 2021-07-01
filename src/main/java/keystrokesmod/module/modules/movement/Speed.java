@@ -15,10 +15,10 @@ public class Speed extends Module {
    public static ModuleSetting b;
 
    public Speed() {
-      super(new char[]{'S', 'p', 'e', 'e', 'd'}, Module.category.movement, 0);
-      this.registerSetting(dc = new ModuleDesc(new String(new char[]{'H', 'y', 'p', 'i', 'x', 'e', 'l', ' ', 'm', 'a', 'x', ':', ' ', '1', '.', '1', '3'})));
-      this.registerSetting(a = new ModuleSetting2(new char[]{'S', 'p', 'e', 'e', 'd'}, 1.2D, 1.0D, 1.5D, 0.01D));
-      this.registerSetting(b = new ModuleSetting(new char[]{'S', 't', 'r', 'a', 'f', 'e', ' ', 'o', 'n', 'l', 'y'}, false));
+      super("Speed", Module.category.movement, 0);
+      this.registerSetting(dc = new ModuleDesc("Hypixel max: 1.13"));
+      this.registerSetting(a = new ModuleSetting2("Speed", 1.2D, 1.0D, 1.5D, 0.01D));
+      this.registerSetting(b = new ModuleSetting("Strafe only", false));
    }
 
    public void update() {

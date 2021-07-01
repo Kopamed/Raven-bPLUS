@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
 
 public class InvMove extends Module {
    public InvMove() {
-      super(new char[]{'I', 'n', 'v', 'M', 'o', 'v', 'e'}, Module.category.movement, 0);
+      super("InvMove", Module.category.movement, 0);
    }
 
    public void update() {
@@ -19,15 +19,10 @@ public class InvMove extends Module {
             return;
          }
 
-         KeyBinding var10000 = mc.gameSettings.keyBindForward;
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode()));
-         var10000 = mc.gameSettings.keyBindBack;
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindBack.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode()));
-         var10000 = mc.gameSettings.keyBindRight;
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindRight.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindRight.getKeyCode()));
-         var10000 = mc.gameSettings.keyBindLeft;
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindLeft.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindLeft.getKeyCode()));
-         var10000 = mc.gameSettings.keyBindJump;
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode()));
          EntityPlayerSP var1;
          if (Keyboard.isKeyDown(208) && mc.thePlayer.rotationPitch < 90.0F) {

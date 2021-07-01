@@ -27,18 +27,18 @@ public class BurstClicker extends Module {
    private Method rightClickMouse = null;
 
    public BurstClicker() {
-      super(new char[]{'B', 'u', 'r', 's', 't', 'C', 'l', 'i', 'c', 'k', 'e', 'r'}, Module.category.combat, 0);
-      this.registerSetting(artificialDragClicking = new ModuleDesc(new String(new char[]{'A', 'r', 't', 'i', 'f', 'i', 'c', 'i', 'a', 'l', ' ', 'd', 'r', 'a', 'g', 'c', 'l', 'i', 'c', 'k', 'i', 'n', 'g', '.'})));
-      this.registerSetting(clicks = new ModuleSetting2(new char[]{'C', 'l', 'i', 'c', 'k', 's'}, 0.0D, 0.0D, 50.0D, 1.0D));
-      this.registerSetting(delay = new ModuleSetting2(new char[]{'D', 'e', 'l', 'a', 'y', ' ', '(', 'm', 's', ')'}, 5.0D, 1.0D, 40.0D, 1.0D));
-      this.registerSetting(delayRandomizer = new ModuleSetting(new char[]{'D', 'e', 'l', 'a', 'y', ' ', 'r', 'a', 'n', 'd', 'o', 'm', 'i', 'z', 'e', 'r'}, true));
-      this.registerSetting(placeWhenBlock = new ModuleSetting(new char[]{'P', 'l', 'a', 'c', 'e', ' ', 'w', 'h', 'e', 'n', ' ', 'b', 'l', 'o', 'c', 'k'}, false));
+      super("BurstClicker", Module.category.combat, 0);
+      this.registerSetting(artificialDragClicking = new ModuleDesc("Artificial dragclicking."));
+      this.registerSetting(clicks = new ModuleSetting2("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
+      this.registerSetting(delay = new ModuleSetting2("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
+      this.registerSetting(delayRandomizer = new ModuleSetting("Delay randomizer", true));
+      this.registerSetting(placeWhenBlock = new ModuleSetting("Place when block", false));
 
       try {
-         this.rightClickMouse = mc.getClass().getDeclaredMethod(new String(new char[]{'f', 'u', 'n', 'c', '_', '1', '4', '7', '1', '2', '1', '_', 'a', 'g'}));
+         this.rightClickMouse = mc.getClass().getDeclaredMethod("func_147121_ag");
       } catch (NoSuchMethodException var4) {
          try {
-            this.rightClickMouse = mc.getClass().getDeclaredMethod(new String(new char[]{'r', 'i', 'g', 'h', 't', 'C', 'l', 'i', 'c', 'k', 'M', 'o', 'u', 's', 'e'}));
+            this.rightClickMouse = mc.getClass().getDeclaredMethod("rightClickMouse");
          } catch (NoSuchMethodException var3) {
          }
       }
@@ -68,7 +68,7 @@ public class BurstClicker extends Module {
                            }
                         }
 
-                        Thread.sleep((long)realDel);
+                        Thread.sleep(realDel);
                      }
                   } else {
                      this.l_r = true;

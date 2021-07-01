@@ -23,9 +23,9 @@ public class Freecam extends Module {
    private float[] sAng = new float[]{0.0F, 0.0F};
 
    public Freecam() {
-      super(new char[]{'F', 'r', 'e', 'e', 'c', 'a', 'm'}, Module.category.player, 0);
-      this.registerSetting(a = new ModuleSetting2(new char[]{'S', 'p', 'e', 'e', 'd'}, 2.5D, 0.5D, 10.0D, 0.5D));
-      this.registerSetting(b = new ModuleSetting(new char[]{'D', 'i', 's', 'a', 'b', 'l', 'e', ' ', 'o', 'n', ' ', 'd', 'a', 'm', 'a', 'g', 'e'}, true));
+      super("Freecam", Module.category.player, 0);
+      this.registerSetting(a = new ModuleSetting2("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
+      this.registerSetting(b = new ModuleSetting("Disable on damage", true));
    }
 
    public void onEnable() {
