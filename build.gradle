@@ -29,8 +29,8 @@ plugins {
 }
 */
 version = "1.0"
-group= "com.yourname.modid"
-archivesBaseName = "modid"
+group= "club.sk1er.keystrokes"
+archivesBaseName = "[1.8.9] BetterKeystrokes V"
 
 minecraft {
     version = "1.8.9-11.15.1.1722"
