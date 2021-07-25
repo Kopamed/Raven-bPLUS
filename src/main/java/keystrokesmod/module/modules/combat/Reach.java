@@ -67,7 +67,7 @@ public class Reach extends Module {
             }
          }
 
-         double r = ay.mmVal(a, b, ay.rand());
+         double r = ay.ranModuleVal(a, b, ay.rand());
          Object[] o = zz(r, 0.0D);
          if (o == null) {
             return false;

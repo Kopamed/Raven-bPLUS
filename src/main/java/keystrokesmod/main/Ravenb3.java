@@ -32,10 +32,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 public class Ravenb3 {
    public static final int ver = 3;
    public static boolean debugger = false;
-   private final String numberOfUseTracker = "https://pastebin.com/raw/9a7KHzQe";
+   private final String numberOfUseTracker = "https://pastebin.com/raw/EgBH4cxS";
    public static int a = 1;
    public static int b = 0;
-   public static Minecraft mc = Minecraft.getMinecraft();
+   public static Minecraft mc;
    public static NotAName nan;
    private static KeyStroke keyStroke;
    private static KeySrokeRenderer keySrokeRenderer;
@@ -48,6 +48,7 @@ public class Ravenb3 {
 
    @EventHandler
    public void init(FMLInitializationEvent e) {
+      mc =  Minecraft.getMinecraft();
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
       FMLCommonHandler.instance().bus().register(this);
@@ -87,6 +88,10 @@ public class Ravenb3 {
          }
 
       }
+   }
+
+   public void pingTracker() {
+
    }
 
    public static ScheduledExecutorService getExecutor() {

@@ -3,6 +3,7 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.*;
+import keystrokesmod.module.Module;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 

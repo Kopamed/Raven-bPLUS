@@ -18,6 +18,7 @@ public class StopMotion extends Module {
    }
 
    public void onEnable() {
+      /*
       if (a.isToggled()) {
          mc.thePlayer.motionX = 0.0D;
       }
@@ -28,7 +29,8 @@ public class StopMotion extends Module {
 
       if (c.isToggled()) {
          mc.thePlayer.motionZ = 0.0D;
-      }
+      }*/
+      System.out.println("No fuck you");
 
       this.disable();
    }

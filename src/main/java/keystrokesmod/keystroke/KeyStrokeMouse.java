@@ -61,8 +61,8 @@ public class KeyStrokeMouse {
       }
 
       this.b.fontRendererObj.drawString(s, o + this.d + 8, p + this.e + 4, -16777216 + ((int)((double)t * this.j) << 16) + ((int)((double)u * this.j) << 8) + (int)((double)v * this.j));
-      String w = cl.f() + " CPS";
-      String x = cl.i() + " CPS";
+      String w = cl.getLeftClickCounter() + " CPS";
+      String x = cl.getRightClickCounter() + " CPS";
       int y = this.b.fontRendererObj.getStringWidth(w);
       int z = this.b.fontRendererObj.getStringWidth(x);
       boolean a2 = this.c == 0;

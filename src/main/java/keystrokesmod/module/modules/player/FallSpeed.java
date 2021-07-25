@@ -3,6 +3,7 @@
 package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.*;
+import keystrokesmod.module.Module;
 
 public class FallSpeed extends Module {
    public static ModuleDesc dc;

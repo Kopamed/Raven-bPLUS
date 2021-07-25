@@ -40,7 +40,7 @@ public class cm {
       int tY = this.bh + 3;
 
       for(Iterator var3 = Ravenb3.nan.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
-         Module mod = (Module)var3.next();
+         Module mod = (Module) var3.next();
          m3 b = new m3(mod, this, tY);
          this.c.add(b);
       }

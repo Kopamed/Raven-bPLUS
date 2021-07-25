@@ -6,7 +6,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.*;
+import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.AutoConfig;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;

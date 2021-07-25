@@ -12,16 +12,16 @@ import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class cl {
-   private static List<Long> a = new ArrayList();
-   private static List<Long> b = new ArrayList();
-   public static long LL = 0L;
-   public static long LR = 0L;
+   private static List<Long> leftClicks = new ArrayList();
+   private static List<Long> rightClicks = new ArrayList();
+   public static long leftClickTimer = 0L;
+   public static long rightClickTimer = 0L;
 
    @SubscribeEvent
-   public void onMouseUpdate(MouseEvent d) {
-      if (d.buttonstate) {
-         if (d.button == 0) {
-            aL();
+   public void onMouseUpdate(MouseEvent mouse) {
+      if (mouse.buttonstate) {
+         if (mouse.button == 0) {
+            addLeftClick();
             if (Ravenb3.debugger && Ravenb3.mc.objectMouseOver != null) {
                Entity en = Ravenb3.mc.objectMouseOver.entityHit;
                if (en == null) {
@@ -35,28 +35,32 @@ public class cl {
                ay.sm("rd: " + en.getDisplayName().getUnformattedText().replace("§", "%"));
                ay.sm("b?: " + AntiBot.bot(en));
             }
-         } else if (d.button == 1) {
-            aR();
+         } else if (mouse.button == 1) {
+            addRightClick();
          }
 
       }
    }
 
-   public static void aL() {
-      a.add(LL = System.currentTimeMillis());
+   public static void addLeftClick() {
+      leftClicks.add(leftClickTimer = System.currentTimeMillis());
    }
 
-   public static void aR() {
-      b.add(LR = System.currentTimeMillis());
+   public static void addRightClick() {
+      rightClicks.add(rightClickTimer = System.currentTimeMillis());
    }
 
-   public static int f() {
-      a.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
-      return a.size();
+
+   //prev f
+   public static int getLeftClickCounter() {
+      leftClicks.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
+      return leftClicks.size();
    }
 
-   public static int i() {
-      b.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
-      return b.size();
+
+   // prev i
+   public static int getRightClickCounter() {
+      rightClicks.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
+      return rightClicks.size();
    }
 }

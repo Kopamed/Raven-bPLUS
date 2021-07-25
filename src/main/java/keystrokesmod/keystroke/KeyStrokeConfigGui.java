@@ -58,7 +58,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
       }
 
       if (button == 0) {
-         cl.aL();
+         cl.addLeftClick();
          KeyStroke st = Ravenb3.getKeyStroke();
          int startX = KeyStroke.x;
          int startY = KeyStroke.y;
@@ -70,7 +70,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
             this.ly = mouseY;
          }
       } else if (button == 1) {
-         cl.aR();
+         cl.addRightClick();
       }
 
    }

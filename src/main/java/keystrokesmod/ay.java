@@ -109,7 +109,7 @@ public class ay {
 
    }
 
-   public static double mmVal(ModuleSetting2 a, ModuleSetting2 b, Random r) {
+   public static double ranModuleVal(ModuleSetting2 a, ModuleSetting2 b, Random r) {
       return a.getInput() == b.getInput() ? a.getInput() : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
    }
 
@@ -128,7 +128,9 @@ public class ay {
    public static net.minecraft.util.Timer gt() {
       try {
          return (net.minecraft.util.Timer)t.get(mc);
-      } catch (IndexOutOfBoundsException | IllegalAccessException var1) {
+      } catch (IndexOutOfBoundsException var1) {
+         return null;
+      } catch ( IllegalAccessException var112) {
          return null;
       }
    }
@@ -284,7 +286,7 @@ public class ay {
    public static boolean ilc() {
       if (ModuleManager.autoClicker.isEnabled()) {
          return AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0);
-      } else return cl.f() > 1 && System.currentTimeMillis() - cl.LL < 300L;
+      } else return cl.getLeftClickCounter() > 1 && System.currentTimeMillis() - cl.leftClickTimer < 300L;
    }
 
    public static int gc(long speed, long... delay) {
@@ -373,7 +375,7 @@ public class ay {
       return s.substring(0, 1).toUpperCase() + s.substring(1);
    }
 
-   public static boolean eob() {
+   public static boolean playerOverAir() {
       double x = mc.thePlayer.posX;
       double y = mc.thePlayer.posY - 1.0D;
       double z = mc.thePlayer.posZ;
@@ -388,5 +390,10 @@ public class ay {
          Item item = mc.thePlayer.getCurrentEquippedItem().getItem();
          return item instanceof ItemSword || item instanceof ItemAxe;
       }
+   }
+
+   public static enum ClickMode {
+      RAVEN,
+      LEGIT
    }
 }

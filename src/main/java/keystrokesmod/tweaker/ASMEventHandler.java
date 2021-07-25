@@ -40,8 +40,8 @@ public class ASMEventHandler {
 
    public static boolean onEntityMove(Entity en) {
       if (en == mc.thePlayer && mc.thePlayer.onGround) {
-         if (ModuleManager.safeWalk.isEnabled() && !SafeWalk.a.isToggled()) {
-            if (SafeWalk.b.isToggled()) {
+         if (ModuleManager.safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
+            if (SafeWalk.blocksOnly.isToggled()) {
                ItemStack i = mc.thePlayer.getHeldItem();
                if (i == null || !(i.getItem() instanceof ItemBlock)) {
                   return mc.thePlayer.isSneaking();

@@ -100,7 +100,7 @@ public class ClickAssist extends Module {
                      }
                   }
 
-                  if (f.isToggled() && cl.i() <= 5) {
+                  if (f.isToggled() && cl.getRightClickCounter() <= 5) {
                      this.fix(1);
                      return;
                   }

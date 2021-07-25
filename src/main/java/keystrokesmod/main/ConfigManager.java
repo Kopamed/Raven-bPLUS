@@ -149,10 +149,10 @@ public class ConfigManager {
                Module.getModule(Velocity.class).setbind(Integer.parseInt(line));
                break;
             case 13:
-               AutoClicker.minCPS.setValue(Double.parseDouble(line));
+               AutoClicker.leftMinCPS.setValue(Double.parseDouble(line));
                break;
             case 14:
-               AutoClicker.maxCPS.setValue(Double.parseDouble(line));
+               AutoClicker.leftMaxCPS.setValue(Double.parseDouble(line));
                break;
             case 15:
                AutoClicker.jitter.setValue(Double.parseDouble(line));
