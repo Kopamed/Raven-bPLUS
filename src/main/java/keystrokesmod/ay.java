@@ -100,7 +100,7 @@ public class ay {
       return txt.replaceAll("&", "§");
    }
 
-   public static void b(ModuleSetting2 c, ModuleSetting2 d) {
+   public static void correctSliders(ModuleSetting2 c, ModuleSetting2 d) {
       if (c.getInput() > d.getInput()) {
          double p = c.getInput();
          c.setValue(d.getInput());

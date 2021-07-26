@@ -40,7 +40,7 @@ public class Reach extends Module {
    }
 
    public void guiUpdate() {
-      ay.b(a, b);
+      ay.correctSliders(a, b);
    }
 
    @SubscribeEvent

@@ -44,17 +44,17 @@ public class AutoClicker extends Module {
    public static ModuleSetting2 mode;
    private Random rand = null;
    private Method playerMouseInput;
-   private long i;
-   private long j;
-   private long k;
-   private long l;
-   private double m;
-   private boolean n;
-   private boolean leftHeld;
+   private long lefti, righti;
+   private long leftj, rightj;
+   private long leftk, rightk;
+   private long leftl, rightl;
+   private double leftm, rightm;
+   private boolean leftn, rightn;
+   private boolean leftHeld, rightHeld;
    private double speedLeft, speedRight;
    private double leftHoldLength, rightHoldLength;
    private long lastClick;
-   private long hold;
+   private long leftHold, rightHold;
 
    public AutoClicker() {
       super("AutoClicker", Module.category.combat, 0);
@@ -98,19 +98,20 @@ public class AutoClicker extends Module {
    }
 
    public void onDisable() {
-      this.i = 0L;
-      this.j = 0L;
+      this.lefti = 0L;
+      this.leftj = 0L;
       this.leftHeld = false;
    }
 
    public void guiUpdate() {
-      ay.b(leftMinCPS, leftMaxCPS);
+      ay.correctSliders(leftMinCPS, leftMaxCPS);
+      ay.correctSliders(rightMinCPS, rightMaxCPS);
       modeDesc.setDesc(ay.md + ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)].name());
    }
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if (ev.phase != Phase.END && ay.isPlayerInGame() && !mc.thePlayer.isEating() && ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)] == ay.ClickMode.RAVEN) {
+      if (ev.phase != Phase.END && ay.isPlayerInGame() && ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)] == ay.ClickMode.RAVEN) {
          if (mc.currentScreen == null && mc.inGameHasFocus) {
             if (weaponOnly.isToggled() && !ay.wpn()) {
                return;
@@ -122,20 +123,20 @@ public class AutoClicker extends Module {
             } else if (rightClick.isToggled() && Mouse.isButtonDown(1)) {
                this.rightClickExecute(mc.gameSettings.keyBindUseItem.getKeyCode());
             } else {
-               this.i = 0L;
-               this.j = 0L;
+               this.lefti = 0L;
+               this.leftj = 0L;
             }
          } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
             if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
-               this.i = 0L;
-               this.j = 0L;
-            } else if (this.i != 0L && this.j != 0L) {
-               if (System.currentTimeMillis() > this.j) {
-                  this.genTimings();
+               this.lefti = 0L;
+               this.leftj = 0L;
+            } else if (this.lefti != 0L && this.leftj != 0L) {
+               if (System.currentTimeMillis() > this.leftj) {
+                  this.genLeftTimings();
                   this.inInvClick(mc.currentScreen);
                }
             } else {
-               this.genTimings();
+               this.genLeftTimings();
             }
          }
 
@@ -168,36 +169,36 @@ public class AutoClicker extends Module {
 
       if (jitter.getInput() > 0.0D) {
          double a = jitter.getInput() * 0.45D;
-         EntityPlayerSP var10000;
+         EntityPlayerSP entityPlayer;
          if (this.rand.nextBoolean()) {
-            var10000 = mc.thePlayer;
-            var10000.rotationYaw = (float)((double)var10000.rotationYaw + (double)this.rand.nextFloat() * a);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
          } else {
-            var10000 = mc.thePlayer;
-            var10000.rotationYaw = (float)((double)var10000.rotationYaw - (double)this.rand.nextFloat() * a);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * a);
          }
 
          if (this.rand.nextBoolean()) {
-            var10000 = mc.thePlayer;
-            var10000.rotationPitch = (float)((double)var10000.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
          } else {
-            var10000 = mc.thePlayer;
-            var10000.rotationPitch = (float)((double)var10000.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
          }
       }
 
-      if (this.j > 0L && this.i > 0L) {
-         if (System.currentTimeMillis() > this.j) {
+      if (this.leftj > 0L && this.lefti > 0L) {
+         if (System.currentTimeMillis() > this.leftj) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
             ay.sc(0, true);
-            this.genTimings();
-         } else if (System.currentTimeMillis() > this.i) {
+            this.genLeftTimings();
+         } else if (System.currentTimeMillis() > this.lefti) {
             KeyBinding.setKeyBindState(key, false);
             ay.sc(0, false);
          }
       } else {
-         this.genTimings();
+         this.genLeftTimings();
       }
 
    }
@@ -218,101 +219,99 @@ public class AutoClicker extends Module {
       }
 
       if (jitter.getInput() > 0.0D) {
-         double a = jitter.getInput() * 0.45D;
-         EntityPlayerSP var10000;
+         double jitterMultiplier = jitter.getInput() * 0.45D;
+         EntityPlayerSP entityPlayer;
          if (this.rand.nextBoolean()) {
-            var10000 = mc.thePlayer;
-            var10000.rotationYaw = (float)((double)var10000.rotationYaw + (double)this.rand.nextFloat() * a);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * jitterMultiplier);
          } else {
-            var10000 = mc.thePlayer;
-            var10000.rotationYaw = (float)((double)var10000.rotationYaw - (double)this.rand.nextFloat() * a);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * jitterMultiplier);
          }
 
          if (this.rand.nextBoolean()) {
-            var10000 = mc.thePlayer;
-            var10000.rotationPitch = (float)((double)var10000.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * jitterMultiplier * 0.45D);
          } else {
-            var10000 = mc.thePlayer;
-            var10000.rotationPitch = (float)((double)var10000.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
+            entityPlayer = mc.thePlayer;
+            entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * jitterMultiplier * 0.45D);
          }
       }
 
-      if (this.j > 0L && this.i > 0L) {
-         if (System.currentTimeMillis() > this.j) {
+      if (this.rightj > 0L && this.righti > 0L) {
+         if (System.currentTimeMillis() > this.rightj) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
             ay.sc(1, true);
-            this.genTimings();
-         } else if (System.currentTimeMillis() > this.i) {
+            this.genRightTimings();
+         } else if (System.currentTimeMillis() > this.righti) {
             KeyBinding.setKeyBindState(key, false);
             ay.sc(1, false);
          }
       } else {
-         this.testgenTimings();
+         this.genRightTimings();
       }
 
    }
 
-   public void genTimings() {
+   public void genLeftTimings() {
       double clickSpeed = ay.ranModuleVal(leftMinCPS, leftMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
       long delay = (long)((int)Math.round(1000.0D / clickSpeed));
-      if (System.currentTimeMillis() > this.k) {
-         if (!this.n && this.rand.nextInt(100) >= 85) {
-            this.n = true;
-            this.m = 1.1D + this.rand.nextDouble() * 0.15D;
+      if (System.currentTimeMillis() > this.leftk) {
+         if (!this.leftn && this.rand.nextInt(100) >= 85) {
+            this.leftn = true;
+            this.leftm = 1.1D + this.rand.nextDouble() * 0.15D;
          } else {
-            this.n = false;
+            this.leftn = false;
          }
 
-         this.k = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
+         this.leftk = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
       }
 
-      if (this.n) {
-         delay = (long)((double)delay * this.m);
+      if (this.leftn) {
+         delay = (long)((double)delay * this.leftm);
       }
 
-      if (System.currentTimeMillis() > this.l) {
+      if (System.currentTimeMillis() > this.leftl) {
          if (this.rand.nextInt(100) >= 80) {
             delay += 50L + (long)this.rand.nextInt(100);
          }
 
-         this.l = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
+         this.leftl = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
       }
 
-      this.j = System.currentTimeMillis() + delay;
-      this.i = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
+      this.leftj = System.currentTimeMillis() + delay;
+      this.lefti = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
    }
 
-   public void testgenTimings() {
+   public void genRightTimings() {
       double clickSpeed = ay.ranModuleVal(rightMinCPS, rightMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
-      System.out.println("Click speeed " + clickSpeed);
       long delay = (long)((int)Math.round(1000.0D / clickSpeed));
-      System.out.println("Delay " + delay);
-      if (System.currentTimeMillis() > this.k) {
-         if (!this.n && this.rand.nextInt(100) >= 85) {
-            this.n = true;
-            this.m = 1.1D + this.rand.nextDouble() * 0.15D;
+      if (System.currentTimeMillis() > this.rightk) {
+         if (!this.rightn && this.rand.nextInt(100) >= 85) {
+            this.rightn = true;
+            this.rightm = 1.1D + this.rand.nextDouble() * 0.15D;
          } else {
-            this.n = false;
+            this.rightn = false;
          }
 
-         this.k = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
+         this.rightk = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
       }
 
-      if (this.n) {
-         delay = (long)((double)delay * this.m);
+      if (this.rightn) {
+         delay = (long)((double)delay * this.rightm);
       }
 
-      if (System.currentTimeMillis() > this.l) {
+      if (System.currentTimeMillis() > this.rightl) {
          if (this.rand.nextInt(100) >= 80) {
             delay += 50L + (long)this.rand.nextInt(100);
          }
 
-         this.l = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
+         this.rightl = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
       }
 
-      this.j = System.currentTimeMillis() + delay;
-      this.i = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
+      this.rightj = System.currentTimeMillis() + delay;
+      this.righti = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
    }
 
    private void inInvClick(GuiScreen guiScreen) {
@@ -331,14 +330,14 @@ public class AutoClicker extends Module {
       if (!ay.isPlayerInGame()) {
          return;
       }
-
+      guiUpdate();
       if (ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)] != ay.ClickMode.LEGIT)
          return;
 
-      speedLeft = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
-      leftHoldLength = speedLeft / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput(), leftMaxCPS.getInput());
-      speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble( rightMinCPS.getInput() - 0.2, rightMaxCPS.getInput());
-      rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput(), rightMaxCPS.getInput());
+      speedLeft = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
+      leftHoldLength = speedLeft / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.02D, leftMaxCPS.getInput());
+      speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble( rightMinCPS.getInput() - 0.2D, rightMaxCPS.getInput());
+      rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.02D, rightMaxCPS.getInput());
       //If none of the buttons are allowed to click, what is the point in generating clicktimes anyway?
       //if (!leftActive && !rightActive) {
         // return;
@@ -363,13 +362,13 @@ public class AutoClicker extends Module {
          double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
          if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
             lastClick = System.currentTimeMillis();
-            if (hold < lastClick){
-               hold = lastClick;
+            if (leftHold < lastClick){
+               leftHold = lastClick;
             }
             int key = mc.gameSettings.keyBindAttack.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-         } else if (System.currentTimeMillis() - hold > leftHoldLength * 1000) {
+         } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
          }
       }
@@ -393,13 +392,13 @@ public class AutoClicker extends Module {
 
          if (System.currentTimeMillis() - lastClick > speedRight * 1000) {
             lastClick = System.currentTimeMillis();
-            if (hold < lastClick){
-               hold = lastClick;
+            if (leftHold < lastClick){
+               leftHold = lastClick;
             }
             int key = mc.gameSettings.keyBindUseItem.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-         } else if (System.currentTimeMillis() - hold > rightHoldLength * 1000) {
+         } else if (System.currentTimeMillis() - leftHold > rightHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
          }
       }
