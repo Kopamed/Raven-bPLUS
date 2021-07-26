@@ -30,13 +30,8 @@ Discord:<br>
 ## Improved Module List
  - SafeWalk: Sneak while jump and On hold settings
  - Autoclicker: Seperate Righclick min and max cps sliders, allow eat, allow bow and different click modes (LEGIT and RAVEN) and you can make your cps higher
-<<<<<<< HEAD
  - ChatLogger: I have a chat logger 
  - Bridge Assist: helps you aim and click during godbridging
- 
-=======
- - ChatLogger: I made a chatlogger lol
->>>>>>> a27a3abd30d2a4ae6e41ebba2130b357cd235f47
 
 
 #### Readme last updated on 26/07/2021. Bug and update info and other stuff may be out of date. 
