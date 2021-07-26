@@ -41,7 +41,7 @@ public class SafeWalk extends Module {
    public void p(PlayerTickEvent e) {
       if (ay.isPlayerInGame() && doShift.isToggled()) {
          if (onHold.isToggled()) {
-            if  (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+            if  (!Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()))
                return;
          }
          if (mc.thePlayer.onGround) {
