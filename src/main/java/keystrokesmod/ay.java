@@ -396,4 +396,9 @@ public class ay {
       RAVEN,
       LEGIT
    }
+
+   public static enum BridgeMode {
+      GODBRIDGE,
+      MOONWALK
+   }
 }

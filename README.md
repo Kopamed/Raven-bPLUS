@@ -25,10 +25,14 @@ Discord:<br>
 ## Known bugs
  - Safewalk does not work without the shift setting turned on
  - None of the "ASM" modules work so reach... and some other stuff...
+ - Bridge Assist is buggy but I will fix that tmrw
 
 ## Improved Module List
  - SafeWalk: Sneak while jump and On hold settings
  - Autoclicker: Seperate Righclick min and max cps sliders, allow eat, allow bow and different click modes (LEGIT and RAVEN) and you can make your cps higher
+ - ChatLogger: I have a chat logger 
+ - Bridge Assist: helps you aim and click during godbridging
+ 
 
 
 #### Readme last updated on 26/07/2021. Bug and update info and other stuff may be out of date. 

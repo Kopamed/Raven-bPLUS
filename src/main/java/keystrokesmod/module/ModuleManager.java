@@ -103,6 +103,7 @@ public class ModuleManager {
       this.addModule(new Gui());
       this.addModule(new SelfDestruct());
       this.addModule(new ChatLogger());
+      this.addModule(new BridgeAssist());
       this.defEn();
    }
 
