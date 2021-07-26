@@ -67,14 +67,17 @@ public class SafeWalk extends Module {
             }
          }
 
-         if (shouldBridge && mc.thePlayer.capabilities.isFlying) {
+         else if (shouldBridge && mc.thePlayer.capabilities.isFlying) {
             this.setShift(false);
             shouldBridge = false;
          }
 
-         if (shouldBridge && ay.playerOverAir() && shiftOnJump.isToggled()) {
+         else if (shouldBridge && ay.playerOverAir() && shiftOnJump.isToggled()) {
             isShifting = true;
             this.setShift(true);
+         } else {
+            isShifting = false;
+            this.setShift(false);
          }
       }
    }
