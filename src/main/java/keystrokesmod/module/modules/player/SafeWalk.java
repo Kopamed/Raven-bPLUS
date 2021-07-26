@@ -13,33 +13,33 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import org.lwjgl.input.Keyboard;
 
 public class SafeWalk extends Module {
-   public static ModuleSetting doSneak;
+   public static ModuleSetting doShift;
    public static ModuleSetting blocksOnly;
-   public static ModuleSetting sneakOnJump;
+   public static ModuleSetting shiftOnJump;
    public static ModuleSetting onHold;
    private static boolean shouldBridge = false;
-   private static boolean isSneaking = false;
+   private static boolean isShifting = false;
 
    public SafeWalk() {
       super("SafeWalk", Module.category.player, 0);
-      this.registerSetting(doSneak = new ModuleSetting("Sneak", false));
-      this.registerSetting(sneakOnJump = new ModuleSetting("Sneak during jumps", false));
-      this.registerSetting(onHold = new ModuleSetting("On sneak hold", false));
+      this.registerSetting(doShift = new ModuleSetting("Shift", false));
+      this.registerSetting(shiftOnJump = new ModuleSetting("Shift during jumps", false));
+      this.registerSetting(onHold = new ModuleSetting("On shift hold", false));
       this.registerSetting(blocksOnly = new ModuleSetting("Blocks only", true));
    }
 
    public void onDisable() {
-      if (doSneak.isToggled() && ay.playerOverAir()) {
-         this.setSneak(false);
+      if (doShift.isToggled() && ay.playerOverAir()) {
+         this.setShift(false);
       }
 
       shouldBridge = false;
-      isSneaking = false;
+      isShifting = false;
    }
 
    @SubscribeEvent
    public void p(PlayerTickEvent e) {
-      if (ay.isPlayerInGame() && doSneak.isToggled()) {
+      if (ay.isPlayerInGame() && doShift.isToggled()) {
          if (onHold.isToggled()) {
             if  (!Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()))
                return;
@@ -49,37 +49,37 @@ public class SafeWalk extends Module {
                if (blocksOnly.isToggled()) {
                   ItemStack i = mc.thePlayer.getHeldItem();
                   if (i == null || !(i.getItem() instanceof ItemBlock)) {
-                     if (isSneaking) {
-                        isSneaking = false;
-                        this.setSneak(false);
+                     if (isShifting) {
+                        isShifting = false;
+                        this.setShift(false);
                      }
 
                      return;
                   }
                }
 
-               isSneaking = true;
-               this.setSneak(true);
+               isShifting = true;
+               this.setShift(true);
                shouldBridge = true;
-            } else if (isSneaking) {
-               isSneaking = false;
-               this.setSneak(false);
+            } else if (isShifting) {
+               isShifting = false;
+               this.setShift(false);
             }
          }
 
          if (shouldBridge && mc.thePlayer.capabilities.isFlying) {
-            this.setSneak(false);
+            this.setShift(false);
             shouldBridge = false;
          }
 
-         if (shouldBridge && ay.playerOverAir() && sneakOnJump.isToggled()) {
+         if (shouldBridge && ay.playerOverAir() && shiftOnJump.isToggled()) {
             isShifting = true;
             this.setShift(true);
          }
       }
    }
 
-   private void setSneak(boolean sh) {
+   private void setShift(boolean sh) {
       KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), sh);
    }
 }
