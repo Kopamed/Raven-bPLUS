@@ -57,7 +57,7 @@ public class BridgeAssist extends Module {
 
 
 
-        if (!waitingForAim && waitFor.getInput() > 0) {
+        if (!waitingForAim) {
             waitingForAim = true;
             startWaitTime = System.currentTimeMillis();
             //System.out.println("Timer start");
@@ -91,6 +91,7 @@ public class BridgeAssist extends Module {
                 //System.out.println("Nithing");
                 }
         }
+        this.waitingForAim = false;
     }
 
     public void aimAt(float pitch, float yaw){
@@ -98,7 +99,6 @@ public class BridgeAssist extends Module {
            //System.out.println("Setting aim");
            mc.thePlayer.rotationPitch = pitch;
            mc.thePlayer.rotationYaw = yaw;
-           this.waitingForAim = false;
         }
     }
 }
