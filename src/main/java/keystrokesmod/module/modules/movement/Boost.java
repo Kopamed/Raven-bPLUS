@@ -6,20 +6,20 @@ import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 
 public class Boost extends Module {
    public static ModuleDesc c;
-   public static ModuleSetting2 a;
-   public static ModuleSetting2 b;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingSlider b;
    private int i = 0;
    private boolean t = false;
 
    public Boost() {
       super("Boost", Module.category.movement, 0);
       this.registerSetting(c = new ModuleDesc("20 ticks are in 1 second"));
-      this.registerSetting(a = new ModuleSetting2("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
-      this.registerSetting(b = new ModuleSetting2("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
+      this.registerSetting(a = new ModuleSettingSlider("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
+      this.registerSetting(b = new ModuleSettingSlider("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
    }
 
    public void onEnable() {

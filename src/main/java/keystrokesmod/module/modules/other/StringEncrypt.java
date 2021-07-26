@@ -5,8 +5,8 @@ package keystrokesmod.module.modules.other;
 import keystrokesmod.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.ClickGui;
 
 public class StringEncrypt extends Module {
@@ -16,16 +16,16 @@ public class StringEncrypt extends Module {
    private static final String m4 = "Blank";
    private static int m3s = 1;
    private boolean m3t = false;
-   public static ModuleSetting a;
-   public static ModuleSetting b;
-   public static ModuleSetting2 c;
+   public static ModuleSettingTick a;
+   public static ModuleSettingTick b;
+   public static ModuleSettingSlider c;
    public static ModuleDesc d;
 
    public StringEncrypt() {
       super("String Encrypt", Module.category.other, 0);
-      this.registerSetting(a = new ModuleSetting("Ignore debug", false));
-      this.registerSetting(b = new ModuleSetting("Ignore all GUI", false));
-      this.registerSetting(c = new ModuleSetting2("Value", 1.0D, 1.0D, 4.0D, 1.0D));
+      this.registerSetting(a = new ModuleSettingTick("Ignore debug", false));
+      this.registerSetting(b = new ModuleSettingTick("Ignore all GUI", false));
+      this.registerSetting(c = new ModuleSettingSlider("Value", 1.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(d = new ModuleDesc(ay.md + m1));
    }
 

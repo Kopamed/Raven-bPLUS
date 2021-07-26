@@ -127,7 +127,7 @@ public class Module {
    public void guiUpdate() {
    }
 
-   public void guiButtonToggled(ModuleSetting b) {
+   public void guiButtonToggled(ModuleSettingTick b) {
    }
 
    public int getKeycode() {

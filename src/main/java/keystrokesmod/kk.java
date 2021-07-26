@@ -5,20 +5,20 @@ package keystrokesmod;
 import java.awt.Color;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class kk extends b {
    private final int c = (new Color(20, 255, 0)).getRGB();
    private Module mod;
-   private ModuleSetting cl1ckbUtt0n;
+   private ModuleSettingTick cl1ckbUtt0n;
    private m3 p;
    private int o;
    private int x;
    private int y;
 
-   public kk(Module mod, ModuleSetting op, m3 b, int o) {
+   public kk(Module mod, ModuleSettingTick op, m3 b, int o) {
       this.mod = mod;
       this.cl1ckbUtt0n = op;
       this.p = b;

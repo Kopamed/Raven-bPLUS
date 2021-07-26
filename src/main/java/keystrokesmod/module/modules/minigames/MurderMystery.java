@@ -10,7 +10,7 @@ import java.util.List;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -21,9 +21,9 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MurderMystery extends Module {
-   public static ModuleSetting a;
-   public static ModuleSetting b;
-   public static ModuleSetting c;
+   public static ModuleSettingTick a;
+   public static ModuleSettingTick b;
+   public static ModuleSettingTick c;
    private static final List<EntityPlayer> mur = new ArrayList();
    private static final List<EntityPlayer> det = new ArrayList();
    private final String c1 = "MURDER";
@@ -36,9 +36,9 @@ public class MurderMystery extends Module {
 
    public MurderMystery() {
       super("Murder Mystery", Module.category.minigames, 0);
-      this.registerSetting(a = new ModuleSetting("Alert", true));
-      this.registerSetting(b = new ModuleSetting("Search detectives", true));
-      this.registerSetting(c = new ModuleSetting("Announce murderer", false));
+      this.registerSetting(a = new ModuleSettingTick("Alert", true));
+      this.registerSetting(b = new ModuleSettingTick("Search detectives", true));
+      this.registerSetting(c = new ModuleSettingTick("Announce murderer", false));
    }
 
    @SubscribeEvent

@@ -4,18 +4,18 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.ay;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class AutoJump extends Module {
-   public static ModuleSetting b;
+   public static ModuleSettingTick b;
    private boolean c = false;
 
    public AutoJump() {
       super("AutoJump", Module.category.player, 0);
-      this.registerSetting(b = new ModuleSetting("Cancel when shifting", true));
+      this.registerSetting(b = new ModuleSettingTick("Cancel when shifting", true));
    }
 
    public void onDisable() {

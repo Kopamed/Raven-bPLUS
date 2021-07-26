@@ -4,23 +4,23 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
 
 public class Fly extends Module {
    private final Fly.VanFly vanFly = new Fly.VanFly();
    private final Fly.GliFly gliFly = new Fly.GliFly();
    public static ModuleDesc dc;
-   public static ModuleSetting2 a;
-   public static ModuleSetting2 b;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingSlider b;
    private static final String c1 = "Vanilla";
    private static final String c2 = "Glide";
 
    public Fly() {
       super("Fly", Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting2("Value", 1.0D, 1.0D, 2.0D, 1.0D));
+      this.registerSetting(a = new ModuleSettingSlider("Value", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(dc = new ModuleDesc(ay.md + c1));
-      this.registerSetting(b = new ModuleSetting2("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
+      this.registerSetting(b = new ModuleSettingSlider("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
    }
 
    public void onEnable() {

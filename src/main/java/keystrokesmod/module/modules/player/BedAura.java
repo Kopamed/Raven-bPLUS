@@ -5,7 +5,7 @@ package keystrokesmod.module.modules.player;
 import java.util.TimerTask;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
@@ -13,14 +13,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class BedAura extends Module {
-   public static ModuleSetting2 r;
+   public static ModuleSettingSlider r;
    private java.util.Timer t;
    private BlockPos m = null;
    private final long per = 600L;
 
    public BedAura() {
       super("BedAura", Module.category.player, 0);
-      this.registerSetting(r = new ModuleSetting2("Range", 5.0D, 2.0D, 10.0D, 1.0D));
+      this.registerSetting(r = new ModuleSettingSlider("Range", 5.0D, 2.0D, 10.0D, 1.0D));
    }
 
    public void onEnable() {

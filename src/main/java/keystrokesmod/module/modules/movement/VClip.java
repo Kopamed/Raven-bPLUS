@@ -3,14 +3,14 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 
 public class VClip extends Module {
-   public static ModuleSetting2 a;
+   public static ModuleSettingSlider a;
 
    public VClip() {
       super("VClip", Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting2("Distace", 2.0D, -10.0D, 10.0D, 0.5D));
+      this.registerSetting(a = new ModuleSettingSlider("Distace", 2.0D, -10.0D, 10.0D, 0.5D));
    }
 
    public void onEnable() {

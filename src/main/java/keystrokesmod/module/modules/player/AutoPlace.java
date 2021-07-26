@@ -21,9 +21,9 @@ import org.lwjgl.input.Mouse;
 
 public class AutoPlace extends Module {
    public static ModuleDesc ds;
-   public static ModuleSetting a;
-   public static ModuleSetting b;
-   public static ModuleSetting2 c;
+   public static ModuleSettingTick a;
+   public static ModuleSettingTick b;
+   public static ModuleSettingSlider c;
    private double lfd = 0.0D;
    private final int d = 25;
    private long l = 0L;
@@ -34,8 +34,8 @@ public class AutoPlace extends Module {
    public AutoPlace() {
       super("AutoPlace", Module.category.player, 0);
       this.registerSetting(ds = new ModuleDesc("FD: FPS/80"));
-      this.registerSetting(c = new ModuleSetting2("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
-      this.registerSetting(a = new ModuleSetting("Hold right", true));
+      this.registerSetting(c = new ModuleSettingSlider("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
+      this.registerSetting(a = new ModuleSettingTick("Hold right", true));
    }
 
    public void guiUpdate() {

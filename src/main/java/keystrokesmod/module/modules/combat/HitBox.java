@@ -3,14 +3,13 @@
 package keystrokesmod.module.modules.combat;
 
 import java.awt.Color;
-import java.util.Iterator;
 import java.util.List;
 
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -26,15 +25,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 public class HitBox extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting b;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingTick b;
    private static Entity pE;
    private static MovingObjectPosition mv;
 
    public HitBox() {
       super("HitBox", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
-      this.registerSetting(b = new ModuleSetting("Show new hitbox", false));
+      this.registerSetting(a = new ModuleSettingSlider("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
+      this.registerSetting(b = new ModuleSettingTick("Show new hitbox", false));
    }
 
    public void update() {

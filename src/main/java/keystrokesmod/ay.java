@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -100,7 +100,7 @@ public class ay {
       return txt.replaceAll("&", "§");
    }
 
-   public static void correctSliders(ModuleSetting2 c, ModuleSetting2 d) {
+   public static void correctSliders(ModuleSettingSlider c, ModuleSettingSlider d) {
       if (c.getInput() > d.getInput()) {
          double p = c.getInput();
          c.setValue(d.getInput());
@@ -109,7 +109,7 @@ public class ay {
 
    }
 
-   public static double ranModuleVal(ModuleSetting2 a, ModuleSetting2 b, Random r) {
+   public static double ranModuleVal(ModuleSettingSlider a, ModuleSettingSlider b, Random r) {
       return a.getInput() == b.getInput() ? a.getInput() : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
    }
 

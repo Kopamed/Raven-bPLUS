@@ -3,18 +3,18 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 
 public class StopMotion extends Module {
-   public static ModuleSetting a;
-   public static ModuleSetting b;
-   public static ModuleSetting c;
+   public static ModuleSettingTick a;
+   public static ModuleSettingTick b;
+   public static ModuleSettingTick c;
 
    public StopMotion() {
       super("Stop Motion", Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting("Stop X", true));
-      this.registerSetting(b = new ModuleSetting("Stop Y", true));
-      this.registerSetting(c = new ModuleSetting("Stop Z", true));
+      this.registerSetting(a = new ModuleSettingTick("Stop X", true));
+      this.registerSetting(b = new ModuleSettingTick("Stop Y", true));
+      this.registerSetting(c = new ModuleSettingTick("Stop Z", true));
    }
 
    public void onEnable() {

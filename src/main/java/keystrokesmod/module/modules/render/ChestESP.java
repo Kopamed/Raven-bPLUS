@@ -7,8 +7,8 @@ import java.util.Iterator;
 
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -17,17 +17,17 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChestESP extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting2 b;
-   public static ModuleSetting2 c;
-   public static ModuleSetting d;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingSlider c;
+   public static ModuleSettingTick d;
 
    public ChestESP() {
       super("ChestESP", Module.category.render, 0);
-      a = new ModuleSetting2("Red", 0.0D, 0.0D, 255.0D, 1.0D);
-      b = new ModuleSetting2("Green", 0.0D, 0.0D, 255.0D, 1.0D);
-      c = new ModuleSetting2("Blue", 255.0D, 0.0D, 255.0D, 1.0D);
-      d = new ModuleSetting("Rainbow", false);
+      a = new ModuleSettingSlider("Red", 0.0D, 0.0D, 255.0D, 1.0D);
+      b = new ModuleSettingSlider("Green", 0.0D, 0.0D, 255.0D, 1.0D);
+      c = new ModuleSettingSlider("Blue", 255.0D, 0.0D, 255.0D, 1.0D);
+      d = new ModuleSettingTick("Rainbow", false);
       this.registerSetting(a);
       this.registerSetting(b);
       this.registerSetting(c);

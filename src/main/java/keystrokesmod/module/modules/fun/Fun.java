@@ -7,8 +7,8 @@ import java.util.Iterator;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -19,14 +19,14 @@ import net.minecraft.util.Vec3;
 
 public class Fun {
    public static class Spin extends Module {
-      public static ModuleSetting2 a;
-      public static ModuleSetting2 b;
+      public static ModuleSettingSlider a;
+      public static ModuleSettingSlider b;
       private float yaw;
 
       public Spin() {
          super("Spin", Module.category.fun, 0);
-         this.registerSetting(a = new ModuleSetting2("Rotation", 360.0D, 30.0D, 360.0D, 1.0D));
-         this.registerSetting(b = new ModuleSetting2("Speed", 25.0D, 1.0D, 60.0D, 1.0D));
+         this.registerSetting(a = new ModuleSettingSlider("Rotation", 360.0D, 30.0D, 360.0D, 1.0D));
+         this.registerSetting(b = new ModuleSettingSlider("Speed", 25.0D, 1.0D, 60.0D, 1.0D));
       }
 
       public void onEnable() {
@@ -57,19 +57,19 @@ public class Fun {
 
    public static class SlyPort extends Module {
       public static ModuleDesc f;
-      public static ModuleSetting2 r;
-      public static ModuleSetting b;
-      public static ModuleSetting d;
-      public static ModuleSetting e;
+      public static ModuleSettingSlider r;
+      public static ModuleSettingTick b;
+      public static ModuleSettingTick d;
+      public static ModuleSettingTick e;
       private boolean s = false;
 
       public SlyPort() {
          super("SlyPort", Module.category.fun, 0);
          this.registerSetting(f = new ModuleDesc(new String("Teleport behind enemies.")));
-         this.registerSetting(r = new ModuleSetting2("Range", 6.0D, 2.0D, 15.0D, 1.0D));
-         this.registerSetting(e = new ModuleSetting("Aim", true));
-         this.registerSetting(b = new ModuleSetting("Play sound", true));
-         this.registerSetting(d = new ModuleSetting("Players only", true));
+         this.registerSetting(r = new ModuleSettingSlider("Range", 6.0D, 2.0D, 15.0D, 1.0D));
+         this.registerSetting(e = new ModuleSettingTick("Aim", true));
+         this.registerSetting(b = new ModuleSettingTick("Play sound", true));
+         this.registerSetting(d = new ModuleSettingTick("Players only", true));
       }
 
       public void onEnable() {
@@ -130,7 +130,7 @@ public class Fun {
    }
 
    public static class FlameTrail extends Module {
-      public static ModuleSetting2 a;
+      public static ModuleSettingSlider a;
 
       public FlameTrail() {
          super("Flame Trail", Module.category.fun, 0);
@@ -146,12 +146,12 @@ public class Fun {
    }
 
    public static class ExtraBobbing extends Module {
-      public static ModuleSetting2 a;
+      public static ModuleSettingSlider a;
       private boolean b;
 
       public ExtraBobbing() {
          super("Extra Bobbing", Module.category.fun, 0);
-         this.registerSetting(a = new ModuleSetting2("Level", 1.0D, 0.0D, 8.0D, 0.1D));
+         this.registerSetting(a = new ModuleSettingSlider("Level", 1.0D, 0.0D, 8.0D, 0.1D));
       }
 
       public void onEnable() {

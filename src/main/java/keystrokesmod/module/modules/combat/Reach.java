@@ -7,8 +7,8 @@ import java.util.List;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -22,21 +22,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class Reach extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting2 b;
-   public static ModuleSetting c;
-   public static ModuleSetting d;
-   public static ModuleSetting e;
-   public static ModuleSetting f;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingTick c;
+   public static ModuleSettingTick d;
+   public static ModuleSettingTick e;
+   public static ModuleSettingTick f;
 
    public Reach() {
       super("Reach", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2("Min", 3.1D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(b = new ModuleSetting2("Max", 3.3D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(c = new ModuleSetting("Weapon only", false));
-      this.registerSetting(d = new ModuleSetting("Moving only", false));
-      this.registerSetting(e = new ModuleSetting("Sprint only", false));
-      this.registerSetting(f = new ModuleSetting("Hit through blocks", false));
+      this.registerSetting(a = new ModuleSettingSlider("Min", 3.1D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(b = new ModuleSettingSlider("Max", 3.3D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(c = new ModuleSettingTick("Weapon only", false));
+      this.registerSetting(d = new ModuleSettingTick("Moving only", false));
+      this.registerSetting(e = new ModuleSettingTick("Sprint only", false));
+      this.registerSetting(f = new ModuleSettingTick("Hit through blocks", false));
    }
 
    public void guiUpdate() {

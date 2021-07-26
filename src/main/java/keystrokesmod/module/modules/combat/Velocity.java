@@ -3,28 +3,27 @@
 package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
-import keystrokesmod.module.ModuleSetting;
-import net.minecraft.client.entity.EntityPlayerSP;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 public class Velocity extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting2 b;
-   public static ModuleSetting2 c;
-   public static ModuleSetting d;
-   public static ModuleSetting e;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingSlider c;
+   public static ModuleSettingTick d;
+   public static ModuleSettingTick e;
 
    public Velocity() {
       super("Velocity", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2("Horizontal", 90.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting2("Vertical", 100.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(c = new ModuleSetting2("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(d = new ModuleSetting("Only while targeting", false));
-      this.registerSetting(e = new ModuleSetting("Disable while holding S", false));
+      this.registerSetting(a = new ModuleSettingSlider("Horizontal", 90.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(b = new ModuleSettingSlider("Vertical", 100.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(c = new ModuleSettingSlider("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(d = new ModuleSettingTick("Only while targeting", false));
+      this.registerSetting(e = new ModuleSettingTick("Disable while holding S", false));
    }
 
    @SubscribeEvent

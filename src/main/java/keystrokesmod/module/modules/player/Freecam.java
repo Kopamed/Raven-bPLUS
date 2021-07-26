@@ -6,8 +6,8 @@ import java.awt.Color;
 
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 public class Freecam extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting b;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingTick b;
    private final double toRad = 0.017453292519943295D;
    public static EntityOtherPlayerMP en = null;
    private int[] lcc = new int[]{Integer.MAX_VALUE, 0};
@@ -24,8 +24,8 @@ public class Freecam extends Module {
 
    public Freecam() {
       super("Freecam", Module.category.player, 0);
-      this.registerSetting(a = new ModuleSetting2("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
-      this.registerSetting(b = new ModuleSetting("Disable on damage", true));
+      this.registerSetting(a = new ModuleSettingSlider("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
+      this.registerSetting(b = new ModuleSettingTick("Disable on damage", true));
    }
 
    public void onEnable() {

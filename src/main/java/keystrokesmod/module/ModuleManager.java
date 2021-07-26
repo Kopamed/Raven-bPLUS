@@ -21,6 +21,7 @@ import keystrokesmod.module.modules.other.WaterBucket;
 import keystrokesmod.module.modules.player.*;
 import keystrokesmod.module.modules.render.*;
 import keystrokesmod.module.modules.world.AntiBot;
+import keystrokesmod.module.modules.world.ChatLogger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +102,7 @@ public class ModuleManager {
       this.addModule(new CommandLine());
       this.addModule(new Gui());
       this.addModule(new SelfDestruct());
+      this.addModule(new ChatLogger());
       this.defEn();
    }
 

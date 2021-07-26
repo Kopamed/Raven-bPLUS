@@ -9,8 +9,8 @@ import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,10 +18,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class BurstClicker extends Module {
    public static ModuleDesc artificialDragClicking;
-   public static ModuleSetting2 clicks;
-   public static ModuleSetting2 delay;
-   public static ModuleSetting delayRandomizer;
-   public static ModuleSetting placeWhenBlock;
+   public static ModuleSettingSlider clicks;
+   public static ModuleSettingSlider delay;
+   public static ModuleSettingTick delayRandomizer;
+   public static ModuleSettingTick placeWhenBlock;
    private boolean l_c = false;
    private boolean l_r = false;
    private Method rightClickMouse = null;
@@ -29,10 +29,10 @@ public class BurstClicker extends Module {
    public BurstClicker() {
       super("BurstClicker", Module.category.combat, 0);
       this.registerSetting(artificialDragClicking = new ModuleDesc("Artificial dragclicking."));
-      this.registerSetting(clicks = new ModuleSetting2("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
-      this.registerSetting(delay = new ModuleSetting2("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
-      this.registerSetting(delayRandomizer = new ModuleSetting("Delay randomizer", true));
-      this.registerSetting(placeWhenBlock = new ModuleSetting("Place when block", false));
+      this.registerSetting(clicks = new ModuleSettingSlider("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
+      this.registerSetting(delay = new ModuleSettingSlider("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
+      this.registerSetting(delayRandomizer = new ModuleSettingTick("Delay randomizer", true));
+      this.registerSetting(placeWhenBlock = new ModuleSettingTick("Place when block", false));
 
       try {
          this.rightClickMouse = mc.getClass().getDeclaredMethod("func_147121_ag");

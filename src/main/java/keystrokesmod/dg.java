@@ -6,12 +6,12 @@ import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class dg extends b {
-   private ModuleSetting2 v;
+   private ModuleSettingSlider v;
    private m3 p;
    private int o;
    private int x;
@@ -20,7 +20,7 @@ public class dg extends b {
    private double w;
    private final int msl = 84;
 
-   public dg(ModuleSetting2 v, m3 b, int o) {
+   public dg(ModuleSettingSlider v, m3 b, int o) {
       this.v = v;
       this.p = b;
       this.x = b.c4t.gx() + b.c4t.gw();

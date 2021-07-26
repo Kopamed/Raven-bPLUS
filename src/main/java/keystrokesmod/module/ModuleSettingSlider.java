@@ -3,14 +3,14 @@ package keystrokesmod.module;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ModuleSetting2 extends ModuleSettingsList {
+public class ModuleSettingSlider extends ModuleSettingsList {
    private String n;
    private double v;
    private double a;
    private double m;
    private double i;
 
-   public ModuleSetting2(String settingName, double defaultValue, double min, double max, double intervals) {
+   public ModuleSettingSlider(String settingName, double defaultValue, double min, double max, double intervals) {
       super(settingName);
       this.n = settingName;
       this.v = defaultValue;

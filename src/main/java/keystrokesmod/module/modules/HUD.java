@@ -12,7 +12,7 @@ import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,24 +23,24 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class HUD extends Module {
-   public static ModuleSetting ep;
-   public static ModuleSetting sh;
-   public static ModuleSetting al;
+   public static ModuleSettingTick ep;
+   public static ModuleSettingTick sh;
+   public static ModuleSettingTick al;
    private static int hudX = 5;
    private static int hudY = 70;
 
    public HUD() {
       super("HUD", Module.category.render, 0);
-      this.registerSetting(ep = new ModuleSetting("Edit position", false));
-      this.registerSetting(sh = new ModuleSetting("Drop shadow", true));
-      this.registerSetting(al = new ModuleSetting("Alphabetical sort", false));
+      this.registerSetting(ep = new ModuleSettingTick("Edit position", false));
+      this.registerSetting(sh = new ModuleSettingTick("Drop shadow", true));
+      this.registerSetting(al = new ModuleSettingTick("Alphabetical sort", false));
    }
 
    public void onEnable() {
       ModuleManager.sort();
    }
 
-   public void guiButtonToggled(ModuleSetting b) {
+   public void guiButtonToggled(ModuleSettingTick b) {
       if (b == ep) {
          ep.disable();
          mc.displayGuiScreen(new HUD.eh());

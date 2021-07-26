@@ -9,18 +9,18 @@ import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DuelsStats extends Module {
-   public static ModuleSetting2 value;
+   public static ModuleSettingSlider value;
    public static ModuleDesc moduleDesc;
-   public static ModuleSetting a;
-   public static ModuleSetting threatLevel;
+   public static ModuleSettingTick a;
+   public static ModuleSettingTick threatLevel;
    public static String nk = "";
    private String ign = "";
    private String en = "";
@@ -29,10 +29,10 @@ public class DuelsStats extends Module {
 
    public DuelsStats() {
       super("Duels Stats", Module.category.minigames, 0);
-      this.registerSetting(value = new ModuleSetting2("Value", 1.0D, 1.0D, 7.0D, 1.0D));
+      this.registerSetting(value = new ModuleSettingSlider("Value", 1.0D, 1.0D, 7.0D, 1.0D));
       this.registerSetting(moduleDesc = new ModuleDesc("Mode: OVERALL"));
-      this.registerSetting(a = new ModuleSetting("Send ign on join", false));
-      this.registerSetting(threatLevel = new ModuleSetting("Threat Level", true));
+      this.registerSetting(a = new ModuleSettingTick("Send ign on join", false));
+      this.registerSetting(threatLevel = new ModuleSettingTick("Threat Level", true));
    }
 
    public void onEnable() {

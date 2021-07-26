@@ -9,7 +9,7 @@ import java.util.Iterator;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class BridgeInfo extends Module {
    public static ModuleDesc a;
-   public static ModuleSetting ep;
+   public static ModuleSettingTick ep;
    private static final int rgb = (new Color(0, 200, 200)).getRGB();
    private final String bd = new String("the brid");
    private final String g1t = new String("Defend!");
@@ -53,14 +53,14 @@ public class BridgeInfo extends Module {
    public BridgeInfo() {
       super("Bridge Info", Module.category.minigames, 0);
       this.registerSetting(a = new ModuleDesc(new String("Only for solos.")));
-      this.registerSetting(ep = new ModuleSetting("Edit position", false));
+      this.registerSetting(ep = new ModuleSettingTick("Edit position", false));
    }
 
    public void onDisable() {
       this.rv();
    }
 
-   public void guiButtonToggled(ModuleSetting b) {
+   public void guiButtonToggled(ModuleSettingTick b) {
       if (b == ep) {
          ep.disable();
          mc.displayGuiScreen(new BridgeInfo.eh());

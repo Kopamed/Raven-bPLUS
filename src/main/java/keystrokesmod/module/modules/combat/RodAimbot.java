@@ -5,9 +5,9 @@ package keystrokesmod.module.modules.combat;
 import java.util.Iterator;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,15 +16,15 @@ import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class RodAimbot extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting2 b;
-   public static ModuleSetting c;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingTick c;
 
    public RodAimbot() {
       super("RodAimbot", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSetting2("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting2("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
-      this.registerSetting(c = new ModuleSetting("Aim invis", false));
+      this.registerSetting(a = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
+      this.registerSetting(b = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(c = new ModuleSettingTick("Aim invis", false));
    }
 
    @SubscribeEvent

@@ -10,8 +10,8 @@ import java.util.TimerTask;
 
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -19,30 +19,30 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Xray extends Module {
-   public static ModuleSetting2 r;
-   public static ModuleSetting a;
-   public static ModuleSetting b;
-   public static ModuleSetting c;
-   public static ModuleSetting d;
-   public static ModuleSetting e;
-   public static ModuleSetting f;
-   public static ModuleSetting g;
-   public static ModuleSetting h;
+   public static ModuleSettingSlider r;
+   public static ModuleSettingTick a;
+   public static ModuleSettingTick b;
+   public static ModuleSettingTick c;
+   public static ModuleSettingTick d;
+   public static ModuleSettingTick e;
+   public static ModuleSettingTick f;
+   public static ModuleSettingTick g;
+   public static ModuleSettingTick h;
    private java.util.Timer t;
    private List<BlockPos> ren;
    private final long per = 200L;
 
    public Xray() {
       super("Xray", Module.category.render, 0);
-      this.registerSetting(r = new ModuleSetting2("Range", 20.0D, 5.0D, 50.0D, 1.0D));
-      this.registerSetting(a = new ModuleSetting("Iron", true));
-      this.registerSetting(b = new ModuleSetting("Gold", true));
-      this.registerSetting(c = new ModuleSetting("Diamond", true));
-      this.registerSetting(d = new ModuleSetting("Emerald", true));
-      this.registerSetting(e = new ModuleSetting("Lapis", true));
-      this.registerSetting(f = new ModuleSetting("Redstone", true));
-      this.registerSetting(g = new ModuleSetting("Coal", true));
-      this.registerSetting(h = new ModuleSetting("Spawner", true));
+      this.registerSetting(r = new ModuleSettingSlider("Range", 20.0D, 5.0D, 50.0D, 1.0D));
+      this.registerSetting(a = new ModuleSettingTick("Iron", true));
+      this.registerSetting(b = new ModuleSettingTick("Gold", true));
+      this.registerSetting(c = new ModuleSettingTick("Diamond", true));
+      this.registerSetting(d = new ModuleSettingTick("Emerald", true));
+      this.registerSetting(e = new ModuleSettingTick("Lapis", true));
+      this.registerSetting(f = new ModuleSettingTick("Redstone", true));
+      this.registerSetting(g = new ModuleSettingTick("Coal", true));
+      this.registerSetting(h = new ModuleSettingTick("Spawner", true));
    }
 
    public void onEnable() {

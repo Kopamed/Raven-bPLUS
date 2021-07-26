@@ -7,7 +7,7 @@ import java.util.HashMap;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.player.Freecam;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,11 +17,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AntiBot extends Module {
    private static final HashMap<EntityPlayer, Long> newEnt = new HashMap();
    private final long ms = 4000L;
-   public static ModuleSetting a;
+   public static ModuleSettingTick a;
 
    public AntiBot() {
       super("AntiBot", Module.category.world, 0);
-      this.registerSetting(a = new ModuleSetting("Wait 80 ticks", false));
+      this.registerSetting(a = new ModuleSettingTick("Wait 80 ticks", false));
    }
 
    public void onDisable() {

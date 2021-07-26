@@ -7,31 +7,30 @@ import java.util.Iterator;
 import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class AimAssist extends Module {
-   public static ModuleSetting2 speed;
-   public static ModuleSetting2 fov;
-   public static ModuleSetting2 distance;
-   public static ModuleSetting clickAim;
-   public static ModuleSetting weaponOnly;
-   public static ModuleSetting aimInvis;
-   public static ModuleSetting blatantMode;
+   public static ModuleSettingSlider speed;
+   public static ModuleSettingSlider fov;
+   public static ModuleSettingSlider distance;
+   public static ModuleSettingTick clickAim;
+   public static ModuleSettingTick weaponOnly;
+   public static ModuleSettingTick aimInvis;
+   public static ModuleSettingTick blatantMode;
 
    public AimAssist() {
       super("AimAssist", Module.category.combat, 0);
-      this.registerSetting(speed = new ModuleSetting2("Speed", 45.0D, 1.0D, 100.0D, 1.0D));
-      this.registerSetting(fov = new ModuleSetting2("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
-      this.registerSetting(distance = new ModuleSetting2("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
-      this.registerSetting(clickAim = new ModuleSetting("Click aim", true));
-      this.registerSetting(weaponOnly = new ModuleSetting("Weapon only", false));
-      this.registerSetting(aimInvis = new ModuleSetting("Aim invis", false));
-      this.registerSetting(blatantMode = new ModuleSetting("Blatant mode", false));
+      this.registerSetting(speed = new ModuleSettingSlider("Speed", 45.0D, 1.0D, 100.0D, 1.0D));
+      this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
+      this.registerSetting(distance = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(clickAim = new ModuleSettingTick("Click aim", true));
+      this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
+      this.registerSetting(aimInvis = new ModuleSettingTick("Aim invis", false));
+      this.registerSetting(blatantMode = new ModuleSettingTick("Blatant mode", false));
    }
 
    public void update() {

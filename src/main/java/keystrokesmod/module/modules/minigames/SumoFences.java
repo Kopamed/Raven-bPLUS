@@ -9,7 +9,7 @@ import java.util.TimerTask;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -22,8 +22,8 @@ import org.lwjgl.input.Mouse;
 public class SumoFences extends Module {
    public static ModuleDesc a;
    public static ModuleDesc d;
-   public static ModuleSetting2 b;
-   public static ModuleSetting2 c;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingSlider c;
    private java.util.Timer t;
    private final List<String> m = Arrays.asList("Sumo", "Space Mine", "White Crystal");
    private IBlockState f;
@@ -43,8 +43,8 @@ public class SumoFences extends Module {
       this.c4 = "Glass";
       this.c5 = "Barrier";
       this.registerSetting(a = new ModuleDesc("Fences for Hypixel sumo."));
-      this.registerSetting(b = new ModuleSetting2("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
-      this.registerSetting(c = new ModuleSetting2("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
+      this.registerSetting(b = new ModuleSettingSlider("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
+      this.registerSetting(c = new ModuleSettingSlider("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(d = new ModuleDesc(ay.md + this.c2));
    }
 

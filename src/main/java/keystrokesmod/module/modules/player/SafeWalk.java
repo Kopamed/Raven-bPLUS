@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.ay;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -13,19 +13,19 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import org.lwjgl.input.Keyboard;
 
 public class SafeWalk extends Module {
-   public static ModuleSetting doShift;
-   public static ModuleSetting blocksOnly;
-   public static ModuleSetting shiftOnJump;
-   public static ModuleSetting onHold;
+   public static ModuleSettingTick doShift;
+   public static ModuleSettingTick blocksOnly;
+   public static ModuleSettingTick shiftOnJump;
+   public static ModuleSettingTick onHold;
    private static boolean shouldBridge = false;
    private static boolean isShifting = false;
 
    public SafeWalk() {
       super("SafeWalk", Module.category.player, 0);
-      this.registerSetting(doShift = new ModuleSetting("Shift", false));
-      this.registerSetting(shiftOnJump = new ModuleSetting("Shift during jumps", false));
-      this.registerSetting(onHold = new ModuleSetting("On shift hold", false));
-      this.registerSetting(blocksOnly = new ModuleSetting("Blocks only", true));
+      this.registerSetting(doShift = new ModuleSettingTick("Shift", false));
+      this.registerSetting(shiftOnJump = new ModuleSettingTick("Shift during jumps", false));
+      this.registerSetting(onHold = new ModuleSettingTick("On shift hold", false));
+      this.registerSetting(blocksOnly = new ModuleSettingTick("Blocks only", true));
    }
 
    public void onDisable() {
@@ -76,6 +76,7 @@ public class SafeWalk extends Module {
             isShifting = true;
             this.setShift(true);
          } else {
+            // rn we are in the air and we are not flying, meaning that we are in a jump. and since shiftOnJump is turned off, we just unshift and uhh... nyoooom
             isShifting = false;
             this.setShift(false);
          }

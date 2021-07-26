@@ -1,10 +1,10 @@
 package keystrokesmod.module;
 
-public class ModuleSetting extends ModuleSettingsList {
+public class ModuleSettingTick extends ModuleSettingsList {
    private String name;
    private boolean isEnabled;
 
-   public ModuleSetting(String name, boolean isEnabled) {
+   public ModuleSettingTick(String name, boolean isEnabled) {
       super(name);
       this.name = name;
       this.isEnabled = isEnabled;

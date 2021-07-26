@@ -6,16 +6,16 @@ import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 
 public class Gui extends Module {
    public static final int bind = 54;
-   public static ModuleSetting2 a;
+   public static ModuleSettingSlider a;
    public static ModuleDesc b;
 
    public Gui() {
       super("Gui", Module.category.client, 54);
-      this.registerSetting(a = new ModuleSetting2("Theme", 3.0D, 1.0D, 3.0D, 1.0D));
+      this.registerSetting(a = new ModuleSettingSlider("Theme", 3.0D, 1.0D, 3.0D, 1.0D));
       this.registerSetting(b = new ModuleDesc(ay.md + "b" + 3));
    }
 

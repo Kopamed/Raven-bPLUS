@@ -4,19 +4,18 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 
 public class KeepSprint extends Module {
    public static ModuleDesc a;
-   public static ModuleSetting2 b;
-   public static ModuleSetting c;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingTick c;
 
    public KeepSprint() {
       super("KeepSprint", Module.category.movement, 0);
       this.registerSetting(a = new ModuleDesc(new String("Default is 40% motion reduction.")));
-      this.registerSetting(b = new ModuleSetting2("Slow %", 40.0D, 0.0D, 40.0D, 1.0D));
-      this.registerSetting(c = new ModuleSetting("Only reduce reach hits", false));
+      this.registerSetting(b = new ModuleSettingSlider("Slow %", 40.0D, 0.0D, 40.0D, 1.0D));
+      this.registerSetting(c = new ModuleSettingTick("Only reduce reach hits", false));
    }
 
    public static void sl(Entity en) {

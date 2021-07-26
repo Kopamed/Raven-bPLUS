@@ -4,19 +4,18 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting2;
-import net.minecraft.util.MovementInput;
+import keystrokesmod.module.ModuleSettingSlider;
 
 public class NoSlow extends Module {
    public static ModuleDesc a;
    public static ModuleDesc c;
-   public static ModuleSetting2 b;
+   public static ModuleSettingSlider b;
 
    public NoSlow() {
       super("NoSlow", Module.category.movement, 0);
       this.registerSetting(a = new ModuleDesc("Default is 80% motion reduction."));
       this.registerSetting(c = new ModuleDesc("Hypixel max: 22%"));
-      this.registerSetting(b = new ModuleSetting2("Slow %", 80.0D, 0.0D, 80.0D, 1.0D));
+      this.registerSetting(b = new ModuleSettingSlider("Slow %", 80.0D, 0.0D, 80.0D, 1.0D));
    }
 
    public static void sl() {

@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.AutoConfig;
@@ -32,13 +31,13 @@ public class m3 extends b {
       int y = o + 12;
       if (!mod.getSettings().isEmpty()) {
          for (ModuleSettingsList v : mod.getSettings()) {
-            if (v instanceof ModuleSetting2) {
-               ModuleSetting2 n = (ModuleSetting2) v;
+            if (v instanceof ModuleSettingSlider) {
+               ModuleSettingSlider n = (ModuleSettingSlider) v;
                dg s = new dg(n, this, y);
                this.sn.add(s);
                y += 12;
-            } else if (v instanceof ModuleSetting) {
-               ModuleSetting b = (ModuleSetting) v;
+            } else if (v instanceof ModuleSettingTick) {
+               ModuleSettingTick b = (ModuleSettingTick) v;
                kk c = new kk(mod, b, this, y);
                this.sn.add(c);
                y += 12;

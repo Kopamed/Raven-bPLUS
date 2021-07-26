@@ -5,20 +5,20 @@ package keystrokesmod.module.modules.movement;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import org.lwjgl.input.Keyboard;
 
 public class Speed extends Module {
    public static ModuleDesc dc;
-   public static ModuleSetting2 a;
-   public static ModuleSetting b;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingTick b;
 
    public Speed() {
       super("Speed", Module.category.movement, 0);
       this.registerSetting(dc = new ModuleDesc("Hypixel max: 1.13"));
-      this.registerSetting(a = new ModuleSetting2("Speed", 1.2D, 1.0D, 1.5D, 0.01D));
-      this.registerSetting(b = new ModuleSetting("Strafe only", false));
+      this.registerSetting(a = new ModuleSettingSlider("Speed", 1.2D, 1.0D, 1.5D, 0.01D));
+      this.registerSetting(b = new ModuleSettingTick("Strafe only", false));
    }
 
    public void update() {

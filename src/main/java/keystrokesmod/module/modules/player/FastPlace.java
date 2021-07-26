@@ -5,9 +5,9 @@ package keystrokesmod.module.modules.player;
 import java.lang.reflect.Field;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,14 +15,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class FastPlace extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting b;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingTick b;
    public static Field r = null;
 
    public FastPlace() {
       super("FastPlace", Module.category.player, 0);
-      this.registerSetting(a = new ModuleSetting2("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting("Blocks only", true));
+      this.registerSetting(a = new ModuleSettingSlider("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
+      this.registerSetting(b = new ModuleSettingTick("Blocks only", true));
 
       try {
          r = mc.getClass().getDeclaredField("field_71467_ac");

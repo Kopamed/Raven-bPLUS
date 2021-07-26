@@ -4,17 +4,17 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
 import net.minecraft.client.settings.KeyBinding;
 
 public class BHop extends Module {
-   public static ModuleSetting2 a;
+   public static ModuleSettingSlider a;
    private final double bspd = 0.0025D;
 
    public BHop() {
       super("Bhop", Module.category.movement, 0);
-      this.registerSetting(a = new ModuleSetting2("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
+      this.registerSetting(a = new ModuleSettingSlider("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 
    public void update() {

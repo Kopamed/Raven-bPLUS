@@ -8,8 +8,8 @@ import java.awt.Robot;
 import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSetting;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
@@ -19,13 +19,13 @@ import org.lwjgl.input.Mouse;
 
 public class ClickAssist extends Module {
    public static ModuleDesc a;
-   public static ModuleSetting2 b;
-   public static ModuleSetting L;
-   public static ModuleSetting R;
-   public static ModuleSetting c;
-   public static ModuleSetting d;
-   public static ModuleSetting e;
-   public static ModuleSetting f;
+   public static ModuleSettingSlider b;
+   public static ModuleSettingTick L;
+   public static ModuleSettingTick R;
+   public static ModuleSettingTick c;
+   public static ModuleSettingTick d;
+   public static ModuleSettingTick e;
+   public static ModuleSettingTick f;
    private Robot bot;
    private boolean ignNL = false;
    private boolean ignNR = false;
@@ -33,13 +33,13 @@ public class ClickAssist extends Module {
    public ClickAssist() {
       super("ClickAssist", Module.category.combat, 0);
       this.registerSetting(a = new ModuleDesc("Boost your CPS."));
-      this.registerSetting(b = new ModuleSetting2("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(L = new ModuleSetting("Left click", true));
-      this.registerSetting(d = new ModuleSetting("Weapon only", true));
-      this.registerSetting(e = new ModuleSetting("Only while targeting", false));
-      this.registerSetting(R = new ModuleSetting("Right click", false));
-      this.registerSetting(c = new ModuleSetting("Blocks only", true));
-      this.registerSetting(f = new ModuleSetting("Above 5 cps", false));
+      this.registerSetting(b = new ModuleSettingSlider("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(L = new ModuleSettingTick("Left click", true));
+      this.registerSetting(d = new ModuleSettingTick("Weapon only", true));
+      this.registerSetting(e = new ModuleSettingTick("Only while targeting", false));
+      this.registerSetting(R = new ModuleSettingTick("Right click", false));
+      this.registerSetting(c = new ModuleSettingTick("Blocks only", true));
+      this.registerSetting(f = new ModuleSettingTick("Above 5 cps", false));
    }
 
    public void onEnable() {

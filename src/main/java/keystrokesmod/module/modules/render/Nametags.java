@@ -3,9 +3,9 @@
 package keystrokesmod.module.modules.render;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSetting2;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
-import keystrokesmod.module.ModuleSetting;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -17,20 +17,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 public class Nametags extends Module {
-   public static ModuleSetting2 a;
-   public static ModuleSetting b;
-   public static ModuleSetting c;
-   public static ModuleSetting d;
-   public static ModuleSetting rm;
-   public static ModuleSetting e;
+   public static ModuleSettingSlider a;
+   public static ModuleSettingTick b;
+   public static ModuleSettingTick c;
+   public static ModuleSettingTick d;
+   public static ModuleSettingTick rm;
+   public static ModuleSettingTick e;
 
    public Nametags() {
       super("Nametags", Module.category.render, 0);
-      this.registerSetting(a = new ModuleSetting2("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
-      this.registerSetting(b = new ModuleSetting("Rect", true));
-      this.registerSetting(c = new ModuleSetting("Show health", true));
-      this.registerSetting(d = new ModuleSetting("Show invis", true));
-      this.registerSetting(rm = new ModuleSetting("Remove tags", false));
+      this.registerSetting(a = new ModuleSettingSlider("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
+      this.registerSetting(b = new ModuleSettingTick("Rect", true));
+      this.registerSetting(c = new ModuleSettingTick("Show health", true));
+      this.registerSetting(d = new ModuleSettingTick("Show invis", true));
+      this.registerSetting(rm = new ModuleSettingTick("Remove tags", false));
    }
 
    @SubscribeEvent
