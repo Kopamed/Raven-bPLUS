@@ -23,7 +23,7 @@ Discord:<br>
 
 # Client
 ## Known bugs
- - Safewalk does not work without the shift setting turned on
+ - Safewalk does not work without the sneak setting turned on
  - None of the "ASM" modules work so reach... and some other stuff...
 
 ## Improved Module List
