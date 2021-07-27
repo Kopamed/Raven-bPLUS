@@ -399,6 +399,13 @@ public class ay {
 
    public static enum BridgeMode {
       GODBRIDGE,
-      MOONWALK
+      MOONWALK,
+      BREEZILY,
+      NORMAL
+   }
+
+   public static enum LookMode {
+      SNAP,
+      GLIDE
    }
 }

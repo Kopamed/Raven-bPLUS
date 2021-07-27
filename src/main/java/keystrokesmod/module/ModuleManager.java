@@ -104,6 +104,7 @@ public class ModuleManager {
       this.addModule(new SelfDestruct());
       this.addModule(new ChatLogger());
       this.addModule(new BridgeAssist());
+      this.addModule(new Fullbright());
       this.defEn();
    }
 
