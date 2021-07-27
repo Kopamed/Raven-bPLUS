@@ -77,6 +77,7 @@ public class BridgeAssist extends Module {
         if (onSneak.isToggled()) {
             if (!mc.thePlayer.isSneaking()) {
                 //System.out.println("Nibba aint shiftin");
+                return;
             }
         }
 
