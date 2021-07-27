@@ -19,9 +19,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -37,6 +35,8 @@ public class AutoClicker extends Module {
    public static ModuleSettingSlider jitter;
    public static ModuleSettingTick weaponOnly;
    public static ModuleSettingTick breakBlocks;
+   public static ModuleSettingTick onlyBlocks;
+   public static ModuleSettingTick noBlockSword;
    public static ModuleSettingTick leftClick;
    public static ModuleSettingTick rightClick;
    public static ModuleSettingTick inventoryFill;
@@ -67,6 +67,8 @@ public class AutoClicker extends Module {
       this.registerSetting(rightMaxCPS = new ModuleSettingSlider("Right Max CPS", 16.0D, 1.0D, 60.0D, 0.5D));
       this.registerSetting(inventoryFill = new ModuleSettingTick("Inventory fill", false));
       this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
+      this.registerSetting(noBlockSword = new ModuleSettingTick("Don't rightclick sword", true));
+      this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks", false));
       this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
@@ -121,10 +123,14 @@ public class AutoClicker extends Module {
             if (leftClick.isToggled() && Mouse.isButtonDown(0)) {
                this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
             } else if (rightClick.isToggled() && Mouse.isButtonDown(1)) {
+               if (!this.rightClickAllowed())
+                  return;
                this.rightClickExecute(mc.gameSettings.keyBindUseItem.getKeyCode());
             } else {
                this.lefti = 0L;
                this.leftj = 0L;
+               this.righti = 0L;
+               this.rightj = 0L;
             }
          } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
             if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
@@ -204,20 +210,6 @@ public class AutoClicker extends Module {
    }
 
    public void rightClickExecute(int key) {
-      ItemStack item = mc.thePlayer.getHeldItem();
-      if (item != null) {
-         if (this.allowEat.isToggled()) {
-            if ((item.getItem() instanceof ItemFood)) {
-               return;
-            }
-         }
-         if (this.allowBow.isToggled()) {
-            if (item.getItem() instanceof ItemBow) {
-               return;
-            }
-         }
-      }
-
       if (jitter.getInput() > 0.0D) {
          double jitterMultiplier = jitter.getInput() * 0.45D;
          EntityPlayerSP entityPlayer;
@@ -374,19 +366,8 @@ public class AutoClicker extends Module {
       }
       //we cheat in a block game ft. right click
       if (Mouse.isButtonDown(1) && rightClick.isToggled()) {
-         ItemStack item = mc.thePlayer.getHeldItem();
-         if (item != null) {
-            if (allowEat.isToggled()) {
-               if ((item.getItem() instanceof ItemFood)) {
-                  return;
-               }
-            }
-            if (allowBow.isToggled()) {
-               if (item.getItem() instanceof ItemBow) {
-                  return;
-               }
-            }
-         }
+         if (!this.rightClickAllowed())
+            return;
 
 
 
@@ -402,5 +383,30 @@ public class AutoClicker extends Module {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
          }
       }
+   }
+
+   public boolean rightClickAllowed() {
+      ItemStack item = mc.thePlayer.getHeldItem();
+      if (item != null) {
+         if (this.allowEat.isToggled()) {
+            if ((item.getItem() instanceof ItemFood)) {
+               return false;
+            }
+         }
+         if (this.allowBow.isToggled()) {
+            if (item.getItem() instanceof ItemBow) {
+               return false;
+            }
+         }
+         if (this.onlyBlocks.isToggled()) {
+            if (!(item.getItem() instanceof ItemBlock))
+               return false;
+         }
+         if (this.noBlockSword.isToggled()) {
+            if (item.getItem() instanceof ItemSword)
+               return false;
+         }
+      }
+      return true;
    }
 }
