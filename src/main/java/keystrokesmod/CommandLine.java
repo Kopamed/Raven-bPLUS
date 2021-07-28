@@ -47,9 +47,16 @@ public class CommandLine {
                   e.printStackTrace();
                   CommandLine.print("&cFailed to open page! Please report this bug in Raven b+'s discord", 1);
                }
+            } else if (version.isBeta()){
+               CommandLine.print("§3Bro you are literally using a beta build", 0);
+               CommandLine.print("§3But I will still open it for you if you want...", 0);
+               CommandLine.print("§3Opening page...", 1);
             } else {
                print("&aAlready up to date!", 1);
             }
+         } else if (cm.startsWith("version")) {
+            print("&aYour build of Raven B+ is " + version.getCurrentVersion().replaceAll("-", "."), 0);
+            print("&aLatest public build: " + version.getLatestVersion().replaceAll("-", "."), 1);
          }
          else if (cm.startsWith("setkey".toLowerCase())) {
             if (!hasArgs) {
@@ -205,6 +212,7 @@ public class CommandLine {
             print("3 nick [name]", 0);
             print("4 ping", 0);
             print("5 update", 0);
+            print("6 version", 0);
             print("&eModule-specific:", 0);
             print("1 cname [name]", 0);
             print("2 " + FakeChat.command + " [msg]", 0);

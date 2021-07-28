@@ -34,9 +34,10 @@ public class Ravenb3 {
    public static final int ver = 3;
    public static boolean debugger = false;
    public static boolean outdated = false;
+   public static boolean beta = false;
    private final String numberOfUseTracker = "https://pastebin.com/raw/EgBH4cxS";
    public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
-   public static String[] updateText = {"Your version of Raven B+ is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat."};
+   public static String[] updateText = {"Your version of Raven B+ (" + version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
    public static int b = 0;
    public static Minecraft mc;
@@ -69,6 +70,9 @@ public class Ravenb3 {
       ex.execute(() -> URLUtils.getTextFromURL(this.numberOfUseTracker));
       if(version.outdated()) {
          Ravenb3.outdated = true;
+      }
+      if(version.isBeta()) {
+         Ravenb3.beta = true;
       }
    }
 

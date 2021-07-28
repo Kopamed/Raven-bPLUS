@@ -72,15 +72,20 @@ public class ClickGui extends GuiScreen {
       this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, ay.rainbowDraw(2L, 600L));
       this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, ay.rainbowDraw(2L, 300L));
       this.drawCenteredString(this.fontRendererObj, "b3", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, ay.rainbowDraw(2L, 0L));
-      this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 3, this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+      this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 2, this.height - 2 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
       if(Ravenb3.outdated){
          int margin = 2;
-         int rows = -1;
-         for (String up : Ravenb3.updateText) {
-            this.drawString(this.fontRendererObj, up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * rows + margin, ay.rainbowDraw(2L, 420L));
+         int rows = 1;
+         for (int i = Ravenb3.updateText.length-1; i >= 0; i--) {
+            String up = Ravenb3.updateText[i];
+            this.drawString(this.fontRendererObj, up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.rainbowDraw(2L, 420L));
             rows++;
             margin += 2;
          }
+      }
+      if(Ravenb3.beta) {
+         String veryCoolBetaUser = mc.thePlayer.getName() + " is a very cool beta user of version " + version.getCurrentVersion().replaceAll("-", ".");
+         this.drawString(this.fontRendererObj, veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.rainbowDraw(2L, 420L));
       }
       this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
       this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
