@@ -1,11 +1,14 @@
 package keystrokesmod;
 
 import keystrokesmod.main.Ravenb3;
+import org.lwjgl.Sys;
+import scala.Int;
 import scala.reflect.internal.pickling.UnPickler;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class version {
@@ -41,19 +44,30 @@ public class version {
         try {
             Scanner versionLook = new Scanner(br);
             latestVersion = versionLook.nextLine();
+            System.out.println(latestVersion);
+            System.out.println(currentVersion);
         } catch (Exception var48) {
             var48.printStackTrace();
             return false;
         }
-        String[] currentVersionSplited = currentVersion.split(".");
-        String[] latestVersionSplited = latestVersion.split(".");
-        if (Integer.parseInt(latestVersionSplited[0]) > Integer.parseInt(currentVersionSplited[0])) {
+
+        ArrayList<Integer> currentVersionSplited = new ArrayList<Integer>();
+        ArrayList<Integer> latestVersionSplited = new ArrayList<Integer>();
+
+        for (String whatHelp : currentVersion.split("-")) {
+            currentVersionSplited.add(Integer.parseInt(whatHelp));
+        }
+        for (String whatHelp : latestVersion.split("-")) {
+            latestVersionSplited.add(Integer.parseInt(whatHelp));
+        }
+
+        if (latestVersionSplited.get(0) > currentVersionSplited.get(0)) {
             return true;
         }
-        if (Integer.parseInt(latestVersionSplited[1]) > Integer.parseInt(currentVersionSplited[1])) {
+        if (latestVersionSplited.get(1) > currentVersionSplited.get(1)) {
             return true;
         }
-        if (Integer.parseInt(latestVersionSplited[2]) > Integer.parseInt(currentVersionSplited[2])) {
+        if (latestVersionSplited.get(2) > currentVersionSplited.get(2)) {
             return true;
         }
         return false;
