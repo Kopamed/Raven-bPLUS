@@ -13,8 +13,7 @@ public class version {
     public static String currentVersion;
     public static String latestVersion;
     public static boolean outdated() {
-        return true;
-        /*InputStream input = version.class.getResourceAsStream(versionFileName);
+        InputStream input = version.class.getResourceAsStream(versionFileName);
         Scanner scanner = new Scanner(input);
         try {
             currentVersion = scanner.nextLine();
@@ -57,6 +56,6 @@ public class version {
         if (Integer.parseInt(latestVersionSplited[2]) > Integer.parseInt(currentVersionSplited[2])) {
             return true;
         }
-        return false;*/
+        return false;
     }
 }
