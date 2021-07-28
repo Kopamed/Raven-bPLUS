@@ -74,7 +74,7 @@ public class MurderMystery extends Module {
                         mur.add(en);
                         if (a.isToggled()) {
                            mc.thePlayer.playSound(this.c5, 1.0F, 1.0F);
-                           ay.sm(this.c4 + " &e" + en.getName() + " &3" + this.c6);
+                           ay.sendMessageToSelf(this.c4 + " &e" + en.getName() + " &3" + this.c6);
                         }
 
                         if (c.isToggled()) {
@@ -83,7 +83,7 @@ public class MurderMystery extends Module {
                      } else if (i instanceof ItemBow && b.isToggled() && !det.contains(en)) {
                         det.add(en);
                         if (a.isToggled()) {
-                           ay.sm(this.c4 + " &e" + en.getName() + " &3" + this.c7);
+                           ay.sendMessageToSelf(this.c4 + " &e" + en.getName() + " &3" + this.c7);
                         }
 
                         if (c.isToggled()) {

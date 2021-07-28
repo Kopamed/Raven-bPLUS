@@ -107,39 +107,39 @@ public class DuelsStats extends Module {
    private void ef(String n) {
       this.en = n;
       if (a.isToggled()) {
-         ay.sm("&eOpponent found: " + "&3" + n);
+         ay.sendMessageToSelf("&eOpponent found: " + "&3" + n);
       }
 
       if (URLUtils.k.isEmpty()) {
-         ay.sm("&cAPI Key is empty!");
+         ay.sendMessageToSelf("&cAPI Key is empty!");
       } else {
          ProfileUtils.DM dm = ProfileUtils.DM.values()[(int)(value.getInput() - 1.0D)];
          Ravenb3.getExecutor().execute(() -> {
             int[] s = ProfileUtils.getHypixelStats(n, dm);
             if (s != null) {
                if (s[0] == -1) {
-                  ay.sm("&3" + n + " " + "&eis nicked!");
+                  ay.sendMessageToSelf("&3" + n + " " + "&eis nicked!");
                   return;
                }
 
                double wlr = s[1] != 0 ? ay.rnd((double)s[0] / (double)s[1], 2) : (double)s[0];
-               ay.sm("&7&m-------------------------");
+               ay.sendMessageToSelf("&7&m-------------------------");
                if (dm != ProfileUtils.DM.OVERALL) {
-                  ay.sm("&e" + ay.md + "&3" + dm.name());
+                  ay.sendMessageToSelf("&e" + ay.md + "&3" + dm.name());
                }
 
-               ay.sm("&eOpponent: &3" + n);
-               ay.sm("&eWins: &3" + s[0]);
-               ay.sm("&eLosses: &3" + s[1]);
-               ay.sm("&eWLR: &3" + wlr);
-               ay.sm("&eWS: &3" + s[2]);
+               ay.sendMessageToSelf("&eOpponent: &3" + n);
+               ay.sendMessageToSelf("&eWins: &3" + s[0]);
+               ay.sendMessageToSelf("&eLosses: &3" + s[1]);
+               ay.sendMessageToSelf("&eWLR: &3" + wlr);
+               ay.sendMessageToSelf("&eWS: &3" + s[2]);
                if (threatLevel.isToggled()) {
-                  ay.sm("&eThreat: &3" + gtl(s[0], s[1], wlr, s[2]));
+                  ay.sendMessageToSelf("&eThreat: &3" + gtl(s[0], s[1], wlr, s[2]));
                }
 
-               ay.sm("&7&m-------------------------");
+               ay.sendMessageToSelf("&7&m-------------------------");
             } else {
-               ay.sm("&cThere was an error.");
+               ay.sendMessageToSelf("&cThere was an error.");
             }
 
          });

@@ -65,7 +65,7 @@ public class HUD extends Module {
          while(var5.hasNext()) {
             Module m = (Module)var5.next();
             if (m.isEnabled() && m != this) {
-               mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.gc(2L, (long)del), sh.isToggled());
+               mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, (long)del), sh.isToggled());
                y += mc.fontRendererObj.FONT_HEIGHT + 2;
                del -= 120;
             }

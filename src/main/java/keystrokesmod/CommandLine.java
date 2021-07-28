@@ -3,6 +3,8 @@
 package keystrokesmod;
 
 import java.awt.Color;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class gc {
+public class CommandLine {
    private static final Minecraft mc = Minecraft.getMinecraft();
    private static boolean f = true;
    private static boolean u = false;
@@ -24,8 +26,8 @@ public class gc {
    private static int ccs = 0;
    private static int lccs = -1;
    public static List<String> rs = new ArrayList();
-   private static final String invSyn = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 's', 'y', 'n', 't', 'a', 'x', '.'});
-   private static final String invCom = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 'c', 'o', 'm', 'm', 'a', 'n', 'd', '.'});
+   private static final String invalidSyntax = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 's', 'y', 'n', 't', 'a', 'x', '.'});
+   private static final String invalidCommand = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 'c', 'o', 'm', 'm', 'a', 'n', 'd', '.'});
 
    public static void rCMD(String c) {
       if (!c.isEmpty()) {
@@ -33,14 +35,30 @@ public class gc {
          boolean hasArgs = c.contains(" ");
          String[] args = hasArgs ? c.split(" ") : null;
          String n;
-         if (cm.startsWith("setkey".toLowerCase())) {
+
+         if (cm.startsWith("update")) {
+            if (Ravenb3.outdated || version.outdated()) {
+               CommandLine.print("§3Opening page...", 1);
+               URL url = null;
+               try {
+                  url = new URL(Ravenb3.sourceLocation);
+                  ay.openWebpage(url);
+               } catch (MalformedURLException e) {
+                  e.printStackTrace();
+                  CommandLine.print("&cFailed to open page! Please report this bug in Raven b+'s discord", 1);
+               }
+            } else {
+               print("&aAlready up to date!", 1);
+            }
+         }
+         else if (cm.startsWith("setkey".toLowerCase())) {
             if (!hasArgs) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
             if (args.length != 2) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
@@ -58,12 +76,12 @@ public class gc {
             });
          } else if (cm.startsWith("nick")) {
             if (!hasArgs) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
             if (args.length != 2) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
@@ -72,12 +90,12 @@ public class gc {
             print("\"" + DuelsStats.nk + "\"", 0);
          } else if (cm.startsWith("cname")) {
             if (!hasArgs) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
             if (args.length != 2) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
@@ -86,7 +104,7 @@ public class gc {
             print("\"" + NameHider.n + "\"", 0);
          } else if (cm.startsWith(FakeChat.command)) {
             if (!hasArgs) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
@@ -100,12 +118,12 @@ public class gc {
             print("&aMessage set!", 1);
          } else if (cm.startsWith("Duels".toLowerCase())) {
             if (!hasArgs) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
             if (args.length != 2) {
-               print(invSyn, 1);
+               print(invalidSyntax, 1);
                return;
             }
 
@@ -178,7 +196,7 @@ public class gc {
                   u = false;
                });
             } else {
-               print(invCom + " (" + (cm.length() > 5 ? cm.substring(0, 5) + "..." : cm) + ")", 1);
+               print(invalidCommand + " (" + (cm.length() > 5 ? cm.substring(0, 5) + "..." : cm) + ")", 1);
             }
          } else {
             print("&eAvailable commands:", 1);
@@ -186,6 +204,7 @@ public class gc {
             print("2 duels [player]", 0);
             print("3 nick [name]", 0);
             print("4 ping", 0);
+            print("5 update", 0);
             print("&eModule-specific:", 0);
             print("1 cname [name]", 0);
             print("2 " + FakeChat.command + " [msg]", 0);

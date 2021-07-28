@@ -28,12 +28,12 @@ public class cl {
                   return;
                }
 
-               ay.sm("&7&m-------------------------");
-               ay.sm("n: " + en.getName());
-               ay.sm("rn: " + en.getName().replace("§", "%"));
-               ay.sm("d: " + en.getDisplayName().getUnformattedText());
-               ay.sm("rd: " + en.getDisplayName().getUnformattedText().replace("§", "%"));
-               ay.sm("b?: " + AntiBot.bot(en));
+               ay.sendMessageToSelf("&7&m-------------------------");
+               ay.sendMessageToSelf("n: " + en.getName());
+               ay.sendMessageToSelf("rn: " + en.getName().replace("§", "%"));
+               ay.sendMessageToSelf("d: " + en.getDisplayName().getUnformattedText());
+               ay.sendMessageToSelf("rd: " + en.getDisplayName().getUnformattedText().replace("§", "%"));
+               ay.sendMessageToSelf("b?: " + AntiBot.bot(en));
             }
          } else if (mouse.button == 1) {
             addRightClick();

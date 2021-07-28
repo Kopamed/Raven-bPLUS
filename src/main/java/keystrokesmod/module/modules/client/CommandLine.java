@@ -3,7 +3,6 @@ package keystrokesmod.module.modules.client;
 import keystrokesmod.module.Module;
 import keystrokesmod.am;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.gc;
 
 public class CommandLine extends Module {
    public static boolean a = false;
@@ -17,7 +16,7 @@ public class CommandLine extends Module {
    }
 
    public void onEnable() {
-      gc.setccs();
+      keystrokesmod.CommandLine.setccs();
       a = true;
       b = false;
       (an = new am(500.0F)).start();
@@ -29,6 +28,6 @@ public class CommandLine extends Module {
          an.start();
       }
 
-      gc.od();
+      keystrokesmod.CommandLine.od();
    }
 }

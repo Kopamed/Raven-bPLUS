@@ -78,8 +78,8 @@ public class ru {
                net.minecraft.client.gui.Gui.drawRect(-21, 0, 24, 4, color);
                net.minecraft.client.gui.Gui.drawRect(-21, 71, 25, 74, color);
             } else {
-               int st = ay.gc(2L, 0L);
-               int en = ay.gc(2L, 1000L);
+               int st = ay.rainbowDraw(2L, 0L);
+               int en = ay.rainbowDraw(2L, 1000L);
                dGR(-21, 0, -25, 74, st, en);
                dGR(21, 0, 25, 74, st, en);
                net.minecraft.client.gui.Gui.drawRect(-21, 0, 21, 4, en);
@@ -107,7 +107,7 @@ public class ru {
                d3p(x, y, z, 0.699999988079071D, 45, 1.5F, color, color == 0);
             } else {
                if (color == 0) {
-                  color = ay.gc(2L, 0L);
+                  color = ay.rainbowDraw(2L, 0L);
                }
 
                float a = (float)(color >> 24 & 255) / 255.0F;
@@ -316,7 +316,7 @@ public class ru {
             y += fontRenderer.FONT_HEIGHT + 5;
             r = shift * (long)l;
          } else {
-            fontRenderer.drawString(String.valueOf(c), (float)x, (float)y, ay.gc(s, r), rect);
+            fontRenderer.drawString(String.valueOf(c), (float)x, (float)y, ay.rainbowDraw(s, r), rect);
             x += fontRenderer.getCharWidth(c);
             if (c != ' ') {
                r -= 90L;
@@ -381,7 +381,7 @@ public class ru {
                d += ed;
             }
 
-            int c = ay.gc(2L, d);
+            int c = ay.rainbowDraw(2L, d);
             float r2 = (float)(c >> 16 & 255) / 255.0F;
             float g2 = (float)(c >> 8 & 255) / 255.0F;
             float b2 = (float)(c & 255) / 255.0F;

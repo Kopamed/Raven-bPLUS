@@ -7,6 +7,7 @@ import keystrokesmod.module.modules.*;
 import keystrokesmod.module.modules.client.CommandLine;
 import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.module.modules.client.SelfDestruct;
+import keystrokesmod.module.modules.client.UpdateCheck;
 import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.fun.Fun;
 import keystrokesmod.module.modules.minigames.BridgeInfo;
@@ -105,6 +106,7 @@ public class ModuleManager {
       this.addModule(new ChatLogger());
       this.addModule(new BridgeAssist());
       this.addModule(new Fullbright());
+      this.addModule(new UpdateCheck());
       this.defEn();
    }
 

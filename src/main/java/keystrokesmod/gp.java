@@ -22,9 +22,9 @@ public class gp {
    }
 
    public static void checkPing() {
-      gc.print("§3Checking...", 1);
+      CommandLine.print("§3Checking...", 1);
       if (e) {
-         gc.print("§cPlease wait.", 0);
+         CommandLine.print("§cPlease wait.", 0);
       } else {
          ay.mc.thePlayer.sendChatMessage("/...");
          e = true;
@@ -38,7 +38,7 @@ public class gp {
          ping = 0;
       }
 
-      gc.print("Your ping: " + ping + "ms", 0);
+      CommandLine.print("Your ping: " + ping + "ms", 0);
       rs();
    }
 

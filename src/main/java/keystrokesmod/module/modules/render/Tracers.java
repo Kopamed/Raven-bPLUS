@@ -63,7 +63,7 @@ public class Tracers extends Module {
    @SubscribeEvent
    public void o(RenderWorldLastEvent ev) {
       if (ay.isPlayerInGame()) {
-         int rgb = e.isToggled() ? ay.gc(2L, 0L) : this.rgb_c;
+         int rgb = e.isToggled() ? ay.rainbowDraw(2L, 0L) : this.rgb_c;
          Iterator var3;
          if (Ravenb3.debugger) {
             var3 = mc.theWorld.loadedEntityList.iterator();

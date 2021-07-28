@@ -40,7 +40,7 @@ public class AimAssist extends Module {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenb3.debugger) {
-                     ay.sm(this.getName() + " &e" + en.getName());
+                     ay.sendMessageToSelf(this.getName() + " &e" + en.getName());
                   }
 
                   if (blatantMode.isToggled()) {

@@ -4,8 +4,12 @@ package keystrokesmod;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import java.awt.Color;
+
+import java.awt.*;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -89,7 +93,7 @@ public class ay {
       }
    }
 
-   public static void sm(String txt) {
+   public static void sendMessageToSelf(String txt) {
       if (isPlayerInGame()) {
          String m = r("&7[&dR&7]&r " + txt);
          mc.thePlayer.addChatMessage(new ChatComponentText(m));
@@ -289,7 +293,7 @@ public class ay {
       } else return cl.getLeftClickCounter() > 1 && System.currentTimeMillis() - cl.leftClickTimer < 300L;
    }
 
-   public static int gc(long speed, long... delay) {
+   public static int rainbowDraw(long speed, long... delay) {
       long time = System.currentTimeMillis() + (delay.length > 0 ? delay[0] : 0L);
       return Color.getHSBColor((float)(time % (15000L / speed)) / (15000.0F / (float)speed), 1.0F, 1.0F).getRGB();
    }
@@ -392,7 +396,30 @@ public class ay {
       }
    }
 
-   public static enum ClickMode {
+   public static boolean openWebpage(URL url) {
+      try {
+         return openWebpage(url.toURI());
+      } catch (URISyntaxException e) {
+         e.printStackTrace();
+      }
+      return false;
+   }
+
+   public static boolean openWebpage(URI uri) {
+      Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+      if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+         try {
+            desktop.browse(uri);
+            return true;
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+      }
+      return false;
+   }
+
+
+      public static enum ClickMode {
       RAVEN,
       LEGIT
    }

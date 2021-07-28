@@ -28,7 +28,7 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0"
+version = "1.0.1"
 group= "club.sk1er.keystrokes"
 archivesBaseName = "[1.8.9] BetterKeystrokes V"
 

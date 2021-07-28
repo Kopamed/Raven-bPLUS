@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.modules.client.CommandLine;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -59,27 +58,37 @@ public class ClickGui extends GuiScreen {
       this.sr = new ScaledResolution(this.mc);
       (this.c = new GuiTextField(1, this.mc.fontRendererObj, 22, this.height - 100, 150, 20)).setMaxStringLength(256);
       this.buttonList.add(this.s = new GuiButtonExt(2, 22, this.height - 70, 150, 20, "Send"));
-      this.s.visible = CommandLine.a;
+      this.s.visible = keystrokesmod.module.modules.client.CommandLine.a;
    }
 
    public void drawScreen(int x, int y, float p) {
       drawRect(0, 0, this.width, this.height, (int)(this.aR.getValueFloat(0.0F, 0.7F, 2) * 255.0F) << 24);
-      int h = this.height / 4;
-      int wd = this.width / 2;
+      int quarterScreenHeight = this.height / 4;
+      int halfScreenWidth = this.width / 2;
       int w_c = 30 - this.aT.getValueInt(0, 30, 3);
-      this.drawCenteredString(this.fontRendererObj, "r", wd + 1 - w_c, h - 25, ay.gc(2L, 1500L));
-      this.drawCenteredString(this.fontRendererObj, "a", wd - w_c, h - 15, ay.gc(2L, 1200L));
-      this.drawCenteredString(this.fontRendererObj, "v", wd - w_c, h - 5, ay.gc(2L, 900L));
-      this.drawCenteredString(this.fontRendererObj, "e", wd - w_c, h + 5, ay.gc(2L, 600L));
-      this.drawCenteredString(this.fontRendererObj, "n", wd - w_c, h + 15, ay.gc(2L, 300L));
-      this.drawCenteredString(this.fontRendererObj, "b3", wd + 1 + w_c, h + 30, ay.gc(2L, 0L));
-      this.drawVerticalLine(wd - 10 - w_c, h - 30, h + 43, Color.white.getRGB());
-      this.drawVerticalLine(wd + 10 + w_c, h - 30, h + 43, Color.white.getRGB());
+      this.drawCenteredString(this.fontRendererObj, "r", halfScreenWidth + 1 - w_c, quarterScreenHeight - 25, ay.rainbowDraw(2L, 1500L));
+      this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15, ay.rainbowDraw(2L, 1200L));
+      this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, ay.rainbowDraw(2L, 900L));
+      this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, ay.rainbowDraw(2L, 600L));
+      this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, ay.rainbowDraw(2L, 300L));
+      this.drawCenteredString(this.fontRendererObj, "b3", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, ay.rainbowDraw(2L, 0L));
+      this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 3, this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+      if(Ravenb3.outdated){
+         int margin = 2;
+         int rows = -1;
+         for (String up : Ravenb3.updateText) {
+            this.drawString(this.fontRendererObj, up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * rows + margin, ay.rainbowDraw(2L, 420L));
+            rows++;
+            margin += 2;
+         }
+      }
+      this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
+      this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
       int r;
       if (this.aL != null) {
          r = this.aL.getValueInt(0, 20, 2);
-         this.drawHorizontalLine(wd - 10, wd - 10 + r, h - 29, -1);
-         this.drawHorizontalLine(wd + 10, wd + 10 - r, h + 42, -1);
+         this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + r, quarterScreenHeight - 29, -1);
+         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - r, quarterScreenHeight + 42, -1);
       }
 
       for (cm c : c4tL1st) {
@@ -92,17 +101,17 @@ public class ClickGui extends GuiScreen {
       }
 
       GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 10, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
-      if (CommandLine.a) {
+      if (keystrokesmod.module.modules.client.CommandLine.a) {
          if (!this.s.visible) {
             this.s.visible = true;
          }
 
-         r = CommandLine.animate.isToggled() ? CommandLine.an.getValueInt(0, 200, 2) : 200;
-         if (CommandLine.b) {
+         r = keystrokesmod.module.modules.client.CommandLine.animate.isToggled() ? keystrokesmod.module.modules.client.CommandLine.an.getValueInt(0, 200, 2) : 200;
+         if (keystrokesmod.module.modules.client.CommandLine.b) {
             r = 200 - r;
             if (r == 0) {
-               CommandLine.b = false;
-               CommandLine.a = false;
+               keystrokesmod.module.modules.client.CommandLine.b = false;
+               keystrokesmod.module.modules.client.CommandLine.a = false;
                this.s.visible = false;
             }
          }
@@ -111,14 +120,14 @@ public class ClickGui extends GuiScreen {
          this.drawHorizontalLine(0, r - 1, this.height - 345, -1);
          this.drawHorizontalLine(0, r - 1, this.height - 115, -1);
          drawRect(r - 1, 0, r, this.height, -1);
-         gc.rc(this.fontRendererObj, this.height, r, this.sr.getScaleFactor());
+         CommandLine.rc(this.fontRendererObj, this.height, r, this.sr.getScaleFactor());
          int x2 = r - 178;
          this.c.xPosition = x2;
          this.s.xPosition = x2;
          this.c.drawTextBox();
          super.drawScreen(x, y, p);
-      } else if (CommandLine.b) {
-         CommandLine.b = false;
+      } else if (keystrokesmod.module.modules.client.CommandLine.b) {
+         keystrokesmod.module.modules.client.CommandLine.b = false;
       }
 
    }
@@ -131,7 +140,7 @@ public class ClickGui extends GuiScreen {
          do {
             do {
                if (!var4.hasNext()) {
-                  if (CommandLine.a) {
+                  if (keystrokesmod.module.modules.client.CommandLine.a) {
                      this.c.mouseClicked(x, y, m);
                      super.mouseClicked(x, y, m);
                   }
@@ -203,10 +212,10 @@ public class ClickGui extends GuiScreen {
             do {
                do {
                   if (!var3.hasNext()) {
-                     if (CommandLine.a) {
+                     if (keystrokesmod.module.modules.client.CommandLine.a) {
                         String cm = this.c.getText();
                         if (k == 28 && !cm.isEmpty()) {
-                           gc.rCMD(this.c.getText());
+                           CommandLine.rCMD(this.c.getText());
                            this.c.setText("");
                            return;
                         }
@@ -230,7 +239,7 @@ public class ClickGui extends GuiScreen {
 
    public void actionPerformed(GuiButton b) {
       if (b == this.s) {
-         gc.rCMD(this.c.getText());
+         CommandLine.rCMD(this.c.getText());
          this.c.setText("");
       }
 

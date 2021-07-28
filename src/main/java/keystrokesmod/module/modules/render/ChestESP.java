@@ -37,7 +37,7 @@ public class ChestESP extends Module {
    @SubscribeEvent
    public void o(RenderWorldLastEvent ev) {
       if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-         int rgb = d.isToggled() ? ay.gc(2L, 0L) : (new Color((int)a.getInput(), (int)b.getInput(), (int)c.getInput())).getRGB();
+         int rgb = d.isToggled() ? ay.rainbowDraw(2L, 0L) : (new Color((int)a.getInput(), (int)b.getInput(), (int)c.getInput())).getRGB();
          Iterator var3 = mc.theWorld.loadedTileEntityList.iterator();
 
          while(true) {
