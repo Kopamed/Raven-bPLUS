@@ -26,7 +26,7 @@ Discord:<br>
 ![damnnn ur wifi sucks](https://i.imgur.com/LP5jEGe.png)
 
 ## Build
-1. (Get)[https://gradle.org/next-steps/?version=2.7&format=bin] and (install)[https://docs.gradle.org/current/userguide/installation.html] gradle.
+1. [Get](https://gradle.org/next-steps/?version=2.7&format=bin) and [install](https://docs.gradle.org/current/userguide/installation.html) gradle.
 2. Download and clone repo to a new folder
 3. Open terminal/command prompt and type ./gradlew build
 4. Find the build in builds/libs in the direcotry you cloned this to
@@ -35,13 +35,13 @@ Discord:<br>
 ## Known bugs
  - Safewalk does not work without the shift setting turned on
  - None of the "ASM" modules work so reach... and some other stuff...
- - Bridge Assist is buggy but I will fix that tmrw
 
 ## Improved Module List
  - SafeWalk: Sneak while jump and On hold settings
  - Autoclicker: Seperate Righclick min and max cps sliders, allow eat, allow bow and different click modes (LEGIT and RAVEN) and you can make your cps higher, no sword rightclick (doesn't right click when you are holding a sword), onlyblocks (only rightclicks when you are holding blocks)
  - ChatLogger: I have a chat logger 
  - Bridge Assist: helps you aim and click during godbridging, moonwalking, ninja bridging and breezily.
+ - Much more but I am too lazy to put it here... 
 
 
-#### Readme last updated on 26/07/2021. Bug and update info and other stuff may be out of date. 
+#### Readme last updated on 29/07/2021. Bug and update info and other stuff may be out of date. 
