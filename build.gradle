@@ -28,7 +28,7 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0.1"
+version = "1.1.0"
 group= "club.sk1er.keystrokes"
 archivesBaseName = "[1.8.9] BetterKeystrokes V"
 
@@ -38,7 +38,16 @@ minecraft {
 
     mappings = "stable_20"
 }
-
+/*
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'keystrokesmod.tweaker.FMLLoadingPlugin'
+        attributes 'FMLCorePluginContainsMod': 'true'
+        attributes "ForceLoadAsMod": true
+        attributes "ModSide": "CLIENT"
+    }
+}
+*/
 dependencies {
 }
 

@@ -39,7 +39,7 @@ public class cm {
       this.chromaSpeed = 3;
       int tY = this.bh + 3;
 
-      for(Iterator var3 = Ravenb3.nan.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+      for(Iterator var3 = Ravenb3.notAName.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
          Module mod = (Module) var3.next();
          m3 b = new m3(mod, this, tY);
          this.c.add(b);

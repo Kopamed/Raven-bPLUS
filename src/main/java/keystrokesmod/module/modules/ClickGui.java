@@ -72,7 +72,9 @@ public class ClickGui extends GuiScreen {
       this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, ay.rainbowDraw(2L, 600L));
       this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, ay.rainbowDraw(2L, 300L));
       this.drawCenteredString(this.fontRendererObj, "b3", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, ay.rainbowDraw(2L, 0L));
-      this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 2, this.height - 2 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+      this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 4, this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+
+      this.drawString(this.fontRendererObj, ay.getDate(), this.width-3-this.fontRendererObj.getStringWidth(ay.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
       if(Ravenb3.outdated){
          int margin = 2;
          int rows = 1;
@@ -105,7 +107,8 @@ public class ClickGui extends GuiScreen {
          }
       }
 
-      GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 10, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
+      GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 10 - this.fontRendererObj.FONT_HEIGHT, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
+
       if (keystrokesmod.module.modules.client.CommandLine.a) {
          if (!this.s.visible) {
             this.s.visible = true;

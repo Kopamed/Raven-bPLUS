@@ -11,7 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class cl {
+public class mouseManager {
    private static List<Long> leftClicks = new ArrayList();
    private static List<Long> rightClicks = new ArrayList();
    public static long leftClickTimer = 0L;

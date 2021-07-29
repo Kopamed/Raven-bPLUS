@@ -28,7 +28,11 @@ public class Freecam extends Module {
       this.registerSetting(b = new ModuleSettingTick("Disable on damage", true));
    }
 
+   @Override
    public void onEnable() {
+      if(!ay.isPlayerInGame()) {
+         return;
+      }
       if (!mc.thePlayer.onGround) {
          this.disable();
       } else {

@@ -17,7 +17,7 @@ import keystrokesmod.module.modules.combat.Velocity;
 import keystrokesmod.URLUtils;
 import net.minecraft.client.Minecraft;
 
-public class ConfigManager {
+public class BlowsyConfigManager {
    private static Minecraft mc = Minecraft.getMinecraft();
 
    public static void saveKeyStrokeSettingsToConfigFile() {

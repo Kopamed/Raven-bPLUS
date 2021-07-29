@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import keystrokesmod.main.ConfigManager;
+import keystrokesmod.main.BlowsyConfigManager;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.modules.minigames.DuelsStats;
 import keystrokesmod.module.modules.other.FakeChat;
@@ -75,7 +75,7 @@ public class CommandLine {
                if (URLUtils.isHypixelKeyValid(n)) {
                   URLUtils.k = n;
                   print("&a" + "success!", 0);
-                  ConfigManager.saveCheatSettingsToConfigFile();
+                  BlowsyConfigManager.saveCheatSettingsToConfigFile();
                } else {
                   print("&c" + "Invalid key.", 0);
                }
@@ -162,7 +162,7 @@ public class CommandLine {
 
             });
          } else if (cm.startsWith("ping")) {
-            gp.checkPing();
+            ChatHelper.checkPing();
          } else if (cm.startsWith("clear")) {
             rs.clear();
          } else if (cm.startsWith("Debug".toLowerCase())) {
@@ -286,6 +286,6 @@ public class CommandLine {
    }
 
    public static void od() {
-      gp.rs();
+      ChatHelper.rs();
    }
 }

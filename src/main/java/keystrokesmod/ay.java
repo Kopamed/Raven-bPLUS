@@ -40,15 +40,17 @@ import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Mouse;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class ay {
    private static final Random rand = new Random();
    public static final Minecraft mc = Minecraft.getMinecraft();
    public static final String md = new String(new char[]{'M', 'o', 'd', 'e', ':', ' '});
    private static Field t = null;
-   private static Field g = null;
-   private static Field f = null;
-   private static Field h = null;
+   private static Field mouseButton = null;
+   private static Field mouseButtonState = null;
+   private static Field mouseButtons = null;
 
    public static void su() {
       try {
@@ -65,27 +67,27 @@ public class ay {
       }
 
       try {
-         g = MouseEvent.class.getDeclaredField("button");
-         f = MouseEvent.class.getDeclaredField("buttonstate");
-         h = Mouse.class.getDeclaredField("buttons");
+         mouseButton = MouseEvent.class.getDeclaredField("button");
+         mouseButtonState = MouseEvent.class.getDeclaredField("buttonstate");
+         mouseButtons = Mouse.class.getDeclaredField("buttons");
       } catch (Exception var2) {
       }
 
    }
 
    public static void sc(int t, boolean s) {
-      if (g != null && f != null && h != null) {
+      if (mouseButton != null && mouseButtonState != null && mouseButtons != null) {
          MouseEvent m = new MouseEvent();
 
          try {
-            g.setAccessible(true);
-            g.set(m, t);
-            f.setAccessible(true);
-            f.set(m, s);
+            mouseButton.setAccessible(true);
+            mouseButton.set(m, t);
+            mouseButtonState.setAccessible(true);
+            mouseButtonState.set(m, s);
             MinecraftForge.EVENT_BUS.post(m);
-            h.setAccessible(true);
-            ByteBuffer bf = (ByteBuffer)h.get((Object)null);
-            h.setAccessible(false);
+            mouseButtons.setAccessible(true);
+            ByteBuffer bf = (ByteBuffer) mouseButtons.get((Object)null);
+            mouseButtons.setAccessible(false);
             bf.put(t, (byte)(s ? 1 : 0));
          } catch (IllegalAccessException var4) {
          }
@@ -290,7 +292,7 @@ public class ay {
    public static boolean ilc() {
       if (ModuleManager.autoClicker.isEnabled()) {
          return AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0);
-      } else return cl.getLeftClickCounter() > 1 && System.currentTimeMillis() - cl.leftClickTimer < 300L;
+      } else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
    }
 
    public static int rainbowDraw(long speed, long... delay) {
@@ -419,7 +421,14 @@ public class ay {
    }
 
 
-      public static enum ClickMode {
+
+   public static String getDate() {
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+      LocalDateTime now = LocalDateTime.now();
+      return dtf.format(now);
+   }
+
+   public static enum ClickMode {
       RAVEN,
       LEGIT
    }

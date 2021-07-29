@@ -5,6 +5,9 @@ package keystrokesmod.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.config.ConfigManager;
+import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenb3;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -63,7 +66,7 @@ public class Module {
    }
 
    public void enable() {
-      this.setEnabled(true);
+      this.setToggled(true);
       ModuleManager.enModsList.add(this);
       if (ModuleManager.hud.isEnabled()) {
          ModuleManager.sort();
@@ -75,15 +78,17 @@ public class Module {
    }
 
    public void disable() {
-      this.setEnabled(false);
+      this.setToggled(false);
       ModuleManager.enModsList.remove(this);
       MinecraftForge.EVENT_BUS.unregister(this);
       FMLCommonHandler.instance().bus().unregister(this);
       this.onDisable();
    }
 
-   public void setEnabled(boolean enabled) {
+   public void setToggled(boolean enabled) {
       this.enabled = enabled;
+      if (Ravenb3.configManager != null)
+         Ravenb3.configManager.save();
    }
 
    public String getName() {
@@ -107,9 +112,13 @@ public class Module {
    }
 
    public void onEnable() {
+      if (Ravenb3.configManager != null)
+         Ravenb3.configManager.save();
    }
 
    public void onDisable() {
+      if (Ravenb3.configManager != null)
+         Ravenb3.configManager.save();
    }
 
    public void toggle() {
@@ -118,7 +127,8 @@ public class Module {
       } else {
          this.enable();
       }
-
+      if (Ravenb3.configManager != null)
+         Ravenb3.configManager.save();
    }
 
    public void update() {
@@ -136,6 +146,8 @@ public class Module {
 
    public void setbind(int keybind) {
       this.keycode = keybind;
+      if (Ravenb3.configManager != null)
+         Ravenb3.configManager.save();
    }
 
    public static enum category {

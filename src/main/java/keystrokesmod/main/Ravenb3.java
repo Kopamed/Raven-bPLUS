@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import keystrokesmod.*;
+import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.keystroke.KeyStrokeConfigGui;
@@ -15,11 +16,13 @@ import keystrokesmod.module.modules.ClickGui;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -40,32 +43,34 @@ public class Ravenb3 {
    public static String[] updateText = {"Your version of Raven B+ (" + version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
    public static int b = 0;
+   public static ConfigManager configManager;
    public static Minecraft mc;
-   public static NotAName nan;
+   public static NotAName notAName;
    private static KeyStroke keyStroke;
    private static KeySrokeRenderer keySrokeRenderer;
    private static boolean isKeyStrokeConfigGuiToggled;
    private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
 
    public Ravenb3() {
-      nan = new NotAName();
+      notAName = new NotAName();
    }
 
    @EventHandler
    public void init(FMLInitializationEvent e) {
-      mc =  Minecraft.getMinecraft();
+      MinecraftForge.EVENT_BUS.register(this);
+      mc = Minecraft.getMinecraft();
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
-      FMLCommonHandler.instance().bus().register(this);
       FMLCommonHandler.instance().bus().register(new DebugInfoRenderer());
-      FMLCommonHandler.instance().bus().register(new cl());
+      FMLCommonHandler.instance().bus().register(new mouseManager());
       FMLCommonHandler.instance().bus().register(new KeySrokeRenderer());
-      FMLCommonHandler.instance().bus().register(new gp());
-      nan.getm0dmanager().r3g1st3r();
-      ConfigManager.applyKeyStrokeSettingsFromConfigFile();
-      ConfigManager.applyCheatSettingsFromConfigFile();
+      FMLCommonHandler.instance().bus().register(new ChatHelper());
+      notAName.getm0dmanager().r3g1st3r();
+      //BlowsyConfigManager.applyKeyStrokeSettingsFromConfigFile();
+      //BlowsyConfigManager.applyCheatSettingsFromConfigFile();
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
+      this.configManager = new ConfigManager();
       ay.su();
       ex.execute(() -> URLUtils.getTextFromURL(this.numberOfUseTracker));
       if(version.outdated()) {
@@ -84,7 +89,7 @@ public class Ravenb3 {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-            for (Module module : nan.getm0dmanager().listofmods()) {
+            for (Module module : notAName.getm0dmanager().listofmods()) {
                if (mc.currentScreen == null) {
                   module.keybind();
                } else if (mc.currentScreen instanceof ClickGui) {

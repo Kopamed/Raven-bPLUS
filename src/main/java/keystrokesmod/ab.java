@@ -1,6 +1,6 @@
 package keystrokesmod;
 
-import keystrokesmod.main.ConfigManager;
+import keystrokesmod.main.BlowsyConfigManager;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.module.modules.combat.AutoClicker;
@@ -52,6 +52,6 @@ public class ab {
       au7 = AutoClicker.leftClick.isToggled();
       au8 = AutoClicker.rightClick.isToggled();
       au9 = Module.getModule(AutoClicker.class).getKeycode();
-      ConfigManager.saveCheatSettingsToConfigFile();
+      BlowsyConfigManager.saveCheatSettingsToConfigFile();
    }
 }

@@ -1,5 +1,6 @@
 package keystrokesmod.main;
 
+import keystrokesmod.config.ConfigManager;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.modules.ClickGui;
 

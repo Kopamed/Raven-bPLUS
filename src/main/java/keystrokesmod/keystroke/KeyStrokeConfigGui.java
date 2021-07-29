@@ -4,8 +4,8 @@ package keystrokesmod.keystroke;
 
 import java.io.IOException;
 
-import keystrokesmod.cl;
-import keystrokesmod.main.ConfigManager;
+import keystrokesmod.mouseManager;
+import keystrokesmod.main.BlowsyConfigManager;
 import keystrokesmod.main.Ravenb3;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -58,7 +58,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
       }
 
       if (button == 0) {
-         cl.addLeftClick();
+         mouseManager.addLeftClick();
          KeyStroke st = Ravenb3.getKeyStroke();
          int startX = KeyStroke.x;
          int startY = KeyStroke.y;
@@ -70,7 +70,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
             this.ly = mouseY;
          }
       } else if (button == 1) {
-         cl.addRightClick();
+         mouseManager.addRightClick();
       }
 
    }
@@ -96,6 +96,6 @@ public class KeyStrokeConfigGui extends GuiScreen {
    }
 
    public void onGuiClosed() {
-      ConfigManager.saveKeyStrokeSettingsToConfigFile();
+      BlowsyConfigManager.saveKeyStrokeSettingsToConfigFile();
    }
 }
