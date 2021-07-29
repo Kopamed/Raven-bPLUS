@@ -16,6 +16,11 @@ Discord:<br>
 3. Put the file into your minecraft mods folder. If you do not have this folder, just make one in the minecraft directory (or search up how to install forge mods on youtube)
 4. Run minecraft forge.
 
+## For NPC's
+1. Click this thing<br>
+![bruh why aint it loading for u](https://i.imgur.com/78uFw8b.png)
+2. Now look for the latest version. Download the one which does not have `-sources` at the end.
+
 ## Build
 1. (Get)[https://gradle.org/next-steps/?version=2.7&format=bin] and (install)[https://docs.gradle.org/current/userguide/installation.html] gradle.
 2. Download and clone repo to a new folder
