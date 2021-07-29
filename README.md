@@ -20,6 +20,10 @@ Discord:<br>
 1. Click this thing<br>
 ![bruh why aint it loading for u](https://i.imgur.com/78uFw8b.png)
 2. Now look for the latest version. Download the one which does not have `-sources` at the end.
+3. Download by clicking on it (the one in the image below prob has a dif version number below, but that does not matter)<br>
+![and this as well?](https://i.imgur.com/2se2B5Y.png)
+4. Now click download <br>
+![damnnn ur wifi sucks](https://i.imgur.com/LP5jEGe.png)
 
 ## Build
 1. (Get)[https://gradle.org/next-steps/?version=2.7&format=bin] and (install)[https://docs.gradle.org/current/userguide/installation.html] gradle.
