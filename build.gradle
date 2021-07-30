@@ -38,7 +38,7 @@ minecraft {
 
     mappings = "stable_20"
 }
-
+/*
 jar {
     manifest {
         attributes 'FMLCorePlugin': 'keystrokesmod.tweaker.FMLLoadingPlugin'
@@ -47,7 +47,7 @@ jar {
         attributes "ModSide": "CLIENT"
     }
 }
-
+*/
 dependencies {
 }
 
