@@ -8,7 +8,8 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 @MCVersion("1.8.9")
 public class FMLLoadingPlugin implements net.minecraftforge.fml.relauncher.IFMLLoadingPlugin {
    public String[] getASMTransformerClass() {
-      return new String[]{"keystrokesmod/tweaker/ASMKeystrokesEventHandler"};
+      return new String[]{ASMTransformerClass.class.getName()};
+      //ASMTransformerClass.class.getName()
    }
 
    public String getModContainerClass() {

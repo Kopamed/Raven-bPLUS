@@ -12,7 +12,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
 public class ASMTransformerClass implements IClassTransformer {
-   public static String eventHandlerClassName = ASMKeystrokesEventHandler.class.getName();
+   public static String eventHandlerClassName = ASMEventHandler.class.getName();
    private final Multimap<String, Transformer> m = ArrayListMultimap.create();
 
    public ASMTransformerClass() {

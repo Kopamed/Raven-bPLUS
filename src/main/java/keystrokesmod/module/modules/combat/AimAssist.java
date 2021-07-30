@@ -2,6 +2,7 @@
 
 package keystrokesmod.module.modules.combat;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import keystrokesmod.*;
@@ -21,6 +22,8 @@ public class AimAssist extends Module {
    public static ModuleSettingTick weaponOnly;
    public static ModuleSettingTick aimInvis;
    public static ModuleSettingTick blatantMode;
+   public static ModuleSettingTick ignoreFriends;
+   public static ArrayList<String> friends = new ArrayList<String>();
 
    public AimAssist() {
       super("AimAssist", Module.category.combat, 0);
@@ -28,6 +31,7 @@ public class AimAssist extends Module {
       this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
       this.registerSetting(distance = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(clickAim = new ModuleSettingTick("Click aim", true));
+      this.registerSetting(ignoreFriends = new ModuleSettingTick("Ignore Friends", true));
       this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
       this.registerSetting(aimInvis = new ModuleSettingTick("Aim invis", false));
       this.registerSetting(blatantMode = new ModuleSettingTick("Blatant mode", false));

@@ -38,7 +38,7 @@ minecraft {
 
     mappings = "stable_20"
 }
-/*
+/* -Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin
 jar {
     manifest {
         attributes 'FMLCorePlugin': 'keystrokesmod.tweaker.FMLLoadingPlugin'

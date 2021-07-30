@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovementInput;
 import org.lwjgl.input.Mouse;
 
-public class ASMKeystrokesEventHandler {
+public class ASMEventHandler {
    private static final Minecraft mc = Minecraft.getMinecraft();
 
    public static String getUnformattedTextForChat(String s) {
@@ -39,6 +39,7 @@ public class ASMKeystrokesEventHandler {
    }
 
    public static boolean onEntityMove(Entity en) {
+      return true;/*
       if (en == mc.thePlayer && mc.thePlayer.onGround) {
          if (ModuleManager.safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
             if (SafeWalk.blocksOnly.isToggled()) {
@@ -54,7 +55,7 @@ public class ASMKeystrokesEventHandler {
          }
       } else {
          return false;
-      }
+      }*/
    }
 
    public static void onLivingUpdate() {

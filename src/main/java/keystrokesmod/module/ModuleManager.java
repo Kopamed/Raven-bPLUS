@@ -107,6 +107,7 @@ public class ModuleManager {
       this.addModule(new BridgeAssist());
       this.addModule(new Fullbright());
       this.addModule(new UpdateCheck());
+      this.addModule(new Clutch());
       this.defEn();
    }
 
