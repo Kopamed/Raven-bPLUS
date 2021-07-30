@@ -25,3 +25,8 @@ run
 
 #include
 !build/libs/
+
+config/
+keystrokes/
+logs/
+saves/
