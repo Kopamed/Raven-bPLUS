@@ -2,15 +2,16 @@ package keystrokesmod.module;
 
 public class ModuleSettingTick extends ModuleSettingsList {
    private String name;
+   static String settingType = "tick";
    private boolean isEnabled;
 
    public ModuleSettingTick(String name, boolean isEnabled) {
-      super(name);
+      super(name, settingType);
       this.name = name;
       this.isEnabled = isEnabled;
    }
 
-   public String get() {
+   public String getName() {
       return this.name;
    }
 

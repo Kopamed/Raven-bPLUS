@@ -13,8 +13,9 @@ import java.util.Scanner;
 
 public class version {
     public static final String versionFileName = "/assets/keystrokes/version";
-    public static String currentVersion;
-    public static String latestVersion;
+    public static String currentVersion = null;
+    public static String latestVersion = null;
+
     public static boolean outdated() {
         currentVersion = getCurrentVersion();
         latestVersion = getLatestVersion();
@@ -42,6 +43,10 @@ public class version {
     }
 
     public static String getCurrentVersion() {
+        if (currentVersion != null) {
+            //System.out.println("Fast return");
+            return currentVersion;
+        }
         InputStream input = version.class.getResourceAsStream(versionFileName);
         Scanner scanner = new Scanner(input);
         try {
@@ -54,6 +59,11 @@ public class version {
     }
 
     public static  String getLatestVersion() {
+        if (latestVersion != null) {
+            //System.out.println("Fast return");
+            return latestVersion;
+        }
+
         URL url = null;
         try {
             url = new URL("https://raw.githubusercontent.com/Kopamed/Raven-bPLUS/main/src/main/resources/assets/keystrokes/version");

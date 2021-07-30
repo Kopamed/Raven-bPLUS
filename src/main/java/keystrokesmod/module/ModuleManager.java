@@ -114,6 +114,14 @@ public class ModuleManager {
       antiBot.enable();
    }
 
+   public Module getModuleByName(String name) {
+      for (Module module : modsList) {
+         if (module.getName().equalsIgnoreCase(name))
+            return module;
+      }
+      return null;
+   }
+
    private void addModule(Module m) {
       modsList.add(m);
    }

@@ -4,14 +4,16 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 public class ModuleSettingsList {
-   public String n;
+   public String mode;
+   public String settingName;
 
-   public ModuleSettingsList(String n) {
-      this.n = n;
+   public ModuleSettingsList(String name, String mode) {
+      this.settingName = name;
+      this.mode = mode;
    }
 
-   public String get() {
-      return this.n;
+   public String getName() {
+      return this.settingName;
    }
 
    public static void nn(String s) {
@@ -44,8 +46,8 @@ public class ModuleSettingsList {
    }
 
    public void a() {
-      nn(this.n);
-      this.n = null;
+      nn(this.settingName);
+      this.settingName = null;
    }
 
    public static String p(String k, int i) {

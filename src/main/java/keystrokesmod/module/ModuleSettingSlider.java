@@ -5,13 +5,14 @@ import java.math.RoundingMode;
 
 public class ModuleSettingSlider extends ModuleSettingsList {
    private String n;
+   static String settingType = "slider";
    private double v;
    private double a;
    private double m;
    private double i;
 
    public ModuleSettingSlider(String settingName, double defaultValue, double min, double max, double intervals) {
-      super(settingName);
+      super(settingName, settingType);
       this.n = settingName;
       this.v = defaultValue;
       this.m = min;
@@ -19,7 +20,7 @@ public class ModuleSettingSlider extends ModuleSettingsList {
       this.i = intervals;
    }
 
-   public String get() {
+   public String getName() {
       return this.n;
    }
 

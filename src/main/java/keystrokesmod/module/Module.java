@@ -5,8 +5,6 @@ package keystrokesmod.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.config.ConfigManager;
-import keystrokesmod.main.NotAName;
 import keystrokesmod.main.Ravenb3;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
@@ -97,6 +95,14 @@ public class Module {
 
    public ArrayList<ModuleSettingsList> getSettings() {
       return this.settings;
+   }
+
+   public ModuleSettingsList getSettingByName(String name) {
+      for (ModuleSettingsList setting : this.settings) {
+         if (setting.getName().equalsIgnoreCase(name))
+            return setting;
+      }
+      return null;
    }
 
    public void registerSetting(ModuleSettingsList Setting) {

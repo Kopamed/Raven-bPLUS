@@ -12,10 +12,7 @@ import java.util.concurrent.TimeUnit;
 import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
@@ -71,8 +68,40 @@ public class ClickGui extends GuiScreen {
       this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, ay.rainbowDraw(2L, 900L));
       this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, ay.rainbowDraw(2L, 600L));
       this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, ay.rainbowDraw(2L, 300L));
-      this.drawCenteredString(this.fontRendererObj, "b3", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, ay.rainbowDraw(2L, 0L));
-      this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 4, this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+      this.drawCenteredString(this.fontRendererObj, "b+", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, ay.rainbowDraw(2L, 0L));
+
+      //task bar
+      Gui.drawRect(0, this.height, this.width, this.height  - 6 - this.fontRendererObj.FONT_HEIGHT, 0xff3c3f41);
+      //line
+      Gui.drawRect(0, this.height - 6 - this.fontRendererObj.FONT_HEIGHT, this.width, this.height  - 7 - this.fontRendererObj.FONT_HEIGHT, 0xff909599);
+      // info text
+      mc.fontRendererObj.drawString("Made by Kopamed and Blowsy", 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+
+      //date
+      mc.fontRendererObj.drawString(ay.getDate(), this.width-3-this.fontRendererObj.getStringWidth(ay.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+
+      //version
+      if(Ravenb3.outdated){
+         int margin = 2;
+         int rows = 1;
+         for (int i = Ravenb3.updateText.length-1; i >= 0; i--) {
+            String up = Ravenb3.updateText[i];
+            mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.rainbowDraw(2L, 420L));
+            rows++;
+            margin += 2;
+         }
+      }
+      else if(Ravenb3.beta) {
+         String veryCoolBetaUser = mc.thePlayer.getName() + " is a very cool beta user of version " + version.getCurrentVersion().replaceAll("-", ".");
+         mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.rainbowDraw(2L, 420L));
+      } else {
+         mc.fontRendererObj.drawString("On latest version", halfScreenWidth - this.fontRendererObj.getStringWidth("On latest version") / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.rainbowDraw(2L, 420L));
+      }
+
+      /* old code
+      //this.drawString(this.fontRendererObj, "Made by Kopamed and Blowsy", 4, this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
+
+
 
       this.drawString(this.fontRendererObj, ay.getDate(), this.width-3-this.fontRendererObj.getStringWidth(ay.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
       if(Ravenb3.outdated){
@@ -89,6 +118,8 @@ public class ClickGui extends GuiScreen {
          String veryCoolBetaUser = mc.thePlayer.getName() + " is a very cool beta user of version " + version.getCurrentVersion().replaceAll("-", ".");
          this.drawString(this.fontRendererObj, veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.rainbowDraw(2L, 420L));
       }
+      */
+
       this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
       this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
       int r;
@@ -107,7 +138,7 @@ public class ClickGui extends GuiScreen {
          }
       }
 
-      GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 10 - this.fontRendererObj.FONT_HEIGHT, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
+      GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 11 - this.fontRendererObj.FONT_HEIGHT, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
 
       if (keystrokesmod.module.modules.client.CommandLine.a) {
          if (!this.s.visible) {

@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovementInput;
 import org.lwjgl.input.Mouse;
 
-public class ASMEventHandler {
+public class ASMKeystrokesEventHandler {
    private static final Minecraft mc = Minecraft.getMinecraft();
 
    public static String getUnformattedTextForChat(String s) {
