@@ -44,7 +44,7 @@ public class version {
 
     public static String getCurrentVersion() {
         if (currentVersion != null) {
-            //System.out.println("Fast return");
+            ////System.out.println("Fast return");
             return currentVersion;
         }
         InputStream input = version.class.getResourceAsStream(versionFileName);
@@ -60,7 +60,7 @@ public class version {
 
     public static  String getLatestVersion() {
         if (latestVersion != null) {
-            //System.out.println("Fast return");
+            ////System.out.println("Fast return");
             return latestVersion;
         }
 

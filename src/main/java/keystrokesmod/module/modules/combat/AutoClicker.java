@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.*;
+import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -36,6 +38,7 @@ public class AutoClicker extends Module {
    public static ModuleSettingTick weaponOnly;
    public static ModuleSettingTick breakBlocks;
    public static ModuleSettingTick onlyBlocks;
+   public static ModuleSettingTick preferFastPlace;
    public static ModuleSettingTick noBlockSword;
    public static ModuleSettingTick leftClick;
    public static ModuleSettingTick rightClick;
@@ -69,6 +72,7 @@ public class AutoClicker extends Module {
       this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
       this.registerSetting(noBlockSword = new ModuleSettingTick("Don't rightclick sword", true));
       this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks", false));
+      this.registerSetting(preferFastPlace = new ModuleSettingTick("Prefer fast place", false));
       this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
@@ -406,6 +410,12 @@ public class AutoClicker extends Module {
             if (item.getItem() instanceof ItemSword)
                return false;
          }
+      }
+
+      if(this.preferFastPlace.isToggled()) {
+         Module fastplace = NotAName.moduleManager.getModuleByName("FastPlace");
+         if (fastplace.isEnabled())
+            return false;
       }
       return true;
    }

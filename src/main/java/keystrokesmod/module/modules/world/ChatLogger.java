@@ -32,7 +32,7 @@ public class ChatLogger extends Module {
         LocalDateTime now = LocalDateTime.now();
         fileName = dtf.format(now) + "." + extension;
         this.chatLog = new File(dir, fileName);
-        //////System.out.println("Creating file " + fileName + " in " + dir);
+        ////////System.out.println("Creating file " + fileName + " in " + dir);
         if (!chatLog.exists()) {
             try {
                 chatLog.createNewFile();

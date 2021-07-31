@@ -2,10 +2,7 @@ package keystrokesmod.command;
 
 import keystrokesmod.CommandLine;
 import keystrokesmod.ay;
-import keystrokesmod.command.commands.Discord;
-import keystrokesmod.command.commands.Help;
-import keystrokesmod.command.commands.SetKey;
-import keystrokesmod.command.commands.Update;
+import keystrokesmod.command.commands.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.modules.HUD;
 
@@ -25,6 +22,7 @@ public class CommandManager {
         this.addCommand(new Help());
         this.addCommand(new SetKey());
         this.addCommand(new Discord());
+        this.addCommand(new Config());
 
     }
 

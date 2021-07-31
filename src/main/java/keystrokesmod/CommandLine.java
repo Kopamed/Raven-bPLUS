@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 public class CommandLine {
    private static final Minecraft mc = Minecraft.getMinecraft();
    private static boolean f = true;
+   private static int maxLines = 29;
    private static boolean u = false;
    private static final List<Integer> cs = Arrays.asList((new Color(170, 107, 148, 50)).getRGB(), (new Color(122, 158, 134, 50)).getRGB(), (new Color(16, 16, 16, 50)).getRGB(), (new Color(64, 114, 148, 50)).getRGB());
    private static int ccs = 0;
@@ -218,16 +219,19 @@ public class CommandLine {
       }
    }
 
-   public static void print(String m, int breakLineMode) {
+   public static void print(String message, int breakLineMode) {
       if (breakLineMode == 1 || breakLineMode == 2) {
          commandLineHistory.add("");
       }
 
-      commandLineHistory.add(m);
+      commandLineHistory.add(message);
       if (breakLineMode == 2 || breakLineMode == 3) {
          commandLineHistory.add("");
       }
 
+      while (commandLineHistory.size() > maxLines) {
+         commandLineHistory.remove(0);
+      }
    }
 
    public static void rc(FontRenderer fr, int h, int w, int s) {
@@ -237,7 +241,7 @@ public class CommandLine {
       int sH = 230;
       GL11.glEnable(3089);
       int mw = w * s;
-      GL11.glScissor(0, mc.displayHeight - (sY + sH) * s, mw - (mw < 2 ? 0 : 2), sH * s - 2);
+      GL11.glScissor(0, mc.displayHeight - (sY + sH) * s, mw - (mw < 2 ? 0 : 2), mc.displayHeight);
       ru.db(1000, 1000, ccs);
       rss(fr, commandLineHistory, x, y);
       GL11.glDisable(3089);

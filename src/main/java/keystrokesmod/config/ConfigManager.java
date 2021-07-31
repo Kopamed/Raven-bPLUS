@@ -1,6 +1,8 @@
 package keystrokesmod.config;
 
+import keystrokesmod.CommandLine;
 import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.HUD;
 import net.minecraft.client.Minecraft;
@@ -14,8 +16,10 @@ public class ConfigManager {
     private File currentConfig;
     private String fileName;
     private String extension;
+    public boolean loading;
 
     public ConfigManager() {
+        this.loading = false;
         configDirecotry = new File(Minecraft.getMinecraft().mcDataDir, "keystrokes" + File.separator + "configs");
         if (!configDirecotry.exists()) {
             configDirecotry.mkdir();
@@ -38,6 +42,7 @@ public class ConfigManager {
     }
 
     public void save() {
+        //System.out.println("i save to " + this.currentConfig.getName());
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
@@ -91,6 +96,7 @@ public class ConfigManager {
     }
 
     public void load() throws FileNotFoundException {
+        //System.out.println("iLOAD from " + this.currentConfig.getName());
         Scanner reader = new Scanner(this.currentConfig);
         while (reader.hasNextLine()) {
             String current = reader.nextLine();
@@ -100,18 +106,27 @@ public class ConfigManager {
                 Module module = NotAName.moduleManager.getModuleByName(currentModule[1]);
 
                 if (module == null)
-                    continue;;
-                boolean toggled = Boolean.parseBoolean(currentModule[2]);
-                int keyBind = Integer.parseInt(currentModule[3]);
-                if (module.getName().equalsIgnoreCase("hud") && toggled){
-                    Module hud = (HUD) module;
-                    hud.enable();
+                    continue;
+
+                try{
+                    boolean toggled = Boolean.parseBoolean(currentModule[2]);
+                    int keyBind = Integer.parseInt(currentModule[3]);
+                    if (module.getName().equalsIgnoreCase("hud") && toggled){
+                        Module hud = (HUD) module;
+                        hud.enable();
+                    }
+                    module.setbind(keyBind);
+                    if (toggled) {
+                        module.enable();
+                        module.onEnable();
+                    } else {
+                        module.disable();
+                        module.onDisable();
+                    }
+                } catch (Exception hnfsaofsh) {
+                    hnfsaofsh.printStackTrace();
                 }
-                module.setbind(keyBind);
-                if (toggled) {
-                    module.enable();
-                    module.onEnable();
-                }
+
             }
 
             else if (current.startsWith("setting:")){
@@ -144,5 +159,63 @@ public class ConfigManager {
                 }
             }
         }
+    }
+
+    public String getExtension() {
+        return "." + extension;
+    }
+
+    public String getCurrentConfig() {
+        return fileName;
+    }
+
+    public File getConfigDirecotry() {
+        return configDirecotry;
+    }
+
+    public void loadConfig(String fileName) {
+        this.loading = true;
+        //System.out.println("no saving");
+        this.fileName = fileName;
+        this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
+        try {
+            this.load();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        this.loading = false;
+        //System.out.println("yes saving");
+    }
+
+    public void saveConfig(String fileName) {
+        String prevFileName = "";
+        for (int bruh = 0; bruh <= this.fileName.length()-1; bruh++){
+            prevFileName+=this.fileName.charAt(bruh);
+        }
+        this.fileName = fileName;
+        this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
+        if(!this.currentConfig.exists()) {
+            try {
+                this.currentConfig.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        this.save();
+
+        this.loadConfig(prevFileName);
+    }
+
+
+    public ArrayList<File> listConfigs() {
+        ArrayList<File> proBlockGameCheater = new ArrayList<File>();
+        for (File config : this.configDirecotry.listFiles()) {
+            if (config.getName().endsWith(this.extension)) {
+                proBlockGameCheater.add(config);
+            }
+        }
+
+        return proBlockGameCheater;
     }
 }

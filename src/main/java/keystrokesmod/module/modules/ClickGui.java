@@ -156,7 +156,7 @@ public class ClickGui extends GuiScreen {
          }
 
          drawRect(0, 0, r, this.height, -1089466352);
-         this.drawHorizontalLine(0, r - 1, this.height - 345, -1);
+         this.drawHorizontalLine(0, r - 1, 0, -1);
          this.drawHorizontalLine(0, r - 1, this.height - 115, -1);
          drawRect(r - 1, 0, r, this.height, -1);
          CommandLine.rc(this.fontRendererObj, this.height, r, this.sr.getScaleFactor());

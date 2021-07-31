@@ -85,8 +85,9 @@ public class Module {
 
    public void setToggled(boolean enabled) {
       this.enabled = enabled;
-      if (Ravenb3.configManager != null)
+      if (Ravenb3.configManager != null && !Ravenb3.configManager.loading)
          Ravenb3.configManager.save();
+
    }
 
    public String getName() {
@@ -118,12 +119,12 @@ public class Module {
    }
 
    public void onEnable() {
-      if (Ravenb3.configManager != null)
+      if (Ravenb3.configManager != null && !Ravenb3.configManager.loading)
          Ravenb3.configManager.save();
    }
 
    public void onDisable() {
-      if (Ravenb3.configManager != null)
+      if (Ravenb3.configManager != null && !Ravenb3.configManager.loading)
          Ravenb3.configManager.save();
    }
 
@@ -133,7 +134,7 @@ public class Module {
       } else {
          this.enable();
       }
-      if (Ravenb3.configManager != null)
+      if (Ravenb3.configManager != null && !Ravenb3.configManager.loading)
          Ravenb3.configManager.save();
    }
 
@@ -152,7 +153,7 @@ public class Module {
 
    public void setbind(int keybind) {
       this.keycode = keybind;
-      if (Ravenb3.configManager != null)
+      if (Ravenb3.configManager != null && !Ravenb3.configManager.loading)
          Ravenb3.configManager.save();
    }
 
