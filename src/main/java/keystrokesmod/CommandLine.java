@@ -3,17 +3,11 @@
 package keystrokesmod;
 
 import java.awt.Color;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import keystrokesmod.main.BlowsyConfigManager;
 import keystrokesmod.main.Ravenb3;
-import keystrokesmod.module.modules.minigames.DuelsStats;
-import keystrokesmod.module.modules.other.FakeChat;
-import keystrokesmod.module.modules.other.NameHider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
@@ -25,7 +19,7 @@ public class CommandLine {
    private static final List<Integer> cs = Arrays.asList((new Color(170, 107, 148, 50)).getRGB(), (new Color(122, 158, 134, 50)).getRGB(), (new Color(16, 16, 16, 50)).getRGB(), (new Color(64, 114, 148, 50)).getRGB());
    private static int ccs = 0;
    private static int lccs = -1;
-   public static List<String> rs = new ArrayList();
+   public static List<String> commandLineHistory = new ArrayList();
    private static final String invalidSyntax = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 's', 'y', 'n', 't', 'a', 'x', '.'});
    private static final String invalidCommand = new String(new char[]{'&', 'c', 'I', 'n', 'v', 'a', 'l', 'i', 'd', ' ', 'c', 'o', 'm', 'm', 'a', 'n', 'd', '.'});
 
@@ -36,6 +30,9 @@ public class CommandLine {
          String[] args = hasArgs ? c.split(" ") : null;
          String n;
 
+         Ravenb3.commandManager.executeCommand(cm.split(" ")[0], args);
+
+         /*
          if (cm.startsWith("update")) {
             if (Ravenb3.outdated || version.outdated()) {
                CommandLine.print("§3Opening page...", 1);
@@ -216,19 +213,19 @@ public class CommandLine {
             print("&eModule-specific:", 0);
             print("1 cname [name]", 0);
             print("2 " + FakeChat.command + " [msg]", 0);
-         }
+         }*/
 
       }
    }
 
-   public static void print(String m, int t) {
-      if (t == 1 || t == 2) {
-         rs.add("");
+   public static void print(String m, int breakLineMode) {
+      if (breakLineMode == 1 || breakLineMode == 2) {
+         commandLineHistory.add("");
       }
 
-      rs.add(m);
-      if (t == 2 || t == 3) {
-         rs.add("");
+      commandLineHistory.add(m);
+      if (breakLineMode == 2 || breakLineMode == 3) {
+         commandLineHistory.add("");
       }
 
    }
@@ -242,7 +239,7 @@ public class CommandLine {
       int mw = w * s;
       GL11.glScissor(0, mc.displayHeight - (sY + sH) * s, mw - (mw < 2 ? 0 : 2), sH * s - 2);
       ru.db(1000, 1000, ccs);
-      rss(fr, rs, x, y);
+      rss(fr, commandLineHistory, x, y);
       GL11.glDisable(3089);
    }
 

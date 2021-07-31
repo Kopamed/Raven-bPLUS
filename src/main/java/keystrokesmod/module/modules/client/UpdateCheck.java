@@ -43,10 +43,8 @@ public class UpdateCheck extends Module {
             ay.sendMessageToSelf("You are on the latest public version!");
         }
         if (this.copyToClipboard.isToggled()) {
-            StringSelection selection = new StringSelection(Ravenb3.sourceLocation);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(selection, selection);
-            ay.sendMessageToSelf("Successfully copied download link to clipboard!");
+            if (ay.copyToClipboard(Ravenb3.sourceLocation))
+                ay.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
         if(this.openLink.isToggled()) {
             URL url = null;

@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import keystrokesmod.*;
+import keystrokesmod.command.CommandManager;
 import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
 import keystrokesmod.keystroke.KeyStroke;
@@ -22,7 +23,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -38,8 +38,10 @@ public class Ravenb3 {
    public static boolean debugger = false;
    public static boolean outdated = false;
    public static boolean beta = false;
-   private final String numberOfUseTracker = "https://pastebin.com/raw/EgBH4cxS";
+   public static CommandManager commandManager;
+   private static final String numberOfUseTracker = "https://pastebin.com/raw/EgBH4cxS";
    public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
+   public static final String discord = "https://discord.gg/N4zn4FwPcz";
    public static String[] updateText = {"Your version of Raven B+ (" + version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
    public static int b = 0;
@@ -65,6 +67,7 @@ public class Ravenb3 {
       FMLCommonHandler.instance().bus().register(new mouseManager());
       FMLCommonHandler.instance().bus().register(new KeySrokeRenderer());
       FMLCommonHandler.instance().bus().register(new ChatHelper());
+      commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
       //BlowsyConfigManager.applyKeyStrokeSettingsFromConfigFile();
       //BlowsyConfigManager.applyCheatSettingsFromConfigFile();

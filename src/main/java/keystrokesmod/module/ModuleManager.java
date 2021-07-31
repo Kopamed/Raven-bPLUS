@@ -144,7 +144,7 @@ public class ModuleManager {
    }
 
    public static void sort() {
-      if (HUD.al.isToggled()) {
+      if (HUD.alphabeticalSort.isToggled()) {
          Collections.sort(enModsList, Comparator.comparing(Module::getName));
       } else {
          Collections.sort(enModsList, (o1, o2) -> {

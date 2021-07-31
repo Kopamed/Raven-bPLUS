@@ -6,7 +6,10 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -17,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
@@ -398,6 +402,20 @@ public class ay {
       }
    }
 
+   public static boolean openWebpage(String url) {
+      try {
+         URL linkURL = null;
+         linkURL = new URL(url);
+
+         return openWebpage(linkURL.toURI());
+      } catch (URISyntaxException e) {
+         e.printStackTrace();
+      } catch (MalformedURLException e) {
+         e.printStackTrace();
+      }
+      return false;
+   }
+
    public static boolean openWebpage(URL url) {
       try {
          return openWebpage(url.toURI());
@@ -426,6 +444,18 @@ public class ay {
       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
       LocalDateTime now = LocalDateTime.now();
       return dtf.format(now);
+   }
+
+   public static boolean copyToClipboard(String content) {
+      try {
+         StringSelection selection = new StringSelection(content);
+         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+         clipboard.setContents(selection, selection);
+         return true;
+      } catch (Exception fuck){
+         fuck.printStackTrace();
+         return false;
+      }
    }
 
    public static enum ClickMode {

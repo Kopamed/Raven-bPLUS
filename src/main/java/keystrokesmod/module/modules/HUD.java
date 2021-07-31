@@ -23,17 +23,17 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class HUD extends Module {
-   public static ModuleSettingTick ep;
-   public static ModuleSettingTick sh;
-   public static ModuleSettingTick al;
+   public static ModuleSettingTick editPosition;
+   public static ModuleSettingTick dropShadow;
+   public static ModuleSettingTick alphabeticalSort;
    private static int hudX = 5;
    private static int hudY = 70;
 
    public HUD() {
       super("HUD", Module.category.render, 0);
-      this.registerSetting(ep = new ModuleSettingTick("Edit position", false));
-      this.registerSetting(sh = new ModuleSettingTick("Drop shadow", true));
-      this.registerSetting(al = new ModuleSettingTick("Alphabetical sort", false));
+      this.registerSetting(editPosition = new ModuleSettingTick("Edit position", false));
+      this.registerSetting(dropShadow = new ModuleSettingTick("Drop shadow", true));
+      this.registerSetting(alphabeticalSort = new ModuleSettingTick("Alphabetical sort", false));
    }
 
    public void onEnable() {
@@ -41,10 +41,10 @@ public class HUD extends Module {
    }
 
    public void guiButtonToggled(ModuleSettingTick b) {
-      if (b == ep) {
-         ep.disable();
+      if (b == editPosition) {
+         editPosition.disable();
          mc.displayGuiScreen(new HUD.eh());
-      } else if (b == al) {
+      } else if (b == alphabeticalSort) {
          ModuleManager.sort();
       }
 
@@ -65,7 +65,7 @@ public class HUD extends Module {
          while(var5.hasNext()) {
             Module m = (Module)var5.next();
             if (m.isEnabled() && m != this) {
-               mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, (long)del), sh.isToggled());
+               mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, (long)del), dropShadow.isToggled());
                y += mc.fontRendererObj.FONT_HEIGHT + 2;
                del -= 120;
             }
@@ -128,7 +128,7 @@ public class HUD extends Module {
          String[] var5 = t.split("-");
 
          for (String s : var5) {
-            fr.drawString(s, (float) x, (float) y, Color.white.getRGB(), HUD.sh.isToggled());
+            fr.drawString(s, (float) x, (float) y, Color.white.getRGB(), HUD.dropShadow.isToggled());
             y += fr.FONT_HEIGHT + 2;
          }
 
