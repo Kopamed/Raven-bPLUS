@@ -41,6 +41,7 @@ Discord:<br>
  - Autoclicker: Seperate Righclick min and max cps sliders, allow eat, allow bow and different click modes (LEGIT and RAVEN) and you can make your cps higher, no sword rightclick (doesn't right click when you are holding a sword), onlyblocks (only rightclicks when you are holding blocks)
  - ChatLogger: I have a chat logger 
  - Bridge Assist: helps you aim and click during godbridging, moonwalking, ninja bridging and breezily.
+ - CONFIG MANAGER!
  - Much more but I am too lazy to put it here... 
 
 
