@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 public class CommandLine {
    private static final Minecraft mc = Minecraft.getMinecraft();
    private static boolean f = true;
-   private static int maxLines = 29;
+   private static int maxLines = 80;
    private static boolean u = false;
    private static final List<Integer> cs = Arrays.asList((new Color(170, 107, 148, 50)).getRGB(), (new Color(122, 158, 134, 50)).getRGB(), (new Color(16, 16, 16, 50)).getRGB(), (new Color(64, 114, 148, 50)).getRGB());
    private static int ccs = 0;

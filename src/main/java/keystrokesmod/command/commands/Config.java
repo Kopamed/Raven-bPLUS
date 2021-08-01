@@ -84,9 +84,9 @@ public class Config extends Command {
         for (File config : Ravenb3.configManager.listConfigs()) {
             if (config.getName().endsWith(Ravenb3.configManager.getExtension())) {
                 if (Ravenb3.configManager.getCurrentConfig().equalsIgnoreCase(config.getName().replace(Ravenb3.configManager.getExtension(), "")))
-                    CommandLine.print("§aCurrent config: " + config.getName().replace(Ravenb3.configManager.getExtension(), ""), 0);
+                    CommandLine.print("§3Current config: " + config.getName().replace(Ravenb3.configManager.getExtension(), ""), 0);
                 else
-                    CommandLine.print("§3" + config.getName().replace(Ravenb3.configManager.getExtension(), ""), 0);
+                    CommandLine.print(config.getName().replace(Ravenb3.configManager.getExtension(), ""), 0);
             }
         }
     }
