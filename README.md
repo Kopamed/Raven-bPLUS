@@ -35,7 +35,7 @@ Discord:<br>
 # Client
 ## Known bugs
  - Safewalk does not work without the shift setting turned on
- - None of the "ASM" modules work so reach... and some other stuff...
+ - None of the "ASM" modules work... and some other stuff...
 
 ## Improved Module List
  - SafeWalk: Sneak while jump and On hold settings
@@ -46,4 +46,4 @@ Discord:<br>
  - Much more but I am too lazy to put it here... 
 
 
-#### Readme last updated on 29/07/2021. Bug and update info and other stuff may be out of date. 
+#### Readme last updated on 01/08/2021. Bug and update info and other stuff may be out of date. 

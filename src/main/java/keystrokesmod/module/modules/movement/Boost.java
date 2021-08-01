@@ -32,8 +32,8 @@ public class Boost extends Module {
 
    public void onDisable() {
       this.i = 0;
-      if (ay.gt().timerSpeed != 1.0F) {
-         ay.rt();
+      if (ay.getTimer().timerSpeed != 1.0F) {
+         ay.resetTimer();
       }
 
       if (this.t) {
@@ -48,9 +48,9 @@ public class Boost extends Module {
          this.i = mc.thePlayer.ticksExisted;
       }
 
-      ay.gt().timerSpeed = (float)a.getInput();
+      ay.getTimer().timerSpeed = (float)a.getInput();
       if ((double)this.i == (double)mc.thePlayer.ticksExisted - b.getInput()) {
-         ay.rt();
+         ay.resetTimer();
          this.disable();
       }
 

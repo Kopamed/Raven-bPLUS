@@ -24,7 +24,7 @@ public class Sprint extends Module {
       if (ay.isPlayerInGame() && mc.inGameHasFocus) {
          EntityPlayerSP p = mc.thePlayer;
          if (a.isToggled()) {
-            if (ay.im() && p.getFoodStats().getFoodLevel() > 6) {
+            if (ay.isMoving() && p.getFoodStats().getFoodLevel() > 6) {
                p.setSprinting(true);
             }
          } else {

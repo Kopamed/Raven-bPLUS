@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
@@ -50,24 +49,23 @@ import java.time.LocalDateTime;
 public class ay {
    private static final Random rand = new Random();
    public static final Minecraft mc = Minecraft.getMinecraft();
-   public static final String md = new String(new char[]{'M', 'o', 'd', 'e', ':', ' '});
-   private static Field t = null;
+   public static final String md = "Mode: ";
+   private static Field timerField = null;
    private static Field mouseButton = null;
    private static Field mouseButtonState = null;
    private static Field mouseButtons = null;
 
    public static void su() {
       try {
-         t = Minecraft.class.getDeclaredField("field_71428_T");
+         timerField = Minecraft.class.getDeclaredField("field_71428_T");
       } catch (Exception var4) {
          try {
-            t = Minecraft.class.getDeclaredField("timer");
-         } catch (Exception var3) {
-         }
+            timerField = Minecraft.class.getDeclaredField("timer");
+         } catch (Exception ignored) {}
       }
 
-      if (t != null) {
-         t.setAccessible(true);
+      if (timerField != null) {
+         timerField.setAccessible(true);
       }
 
       try {
@@ -135,21 +133,18 @@ public class ay {
       return mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
    }
 
-   public static net.minecraft.util.Timer gt() {
+   public static net.minecraft.util.Timer getTimer() {
       try {
-         return (net.minecraft.util.Timer)t.get(mc);
-      } catch (IndexOutOfBoundsException var1) {
-         return null;
-      } catch ( IllegalAccessException var112) {
+         return (net.minecraft.util.Timer) timerField.get(mc);
+      } catch (IndexOutOfBoundsException | IllegalAccessException var1) {
          return null;
       }
    }
 
-   public static void rt() {
+   public static void resetTimer() {
       try {
-         gt().timerSpeed = 1.0F;
-      } catch (NullPointerException var1) {
-      }
+         getTimer().timerSpeed = 1.0F;
+      } catch (NullPointerException ignored) {}
 
    }
 
@@ -157,7 +152,7 @@ public class ay {
       return rand;
    }
 
-   public static boolean im() {
+   public static boolean isMoving() {
       return mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F;
    }
 
@@ -217,7 +212,7 @@ public class ay {
    }
 
    public static void ss(double s, boolean m) {
-      if (!m || im()) {
+      if (!m || isMoving()) {
          mc.thePlayer.motionX = -Math.sin((double)gd()) * s;
          mc.thePlayer.motionZ = Math.cos((double)gd()) * s;
       }
@@ -290,7 +285,7 @@ public class ay {
       double x = en.posX - en.prevPosX;
       double z = en.posZ - en.prevPosZ;
       double sp = Math.sqrt(x * x + z * z) * 20.0D;
-      return rnd(sp, d);
+      return round(sp, d);
    }
 
    public static boolean autoClickerClicking() {
@@ -304,7 +299,7 @@ public class ay {
       return Color.getHSBColor((float)(time % (15000L / speed)) / (15000.0F / (float)speed), 1.0F, 1.0F).getRGB();
    }
 
-   public static double rnd(double n, int d) {
+   public static double round(double n, int d) {
       if (d == 0) {
          return (double)Math.round(n);
       } else {
@@ -341,7 +336,7 @@ public class ay {
             } else {
                Collection<Score> scores = scoreboard.getSortedScores(objective);
                List<Score> list = new ArrayList();
-               Iterator var5 = scores.iterator();
+               Iterator<Score> var5 = scores.iterator();
 
                Score score;
                while(var5.hasNext()) {
@@ -408,9 +403,7 @@ public class ay {
          linkURL = new URL(url);
 
          return openWebpage(linkURL.toURI());
-      } catch (URISyntaxException e) {
-         e.printStackTrace();
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException | MalformedURLException e) {
          e.printStackTrace();
       }
       return false;

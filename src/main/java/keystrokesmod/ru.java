@@ -53,9 +53,9 @@ public class ru {
 
    public static void ee(Entity e, int type, double expand, double shift, int color, boolean damage) {
       if (e instanceof EntityLivingBase) {
-         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosX;
-         double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosY;
-         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
+         double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
+         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
          float d = (float)expand / 40.0F;
          if (e instanceof EntityPlayer && damage && ((EntityPlayer)e).hurtTime != 0) {
             color = Color.RED.getRGB();
@@ -228,9 +228,9 @@ public class ru {
 
    public static void dtl(Entity e, int color, float lw) {
       if (e != null) {
-         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosX;
-         double y = (double)e.getEyeHeight() + e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosY;
-         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
+         double y = (double)e.getEyeHeight() + e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
+         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
          float a = (float)(color >> 24 & 255) / 255.0F;
          float r = (float)(color >> 16 & 255) / 255.0F;
          float g = (float)(color >> 8 & 255) / 255.0F;
