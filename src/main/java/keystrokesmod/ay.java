@@ -458,6 +458,21 @@ public class ay {
       }
    }
 
+   public static String joinStringList(String[] wtf, String okwaht){
+      if (wtf == null)
+         return "";
+      if(wtf.length <= 1)
+         return "";
+
+      String finalString = wtf[0];
+
+      for (int i = 1; i < wtf.length; i++){
+         finalString += okwaht + wtf[i];
+      }
+
+      return finalString;
+   }
+
    public static enum ClickMode {
       RAVEN,
       LEGIT

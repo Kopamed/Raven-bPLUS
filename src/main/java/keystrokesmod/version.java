@@ -27,7 +27,12 @@ public class version {
             currentVersionSplited.add(Integer.parseInt(whatHelp));
         }
         for (String whatHelp : latestVersion.split("-")) {
-            latestVersionSplited.add(Integer.parseInt(whatHelp));
+            try {
+                latestVersionSplited.add(Integer.parseInt(whatHelp));
+            } catch (NumberFormatException klojaanPlayingMinecraftBeLike) {
+                klojaanPlayingMinecraftBeLike.printStackTrace();
+                return false;
+            }
         }
 
         if (latestVersionSplited.get(0) > currentVersionSplited.get(0)) {

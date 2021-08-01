@@ -39,10 +39,10 @@ public class ChatHelper {
       }
 
       CommandLine.print("Your ping: " + ping + "ms", 0);
-      rs();
+      reset();
    }
 
-   public static void rs() {
+   public static void reset() {
       e = false;
       s = 0L;
    }

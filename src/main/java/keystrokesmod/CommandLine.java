@@ -113,14 +113,7 @@ public class CommandLine {
                return;
             }
 
-            n = c.replaceFirst(FakeChat.command, "").substring(1);
-            if (n.isEmpty() || n.equals("\\n")) {
-               print(FakeChat.c4, 1);
-               return;
-            }
-
-            FakeChat.msg = n;
-            print("&aMessage set!", 1);
+            º
          } else if (cm.startsWith("Duels".toLowerCase())) {
             if (!hasArgs) {
                print(invalidSyntax, 1);
@@ -177,7 +170,7 @@ public class CommandLine {
                if (u) {
                   return;
                }
-
+a
                Ravenb3.getExecutor().execute(() -> {
                   u = true;
 
@@ -287,6 +280,6 @@ public class CommandLine {
    }
 
    public static void od() {
-      ChatHelper.rs();
+      ChatHelper.reset();
    }
 }
