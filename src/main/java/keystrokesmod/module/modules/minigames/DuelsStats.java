@@ -122,7 +122,7 @@ public class DuelsStats extends Module {
                   return;
                }
 
-               double wlr = s[1] != 0 ? ay.rnd((double)s[0] / (double)s[1], 2) : (double)s[0];
+               double wlr = s[1] != 0 ? ay.round((double)s[0] / (double)s[1], 2) : (double)s[0];
                ay.sendMessageToSelf("&7&m-------------------------");
                if (dm != ProfileUtils.DM.OVERALL) {
                   ay.sendMessageToSelf("&e" + ay.md + "&3" + dm.name());

@@ -89,12 +89,12 @@ public class BridgeInfo extends Module {
          }
 
          if (this.g1p != null && this.g2p != null) {
-            this.d1 = ay.rnd(mc.thePlayer.getDistance((double)this.g2p.getX(), (double)this.g2p.getY(), (double)this.g2p.getZ()) - 1.4D, 1);
+            this.d1 = ay.round(mc.thePlayer.getDistance((double)this.g2p.getX(), (double)this.g2p.getY(), (double)this.g2p.getZ()) - 1.4D, 1);
             if (this.d1 < 0.0D) {
                this.d1 = 0.0D;
             }
 
-            this.d2 = enem == null ? 0.0D : ay.rnd(enem.getDistance((double)this.g1p.getX(), (double)this.g1p.getY(), (double)this.g1p.getZ()) - 1.4D, 1);
+            this.d2 = enem == null ? 0.0D : ay.round(enem.getDistance((double)this.g1p.getX(), (double)this.g1p.getY(), (double)this.g1p.getZ()) - 1.4D, 1);
             if (this.d2 < 0.0D) {
                this.d2 = 0.0D;
             }

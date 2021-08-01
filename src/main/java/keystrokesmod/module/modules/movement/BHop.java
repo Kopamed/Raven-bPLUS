@@ -18,7 +18,7 @@ public class BHop extends Module {
    }
 
    public void update() {
-      if (!ModuleManager.fly.isEnabled() && ay.im() && !mc.thePlayer.isInWater()) {
+      if (!ModuleManager.fly.isEnabled() && ay.isMoving() && !mc.thePlayer.isInWater()) {
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
          mc.thePlayer.noClip = true;
          if (mc.thePlayer.onGround) {

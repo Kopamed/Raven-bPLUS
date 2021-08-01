@@ -23,18 +23,18 @@ public class Timer extends Module {
    public void update() {
       if (!(mc.currentScreen instanceof ClickGui)) {
          if (b.isToggled() && mc.thePlayer.moveStrafing == 0.0F) {
-            ay.rt();
+            ay.resetTimer();
             return;
          }
 
-         ay.gt().timerSpeed = (float)a.getInput();
+         ay.getTimer().timerSpeed = (float)a.getInput();
       } else {
-         ay.rt();
+         ay.resetTimer();
       }
 
    }
 
    public void onDisable() {
-      ay.rt();
+      ay.resetTimer();
    }
 }

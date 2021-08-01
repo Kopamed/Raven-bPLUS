@@ -48,19 +48,16 @@ public class am {
    }
 
    private float bounce(float t) {
-      float i = 0.0F;
       double i2 = 7.5625D;
       double i3 = 2.75D;
       if ((double)t < 1.0D / i3) {
-         i = (float)(i2 * (double)t * (double)t);
+         return (float)(i2 * (double)t * (double)t);
       } else if ((double)t < 2.0D / i3) {
-         i = (float)(i2 * (double)(t = (float)((double)t - 1.5D / i3)) * (double)t + 0.75D);
+         return (float)(i2 * (double)(t = (float)((double)t - 1.5D / i3)) * (double)t + 0.75D);
       } else if ((double)t < 2.5D / i3) {
-         i = (float)(i2 * (double)(t = (float)((double)t - 2.25D / i3)) * (double)t + 0.9375D);
+         return (float)(i2 * (double)(t = (float)((double)t - 2.25D / i3)) * (double)t + 0.9375D);
       } else {
-         i = (float)(i2 * (double)(t = (float)((double)t - 2.625D / i3)) * (double)t + 0.984375D);
+         return (float)(i2 * (double)(t = (float)((double)t - 2.625D / i3)) * (double)t + 0.984375D);
       }
-
-      return i;
    }
 }

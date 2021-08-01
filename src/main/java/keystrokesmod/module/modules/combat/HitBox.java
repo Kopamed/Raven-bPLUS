@@ -127,9 +127,9 @@ public class HitBox extends Module {
 
    private void rh(Entity e, Color c) {
       if (e instanceof EntityLivingBase) {
-         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosX;
-         double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosY;
-         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.gt().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
+         double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
+         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
          float ex = (float)((double)e.getCollisionBorderSize() * a.getInput());
          AxisAlignedBB bbox = e.getEntityBoundingBox().expand((double)ex, (double)ex, (double)ex);
          AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y, bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);
