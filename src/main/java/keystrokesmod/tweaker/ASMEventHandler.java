@@ -62,10 +62,8 @@ public class ASMEventHandler {
       if (ModuleManager.noSlow.isEnabled()) {
          NoSlow.sl();
       } else {
-         MovementInput movementInput = mc.thePlayer.movementInput;
-         movementInput.moveStrafe *= 0.2F;
-         movementInput = mc.thePlayer.movementInput;
-         movementInput.moveForward *= 0.2F;
+         mc.thePlayer.movementInput.moveStrafe *= 0.2F;
+         mc.thePlayer.movementInput.moveForward *= 0.2F;
       }
    }
 
@@ -73,10 +71,8 @@ public class ASMEventHandler {
       if (ModuleManager.keepSprint.isEnabled()) {
          KeepSprint.sl(en);
       } else {
-         EntityPlayerSP player = mc.thePlayer;
-         player.motionX *= 0.6D;
-         player = mc.thePlayer;
-         player.motionZ *= 0.6D;
+         mc.thePlayer.motionX *= 0.6D;
+         mc.thePlayer.motionZ *= 0.6D;
       }
    }
 

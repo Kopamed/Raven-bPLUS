@@ -98,11 +98,11 @@ public class Reach extends Module {
          List zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(zz2, zz2.getEntityBoundingBox().addCoord(zz4.xCoord * zzD, zz4.yCoord * zzD, zz4.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
          double zz9 = zzD;
 
-         for(int zz10 = 0; zz10 < zz8.size(); ++zz10) {
-            Entity zz11 = (Entity)zz8.get(zz10);
+         for (Object o : zz8) {
+            Entity zz11 = (Entity) o;
             if (zz11.canBeCollidedWith()) {
-               float ex = (float)((double)zz11.getCollisionBorderSize() * HitBox.exp(zz11));
-               AxisAlignedBB zz13 = zz11.getEntityBoundingBox().expand((double)ex, (double)ex, (double)ex);
+               float ex = (float) ((double) zz11.getCollisionBorderSize() * HitBox.exp(zz11));
+               AxisAlignedBB zz13 = zz11.getEntityBoundingBox().expand((double) ex, (double) ex, (double) ex);
                zz13 = zz13.expand(zzE, zzE, zzE);
                MovingObjectPosition zz14 = zz13.calculateIntercept(zz3, zz5);
                if (zz13.isVecInside(zz3)) {

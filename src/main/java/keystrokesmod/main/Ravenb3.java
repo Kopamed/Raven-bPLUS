@@ -13,6 +13,7 @@ import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.keystroke.KeyStrokeConfigGui;
 import keystrokesmod.keystroke.keystrokeCommand;
 import keystrokesmod.module.Module;
+import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.modules.ClickGui;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.client.Minecraft;
@@ -69,6 +70,7 @@ public class Ravenb3 {
       FMLCommonHandler.instance().bus().register(new ChatHelper());
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
+      FMLCommonHandler.instance().bus().register(ModuleManager.reach);
       //BlowsyConfigManager.applyKeyStrokeSettingsFromConfigFile();
       //BlowsyConfigManager.applyCheatSettingsFromConfigFile();
       keySrokeRenderer = new KeySrokeRenderer();

@@ -145,11 +145,9 @@ public class ModuleManager {
 
    public static void sort() {
       if (HUD.alphabeticalSort.isToggled()) {
-         Collections.sort(enModsList, Comparator.comparing(Module::getName));
+         enModsList.sort(Comparator.comparing(Module::getName));
       } else {
-         Collections.sort(enModsList, (o1, o2) -> {
-            return ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName());
-         });
+         enModsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
       }
 
    }
