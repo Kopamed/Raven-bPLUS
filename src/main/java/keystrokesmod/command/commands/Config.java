@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Config extends Command {
     public Config() {
-        super("config", "Manages configs", 0, 3, new String[] {"load / save / list", "filename (e.g. hypixelConfig)"}, new String[] {"cfg"});
+        super("config", "Manages configs", 0, 3, new String[] {"load / save / list / remove", "filename (e.g. hypixelConfig)"}, new String[] {"cfg", "profiles"});
     }
 
     @Override
@@ -58,6 +58,22 @@ public class Config extends Command {
                 CommandLine.print("&aSaved as '" + args[2] + "'", 0);
                 CommandLine.print("&aTo transition to config " + args[2] + " run", 0);
                 CommandLine.print("§3'config load " + args[2]+ "'", 0);
+            }
+            else if (args[1].equalsIgnoreCase("remove")) {
+                //me coding the save command be like https://imgur.com/u1EJ4op
+                CommandLine.print("&aRemoving " + args[2] + "...", 1);
+                //FUCKING SAVE TO A FILE
+                if (Ravenb3.configManager.removeConfig(args[2])) {
+                    CommandLine.print("&aRemoved " + args[2] + " successfully!", 0);
+                    CommandLine.print("§3Current config: " + Ravenb3.configManager.getCurrentConfig(), 0);
+                }
+                else {
+                    CommandLine.print("&cFailed to delete " + args[2], 0);
+                    CommandLine.print("&cUnable to find a config with the name", 0);
+                    CommandLine.print("&cOr an error occurred during removal", 0);
+                }
+            } else {
+                this.incorrectArgs();
             }
 
         }

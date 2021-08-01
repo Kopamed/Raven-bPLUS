@@ -207,6 +207,22 @@ public class ConfigManager {
         this.loadConfig(prevFileName);
     }
 
+    public boolean removeConfig(String fileName) {
+        boolean found = false;
+        for (File config : this.listConfigs()) {
+            if (config.getName().replace(this.getExtension(), "").equalsIgnoreCase(fileName)){
+                found = true;
+                File toDelete = new File(this.configDirecotry, fileName + this.getExtension());
+                if(toDelete.delete()) {
+                    this.loadConfig("default");
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+        return false;
+    }
 
     public ArrayList<File> listConfigs() {
         ArrayList<File> proBlockGameCheater = new ArrayList<File>();

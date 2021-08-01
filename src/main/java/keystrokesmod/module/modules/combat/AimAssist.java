@@ -11,8 +11,12 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 
 public class AimAssist extends Module {
    public static ModuleSettingSlider speed;
@@ -21,6 +25,7 @@ public class AimAssist extends Module {
    public static ModuleSettingTick clickAim;
    public static ModuleSettingTick weaponOnly;
    public static ModuleSettingTick aimInvis;
+   public static ModuleSettingTick breakBlocks;
    public static ModuleSettingTick blatantMode;
    public static ModuleSettingTick ignoreFriends;
    public static ArrayList<String> friends = new ArrayList<String>();
@@ -31,6 +36,7 @@ public class AimAssist extends Module {
       this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
       this.registerSetting(distance = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(clickAim = new ModuleSettingTick("Click aim", true));
+      this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", true));
       this.registerSetting(ignoreFriends = new ModuleSettingTick("Ignore Friends", true));
       this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
       this.registerSetting(aimInvis = new ModuleSettingTick("Aim invis", false));
@@ -38,9 +44,18 @@ public class AimAssist extends Module {
    }
 
    public void update() {
-      if (mc.currentScreen == null && mc.inGameHasFocus) {
+         if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
+            BlockPos p = mc.objectMouseOver.getBlockPos();
+            if (p != null) {
+               Block bl = mc.theWorld.getBlockState(p).getBlock();
+               if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
+                  return;
+               }
+            }
+
+
          if (!weaponOnly.isToggled() || ay.wpn()) {
-            if (!clickAim.isToggled() || ay.ilc()) {
+            if (!clickAim.isToggled() || ay.autoClickerClicking()) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenb3.debugger) {
