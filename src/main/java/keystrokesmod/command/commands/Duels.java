@@ -29,7 +29,7 @@ public class Duels extends Command {
                 if (s[0] == -1) {
                     CommandLine.print("&c" + (n.length() > 16 ? n.substring(0, 16) + "..." : n) + " does not exist!", 0);
                 } else {
-                    double wlr = s[1] != 0 ? ay.rnd((double)s[0] / (double)s[1], 2) : (double)s[0];
+                    double wlr = s[1] != 0 ? ay.round((double)s[0] / (double)s[1], 2) : (double)s[0];
                     CommandLine.print("&e" + n + " stats:", 1);
                     CommandLine.print("Wins: " + s[0], 0);
                     CommandLine.print("Losses: " + s[1], 0);

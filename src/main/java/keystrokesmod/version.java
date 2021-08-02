@@ -29,7 +29,7 @@ public class version {
         for (String whatHelp : latestVersion.split("-")) {
             try {
                 latestVersionSplited.add(Integer.parseInt(whatHelp));
-            } catch (NumberFormatException klojaanPlayingMinecraftBeLike) {
+            } catch (Exception klojaanPlayingMinecraftBeLike) {
                 klojaanPlayingMinecraftBeLike.printStackTrace();
                 return false;
             }
