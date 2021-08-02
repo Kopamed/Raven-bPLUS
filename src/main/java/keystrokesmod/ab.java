@@ -45,7 +45,7 @@ public class ab {
       v4 = Module.getModule(Velocity.class).getKeycode();
       au1 = AutoClicker.leftMinCPS.getInput();
       au2 = AutoClicker.leftMaxCPS.getInput();
-      au3 = AutoClicker.jitter.getInput();
+      au3 = AutoClicker.jitterLeft.getInput();
       au4 = AutoClicker.weaponOnly.isToggled();
       au5 = AutoClicker.breakBlocks.isToggled();
       au6 = AutoClicker.inventoryFill.isToggled();

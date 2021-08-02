@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
-import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -34,7 +33,8 @@ public class AutoClicker extends Module {
    public static ModuleDesc bestWithDelayRemover, modeDesc;
    public static ModuleSettingSlider leftMinCPS, rightMinCPS;
    public static ModuleSettingSlider leftMaxCPS, rightMaxCPS;
-   public static ModuleSettingSlider jitter;
+   public static ModuleSettingSlider jitterLeft;
+   public static ModuleSettingSlider jitterRight;
    public static ModuleSettingTick weaponOnly;
    public static ModuleSettingTick breakBlocks;
    public static ModuleSettingTick onlyBlocks;
@@ -76,7 +76,8 @@ public class AutoClicker extends Module {
       this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
-      this.registerSetting(jitter = new ModuleSettingSlider("Jitter", 0.0D, 0.0D, 3.0D, 0.1D));
+      this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
+      this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(mode = new ModuleSettingSlider("Value", 2.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(modeDesc = new ModuleDesc("Mode: LEGIT"));
 
@@ -177,8 +178,8 @@ public class AutoClicker extends Module {
 
 
 
-      if (jitter.getInput() > 0.0D) {
-         double a = jitter.getInput() * 0.45D;
+      if (jitterLeft.getInput() > 0.0D) {
+         double a = jitterLeft.getInput() * 0.45D;
          EntityPlayerSP entityPlayer;
          if (this.rand.nextBoolean()) {
             entityPlayer = mc.thePlayer;
@@ -214,8 +215,8 @@ public class AutoClicker extends Module {
    }
 
    public void rightClickExecute(int key) {
-      if (jitter.getInput() > 0.0D) {
-         double jitterMultiplier = jitter.getInput() * 0.45D;
+      if (jitterRight.getInput() > 0.0D) {
+         double jitterMultiplier = jitterRight.getInput() * 0.45D;
          EntityPlayerSP entityPlayer;
          if (this.rand.nextBoolean()) {
             entityPlayer = mc.thePlayer;

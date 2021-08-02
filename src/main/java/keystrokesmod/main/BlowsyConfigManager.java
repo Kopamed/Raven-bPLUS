@@ -158,7 +158,7 @@ public class BlowsyConfigManager {
                AutoClicker.leftMaxCPS.setValue(Double.parseDouble(line));
                break;
             case 15:
-               AutoClicker.jitter.setValue(Double.parseDouble(line));
+               AutoClicker.jitterLeft.setValue(Double.parseDouble(line));
                break;
             case 16:
                AutoClicker.weaponOnly.setEnabled(Boolean.parseBoolean(line));
