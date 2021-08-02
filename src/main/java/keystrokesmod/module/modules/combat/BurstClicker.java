@@ -33,14 +33,17 @@ public class BurstClicker extends Module {
       this.registerSetting(delay = new ModuleSettingSlider("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
       this.registerSetting(delayRandomizer = new ModuleSettingTick("Delay randomizer", true));
       this.registerSetting(placeWhenBlock = new ModuleSettingTick("Place when block", false));
-
       try {
-         this.rightClickMouse = mc.getClass().getDeclaredMethod("func_147121_ag");
-      } catch (Exception var4) {
          try {
-            this.rightClickMouse = mc.getClass().getDeclaredMethod("rightClickMouse");
-         } catch (Exception var3) {
+            this.rightClickMouse = mc.getClass().getDeclaredMethod("func_147121_ag");
+         } catch (NoSuchMethodException var4) {
+            try {
+               this.rightClickMouse = mc.getClass().getDeclaredMethod("rightClickMouse");
+            } catch (NoSuchMethodException var3) {
+            }
          }
+      } catch(NoClassDefFoundError varbruh){
+         varbruh.printStackTrace();
       }
 
       if (this.rightClickMouse != null) {
