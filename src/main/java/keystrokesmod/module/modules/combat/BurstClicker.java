@@ -36,10 +36,10 @@ public class BurstClicker extends Module {
 
       try {
          this.rightClickMouse = mc.getClass().getDeclaredMethod("func_147121_ag");
-      } catch (NoSuchMethodException var4) {
+      } catch (Exception var4) {
          try {
             this.rightClickMouse = mc.getClass().getDeclaredMethod("rightClickMouse");
-         } catch (NoSuchMethodException var3) {
+         } catch (Exception var3) {
          }
       }
 
