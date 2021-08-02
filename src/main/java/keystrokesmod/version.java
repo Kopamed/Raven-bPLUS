@@ -19,6 +19,8 @@ public class version {
     public static boolean outdated() {
         currentVersion = getCurrentVersion();
         latestVersion = getLatestVersion();
+        if (latestVersion.isEmpty())
+            return false;
 
         ArrayList<Integer> currentVersionSplited = new ArrayList<Integer>();
         ArrayList<Integer> latestVersionSplited = new ArrayList<Integer>();
@@ -80,8 +82,8 @@ public class version {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(url.openStream()));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception klojangamingmoment) {
+            klojangamingmoment.printStackTrace();
             return "";
         }
 

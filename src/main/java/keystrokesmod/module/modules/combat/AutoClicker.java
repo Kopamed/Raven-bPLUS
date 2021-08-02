@@ -1,5 +1,3 @@
-//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
-
 package keystrokesmod.module.modules.combat;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +28,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public class AutoClicker extends Module {
-   public static ModuleDesc bestWithDelayRemover, modeDesc;
+   public static ModuleDesc bestWithDelayRemover, modeDesc, timingsDesc;
    public static ModuleSettingSlider leftMinCPS, rightMinCPS;
    public static ModuleSettingSlider leftMaxCPS, rightMaxCPS;
    public static ModuleSettingSlider jitterLeft;
@@ -44,7 +42,9 @@ public class AutoClicker extends Module {
    public static ModuleSettingTick rightClick;
    public static ModuleSettingTick inventoryFill;
    public static ModuleSettingTick allowEat, allowBow;
-   public static ModuleSettingSlider mode;
+   public static ModuleSettingSlider rightClickDelay;
+   public static ModuleSettingSlider clickEvent, clickTimings;
+
    private Random rand = null;
    private Method playerMouseInput;
    private long lefti, righti;
@@ -58,6 +58,8 @@ public class AutoClicker extends Module {
    private double leftHoldLength, rightHoldLength;
    private long lastClick;
    private long leftHold, rightHold;
+   private boolean rightClickWaiting;
+   private double rightClickWaitStartTime;
 
    public AutoClicker() {
       super("AutoClicker", Module.category.combat, 0);
@@ -78,7 +80,10 @@ public class AutoClicker extends Module {
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
       this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(mode = new ModuleSettingSlider("Value", 2.0D, 1.0D, 2.0D, 1.0D));
+      this.registerSetting(rightClickDelay = new ModuleSettingSlider("Righhtclick delay (ms)", 10D, 0D, 100D, 1.0D));
+      this.registerSetting(clickTimings = new ModuleSettingSlider("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
+      this.registerSetting(timingsDesc = new ModuleDesc("Mode: RAVEN"));
+      this.registerSetting(clickEvent = new ModuleSettingSlider("Event", 2.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(modeDesc = new ModuleDesc("Mode: LEGIT"));
 
       try {
@@ -94,6 +99,8 @@ public class AutoClicker extends Module {
          this.playerMouseInput.setAccessible(true);
       }
 
+      this.rightClickWaiting = false;
+
    }
 
    public void onEnable() {
@@ -108,50 +115,173 @@ public class AutoClicker extends Module {
       this.lefti = 0L;
       this.leftj = 0L;
       this.leftHeld = false;
+      this.rightClickWaiting = false;
    }
 
    public void guiUpdate() {
       ay.correctSliders(leftMinCPS, leftMaxCPS);
       ay.correctSliders(rightMinCPS, rightMaxCPS);
-      modeDesc.setDesc(ay.md + ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)].name());
+      modeDesc.setDesc(ay.md + ay.ClickEvents.values()[(int)(clickEvent.getInput() - 1.0D)].name());
+      timingsDesc.setDesc(ay.md + ay.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
    }
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if (ev.phase != Phase.END && ay.isPlayerInGame() && ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)] == ay.ClickMode.RAVEN) {
-         if (mc.currentScreen == null && mc.inGameHasFocus) {
-            if (weaponOnly.isToggled() && !ay.wpn()) {
-               return;
-            }
+      if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
+         return;
 
-            Mouse.poll();
-            if (leftClick.isToggled() && Mouse.isButtonDown(0)) {
-               this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
-            } else if (rightClick.isToggled() && Mouse.isButtonDown(1)) {
-               if (!this.rightClickAllowed())
+      if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
+         if (ev.phase == Phase.END)
+            return;
+         ravenClick();
+      }
+      else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.SKID){
+         skidClick(ev, null);
+      }
+   }
+
+   @SubscribeEvent
+   public void onTick(TickEvent.PlayerTickEvent ev) {
+      if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
+         return;
+
+      if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
+         ravenClick();
+      }
+      else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.SKID){
+         skidClick(null, ev);
+      }
+   }
+
+   private void skidClick(RenderTickEvent er, TickEvent.PlayerTickEvent e) {
+      guiUpdate();
+
+      speedLeft = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
+      leftHoldLength = speedLeft / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.02D, leftMaxCPS.getInput());
+      speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble( rightMinCPS.getInput() - 0.2D, rightMaxCPS.getInput());
+      rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.02D, rightMaxCPS.getInput());
+      //If none of the buttons are allowed to click, what is the point in generating clicktimes anyway?
+      //if (!leftActive && !rightActive) {
+      // return;
+      //}
+
+
+      // Uhh left click only, mate
+      if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
+         if(breakBlocks.isToggled()) {
+            BlockPos lookingBlock = mc.objectMouseOver.getBlockPos();
+            if (lookingBlock != null) {
+               Block stateBlock = mc.theWorld.getBlockState(lookingBlock).getBlock();
+               if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid)) {
+                  int key = mc.gameSettings.keyBindAttack.getKeyCode();
+                  KeyBinding.setKeyBindState(key, true);
+                  KeyBinding.onTick(key);
                   return;
-               this.rightClickExecute(mc.gameSettings.keyBindUseItem.getKeyCode());
-            } else {
-               this.lefti = 0L;
-               this.leftj = 0L;
-               this.righti = 0L;
-               this.rightj = 0L;
-            }
-         } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
-            if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
-               this.lefti = 0L;
-               this.leftj = 0L;
-            } else if (this.lefti != 0L && this.leftj != 0L) {
-               if (System.currentTimeMillis() > this.leftj) {
-                  this.genLeftTimings();
-                  this.inInvClick(mc.currentScreen);
                }
-            } else {
-               this.genLeftTimings();
             }
          }
 
+         double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
+         if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
+            lastClick = System.currentTimeMillis();
+            if (leftHold < lastClick){
+               leftHold = lastClick;
+            }
+            int key = mc.gameSettings.keyBindAttack.getKeyCode();
+            KeyBinding.setKeyBindState(key, true);
+            KeyBinding.onTick(key);
+         } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
+         }
       }
+      //we cheat in a block game ft. right click
+      if (Mouse.isButtonDown(1) && rightClick.isToggled()) {
+         if (!this.rightClickAllowed())
+            return;
+
+
+
+         if (System.currentTimeMillis() - lastClick > speedRight * 1000) {
+            lastClick = System.currentTimeMillis();
+            if (leftHold < lastClick){
+               leftHold = lastClick;
+            }
+            int key = mc.gameSettings.keyBindUseItem.getKeyCode();
+            KeyBinding.setKeyBindState(key, true);
+            KeyBinding.onTick(key);
+         } else if (System.currentTimeMillis() - leftHold > rightHoldLength * 1000) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+         }
+      }
+   }
+
+   private void ravenClick() {
+      if (mc.currentScreen == null && mc.inGameHasFocus) {
+         if (weaponOnly.isToggled() && !ay.wpn()) {
+            return;
+         }
+
+         Mouse.poll();
+         if (leftClick.isToggled() && Mouse.isButtonDown(0)) {
+            this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
+         } else if (rightClick.isToggled() && Mouse.isButtonDown(1)) {
+            if (!this.rightClickAllowed())
+               return;
+            this.rightClickExecute(mc.gameSettings.keyBindUseItem.getKeyCode());
+         } else {
+            this.lefti = 0L;
+            this.leftj = 0L;
+            this.righti = 0L;
+            this.rightj = 0L;
+            this.rightClickWaiting = false;
+         }
+      } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
+         if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
+            this.lefti = 0L;
+            this.leftj = 0L;
+         } else if (this.lefti != 0L && this.leftj != 0L) {
+            if (System.currentTimeMillis() > this.leftj) {
+               this.genLeftTimings();
+               this.inInvClick(mc.currentScreen);
+            }
+         } else {
+            this.genLeftTimings();
+         }
+      }
+   }
+
+
+   public boolean rightClickAllowed() {
+      ItemStack item = mc.thePlayer.getHeldItem();
+      if (item != null) {
+         if (this.allowEat.isToggled()) {
+            if ((item.getItem() instanceof ItemFood)) {
+               return false;
+            }
+         }
+         if (this.allowBow.isToggled()) {
+            if (item.getItem() instanceof ItemBow) {
+               return false;
+            }
+         }
+         if (this.onlyBlocks.isToggled()) {
+            if (!(item.getItem() instanceof ItemBlock))
+               return false;
+         }
+         if (this.noBlockSword.isToggled()) {
+            if (item.getItem() instanceof ItemSword)
+               return false;
+         }
+      }
+
+      if(this.preferFastPlace.isToggled()) {
+         Module fastplace = NotAName.moduleManager.getModuleByName("FastPlace");
+         if (fastplace.isEnabled())
+            return false;
+      }
+
+
+      return true;
    }
 
    public void leftClickExecute(int key) {
@@ -175,8 +305,6 @@ public class AutoClicker extends Module {
             }
          }
       }
-
-
 
       if (jitterLeft.getInput() > 0.0D) {
          double a = jitterLeft.getInput() * 0.45D;
@@ -202,11 +330,11 @@ public class AutoClicker extends Module {
          if (System.currentTimeMillis() > this.leftj) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            ay.sc(0, true);
+            ay.setMouseButtonState(0, true);
             this.genLeftTimings();
          } else if (System.currentTimeMillis() > this.lefti) {
             KeyBinding.setKeyBindState(key, false);
-            ay.sc(0, false);
+            ay.setMouseButtonState(0, false);
          }
       } else {
          this.genLeftTimings();
@@ -239,11 +367,11 @@ public class AutoClicker extends Module {
          if (System.currentTimeMillis() > this.rightj) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            ay.sc(1, true);
+            ay.setMouseButtonState(1, true);
             this.genRightTimings();
          } else if (System.currentTimeMillis() > this.righti) {
             KeyBinding.setKeyBindState(key, false);
-            ay.sc(1, false);
+            ay.setMouseButtonState(1, false);
          }
       } else {
          this.genRightTimings();
@@ -320,104 +448,5 @@ public class AutoClicker extends Module {
       } catch (IllegalAccessException | InvocationTargetException var5) {
       }
 
-   }
-
-   @SubscribeEvent
-   public void onTick(TickEvent.PlayerTickEvent e) {
-      if (!ay.isPlayerInGame()) {
-         return;
-      }
-      guiUpdate();
-      if (ay.ClickMode.values()[(int)(mode.getInput() - 1.0D)] != ay.ClickMode.LEGIT)
-         return;
-
-      speedLeft = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
-      leftHoldLength = speedLeft / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.02D, leftMaxCPS.getInput());
-      speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble( rightMinCPS.getInput() - 0.2D, rightMaxCPS.getInput());
-      rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.02D, rightMaxCPS.getInput());
-      //If none of the buttons are allowed to click, what is the point in generating clicktimes anyway?
-      //if (!leftActive && !rightActive) {
-        // return;
-      //}
-
-
-      // Uhh left click only, mate
-      if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
-         if(breakBlocks.isToggled()) {
-            BlockPos lookingBlock = mc.objectMouseOver.getBlockPos();
-            if (lookingBlock != null) {
-               Block stateBlock = mc.theWorld.getBlockState(lookingBlock).getBlock();
-               if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid)) {
-                  int key = mc.gameSettings.keyBindAttack.getKeyCode();
-                  KeyBinding.setKeyBindState(key, true);
-                  KeyBinding.onTick(key);
-                  return;
-               }
-            }
-         }
-
-         double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
-         if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
-            lastClick = System.currentTimeMillis();
-            if (leftHold < lastClick){
-               leftHold = lastClick;
-            }
-            int key = mc.gameSettings.keyBindAttack.getKeyCode();
-            KeyBinding.setKeyBindState(key, true);
-            KeyBinding.onTick(key);
-         } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-         }
-      }
-      //we cheat in a block game ft. right click
-      if (Mouse.isButtonDown(1) && rightClick.isToggled()) {
-         if (!this.rightClickAllowed())
-            return;
-
-
-
-         if (System.currentTimeMillis() - lastClick > speedRight * 1000) {
-            lastClick = System.currentTimeMillis();
-            if (leftHold < lastClick){
-               leftHold = lastClick;
-            }
-            int key = mc.gameSettings.keyBindUseItem.getKeyCode();
-            KeyBinding.setKeyBindState(key, true);
-            KeyBinding.onTick(key);
-         } else if (System.currentTimeMillis() - leftHold > rightHoldLength * 1000) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-         }
-      }
-   }
-
-   public boolean rightClickAllowed() {
-      ItemStack item = mc.thePlayer.getHeldItem();
-      if (item != null) {
-         if (this.allowEat.isToggled()) {
-            if ((item.getItem() instanceof ItemFood)) {
-               return false;
-            }
-         }
-         if (this.allowBow.isToggled()) {
-            if (item.getItem() instanceof ItemBow) {
-               return false;
-            }
-         }
-         if (this.onlyBlocks.isToggled()) {
-            if (!(item.getItem() instanceof ItemBlock))
-               return false;
-         }
-         if (this.noBlockSword.isToggled()) {
-            if (item.getItem() instanceof ItemSword)
-               return false;
-         }
-      }
-
-      if(this.preferFastPlace.isToggled()) {
-         Module fastplace = NotAName.moduleManager.getModuleByName("FastPlace");
-         if (fastplace.isEnabled())
-            return false;
-      }
-      return true;
    }
 }

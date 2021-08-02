@@ -119,6 +119,6 @@ public class BurstClicker extends Module {
          }
       }
 
-      ay.sc(r ? 1 : 0, st);
+      ay.setMouseButtonState(r ? 1 : 0, st);
    }
 }

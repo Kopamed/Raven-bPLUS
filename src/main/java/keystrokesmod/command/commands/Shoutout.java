@@ -15,5 +15,6 @@ public class Shoutout extends Command {
         print("- hevex", 0);
         print("- blowsy", 0);
         print("- jmraichdev", 0);
+        print("- nighttab", 0);
     }
 }

@@ -77,20 +77,20 @@ public class ay {
 
    }
 
-   public static void sc(int t, boolean s) {
-      if (mouseButton != null && mouseButtonState != null && mouseButtons != null) {
+   public static void setMouseButtonState(int mouseButton, boolean held) {
+      if (ay.mouseButton != null && mouseButtonState != null && mouseButtons != null) {
          MouseEvent m = new MouseEvent();
 
          try {
-            mouseButton.setAccessible(true);
-            mouseButton.set(m, t);
+            ay.mouseButton.setAccessible(true);
+            ay.mouseButton.set(m, mouseButton);
             mouseButtonState.setAccessible(true);
-            mouseButtonState.set(m, s);
+            mouseButtonState.set(m, held);
             MinecraftForge.EVENT_BUS.post(m);
             mouseButtons.setAccessible(true);
             ByteBuffer bf = (ByteBuffer) mouseButtons.get((Object)null);
             mouseButtons.setAccessible(false);
-            bf.put(t, (byte)(s ? 1 : 0));
+            bf.put(mouseButton, (byte)(held ? 1 : 0));
          } catch (IllegalAccessException var4) {
          }
 
@@ -466,9 +466,9 @@ public class ay {
       return finalString;
    }
 
-   public static enum ClickMode {
-      RAVEN,
-      LEGIT
+   public static enum ClickEvents {
+      RENDER,
+      TICK
    }
 
    public static enum BridgeMode {
@@ -481,5 +481,10 @@ public class ay {
    public static enum LookMode {
       SNAP,
       GLIDE
+   }
+
+   public static enum ClickTimings {
+      RAVEN,
+      SKID
    }
 }
