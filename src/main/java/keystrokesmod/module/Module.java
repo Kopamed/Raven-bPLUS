@@ -166,6 +166,7 @@ public class Module {
       minigames,
       fun,
       other,
-      client;
+      client,
+      debug;
    }
 }

@@ -11,6 +11,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.modules.debug.Click;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -133,6 +134,10 @@ public class AutoClicker extends Module {
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
          return;
 
+      if(!Mouse.isButtonDown(0)){
+         KeyBinding.setKeyBindState(0, false);
+      }
+
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
          if (ev.phase == Phase.END)
             return;
@@ -147,6 +152,10 @@ public class AutoClicker extends Module {
    public void onTick(TickEvent.PlayerTickEvent ev) {
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
          return;
+
+      if(!Mouse.isButtonDown(0)){
+         KeyBinding.setKeyBindState(0, false);
+      }
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
          ravenClick();
@@ -192,9 +201,11 @@ public class AutoClicker extends Module {
             }
             int key = mc.gameSettings.keyBindAttack.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
+            Click.minecraftPressed(true);
             KeyBinding.onTick(key);
          } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
+            Click.minecraftPressed(false);
          }
       }
       //we cheat in a block game ft. right click
@@ -211,9 +222,11 @@ public class AutoClicker extends Module {
             }
             int key = mc.gameSettings.keyBindUseItem.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
+
             KeyBinding.onTick(key);
          } else if (System.currentTimeMillis() - leftHold > rightHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+
          }
       } else {
          this.rightClickWaiting = false;
@@ -222,9 +235,6 @@ public class AutoClicker extends Module {
    }
 
    private void ravenClick() {
-      if(!Mouse.isButtonDown(0)){
-         KeyBinding.setKeyBindState(0, false);
-      }
       if (mc.currentScreen == null && mc.inGameHasFocus) {
          if (weaponOnly.isToggled() && !ay.wpn()) {
             return;
@@ -320,6 +330,7 @@ public class AutoClicker extends Module {
             if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
                if (!this.leftHeld) {
                   KeyBinding.setKeyBindState(key, true);
+                  Click.minecraftPressed(true);
                   KeyBinding.onTick(key);
                   this.leftHeld = true;
                }
@@ -329,6 +340,7 @@ public class AutoClicker extends Module {
 
             if (this.leftHeld) {
                KeyBinding.setKeyBindState(key, false);
+               Click.minecraftPressed(false);
                this.leftHeld = false;
             }
          }

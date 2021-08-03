@@ -388,6 +388,14 @@ public class ay {
       return mc.theWorld.isAirBlock(p);
    }
 
+   public static boolean playerUnderBlock() {
+      double x = mc.thePlayer.posX;
+      double y = mc.thePlayer.posY + 2.0D;
+      double z = mc.thePlayer.posZ;
+      BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
+      return mc.theWorld.isBlockFullCube(p);
+   }
+
    public static boolean wpn() {
       if (mc.thePlayer.getCurrentEquippedItem() == null) {
          return false;
