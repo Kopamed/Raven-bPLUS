@@ -159,7 +159,7 @@ public class BridgeAssist extends Module {
                 if (godbridgePos[0] >= (pitch - range) && godbridgePos[0] <= (pitch + range)) {
                     for (int k = 1; k < godbridgePos.length; k++) {
                         if (godbridgePos[k] >= (yaw - range) && godbridgePos[k] <= (yaw + range)) {
-                            aimAt(godbridgePos[0], godbridgePos[k]);
+                            aimAt(godbridgePos[0], godbridgePos[k], fuckedYaw, fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -172,7 +172,7 @@ public class BridgeAssist extends Module {
                 if (moonwalkPos[0] >= (pitch - range) && moonwalkPos[0] <= (pitch + range)) {
                     for (int k = 1; k < moonwalkPos.length; k++) {
                         if (moonwalkPos[k] >= (yaw - range) && moonwalkPos[k] <= (yaw + range)) {
-                            aimAt(moonwalkPos[0], moonwalkPos[k]);
+                            aimAt(moonwalkPos[0], moonwalkPos[k], fuckedYaw, fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -184,7 +184,7 @@ public class BridgeAssist extends Module {
                 if (breezilyPos[0] >= (pitch - range) && breezilyPos[0] <= (pitch + range)) {
                     for (int k = 1; k < breezilyPos.length; k++) {
                         if (breezilyPos[k] >= (yaw - range) && breezilyPos[k] <= (yaw + range)) {
-                            aimAt(breezilyPos[0], breezilyPos[k]);
+                            aimAt(breezilyPos[0], breezilyPos[k], fuckedYaw, fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -196,7 +196,7 @@ public class BridgeAssist extends Module {
                 if (normalPos[0] >= (pitch - range) && normalPos[0] <= (pitch + range)) {
                     for (int k = 1; k < normalPos.length; k++) {
                         if (normalPos[k] >= (yaw - range) && normalPos[k] <= (yaw + range)) {
-                            aimAt(normalPos[0], normalPos[k]);
+                            aimAt(normalPos[0], normalPos[k], fuckedYaw, fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -207,11 +207,11 @@ public class BridgeAssist extends Module {
         this.waitingForAim = false;
     }
 
-    public void aimAt(float pitch, float yaw){
+    public void aimAt(float pitch, float yaw, float fuckedYaw, float fuckedPitch){
        if(setLook.isToggled()) {
            //////System.out.println("Setting aim");
            if (ay.LookMode.values()[(int)(setLookMode.getInput() - 1.0D)] == ay.LookMode.SNAP) {
-               mc.thePlayer.rotationPitch = pitch;
+               mc.thePlayer.rotationPitch = pitch + ((int)fuckedPitch/360) * 360;
                mc.thePlayer.rotationYaw = yaw;
            } else if (ay.LookMode.values()[(int)(setLookMode.getInput() - 1.0D)] == ay.LookMode.GLIDE) {
                this.speedYaw = (yaw - mc.thePlayer.rotationYaw) / glideTime.getInput();
@@ -223,8 +223,8 @@ public class BridgeAssist extends Module {
                if (this.speedPitch < 0)
                    this.speedPitch *= -1;
 
-               this.waitingForYaw = yaw;
-               this.waitingForPitch = pitch;
+               this.waitingForYaw = yaw + fuckedYaw;
+               this.waitingForPitch = pitch + fuckedPitch;
 
                this.gliding = true;
            }
