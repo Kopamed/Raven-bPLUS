@@ -4,6 +4,7 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.ay;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
@@ -17,6 +18,9 @@ public class SafeWalk extends Module {
    public static ModuleSettingTick blocksOnly;
    public static ModuleSettingTick shiftOnJump;
    public static ModuleSettingTick onHold;
+   public static ModuleSettingTick lookDown;
+   public static ModuleSettingSlider pitchRange;
+   public static ModuleSettingSlider pitchIgnorePoint;
    private static boolean shouldBridge = false;
    private static boolean isShifting = false;
 
@@ -26,6 +30,9 @@ public class SafeWalk extends Module {
       this.registerSetting(shiftOnJump = new ModuleSettingTick("Shift during jumps", false));
       this.registerSetting(onHold = new ModuleSettingTick("On shift hold", false));
       this.registerSetting(blocksOnly = new ModuleSettingTick("Blocks only", true));
+      this.registerSetting(lookDown = new ModuleSettingTick("Only when looking down", true));
+      this.registerSetting(pitchRange = new ModuleSettingSlider("Pitch min range:", 70D, 0D, 90D, 1D));
+      this.registerSetting(pitchIgnorePoint = new ModuleSettingSlider("Pitch Max range:", 85D, 0D, 90D, 1D));
    }
 
    public void onDisable() {
@@ -37,9 +44,20 @@ public class SafeWalk extends Module {
       isShifting = false;
    }
 
+   public void guiUpdate() {
+      ay.correctSliders(pitchRange, pitchIgnorePoint);
+   }
+
    @SubscribeEvent
    public void p(PlayerTickEvent e) {
-      if (ay.isPlayerInGame() && doShift.isToggled()) {
+      if (!ay.isPlayerInGame()) {
+         return;
+      }
+      if(doShift.isToggled()) {
+         if(lookDown.isToggled()) {
+            if(mc.thePlayer.rotationPitch < pitchRange.getInput() || mc.thePlayer.rotationPitch > pitchIgnorePoint.getInput())
+               return;
+         }
          if (onHold.isToggled()) {
             if  (!Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()))
                return;
@@ -61,8 +79,10 @@ public class SafeWalk extends Module {
                isShifting = true;
                this.setShift(true);
                shouldBridge = true;
-            } else if (isShifting) {
+            }
+            else if (mc.thePlayer.isSneaking() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
                isShifting = false;
+               shouldBridge = false;
                this.setShift(false);
             }
          }

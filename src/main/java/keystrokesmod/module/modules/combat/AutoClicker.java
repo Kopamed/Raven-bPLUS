@@ -222,6 +222,9 @@ public class AutoClicker extends Module {
    }
 
    private void ravenClick() {
+      if(!Mouse.isButtonDown(0)){
+         KeyBinding.setKeyBindState(0, false);
+      }
       if (mc.currentScreen == null && mc.inGameHasFocus) {
          if (weaponOnly.isToggled() && !ay.wpn()) {
             return;
