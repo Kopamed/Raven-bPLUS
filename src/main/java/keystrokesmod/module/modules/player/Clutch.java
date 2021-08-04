@@ -42,5 +42,6 @@ public class Clutch extends Module {
                 return;
             }
         }
+        this.disable();
     }
 }

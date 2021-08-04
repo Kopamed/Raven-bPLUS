@@ -20,11 +20,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
+import keystrokesmod.module.modules.debug.Click;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -393,7 +396,7 @@ public class ay {
       double y = mc.thePlayer.posY + 2.0D;
       double z = mc.thePlayer.posZ;
       BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
-      return mc.theWorld.isBlockFullCube(p);
+      return !mc.theWorld.isAirBlock(p);
    }
 
    public static boolean wpn() {

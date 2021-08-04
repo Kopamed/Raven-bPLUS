@@ -166,6 +166,9 @@ public class AutoClicker extends Module {
    }
 
    private void skidClick(RenderTickEvent er, TickEvent.PlayerTickEvent e) {
+      if (!ay.isPlayerInGame())
+         return;
+
       guiUpdate();
 
       speedLeft = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
@@ -217,14 +220,14 @@ public class AutoClicker extends Module {
 
          if (System.currentTimeMillis() - lastClick > speedRight * 1000) {
             lastClick = System.currentTimeMillis();
-            if (leftHold < lastClick){
-               leftHold = lastClick;
+            if (rightHold < lastClick){
+               rightHold = lastClick;
             }
             int key = mc.gameSettings.keyBindUseItem.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
 
             KeyBinding.onTick(key);
-         } else if (System.currentTimeMillis() - leftHold > rightHoldLength * 1000) {
+         } else if (System.currentTimeMillis() - rightHold > rightHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
 
          }

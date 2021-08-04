@@ -18,6 +18,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
+import javax.security.auth.login.CredentialException;
+import javax.xml.stream.events.EndElement;
+
 public class AimAssist extends Module {
    public static ModuleSettingSlider speed;
    public static ModuleSettingSlider fov;
@@ -28,7 +31,7 @@ public class AimAssist extends Module {
    public static ModuleSettingTick breakBlocks;
    public static ModuleSettingTick blatantMode;
    public static ModuleSettingTick ignoreFriends;
-   public static ArrayList<String> friends = new ArrayList<String>();
+   public static ArrayList<Entity> friends = new ArrayList<>();
 
    public AimAssist() {
       super("AimAssist", Module.category.combat, 0);
@@ -61,6 +64,9 @@ public class AimAssist extends Module {
                   if (Ravenb3.debugger) {
                      ay.sendMessageToSelf(this.getName() + " &e" + en.getName());
                   }
+                  if (ignoreFriends.isToggled() && isAFriend(en)){
+                     return;
+                  }
 
                   if (blatantMode.isToggled()) {
                      ay.aim(en, 0.0F, false);
@@ -76,6 +82,14 @@ public class AimAssist extends Module {
             }
          }
       }
+   }
+
+   public boolean isAFriend(Entity entity) {
+      for (Entity wut : friends){
+         if (wut.equals(entity))
+            return true;
+      }
+      return false;
    }
 
    public Entity getEnemy() {
@@ -102,5 +116,48 @@ public class AimAssist extends Module {
       } while(!blatantMode.isToggled() && !ay.fov(en, (float)fov));
 
       return en;
+   }
+
+   public static void addFriend(Entity entityPlayer) {
+      friends.add(entityPlayer);
+   }
+
+   public static boolean addFriend(String name) {
+      boolean found = false;
+      for (Entity entity:mc.theWorld.getLoadedEntityList()) {
+         if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
+            addFriend(entity);
+            found = true;
+         }
+      }
+
+      return found;
+   }
+
+   public static boolean removeFriend(String name) {
+      boolean removed = false;
+      boolean found = false;
+      for (Entity entity:mc.theWorld.getLoadedEntityList()) {
+         if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
+            removed = removeFriend(entity);
+            found = true;
+         }
+      }
+
+      return found && removed;
+   }
+
+   public static boolean removeFriend(Entity entityPlayer) {
+      try{
+         friends.remove(entityPlayer);
+      } catch (Exception eeeeee){
+         eeeeee.printStackTrace();
+         return false;
+      }
+      return true;
+   }
+
+   public static ArrayList<Entity> getFriends() {
+      return friends;
    }
 }

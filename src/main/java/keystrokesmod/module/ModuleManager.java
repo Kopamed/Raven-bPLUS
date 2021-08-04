@@ -10,6 +10,7 @@ import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.module.modules.client.UpdateCheck;
 import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.debug.Click;
+import keystrokesmod.module.modules.debug.MouseClick;
 import keystrokesmod.module.modules.fun.Fun;
 import keystrokesmod.module.modules.minigames.BridgeInfo;
 import keystrokesmod.module.modules.minigames.DuelsStats;
@@ -111,6 +112,8 @@ public class ModuleManager {
       this.addModule(new Clutch());
       this.addModule(new AutoHeader());
       this.addModule(new Click());
+      this.addModule(new MiddleClick());
+      this.addModule(new MouseClick());
       this.defEn();
    }
 
