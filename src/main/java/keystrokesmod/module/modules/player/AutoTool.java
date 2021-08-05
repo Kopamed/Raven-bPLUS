@@ -44,8 +44,10 @@ public class AutoTool extends Module {
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent e) {
-        if (!ay.isPlayerInGame())
+        if (!ay.isPlayerInGame() || mc.currentScreen != null)
             return;
+
+        //System.out.println(mc.currentScreen);
 
         if(Mouse.isButtonDown(0)) {
             if(AutoClicker.autoClickerEnabled) {
@@ -57,13 +59,13 @@ public class AutoTool extends Module {
             BlockPos lookingAtBlock = mc.objectMouseOver.getBlockPos();
             if (lookingAtBlock != null) {
                 Block stateBlock = mc.theWorld.getBlockState(lookingAtBlock).getBlock();
-                if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid)) {
+                if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid) && stateBlock instanceof Block) {
                     if(!mining) {
                         previousSlot = ay.getCurrentPlayerSlot();
                         mining = true;
                     }
                     int index = -1;
-                    double speed = -1;
+                    double speed = 1;
 
 
                     for (int slot = 0; slot <= 8; slot++) {
@@ -88,7 +90,7 @@ public class AutoTool extends Module {
                         }
                     }
 
-                    if(index == -1 || speed <= 1) {
+                    if(index == -1 || speed <= 1.1 || speed == 0) {
                         return;
                     } else {
                         ay.hotkeyToSlot(index);
@@ -101,11 +103,11 @@ public class AutoTool extends Module {
 
                 }
                 else{
-                    finishMining();
+                    return;
                 }
             }
             else {
-                finishMining();
+                return;
             }
 
 
