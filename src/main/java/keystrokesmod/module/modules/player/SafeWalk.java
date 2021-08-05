@@ -80,6 +80,11 @@ public class SafeWalk extends Module {
                this.setShift(true);
                shouldBridge = true;
             }
+            else if(mc.thePlayer.isSneaking()) {
+               isShifting = false;
+               this.setShift(false);
+               shouldBridge = true;
+            }
             else if (mc.thePlayer.isSneaking() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
                isShifting = false;
                shouldBridge = false;

@@ -141,6 +141,8 @@ public class AutoClicker extends Module {
 
       if(!Mouse.isButtonDown(0)){
          KeyBinding.setKeyBindState(0, false);
+         this.lefti = 0L;
+         this.leftj = 0L;
       }
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
@@ -160,6 +162,8 @@ public class AutoClicker extends Module {
 
       if(!Mouse.isButtonDown(0)){
          KeyBinding.setKeyBindState(0, false);
+         this.lefti = 0L;
+         this.leftj = 0L;
       }
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
@@ -331,6 +335,13 @@ public class AutoClicker extends Module {
    }
 
    public void leftClickExecute(int key) {
+      if(!Mouse.isButtonDown(0)){
+         KeyBinding.setKeyBindState(0, false);
+         this.lefti = 0L;
+         this.leftj = 0L;
+         return;
+      }
+      
       if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
          BlockPos p = mc.objectMouseOver.getBlockPos();
          if (p != null) {
