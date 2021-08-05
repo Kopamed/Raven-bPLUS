@@ -36,7 +36,7 @@ public class Clutch extends Module {
 
         for (int slot = 0; slot <= 8; slot++) {
             ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-            if(itemInSlot != null && itemInSlot.getItem() instanceof ItemBlock) {
+            if(itemInSlot != null && itemInSlot.getItem() instanceof ItemBlock && (((ItemBlock) itemInSlot.getItem()).getBlock().isFullBlock() || ((ItemBlock) itemInSlot.getItem()).getBlock().isFullCube())) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
