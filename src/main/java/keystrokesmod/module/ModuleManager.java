@@ -17,17 +17,13 @@ import keystrokesmod.module.modules.minigames.DuelsStats;
 import keystrokesmod.module.modules.minigames.MurderMystery;
 import keystrokesmod.module.modules.minigames.SumoFences;
 import keystrokesmod.module.modules.movement.*;
-import keystrokesmod.module.modules.other.FakeChat;
-import keystrokesmod.module.modules.other.NameHider;
-import keystrokesmod.module.modules.other.StringEncrypt;
-import keystrokesmod.module.modules.other.WaterBucket;
+import keystrokesmod.module.modules.other.*;
 import keystrokesmod.module.modules.player.*;
 import keystrokesmod.module.modules.render.*;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.module.modules.world.ChatLogger;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -114,6 +110,7 @@ public class ModuleManager {
       this.addModule(new Click());
       this.addModule(new MiddleClick());
       this.addModule(new MouseClick());
+      this.addModule(new AutoTool());
       this.defEn();
    }
 

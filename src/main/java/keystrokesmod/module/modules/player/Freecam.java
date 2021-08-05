@@ -72,6 +72,8 @@ public class Freecam extends Module {
    }
 
    public void update() {
+      if(!ay.isPlayerInGame() || en == null)
+         return;;
       if (b.isToggled() && mc.thePlayer.hurtTime != 0) {
          this.disable();
       } else {

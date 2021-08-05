@@ -399,6 +399,17 @@ public class ay {
       return !mc.theWorld.isAirBlock(p);
    }
 
+   public static void hotkeyToSlot(int slot) {
+      if(!ay.isPlayerInGame())
+         return;
+
+      mc.thePlayer.inventory.currentItem = slot;
+   }
+
+   public static int getCurrentPlayerSlot() {
+      return mc.thePlayer.inventory.currentItem;
+   }
+
    public static boolean wpn() {
       if (mc.thePlayer.getCurrentEquippedItem() == null) {
          return false;

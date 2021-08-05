@@ -1,4 +1,4 @@
-package keystrokesmod.module.modules.player;
+package keystrokesmod.module.modules.other;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.ay;
@@ -34,7 +34,7 @@ public class MiddleClick extends Module {
     public static boolean moveback, timeOut;
 
     public MiddleClick() {
-        super("Middleclick", category.player, 0);
+        super("Middleclick", category.other, 0);
         this.registerSetting(showHelp = new ModuleSettingTick("Show friend help in chat", true));
         this.registerSetting(minCPS = new ModuleSettingSlider("Min CPS:", 8,1, 20, 0.5));
         this.registerSetting(maxCPS = new ModuleSettingSlider("Max CPS:", 12,1, 20, 0.5));

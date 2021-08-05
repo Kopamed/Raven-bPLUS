@@ -62,6 +62,7 @@ public class AutoClicker extends Module {
    private boolean rightClickWaiting;
    private double rightClickWaitStartTime;
    private boolean allowedClick;
+   public static boolean autoClickerEnabled;
 
    public AutoClicker() {
       super("AutoClicker", Module.category.combat, 0);
@@ -95,6 +96,8 @@ public class AutoClicker extends Module {
             this.playerMouseInput = GuiScreen.class.getDeclaredMethod("mouseClicked", Integer.TYPE, Integer.TYPE, Integer.TYPE);
          } catch (Exception var3) {
          }
+
+
       }
 
       if (this.playerMouseInput != null) {
@@ -102,7 +105,7 @@ public class AutoClicker extends Module {
       }
 
       this.rightClickWaiting = false;
-
+      autoClickerEnabled = false;
    }
 
    public void onEnable() {
@@ -113,6 +116,7 @@ public class AutoClicker extends Module {
       this.rightClickWaiting = false;
       this.allowedClick = false;
       this.rand = new Random();
+      autoClickerEnabled = true;
    }
 
    public void onDisable() {
@@ -120,6 +124,7 @@ public class AutoClicker extends Module {
       this.leftj = 0L;
       this.leftHeld = false;
       this.rightClickWaiting = false;
+      autoClickerEnabled = false;
    }
 
    public void guiUpdate() {

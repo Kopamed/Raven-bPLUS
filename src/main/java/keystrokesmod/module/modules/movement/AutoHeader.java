@@ -1,4 +1,4 @@
-package keystrokesmod.module.modules.player;
+package keystrokesmod.module.modules.movement;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.ay;
@@ -20,7 +20,7 @@ public class AutoHeader extends Module {
     private double startWait;
 
     public AutoHeader() {
-        super("AutoHeadHitter", category.player, 0);
+        super("AutoHeadHitter", category.movement, 0);
         this.registerSetting(desc = new ModuleDesc("Spams spacebar when under blocks"));
         this.registerSetting(cancelDuringShift = new ModuleSettingTick("Cancel if snkeaing", true));
         this.registerSetting(pbs = new ModuleSettingSlider("Jump Presses per second", 12, 1, 20, 1));

@@ -13,6 +13,7 @@ import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -84,7 +85,7 @@ public class AimAssist extends Module {
       }
    }
 
-   public boolean isAFriend(Entity entity) {
+   public static boolean isAFriend(Entity entity) {
       for (Entity wut : friends){
          if (wut.equals(entity))
             return true;
@@ -126,8 +127,10 @@ public class AimAssist extends Module {
       boolean found = false;
       for (Entity entity:mc.theWorld.getLoadedEntityList()) {
          if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
-            addFriend(entity);
-            found = true;
+            if(!isAFriend(entity)) {
+               addFriend(entity);
+               found = true;
+            }
          }
       }
 
@@ -137,7 +140,8 @@ public class AimAssist extends Module {
    public static boolean removeFriend(String name) {
       boolean removed = false;
       boolean found = false;
-      for (Entity entity:mc.theWorld.getLoadedEntityList()) {
+      for (NetworkPlayerInfo networkPlayerInfo : new ArrayList<NetworkPlayerInfo>(mc.getNetHandler().getPlayerInfoMap())) {
+         Entity entity = (Entity) mc.theWorld.getPlayerEntityByName(networkPlayerInfo.getDisplayName().getUnformattedText());
          if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
             removed = removeFriend(entity);
             found = true;
