@@ -50,6 +50,10 @@ public class AutoCombo extends Module {
 
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
+            if(target.isDead) {
+                return;
+            }
+
             if (mc.thePlayer.getDistanceToEntity(target) <= 3) {
                 if (target.canAttackWithItem()) {
                     comboLasts = ThreadLocalRandom.current().nextDouble( minActionTicks.getInput(),  maxActionTicks.getInput() + 0.02) + System.currentTimeMillis();

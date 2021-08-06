@@ -188,6 +188,7 @@ public class AutoClicker extends Module {
                   int key = mc.gameSettings.keyBindAttack.getKeyCode();
                   KeyBinding.setKeyBindState(key, true);
                   KeyBinding.onTick(key);
+                  ay.setMouseButtonState(0, true);
                   return;
                }
             }
@@ -203,9 +204,11 @@ public class AutoClicker extends Module {
             KeyBinding.setKeyBindState(key, true);
             Click.minecraftPressed(true);
             KeyBinding.onTick(key);
+            ay.setMouseButtonState(0, true);
          } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
             Click.minecraftPressed(false);
+            ay.setMouseButtonState(0, false);
          }
       }
       //we cheat in a block game ft. right click
@@ -222,10 +225,12 @@ public class AutoClicker extends Module {
             }
             int key = mc.gameSettings.keyBindUseItem.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
+            ay.setMouseButtonState(1, true);
 
             KeyBinding.onTick(key);
          } else if (System.currentTimeMillis() - rightHold > rightHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+            ay.setMouseButtonState(1, false);
 
          }
       } else {
