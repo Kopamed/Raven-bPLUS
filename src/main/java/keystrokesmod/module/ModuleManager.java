@@ -111,6 +111,7 @@ public class ModuleManager {
       this.addModule(new MiddleClick());
       this.addModule(new MouseClick());
       this.addModule(new AutoTool());
+      this.addModule(new AutoCombo());
       this.defEn();
    }
 

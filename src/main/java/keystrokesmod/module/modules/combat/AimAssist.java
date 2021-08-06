@@ -52,10 +52,11 @@ public class AimAssist extends Module {
             BlockPos p = mc.objectMouseOver.getBlockPos();
             if (p != null) {
                Block bl = mc.theWorld.getBlockState(p).getBlock();
-               if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
+               if (bl != Blocks.air && !(bl instanceof BlockLiquid) && bl instanceof  Block) {
                   return;
                }
             }
+         }
 
 
          if (!weaponOnly.isToggled() || ay.wpn()) {
@@ -83,7 +84,7 @@ public class AimAssist extends Module {
             }
          }
       }
-   }
+
 
    public static boolean isAFriend(Entity entity) {
       for (Entity wut : friends){

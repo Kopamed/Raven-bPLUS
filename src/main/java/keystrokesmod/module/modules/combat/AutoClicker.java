@@ -341,7 +341,7 @@ public class AutoClicker extends Module {
          this.leftj = 0L;
          return;
       }
-      
+
       if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
          BlockPos p = mc.objectMouseOver.getBlockPos();
          if (p != null) {

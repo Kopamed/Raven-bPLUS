@@ -1,10 +1,10 @@
 package keystrokesmod.config;
 
-import keystrokesmod.CommandLine;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.HUD;
+import keystrokesmod.module.modules.client.CommandLine;
 import net.minecraft.client.Minecraft;
 
 import java.io.*;
@@ -114,6 +114,13 @@ public class ConfigManager {
                     if (module.getName().equalsIgnoreCase("hud") && toggled){
                         Module hud = (HUD) module;
                         hud.enable();
+                    }
+
+                    if (module.getName().equalsIgnoreCase("Command line") && toggled){
+                        Module cmd = (CommandLine) module;
+                        cmd.disable();
+                        cmd.onDisable();
+                        continue;
                     }
                     module.setbind(keyBind);
                     if (toggled) {
