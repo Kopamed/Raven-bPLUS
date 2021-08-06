@@ -10,21 +10,8 @@ Discord:<br>
 <a href="https://discord.gg/N4zn4FwPcz"><img src="https://invidget.switchblade.xyz/N4zn4FwPcz" alt="https://discord.gg/N4zn4FwPcz"/></a><br>
 (0 stars and forks because I remade repo due to the fact that all the stars and forks of the old one were going to the parent repo, shich I did not like)
 # Installation
-
 ## User
-1. Get and install (by running the file you downloaded) [forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html 'forge'). 
-2. Get the client from the [builds](https://github.com/Kopamed/Raven-bPLUS/tree/main/build/libs 'Builds') folder
-3. Put the file into your minecraft mods folder. If you do not have this folder, just make one in the minecraft directory (or search up how to install forge mods on youtube)
-4. Run minecraft forge.
-
-## For NPC's
-1. Click this thing<br>
-![bruh why aint it loading for u](https://i.imgur.com/78uFw8b.png)
-2. Now look for the latest version. Download the one which does not have `-sources` at the end.
-3. Download by clicking on it (the one in the image below prob has a dif version number below, but that does not matter)<br>
-![and this as well?](https://i.imgur.com/2se2B5Y.png)
-4. Now click download <br>
-![damnnn ur wifi sucks](https://i.imgur.com/LP5jEGe.png)
+Get the latest version by clicking Download on our website! https://ravenclient.cf/ !<br>
 
 ## Build
 1. [Get](https://gradle.org/next-steps/?version=2.7&format=bin) and [install](https://docs.gradle.org/current/userguide/installation.html) gradle.
