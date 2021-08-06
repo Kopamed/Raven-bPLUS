@@ -19,15 +19,18 @@ public class AutoCombo extends Module {
     public static ModuleSettingSlider comboMode, range;
     public static ModuleSettingTick onlyPlayers;
     public static ModuleDesc comboModeDesc;
-    public static ModuleSettingSlider minActionTicks, maxActionTicks;
+    public static ModuleSettingSlider minActionTicks, maxActionTicks, minOnceEvery, maxOnceEvery;
     public static double comboLasts, currentTime;
-    public static boolean comboing;
+    public static boolean comboing, hitCoolDown, alreadyHit;
+    public static int hitTimeout, hitsWaited;
 
     public AutoCombo() {
         super("Auto Combo", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
         this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 150, 1, 500, 5));
-        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 215, 1, 500, 1));
+        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 215, 1, 500, 5));
+        this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
+        this.registerSetting(maxOnceEvery = new ModuleSettingSlider("Once every max hits: ", 1, 1, 10, 1));
         this.registerSetting(range = new ModuleSettingSlider("Range: ", 2.85, 1, 6, 0.05));
         this.registerSetting(comboMode = new ModuleSettingSlider("Value: ", 1, 1, 3, 1));
         this.registerSetting(comboModeDesc = new ModuleDesc("Mode: BlockHit"));
@@ -37,6 +40,7 @@ public class AutoCombo extends Module {
     public void guiUpdate() {
         comboModeDesc.setDesc(ay.md + ComboMode.values()[(int) (comboMode.getInput() - 1)]);
         ay.correctSliders(minActionTicks, maxActionTicks);
+        ay.correctSliders(minOnceEvery, maxOnceEvery);
     }
 
 
@@ -62,6 +66,7 @@ public class AutoCombo extends Module {
 
             if (mc.thePlayer.getDistanceToEntity(target) <= range.getInput()) {
                 if (target.canAttackWithItem()) {
+
                     if (onlyPlayers.isToggled()){
                         if (!(target instanceof EntityPlayer)){
                             return;
@@ -72,9 +77,33 @@ public class AutoCombo extends Module {
                         return;
                     }
 
+
+                    if (hitCoolDown && !alreadyHit) {
+                        hitsWaited++;
+                        alreadyHit = true;
+                        if(hitsWaited >= hitTimeout + 1){
+                            hitCoolDown = false;
+                            hitsWaited = 0;
+                        } else {
+                            return;
+                        }
+                    }
+
+                    guiUpdate();
+                    if(minOnceEvery.getInput() == maxOnceEvery.getInput()) {
+                        hitTimeout =  (int)minOnceEvery.getInput();
+                    } else {
+
+                        hitTimeout = ThreadLocalRandom.current().nextInt((int)minOnceEvery.getInput(), (int)maxOnceEvery.getInput());
+                    }
+                    hitCoolDown = true;
+                    hitsWaited = 0;
+
                     comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.01) + System.currentTimeMillis();
                     comboing = true;
                     startCombo();
+                } else {
+                    alreadyHit = false;
                 }
             }
         }

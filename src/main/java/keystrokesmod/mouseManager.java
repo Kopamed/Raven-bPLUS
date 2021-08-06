@@ -53,7 +53,15 @@ public class mouseManager {
 
    //prev f
    public static int getLeftClickCounter() {
-      leftClicks.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
+      try{
+         for(int i = 0; 1 < leftClicks.size(); i++) {
+            if(leftClicks.get(i) > 1000) {
+               leftClicks.remove(i);
+            }
+         }
+      } catch (Exception welpTheKeystrokes){
+         welpTheKeystrokes.printStackTrace();
+      }
       return leftClicks.size();
    }
 
