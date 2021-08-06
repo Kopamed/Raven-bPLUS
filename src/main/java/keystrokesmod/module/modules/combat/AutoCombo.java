@@ -71,8 +71,8 @@ public class AutoCombo extends Module {
                     if(AntiBot.bot(target)){
                         return;
                     }
-                    
-                    comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.001) + System.currentTimeMillis();
+
+                    comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.01) + System.currentTimeMillis();
                     comboing = true;
                     startCombo();
                 }
