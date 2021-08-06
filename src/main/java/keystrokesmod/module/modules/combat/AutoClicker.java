@@ -83,7 +83,7 @@ public class AutoClicker extends Module {
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
       this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(rightClickDelay = new ModuleSettingSlider("Righhtclick delay (ms)", 85D, 0D, 500D, 1.0D));
+      this.registerSetting(rightClickDelay = new ModuleSettingSlider("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
       this.registerSetting(clickTimings = new ModuleSettingSlider("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(timingsDesc = new ModuleDesc("Mode: RAVEN"));
       this.registerSetting(clickEvent = new ModuleSettingSlider("Event", 2.0D, 1.0D, 2.0D, 1.0D));

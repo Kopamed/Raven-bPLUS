@@ -25,7 +25,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -72,6 +71,7 @@ public class Ravenb3 {
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
       FMLCommonHandler.instance().bus().register(ModuleManager.reach);
+      FMLCommonHandler.instance().bus().register(ModuleManager.nameHider);
       //BlowsyConfigManager.applyKeyStrokeSettingsFromConfigFile();
       //BlowsyConfigManager.applyCheatSettingsFromConfigFile();
       keySrokeRenderer = new KeySrokeRenderer();
@@ -92,7 +92,7 @@ public class Ravenb3 {
    }
 
    @SubscribeEvent
-   public void onTick(TickEvent.PlayerTickEvent e) {
+   public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
             for (Module module : notAName.getm0dmanager().listofmods()) {
