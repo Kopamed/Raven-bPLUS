@@ -139,12 +139,6 @@ public class AutoClicker extends Module {
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
          return;
 
-      if(!Mouse.isButtonDown(0)){
-         KeyBinding.setKeyBindState(0, false);
-         this.lefti = 0L;
-         this.leftj = 0L;
-      }
-
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
          if (ev.phase == Phase.END)
             return;
@@ -159,12 +153,6 @@ public class AutoClicker extends Module {
    public void onTick(TickEvent.PlayerTickEvent ev) {
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
          return;
-
-      if(!Mouse.isButtonDown(0)){
-         KeyBinding.setKeyBindState(0, false);
-         this.lefti = 0L;
-         this.leftj = 0L;
-      }
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] != ay.ClickTimings.RAVEN){
          ravenClick();
@@ -348,10 +336,12 @@ public class AutoClicker extends Module {
             Block bl = mc.theWorld.getBlockState(p).getBlock();
             if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
                if (!this.leftHeld) {
-                  KeyBinding.setKeyBindState(key, true);
-                  Click.minecraftPressed(true);
-                  KeyBinding.onTick(key);
-                  this.leftHeld = true;
+                  if(!Mouse.isButtonDown(0)){
+                     KeyBinding.setKeyBindState(key, true);
+                     Click.minecraftPressed(true);
+                     KeyBinding.onTick(key);
+                     this.leftHeld = true;
+                  }
                }
 
                return;
