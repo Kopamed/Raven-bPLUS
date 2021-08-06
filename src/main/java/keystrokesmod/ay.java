@@ -396,7 +396,7 @@ public class ay {
       double y = mc.thePlayer.posY + 2.0D;
       double z = mc.thePlayer.posZ;
       BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
-      return !mc.theWorld.isAirBlock(p);
+      return mc.theWorld.isBlockFullCube(p) || mc.theWorld.isBlockNormalCube(p, false);
    }
 
    public static void hotkeyToSlot(int slot) {
@@ -486,6 +486,10 @@ public class ay {
       }
 
       return finalString;
+   }
+
+   public static boolean currentScreenMinecraft() {
+      return mc.currentScreen == null;
    }
 
    public static enum ClickEvents {

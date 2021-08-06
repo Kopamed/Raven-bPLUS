@@ -50,6 +50,9 @@ public class SafeWalk extends Module {
 
    @SubscribeEvent
    public void p(PlayerTickEvent e) {
+      if(!ay.currentScreenMinecraft())
+         return;
+
       if (!ay.isPlayerInGame()) {
          return;
       }

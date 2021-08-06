@@ -139,7 +139,9 @@ public class AutoTool extends Module {
     }
 
     public void finishMining(){
-        ay.hotkeyToSlot(previousSlot);
+        if(hotkeyBack.isToggled()) {
+            ay.hotkeyToSlot(previousSlot);
+        }
         justFinishedMining = false;
         mining = false;
     }

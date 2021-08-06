@@ -136,6 +136,9 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
+      if(!ay.currentScreenMinecraft())
+         return;
+
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
          return;
 
@@ -151,6 +154,9 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onTick(TickEvent.PlayerTickEvent ev) {
+      if(!ay.currentScreenMinecraft())
+         return;
+
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
          return;
 

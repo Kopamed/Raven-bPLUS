@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,8 +28,8 @@ public class AutoCombo extends Module {
     public AutoCombo() {
         super("Auto Combo", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
-        this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 150, 1, 500, 5));
-        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 215, 1, 500, 5));
+        this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 75, 1, 500, 5));
+        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 120, 1, 500, 5));
         this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
         this.registerSetting(maxOnceEvery = new ModuleSettingSlider("Once every max hits: ", 1, 1, 10, 1));
         this.registerSetting(range = new ModuleSettingSlider("Range: ", 2.85, 1, 6, 0.05));
@@ -60,12 +61,13 @@ public class AutoCombo extends Module {
 
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
+            System.out.println(target.hurtResistantTime);
             if(target.isDead) {
                 return;
             }
 
             if (mc.thePlayer.getDistanceToEntity(target) <= range.getInput()) {
-                if (target.canAttackWithItem()) {
+                if (target.hurtResistantTime <= 10) {
 
                     if (onlyPlayers.isToggled()){
                         if (!(target instanceof EntityPlayer)){
@@ -79,31 +81,45 @@ public class AutoCombo extends Module {
 
 
                     if (hitCoolDown && !alreadyHit) {
+                        System.out.println("coolDownCheck");
                         hitsWaited++;
-                        alreadyHit = true;
-                        if(hitsWaited >= hitTimeout + 1){
+                        if(hitsWaited >= hitTimeout){
+                            System.out.println("hiit cool down reached");
                             hitCoolDown = false;
                             hitsWaited = 0;
                         } else {
+                            System.out.println("still waiting for cooldown");
+                            alreadyHit = true;
                             return;
                         }
                     }
 
-                    guiUpdate();
-                    if(minOnceEvery.getInput() == maxOnceEvery.getInput()) {
-                        hitTimeout =  (int)minOnceEvery.getInput();
-                    } else {
+                    System.out.println("Continued");
 
-                        hitTimeout = ThreadLocalRandom.current().nextInt((int)minOnceEvery.getInput(), (int)maxOnceEvery.getInput());
+                    if(!alreadyHit){
+                        System.out.println("Startring combo code");
+                        guiUpdate();
+                        if(minOnceEvery.getInput() == maxOnceEvery.getInput()) {
+                            hitTimeout =  (int)minOnceEvery.getInput();
+                        } else {
+
+                            hitTimeout = ThreadLocalRandom.current().nextInt((int)minOnceEvery.getInput(), (int)maxOnceEvery.getInput());
+                        }
+                        hitCoolDown = true;
+                        hitsWaited = 0;
+
+                        comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.01) + System.currentTimeMillis();
+                        comboing = true;
+                        startCombo();
+                        System.out.println("Combo started");
+                        alreadyHit = true;
                     }
-                    hitCoolDown = true;
-                    hitsWaited = 0;
-
-                    comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.01) + System.currentTimeMillis();
-                    comboing = true;
-                    startCombo();
                 } else {
+                    if(alreadyHit){
+                        System.out.println("UnHit");
+                    }
                     alreadyHit = false;
+                    System.out.println("REEEEEEE");
                 }
             }
         }
