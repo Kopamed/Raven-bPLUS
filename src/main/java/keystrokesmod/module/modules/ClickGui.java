@@ -81,7 +81,17 @@ public class ClickGui extends GuiScreen {
       mc.fontRendererObj.drawString(ay.getDate(), this.width-3-this.fontRendererObj.getStringWidth(ay.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.rainbowDraw(2L, 420L));
 
       //version
-      if(Ravenb3.outdated){
+      if(Ravenb3.outdated && Ravenb3.beta) {
+         int margin = 2;
+         int rows = 1;
+         for (int i = Ravenb3.helloYourComputerHasVirus.length-1; i >= 0; i--) {
+            String up = Ravenb3.helloYourComputerHasVirus[i];
+            mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.rainbowDraw(2L, 420L));
+            rows++;
+            margin += 2;
+         }
+      }
+      else if(Ravenb3.outdated){
          int margin = 2;
          int rows = 1;
          for (int i = Ravenb3.updateText.length-1; i >= 0; i--) {
@@ -92,7 +102,7 @@ public class ClickGui extends GuiScreen {
          }
       }
       else if(Ravenb3.beta) {
-         String veryCoolBetaUser = mc.thePlayer.getName() + " is a very cool beta user of version " + version.getCurrentVersion().replaceAll("-", ".");
+         String veryCoolBetaUser = "Beta build of version " + version.getCurrentVersion().replaceAll("-", ".");
          mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.rainbowDraw(2L, 420L));
       } else {
          mc.fontRendererObj.drawString("On latest version", halfScreenWidth - this.fontRendererObj.getStringWidth("On latest version") / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.rainbowDraw(2L, 420L));

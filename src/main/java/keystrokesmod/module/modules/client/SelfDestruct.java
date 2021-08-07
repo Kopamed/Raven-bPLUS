@@ -5,12 +5,13 @@ package keystrokesmod.module.modules.client;
 import keystrokesmod.module.Module;
 import keystrokesmod.main.NotAName;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.input.Keyboard;
 
 public class SelfDestruct extends Module {
    public static boolean destructed = false;
 
    public SelfDestruct() {
-      super("Self Destruct", Module.category.client, 0);
+      super("Self Destruct", Module.category.client, Keyboard.KEY_BACK);
    }
 
    public void onEnable() {

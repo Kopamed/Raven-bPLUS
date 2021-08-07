@@ -4,6 +4,7 @@ package keystrokesmod.module.modules.combat;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
@@ -66,16 +67,13 @@ public class AimAssist extends Module {
                   if (Ravenb3.debugger) {
                      ay.sendMessageToSelf(this.getName() + " &e" + en.getName());
                   }
-                  if (ignoreFriends.isToggled() && isAFriend(en)){
-                     return;
-                  }
 
                   if (blatantMode.isToggled()) {
                      ay.aim(en, 0.0F, false);
                   } else {
                      double n = ay.n(en);
                      if (n > 1.0D || n < -1.0D) {
-                        float val = (float)(-(n / (101.0D - speed.getInput())));
+                        float val = (float)(-(n / (101.0D - ThreadLocalRandom.current().nextDouble(speed.getInput()-0.5, speed.getInput() + 8.432))));
                         mc.thePlayer.rotationYaw += val;
                      }
                   }
@@ -105,11 +103,13 @@ public class AimAssist extends Module {
                do {
                   do {
                      do {
-                        if (!var2.hasNext()) {
-                           return null;
-                        }
+                        do {
+                           if (!var2.hasNext()) {
+                              return null;
+                           }
 
-                        en = (EntityPlayer)var2.next();
+                           en = (EntityPlayer) var2.next();
+                        } while (ignoreFriends.isToggled() && isAFriend(en));
                      } while(en == mc.thePlayer);
                   } while(en.deathTime != 0);
                } while(!aimInvis.isToggled() && en.isInvisible());

@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 public class version {
     public static final String versionFileName = "/assets/keystrokes/version";
+    public static final String branchFileName = "/assets/keystrokes/branch";
     public static String currentVersion = null;
     public static String latestVersion = null;
 
@@ -98,6 +99,17 @@ public class version {
     }
 
     public static boolean isBeta() {
+        InputStream input = version.class.getResourceAsStream(branchFileName);
+        Scanner scanner = new Scanner(input);
+        try {
+            if(scanner.nextLine().equalsIgnoreCase("beta")){
+                return true;
+            }
+        } catch (Exception var47) {
+            var47.printStackTrace();
+        }
+
+
         currentVersion = getCurrentVersion();
         latestVersion = getLatestVersion();
 
