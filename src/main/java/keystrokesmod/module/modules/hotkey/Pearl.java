@@ -5,16 +5,19 @@ import keystrokesmod.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.*;
 import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.nio.file.FileSystem;
+import java.util.ArrayList;
 
 public class Pearl extends Module {
     private ModuleSettingTick preferSlot;
     private ModuleSettingSlider hotbarSlotPreference;
+    public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<KeyBinding>();
     public Pearl() {
         super("Pearl", category.hotkey, 0);
 
@@ -33,6 +36,21 @@ public class Pearl extends Module {
 
     @Override
     public void onEnable(){
+        if (!ay.isPlayerInGame())
+            return;
+
+        for (int o = 0; o < mc.gameSettings.keyBindsHotbar.length; o++){
+            if(mc.gameSettings.keyBindsHotbar[o].getKeyCode()== this.getKeycode()) {
+                System.out.println(o + " -  - - - - - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
+                mc.gameSettings.keyBindsHotbar[o].setKeyCode(0);
+                changedKeybinds.add(mc.gameSettings.keyBindsHotbar[o]);
+            }
+            else {
+                System.out.println(o + " - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
+            }
+        }
+
+
 
     }
 
@@ -48,8 +66,7 @@ public class Pearl extends Module {
         }
 
 
-        if (!ay.isPlayerInGame())
-            return;
+
         if (preferSlot.isToggled()) {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
 
