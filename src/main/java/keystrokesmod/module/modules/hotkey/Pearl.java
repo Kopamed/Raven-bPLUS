@@ -56,17 +56,9 @@ public class Pearl extends Module {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.ClientTickEvent ev) {
-        int curSlot = mc.thePlayer.inventory.currentItem;
-        curSlot = mc.thePlayer.inventory.player.inventory.currentItem;
-        for (int o = 0; o < mc.gameSettings.keyBindsHotbar.length; o++){
-            if(mc.gameSettings.keyBindsHotbar[o].getKeyCode()== this.getKeycode()) {
-                //curSlot = o;
-
-            }
+        if (!ay.isPlayerInGame()) {
+            return;
         }
-
-
-
         if (preferSlot.isToggled()) {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
 
@@ -79,11 +71,7 @@ public class Pearl extends Module {
 
         for (int slot = 0; slot <= 8; slot++) {
             if(checkSlot(slot)) {
-                if(curSlot != slot){
-                    mc.thePlayer.inventory.currentItem = slot;
-                } else {
-                    return;
-                }
+                mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
             }

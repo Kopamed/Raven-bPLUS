@@ -46,6 +46,8 @@ import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Mouse;
+import scala.Int;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -487,6 +489,17 @@ public class ay {
       }
 
       return finalString;
+   }
+
+   public static ArrayList<Integer> playerWearingArmor() {
+      ArrayList<Integer> wearingArmor = new ArrayList<Integer>();
+      for(int armorPiece = 0; armorPiece < 4; armorPiece++){
+         if(mc.thePlayer.getCurrentArmor(armorPiece) != null){
+            wearingArmor.add(armorPiece);
+         }
+      }
+
+      return wearingArmor;
    }
 
    public static boolean currentScreenMinecraft() {

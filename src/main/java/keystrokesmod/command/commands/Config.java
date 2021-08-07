@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Config extends Command {
     public Config() {
-        super("config", "Manages configs", 0, 3, new String[] {"load / save / list / remove", "filename (e.g. hypixelConfig)"}, new String[] {"cfg", "profiles"});
+        super("config", "Manages configs", 0, 3, new String[] {"load/save/list/remove/clear", "filename (e.g. hypixelConfig)"}, new String[] {"cfg", "profiles"});
     }
 
     @Override
@@ -22,7 +22,13 @@ public class Config extends Command {
         else if (args.length == 2) {
             if (args[1].equalsIgnoreCase("list")) {
                 this.listConfigs();
-            } else {
+            } else if(args[1].equalsIgnoreCase("clear")){
+                CommandLine.print("&eAre you sure you want to", 1);
+                CommandLine.print("&ereset the config", 0);
+                CommandLine.print("§3" + Ravenb3.configManager.getCurrentConfig(), 0);
+                CommandLine.print("&eif so, enter", 0);
+                CommandLine.print("§3'config clear confirm'", 0);
+            }else {
                 this.incorrectArgs();
             }
         }
@@ -72,6 +78,14 @@ public class Config extends Command {
                     CommandLine.print("&cUnable to find a config with the name", 0);
                     CommandLine.print("&cOr an error occurred during removal", 0);
                 }
+            } else if(args[1].equalsIgnoreCase("clear")) {
+                if(args[2].equalsIgnoreCase("confirm")){
+                    Ravenb3.configManager.clearConfig();
+                    CommandLine.print("&aCleared config!",1);
+                } else {
+                    CommandLine.print("&cIt is confirm, not " + args[2], 0);
+                }
+
             } else {
                 this.incorrectArgs();
             }

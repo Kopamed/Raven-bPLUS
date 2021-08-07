@@ -16,6 +16,7 @@ public class version {
     public static final String branchFileName = "/assets/keystrokes/branch";
     public static String currentVersion = null;
     public static String latestVersion = null;
+    public static String branch = null;
 
     public static boolean outdated() {
         currentVersion = getCurrentVersion();
@@ -96,6 +97,38 @@ public class version {
             return "";
         }
         return latestVersion;
+    }
+
+    public static  String getBranch() {
+        if (branch != null) {
+            ////System.out.println("Fast return");
+            return branch;
+        }
+
+        URL url = null;
+        try {
+            url = new URL("https://raw.githubusercontent.com/Kopamed/Raven-bPLUS/main/src/main/resources/assets/keystrokes/branch");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(url.openStream()));
+        } catch (Exception klojangamingmoment) {
+            klojangamingmoment.printStackTrace();
+            return "";
+        }
+
+        try {
+            Scanner versionLook = new Scanner(br);
+            branch = versionLook.nextLine();
+        } catch (Exception var48) {
+            var48.printStackTrace();
+            return "";
+        }
+        return branch;
     }
 
     public static boolean isBeta() {
