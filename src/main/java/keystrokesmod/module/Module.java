@@ -167,6 +167,7 @@ public class Module {
       fun,
       other,
       client,
+      hotkey,
       debug;
    }
 }

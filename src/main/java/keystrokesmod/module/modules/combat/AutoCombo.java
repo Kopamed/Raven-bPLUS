@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -132,10 +133,14 @@ public class AutoCombo extends Module {
             ay.setMouseButtonState(1, false);
         }
         else if(ComboMode.values()[(int) (comboMode.getInput() - 1)] == ComboMode.WTAP) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
+            if(Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode())){
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
+            }
         }
         else if(ComboMode.values()[(int) (comboMode.getInput() - 1)] == ComboMode.STAP) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindBack.getKeyCode(), false);
+            if(!Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())){
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindBack.getKeyCode(), false);
+            }
         }
     }
 

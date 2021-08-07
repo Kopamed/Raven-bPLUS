@@ -37,7 +37,7 @@ public class AimAssist extends Module {
 
    public AimAssist() {
       super("AimAssist", Module.category.combat, 0);
-      this.registerSetting(speed = new ModuleSettingSlider("Speed", 45.0D, 1.0D, 100.0D, 1.0D));
+      this.registerSetting(speed = new ModuleSettingSlider("Speed", 45.0D, 5.0D, 100.0D, 1.0D));
       this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
       this.registerSetting(distance = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(clickAim = new ModuleSettingTick("Click aim", true));
@@ -49,6 +49,11 @@ public class AimAssist extends Module {
    }
 
    public void update() {
+
+      if(!ay.currentScreenMinecraft()){
+         return;
+      }
+
          if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
             BlockPos p = mc.objectMouseOver.getBlockPos();
             if (p != null) {
@@ -61,7 +66,7 @@ public class AimAssist extends Module {
 
 
          if (!weaponOnly.isToggled() || ay.wpn()) {
-            if (!clickAim.isToggled() || ay.autoClickerClicking()) {
+            if (!clickAim.isToggled() || mouseManager.getLeftClickCounter() > 0 || ay.autoClickerClicking()) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenb3.debugger) {
@@ -73,7 +78,7 @@ public class AimAssist extends Module {
                   } else {
                      double n = ay.n(en);
                      if (n > 1.0D || n < -1.0D) {
-                        float val = (float)(-(n / (101.0D - ThreadLocalRandom.current().nextDouble(speed.getInput()-0.5, speed.getInput() + 8.432))));
+                        float val = (float)(-(n / (101.0D - ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput() + 8.71289))));
                         mc.thePlayer.rotationYaw += val;
                      }
                   }

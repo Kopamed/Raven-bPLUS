@@ -294,7 +294,8 @@ public class ay {
    public static boolean autoClickerClicking() {
       if (ModuleManager.autoClicker.isEnabled()) {
          return AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0);
-      } else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
+      } //else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
+      return false;
    }
 
    public static int rainbowDraw(long speed, long... delay) {

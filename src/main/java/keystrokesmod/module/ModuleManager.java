@@ -12,6 +12,10 @@ import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.debug.Click;
 import keystrokesmod.module.modules.debug.MouseClick;
 import keystrokesmod.module.modules.fun.Fun;
+import keystrokesmod.module.modules.hotkey.Blocks;
+import keystrokesmod.module.modules.hotkey.Ladders;
+import keystrokesmod.module.modules.hotkey.Pearl;
+import keystrokesmod.module.modules.hotkey.Weapon;
 import keystrokesmod.module.modules.minigames.BridgeInfo;
 import keystrokesmod.module.modules.minigames.DuelsStats;
 import keystrokesmod.module.modules.minigames.MurderMystery;
@@ -105,13 +109,16 @@ public class ModuleManager {
       this.addModule(new BridgeAssist());
       this.addModule(new Fullbright());
       this.addModule(new UpdateCheck());
-      this.addModule(new Clutch());
       this.addModule(new AutoHeader());
       this.addModule(new Click());
       this.addModule(new MiddleClick());
       this.addModule(new MouseClick());
       this.addModule(new AutoTool());
       this.addModule(new AutoCombo());
+      this.addModule(new Blocks());
+      this.addModule(new Ladders());
+      this.addModule(new Weapon());
+      this.addModule(new Pearl());
       this.defEn();
    }
 
