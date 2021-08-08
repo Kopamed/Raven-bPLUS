@@ -29,7 +29,7 @@ public class Armour extends Module {
         double strength = -1;
 
         for(int armorType = 0; armorType < 4; armorType++) {
-            //System.out.println("Looking for " + armorType);
+            ////System.out.println("Looking for " + armorType);
             index = -1;
             strength = -1;
             for (int slot = 0; slot <= 8; slot++) {
@@ -37,17 +37,17 @@ public class Armour extends Module {
                 if (itemStack != null && itemStack.getItem() instanceof ItemArmor) {
                     ItemArmor armorPiece = (ItemArmor) itemStack.getItem();
 
-                    //System.out.println(ay.playerWearingArmor());
+                    ////System.out.println(ay.playerWearingArmor());
                     if(!ay.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()){
-                        //System.out.println("match found of " + armorPiece.armorType + " in slotr " + slot);
-                        //System.out.println(strength + " "+ armorPiece.getArmorMaterial().getDamageReductionAmount(armorType));
+                        ////System.out.println("match found of " + armorPiece.armorType + " in slotr " + slot);
+                        ////System.out.println(strength + " "+ armorPiece.getArmorMaterial().getDamageReductionAmount(armorType));
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {
                             strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                             index = slot;
                         }
 
                     } else if (ay.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
-                        //System.out.println("found betta");
+                        ////System.out.println("found betta");
                         ItemArmor playerArmor;
                         if(armorType == 0){
                             playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(3).getItem();
@@ -58,7 +58,7 @@ public class Armour extends Module {
                         } else if(armorType == 3){
                             playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(0).getItem();
                         } else {
-                            //System.out.println("Shit");
+                            ////System.out.println("Shit");
                             continue;
                         }
 
@@ -67,7 +67,7 @@ public class Armour extends Module {
                             index = slot;
                         }
                     } else if(!ay.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
-                        //System.out.println("playa aint have amo and is off");
+                        ////System.out.println("playa aint have amo and is off");
 
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {
                             strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
@@ -85,32 +85,32 @@ public class Armour extends Module {
 
 
                 /*if(armorPiece != null){
-                    //System.out.println("not null");
+                    ////System.out.println("not null");
                     if(armorPiece.armorType == armorType){
-                        //System.out.println("armour type " + armorPiece.getItemStackDisplayName(itemStack));
+                        ////System.out.println("armour type " + armorPiece.getItemStackDisplayName(itemStack));
 
                         if(mc.thePlayer.getCurrentArmor(armorPiece.armorType) != null && ignoreIfAlreadyEquipped.isToggled()){
-                            //System.out.println("player alr wearing");
+                            ////System.out.println("player alr wearing");
                         } else {
                             try {
-                                //System.out.println("main");
+                                ////System.out.println("main");
                                 if(ay.playerWearingArmor().contains(armorType)){
                                     ItemArmor playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(armorType).getItem();
                                     if(playerArmor.getArmorMaterial().getDamageReductionAmount(armorType) < armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) || strength < armorPiece.getArmorMaterial().getDamageReductionAmount(armorType)) {
-                                        //System.out.println("added index v1");
+                                        ////System.out.println("added index v1");
                                         strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                                         index = slot;
                                     }
                                 }
                                 else {
                                     if(strength < armorPiece.getArmorMaterial().getDamageReductionAmount(armorType)) {
-                                        //System.out.println("added index v2");
+                                        ////System.out.println("added index v2");
                                         strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                                         index = slot;
                                     }
                                 }
                             } catch (Exception e){
-                                //System.out.println("eXCEPTION FUCK");
+                                ////System.out.println("eXCEPTION FUCK");
                                 e.printStackTrace();
                             }
                         }
@@ -119,7 +119,7 @@ public class Armour extends Module {
                 }
             }
             if(index > -1 || strength > -1) {
-                //System.out.println("Hotkeying to " + index);
+                ////System.out.println("Hotkeying to " + index);
                 mc.thePlayer.inventory.currentItem = index;
                 this.disable();
                 this.onDisable();

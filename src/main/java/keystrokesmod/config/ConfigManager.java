@@ -45,7 +45,7 @@ public class ConfigManager {
     }
 
     public void save() {
-        //System.out.println("i save to " + this.currentConfig.getName());
+        ////System.out.println("i save to " + this.currentConfig.getName());
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
@@ -99,7 +99,7 @@ public class ConfigManager {
     }
 
     public void load() throws FileNotFoundException {
-        //System.out.println("iLOAD from " + this.currentConfig.getName());
+        ////System.out.println("iLOAD from " + this.currentConfig.getName());
         Scanner reader = new Scanner(this.currentConfig);
         while (reader.hasNextLine()) {
             String current = reader.nextLine();
@@ -185,7 +185,7 @@ public class ConfigManager {
 
     public void loadConfig(String fileName) {
         this.loading = true;
-        //System.out.println("no saving");
+        ////System.out.println("no saving");
         this.fileName = fileName;
         this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
         try {
@@ -195,7 +195,7 @@ public class ConfigManager {
         }
 
         this.loading = false;
-        //System.out.println("yes saving");
+        ////System.out.println("yes saving");
     }
 
     public void saveConfig(String fileName) {
