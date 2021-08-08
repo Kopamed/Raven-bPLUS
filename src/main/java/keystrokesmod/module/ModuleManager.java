@@ -118,6 +118,7 @@ public class ModuleManager {
       this.addModule(new Pearl());
       this.addModule(new Armour());
       this.addModule(new Healing());
+      this.addModule(new Trajectories());
       this.defEn();
    }
 
