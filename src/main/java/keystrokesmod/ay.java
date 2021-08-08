@@ -495,7 +495,15 @@ public class ay {
       ArrayList<Integer> wearingArmor = new ArrayList<Integer>();
       for(int armorPiece = 0; armorPiece < 4; armorPiece++){
          if(mc.thePlayer.getCurrentArmor(armorPiece) != null){
-            wearingArmor.add(armorPiece);
+            if (armorPiece == 0) {
+               wearingArmor.add(3);
+            } else if (armorPiece == 1) {
+               wearingArmor.add(2);
+            } else if (armorPiece == 2) {
+               wearingArmor.add(1);
+            } else if (armorPiece == 3) {
+               wearingArmor.add(0);
+            }
          }
       }
 

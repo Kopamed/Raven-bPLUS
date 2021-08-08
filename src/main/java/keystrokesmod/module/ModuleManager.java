@@ -116,7 +116,7 @@ public class ModuleManager {
       this.addModule(new Ladders());
       this.addModule(new Weapon());
       this.addModule(new Pearl());
-      //this.addModule(new Armour());
+      this.addModule(new Armour());
       this.defEn();
    }
 

@@ -43,7 +43,7 @@ public class Weapon extends Module {
             try {
                 itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
                 for(String wut : itemInSlot.getItem().getAttributeModifiers(itemInSlot).keys()){
-                    System.out.println(wut + " - " + itemInSlot.getItem().getAttributeModifiers(itemInSlot).get(wut));
+                    //System.out.println(wut + " - " + itemInSlot.getItem().getAttributeModifiers(itemInSlot).get(wut));
                 }
                 ItemSword fuckme = (ItemSword) itemInSlot.getItem();
                 if(fuckme.getDamageVsEntity() > damage){

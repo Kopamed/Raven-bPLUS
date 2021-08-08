@@ -41,12 +41,12 @@ public class Pearl extends Module {
 
         for (int o = 0; o < mc.gameSettings.keyBindsHotbar.length; o++){
             if(mc.gameSettings.keyBindsHotbar[o].getKeyCode()== this.getKeycode()) {
-                System.out.println(o + " -  - - - - - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
+                //System.out.println(o + " -  - - - - - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
                 mc.gameSettings.keyBindsHotbar[o].setKeyCode(0);
                 changedKeybinds.add(mc.gameSettings.keyBindsHotbar[o]);
             }
             else {
-                System.out.println(o + " - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
+                //System.out.println(o + " - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
             }
         }
 
