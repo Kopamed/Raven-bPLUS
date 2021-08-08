@@ -50,6 +50,8 @@ public class Ladders extends Module {
 
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+        if(itemInSlot == null)
+            return false;
 
         if(itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder")) {
             return true;

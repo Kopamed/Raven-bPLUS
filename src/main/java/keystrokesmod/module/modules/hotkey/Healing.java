@@ -95,7 +95,8 @@ public class Healing extends Module {
 
     public boolean isSoup(int slot){
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-
+        if(itemInSlot == null)
+            return false;
         if(itemInSlot.getItem() instanceof ItemSoup) {
             return true;
         }
@@ -104,6 +105,8 @@ public class Healing extends Module {
 
     public boolean isGapple(int slot){
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+        if(itemInSlot == null)
+            return false;
 
         if(itemInSlot.getItem() instanceof ItemAppleGold) {
             return true;
@@ -113,6 +116,8 @@ public class Healing extends Module {
 
     public boolean isHead(int slot){
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+        if(itemInSlot == null)
+            return false;
 
         if(itemInSlot.getItem() instanceof Item) {
             return true;
@@ -122,6 +127,8 @@ public class Healing extends Module {
 
     public boolean isFood(int slot){
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+        if(itemInSlot == null)
+            return false;
 
         if(itemInSlot.getItem() instanceof ItemFood) {
             return true;

@@ -36,29 +36,10 @@ public class Pearl extends Module {
 
     @Override
     public void onEnable(){
-        if (!ay.isPlayerInGame())
-            return;
-
-        for (int o = 0; o < mc.gameSettings.keyBindsHotbar.length; o++){
-            if(mc.gameSettings.keyBindsHotbar[o].getKeyCode()== this.getKeycode()) {
-                //System.out.println(o + " -  - - - - - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
-                mc.gameSettings.keyBindsHotbar[o].setKeyCode(0);
-                changedKeybinds.add(mc.gameSettings.keyBindsHotbar[o]);
-            }
-            else {
-                //System.out.println(o + " - " + mc.gameSettings.keyBindsHotbar[o].getKeyCode());
-            }
-        }
-
-
-
-    }
-
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.ClientTickEvent ev) {
-        if (!ay.isPlayerInGame()) {
+        if (!ay.isPlayerInGame()){
             return;
         }
+
         if (preferSlot.isToggled()) {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
 
@@ -70,7 +51,7 @@ public class Pearl extends Module {
         }
 
         for (int slot = 0; slot <= 8; slot++) {
-            if(checkSlot(slot)) {
+            if (checkSlot(slot)) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
