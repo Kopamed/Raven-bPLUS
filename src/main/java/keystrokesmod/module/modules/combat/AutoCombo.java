@@ -48,6 +48,9 @@ public class AutoCombo extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
+        if(!ay.isPlayerInGame())
+            return;
+
         if(comboing) {
             if(System.currentTimeMillis() >= comboLasts){
                 comboing = false;
