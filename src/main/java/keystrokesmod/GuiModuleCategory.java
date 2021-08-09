@@ -11,8 +11,8 @@ import keystrokesmod.module.Module;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class cm {
-   public ArrayList<b> c = new ArrayList();
+public class GuiModuleCategory {
+   public ArrayList<b> modulesInCategory = new ArrayList();
    public Module.category categoryName;
    private boolean categoryOpened;
    private int k;
@@ -26,8 +26,9 @@ public class cm {
    public String pvp;
    public boolean pin = false;
    private int chromaSpeed;
+   private double marginY, marginX;
 
-   public cm(Module.category category) {
+   public GuiModuleCategory(Module.category category) {
       this.categoryName = category;
       this.k = 92;
       this.x = 5;
@@ -38,16 +39,18 @@ public class cm {
       this.id = false;
       this.chromaSpeed = 3;
       int tY = this.bh + 3;
+      this.marginX = 80;
+      this.marginY = 4.5;
 
       for(Iterator var3 = Ravenb3.notAName.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
          Module mod = (Module) var3.next();
          m3 b = new m3(mod, this, tY);
-         this.c.add(b);
+         this.modulesInCategory.add(b);
       }
 
    }
 
-   public cm(String d) {
+   public GuiModuleCategory(String d) {
       this.k = 92;
       this.x = 5;
       this.y = 5;
@@ -61,14 +64,14 @@ public class cm {
    }
 
    public ArrayList<b> gc() {
-      return this.c;
+      return this.modulesInCategory;
    }
 
    public void x(int n) {
       this.x = n;
    }
 
-   public void y(int y) {
+   public void addCategoryWithOffset(int y) {
       this.y = y;
    }
 
@@ -94,12 +97,12 @@ public class cm {
 
    public void rf(FontRenderer renderer) {
       this.k = 92;
-      if (!this.c.isEmpty() && this.categoryOpened) {
+      if (!this.modulesInCategory.isEmpty() && this.categoryOpened) {
          int h = 0;
 
          b c;
-         for(Iterator var3 = this.c.iterator(); var3.hasNext(); h += c.gh()) {
-            c = (b)var3.next();
+         for(Iterator moduleInCategoryIterator = this.modulesInCategory.iterator(); moduleInCategoryIterator.hasNext(); h += c.getH()) {
+            c = (b)moduleInCategoryIterator.next();
          }
 
          net.minecraft.client.gui.Gui.drawRect(this.x - 2, this.y, this.x + this.k + 2, this.y + this.bh + h + 4, (new Color(0, 0, 0, 110)).getRGB());
@@ -107,12 +110,14 @@ public class cm {
 
       kk.d((float)(this.x - 2), (float)this.y, (float)(this.x + this.k + 2), (float)(this.y + this.bh + 3), -1);
       renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
+      //renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), ay.astolfoColorsDraw(10, 14), false);
       if (!this.n4m) {
          GL11.glPushMatrix();
-         renderer.drawString(this.categoryOpened ? "-" : "+", (float)(this.x + 80), (float)((double)this.y + 4.5D), Color.white.getRGB(), false);
+         //Opened/closed unicode... :yes: :holsum: :evil:
+         renderer.drawString(this.categoryOpened ? "-" : "+", (float)(this.x + marginX), (float)((double)this.y + marginY), Color.white.getRGB(), false);
          GL11.glPopMatrix();
-         if (this.categoryOpened && !this.c.isEmpty()) {
-            Iterator var5 = this.c.iterator();
+         if (this.categoryOpened && !this.modulesInCategory.isEmpty()) {
+            Iterator var5 = this.modulesInCategory.iterator();
 
             while(var5.hasNext()) {
                b c2 = (b)var5.next();
@@ -127,7 +132,7 @@ public class cm {
       int o = this.bh + 3;
 
       b c;
-      for(Iterator var2 = this.c.iterator(); var2.hasNext(); o += c.gh()) {
+      for(Iterator var2 = this.modulesInCategory.iterator(); var2.hasNext(); o += c.getH()) {
          c = (b)var2.next();
          c.so(o);
       }
@@ -149,7 +154,7 @@ public class cm {
    public void up(int x, int y) {
       if (this.id) {
          this.x(x - this.xx);
-         this.y(y - this.yy);
+         this.addCategoryWithOffset(y - this.yy);
       }
 
    }

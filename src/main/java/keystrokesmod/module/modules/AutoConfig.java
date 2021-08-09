@@ -79,7 +79,7 @@ public class AutoConfig extends b {
       return x > this.x && x < this.x + this.p.c4t.gw() && y > this.y - 1 && y < this.y + 12;
    }
 
-   public int gh() {
+   public int getH() {
       return 16;
    }
 

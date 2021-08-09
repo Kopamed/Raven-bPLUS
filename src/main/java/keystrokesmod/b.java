@@ -19,7 +19,7 @@ public class b {
    public void so(int n) {
    }
 
-   public int gh() {
+   public int getH() {
       return 0;
    }
 }

@@ -17,12 +17,12 @@ public class m3 extends b {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
    public Module mod;
-   public cm c4t;
+   public GuiModuleCategory c4t;
    public int o;
    private ArrayList<b> sn;
    public boolean po;
 
-   public m3(Module mod, cm p, int o) {
+   public m3(Module mod, GuiModuleCategory p, int o) {
       this.mod = mod;
       this.c4t = p;
       this.o = o;
@@ -144,7 +144,7 @@ public class m3 extends b {
 
    }
 
-   public int gh() {
+   public int getH() {
       if (!this.po) {
          return 16;
       } else {
