@@ -67,7 +67,7 @@ public class HUD extends Module {
          int del = 0;
          List<Module> en = new ArrayList(NotAName.moduleManager.listofmods());
          Iterator var5 = en.iterator();
-         
+
          while(var5.hasNext()) {
             Module m = (Module)var5.next();
             if (m.isEnabled() && m != this) {
@@ -79,7 +79,7 @@ public class HUD extends Module {
                else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.RAVEN2) {
                   mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
                   y += mc.fontRendererObj.FONT_HEIGHT + 2;
-                  del -= 11;
+                  del -= 10;
                }
                else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.ASTOLFO) {
                   mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.astolfoColorsDraw(10, 14), dropShadow.isToggled());
@@ -94,7 +94,7 @@ public class HUD extends Module {
                else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.ASTOLFO3) {
                   mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
                   y += mc.fontRendererObj.FONT_HEIGHT + 2;
-                  del -= 11;
+                  del -= 10;
                }
             }
          }
