@@ -305,6 +305,52 @@ public class ay {
       return Color.getHSBColor((float)(time % (15000L / speed)) / (15000.0F / (float)speed), 1.0F, 1.0F).getRGB();
    }
 
+   public static int astolfoColorsDraw(int yOffset, int yTotal) {
+      float speed = 2900F;
+      float hue = (float) (System.currentTimeMillis() % (int)speed) + ((yTotal - yOffset) * 9);
+      while (hue > speed) {
+         hue -= speed;
+      }
+      hue /= speed;
+      if (hue > 0.5) {
+         hue = 0.5F - (hue - 0.5f);
+      }
+      hue += 0.5F;
+      return Color.HSBtoRGB(hue, 0.5f, 1F);
+   }
+
+   public static int kopamedColoursDraw(int yOffset, int yTotal){
+      float speed = 6428;
+      float hue;
+      try {
+         hue = (float)(System.currentTimeMillis() % (int)speed) + ((yTotal - yOffset) / (yOffset / yTotal));
+      } catch (ArithmeticException divisionByZero) {
+         hue = (float)(System.currentTimeMillis() % (int)speed) + ((yTotal - yOffset) / ((yOffset / yTotal + 1) + 1));
+      }
+
+      while (hue > speed) {
+         hue -= speed;
+      }
+      hue /= speed;
+      if (hue > 2) {
+         hue = 2F - (hue - 2f);
+      }
+      hue += 2F;
+
+      float current = (System.currentTimeMillis()% speed) + ((yOffset + yTotal) * 9);
+
+      while (current > speed) {
+         current -= speed;
+      }
+      current /= speed;
+      if (current > 2) {
+         current = 2F - (current - 2f);
+      }
+      current += 2F;
+
+      return Color.HSBtoRGB((float)(current / (current - yTotal)) + current, 1f, 1F);
+   }
+
    public static double round(double n, int d) {
       if (d == 0) {
          return (double)Math.round(n);

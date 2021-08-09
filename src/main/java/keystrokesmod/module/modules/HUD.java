@@ -10,9 +10,7 @@ import java.util.List;
 
 import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
-import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.*;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -26,6 +24,8 @@ public class HUD extends Module {
    public static ModuleSettingTick editPosition;
    public static ModuleSettingTick dropShadow;
    public static ModuleSettingTick alphabeticalSort;
+   public static ModuleSettingSlider colourMode;
+   public static ModuleDesc colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
 
@@ -34,6 +34,12 @@ public class HUD extends Module {
       this.registerSetting(editPosition = new ModuleSettingTick("Edit position", false));
       this.registerSetting(dropShadow = new ModuleSettingTick("Drop shadow", true));
       this.registerSetting(alphabeticalSort = new ModuleSettingTick("Alphabetical sort", false));
+      this.registerSetting(colourMode = new ModuleSettingSlider("Value: ", 1, 1, 5, 1));
+      this.registerSetting(colourModeDesc = new ModuleDesc("Mode: RAVEN"));
+   }
+
+   public void guiUpdate(){
+      colourModeDesc.setDesc(ay.md + ColourModes.values()[(int) colourMode.getInput()-1]);
    }
 
    public void onEnable() {
@@ -61,13 +67,35 @@ public class HUD extends Module {
          int del = 0;
          List<Module> en = new ArrayList(NotAName.moduleManager.listofmods());
          Iterator var5 = en.iterator();
-
+         
          while(var5.hasNext()) {
             Module m = (Module)var5.next();
             if (m.isEnabled() && m != this) {
-               mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, (long)del), dropShadow.isToggled());
-               y += mc.fontRendererObj.FONT_HEIGHT + 2;
-               del -= 120;
+               if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.RAVEN){
+                  mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, (long)del), dropShadow.isToggled());
+                  y += mc.fontRendererObj.FONT_HEIGHT + 2;
+                  del -= 120;
+               }
+               else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.RAVEN2) {
+                  mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
+                  y += mc.fontRendererObj.FONT_HEIGHT + 2;
+                  del -= 11;
+               }
+               else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.ASTOLFO) {
+                  mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.astolfoColorsDraw(10, 14), dropShadow.isToggled());
+                  y += mc.fontRendererObj.FONT_HEIGHT + 2;
+                  del -= 120;
+               }
+               else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.ASTOLFO2) {
+                  mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                  y += mc.fontRendererObj.FONT_HEIGHT + 2;
+                  del -= 120;
+               }
+               else if(ColourModes.values()[(int) colourMode.getInput()-1] == ColourModes.ASTOLFO3) {
+                  mc.fontRendererObj.drawString(m.getName(), (float)hudX, (float)y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                  y += mc.fontRendererObj.FONT_HEIGHT + 2;
+                  del -= 11;
+               }
             }
          }
       }
@@ -170,5 +198,14 @@ public class HUD extends Module {
       public boolean doesGuiPauseGame() {
          return false;
       }
+   }
+
+   public static enum ColourModes {
+      RAVEN,
+      RAVEN2,
+      ASTOLFO,
+      ASTOLFO2,
+      ASTOLFO3,
+      KOPAMED;
    }
 }
