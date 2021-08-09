@@ -8,7 +8,7 @@ https://ravenclient.cf/<br>
 Raven b+ is built on top of Raven b3, adding quality of life improvements, bug fixes, and more.<br>
 Discord:<br>
 <a href="https://discord.gg/N4zn4FwPcz"><img src="https://invidget.switchblade.xyz/N4zn4FwPcz" alt="https://discord.gg/N4zn4FwPcz"/></a><br>
-(0 stars and forks because I remade repo due to the fact that all the stars and forks of the old one were going to the parent repo, which I did not like)
+
 # Installation
 ## User
 Get the latest version by clicking Download on our website! https://ravenclient.cf/ !<br>
