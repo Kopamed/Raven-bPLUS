@@ -63,6 +63,8 @@ public class AutoClicker extends Module {
    private double rightClickWaitStartTime;
    private boolean allowedClick;
    public static boolean autoClickerEnabled;
+   public static int clickFinder;
+   public static int clickCount;
 
    public AutoClicker() {
       super("AutoClicker", Module.category.combat, 0);
@@ -106,6 +108,8 @@ public class AutoClicker extends Module {
 
       this.rightClickWaiting = false;
       autoClickerEnabled = false;
+      clickFinder = 2;
+      clickCount = 1;
    }
 
    public void onEnable() {
@@ -164,7 +168,9 @@ public class AutoClicker extends Module {
          return;
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
-         //System.out.println("raven");
+         if (ev.phase == Phase.END)
+            return;
+         //System.out.println("ravern");
          ravenClick();
       }
       else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.SKID){
@@ -199,7 +205,6 @@ public class AutoClicker extends Module {
                   int key = mc.gameSettings.keyBindAttack.getKeyCode();
                   KeyBinding.setKeyBindState(key, true);
                   KeyBinding.onTick(key);
-                  ay.setMouseButtonState(0, true);
                   return;
                }
             }
@@ -237,7 +242,10 @@ public class AutoClicker extends Module {
             int key = mc.gameSettings.keyBindUseItem.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
             //ay.setMouseButtonState(1, true);
-
+            if(clickCount/clickFinder == 0) {
+               mouseManager.addRightClick();
+            }
+            clickCount++;
             KeyBinding.onTick(key);
          } else if (System.currentTimeMillis() - rightHold > rightHoldLength * 1000) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
@@ -260,12 +268,8 @@ public class AutoClicker extends Module {
          //Mouse.poll();
          if (leftClick.isToggled() && Mouse.isButtonDown(0)) {
             this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
-         } else {
-            this.lefti = 0L;
-            this.leftj = 0L;
          }
-
-         if (rightClick.isToggled() && Mouse.isButtonDown(1)) {
+         else if (rightClick.isToggled() && Mouse.isButtonDown(1)) {
             this.rightClickExecute(mc.gameSettings.keyBindUseItem.getKeyCode());
          } else if (!Mouse.isButtonDown(1)){
             this.rightClickWaiting = false;
@@ -273,6 +277,8 @@ public class AutoClicker extends Module {
             //System.out.println("Reset allowedClick");
             this.righti = 0L;
             this.rightj = 0L;
+            this.lefti = 0L;
+            this.leftj = 0L;
          }
       } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
          if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
@@ -347,35 +353,29 @@ public class AutoClicker extends Module {
    }
 
    public void leftClickExecute(int key) {
-      if(!Mouse.isButtonDown(0)){
-         KeyBinding.setKeyBindState(0, false);
-         this.lefti = 0L;
-         this.leftj = 0L;
-         return;
-      }
 
       if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
          BlockPos p = mc.objectMouseOver.getBlockPos();
          if (p != null) {
             Block bl = mc.theWorld.getBlockState(p).getBlock();
             if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
-               if (!this.leftHeld) {
-                  if(!Mouse.isButtonDown(0)){
+               //if (!this.leftHeld) {
+                  //if(!Mouse.isButtonDown(0)){
                      KeyBinding.setKeyBindState(key, true);
                      Click.minecraftPressed(true);
                      KeyBinding.onTick(key);
                      this.leftHeld = true;
-                  }
-               }
+                 // }
+              // }
 
                return;
             }
-
+            /*
             if (this.leftHeld) {
                KeyBinding.setKeyBindState(key, false);
                Click.minecraftPressed(false);
                this.leftHeld = false;
-            }
+            }*/
          }
       }
 
