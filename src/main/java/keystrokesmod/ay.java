@@ -305,8 +305,7 @@ public class ay {
       return Color.getHSBColor((float)(time % (15000L / speed)) / (15000.0F / (float)speed), 1.0F, 1.0F).getRGB();
    }
 
-   public static int astolfoColorsDraw(int yOffset, int yTotal) {
-      float speed = 2900F;
+   public static int astolfoColorsDraw(int yOffset, int yTotal, float speed) {
       float hue = (float) (System.currentTimeMillis() % (int)speed) + ((yTotal - yOffset) * 9);
       while (hue > speed) {
          hue -= speed;
@@ -317,6 +316,9 @@ public class ay {
       }
       hue += 0.5F;
       return Color.HSBtoRGB(hue, 0.5f, 1F);
+   }
+   public static int astolfoColorsDraw(int yOffset, int yTotal) {
+      return astolfoColorsDraw(yOffset, yTotal, 2900F);
    }
 
    public static int kopamedColoursDraw(int yOffset, int yTotal){
