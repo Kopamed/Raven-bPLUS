@@ -27,9 +27,9 @@ Get the latest version by clicking Download on our website! https://ravenclient.
  - None of the "ASM" modules work... and some other stuff...
 
 ## Improved Modules
- - SafeWalk: Sneak while jumping and on hold settings.
- - Autoclicker: Seperate righclick min and max cps sliders, allow eat, allow bow and different click modes (LEGIT and RAVEN) and you can make your cps higher, no sword rightclick, blocks only.
+ - Autoclicker: Seperate righclick min and max cps sliders, allow eat, allow bow, different click modes (Legit and Raven), no sword rightclick, blocks only.
  - Bridge Assist: Helps you aim and click during godbridging, moonwalking, ninja bridging and breezily.
+ - SafeWalk: Sneak while jumping and on hold settings.
  - ChatLogger: Logs chat.
  - Config Manager.
  - Much More!
