@@ -4,7 +4,6 @@
 ![](https://img.shields.io/tokei/lines/github/Kopamed/Raven-bPLUS?style=flat-square)
 ![](https://img.shields.io/github/languages/top/Kopamed/Raven-bPLUS) <br>
 A minecraft hacked client made by [Blowsy](https://www.youtube.com/c/blowsy/featured), code deobfuscated and partially remapped by [JMRaichDev](https://github.com/JMRaichDev) and improved by [me](https://github.com/Kopamed).<br>
-https://ravenclient.cf/<br>
 
 Raven b+ is built on top of Raven b3, adding quality of life improvements, bug fixes, and much more.<br>
 Discord:<br>
