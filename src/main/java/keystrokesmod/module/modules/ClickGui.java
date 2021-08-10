@@ -146,8 +146,8 @@ public class ClickGui extends GuiScreen {
          category.rf(this.fontRendererObj);
          category.up(x, y);
 
-         for (b m : category.gc()) {
-            m.uu(x, y);
+         for (b module : category.getModules()) {
+            module.uu(x, y);
          }
       }
 
@@ -215,9 +215,9 @@ public class ClickGui extends GuiScreen {
                   c4t.cv(!c4t.p());
                }
             } while(!c4t.fv());
-         } while(c4t.gc().isEmpty());
+         } while(c4t.getModules().isEmpty());
 
-         for (b c : c4t.gc()) {
+         for (b c : c4t.getModules()) {
             c.onCl1ck(x, y, m);
          }
       }
@@ -244,9 +244,9 @@ public class ClickGui extends GuiScreen {
 
                   c4t = (GuiModuleCategory)var4.next();
                } while(!c4t.fv());
-            } while(c4t.gc().isEmpty());
+            } while(c4t.getModules().isEmpty());
 
-            for (b c : c4t.gc()) {
+            for (b c : c4t.getModules()) {
                c.mr(x, y, s);
             }
          }
@@ -280,9 +280,9 @@ public class ClickGui extends GuiScreen {
 
                   c4t = (GuiModuleCategory)var3.next();
                } while(!c4t.fv());
-            } while(c4t.gc().isEmpty());
+            } while(c4t.getModules().isEmpty());
 
-            for (b c : c4t.gc()) {
+            for (b c : c4t.getModules()) {
                c.ky(t, k);
             }
          }

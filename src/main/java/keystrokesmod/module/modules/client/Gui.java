@@ -10,13 +10,13 @@ import keystrokesmod.module.ModuleSettingSlider;
 
 public class Gui extends Module {
    public static final int bind = 54;
-   public static ModuleSettingSlider a;
-   public static ModuleDesc b;
+   public static ModuleSettingSlider guiTheme;
+   public static ModuleDesc guiThemeDesc;
 
    public Gui() {
       super("Gui", Module.category.client, 54);
-      this.registerSetting(a = new ModuleSettingSlider("Theme", 3.0D, 1.0D, 3.0D, 1.0D));
-      this.registerSetting(b = new ModuleDesc(ay.md + "b" + 3));
+      this.registerSetting(guiTheme = new ModuleSettingSlider("Theme", 4.0D, 1.0D, 3.0D, 1.0D));
+      this.registerSetting(guiThemeDesc = new ModuleDesc(ay.md + "b" + 3));
    }
 
    public void onEnable() {
@@ -29,15 +29,17 @@ public class Gui extends Module {
    }
 
    public void guiUpdate() {
-      switch((int)a.getInput()) {
+      switch((int) guiTheme.getInput()) {
       case 1:
-         b.setDesc(ay.md + "b" + 1);
+         guiThemeDesc.setDesc(ay.md + "b" + 1);
          break;
       case 2:
-         b.setDesc(ay.md + "b" + 2);
+         guiThemeDesc.setDesc(ay.md + "b" + 2);
          break;
       case 3:
-         b.setDesc(ay.md + "b" + 3);
+         guiThemeDesc.setDesc(ay.md + "b" + 3);
+         break;
+
       }
 
    }

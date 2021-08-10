@@ -63,7 +63,7 @@ public class GuiModuleCategory {
       this.n4m = true;
    }
 
-   public ArrayList<b> gc() {
+   public ArrayList<b> getModules() {
       return this.modulesInCategory;
    }
 

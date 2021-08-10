@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoCombo extends Module {
     public static ModuleSettingSlider comboMode, range;
-    public static ModuleSettingTick onlyPlayers;
+    public static ModuleSettingTick onlyPlayers, blockHit, wTap, sTap;
     public static ModuleDesc comboModeDesc;
     public static ModuleSettingSlider minActionTicks, maxActionTicks, minOnceEvery, maxOnceEvery;
     public static double comboLasts, currentTime;

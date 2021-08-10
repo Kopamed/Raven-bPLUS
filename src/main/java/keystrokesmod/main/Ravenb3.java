@@ -41,6 +41,7 @@ public class Ravenb3 {
    public static boolean beta = false;
    public static CommandManager commandManager;
    private static final String numberOfUseTracker = "https://pastebin.com/raw/EgBH4cxS";
+   public static final String numberOfFirstLaunchesTracker = "https://pastebin.com/raw/AyRARCeU";
    public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
    public static final String discord = "https://discord.gg/N4zn4FwPcz";
    public static String[] updateText = {"Your version of Raven B+ (" + version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};

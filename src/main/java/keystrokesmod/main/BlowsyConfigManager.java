@@ -116,7 +116,7 @@ public class BlowsyConfigManager {
                URLUtils.k = line.split(": ")[1];
                break;
             case 1:
-               Gui.a.setValue(Double.parseDouble(line));
+               Gui.guiTheme.setValue(Double.parseDouble(line));
                break;
             case 2:
                Reach.a.setValue(Double.parseDouble(line));

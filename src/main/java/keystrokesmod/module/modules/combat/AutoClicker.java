@@ -23,7 +23,6 @@ import net.minecraft.item.*;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -48,8 +47,8 @@ public class AutoClicker extends Module {
 
    private Random rand = null;
    private Method playerMouseInput;
-   private long lefti, righti;
-   private long leftj, rightj;
+   private long leftDownTime, righti;
+   private long leftUpTime, rightj;
    private long leftk, rightk;
    private long leftl, rightl;
    private double leftm, rightm;
@@ -125,8 +124,8 @@ public class AutoClicker extends Module {
    }
 
    public void onDisable() {
-      this.lefti = 0L;
-      this.leftj = 0L;
+      this.leftDownTime = 0L;
+      this.leftUpTime = 0L;
       this.leftHeld = false;
       this.rightClickWaiting = false;
       autoClickerEnabled = false;
@@ -148,8 +147,8 @@ public class AutoClicker extends Module {
          return;
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
-         if (ev.phase == Phase.END)
-            return;
+         //if (ev.phase == Phase.END)
+           // return;
          //System.out.println("ravern");
          ravenClick();
       }
@@ -168,8 +167,6 @@ public class AutoClicker extends Module {
          return;
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
-         if (ev.phase == Phase.END)
-            return;
          //System.out.println("ravern");
          ravenClick();
       }
@@ -202,9 +199,11 @@ public class AutoClicker extends Module {
             if (lookingBlock != null) {
                Block stateBlock = mc.theWorld.getBlockState(lookingBlock).getBlock();
                if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid)) {
-                  int key = mc.gameSettings.keyBindAttack.getKeyCode();
-                  KeyBinding.setKeyBindState(key, true);
-                  KeyBinding.onTick(key);
+                  if(!Mouse.isButtonDown(0)) {
+                     int key = mc.gameSettings.keyBindAttack.getKeyCode();
+                     KeyBinding.setKeyBindState(key, true);
+                     KeyBinding.onTick(key);
+                  }
                   return;
                }
             }
@@ -277,15 +276,15 @@ public class AutoClicker extends Module {
             //System.out.println("Reset allowedClick");
             this.righti = 0L;
             this.rightj = 0L;
-            this.lefti = 0L;
-            this.leftj = 0L;
+            this.leftDownTime = 0L;
+            this.leftUpTime = 0L;
          }
       } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
          if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
-            this.lefti = 0L;
-            this.leftj = 0L;
-         } else if (this.lefti != 0L && this.leftj != 0L) {
-            if (System.currentTimeMillis() > this.leftj) {
+            this.leftDownTime = 0L;
+            this.leftUpTime = 0L;
+         } else if (this.leftDownTime != 0L && this.leftUpTime != 0L) {
+            if (System.currentTimeMillis() > this.leftUpTime) {
                this.genLeftTimings();
                this.inInvClick(mc.currentScreen);
             }
@@ -359,15 +358,11 @@ public class AutoClicker extends Module {
          if (p != null) {
             Block bl = mc.theWorld.getBlockState(p).getBlock();
             if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
-               //if (!this.leftHeld) {
-                  //if(!Mouse.isButtonDown(0)){
-                     KeyBinding.setKeyBindState(key, true);
-                     Click.minecraftPressed(true);
-                     KeyBinding.onTick(key);
-                     this.leftHeld = true;
-                 // }
-              // }
-
+               if(!Mouse.isButtonDown(0)) {
+                  int e = mc.gameSettings.keyBindAttack.getKeyCode();
+                  KeyBinding.setKeyBindState(e, true);
+                  KeyBinding.onTick(e);
+               }
                return;
             }
             /*
@@ -399,17 +394,20 @@ public class AutoClicker extends Module {
          }
       }
 
-      if (this.leftj > 0L && this.lefti > 0L) {
-         if (System.currentTimeMillis() > this.leftj) {
+      if (this.leftUpTime > 0L && this.leftDownTime > 0L) {
+         if (System.currentTimeMillis() > this.leftUpTime) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            ay.setMouseButtonState(0, true);
+            //ay.setMouseButtonState(0, false);
+            //System.out.println("down");
             this.genLeftTimings();
-         } else if (System.currentTimeMillis() > this.lefti) {
+         } else if (System.currentTimeMillis() > this.leftDownTime) {
             KeyBinding.setKeyBindState(key, false);
-            ay.setMouseButtonState(0, false);
+            //ay.setMouseButtonState(0, true);
+            //System.out.println("up");
          }
       } else {
+         System.out.println("gen");
          this.genLeftTimings();
       }
 
@@ -443,11 +441,12 @@ public class AutoClicker extends Module {
          if (System.currentTimeMillis() > this.rightj) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
+            ay.setMouseButtonState(1, false);
             ay.setMouseButtonState(1, true);
             this.genRightTimings();
          } else if (System.currentTimeMillis() > this.righti) {
             KeyBinding.setKeyBindState(key, false);
-            ay.setMouseButtonState(1, false);
+            //ay.setMouseButtonState(1, false);
          }
       } else {
          this.genRightTimings();
@@ -481,8 +480,8 @@ public class AutoClicker extends Module {
          this.leftl = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
       }
 
-      this.leftj = System.currentTimeMillis() + delay;
-      this.lefti = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
+      this.leftUpTime = System.currentTimeMillis() + delay;
+      this.leftDownTime = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
    }
 
    public void genRightTimings() {

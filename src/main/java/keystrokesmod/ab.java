@@ -31,7 +31,7 @@ public class ab {
    public static int au9 = 0;
 
    public static void ss() {
-      theme = Gui.a.getInput();
+      theme = Gui.guiTheme.getInput();
       r1 = Reach.a.getInput();
       r2 = Reach.b.getInput();
       r3 = Reach.c.isToggled();
