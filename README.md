@@ -7,7 +7,8 @@ A minecraft hacked client made by [Blowsy](https://www.youtube.com/c/blowsy/feat
 https://ravenclient.cf/<br>
 
 Raven b+ is built on top of Raven b3, adding quality of life improvements, bug fixes, and much more.<br>
-Discord: <a href="https://discord.gg/N4zn4FwPcz"><img src="https://invidget.switchblade.xyz/N4zn4FwPcz" alt="https://discord.gg/N4zn4FwPcz"/></a><br>
+Discord:<br>
+<a href="https://discord.gg/N4zn4FwPcz"><img src="https://invidget.switchblade.xyz/N4zn4FwPcz" alt="https://discord.gg/N4zn4FwPcz"/></a><br>
 
 # Installation
 ## User
