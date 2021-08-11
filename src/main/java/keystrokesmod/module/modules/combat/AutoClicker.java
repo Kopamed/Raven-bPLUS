@@ -29,7 +29,7 @@ import org.lwjgl.input.Mouse;
 
 public class AutoClicker extends Module {
    public static ModuleDesc bestWithDelayRemover, modeDesc, timingsDesc;
-   public static ModuleSettingSlider leftMinCPS, rightMinCPS;
+   public static ModuleSettingSlider leftMinCPS, rightMinCPS, breakBlocksMin, breakBlocksMax;
    public static ModuleSettingSlider leftMaxCPS, rightMaxCPS;
    public static ModuleSettingSlider jitterLeft;
    public static ModuleSettingSlider jitterRight;
@@ -53,15 +53,15 @@ public class AutoClicker extends Module {
    private long leftl, rightl;
    private double leftm, rightm;
    private boolean leftn, rightn;
-   private boolean leftHeld, rightHeld;
+   private boolean leftHeld, rightHeld, breakHeld, watingForBreakTimeout;
    private double speedLeft, speedRight;
-   private double leftHoldLength, rightHoldLength;
+   private double leftHoldLength, rightHoldLength, breakTimerStart, breakBlockFinishWaitTime;
    private long lastClick;
    private long leftHold, rightHold;
    private boolean rightClickWaiting;
    private double rightClickWaitStartTime;
    private boolean allowedClick;
-   public static boolean autoClickerEnabled;
+   public static boolean autoClickerEnabled, breakTimeDone;
    public static int clickFinder;
    public static int clickCount;
 
@@ -80,6 +80,8 @@ public class AutoClicker extends Module {
       this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks", false));
       this.registerSetting(preferFastPlace = new ModuleSettingTick("Prefer fast place", false));
       this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
+      this.registerSetting(breakBlocksMin = new ModuleSettingSlider("Breack blocks min delay", 20.0D, 0.0D, 1000.0D, 5D));
+      this.registerSetting(breakBlocksMax = new ModuleSettingSlider("Breack blocks max delay", 50.0D, 0.0D, 1000.0D, 5D));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
       this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
@@ -134,6 +136,7 @@ public class AutoClicker extends Module {
    public void guiUpdate() {
       ay.correctSliders(leftMinCPS, leftMaxCPS);
       ay.correctSliders(rightMinCPS, rightMaxCPS);
+      ay.correctSliders(breakBlocksMin, breakBlocksMax);
       modeDesc.setDesc(ay.md + ay.ClickEvents.values()[(int)(clickEvent.getInput() - 1.0D)].name());
       timingsDesc.setDesc(ay.md + ay.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
    }
@@ -194,20 +197,7 @@ public class AutoClicker extends Module {
 
       // Uhh left click only, mate
       if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
-         if(breakBlocks.isToggled()) {
-            BlockPos lookingBlock = mc.objectMouseOver.getBlockPos();
-            if (lookingBlock != null) {
-               Block stateBlock = mc.theWorld.getBlockState(lookingBlock).getBlock();
-               if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid)) {
-                  if(!Mouse.isButtonDown(0)) {
-                     int key = mc.gameSettings.keyBindAttack.getKeyCode();
-                     KeyBinding.setKeyBindState(key, true);
-                     KeyBinding.onTick(key);
-                  }
-                  return;
-               }
-            }
-         }
+         if(breakBlock()) return;
 
          double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
          if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
@@ -353,26 +343,7 @@ public class AutoClicker extends Module {
 
    public void leftClickExecute(int key) {
 
-      if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
-         BlockPos p = mc.objectMouseOver.getBlockPos();
-         if (p != null) {
-            Block bl = mc.theWorld.getBlockState(p).getBlock();
-            if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
-               if(!Mouse.isButtonDown(0)) {
-                  int e = mc.gameSettings.keyBindAttack.getKeyCode();
-                  KeyBinding.setKeyBindState(e, true);
-                  KeyBinding.onTick(e);
-               }
-               return;
-            }
-            /*
-            if (this.leftHeld) {
-               KeyBinding.setKeyBindState(key, false);
-               Click.minecraftPressed(false);
-               this.leftHeld = false;
-            }*/
-         }
-      }
+      if(breakBlock()) return;
 
       if (jitterLeft.getInput() > 0.0D) {
          double a = jitterLeft.getInput() * 0.45D;
@@ -523,5 +494,58 @@ public class AutoClicker extends Module {
       } catch (IllegalAccessException | InvocationTargetException var5) {
       }
 
+   }
+
+   public boolean breakBlock() {
+      if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
+         BlockPos p = mc.objectMouseOver.getBlockPos();
+         if (p != null) {
+            Block bl = mc.theWorld.getBlockState(p).getBlock();
+            if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
+               if(breakBlocksMax.getInput() == 0){
+                  if(!breakHeld) {
+                     int e = mc.gameSettings.keyBindAttack.getKeyCode();
+                     KeyBinding.setKeyBindState(e, true);
+                     KeyBinding.onTick(e);
+                     breakHeld = true;
+                  }
+                  return true;
+               }
+               if(!breakTimeDone && !watingForBreakTimeout) {
+                  watingForBreakTimeout = true;
+                  guiUpdate();
+                  breakBlockFinishWaitTime = ThreadLocalRandom.current().nextDouble(breakBlocksMin.getInput(), breakBlocksMax.getInput()+1) + System.currentTimeMillis();
+                  return false;
+               } else if(!breakTimeDone && watingForBreakTimeout) {
+                  if (System.currentTimeMillis() > breakBlockFinishWaitTime) {
+                     breakTimeDone = true;
+                     watingForBreakTimeout = false;
+                  }
+               }
+
+               if(breakTimeDone && !watingForBreakTimeout) {
+                  if(!breakHeld) {
+                     int e = mc.gameSettings.keyBindAttack.getKeyCode();
+                     KeyBinding.setKeyBindState(e, true);
+                     KeyBinding.onTick(e);
+                     breakHeld = true;
+                  }
+                  return true;
+               }
+            }
+            if(breakHeld) {
+               breakHeld = false;
+               breakTimeDone = false;
+               watingForBreakTimeout = false;
+            }
+            /*
+            if (this.leftHeld) {
+               KeyBinding.setKeyBindState(key, false);
+               Click.minecraftPressed(false);
+               this.leftHeld = false;
+            }*/
+         }
+      }
+      return false;
    }
 }

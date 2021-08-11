@@ -16,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -94,6 +95,7 @@ public class AimAssist extends Module {
          if (wut.equals(entity))
             return true;
       }
+      if(mc.thePlayer.isOnSameTeam((EntityLivingBase) entity)) return true;
       return false;
    }
 

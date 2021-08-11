@@ -111,7 +111,6 @@ public class ModuleManager {
       this.addModule(new MiddleClick());
       this.addModule(new MouseClick());
       this.addModule(new AutoTool());
-      this.addModule(new AutoCombo());
       this.addModule(new Blocks());
       this.addModule(new Ladders());
       this.addModule(new Weapon());
@@ -119,6 +118,9 @@ public class ModuleManager {
       this.addModule(new Armour());
       this.addModule(new Healing());
       this.addModule(new Trajectories());
+      this.addModule(new WTap());
+      this.addModule(new BlockHit());
+      this.addModule(new STap());
       this.defEn();
    }
 
