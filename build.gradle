@@ -14,6 +14,7 @@ buildscript {
 }
 
 
+
 apply plugin: 'java'
 compileJava {
     sourceCompatibility = '1.8'
@@ -52,17 +53,17 @@ dependencies {
 }
 
 processResources
-{
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                expand 'version': project.version, 'mcversion': project.minecraft.version
+            }
+
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }

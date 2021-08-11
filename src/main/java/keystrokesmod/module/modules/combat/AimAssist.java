@@ -91,11 +91,29 @@ public class AimAssist extends Module {
 
 
    public static boolean isAFriend(Entity entity) {
+      if(entity == mc.thePlayer) return true;
+
       for (Entity wut : friends){
          if (wut.equals(entity))
             return true;
       }
-      if(mc.thePlayer.isOnSameTeam((EntityLivingBase) entity)) return true;
+      try {
+         EntityPlayer bruhentity = (EntityPlayer) entity;
+         if(Ravenb3.debugger){
+            ay.sendMessageToSelf("unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
+
+            ay.sendMessageToSelf("susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
+            ay.sendMessageToSelf("substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
+         }
+         if(mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName().getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2))) return true;
+      } catch (Exception fhwhfhwe) {
+         if(Ravenb3.debugger) {
+            ay.sendMessageToSelf(fhwhfhwe.getMessage());
+         }
+      }
+
+
+
       return false;
    }
 
