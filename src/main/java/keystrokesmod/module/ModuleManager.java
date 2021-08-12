@@ -23,14 +23,15 @@ import keystrokesmod.module.modules.player.*;
 import keystrokesmod.module.modules.render.*;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.module.modules.world.ChatLogger;
+import net.minecraft.client.gui.FontRenderer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ModuleManager {
-   static List<Module> modsList = new ArrayList<>();
-   static List<Module> enModsList = new ArrayList<>();
+   public static List<Module> modsList = new ArrayList<>();
+   public static List<Module> enModsList = new ArrayList<>();
    public static Module nameHider;
    public static Module fastPlace;
    public static Module antiShuffle;
@@ -163,5 +164,35 @@ public class ModuleManager {
          enModsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
       }
 
+   }
+
+   public static void sortLongShort() {
+      enModsList.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));;
+   }
+
+   public static void sortShortLong() {
+      enModsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
+   }
+
+   public static int getLongestActiveModule(FontRenderer fr) {
+      int length = 0;
+      for(Module mod : modsList) {
+         if(mod.isEnabled()){
+            if(fr.getStringWidth(mod.getName()) > length){
+               length = fr.getStringWidth(mod.getName());
+            }
+         }
+      }
+      return length;
+   }
+
+   public static int getBoxHeight(FontRenderer fr, int margin) {
+      int length = 0;
+      for(Module mod : modsList) {
+         if(mod.isEnabled()){
+            length += fr.FONT_HEIGHT + margin;
+         }
+      }
+      return length;
    }
 }

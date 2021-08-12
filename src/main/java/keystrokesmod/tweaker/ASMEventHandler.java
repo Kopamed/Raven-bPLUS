@@ -39,7 +39,6 @@ public class ASMEventHandler {
    }
 
    public static boolean onEntityMove(Entity en) {
-      return true;/*
       if (en == mc.thePlayer && mc.thePlayer.onGround) {
          if (ModuleManager.safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
             if (SafeWalk.blocksOnly.isToggled()) {
@@ -55,7 +54,7 @@ public class ASMEventHandler {
          }
       } else {
          return false;
-      }*/
+      }
    }
 
    public static void onLivingUpdate() {

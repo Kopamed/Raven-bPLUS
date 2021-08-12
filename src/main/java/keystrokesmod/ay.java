@@ -558,6 +558,15 @@ public class ay {
       return wearingArmor;
    }
 
+   public static ArrayList<String> toArrayList(String[] fakeList){
+      ArrayList<String> e = new ArrayList<String>();
+      for(String f : fakeList) {
+         e.add(f);
+      }
+
+      return e;
+   }
+
    public static boolean currentScreenMinecraft() {
       return mc.currentScreen == null;
    }

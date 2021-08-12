@@ -3,6 +3,7 @@
 package keystrokesmod;
 
 import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -303,27 +304,58 @@ public class ru {
       net.minecraft.client.gui.Gui.drawRect(0, 0, w, h, c);
    }
 
-   public static void dct(String text, char lineSplit, int x, int y, long s, long shift, boolean rect, FontRenderer fontRenderer) {
-      int bX = x;
+   public static void drawColouredText(String text, char lineSplit, int leftOffset, int topOffset, long colourParam1, long shift, boolean rect, FontRenderer fontRenderer) {
+      int bX = leftOffset;
       int l = 0;
-      long r = 0L;
+      long colourControl = 0L;
 
       for(int i = 0; i < text.length(); ++i) {
          char c = text.charAt(i);
          if (c == lineSplit) {
             ++l;
-            x = bX;
-            y += fontRenderer.FONT_HEIGHT + 5;
-            r = shift * (long)l;
+            leftOffset = bX;
+            topOffset += fontRenderer.FONT_HEIGHT + 5;
+            //reseting text colour?
+            colourControl = shift * (long)l;
          } else {
-            fontRenderer.drawString(String.valueOf(c), (float)x, (float)y, ay.rainbowDraw(s, r), rect);
-            x += fontRenderer.getCharWidth(c);
+            fontRenderer.drawString(String.valueOf(c), (float)leftOffset, (float)topOffset, ay.astolfoColorsDraw((int)colourParam1, (int)colourControl), rect);
+            leftOffset += fontRenderer.getCharWidth(c);
             if (c != ' ') {
-               r -= 90L;
+               colourControl -= 90L;
             }
          }
       }
 
+   }
+
+   public static PositionMode getPostitionMode(int marginX, int marginY, double height, double width) {
+      int halfHeight = (int)(height / 7.32824);
+      int halfWidth = (int)(width / 2.17427);
+      PositionMode positionMode = null;
+      // up left
+
+      if(marginY < halfHeight) {
+         if(marginX < halfWidth) {
+            positionMode = PositionMode.UPLEFT;
+         }
+         if(marginX > halfWidth) {
+            positionMode = PositionMode.UPRIGHT;
+         }
+      }
+
+      if(marginY > halfHeight) {
+         if(marginX < halfWidth) {
+            positionMode = PositionMode.DOWNLEFT;
+         }
+         if(marginX > halfWidth) {
+            positionMode = PositionMode.DOWNRIGHT;
+         }
+      }
+
+
+      //System.out.println(height + " " + halfHeight + " || " + width + " " + halfWidth + " || " + marginX + " " + marginY + " || " + positionMode);
+
+      return positionMode;
    }
 
    public static void d2p(double x, double y, int radius, int sides, int color) {
@@ -400,5 +432,12 @@ public class ru {
       GL11.glDisable(3042);
       GL11.glEnable(3553);
       mc.entityRenderer.enableLightmap();
+   }
+
+   public static enum PositionMode {
+      UPLEFT,
+      UPRIGHT,
+      DOWNLEFT,
+      DOWNRIGHT;
    }
 }
