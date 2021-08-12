@@ -131,7 +131,13 @@ public class ay {
    }
 
    public static boolean isHyp() {
-      return !mc.isSingleplayer() && mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net");
+      if(!ay.isPlayerInGame()) return false;
+      try {
+         return !mc.isSingleplayer() && mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net");
+      } catch (Exception welpBruh) {
+         welpBruh.printStackTrace();
+         return false;
+      }
    }
 
    public static int f() {
