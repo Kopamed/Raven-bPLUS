@@ -239,7 +239,7 @@ public class HUD extends Module {
             if (this.mouseDown) {
                this.marginX = this.lastMousePosX + (mousePosX - this.sessionMousePosX);
                this.marginY = this.lastMousePosY + (mousePosY - this.sessionMousePosY);
-               HUD.positionMode = ru.getPostitionMode(marginX, marginY, this.width, this.height);
+               HUD.positionMode = ru.getPostitionMode(marginX, marginY, mc.currentScreen.width, mc.currentScreen.height);
 
                //in the else if statement, we check if the mouse is clicked AND inside the "text box"
             } else if (mousePosX > this.textBoxStartX && mousePosX < this.textBoxEndX && mousePosY > this.textBoxStartY && mousePosY < this.textBoxEndY) {
