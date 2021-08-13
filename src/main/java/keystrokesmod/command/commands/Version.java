@@ -2,7 +2,6 @@ package keystrokesmod.command.commands;
 
 import keystrokesmod.command.Command;
 import keystrokesmod.version;
-import keystrokesmod.command.Command;
 
 import static keystrokesmod.CommandLine.print;
 
@@ -20,10 +19,10 @@ public class Version extends Command {
             currentBranch = "main";
         }
 
-        String latestBranch = version.getBranch();
+        String latestBranch = version.getSelfBranch();
 
-        print("&eYour build: " + currentBranch + " build of version " + version.getCurrentVersion().replace("-", "."), 1);
-        print("&aLatest version: " + latestBranch + " build of " + version.getLatestVersion().replace("-", "."), 0);
+        print("&eYour build: " + currentBranch + " build " + version.getSelfBetaVersion() + " of " + version.getCurrentVersion().replace("-", "."), 1);
+        print("&aLatest version: " + latestBranch + " build " + version.getLatestBetaVersion() + " of " + version.getLatestVersion().replace("-", "."), 0);
 
     }
 }

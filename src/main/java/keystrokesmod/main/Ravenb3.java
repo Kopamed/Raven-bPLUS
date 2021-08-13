@@ -93,10 +93,17 @@ public class Ravenb3 {
       BufferedImage bf = null;
       try {
          bf = ImageIO.read(ravenLogoInputStream);
+         mResourceLocation = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
       } catch (IOException noway) {
          noway.printStackTrace();
+         mResourceLocation = null;
+      } catch (IllegalArgumentException nowayV2) {
+         nowayV2.printStackTrace();
+         mResourceLocation = null;
+      } catch (NullPointerException nowayV3) {
+         nowayV3.printStackTrace();
+         mResourceLocation = null;
       }
-      mResourceLocation = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
 
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();

@@ -106,7 +106,7 @@ public class ClickGui extends GuiScreen {
          }
       }
       else if(Ravenb3.beta) {
-         String veryCoolBetaUser = "Beta build of version " + version.getCurrentVersion().replaceAll("-", ".");
+         String veryCoolBetaUser = "Beta build " + version.getSelfBetaVersion() + " of version " + version.getCurrentVersion().replaceAll("-", ".");
          mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.astolfoColorsDraw(10, 28, speed));
       } else {
          mc.fontRendererObj.drawString("On latest version", halfScreenWidth - this.fontRendererObj.getStringWidth("On latest version") / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.astolfoColorsDraw(10, 14, speed));

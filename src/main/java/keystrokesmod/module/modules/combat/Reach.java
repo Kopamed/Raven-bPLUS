@@ -58,6 +58,7 @@ public class Reach extends Module {
    public void ef(TickEvent ev) {
       // autoclick event
       if(!ay.isPlayerInGame()) return;
+
       if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
 
       if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){

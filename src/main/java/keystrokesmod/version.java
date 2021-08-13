@@ -18,6 +18,8 @@ public class version {
     public static String latestVersion = null;
     public static String branch = null;
     public static String beta = null;
+    public static int betaSelfVersion = -1;
+    public static int betaLatestVersion = -1;
 
     public static boolean outdated() {
         currentVersion = getCurrentVersion();
@@ -97,7 +99,7 @@ public class version {
         return latestVersion;
     }
 
-    public static  String getBranch() {
+    public static  String getSelfBranch() {
         if (branch != null) {
             //////System.out.println("Fast return");
             return branch;
@@ -121,7 +123,7 @@ public class version {
 
         try {
             Scanner versionLook = new Scanner(br);
-            branch = versionLook.nextLine();
+            branch = versionLook.nextLine().split("-")[0];
         } catch (Exception var48) {
             var48.printStackTrace();
             return "";
@@ -137,7 +139,7 @@ public class version {
         InputStream input = version.class.getResourceAsStream(branchFileName);
         Scanner scanner = new Scanner(input);
         try {
-            if(scanner.nextLine().equalsIgnoreCase("beta")){
+            if(scanner.nextLine().split("-")[0].equalsIgnoreCase("beta")){
                 beta = "beta";
                 return true;
             }
@@ -166,5 +168,59 @@ public class version {
             return true;
         }
         return latestVersionSplited.get(2) < currentVersionSplited.get(2);
+    }
+
+    public static int getSelfBetaVersion() {
+        if(betaSelfVersion != -1){
+            return betaSelfVersion;
+        }
+
+        InputStream input = version.class.getResourceAsStream(branchFileName);
+        Scanner scanner = new Scanner(input);
+        try {
+            String meinkfragt = scanner.nextLine();
+            if(meinkfragt.split("-")[0].equalsIgnoreCase("beta")) {
+                betaSelfVersion = Integer.parseInt(meinkfragt.split("-")[1]);
+                return betaSelfVersion;
+            }
+        } catch (Exception var47) {
+            var47.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int getLatestBetaVersion() {
+        if(betaLatestVersion != -1) {
+            return betaLatestVersion;
+        }
+
+        URL url = null;
+        try {
+            url = new URL("https://raw.githubusercontent.com/Kopamed/Raven-bPLUS/main/src/main/resources/assets/keystrokes/branch");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(url.openStream()));
+        } catch (Exception klojangamingmoment) {
+            klojangamingmoment.printStackTrace();
+            return -1;
+        }
+
+        try {
+            Scanner scanner = new Scanner(br);
+            String sigma_monero_miner = scanner.nextLine();
+            if(sigma_monero_miner.split("-")[0].equalsIgnoreCase("beta")) {
+                betaLatestVersion = Integer.parseInt(sigma_monero_miner.split("-")[1]);
+                return betaLatestVersion;
+            }
+        } catch (Exception var48) {
+            var48.printStackTrace();
+            return -1;
+        }
+        return -1;
     }
 }

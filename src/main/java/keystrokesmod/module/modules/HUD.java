@@ -39,6 +39,7 @@ public class HUD extends Module {
    private static int hudY = 70;
    public static ru.PositionMode positionMode;
    public static int logoSize;
+   public static boolean showedError;
 
 
    public HUD() {
@@ -50,6 +51,7 @@ public class HUD extends Module {
       this.registerSetting(colourMode = new ModuleSettingSlider("Value: ", 1, 1, 5, 1));
       this.registerSetting(colourModeDesc = new ModuleDesc("Mode: RAVEN"));
       logoSize = 64;
+      showedError = false;
    }
 
    public void guiUpdate(){
@@ -83,6 +85,12 @@ public class HUD extends Module {
          int y = hudY;
          int del = 0;
 
+         if(mResourceLocation == null && !showedError) {
+            System.out.println("Showed error");
+            ay.sendMessageToSelf("Error! Failed to load the raven B+ logo. Please report this in our discord!");
+            showedError = true;
+         }
+
          if (mResourceLocation != null && logo.isToggled()) {
             Minecraft.getMinecraft().getTextureManager().bindTexture(mResourceLocation);
             Gui.drawModalRectWithCustomSizedTexture(hudX - 13, hudY, 0, 0, logoSize, logoSize, logoSize, logoSize);
@@ -101,7 +109,7 @@ public class HUD extends Module {
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
          int textBoxHeight = ModuleManager.getBoxHeight(mc.fontRendererObj, margin);
          //System.out.println(mc.displayWidth + " " + mc.displayHeight + " || " + hudX + " " + hudY);
-         if(logo.isToggled()) {
+         if(logo.isToggled() && mResourceLocation != null) {
             y += (logoSize * 0.8);
          }
 
@@ -109,7 +117,7 @@ public class HUD extends Module {
             hudX = margin;
          }
          if(hudY < 0) {
-            if(logo.isToggled()) {
+            if(logo.isToggled() && mResourceLocation != null) {
                hudY = logoSize - (int)(logoSize * 0.2);
             } else {
                hudY = margin;
