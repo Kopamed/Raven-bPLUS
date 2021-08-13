@@ -11,6 +11,7 @@ import java.util.List;
 import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -76,7 +77,7 @@ public class HUD extends Module {
                ModuleManager.sortLongShort();
             }
          }
-         List<Module> en = new ArrayList(NotAName.moduleManager.enModsList);
+         List<Module> en = new ArrayList(NotAName.moduleManager.listofmods());
          if(en.isEmpty()) return;
 
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
@@ -161,6 +162,7 @@ public class HUD extends Module {
       boolean mouseDown = false;
       int textBoxStartX = 0;
       int textBoxStartY = 0;
+      ScaledResolution sr;
       int textBoxEndX = 0;
       int textBoxEndY = 0;
       int marginX = 5;
@@ -175,7 +177,8 @@ public class HUD extends Module {
          this.buttonList.add(this.resetPosButton = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String("Reset position")));
          this.marginX = HUD.hudX;
          this.marginY = HUD.hudY;
-         HUD.positionMode = ru.getPostitionMode(marginX, marginY, this.width, this.height);
+         sr = new ScaledResolution(Minecraft.getMinecraft());
+         HUD.positionMode = ru.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
       }
 
       public void drawScreen(int mX, int mY, float pt) {
@@ -239,7 +242,7 @@ public class HUD extends Module {
             if (this.mouseDown) {
                this.marginX = this.lastMousePosX + (mousePosX - this.sessionMousePosX);
                this.marginY = this.lastMousePosY + (mousePosY - this.sessionMousePosY);
-               HUD.positionMode = ru.getPostitionMode(marginX, marginY, mc.currentScreen.width, mc.currentScreen.height);
+               HUD.positionMode = ru.getPostitionMode(marginX, marginY,sr.getScaledWidth(), sr.getScaledHeight());
 
                //in the else if statement, we check if the mouse is clicked AND inside the "text box"
             } else if (mousePosX > this.textBoxStartX && mousePosX < this.textBoxEndX && mousePosY > this.textBoxStartY && mousePosY < this.textBoxEndY) {

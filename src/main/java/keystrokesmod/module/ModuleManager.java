@@ -122,6 +122,7 @@ public class ModuleManager {
       this.addModule(new WTap());
       this.addModule(new BlockHit());
       this.addModule(new STap());
+      //this.addModule(new TargetHUD());
       this.defEn();
    }
 
@@ -159,19 +160,19 @@ public class ModuleManager {
 
    public static void sort() {
       if (HUD.alphabeticalSort.isToggled()) {
-         enModsList.sort(Comparator.comparing(Module::getName));
+         modsList.sort(Comparator.comparing(Module::getName));
       } else {
-         enModsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
+         modsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
       }
 
    }
 
    public static void sortLongShort() {
-      enModsList.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));;
+      modsList.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));;
    }
 
    public static void sortShortLong() {
-      enModsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
+      modsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
    }
 
    public static int getLongestActiveModule(FontRenderer fr) {

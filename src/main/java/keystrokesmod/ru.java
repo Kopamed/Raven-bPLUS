@@ -329,8 +329,8 @@ public class ru {
    }
 
    public static PositionMode getPostitionMode(int marginX, int marginY, double height, double width) {
-      int halfHeight = (int)(height / (7.32824/2));
-      int halfWidth = (int)(width / (2.17427/2));
+      int halfHeight = (int)(height / 4);
+      int halfWidth = (int)(width / 1);
       PositionMode positionMode = null;
       // up left
 
