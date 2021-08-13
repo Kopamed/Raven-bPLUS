@@ -1,3 +1,60 @@
+module:Murder Mystery:false:0
+setting:Murder Mystery:Alert:tick:true
+setting:Murder Mystery:Search detectives:tick:true
+setting:Murder Mystery:Announce murderer:tick:false
+module:String Encrypt:false:0
+setting:String Encrypt:Ignore debug:tick:false
+setting:String Encrypt:Ignore all GUI:tick:false
+setting:String Encrypt:Value:slider:1.0
+setting:String Encrypt:Mode: &k:desc:Mode: &k
+module:AutoHeadHitter:false:0
+setting:AutoHeadHitter:Spams spacebar when under blocks:desc:Spams spacebar when under blocks
+setting:AutoHeadHitter:Cancel if snkeaing:tick:true
+setting:AutoHeadHitter:Jump Presses per second:slider:12.0
+module:Delay Remover:false:0
+setting:Delay Remover:Gives you 1.7 hitreg.:desc:Gives you 1.7 hitreg.
+module:Extra Bobbing:false:0
+setting:Extra Bobbing:Level:slider:1.0
+module:Self Destruct:false:14
+module:Bridge Assist:false:0
+setting:Bridge Assist:Best with fastplace, not autoplace:desc:Best with fastplace, not autoplace
+setting:Bridge Assist:Value:slider:1.0
+setting:Bridge Assist:Mode: Snap:desc:Mode: SNAP
+setting:Bridge Assist:Wait time (ms):slider:500.0
+setting:Bridge Assist:Set look pos:tick:true
+setting:Bridge Assist:Work only when sneaking:tick:true
+setting:Bridge Assist:Work with safewalk:tick:false
+setting:Bridge Assist:Assist range:slider:10.0
+setting:Bridge Assist:Glide speed:slider:500.0
+setting:Bridge Assist:Value:slider:1.0
+setting:Bridge Assist:Mode: GodBridge:desc:Mode: GODBRIDGE
+module:Trajectories:false:0
+setting:Trajectories:Prefer a slot:tick:false
+setting:Trajectories:Prefer wich slot:slider:5.0
+module:Water bucket:false:0
+setting:Water bucket:Credits: aycy:desc:Credits: aycy
+module:Sumo Fences:false:0
+setting:Sumo Fences:Fences for Hypixel sumo.:desc:Fences for Hypixel sumo.
+setting:Sumo Fences:Fence height:slider:4.0
+setting:Sumo Fences:Block type:slider:1.0
+setting:Sumo Fences:Mode: Oak fence:desc:Mode: Oak fence
+module:Command line:false:0
+setting:Command line:Animate:tick:true
+module:BurstClicker:false:0
+setting:BurstClicker:Artificial dragclicking.:desc:Artificial dragclicking.
+setting:BurstClicker:Clicks:slider:0.0
+setting:BurstClicker:Delay (ms):slider:5.0
+setting:BurstClicker:Delay randomizer:tick:true
+setting:BurstClicker:Place when block:tick:false
+module:Chat Logger:false:0
+module:Bridge Info:false:0
+setting:Bridge Info:Only for solos.:desc:Only for solos.
+setting:Bridge Info:Edit position:tick:false
+module:Duels Stats:false:0
+setting:Duels Stats:Value:slider:1.0
+setting:Duels Stats:Mode: OVERALL:desc:Mode: OVERALL
+setting:Duels Stats:Send ign on join:tick:false
+setting:Duels Stats:Threat Level:tick:true
 module:AutoClicker:false:0
 setting:AutoClicker:Best with delay remover.:desc:Best with delay remover.
 setting:AutoClicker:Left click:tick:true
@@ -12,6 +69,8 @@ setting:AutoClicker:Don't rightclick sword:tick:true
 setting:AutoClicker:Only rightclick with blocks:tick:false
 setting:AutoClicker:Prefer fast place:tick:false
 setting:AutoClicker:Break blocks:tick:false
+setting:AutoClicker:Breack blocks min delay:slider:20.0
+setting:AutoClicker:Breack blocks max delay:slider:50.0
 setting:AutoClicker:Allow eat:tick:true
 setting:AutoClicker:Allow bow:tick:true
 setting:AutoClicker:Jitter left:slider:0.0
@@ -21,22 +80,19 @@ setting:AutoClicker:ClickStyle:slider:1.0
 setting:AutoClicker:Mode: RAVEN:desc:Mode: RAVEN
 setting:AutoClicker:Event:slider:2.0
 setting:AutoClicker:Mode: LEGIT:desc:Mode: TICK
-module:AimAssist:false:0
-setting:AimAssist:Speed:slider:45.0
-setting:AimAssist:FOV:slider:90.0
-setting:AimAssist:Distance:slider:4.5
-setting:AimAssist:Click aim:tick:true
-setting:AimAssist:Break blocks:tick:true
-setting:AimAssist:Ignore Friends:tick:true
-setting:AimAssist:Weapon only:tick:false
-setting:AimAssist:Aim invis:tick:false
-setting:AimAssist:Blatant mode:tick:false
-module:BurstClicker:false:0
-setting:BurstClicker:Artificial dragclicking.:desc:Artificial dragclicking.
-setting:BurstClicker:Clicks:slider:0.0
-setting:BurstClicker:Delay (ms):slider:5.0
-setting:BurstClicker:Delay randomizer:tick:true
-setting:BurstClicker:Place when block:tick:false
+module:Stop Motion:false:0
+setting:Stop Motion:Stop X:tick:true
+setting:Stop Motion:Stop Y:tick:true
+setting:Stop Motion:Stop Z:tick:true
+module:AntiShuffle:false:0
+setting:AntiShuffle:Remove &k:desc:Remove &k
+module:KeepSprint:false:0
+setting:KeepSprint:Default is 40% motion reduction.:desc:Default is 40% motion reduction.
+setting:KeepSprint:Slow %:slider:40.0
+setting:KeepSprint:Only reduce reach hits:tick:false
+module:Flame Trail:false:0
+module:Name Hider:false:0
+setting:Name Hider:Command: cname [name]:desc:Command: cname [name]
 module:ClickAssist:false:0
 setting:ClickAssist:Boost your CPS.:desc:Boost your CPS.
 setting:ClickAssist:Chance:slider:80.0
@@ -46,105 +102,7 @@ setting:ClickAssist:Only while targeting:tick:false
 setting:ClickAssist:Right click:tick:false
 setting:ClickAssist:Blocks only:tick:true
 setting:ClickAssist:Above 5 cps:tick:false
-module:Delay Remover:false:0
-setting:Delay Remover:Gives you 1.7 hitreg.:desc:Gives you 1.7 hitreg.
-module:HitBox:false:0
-setting:HitBox:Multiplier:slider:1.2
-setting:HitBox:Show new hitbox:tick:false
-module:Reach:false:0
-setting:Reach:Min:slider:3.1
-setting:Reach:Max:slider:3.3
-setting:Reach:Weapon only:tick:false
-setting:Reach:Moving only:tick:false
-setting:Reach:Sprint only:tick:false
-setting:Reach:Hit through blocks:tick:false
-module:RodAimbot:false:0
-setting:RodAimbot:FOV:slider:90.0
-setting:RodAimbot:Distance:slider:4.5
-setting:RodAimbot:Aim invis:tick:false
-module:Velocity:false:0
-setting:Velocity:Horizontal:slider:90.0
-setting:Velocity:Vertical:slider:100.0
-setting:Velocity:Chance:slider:100.0
-setting:Velocity:Only while targeting:tick:false
-setting:Velocity:Disable while holding S:tick:false
-module:Bhop:false:0
-setting:Bhop:Speed:slider:2.0
-module:Boost:false:0
-setting:Boost:20 ticks are in 1 second:desc:20 ticks are in 1 second
-setting:Boost:Multiplier:slider:2.0
-setting:Boost:Time (ticks):slider:15.0
-module:Fly:false:0
-setting:Fly:Value:slider:1.0
-setting:Fly:Mode: Vanilla:desc:Mode: Vanilla
-setting:Fly:Speed:slider:2.0
-module:InvMove:false:0
-module:KeepSprint:false:0
-setting:KeepSprint:Default is 40% motion reduction.:desc:Default is 40% motion reduction.
-setting:KeepSprint:Slow %:slider:40.0
-setting:KeepSprint:Only reduce reach hits:tick:false
-module:NoSlow:false:0
-setting:NoSlow:Default is 80% motion reduction.:desc:Default is 80% motion reduction.
-setting:NoSlow:Hypixel max: 22%:desc:Hypixel max: 22%
-setting:NoSlow:Slow %:slider:80.0
-module:Speed:false:0
-setting:Speed:Hypixel max: 1.13:desc:Hypixel max: 1.13
-setting:Speed:Speed:slider:1.2
-setting:Speed:Strafe only:tick:false
-module:Sprint:false:0
-setting:Sprint:OmniSprint:tick:false
-module:Stop Motion:false:0
-setting:Stop Motion:Stop X:tick:true
-setting:Stop Motion:Stop Y:tick:true
-setting:Stop Motion:Stop Z:tick:true
-module:Timer:false:0
-setting:Timer:Speed:slider:1.0
-setting:Timer:Strafe only:tick:false
-module:VClip:false:0
-setting:VClip:Distace:slider:2.0
-module:AutoJump:false:0
-setting:AutoJump:Cancel when shifting:tick:true
-module:AutoPlace:false:0
-setting:AutoPlace:FD: FPS/80:desc:FD: FPS/80
-setting:AutoPlace:Frame delay:slider:8.0
-setting:AutoPlace:Hold right:tick:true
-module:BedAura:false:0
-setting:BedAura:Range:slider:5.0
-module:FallSpeed:false:0
-setting:FallSpeed:Vanilla max: 3.92:desc:Vanilla max: 3.92
-setting:FallSpeed:Motion:slider:5.0
-setting:FallSpeed:Disable XZ motion:tick:true
-module:FastPlace:false:0
-setting:FastPlace:Delay:slider:0.0
-setting:FastPlace:Blocks only:tick:true
-module:Freecam:false:0
-setting:Freecam:Speed:slider:2.5
-setting:Freecam:Disable on damage:tick:true
-module:NoFall:false:0
-module:SafeWalk:false:0
-setting:SafeWalk:Shift:tick:false
-setting:SafeWalk:Shift during jumps:tick:false
-setting:SafeWalk:On shift hold:tick:false
-setting:SafeWalk:Blocks only:tick:true
-setting:SafeWalk:Only when looking down:tick:true
-setting:SafeWalk:Pitch min range::slider:70.0
-setting:SafeWalk:Pitch Max range::slider:85.0
-module:AntiBot:true:0
-setting:AntiBot:Wait 80 ticks:tick:false
-module:AntiShuffle:false:0
-setting:AntiShuffle:Remove &k:desc:Remove &k
-module:Chams:false:0
-module:ChestESP:false:0
-setting:ChestESP:Red:slider:0.0
-setting:ChestESP:Green:slider:0.0
-setting:ChestESP:Blue:slider:255.0
-setting:ChestESP:Rainbow:tick:false
-module:Nametags:false:0
-setting:Nametags:Offset:slider:0.0
-setting:Nametags:Rect:tick:true
-setting:Nametags:Show health:tick:true
-setting:Nametags:Show invis:tick:true
-setting:Nametags:Remove tags:tick:false
+module:MouseClick:false:0
 module:PlayerESP:false:0
 setting:PlayerESP:Red:slider:0.0
 setting:PlayerESP:Green:slider:255.0
@@ -161,6 +119,76 @@ setting:PlayerESP:Expand:slider:0.0
 setting:PlayerESP:X-Shift:slider:0.0
 setting:PlayerESP:Show invis:tick:true
 setting:PlayerESP:Red on damage:tick:true
+module:Middleclick:false:0
+setting:Middleclick:Show friend help in chat:tick:true
+setting:Middleclick:Min CPS::slider:8.0
+setting:Middleclick:Max CPS::slider:12.0
+setting:Middleclick:CPS only applies to PEARL_THROW:desc:CPS only applies to PEARL_THROW
+setting:Middleclick:Value::slider:1.0
+setting:Middleclick:Mode: PEARL_THROW:desc:Mode: PEARL_THROW
+module:AutoPlace:false:0
+setting:AutoPlace:FD: FPS/80:desc:FD: FPS/80
+setting:AutoPlace:Frame delay:slider:8.0
+setting:AutoPlace:Hold right:tick:true
+module:FastPlace:false:0
+setting:FastPlace:Delay:slider:0.0
+setting:FastPlace:Blocks only:tick:true
+module:Fake Chat:false:0
+setting:Fake Chat:Command: fakechat [msg]:desc:Command: fakechat [msg]
+module:RodAimbot:false:0
+setting:RodAimbot:FOV:slider:90.0
+setting:RodAimbot:Distance:slider:4.5
+setting:RodAimbot:Aim invis:tick:false
+module:FallSpeed:false:0
+setting:FallSpeed:Vanilla max: 3.92:desc:Vanilla max: 3.92
+setting:FallSpeed:Motion:slider:5.0
+setting:FallSpeed:Disable XZ motion:tick:true
+module:Fullbright:false:0
+setting:Fullbright:No more darkness!:desc:No more darkness!
+module:Click Info:false:0
+setting:Click Info:Value::slider:1.0
+setting:Click Info:Mode: MOUSE:desc:Mode: MOUSE
+module:Auto Tool:false:0
+setting:Auto Tool:Hotkey back:tick:true
+setting:Auto Tool:Random delay:tick:true
+setting:Auto Tool:Min delay:slider:100.0
+setting:Auto Tool:Max delay:slider:390.0
+module:AutoJump:false:0
+setting:AutoJump:Cancel when shifting:tick:true
+module:ChestESP:false:0
+setting:ChestESP:Red:slider:0.0
+setting:ChestESP:Green:slider:0.0
+setting:ChestESP:Blue:slider:255.0
+setting:ChestESP:Rainbow:tick:false
+module:Nametags:false:0
+setting:Nametags:Offset:slider:0.0
+setting:Nametags:Rect:tick:true
+setting:Nametags:Show health:tick:true
+setting:Nametags:Show invis:tick:true
+setting:Nametags:Remove tags:tick:false
+module:AimAssist:false:0
+setting:AimAssist:Speed:slider:45.0
+setting:AimAssist:FOV:slider:90.0
+setting:AimAssist:Distance:slider:4.5
+setting:AimAssist:Click aim:tick:true
+setting:AimAssist:Break blocks:tick:true
+setting:AimAssist:Ignore Friends:tick:true
+setting:AimAssist:Weapon only:tick:false
+setting:AimAssist:Aim invis:tick:false
+setting:AimAssist:Blatant mode:tick:false
+module:SafeWalk:false:0
+setting:SafeWalk:Shift:tick:false
+setting:SafeWalk:Shift during jumps:tick:false
+setting:SafeWalk:On shift hold:tick:false
+setting:SafeWalk:Blocks only:tick:true
+setting:SafeWalk:Only when looking down:tick:true
+setting:SafeWalk:Pitch min range::slider:70.0
+setting:SafeWalk:Pitch Max range::slider:85.0
+module:BedAura:false:0
+setting:BedAura:Range:slider:5.0
+module:Freecam:false:0
+setting:Freecam:Speed:slider:2.5
+setting:Freecam:Disable on damage:tick:true
 module:Tracers:false:0
 setting:Tracers:Show invis:tick:true
 setting:Tracers:Line Width:slider:1.0
@@ -168,10 +196,80 @@ setting:Tracers:Red:slider:0.0
 setting:Tracers:Green:slider:255.0
 setting:Tracers:Blue:slider:0.0
 setting:Tracers:Rainbow:tick:false
-module:HUD:false:0
-setting:HUD:Edit position:tick:false
-setting:HUD:Drop shadow:tick:true
-setting:HUD:Alphabetical sort:tick:false
+module:Ladders:false:0
+setting:Ladders:Prefer a slot:tick:false
+setting:Ladders:Prefer wich slot:slider:8.0
+module:InvMove:false:0
+module:Velocity:false:0
+setting:Velocity:Horizontal:slider:90.0
+setting:Velocity:Vertical:slider:100.0
+setting:Velocity:Chance:slider:100.0
+setting:Velocity:Only while targeting:tick:false
+setting:Velocity:Disable while holding S:tick:false
+module:BlockHit:false:0
+setting:BlockHit:Only combo players:tick:true
+setting:BlockHit:Min ms: :slider:75.0
+setting:BlockHit:Man ms: :slider:120.0
+setting:BlockHit:Once every min hits: :slider:1.0
+setting:BlockHit:Once every max hits: :slider:1.0
+setting:BlockHit:Range: :slider:2.85
+module:SlyPort:false:0
+setting:SlyPort:Teleport behind enemies.:desc:Teleport behind enemies.
+setting:SlyPort:Range:slider:6.0
+setting:SlyPort:Aim:tick:true
+setting:SlyPort:Play sound:tick:true
+setting:SlyPort:Players only:tick:true
+module:Weapon:false:0
+module:Armour:false:0
+setting:Armour:Ignore if already equipped:tick:true
+module:Healing:false:0
+setting:Healing:Prefer a slot:tick:false
+setting:Healing:Prefer wich slot:slider:8.0
+setting:Healing:Value::slider:1.0
+setting:Healing:Mode: SOUP:desc:Mode: SOUP
+module:AntiBot:true:0
+setting:AntiBot:Wait 80 ticks:tick:false
+module:Update:false:0
+setting:Update:Command: update:desc:Command: update
+setting:Update:Copy to clipboard:tick:true
+setting:Update:Open dl in browser:tick:true
+module:NoSlow:false:0
+setting:NoSlow:Default is 80% motion reduction.:desc:Default is 80% motion reduction.
+setting:NoSlow:Hypixel max: 22%:desc:Hypixel max: 22%
+setting:NoSlow:Slow %:slider:80.0
+module:Blocks:false:0
+setting:Blocks:Prefer a slot:tick:false
+setting:Blocks:Prefer wich slot:slider:9.0
+module:HitBox:false:0
+setting:HitBox:Multiplier:slider:1.2
+setting:HitBox:Show new hitbox:tick:false
+module:Reach:false:0
+setting:Reach:Min:slider:3.1
+setting:Reach:Max:slider:3.3
+setting:Reach:Weapon only:tick:false
+setting:Reach:Moving only:tick:false
+setting:Reach:Sprint only:tick:false
+setting:Reach:Hit through blocks:tick:false
+module:Speed:false:0
+setting:Speed:Hypixel max: 1.13:desc:Hypixel max: 1.13
+setting:Speed:Speed:slider:1.2
+setting:Speed:Strafe only:tick:false
+module:Sprint:false:0
+setting:Sprint:OmniSprint:tick:false
+module:NoFall:false:0
+module:Chams:false:0
+module:Boost:false:0
+setting:Boost:20 ticks are in 1 second:desc:20 ticks are in 1 second
+setting:Boost:Multiplier:slider:2.0
+setting:Boost:Time (ticks):slider:15.0
+module:Pearl:false:0
+setting:Pearl:Prefer a slot:tick:false
+setting:Pearl:Prefer wich slot:slider:6.0
+module:Timer:false:0
+setting:Timer:Speed:slider:1.0
+setting:Timer:Strafe only:tick:false
+module:Bhop:false:0
+setting:Bhop:Speed:slider:2.0
 module:Xray:false:0
 setting:Xray:Range:slider:20.0
 setting:Xray:Iron:tick:true
@@ -182,107 +280,36 @@ setting:Xray:Lapis:tick:true
 setting:Xray:Redstone:tick:true
 setting:Xray:Coal:tick:true
 setting:Xray:Spawner:tick:true
-module:Bridge Info:false:0
-setting:Bridge Info:Only for solos.:desc:Only for solos.
-setting:Bridge Info:Edit position:tick:false
-module:Duels Stats:false:0
-setting:Duels Stats:Value:slider:1.0
-setting:Duels Stats:Mode: OVERALL:desc:Mode: OVERALL
-setting:Duels Stats:Send ign on join:tick:false
-setting:Duels Stats:Threat Level:tick:true
-module:Murder Mystery:false:0
-setting:Murder Mystery:Alert:tick:true
-setting:Murder Mystery:Search detectives:tick:true
-setting:Murder Mystery:Announce murderer:tick:false
-module:Sumo Fences:false:0
-setting:Sumo Fences:Fences for Hypixel sumo.:desc:Fences for Hypixel sumo.
-setting:Sumo Fences:Fence height:slider:4.0
-setting:Sumo Fences:Block type:slider:1.0
-setting:Sumo Fences:Mode: Oak fence:desc:Mode: Oak fence
-module:Extra Bobbing:false:0
-setting:Extra Bobbing:Level:slider:1.0
-module:Flame Trail:false:0
-module:SlyPort:false:0
-setting:SlyPort:Teleport behind enemies.:desc:Teleport behind enemies.
-setting:SlyPort:Range:slider:6.0
-setting:SlyPort:Aim:tick:true
-setting:SlyPort:Play sound:tick:true
-setting:SlyPort:Players only:tick:true
+module:WTap:false:0
+setting:WTap:Only combo players:tick:true
+setting:WTap:Min ms: :slider:75.0
+setting:WTap:Man ms: :slider:120.0
+setting:WTap:Once every min hits: :slider:1.0
+setting:WTap:Once every max hits: :slider:1.0
+setting:WTap:Range: :slider:2.85
+module:STap:false:0
+setting:STap:Only combo players:tick:true
+setting:STap:Min ms: :slider:75.0
+setting:STap:Man ms: :slider:120.0
+setting:STap:Once every min hits: :slider:1.0
+setting:STap:Once every max hits: :slider:1.0
+setting:STap:Range: :slider:2.85
+module:VClip:false:0
+setting:VClip:Distace:slider:2.0
 module:Spin:false:0
 setting:Spin:Rotation:slider:360.0
 setting:Spin:Speed:slider:25.0
-module:Fake Chat:false:0
-setting:Fake Chat:Command: fakechat [msg]:desc:Command: fakechat [msg]
-module:Name Hider:false:0
-setting:Name Hider:Command: cname [name]:desc:Command: cname [name]
-module:String Encrypt:false:0
-setting:String Encrypt:Ignore debug:tick:false
-setting:String Encrypt:Ignore all GUI:tick:false
-setting:String Encrypt:Value:slider:1.0
-setting:String Encrypt:Mode: &k:desc:Mode: &k
-module:Water bucket:false:0
-setting:Water bucket:Credits: aycy:desc:Credits: aycy
-module:Command line:false:0
-setting:Command line:Animate:tick:true
+module:HUD:false:0
+setting:HUD:Edit position:tick:false
+setting:HUD:Drop shadow:tick:true
+setting:HUD:Logo:tick:false
+setting:HUD:Alphabetical sort:tick:false
+setting:HUD:Value: :slider:1.0
+setting:HUD:Mode: RAVEN:desc:Mode: RAVEN
+module:Fly:false:0
+setting:Fly:Value:slider:1.0
+setting:Fly:Mode: Vanilla:desc:Mode: Vanilla
+setting:Fly:Speed:slider:2.0
 module:Gui:false:54
-setting:Gui:Theme:slider:3.0
+setting:Gui:Theme:slider:4.0
 setting:Gui:Mode: b3:desc:Mode: b3
-module:Self Destruct:false:14
-module:Chat Logger:false:0
-module:Bridge Assist:false:0
-setting:Bridge Assist:Best with fastplace, not autoplace:desc:Best with fastplace, not autoplace
-setting:Bridge Assist:Value:slider:1.0
-setting:Bridge Assist:Mode: Snap:desc:Mode: SNAP
-setting:Bridge Assist:Wait time (ms):slider:500.0
-setting:Bridge Assist:Set look pos:tick:true
-setting:Bridge Assist:Work only when sneaking:tick:true
-setting:Bridge Assist:Work with safewalk:tick:false
-setting:Bridge Assist:Assist range:slider:10.0
-setting:Bridge Assist:Glide speed:slider:200.0
-setting:Bridge Assist:Value:slider:1.0
-setting:Bridge Assist:Mode: GodBridge:desc:Mode: GODBRIDGE
-module:Fullbright:false:0
-setting:Fullbright:No more darkness!:desc:No more darkness!
-module:Update:false:0
-setting:Update:Command: update:desc:Command: update
-setting:Update:Copy to clipboard:tick:true
-setting:Update:Open dl in browser:tick:true
-module:AutoHeadHitter:false:0
-setting:AutoHeadHitter:Spams spacebar when under blocks:desc:Spams spacebar when under blocks
-setting:AutoHeadHitter:Cancel if snkeaing:tick:true
-setting:AutoHeadHitter:Jump Presses per second:slider:12.0
-module:Click Info:false:0
-setting:Click Info:Value::slider:1.0
-setting:Click Info:Mode: MOUSE:desc:Mode: MOUSE
-module:Middleclick:false:0
-setting:Middleclick:Show friend help in chat:tick:true
-setting:Middleclick:Min CPS::slider:8.0
-setting:Middleclick:Max CPS::slider:12.0
-setting:Middleclick:CPS only applies to PEARL_THROW:desc:CPS only applies to PEARL_THROW
-setting:Middleclick:Value::slider:1.0
-setting:Middleclick:Mode: PEARL_THROW:desc:Mode: PEARL_THROW
-module:MouseClick:false:0
-module:Auto Tool:false:0
-setting:Auto Tool:Hotkey back:tick:true
-setting:Auto Tool:Random delay:tick:true
-setting:Auto Tool:Min delay:slider:100.0
-setting:Auto Tool:Max delay:slider:390.0
-module:Auto Combo:false:0
-setting:Auto Combo:Only combo players:tick:true
-setting:Auto Combo:Min ms: :slider:75.0
-setting:Auto Combo:Man ms: :slider:120.0
-setting:Auto Combo:Once every min hits: :slider:1.0
-setting:Auto Combo:Once every max hits: :slider:1.0
-setting:Auto Combo:Range: :slider:2.85
-setting:Auto Combo:Value: :slider:1.0
-setting:Auto Combo:Mode: BlockHit:desc:Mode: BLOCKHIT
-module:Blocks:false:0
-setting:Blocks:Prefer a slot:tick:false
-setting:Blocks:Prefer wich slot:slider:9.0
-module:Ladders:false:0
-setting:Ladders:Prefer a slot:tick:false
-setting:Ladders:Prefer wich slot:slider:8.0
-module:Weapon:false:0
-module:Pearl:false:0
-setting:Pearl:Prefer a slot:tick:false
-setting:Pearl:Prefer wich slot:slider:6.0

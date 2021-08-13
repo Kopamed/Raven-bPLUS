@@ -14,7 +14,6 @@ public class Friends extends Command {
     public void onCall(String[] args){
         if (args == null){
             listFriends();
-            return;
         }
 
         else if(args[1].equalsIgnoreCase("list")) {

@@ -2,6 +2,9 @@
 
 package keystrokesmod.main;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -15,9 +18,12 @@ import keystrokesmod.keystroke.keystrokeCommand;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.tweaker.transformers.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -28,6 +34,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+
+import javax.imageio.ImageIO;
 
 @Mod(
    modid = "keystrokesmod",
@@ -56,6 +64,8 @@ public class Ravenb3 {
    private static KeySrokeRenderer keySrokeRenderer;
    private static boolean isKeyStrokeConfigGuiToggled;
    private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
+   public static InputStream ravenLogoInputStream;
+   public static ResourceLocation mResourceLocation;
 
    public Ravenb3() {
       notAName = new NotAName();
@@ -77,27 +87,32 @@ public class Ravenb3 {
       MinecraftForge.EVENT_BUS.register(new TransformerEntity());
       MinecraftForge.EVENT_BUS.register(new TransformerEntityPlayer());
       MinecraftForge.EVENT_BUS.register(new TransformerMinecraft());
+
+      //lodaing assest
+      ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
+      BufferedImage bf = null;
+      try {
+         bf = ImageIO.read(ravenLogoInputStream);
+      } catch (IOException noway) {
+         noway.printStackTrace();
+      }
+      mResourceLocation = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
+
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
       FMLCommonHandler.instance().bus().register(ModuleManager.reach);
       FMLCommonHandler.instance().bus().register(ModuleManager.nameHider);
-      //BlowsyConfigManager.applyKeyStrokeSettingsFromConfigFile();
-      //BlowsyConfigManager.applyCheatSettingsFromConfigFile();
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
-      this.configManager = new ConfigManager();
+      configManager = new ConfigManager();
       ay.su();
-      ex.execute(() -> URLUtils.getTextFromURL(this.numberOfUseTracker));
+      ex.execute(() -> URLUtils.getTextFromURL(numberOfUseTracker));
       if(version.outdated()) {
          Ravenb3.outdated = true;
       }
       if(version.isBeta()) {
          Ravenb3.beta = true;
       }
-   }
-
-   @EventHandler
-   public void postInit(FMLPostInitializationEvent e) {
    }
 
    @SubscribeEvent
@@ -127,10 +142,6 @@ public class Ravenb3 {
          }
 
       }
-   }
-
-   public void pingTracker() {
-
    }
 
    public static ScheduledExecutorService getExecutor() {

@@ -20,7 +20,7 @@ public class Freecam extends Module {
    private final double toRad = 0.017453292519943295D;
    public static EntityOtherPlayerMP en = null;
    private int[] lcc = new int[]{Integer.MAX_VALUE, 0};
-   private float[] sAng = new float[]{0.0F, 0.0F};
+   private final float[] sAng = new float[]{0.0F, 0.0F};
 
    public Freecam() {
       super("Freecam", Module.category.player, 0);
@@ -73,8 +73,8 @@ public class Freecam extends Module {
 
    public void update() {
       if(!ay.isPlayerInGame() || en == null)
-         return;;
-      if (b.isToggled() && mc.thePlayer.hurtTime != 0) {
+         return;
+       if (b.isToggled() && mc.thePlayer.hurtTime != 0) {
          this.disable();
       } else {
          mc.thePlayer.setSprinting(false);

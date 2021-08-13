@@ -19,7 +19,7 @@ public class m3 extends b {
    public Module mod;
    public GuiModuleCategory c4t;
    public int o;
-   private ArrayList<b> sn;
+   private final ArrayList<b> sn;
    public boolean po;
 
    public m3(Module mod, GuiModuleCategory p, int o) {

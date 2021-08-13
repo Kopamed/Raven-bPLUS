@@ -15,8 +15,8 @@ import org.lwjgl.opengl.GL11;
 public class CommandLine {
    private static final Minecraft mc = Minecraft.getMinecraft();
    private static boolean f = true;
-   private static int maxLines = 80;
-   private static boolean u = false;
+   private static final int maxLines = 80;
+   private static final boolean u = false;
    private static final List<Integer> cs = Arrays.asList((new Color(170, 107, 148, 50)).getRGB(), (new Color(122, 158, 134, 50)).getRGB(), (new Color(16, 16, 16, 50)).getRGB(), (new Color(64, 114, 148, 50)).getRGB());
    private static int ccs = 0;
    private static int lccs = -1;
@@ -249,7 +249,7 @@ a
 
       if (!rs.isEmpty()) {
          for(int i = rs.size() - 1; i >= 0; --i) {
-            String s = (String)rs.get(i);
+            String s = rs.get(i);
             int c = -1;
             if (s.contains("&a")) {
                s = s.replace("&a", "");
@@ -276,7 +276,7 @@ a
       }
 
       lccs = val;
-      ccs = (Integer)cs.get(val);
+      ccs = cs.get(val);
    }
 
    public static void od() {

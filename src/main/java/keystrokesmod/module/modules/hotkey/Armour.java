@@ -76,46 +76,6 @@ public class Armour extends Module {
                     }
 
 
-
-
-
-
-
-
-
-
-                /*if(armorPiece != null){
-                    ////System.out.println("not null");
-                    if(armorPiece.armorType == armorType){
-                        ////System.out.println("armour type " + armorPiece.getItemStackDisplayName(itemStack));
-
-                        if(mc.thePlayer.getCurrentArmor(armorPiece.armorType) != null && ignoreIfAlreadyEquipped.isToggled()){
-                            ////System.out.println("player alr wearing");
-                        } else {
-                            try {
-                                ////System.out.println("main");
-                                if(ay.playerWearingArmor().contains(armorType)){
-                                    ItemArmor playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(armorType).getItem();
-                                    if(playerArmor.getArmorMaterial().getDamageReductionAmount(armorType) < armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) || strength < armorPiece.getArmorMaterial().getDamageReductionAmount(armorType)) {
-                                        ////System.out.println("added index v1");
-                                        strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
-                                        index = slot;
-                                    }
-                                }
-                                else {
-                                    if(strength < armorPiece.getArmorMaterial().getDamageReductionAmount(armorType)) {
-                                        ////System.out.println("added index v2");
-                                        strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
-                                        index = slot;
-                                    }
-                                }
-                            } catch (Exception e){
-                                ////System.out.println("eXCEPTION FUCK");
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }*/
                 }
             }
             if(index > -1 || strength > -1) {

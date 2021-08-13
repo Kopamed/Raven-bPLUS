@@ -15,14 +15,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
-   private static Minecraft mc = Minecraft.getMinecraft();
+   private static final Minecraft mc = Minecraft.getMinecraft();
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
       if (Ravenb3.debugger && ev.phase == Phase.END && ay.isPlayerInGame() && !SelfDestruct.destructed) {
          if (mc.currentScreen == null) {
             ScaledResolution res = new ScaledResolution(mc);
-            double bps = ay.gbps((Entity)(Freecam.en == null ? mc.thePlayer : Freecam.en), 2);
+            double bps = ay.gbps(Freecam.en == null ? mc.thePlayer : Freecam.en, 2);
             int rgb;
             if (bps < 10.0D) {
                rgb = Color.green.getRGB();

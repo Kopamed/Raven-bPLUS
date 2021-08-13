@@ -18,19 +18,7 @@ public class StopMotion extends Module {
    }
 
    public void onEnable() {
-      /*
-      if (a.isToggled()) {
-         mc.thePlayer.motionX = 0.0D;
-      }
-
-      if (b.isToggled()) {
-         mc.thePlayer.motionY = 0.0D;
-      }
-
-      if (c.isToggled()) {
-         mc.thePlayer.motionZ = 0.0D;
-      }*/
-      ////////System.out.println("No fuck you");
+       ////////System.out.println("No fuck you");
 
       this.disable();
    }

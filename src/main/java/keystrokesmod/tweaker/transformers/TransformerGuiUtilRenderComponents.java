@@ -28,7 +28,7 @@ public class TransformerGuiUtilRenderComponents implements Transformer {
                            return;
                         }
 
-                        ne = (AbstractInsnNode) i.next();
+                        ne = i.next();
                      } while (!(ne instanceof MethodInsnNode));
 
                      mn = (MethodInsnNode) ne;

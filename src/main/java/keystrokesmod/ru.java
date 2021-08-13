@@ -21,7 +21,7 @@ import org.lwjgl.opengl.GL11;
 public class ru {
    public static final int rc = -1089466352;
    private static final double p2 = 6.283185307179586D;
-   private static Minecraft mc = Minecraft.getMinecraft();
+   private static final Minecraft mc = Minecraft.getMinecraft();
    public static boolean ring_c = false;
 
    public static void re(BlockPos bp, int color, boolean shade) {
@@ -39,7 +39,7 @@ public class ru {
          float r = (float)(color >> 16 & 255) / 255.0F;
          float g = (float)(color >> 8 & 255) / 255.0F;
          float b = (float)(color & 255) / 255.0F;
-         GL11.glColor4d((double)r, (double)g, (double)b, (double)a);
+         GL11.glColor4d(r, g, b, a);
          RenderGlobal.drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D));
          if (shade) {
             dbb(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D), r, g, b);
@@ -65,7 +65,7 @@ public class ru {
          GlStateManager.pushMatrix();
          if (type == 3) {
             GL11.glTranslated(x, y - 0.2D, z);
-            GL11.glRotated((double)(-mc.getRenderManager().playerViewY), 0.0D, 1.0D, 0.0D);
+            GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
             GlStateManager.disableDepth();
             GL11.glScalef(0.03F + d, 0.03F + d, 0.03F + d);
             int outline = Color.black.getRGB();
@@ -92,11 +92,11 @@ public class ru {
             int i;
             if (type == 4) {
                EntityLivingBase en = (EntityLivingBase)e;
-               double r = (double)(en.getHealth() / en.getMaxHealth());
+               double r = en.getHealth() / en.getMaxHealth();
                int b = (int)(74.0D * r);
                int hc = r < 0.3D ? Color.red.getRGB() : (r < 0.5D ? Color.orange.getRGB() : (r < 0.7D ? Color.yellow.getRGB() : Color.green.getRGB()));
                GL11.glTranslated(x, y - 0.2D, z);
-               GL11.glRotated((double)(-mc.getRenderManager().playerViewY), 0.0D, 1.0D, 0.0D);
+               GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
                GlStateManager.disableDepth();
                GL11.glScalef(0.03F + d, 0.03F + d, 0.03F + d);
                i = (int)(21.0D + shift * 2.0D);
@@ -117,18 +117,18 @@ public class ru {
                float b = (float)(color & 255) / 255.0F;
                if (type == 5) {
                   GL11.glTranslated(x, y - 0.2D, z);
-                  GL11.glRotated((double)(-mc.getRenderManager().playerViewY), 0.0D, 1.0D, 0.0D);
+                  GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
                   GlStateManager.disableDepth();
                   GL11.glScalef(0.03F + d, 0.03F, 0.03F + d);
                   int base = 1;
                   d2p(0.0D, 95.0D, 10, 3, Color.black.getRGB());
 
                   for(i = 0; i < 6; ++i) {
-                     d2p(0.0D, (double)(95 + (10 - i)), 3, 4, Color.black.getRGB());
+                     d2p(0.0D, 95 + (10 - i), 3, 4, Color.black.getRGB());
                   }
 
                   for(i = 0; i < 7; ++i) {
-                     d2p(0.0D, (double)(95 + (10 - i)), 2, 4, color);
+                     d2p(0.0D, 95 + (10 - i), 2, 4, color);
                   }
 
                   d2p(0.0D, 95.0D, 8, 3, color);
@@ -246,7 +246,7 @@ public class ru {
          GL11.glLineWidth(lw);
          GL11.glColor4f(r, g, b, a);
          GL11.glBegin(2);
-         GL11.glVertex3d(0.0D, (double)mc.thePlayer.getEyeHeight(), 0.0D);
+         GL11.glVertex3d(0.0D, mc.thePlayer.getEyeHeight(), 0.0D);
          GL11.glVertex3d(x, y, z);
          GL11.glEnd();
          GL11.glDisable(3042);
@@ -288,10 +288,10 @@ public class ru {
       Tessellator tessellator = Tessellator.getInstance();
       WorldRenderer worldrenderer = tessellator.getWorldRenderer();
       worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-      worldrenderer.pos((double)right, (double)top, 0.0D).color(f1, f2, f3, f).endVertex();
-      worldrenderer.pos((double)left, (double)top, 0.0D).color(f1, f2, f3, f).endVertex();
-      worldrenderer.pos((double)left, (double)bottom, 0.0D).color(f5, f6, f7, f4).endVertex();
-      worldrenderer.pos((double)right, (double)bottom, 0.0D).color(f5, f6, f7, f4).endVertex();
+      worldrenderer.pos(right, top, 0.0D).color(f1, f2, f3, f).endVertex();
+      worldrenderer.pos(left, top, 0.0D).color(f1, f2, f3, f).endVertex();
+      worldrenderer.pos(left, bottom, 0.0D).color(f5, f6, f7, f4).endVertex();
+      worldrenderer.pos(right, bottom, 0.0D).color(f5, f6, f7, f4).endVertex();
       tessellator.draw();
       GlStateManager.shadeModel(7424);
       GlStateManager.disableBlend();
@@ -434,10 +434,10 @@ public class ru {
       mc.entityRenderer.enableLightmap();
    }
 
-   public static enum PositionMode {
+   public enum PositionMode {
       UPLEFT,
       UPRIGHT,
       DOWNLEFT,
-      DOWNRIGHT;
+      DOWNRIGHT
    }
 }

@@ -19,6 +19,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class Reach extends Module {
@@ -45,7 +46,21 @@ public class Reach extends Module {
 
    @SubscribeEvent
    public void e(MouseEvent ev) {
-      if (ev.button >= 0 && ev.buttonstate && ay.isPlayerInGame() && (!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0))) {
+      // legit event
+      if(!ay.isPlayerInGame()) return;
+      if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
+      if (ev.button >= 0 && ev.buttonstate) {
+         call();
+      }
+   }
+
+   @SubscribeEvent
+   public void ef(TickEvent ev) {
+      // autoclick event
+      if(!ay.isPlayerInGame()) return;
+      if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
+
+      if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
          call();
       }
    }
@@ -102,7 +117,7 @@ public class Reach extends Module {
             Entity zz11 = (Entity) o;
             if (zz11.canBeCollidedWith()) {
                float ex = (float) ((double) zz11.getCollisionBorderSize() * HitBox.exp(zz11));
-               AxisAlignedBB zz13 = zz11.getEntityBoundingBox().expand((double) ex, (double) ex, (double) ex);
+               AxisAlignedBB zz13 = zz11.getEntityBoundingBox().expand(ex, ex, ex);
                zz13 = zz13.expand(zzE, zzE, zzE);
                MovingObjectPosition zz14 = zz13.calculateIntercept(zz3, zz5);
                if (zz13.isVecInside(zz3)) {

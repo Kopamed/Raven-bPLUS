@@ -19,8 +19,8 @@ public class TargetHUD extends Module {
     public TargetHUD() {
         super("Target HUD", category.render, 0);
         sr = new ScaledResolution(Minecraft.getMinecraft());
-        height = (int)(sr.getScaledHeight());
-        width = (int)(sr.getScaledWidth());
+        height = sr.getScaledHeight();
+        width = sr.getScaledWidth();
         fr = mc.fontRendererObj;
     }
 
@@ -31,8 +31,8 @@ public class TargetHUD extends Module {
         if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
         }
-        height = (int)(sr.getScaledHeight());
-        width = (int)(sr.getScaledWidth());
+        height = sr.getScaledHeight();
+        width = sr.getScaledWidth();
         System.out.println("render");
         System.out.println("left " + (int)(width * 0.65) + " || top " + (int)(height * 0.65) + " || right " + (int)(width * 0.75)  + " || bottom " + (int)(height * 0.65));
         Gui.drawRect(width - 10, 0,width, height, 0x90000000);

@@ -1,7 +1,7 @@
 package keystrokesmod;
 
 public class am {
-   private float updates;
+   private final float updates;
    private long last;
    private float cached;
 
@@ -19,7 +19,7 @@ public class am {
             t = t < 0.5F ? 4.0F * t * t * t : (t - 1.0F) * (2.0F * t - 2.0F) * (2.0F * t - 2.0F) + 1.0F;
             break;
          case 2:
-            t = (float)(1.0D - Math.pow((double)(1.0F - t), 5.0D));
+            t = (float)(1.0D - Math.pow(1.0F - t, 5.0D));
             break;
          case 3:
             t = this.bounce(t);

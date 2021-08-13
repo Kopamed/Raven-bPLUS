@@ -10,17 +10,15 @@ import org.lwjgl.opengl.GL11;
 
 public class d1 extends b {
    private final int c = (new Color(226, 83, 47)).getRGB();
-   private ModuleDesc desc;
-   private m3 p;
+   private final ModuleDesc desc;
+   private final m3 p;
    private int o;
-   private int x;
-   private int y;
 
    public d1(ModuleDesc desc, m3 b, int o) {
       this.desc = desc;
       this.p = b;
-      this.x = b.c4t.gx() + b.c4t.gw();
-      this.y = b.c4t.gy() + b.o;
+      int x = b.c4t.gx() + b.c4t.gw();
+      int y = b.c4t.gy() + b.o;
       this.o = o;
    }
 

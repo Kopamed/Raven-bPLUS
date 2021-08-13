@@ -3,7 +3,10 @@
 package keystrokesmod.module.modules;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,30 +16,40 @@ import keystrokesmod.main.NotAName;
 import keystrokesmod.module.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.text.Position;
+
+import static keystrokesmod.main.Ravenb3.mResourceLocation;
 
 public class HUD extends Module {
    public static ModuleSettingTick editPosition;
    public static ModuleSettingTick dropShadow;
+   public static ModuleSettingTick logo;
    public static ModuleSettingTick alphabeticalSort;
    public static ModuleSettingSlider colourMode;
    public static ModuleDesc colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
    public static ru.PositionMode positionMode;
+   public static int logoSize;
+
 
    public HUD() {
       super("HUD", Module.category.render, 0);
       this.registerSetting(editPosition = new ModuleSettingTick("Edit position", false));
       this.registerSetting(dropShadow = new ModuleSettingTick("Drop shadow", true));
+      this.registerSetting(logo = new ModuleSettingTick("Logo", false));
       this.registerSetting(alphabeticalSort = new ModuleSettingTick("Alphabetical sort", false));
       this.registerSetting(colourMode = new ModuleSettingSlider("Value: ", 1, 1, 5, 1));
       this.registerSetting(colourModeDesc = new ModuleDesc("Mode: RAVEN"));
+      logoSize = 64;
    }
 
    public void guiUpdate(){
@@ -69,6 +82,11 @@ public class HUD extends Module {
          int margin = 2;
          int y = hudY;
          int del = 0;
+
+         if (mResourceLocation != null && logo.isToggled()) {
+            Minecraft.getMinecraft().getTextureManager().bindTexture(mResourceLocation);
+            Gui.drawModalRectWithCustomSizedTexture(hudX - 13, hudY, 0, 0, logoSize, logoSize, logoSize, logoSize);
+         }
          if (!alphabeticalSort.isToggled()){
             if (positionMode == ru.PositionMode.UPLEFT || positionMode == ru.PositionMode.UPRIGHT) {
                ModuleManager.sortShortLong();
@@ -83,12 +101,19 @@ public class HUD extends Module {
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
          int textBoxHeight = ModuleManager.getBoxHeight(mc.fontRendererObj, margin);
          //System.out.println(mc.displayWidth + " " + mc.displayHeight + " || " + hudX + " " + hudY);
+         if(logo.isToggled()) {
+            y += (logoSize * 0.8);
+         }
 
          if(hudX < 0) {
             hudX = margin;
          }
          if(hudY < 0) {
-            hudY = margin;
+            if(logo.isToggled()) {
+               hudY = logoSize - (int)(logoSize * 0.2);
+            } else {
+               hudY = margin;
+            }
          }
 
          if(hudX + textBoxWidth > mc.displayWidth/2){
@@ -99,7 +124,6 @@ public class HUD extends Module {
             hudY = mc.displayHeight/2 - textBoxHeight;
          }
 
-
          Iterator var5 = en.iterator();
 
          while(var5.hasNext()) {
@@ -107,7 +131,7 @@ public class HUD extends Module {
             if (m.isEnabled() && m != this) {
                if(HUD.positionMode == ru.PositionMode.DOWNRIGHT || HUD.positionMode == ru.PositionMode.UPRIGHT){
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.rainbowDraw(2L, (long) del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN2) {
@@ -129,7 +153,7 @@ public class HUD extends Module {
                   }
                } else {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.rainbowDraw(2L, (long) del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN2) {
@@ -157,7 +181,7 @@ public class HUD extends Module {
    }
 
    static class EditHudPositionScreen extends GuiScreen {
-      final String hudTextExample = new String("This is an-Example-HUD");
+      final String hudTextExample = "This is an-Example-HUD";
       GuiButtonExt resetPosButton;
       boolean mouseDown = false;
       int textBoxStartX = 0;
@@ -174,7 +198,7 @@ public class HUD extends Module {
 
       public void initGui() {
          super.initGui();
-         this.buttonList.add(this.resetPosButton = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String("Reset position")));
+         this.buttonList.add(this.resetPosButton = new GuiButtonExt(1, this.width - 90, 5, 85, 20, "Reset position"));
          this.marginX = HUD.hudX;
          this.marginY = HUD.hudY;
          sr = new ScaledResolution(Minecraft.getMinecraft());
@@ -183,8 +207,8 @@ public class HUD extends Module {
 
       public void drawScreen(int mX, int mY, float pt) {
          drawRect(0, 0, this.width, this.height, -1308622848);
-         drawRect(0, (int)this.height/2, (int)this.width, (int)this.height/2 + 1, 0x9936393f);
-         drawRect((int)this.width/2, 0, (int)this.width/2 + 1, (int)this.height, 0x9936393f);
+         drawRect(0, this.height /2, this.width, this.height /2 + 1, 0x9936393f);
+         drawRect(this.width /2, 0, this.width /2 + 1, this.height, 0x9936393f);
          int textBoxStartX = this.marginX;
          int textBoxStartY = this.marginY;
          int textBoxEndX = textBoxStartX + 50;
@@ -277,12 +301,12 @@ public class HUD extends Module {
       }
    }
 
-   public static enum ColourModes {
+   public enum ColourModes {
       RAVEN,
       RAVEN2,
       ASTOLFO,
       ASTOLFO2,
       ASTOLFO3,
-      KOPAMED;
+      KOPAMED
    }
 }

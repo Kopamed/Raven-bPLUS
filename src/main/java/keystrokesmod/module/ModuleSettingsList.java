@@ -29,7 +29,7 @@ public class ModuleSettingsList {
 
       char[] a;
       try {
-         a = (char[])((char[])d.get(s));
+         a = (char[]) d.get(s);
       } catch (IllegalAccessException var5) {
          return;
       }

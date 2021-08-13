@@ -32,14 +32,6 @@ public class BridgeInfo extends Module {
    public static ModuleDesc a;
    public static ModuleSettingTick ep;
    private static final int rgb = (new Color(0, 200, 200)).getRGB();
-   private final String bd = new String("the brid");
-   private final String g1t = new String("Defend!");
-   private final String g2t = new String("Jump in to score!");
-   private final String qt = new String("First player to score 5 goals wins");
-   private final String t1 = new String("Enemy: ");
-   private final String t2 = new String("Distance to goal: ");
-   private final String t3 = new String("Enemy distance to goal: ");
-   private final String t4 = new String("Blocks: ");
    private static int hudX = 5;
    private static int hudY = 70;
    private String en = "";
@@ -52,7 +44,7 @@ public class BridgeInfo extends Module {
 
    public BridgeInfo() {
       super("Bridge Info", Module.category.minigames, 0);
-      this.registerSetting(a = new ModuleDesc(new String("Only for solos.")));
+      this.registerSetting(a = new ModuleDesc("Only for solos."));
       this.registerSetting(ep = new ModuleSettingTick("Edit position", false));
    }
 
@@ -80,21 +72,23 @@ public class BridgeInfo extends Module {
                   enem = (EntityPlayer)e;
                }
             } else if (e instanceof EntityArmorStand) {
-               if (e.getName().contains(this.g1t)) {
+               String g2t = "Jump in to score!";
+               String g1t = "Defend!";
+               if (e.getName().contains(g1t)) {
                   this.g1p = e.getPosition();
-               } else if (e.getName().contains(this.g2t)) {
+               } else if (e.getName().contains(g2t)) {
                   this.g2p = e.getPosition();
                }
             }
          }
 
          if (this.g1p != null && this.g2p != null) {
-            this.d1 = ay.round(mc.thePlayer.getDistance((double)this.g2p.getX(), (double)this.g2p.getY(), (double)this.g2p.getZ()) - 1.4D, 1);
+            this.d1 = ay.round(mc.thePlayer.getDistance(this.g2p.getX(), this.g2p.getY(), this.g2p.getZ()) - 1.4D, 1);
             if (this.d1 < 0.0D) {
                this.d1 = 0.0D;
             }
 
-            this.d2 = enem == null ? 0.0D : ay.round(enem.getDistance((double)this.g1p.getX(), (double)this.g1p.getY(), (double)this.g1p.getZ()) - 1.4D, 1);
+            this.d2 = enem == null ? 0.0D : ay.round(enem.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D, 1);
             if (this.d2 < 0.0D) {
                this.d2 = 0.0D;
             }
@@ -120,10 +114,14 @@ public class BridgeInfo extends Module {
             return;
          }
 
-         mc.fontRendererObj.drawString(this.t1 + this.en, (float)hudX, (float)hudY, rgb, true);
-         mc.fontRendererObj.drawString(this.t2 + this.d1, (float)hudX, (float)(hudY + 11), rgb, true);
-         mc.fontRendererObj.drawString(this.t3 + this.d2, (float)hudX, (float)(hudY + 22), rgb, true);
-         mc.fontRendererObj.drawString(this.t4 + this.blc, (float)hudX, (float)(hudY + 33), rgb, true);
+         String t1 = "Enemy: ";
+         mc.fontRendererObj.drawString(t1 + this.en, (float)hudX, (float)hudY, rgb, true);
+         String t2 = "Distance to goal: ";
+         mc.fontRendererObj.drawString(t2 + this.d1, (float)hudX, (float)(hudY + 11), rgb, true);
+         String t3 = "Enemy distance to goal: ";
+         mc.fontRendererObj.drawString(t3 + this.d2, (float)hudX, (float)(hudY + 22), rgb, true);
+         String t4 = "Blocks: ";
+         mc.fontRendererObj.drawString(t4 + this.blc, (float)hudX, (float)(hudY + 33), rgb, true);
       }
 
    }
@@ -133,7 +131,8 @@ public class BridgeInfo extends Module {
       if (ay.isPlayerInGame()) {
          String s = ay.str(c.message.getUnformattedText());
          if (s.startsWith(" ")) {
-            if (s.contains(this.qt)) {
+            String qt = "First player to score 5 goals wins";
+            if (s.contains(qt)) {
                this.q = true;
             } else if (this.q && s.contains("Opponent:")) {
                String n = s.split(":")[1].trim();
@@ -164,7 +163,8 @@ public class BridgeInfo extends Module {
          while(var1.hasNext()) {
             String s = (String)var1.next();
             String s2 = s.toLowerCase();
-            if (s2.contains("mode") && s2.contains(this.bd)) {
+            String bd = "the brid";
+            if (s2.contains("mode") && s2.contains(bd)) {
                return true;
             }
          }
@@ -184,7 +184,7 @@ public class BridgeInfo extends Module {
    }
 
    static class eh extends GuiScreen {
-      final String a = new String("Enemy: Player123-Distance to goal: 17.2-Enemy distance to goal: 16.3-Blocks: 98");
+      final String a = "Enemy: Player123-Distance to goal: 17.2-Enemy distance to goal: 16.3-Blocks: 98";
       GuiButtonExt rp;
       boolean d = false;
       int miX = 0;
@@ -200,7 +200,7 @@ public class BridgeInfo extends Module {
 
       public void initGui() {
          super.initGui();
-         this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, new String("Reset position")));
+         this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, "Reset position"));
          this.aX = BridgeInfo.hudX;
          this.aY = BridgeInfo.hudY;
       }

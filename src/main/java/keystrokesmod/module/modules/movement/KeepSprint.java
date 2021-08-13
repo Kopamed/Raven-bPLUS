@@ -13,7 +13,7 @@ public class KeepSprint extends Module {
 
    public KeepSprint() {
       super("KeepSprint", Module.category.movement, 0);
-      this.registerSetting(a = new ModuleDesc(new String("Default is 40% motion reduction.")));
+      this.registerSetting(a = new ModuleDesc("Default is 40% motion reduction."));
       this.registerSetting(b = new ModuleSettingSlider("Slow %", 40.0D, 0.0D, 40.0D, 1.0D));
       this.registerSetting(c = new ModuleSettingTick("Only reduce reach hits", false));
    }

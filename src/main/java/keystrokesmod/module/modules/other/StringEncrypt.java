@@ -75,40 +75,40 @@ public class StringEncrypt extends Module {
       } else if (b.isToggled() && mc.currentScreen != null) {
          return s;
       } else {
-         String s2;
+         StringBuilder s2;
          if (StringEncrypt.c.getInput() == 1.0D) {
-            s2 = "";
-            String s3 = "";
+            s2 = new StringBuilder();
+            StringBuilder s3 = new StringBuilder();
             boolean w = false;
 
             for(int i = 0; i < s.length(); ++i) {
                String c = Character.toString(s.charAt(i));
                if (c.equals("§")) {
                   w = true;
-                  s3 = s3 + c;
+                  s3.append(c);
                } else if (w) {
                   w = false;
-                  s3 = s3 + c;
+                  s3.append(c);
                } else {
-                  s2 = s2 + s3 + "§" + "k" + c;
-                  s3 = "";
+                  s2.append(s3).append("§").append("k").append(c);
+                  s3 = new StringBuilder();
                }
             }
 
-            return s2;
+            return s2.toString();
          } else if (StringEncrypt.c.getInput() == 2.0D) {
             return s.length() > 3 ? s.substring(0, 3) : s;
          } else if (StringEncrypt.c.getInput() != 3.0D) {
             return "";
          } else {
-            s2 = "";
+            s2 = new StringBuilder();
 
             for(int i = 0; i < s.length(); ++i) {
                char c = (char)(s.charAt(i) + m3s);
-               s2 = s2 + c;
+               s2.append(c);
             }
 
-            return s2;
+            return s2.toString();
          }
       }
    }

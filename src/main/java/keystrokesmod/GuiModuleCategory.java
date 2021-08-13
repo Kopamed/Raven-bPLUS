@@ -18,7 +18,7 @@ public class GuiModuleCategory {
    private int k;
    private int y;
    private int x;
-   private int bh;
+   private final int bh;
    private boolean id;
    public int xx;
    public int yy;

@@ -26,13 +26,6 @@ public class MurderMystery extends Module {
    public static ModuleSettingTick c;
    private static final List<EntityPlayer> mur = new ArrayList();
    private static final List<EntityPlayer> det = new ArrayList();
-   private final String c1 = "MURDER";
-   private final String c2 = "MYSTERY";
-   private final String c3 = "Role:";
-   private final String c4 = "&7[&cALERT&7]";
-   private final String c5 = "note.pling";
-   private final String c6 = "is a murderer!";
-   private final String c7 = "has a bow!";
 
    public MurderMystery() {
       super("Murder Mystery", Module.category.minigames, 0);
@@ -70,24 +63,28 @@ public class MurderMystery extends Module {
                if (en.getHeldItem() != null && en.getHeldItem().hasDisplayName()) {
                   Item i = en.getHeldItem().getItem();
                   if (i instanceof ItemSword || i instanceof ItemAxe || en.getHeldItem().getDisplayName().contains("aKnife")) {
+                     String c4 = "&7[&cALERT&7]";
                      if (!mur.contains(en)) {
                         mur.add(en);
+                        String c6 = "is a murderer!";
                         if (a.isToggled()) {
-                           mc.thePlayer.playSound(this.c5, 1.0F, 1.0F);
-                           ay.sendMessageToSelf(this.c4 + " &e" + en.getName() + " &3" + this.c6);
+                           String c5 = "note.pling";
+                           mc.thePlayer.playSound(c5, 1.0F, 1.0F);
+                           ay.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c6);
                         }
 
                         if (c.isToggled()) {
-                           mc.thePlayer.sendChatMessage(en.getName() + " " + this.c6);
+                           mc.thePlayer.sendChatMessage(en.getName() + " " + c6);
                         }
                      } else if (i instanceof ItemBow && b.isToggled() && !det.contains(en)) {
                         det.add(en);
+                        String c7 = "has a bow!";
                         if (a.isToggled()) {
-                           ay.sendMessageToSelf(this.c4 + " &e" + en.getName() + " &3" + this.c7);
+                           ay.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c7);
                         }
 
                         if (c.isToggled()) {
-                           mc.thePlayer.sendChatMessage(en.getName() + " " + this.c7);
+                           mc.thePlayer.sendChatMessage(en.getName() + " " + c7);
                         }
                      }
                   }
@@ -113,7 +110,9 @@ public class MurderMystery extends Module {
          }
 
          String d = mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1).getDisplayName();
-         if (!d.contains(this.c1) && !d.contains(this.c2)) {
+         String c2 = "MYSTERY";
+         String c1 = "MURDER";
+         if (!d.contains(c1) && !d.contains(c2)) {
             return false;
          }
 
@@ -122,7 +121,8 @@ public class MurderMystery extends Module {
          while(var2.hasNext()) {
             String l = (String)var2.next();
             String s = ay.str(l);
-            if (s.contains(this.c3)) {
+            String c3 = "Role:";
+            if (s.contains(c3)) {
                return true;
             }
          }

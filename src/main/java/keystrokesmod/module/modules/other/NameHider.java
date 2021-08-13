@@ -9,7 +9,7 @@ import keystrokesmod.module.modules.minigames.DuelsStats;
 
 public class NameHider extends Module {
    public static ModuleDesc a;
-   public static String n = new String("raven");
+   public static String n = "raven";
 
    public NameHider() {
       super("Name Hider", Module.category.other, 0);

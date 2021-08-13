@@ -12,8 +12,8 @@ import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class mouseManager {
-   private static List<Long> leftClicks = new ArrayList();
-   private static List<Long> rightClicks = new ArrayList();
+   private static final List<Long> leftClicks = new ArrayList();
+   private static final List<Long> rightClicks = new ArrayList();
    public static long leftClickTimer = 0L;
    public static long rightClickTimer = 0L;
 
@@ -54,7 +54,7 @@ public class mouseManager {
    //prev f
    public static int getLeftClickCounter() {
       try{
-         leftClicks.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
+         leftClicks.removeIf(o -> o < System.currentTimeMillis() - 1000L);
       } catch (Exception welpTheKeystrokes){
          welpTheKeystrokes.printStackTrace();
       }
@@ -64,7 +64,7 @@ public class mouseManager {
 
    // prev i
    public static int getRightClickCounter() {
-      rightClicks.removeIf(o -> (Long) o < System.currentTimeMillis() - 1000L);
+      rightClicks.removeIf(o -> o < System.currentTimeMillis() - 1000L);
       return rightClicks.size();
    }
 }

@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class ChatLogger extends Module {
-    private File dir;
+    private final File dir;
     private File chatLog;
     public String fileName;
     public String extension;

@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class ModuleSettingSlider extends ModuleSettingsList {
-   private String n;
+   private final String n;
    static String settingType = "slider";
    private double v;
-   private double a;
-   private double m;
-   private double i;
+   private final double a;
+   private final double m;
+   private final double i;
 
    public ModuleSettingSlider(String settingName, double defaultValue, double min, double max, double intervals) {
       super(settingName, settingType);

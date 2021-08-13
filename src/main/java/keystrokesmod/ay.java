@@ -14,11 +14,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.module.ModuleManager;
@@ -50,6 +46,7 @@ import scala.Int;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ay {
    private static final Random rand = new Random();
@@ -93,7 +90,7 @@ public class ay {
             mouseButtonState.set(m, held);
             MinecraftForge.EVENT_BUS.post(m);
             mouseButtons.setAccessible(true);
-            ByteBuffer bf = (ByteBuffer) mouseButtons.get((Object)null);
+            ByteBuffer bf = (ByteBuffer) mouseButtons.get(null);
             mouseButtons.setAccessible(false);
             bf.put(mouseButton, (byte)(held ? 1 : 0));
          } catch (IllegalAccessException var4) {
@@ -198,7 +195,7 @@ public class ay {
          }
 
          double diffZ = q.posZ - mc.thePlayer.posZ;
-         double dist = (double)MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
+         double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
          float yaw = (float)(Math.atan2(diffZ, diffX) * 180.0D / 3.141592653589793D) - 90.0F;
          float pitch = (float)(-(Math.atan2(diffY, dist) * 180.0D / 3.141592653589793D));
          return new float[]{mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw), mc.thePlayer.rotationPitch + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch)};
@@ -224,14 +221,14 @@ public class ay {
 
    public static void ss(double s, boolean m) {
       if (!m || isMoving()) {
-         mc.thePlayer.motionX = -Math.sin((double)gd()) * s;
-         mc.thePlayer.motionZ = Math.cos((double)gd()) * s;
+         mc.thePlayer.motionX = -Math.sin(gd()) * s;
+         mc.thePlayer.motionZ = Math.cos(gd()) * s;
       }
    }
 
    public static void ss2(double s) {
-      double forward = (double)mc.thePlayer.movementInput.moveForward;
-      double strafe = (double)mc.thePlayer.movementInput.moveStrafe;
+      double forward = mc.thePlayer.movementInput.moveForward;
+      double strafe = mc.thePlayer.movementInput.moveStrafe;
       float yaw = mc.thePlayer.rotationYaw;
       if (forward == 0.0D && strafe == 0.0D) {
          mc.thePlayer.motionX = 0.0D;
@@ -252,7 +249,7 @@ public class ay {
             }
          }
 
-         double rad = Math.toRadians((double)(yaw + 90.0F));
+         double rad = Math.toRadians(yaw + 90.0F);
          double sin = Math.sin(rad);
          double cos = Math.cos(rad);
          mc.thePlayer.motionX = forward * s * cos + strafe * s * sin;
@@ -356,14 +353,14 @@ public class ay {
       }
       current += 2F;
 
-      return Color.HSBtoRGB((float)(current / (current - yTotal)) + current, 1f, 1F);
+      return Color.HSBtoRGB((current / (current - yTotal)) + current, 1f, 1F);
    }
 
    public static double round(double n, int d) {
       if (d == 0) {
          return (double)Math.round(n);
       } else {
-         double p = Math.pow(10.0D, (double)d);
+         double p = Math.pow(10.0D, d);
          return (double)Math.round(n * p) / p;
       }
    }
@@ -391,16 +388,14 @@ public class ay {
             return lines;
          } else {
             ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
-            if (objective == null) {
-               return lines;
-            } else {
+            if (objective != null) {
                Collection<Score> scores = scoreboard.getSortedScores(objective);
                List<Score> list = new ArrayList();
                Iterator<Score> var5 = scores.iterator();
 
                Score score;
-               while(var5.hasNext()) {
-                  score = (Score)var5.next();
+               while (var5.hasNext()) {
+                  score = var5.next();
                   if (score != null && score.getPlayerName() != null && !score.getPlayerName().startsWith("#")) {
                      list.add(score);
                   }
@@ -414,14 +409,14 @@ public class ay {
 
                var5 = scores.iterator();
 
-               while(var5.hasNext()) {
-                  score = (Score)var5.next();
+               while (var5.hasNext()) {
+                  score = var5.next();
                   ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
                   lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
                }
 
-               return lines;
             }
+            return lines;
          }
       }
    }
@@ -536,13 +531,13 @@ public class ay {
       if(wtf.length <= 1)
          return "";
 
-      String finalString = wtf[0];
+      StringBuilder finalString = new StringBuilder(wtf[0]);
 
       for (int i = 1; i < wtf.length; i++){
-         finalString += okwaht + wtf[i];
+         finalString.append(okwaht).append(wtf[i]);
       }
 
-      return finalString;
+      return finalString.toString();
    }
 
    public static ArrayList<Integer> playerWearingArmor() {
@@ -565,10 +560,7 @@ public class ay {
    }
 
    public static ArrayList<String> toArrayList(String[] fakeList){
-      ArrayList<String> e = new ArrayList<String>();
-      for(String f : fakeList) {
-         e.add(f);
-      }
+      ArrayList<String> e = new ArrayList<String>(Arrays.asList(fakeList));
 
       return e;
    }
@@ -577,24 +569,24 @@ public class ay {
       return mc.currentScreen == null;
    }
 
-   public static enum ClickEvents {
+   public enum ClickEvents {
       RENDER,
       TICK
    }
 
-   public static enum BridgeMode {
+   public enum BridgeMode {
       GODBRIDGE,
       MOONWALK,
       BREEZILY,
       NORMAL
    }
 
-   public static enum LookMode {
+   public enum LookMode {
       SNAP,
       GLIDE
    }
 
-   public static enum ClickTimings {
+   public enum ClickTimings {
       RAVEN,
       SKID
    }

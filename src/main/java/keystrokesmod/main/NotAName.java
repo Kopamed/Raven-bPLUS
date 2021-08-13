@@ -7,7 +7,7 @@ import keystrokesmod.module.modules.ClickGui;
 public class NotAName {
    public static ModuleManager moduleManager;
    public static ClickGui clickGui;
-   private static int c = -1;
+   private static final int c = -1;
 
    public NotAName() {
       moduleManager = new ModuleManager();

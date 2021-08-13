@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class KeySrokeRenderer {
    private static final int[] a = new int[]{16777215, 16711680, 65280, 255, 16776960, 11141290};
-   private Minecraft mc = Minecraft.getMinecraft();
-   private KeyStrokeKeyRenderer[] b = new KeyStrokeKeyRenderer[4];
-   private KeyStrokeMouse[] c = new KeyStrokeMouse[2];
+   private final Minecraft mc = Minecraft.getMinecraft();
+   private final KeyStrokeKeyRenderer[] b = new KeyStrokeKeyRenderer[4];
+   private final KeyStrokeMouse[] c = new KeyStrokeMouse[2];
 
    public KeySrokeRenderer() {
       this.b[0] = new KeyStrokeKeyRenderer(this.mc.gameSettings.keyBindForward, 26, 2);

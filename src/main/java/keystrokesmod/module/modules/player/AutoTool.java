@@ -22,10 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoTool extends Module {
-    private ModuleSettingTick hotkeyBack;
-    private ModuleSettingTick doDelay;
-    private ModuleSettingSlider minDelay;
-    private ModuleSettingSlider maxDelay;
+    private final ModuleSettingTick hotkeyBack;
     public static boolean isBusy;
     private double startWaitTime;
     private boolean isWaiting;
@@ -37,8 +34,11 @@ public class AutoTool extends Module {
         super("Auto Tool", category.player, 0);
 
         this.registerSetting(hotkeyBack = new ModuleSettingTick("Hotkey back", true));
+        ModuleSettingTick doDelay;
         this.registerSetting(doDelay = new ModuleSettingTick("Random delay", true));
+        ModuleSettingSlider minDelay;
         this.registerSetting(minDelay = new ModuleSettingSlider("Min delay", 100, 0, 3000, 5));
+        ModuleSettingSlider maxDelay;
         this.registerSetting(maxDelay = new ModuleSettingSlider("Max delay", 390, 0, 3000, 5));
     }
 
@@ -91,7 +91,6 @@ public class AutoTool extends Module {
                     }
 
                     if(index == -1 || speed <= 1.1 || speed == 0) {
-                        return;
                     } else {
                         ay.hotkeyToSlot(index);
                     }
@@ -103,11 +102,9 @@ public class AutoTool extends Module {
 
                 }
                 else{
-                    return;
                 }
             }
             else {
-                return;
             }
 
 

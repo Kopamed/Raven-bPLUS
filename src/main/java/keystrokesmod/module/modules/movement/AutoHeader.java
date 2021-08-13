@@ -14,9 +14,13 @@ public class AutoHeader extends Module {
     public static ModuleDesc desc;
     public static ModuleSettingTick cancelDuringShift;
     public static ModuleSettingSlider pbs;
-    private boolean jumping, holding;
+    private boolean holding;
     private double pressSpeed, holdLength;
-    private double lastPress, holdingSince, releasedSince, ppsDelay, holdTime, releaseTime, holdStart, releaseStart;
+    private double lastPress;
+    private double holdingSince;
+    private double releaseTime;
+    private double holdStart;
+    private double releaseStart;
     private double startWait;
 
     public AutoHeader() {
@@ -25,12 +29,7 @@ public class AutoHeader extends Module {
         this.registerSetting(cancelDuringShift = new ModuleSettingTick("Cancel if snkeaing", true));
         this.registerSetting(pbs = new ModuleSettingSlider("Jump Presses per second", 12, 1, 20, 1));
 
-        jumping = false;
-    }
-
-    @Override
-    public void onDisable() {
-        super.onDisable();
+        boolean jumping = false;
     }
 
     @Override
@@ -56,9 +55,6 @@ public class AutoHeader extends Module {
         }
 
 /*
-        pressSpeed = 1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.5D, pbs.getInput() + 0.5D);
-        holdLength = pressSpeed / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.5D, pbs.getInput() + 0.5D);
-*//*
         if(ay.playerUnderBlock()){
             if (holding && System.currentTimeMillis() - holdStart > holdTime){
                 holding = false;
@@ -74,17 +70,6 @@ public class AutoHeader extends Module {
                 genTimings();
             }
 */
-/*
-
-            if (System.currentTimeMillis() - lastPress > pressSpeed * 1000) {
-                lastPress = System.currentTimeMillis();
-                if (holdingSince < lastPress){
-                    holdingSince = lastPress;
-                }
-                jump(true);
-            } else if (System.currentTimeMillis() - holdingSince > holdLength * 1000) {
-                jump(false);
-            }*/
 
     }
 
@@ -95,8 +80,8 @@ public class AutoHeader extends Module {
     }
 
     private void genTimings() {
-        ppsDelay = 1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.5, pbs.getInput() + 0.5);
-        holdTime = ppsDelay * ThreadLocalRandom.current().nextDouble(57.6432889, 86.84237846);
-        releasedSince = ppsDelay - holdTime;
+        double ppsDelay = 1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.5, pbs.getInput() + 0.5);
+        double holdTime = ppsDelay * ThreadLocalRandom.current().nextDouble(57.6432889, 86.84237846);
+        double releasedSince = ppsDelay - holdTime;
     }
 }

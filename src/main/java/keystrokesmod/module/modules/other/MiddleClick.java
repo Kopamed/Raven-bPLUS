@@ -45,7 +45,7 @@ public class MiddleClick extends Module {
     }
 
     public void guiUpdate() {
-        this.actionDesc.setDesc(ay.md + actions.values()[(int)(this.action.getInput() -1)]);
+        actionDesc.setDesc(ay.md + actions.values()[(int)(action.getInput() -1)]);
         ay.correctSliders(minCPS, maxCPS);
     }
 
@@ -73,25 +73,6 @@ public class MiddleClick extends Module {
         }
 
         if(clicking){
-            /*
-            if (holding && System.currentTimeMillis() - holdStart > holdTime){
-                holding = false;
-                releaseStart = System.currentTimeMillis();
-                if (holdStart + holdTime < releaseStart){
-                    releaseStart = holdStart + holdTime;
-                }
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-                Click.minecraftPressed(false);
-                clicking = false;
-                mc.thePlayer.inventory.currentItem = prevSlot;
-                genTimings(16, 20);
-            } else if (!holding && System.currentTimeMillis() - releaseStart > releaseTime) {
-                KeyBinding.setKeyBindState(1, true);
-                Click.minecraftPressed(true);
-                KeyBinding.onTick(1);
-                clicking= true;
-                mc.thePlayer.inventory.currentItem = prevSlot;
-            }*/
 
             if (System.currentTimeMillis() - lastClick > speedRight * 1000 && a) {
                 lastClick = System.currentTimeMillis();
@@ -118,7 +99,7 @@ public class MiddleClick extends Module {
             return;
 
 
-        actions middleClickAction = actions.values()[(int) this.action.getInput() - 1];
+        actions middleClickAction = actions.values()[(int) action.getInput() - 1];
 
         if(middleClickAction == actions.PEARL_THROW){
             throwPearl();
@@ -177,14 +158,10 @@ public class MiddleClick extends Module {
         }
     }
 
-    public static enum actions {
+    public enum actions {
         PEARL_THROW,
         ADD_FRIEND,
-        REMOVE_FRIEND;
-    }
-
-    public static void rightClick(double withMinCps, double withMaxCps) {
-
+        REMOVE_FRIEND
     }
 
     public static void genTimings(double withMinCps, double withMaxCps) {

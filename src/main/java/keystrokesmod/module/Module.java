@@ -13,8 +13,8 @@ import org.lwjgl.input.Keyboard;
 
 public class Module {
    protected ArrayList<ModuleSettingsList> settings;
-   private String moduleName;
-   private Module.category moduleCategory;
+   private final String moduleName;
+   private final Module.category moduleCategory;
    private boolean enabled;
    private int keycode;
    protected static Minecraft mc;
@@ -157,7 +157,7 @@ public class Module {
          Ravenb3.configManager.save();
    }
 
-   public static enum category {
+   public enum category {
       combat,
       movement,
       player,
@@ -168,6 +168,6 @@ public class Module {
       other,
       client,
       hotkey,
-      debug;
+      debug
    }
 }

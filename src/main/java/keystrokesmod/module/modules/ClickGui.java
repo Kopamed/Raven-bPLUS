@@ -257,7 +257,7 @@ public class ClickGui extends GuiScreen {
 
    public void keyTyped(char t, int k) {
       if (k == 1) {
-         this.mc.displayGuiScreen((GuiScreen)null);
+         this.mc.displayGuiScreen(null);
       } else {
          Iterator var3 = categoryList.iterator();
 

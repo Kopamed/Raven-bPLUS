@@ -10,8 +10,8 @@ import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 
 public class Ladders extends Module {
-    private ModuleSettingTick preferSlot;
-    private ModuleSettingSlider hotbarSlotPreference;
+    private final ModuleSettingTick preferSlot;
+    private final ModuleSettingSlider hotbarSlotPreference;
     public Ladders() {
         super("Ladders", category.hotkey, 0);
 
@@ -53,9 +53,6 @@ public class Ladders extends Module {
         if(itemInSlot == null)
             return false;
 
-        if(itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder")) {
-            return true;
-        }
-        return false;
+        return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder");
     }
 }

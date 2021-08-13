@@ -93,13 +93,13 @@ public class ProfileUtils {
       }
    }
 
-   public static enum DM {
+   public enum DM {
       OVERALL,
       BRIDGE,
       UHC,
       SKYWARS,
       CLASSIC,
       SUMO,
-      OP;
+      OP
    }
 }

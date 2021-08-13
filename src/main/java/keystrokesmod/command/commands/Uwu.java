@@ -9,17 +9,17 @@ public class Uwu extends Command {
     private static boolean u;
     public Uwu() {
         super("uwu", "hevex added this lol", 0, 0,  new String[] {},  new String[] {"hevex", "weeb", "torture", "noplsno"});
-        this.u = false;
+        u = false;
     }
 
     @Override
     public void onCall(String[] args){
-        if (this.u) {
+        if (u) {
             return;
         }
 
         Ravenb3.getExecutor().execute(() -> {
-            this.u = true;
+            u = true;
 
             for(int i = 0; i < 4; ++i) {
                 if (i == 0) {
@@ -38,7 +38,7 @@ public class Uwu extends Command {
                 }
             }
 
-            this.u = false;
+            u = false;
         });
     }
 }

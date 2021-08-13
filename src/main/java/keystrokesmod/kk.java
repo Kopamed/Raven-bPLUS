@@ -11,9 +11,9 @@ import org.lwjgl.opengl.GL11;
 
 public class kk extends b {
    private final int c = (new Color(20, 255, 0)).getRGB();
-   private Module mod;
-   private ModuleSettingTick cl1ckbUtt0n;
-   private m3 p;
+   private final Module mod;
+   private final ModuleSettingTick cl1ckbUtt0n;
+   private final m3 p;
    private int o;
    private int x;
    private int y;

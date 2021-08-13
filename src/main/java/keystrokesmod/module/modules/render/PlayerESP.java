@@ -42,7 +42,7 @@ public class PlayerESP extends Module {
       this.registerSetting(b = new ModuleSettingSlider("Green", 255.0D, 0.0D, 255.0D, 1.0D));
       this.registerSetting(c = new ModuleSettingSlider("Blue", 0.0D, 0.0D, 255.0D, 1.0D));
       this.registerSetting(d = new ModuleSettingTick("Rainbow", false));
-      this.registerSetting(g = new ModuleDesc(new String("ESP Types")));
+      this.registerSetting(g = new ModuleDesc("ESP Types"));
       this.registerSetting(t3 = new ModuleSettingTick("2D", false));
       this.registerSetting(t5 = new ModuleSettingTick("Arrow", false));
       this.registerSetting(t1 = new ModuleSettingTick("Box", false));

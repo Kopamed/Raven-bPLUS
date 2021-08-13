@@ -11,8 +11,8 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class dg extends b {
-   private ModuleSettingSlider v;
-   private m3 p;
+   private final ModuleSettingSlider v;
+   private final m3 p;
    private int o;
    private int x;
    private int y;
@@ -50,7 +50,7 @@ public class dg extends b {
    public void uu(int x, int y) {
       this.y = this.p.c4t.gy() + this.o;
       this.x = this.p.c4t.gx();
-      double d = (double)Math.min(this.p.c4t.gw() - 8, Math.max(0, x - this.x));
+      double d = Math.min(this.p.c4t.gw() - 8, Math.max(0, x - this.x));
       this.w = (double)(this.p.c4t.gw() - 8) * (this.v.getInput() - this.v.g3ti()) / (this.v.g3ta() - this.v.g3ti());
       if (this.d) {
          if (d == 0.0D) {

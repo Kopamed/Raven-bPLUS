@@ -1,7 +1,7 @@
 package keystrokesmod.module;
 
 public class ModuleSettingTick extends ModuleSettingsList {
-   private String name;
+   private final String name;
    static String settingType = "tick";
    private boolean isEnabled;
 

@@ -3,11 +3,11 @@ package keystrokesmod.command;
 import keystrokesmod.CommandLine;
 
 public class Command {
-    private String name;
-    private String help;
-    private int minArgs;
-    private int maxArgs;
-    private String[] alias;
+    private final String name;
+    private final String help;
+    private final int minArgs;
+    private final int maxArgs;
+    private final String[] alias;
     private String[] args;
 
     public Command(String name, String help, int minArgs, int maxArgs, String[] args, String[] alias) {

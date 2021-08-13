@@ -7,8 +7,8 @@ import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.item.*;
 
 public class Trajectories extends Module {
-    private ModuleSettingTick preferSlot;
-    private ModuleSettingSlider hotbarSlotPreference;
+    private final ModuleSettingTick preferSlot;
+    private final ModuleSettingSlider hotbarSlotPreference;
     public Trajectories() {
         super("Trajectories", category.hotkey, 0);
 
@@ -48,9 +48,6 @@ public class Trajectories extends Module {
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
 
-        if(itemInSlot != null && (itemInSlot.getItem() instanceof ItemSnowball || itemInSlot.getItem() instanceof ItemEgg || itemInSlot.getItem() instanceof ItemFishingRod)) {
-            return true;
-        }
-        return false;
+        return itemInSlot != null && (itemInSlot.getItem() instanceof ItemSnowball || itemInSlot.getItem() instanceof ItemEgg || itemInSlot.getItem() instanceof ItemFishingRod);
     }
 }

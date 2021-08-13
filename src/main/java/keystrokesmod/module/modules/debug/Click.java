@@ -65,14 +65,14 @@ public class Click extends Module {
         }
     }
 
-    public static enum event {
+    public enum event {
         buttonDown,
-        buttonUp;
+        buttonUp
     }
 
-    public static enum hook {
+    public enum hook {
         MOUSE,
-        MINECRAFT;
+        MINECRAFT
     }
 
     public static void minecraftPressed(boolean a){

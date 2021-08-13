@@ -15,7 +15,7 @@ public class SelfDestruct extends Module {
    }
 
    public void onEnable() {
-      mc.displayGuiScreen((GuiScreen)null);
+      mc.displayGuiScreen(null);
       destructed = true;
 
       for (Module module : NotAName.moduleManager.listofmods()) {

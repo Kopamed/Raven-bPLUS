@@ -53,9 +53,11 @@ public class AutoClicker extends Module {
    private long leftl, rightl;
    private double leftm, rightm;
    private boolean leftn, rightn;
-   private boolean leftHeld, rightHeld, breakHeld, watingForBreakTimeout;
-   private double speedLeft, speedRight;
-   private double leftHoldLength, rightHoldLength, breakTimerStart, breakBlockFinishWaitTime;
+   private boolean rightHeld;
+   private boolean breakHeld;
+   private boolean watingForBreakTimeout;
+   private double breakTimerStart;
+   private double breakBlockFinishWaitTime;
    private long lastClick;
    private long leftHold, rightHold;
    private boolean rightClickWaiting;
@@ -128,7 +130,7 @@ public class AutoClicker extends Module {
    public void onDisable() {
       this.leftDownTime = 0L;
       this.leftUpTime = 0L;
-      this.leftHeld = false;
+      boolean leftHeld = false;
       this.rightClickWaiting = false;
       autoClickerEnabled = false;
    }
@@ -150,9 +152,6 @@ public class AutoClicker extends Module {
          return;
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
-         //if (ev.phase == Phase.END)
-           // return;
-         //System.out.println("ravern");
          ravenClick();
       }
       else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.SKID){
@@ -185,10 +184,10 @@ public class AutoClicker extends Module {
 
       guiUpdate();
 
-      speedLeft = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
-      leftHoldLength = speedLeft / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.02D, leftMaxCPS.getInput());
-      speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble( rightMinCPS.getInput() - 0.2D, rightMaxCPS.getInput());
-      rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.02D, rightMaxCPS.getInput());
+      double speedLeft1 = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
+      double leftHoldLength = speedLeft1 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.02D, leftMaxCPS.getInput());
+      double speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.2D, rightMaxCPS.getInput());
+      double rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.02D, rightMaxCPS.getInput());
       //If none of the buttons are allowed to click, what is the point in generating clicktimes anyway?
       //if (!leftActive && !rightActive) {
       // return;
@@ -288,33 +287,33 @@ public class AutoClicker extends Module {
    public boolean rightClickAllowed() {
       ItemStack item = mc.thePlayer.getHeldItem();
       if (item != null) {
-         if (this.allowEat.isToggled()) {
+         if (allowEat.isToggled()) {
             if ((item.getItem() instanceof ItemFood)) {
                return false;
             }
          }
-         if (this.allowBow.isToggled()) {
+         if (allowBow.isToggled()) {
             if (item.getItem() instanceof ItemBow) {
                return false;
             }
          }
-         if (this.onlyBlocks.isToggled()) {
+         if (onlyBlocks.isToggled()) {
             if (!(item.getItem() instanceof ItemBlock))
                return false;
          }
-         if (this.noBlockSword.isToggled()) {
+         if (noBlockSword.isToggled()) {
             if (item.getItem() instanceof ItemSword)
                return false;
          }
       }
 
-      if(this.preferFastPlace.isToggled()) {
+      if(preferFastPlace.isToggled()) {
          Module fastplace = NotAName.moduleManager.getModuleByName("FastPlace");
          if (fastplace.isEnabled())
             return false;
       }
 
-      if(this.rightClickDelay.getInput() != 0){
+      if(rightClickDelay.getInput() != 0){
          if(!rightClickWaiting && !allowedClick) {
             this.rightClickWaitStartTime = System.currentTimeMillis();
             this.rightClickWaiting = true;
@@ -323,7 +322,7 @@ public class AutoClicker extends Module {
          } else if(this.rightClickWaiting && !allowedClick) {
             double passedTime = System.currentTimeMillis() - this.rightClickWaitStartTime;
             //System.out.println("Waiting but not allowed");
-            if (passedTime >= this.rightClickDelay.getInput()) {
+            if (passedTime >= rightClickDelay.getInput()) {
                this.allowedClick = true;
                this.rightClickWaiting = false;
                //System.out.println("allowed");
@@ -369,16 +368,12 @@ public class AutoClicker extends Module {
          if (System.currentTimeMillis() > this.leftUpTime) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            //ay.setMouseButtonState(0, false);
-            //System.out.println("down");
             this.genLeftTimings();
          } else if (System.currentTimeMillis() > this.leftDownTime) {
             KeyBinding.setKeyBindState(key, false);
-            //ay.setMouseButtonState(0, true);
-            //System.out.println("up");
          }
       } else {
-         System.out.println("gen");
+         //System.out.println("gen");
          this.genLeftTimings();
       }
 
@@ -427,7 +422,7 @@ public class AutoClicker extends Module {
 
    public void genLeftTimings() {
       double clickSpeed = ay.ranModuleVal(leftMinCPS, leftMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
-      long delay = (long)((int)Math.round(1000.0D / clickSpeed));
+      long delay = (int)Math.round(1000.0D / clickSpeed);
       if (System.currentTimeMillis() > this.leftk) {
          if (!this.leftn && this.rand.nextInt(100) >= 85) {
             this.leftn = true;
@@ -457,7 +452,7 @@ public class AutoClicker extends Module {
 
    public void genRightTimings() {
       double clickSpeed = ay.ranModuleVal(rightMinCPS, rightMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
-      long delay = (long)((int)Math.round(1000.0D / clickSpeed));
+      long delay = (int)Math.round(1000.0D / clickSpeed);
       if (System.currentTimeMillis() > this.rightk) {
          if (!this.rightn && this.rand.nextInt(100) >= 85) {
             this.rightn = true;
@@ -538,12 +533,6 @@ public class AutoClicker extends Module {
                breakTimeDone = false;
                watingForBreakTimeout = false;
             }
-            /*
-            if (this.leftHeld) {
-               KeyBinding.setKeyBindState(key, false);
-               Click.minecraftPressed(false);
-               this.leftHeld = false;
-            }*/
          }
       }
       return false;

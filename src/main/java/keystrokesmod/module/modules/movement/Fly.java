@@ -8,7 +8,7 @@ import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.ay;
 
 public class Fly extends Module {
-   private final Fly.VanFly vanFly = new Fly.VanFly();
+   private final Fly.VanFly vanFly = new VanFly();
    private final Fly.GliFly gliFly = new Fly.GliFly();
    public static ModuleDesc dc;
    public static ModuleSettingSlider a;
@@ -100,7 +100,7 @@ public class Fly extends Module {
       }
    }
 
-   class VanFly {
+   static class VanFly {
       private final float dfs = 0.05F;
 
       public void onEnable() {

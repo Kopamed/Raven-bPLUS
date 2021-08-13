@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConfigManager {
-    private File configDirecotry;
+    private final File configDirecotry;
     private File currentConfig;
     private String fileName;
-    private String extension;
-    private String defaultConfigLocation;
+    private final String extension;
+    private final String defaultConfigLocation;
     public boolean loading;
 
     public ConfigManager() {
@@ -49,13 +49,12 @@ public class ConfigManager {
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
-            StringBuilder moduleAttributes = new StringBuilder();
-            moduleAttributes.append("module:");
-            moduleAttributes.append(clientModule.getName() + ":");
-            moduleAttributes.append(clientModule.isEnabled() + ":");
-            moduleAttributes.append(clientModule.getKeycode());
 
-            finalString.add(moduleAttributes.toString());
+            String moduleAttributes = "module:" +
+                    clientModule.getName() + ":" +
+                    clientModule.isEnabled() + ":" +
+                    clientModule.getKeycode();
+            finalString.add(moduleAttributes);
 
             for (ModuleSettingsList moduleSetting : clientModule.getSettings()) {
                 StringBuilder settingString = new StringBuilder();
@@ -64,19 +63,19 @@ public class ConfigManager {
                 if (moduleSetting.mode.equalsIgnoreCase("slider")) {
                     ModuleSettingSlider setting = (ModuleSettingSlider) moduleSetting;
 
-                    settingString.append(":" + moduleSetting.mode);
-                    settingString.append(":" + setting.getInput());
+                    settingString.append(":").append(moduleSetting.mode);
+                    settingString.append(":").append(setting.getInput());
                 }
                 else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
                     ModuleSettingTick setting = (ModuleSettingTick) moduleSetting;
 
-                    settingString.append(":" + moduleSetting.mode);
-                    settingString.append(":" + setting.isToggled());
+                    settingString.append(":").append(moduleSetting.mode);
+                    settingString.append(":").append(setting.isToggled());
                 } else if (moduleSetting.mode.equalsIgnoreCase("desc")) {
                     ModuleDesc setting = (ModuleDesc) moduleSetting;
 
-                    settingString.append(":" + moduleSetting.mode);
-                    settingString.append(":" + setting.getDesc());
+                    settingString.append(":").append(moduleSetting.mode);
+                    settingString.append(":").append(setting.getDesc());
                 }
 
                 if (settingString.length() > base.length())
@@ -115,12 +114,12 @@ public class ConfigManager {
                     boolean toggled = Boolean.parseBoolean(currentModule[2]);
                     int keyBind = Integer.parseInt(currentModule[3]);
                     if (module.getName().equalsIgnoreCase("hud") && toggled){
-                        Module hud = (HUD) module;
+                        Module hud = module;
                         hud.enable();
                     }
 
                     if (module.getName().equalsIgnoreCase("Command line") && toggled){
-                        Module cmd = (CommandLine) module;
+                        Module cmd = module;
                         cmd.disable();
                         cmd.onDisable();
                         continue;
@@ -199,9 +198,9 @@ public class ConfigManager {
     }
 
     public void saveConfig(String fileName) {
-        String prevFileName = "";
+        StringBuilder prevFileName = new StringBuilder();
         for (int bruh = 0; bruh <= this.fileName.length()-1; bruh++){
-            prevFileName+=this.fileName.charAt(bruh);
+            prevFileName.append(this.fileName.charAt(bruh));
         }
         this.fileName = fileName;
         this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
@@ -214,7 +213,7 @@ public class ConfigManager {
         }
         this.save();
 
-        this.loadConfig(prevFileName);
+        this.loadConfig(prevFileName.toString());
     }
 
     public boolean removeConfig(String fileName) {

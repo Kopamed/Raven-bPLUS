@@ -9,8 +9,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class Blocks extends Module {
-    private ModuleSettingTick preferSlot;
-    private ModuleSettingSlider hotbarSlotPreference;
+    private final ModuleSettingTick preferSlot;
+    private final ModuleSettingSlider hotbarSlotPreference;
     public Blocks() {
         super("Blocks", category.hotkey, 0);
 

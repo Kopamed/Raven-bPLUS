@@ -42,11 +42,11 @@ public class UpdateCheck extends Module {
         else {
             ay.sendMessageToSelf("You are on the latest public version!");
         }
-        if (this.copyToClipboard.isToggled()) {
+        if (copyToClipboard.isToggled()) {
             if (ay.copyToClipboard(Ravenb3.sourceLocation))
                 ay.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
-        if(this.openLink.isToggled()) {
+        if(openLink.isToggled()) {
             URL url = null;
             try {
                 url = new URL(Ravenb3.sourceLocation);

@@ -8,9 +8,10 @@ import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.item.*;
 
 public class Healing extends Module {
-    private ModuleSettingTick preferSlot;
-    private ModuleSettingSlider hotbarSlotPreference , itemMode;
-    private ModuleDesc modeDesc;
+    private final ModuleSettingTick preferSlot;
+    private final ModuleSettingSlider hotbarSlotPreference;
+    private final ModuleSettingSlider itemMode;
+    private final ModuleDesc modeDesc;
     public Healing() {
         super("Healing", category.hotkey, 0);
 
@@ -78,29 +79,23 @@ public class Healing extends Module {
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
 
-        if(itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder")) {
-            return true;
-        }
-        return false;
+        return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder");
     }
 
-    public static enum HealingItems {
+    public enum HealingItems {
         SOUP,
         GAPPLE,
         //NOTCH_APPLE,
         //HEAD,
         FOOD,
-        ALL;
+        ALL
     }
 
     public boolean isSoup(int slot){
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
         if(itemInSlot == null)
             return false;
-        if(itemInSlot.getItem() instanceof ItemSoup) {
-            return true;
-        }
-        return false;
+        return itemInSlot.getItem() instanceof ItemSoup;
     }
 
     public boolean isGapple(int slot){
@@ -108,10 +103,7 @@ public class Healing extends Module {
         if(itemInSlot == null)
             return false;
 
-        if(itemInSlot.getItem() instanceof ItemAppleGold) {
-            return true;
-        }
-        return false;
+        return itemInSlot.getItem() instanceof ItemAppleGold;
     }
 
     public boolean isHead(int slot){
@@ -119,10 +111,7 @@ public class Healing extends Module {
         if(itemInSlot == null)
             return false;
 
-        if(itemInSlot.getItem() instanceof Item) {
-            return true;
-        }
-        return false;
+        return itemInSlot.getItem() instanceof Item;
     }
 
     public boolean isFood(int slot){
@@ -130,9 +119,6 @@ public class Healing extends Module {
         if(itemInSlot == null)
             return false;
 
-        if(itemInSlot.getItem() instanceof ItemFood) {
-            return true;
-        }
-        return false;
+        return itemInSlot.getItem() instanceof ItemFood;
     }
 }

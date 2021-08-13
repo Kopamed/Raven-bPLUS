@@ -17,6 +17,7 @@ public class version {
     public static String currentVersion = null;
     public static String latestVersion = null;
     public static String branch = null;
+    public static String beta = null;
 
     public static boolean outdated() {
         currentVersion = getCurrentVersion();
@@ -45,10 +46,7 @@ public class version {
         if (latestVersionSplited.get(1) > currentVersionSplited.get(1)) {
             return true;
         }
-        if (latestVersionSplited.get(2) > currentVersionSplited.get(2)) {
-            return true;
-        }
-        return false;
+        return latestVersionSplited.get(2) > currentVersionSplited.get(2);
     }
 
     public static String getCurrentVersion() {
@@ -132,10 +130,15 @@ public class version {
     }
 
     public static boolean isBeta() {
+        if(beta != null) {
+            return beta == "beta";
+        }
+
         InputStream input = version.class.getResourceAsStream(branchFileName);
         Scanner scanner = new Scanner(input);
         try {
             if(scanner.nextLine().equalsIgnoreCase("beta")){
+                beta = "beta";
                 return true;
             }
         } catch (Exception var47) {
@@ -162,9 +165,6 @@ public class version {
         if (latestVersionSplited.get(1) < currentVersionSplited.get(1)) {
             return true;
         }
-        if (latestVersionSplited.get(2) < currentVersionSplited.get(2)) {
-            return true;
-        }
-        return false;
+        return latestVersionSplited.get(2) < currentVersionSplited.get(2);
     }
 }

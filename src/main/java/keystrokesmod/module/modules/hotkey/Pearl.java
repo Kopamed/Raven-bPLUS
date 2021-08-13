@@ -15,8 +15,8 @@ import java.nio.file.FileSystem;
 import java.util.ArrayList;
 
 public class Pearl extends Module {
-    private ModuleSettingTick preferSlot;
-    private ModuleSettingSlider hotbarSlotPreference;
+    private final ModuleSettingTick preferSlot;
+    private final ModuleSettingSlider hotbarSlotPreference;
     public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<KeyBinding>();
     public Pearl() {
         super("Pearl", category.hotkey, 0);
@@ -28,10 +28,7 @@ public class Pearl extends Module {
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
 
-        if(itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ender pearl")) {
-            return true;
-        }
-        return false;
+        return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ender pearl");
     }
 
     @Override

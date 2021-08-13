@@ -6,22 +6,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class BridgeAssist extends Module {
-    private ModuleDesc goodAdvice;
-    private ModuleSettingTick setLook;
-    private ModuleSettingTick onSneak;
-    private ModuleSettingSlider setLookMode;
-    private ModuleDesc setLookModeDesc;
-    private ModuleSettingTick workWithSafeWalk;
-    private ModuleSettingSlider waitFor;
-    private ModuleSettingSlider glideTime;
-    private ModuleSettingSlider assistMode;
-    private ModuleSettingSlider assistRange;
-    private ModuleDesc assistModeDesc;
+    private final ModuleSettingTick setLook;
+    private final ModuleSettingTick onSneak;
+    private final ModuleSettingSlider setLookMode;
+    private final ModuleDesc setLookModeDesc;
+    private final ModuleSettingTick workWithSafeWalk;
+    private final ModuleSettingSlider waitFor;
+    private final ModuleSettingSlider glideTime;
+    private final ModuleSettingSlider assistMode;
+    private final ModuleSettingSlider assistRange;
+    private final ModuleDesc assistModeDesc;
     private boolean waitingForAim;
     private boolean gliding;
     private long waitTime;
     private long startWaitTime;
-    private float range;
     private final float[] godbridgePos = {75.6f, -315, -225, -135, -45, 0, 45, 135, 225, 315};
     private final float[] moonwalkPos = {79.6f, -340, -290, -250, -200, -160, -110, -70, -20, 0, 20, 70, 110, 160, 200, 250, 290, 340};
     private final float[] breezilyPos = {79.9f, -360, -270, -180, -90, 0, 90, 180, 270, 360};
@@ -32,6 +30,7 @@ public class BridgeAssist extends Module {
 
     public BridgeAssist() {
         super("Bridge Assist", category.player, 0);
+        ModuleDesc goodAdvice;
         this.registerSetting(goodAdvice = new ModuleDesc("Best with fastplace, not autoplace"));
         this.registerSetting(setLookMode = new ModuleSettingSlider("Value", 1.0D, 1.0D, 2.0D, 1.0D));
         this.registerSetting(setLookModeDesc = new ModuleDesc("Mode: Snap"));
@@ -152,7 +151,7 @@ public class BridgeAssist extends Module {
         //135, 75 north
         //-135 south
         //-45 east
-        range = (float)assistRange.getInput();
+        float range = (float) assistRange.getInput();
 
         switch (ay.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)]) {
             case GODBRIDGE:

@@ -18,7 +18,7 @@ import keystrokesmod.URLUtils;
 import net.minecraft.client.Minecraft;
 
 public class BlowsyConfigManager {
-   private static Minecraft mc = Minecraft.getMinecraft();
+   private static final Minecraft mc = Minecraft.getMinecraft();
    //when you are coding the config manager and life be like
    //public static String ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed_is_sexy = "https://imgur.com/a/hYd1023";
 
