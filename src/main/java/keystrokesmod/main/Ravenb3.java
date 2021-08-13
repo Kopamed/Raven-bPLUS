@@ -104,16 +104,20 @@ public class Ravenb3 {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-            for (Module module : notAName.getm0dmanager().listofmods()) {
-               if (mc.currentScreen == null) {
-                  module.keybind();
-               } else if (mc.currentScreen instanceof ClickGui) {
-                  module.guiUpdate();
-               }
+            try {
+               for (Module module : notAName.getm0dmanager().listofmods()) {
+                  if (mc.currentScreen == null) {
+                     module.keybind();
+                  } else if (mc.currentScreen instanceof ClickGui) {
+                     module.guiUpdate();
+                  }
 
-               if (module.isEnabled()) {
-                  module.update();
+                  if (module.isEnabled()) {
+                     module.update();
+                  }
                }
+            } catch (Exception suckmer) {
+               suckmer.printStackTrace();
             }
          }
 
