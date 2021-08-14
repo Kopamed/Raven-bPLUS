@@ -20,6 +20,10 @@ public class Duels extends Command {
             CommandLine.print("Use \"setkey [api_key]\".", 0);
             return;
         }
+        if(args == null) {
+            this.incorrectArgs();
+            return;
+        }
         String n;
         n = args[1];
         CommandLine.print("Retrieving data...", 1);
