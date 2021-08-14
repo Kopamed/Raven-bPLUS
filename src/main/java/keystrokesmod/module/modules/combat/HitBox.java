@@ -50,7 +50,7 @@ public class HitBox extends Module {
    }
 
    @SubscribeEvent
-   public void ef(TickEvent ev) {
+   public void ef(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!ay.isPlayerInGame()) return;
       if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;

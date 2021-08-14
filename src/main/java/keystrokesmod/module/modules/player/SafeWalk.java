@@ -73,6 +73,9 @@ public class SafeWalk extends Module {
          if(lookDown.isToggled()) {
             if(mc.thePlayer.rotationPitch < pitchRange.getInput() || mc.thePlayer.rotationPitch > pitchIgnorePoint.getInput()) {
                shouldBridge = false;
+               if(Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
+                  setShift(true);
+               }
                return;
             }
          }
