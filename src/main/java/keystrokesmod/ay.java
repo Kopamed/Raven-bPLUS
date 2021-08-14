@@ -16,15 +16,11 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.*;
 
-import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
-import keystrokesmod.module.modules.debug.Click;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.*;
@@ -41,7 +37,6 @@ import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Mouse;
-import scala.Int;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
@@ -202,10 +197,10 @@ public class ay {
    }
 
    public static double n(Entity en) {
-      return ((double)(mc.thePlayer.rotationYaw - m(en)) % 360.0D + 540.0D) % 360.0D - 180.0D;
+      return ((double)(mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D + 540.0D) % 360.0D - 180.0D;
    }
 
-   public static float m(Entity ent) {
+   public static float fovToEntity(Entity ent) {
       double x = ent.posX - mc.thePlayer.posX;
       double z = ent.posZ - mc.thePlayer.posZ;
       double yaw = Math.atan2(x, z) * 57.2957795D;
@@ -214,7 +209,7 @@ public class ay {
 
    public static boolean fov(Entity entity, float fov) {
       fov = (float)((double)fov * 0.5D);
-      double v = ((double)(mc.thePlayer.rotationYaw - m(entity)) % 360.0D + 540.0D) % 360.0D - 180.0D;
+      double v = ((double)(mc.thePlayer.rotationYaw - fovToEntity(entity)) % 360.0D + 540.0D) % 360.0D - 180.0D;
       return v > 0.0D && v < (double)fov || (double)(-fov) < v && v < 0.0D;
    }
 

@@ -115,6 +115,11 @@ public class SafeWalk extends Module {
                this.setShift(false);
                shouldBridge = true;
             }
+            else if(mc.thePlayer.isSneaking() && !onHold.isToggled()) {
+               isShifting = false;
+               this.setShift(false);
+               shouldBridge = true;
+            }
          }
 
          else if (shouldBridge && mc.thePlayer.capabilities.isFlying) {

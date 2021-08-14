@@ -55,7 +55,7 @@ public class Reach extends Module {
    }
 
    @SubscribeEvent
-   public void ef(TickEvent ev) {
+   public void ef(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!ay.isPlayerInGame()) return;
 
