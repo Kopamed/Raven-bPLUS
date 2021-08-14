@@ -9,7 +9,6 @@ import keystrokesmod.module.modules.player.Freecam;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
@@ -22,7 +21,7 @@ public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
       if (Ravenb3.debugger && ev.phase == Phase.END && ay.isPlayerInGame() && !SelfDestruct.destructed) {
          if (mc.currentScreen == null) {
             ScaledResolution res = new ScaledResolution(mc);
-            double bps = ay.gbps(Freecam.en == null ? mc.thePlayer : Freecam.en, 2);
+            double bps = ay.getPlayerBPS(Freecam.en == null ? mc.thePlayer : Freecam.en, 2);
             int rgb;
             if (bps < 10.0D) {
                rgb = Color.green.getRGB();

@@ -21,14 +21,13 @@ import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
 import keystrokesmod.module.modules.debug.Click;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
 import net.minecraft.potion.Potion;
 import net.minecraft.scoreboard.Score;
@@ -289,7 +288,7 @@ public class ay {
       return Math.sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ);
    }
 
-   public static double gbps(Entity en, int d) {
+   public static double getPlayerBPS(Entity en, int d) {
       double x = en.posX - en.prevPosX;
       double z = en.posZ - en.prevPosZ;
       double sp = Math.sqrt(x * x + z * z) * 20.0D;
@@ -462,7 +461,7 @@ public class ay {
       return mc.thePlayer.inventory.currentItem;
    }
 
-   public static boolean wpn() {
+   public static boolean isPlayerHoldingWeapon() {
       if (mc.thePlayer.getCurrentEquippedItem() == null) {
          return false;
       } else {
@@ -567,6 +566,19 @@ public class ay {
 
    public static boolean currentScreenMinecraft() {
       return mc.currentScreen == null;
+   }
+
+   public static int getBlockAmountInCurrentStack(int currentItem) {
+      if (mc.thePlayer.inventory.getStackInSlot(currentItem) == null) {
+         return 0;
+      } else {
+         ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(currentItem);
+         if(itemStack.getItem() instanceof ItemBlock) {
+            return itemStack.stackSize;
+         } else {
+            return 0;
+         }
+      }
    }
 
    public enum ClickEvents {

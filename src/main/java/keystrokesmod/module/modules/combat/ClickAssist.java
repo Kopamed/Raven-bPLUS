@@ -68,7 +68,7 @@ public class ClickAssist extends Module {
                if (this.ignNL) {
                   this.ignNL = false;
                } else {
-                  if (d.isToggled() && !ay.wpn()) {
+                  if (d.isToggled() && !ay.isPlayerHoldingWeapon()) {
                      return;
                   }
 

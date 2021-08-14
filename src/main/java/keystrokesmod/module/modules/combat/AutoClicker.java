@@ -249,7 +249,7 @@ public class AutoClicker extends Module {
 
    private void ravenClick() {
       if (mc.currentScreen == null && mc.inGameHasFocus) {
-         if (weaponOnly.isToggled() && !ay.wpn()) {
+         if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
             return;
          }
 

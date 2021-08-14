@@ -209,7 +209,7 @@ public class HUD extends Module {
          this.buttonList.add(this.resetPosButton = new GuiButtonExt(1, this.width - 90, 5, 85, 20, "Reset position"));
          this.marginX = HUD.hudX;
          this.marginY = HUD.hudY;
-         sr = new ScaledResolution(Minecraft.getMinecraft());
+         sr = new ScaledResolution(mc);
          HUD.positionMode = ru.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
       }
 
@@ -274,6 +274,7 @@ public class HUD extends Module {
             if (this.mouseDown) {
                this.marginX = this.lastMousePosX + (mousePosX - this.sessionMousePosX);
                this.marginY = this.lastMousePosY + (mousePosY - this.sessionMousePosY);
+               sr = new ScaledResolution(mc);
                HUD.positionMode = ru.getPostitionMode(marginX, marginY,sr.getScaledWidth(), sr.getScaledHeight());
 
                //in the else if statement, we check if the mouse is clicked AND inside the "text box"

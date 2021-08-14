@@ -21,9 +21,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
-import javax.security.auth.login.CredentialException;
-import javax.xml.stream.events.EndElement;
-
 public class AimAssist extends Module {
    public static ModuleSettingSlider speed;
    public static ModuleSettingSlider fov;
@@ -54,6 +51,7 @@ public class AimAssist extends Module {
       if(!ay.currentScreenMinecraft()){
          return;
       }
+      if(!ay.isPlayerInGame()) return;
 
          if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
             BlockPos p = mc.objectMouseOver.getBlockPos();
@@ -66,8 +64,10 @@ public class AimAssist extends Module {
          }
 
 
-         if (!weaponOnly.isToggled() || ay.wpn()) {
-            if (!clickAim.isToggled() || mouseManager.getLeftClickCounter() > 0 || ay.autoClickerClicking()) {
+         if (!weaponOnly.isToggled() || ay.isPlayerHoldingWeapon()) {
+
+            //what if player clicking but mouse not down ????
+            if (!clickAim.isToggled() || ay.autoClickerClicking() || mouseManager.getLeftClickCounter() > 0) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenb3.debugger) {

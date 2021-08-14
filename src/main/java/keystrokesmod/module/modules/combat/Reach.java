@@ -69,7 +69,7 @@ public class Reach extends Module {
    public static boolean call() {
       if (!ay.isPlayerInGame()) {
          return false;
-      } else if (c.isToggled() && !ay.wpn()) {
+      } else if (c.isToggled() && !ay.isPlayerHoldingWeapon()) {
          return false;
       } else if (d.isToggled() && (double)mc.thePlayer.moveForward == 0.0D && (double)mc.thePlayer.moveStrafing == 0.0D) {
          return false;
