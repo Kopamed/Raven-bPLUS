@@ -39,7 +39,7 @@ public class AimAssist extends Module {
       super("AimAssist", Module.category.combat, 0);
       this.registerSetting(speed = new ModuleSettingSlider("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));
       this.registerSetting(compliment = new ModuleSettingSlider("Speed 2", 15.0D, 2D, 97.0D, 1.0D));
-      this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
+      this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
       this.registerSetting(distance = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(clickAim = new ModuleSettingTick("Click aim", true));
       this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", true));
