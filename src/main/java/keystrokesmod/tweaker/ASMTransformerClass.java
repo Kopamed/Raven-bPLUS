@@ -14,14 +14,16 @@ import org.objectweb.asm.tree.ClassNode;
 public class ASMTransformerClass implements IClassTransformer {
    public static String eventHandlerClassName = ASMEventHandler.class.getName();
    private final Multimap<String, Transformer> m = ArrayListMultimap.create();
+   public static final boolean outputBytecode = Boolean.parseBoolean(System.getProperty("debugBytecode", "false"));
 
-   public ASMTransformerClass() {
+   public ASMTransformerClass() {/*
       this.addTransformer(new TransformerFontRenderer());
       this.addTransformer(new TransformerGuiUtilRenderComponents());
       this.addTransformer(new TransformerEntityPlayerSP());
-      this.addTransformer(new TransformerEntity());
+      */
+      this.addTransformer(new TransformerEntity());/*
       this.addTransformer(new TransformerEntityPlayer());
-      this.addTransformer(new TransformerMinecraft());
+      this.addTransformer(new TransformerMinecraft());*/
    }
 
    private void addTransformer(Transformer transformer) {
@@ -32,6 +34,8 @@ public class ASMTransformerClass implements IClassTransformer {
       }
    }
 
+   @SuppressWarnings("ResultOfMethodCallIgnored")
+   @Override
    public byte[] transform(String name, String transformedName, byte[] basicClass) {
       if (basicClass == null) {
          return null;
@@ -42,15 +46,20 @@ public class ASMTransformerClass implements IClassTransformer {
          } else {
             ClassReader classReader = new ClassReader(basicClass);
             ClassNode classNode = new ClassNode();
-            classReader.accept(classNode, 8);
-            tr.forEach((transformer) -> {
+            classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
+            //tr.forEach((transformer) -> {
+             //  transformer.transform(classNode, transformedName);
+            //});
+            for (Transformer transformer : tr) {
                transformer.transform(classNode, transformedName);
-            });
-            ClassWriter classWriter = new ClassWriter(3);
+            }
+            ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 
             try {
                classNode.accept(classWriter);
             } catch (Throwable var9) {
+               //LOGGER.error("Exception when transforming " + transformedName + " : " + t.getClass().getSimpleName());
+               var9.printStackTrace();
             }
 
             return classWriter.toByteArray();

@@ -4,7 +4,7 @@ import java.util.Map;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 
-@SortingIndex(1000)
+//@SortingIndex(1000)
 @MCVersion("1.8.9")
 public class FMLLoadingPlugin implements net.minecraftforge.fml.relauncher.IFMLLoadingPlugin {
    public String[] getASMTransformerClass() {

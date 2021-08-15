@@ -5,6 +5,8 @@ package keystrokesmod.main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -126,21 +128,20 @@ public class Ravenb3 {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-            try {
-               for (Module module : notAName.getm0dmanager().listofmods()) {
+               List<Module> pain = notAName.getm0dmanager().listofmods();
+               for(int indianScammerTech = 0; indianScammerTech < pain.size(); indianScammerTech++){
+                  Module pleaseStopCrashing = pain.get(indianScammerTech);
                   if (mc.currentScreen == null) {
-                     module.keybind();
+                     pleaseStopCrashing.keybind();
                   } else if (mc.currentScreen instanceof ClickGui) {
-                     module.guiUpdate();
+                     pleaseStopCrashing.guiUpdate();
                   }
 
-                  if (module.isEnabled()) {
-                     module.update();
+                  if (pleaseStopCrashing.isEnabled()) {
+                     pleaseStopCrashing.update();
                   }
                }
-            } catch (Exception suckmer) {
-               suckmer.printStackTrace();
-            }
+
          }
 
          if (isKeyStrokeConfigGuiToggled) {

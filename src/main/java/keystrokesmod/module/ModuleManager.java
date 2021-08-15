@@ -143,7 +143,7 @@ public class ModuleManager {
    }
 
    public List<Module> listofmods() {
-      return modsList;
+      return this.modsList;
    }
 
    public List<Module> inCateg(Module.category categ) {
