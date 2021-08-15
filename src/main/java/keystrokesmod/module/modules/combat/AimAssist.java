@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import keystrokesmod.*;
 import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.Module;
+import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
@@ -22,7 +23,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
 public class AimAssist extends Module {
-   public static ModuleSettingSlider speed;
+   public static ModuleSettingSlider speed, compliment;
    public static ModuleSettingSlider fov;
    public static ModuleSettingSlider distance;
    public static ModuleSettingTick clickAim;
@@ -35,7 +36,8 @@ public class AimAssist extends Module {
 
    public AimAssist() {
       super("AimAssist", Module.category.combat, 0);
-      this.registerSetting(speed = new ModuleSettingSlider("Speed", 45.0D, 5.0D, 100.0D, 1.0D));
+      this.registerSetting(speed = new ModuleSettingSlider("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));
+      this.registerSetting(compliment = new ModuleSettingSlider("Speed 2", 15.0D, 2D, 97.0D, 1.0D));
       this.registerSetting(fov = new ModuleSettingSlider("FOV", 90.0D, 15.0D, 180.0D, 1.0D));
       this.registerSetting(distance = new ModuleSettingSlider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(clickAim = new ModuleSettingTick("Click aim", true));
@@ -67,7 +69,7 @@ public class AimAssist extends Module {
          if (!weaponOnly.isToggled() || ay.isPlayerHoldingWeapon()) {
 
             //what if player clicking but mouse not down ????
-            if (!clickAim.isToggled() || ay.autoClickerClicking() || mouseManager.getLeftClickCounter() > 0) {
+            if ((clickAim.isToggled() && ay.autoClickerClicking()) || (mouseManager.getLeftClickCounter() > 0 && !ModuleManager.autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenb3.debugger) {
@@ -79,9 +81,9 @@ public class AimAssist extends Module {
                   } else {
                      double n = ay.fovFromEntity(en);
                      if (n > 1.0D || n < -1.0D) {
-                        double compliment = n*0.15;
-                        double val2 = compliment + ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput());
-                        float val = (float)(-(compliment + n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
+                        double complimentSpeed = n*(ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328, compliment.getInput() + 2.48293)/100);
+                        double val2 = complimentSpeed + ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput());
+                        float val = (float)(-(complimentSpeed + n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
                         mc.thePlayer.rotationYaw += val;
                      }
                   }
