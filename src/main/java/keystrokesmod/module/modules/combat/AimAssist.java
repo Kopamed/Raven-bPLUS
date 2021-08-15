@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import org.lwjgl.input.Mouse;
 
 public class AimAssist extends Module {
    public static ModuleSettingSlider speed, compliment;
@@ -69,7 +70,7 @@ public class AimAssist extends Module {
          if (!weaponOnly.isToggled() || ay.isPlayerHoldingWeapon()) {
 
             //what if player clicking but mouse not down ????
-            if ((clickAim.isToggled() && ay.autoClickerClicking()) || (mouseManager.getLeftClickCounter() > 0 && !ModuleManager.autoClicker.isEnabled()) || !clickAim.isToggled()) {
+            if ((clickAim.isToggled() && ay.autoClickerClicking()) || (Mouse.isButtonDown(0) && !ModuleManager.autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenb3.debugger) {
