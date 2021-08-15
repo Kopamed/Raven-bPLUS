@@ -71,7 +71,7 @@ public class Tracers extends Module {
             while(var3.hasNext()) {
                Entity en = (Entity)var3.next();
                if (en instanceof EntityLivingBase && en != mc.thePlayer) {
-                  ru.dtl(en, rgb, (float)f.getInput());
+                  HUDUtils.dtl(en, rgb, (float)f.getInput());
                }
             }
 
@@ -93,7 +93,7 @@ public class Tracers extends Module {
                } while(!a.isToggled() && en.isInvisible());
 
                if (!AntiBot.bot(en)) {
-                  ru.dtl(en, rgb, (float)f.getInput());
+                  HUDUtils.dtl(en, rgb, (float)f.getInput());
                }
             }
          }

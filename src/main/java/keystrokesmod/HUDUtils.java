@@ -18,7 +18,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import org.lwjgl.opengl.GL11;
 
-public class ru {
+public class HUDUtils {
    public static final int rc = -1089466352;
    private static final double p2 = 6.283185307179586D;
    private static final Minecraft mc = Minecraft.getMinecraft();

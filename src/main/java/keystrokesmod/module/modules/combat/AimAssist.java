@@ -77,9 +77,11 @@ public class AimAssist extends Module {
                   if (blatantMode.isToggled()) {
                      ay.aim(en, 0.0F, false);
                   } else {
-                     double n = ay.n(en);
+                     double n = ay.fovFromEntity(en);
                      if (n > 1.0D || n < -1.0D) {
-                        float val = (float)(-(n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
+                        double compliment = n*0.15;
+                        double val2 = compliment + ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput());
+                        float val = (float)(-(compliment + n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
                         mc.thePlayer.rotationYaw += val;
                      }
                   }

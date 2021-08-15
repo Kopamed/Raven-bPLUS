@@ -97,7 +97,7 @@ public class MurderMystery extends Module {
                   rgb = Color.orange.getRGB();
                }
 
-               ru.ee(en, 2, 0.0D, 0.0D, rgb, false);
+               HUDUtils.ee(en, 2, 0.0D, 0.0D, rgb, false);
             }
          }
       }

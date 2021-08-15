@@ -3,10 +3,7 @@
 package keystrokesmod.module.modules;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,15 +13,10 @@ import keystrokesmod.main.NotAName;
 import keystrokesmod.module.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
-
-import javax.imageio.ImageIO;
-import javax.swing.text.Position;
 
 import static keystrokesmod.main.Ravenb3.mResourceLocation;
 
@@ -37,7 +29,7 @@ public class HUD extends Module {
    public static ModuleDesc colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
-   public static ru.PositionMode positionMode;
+   public static HUDUtils.PositionMode positionMode;
    public static int logoSize;
    public static boolean showedError;
 
@@ -96,10 +88,10 @@ public class HUD extends Module {
             Gui.drawModalRectWithCustomSizedTexture(hudX - 13, hudY, 0, 0, logoSize, logoSize, logoSize, logoSize);
          }
          if (!alphabeticalSort.isToggled()){
-            if (positionMode == ru.PositionMode.UPLEFT || positionMode == ru.PositionMode.UPRIGHT) {
+            if (positionMode == HUDUtils.PositionMode.UPLEFT || positionMode == HUDUtils.PositionMode.UPRIGHT) {
                ModuleManager.sortShortLong();
             }
-            else if(positionMode == ru.PositionMode.DOWNLEFT || positionMode == ru.PositionMode.DOWNRIGHT) {
+            else if(positionMode == HUDUtils.PositionMode.DOWNLEFT || positionMode == HUDUtils.PositionMode.DOWNRIGHT) {
                ModuleManager.sortLongShort();
             }
          }
@@ -137,7 +129,7 @@ public class HUD extends Module {
          while(var5.hasNext()) {
             Module m = (Module)var5.next();
             if (m.isEnabled() && m != this) {
-               if(HUD.positionMode == ru.PositionMode.DOWNRIGHT || HUD.positionMode == ru.PositionMode.UPRIGHT){
+               if(HUD.positionMode == HUDUtils.PositionMode.DOWNRIGHT || HUD.positionMode == HUDUtils.PositionMode.UPRIGHT){
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
@@ -210,7 +202,7 @@ public class HUD extends Module {
          this.marginX = HUD.hudX;
          this.marginY = HUD.hudY;
          sr = new ScaledResolution(mc);
-         HUD.positionMode = ru.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
+         HUD.positionMode = HUDUtils.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
       }
 
       public void drawScreen(int mX, int mY, float pt) {
@@ -231,7 +223,7 @@ public class HUD extends Module {
          ScaledResolution res = new ScaledResolution(this.mc);
          int descriptionOffsetX = res.getScaledWidth() / 2 - 84;
          int descriptionOffsetY = res.getScaledHeight() / 2 - 20;
-         ru.drawColouredText("Edit the HUD position by dragging.", '-', descriptionOffsetX, descriptionOffsetY, 2L, 0L, true, this.mc.fontRendererObj);
+         HUDUtils.drawColouredText("Edit the HUD position by dragging.", '-', descriptionOffsetX, descriptionOffsetY, 2L, 0L, true, this.mc.fontRendererObj);
 
          try {
             this.handleInput();
@@ -248,14 +240,14 @@ public class HUD extends Module {
          double marginY = fr.FONT_HEIGHT + 2;
          String[] var4 = t.split("-");
          ArrayList<String> var5 = ay.toArrayList(var4);
-         if (HUD.positionMode == ru.PositionMode.UPLEFT || HUD.positionMode == ru.PositionMode.UPRIGHT) {
+         if (HUD.positionMode == HUDUtils.PositionMode.UPLEFT || HUD.positionMode == HUDUtils.PositionMode.UPRIGHT) {
             var5.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2) - ay.mc.fontRendererObj.getStringWidth(o1));
          }
-         else if(HUD.positionMode == ru.PositionMode.DOWNLEFT || HUD.positionMode == ru.PositionMode.DOWNRIGHT) {
+         else if(HUD.positionMode == HUDUtils.PositionMode.DOWNLEFT || HUD.positionMode == HUDUtils.PositionMode.DOWNRIGHT) {
             var5.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2) - ay.mc.fontRendererObj.getStringWidth(o1));
          }
 
-         if(HUD.positionMode == ru.PositionMode.DOWNRIGHT || HUD.positionMode == ru.PositionMode.UPRIGHT){
+         if(HUD.positionMode == HUDUtils.PositionMode.DOWNRIGHT || HUD.positionMode == HUDUtils.PositionMode.UPRIGHT){
             for (String s : var5) {
                fr.drawString(s, (float) x + (gap - fr.getStringWidth(s)), (float) y, Color.white.getRGB(), HUD.dropShadow.isToggled());
                y += marginY;
@@ -275,7 +267,7 @@ public class HUD extends Module {
                this.marginX = this.lastMousePosX + (mousePosX - this.sessionMousePosX);
                this.marginY = this.lastMousePosY + (mousePosY - this.sessionMousePosY);
                sr = new ScaledResolution(mc);
-               HUD.positionMode = ru.getPostitionMode(marginX, marginY,sr.getScaledWidth(), sr.getScaledHeight());
+               HUD.positionMode = HUDUtils.getPostitionMode(marginX, marginY,sr.getScaledWidth(), sr.getScaledHeight());
 
                //in the else if statement, we check if the mouse is clicked AND inside the "text box"
             } else if (mousePosX > this.textBoxStartX && mousePosX < this.textBoxEndX && mousePosY > this.textBoxStartY && mousePosY < this.textBoxEndY) {

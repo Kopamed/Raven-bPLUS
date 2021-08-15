@@ -153,8 +153,8 @@ public class Freecam extends Module {
    public void re(RenderWorldLastEvent e) {
       if (ay.isPlayerInGame()) {
          mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
-         ru.ee(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
-         ru.ee(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
+         HUDUtils.ee(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
+         HUDUtils.ee(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
       }
 
    }

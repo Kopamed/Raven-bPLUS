@@ -196,7 +196,7 @@ public class ay {
       }
    }
 
-   public static double n(Entity en) {
+   public static double fovFromEntity(Entity en) {
       return ((double)(mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D + 540.0D) % 360.0D - 180.0D;
    }
 

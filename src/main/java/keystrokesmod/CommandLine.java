@@ -235,7 +235,7 @@ a
       GL11.glEnable(3089);
       int mw = w * s;
       GL11.glScissor(0, mc.displayHeight - (sY + sH) * s, mw - (mw < 2 ? 0 : 2), mc.displayHeight);
-      ru.db(1000, 1000, ccs);
+      HUDUtils.db(1000, 1000, ccs);
       rss(fr, commandLineHistory, x, y);
       GL11.glDisable(3089);
    }

@@ -99,7 +99,7 @@ public class Xray extends Module {
    private void dr(BlockPos p) {
       int[] rgb = this.c(mc.theWorld.getBlockState(p).getBlock());
       if (rgb[0] + rgb[1] + rgb[2] != 0) {
-         ru.re(p, (new Color(rgb[0], rgb[1], rgb[2])).getRGB(), true);
+         HUDUtils.re(p, (new Color(rgb[0], rgb[1], rgb[2])).getRGB(), true);
       }
 
    }

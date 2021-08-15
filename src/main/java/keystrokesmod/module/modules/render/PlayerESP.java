@@ -56,7 +56,7 @@ public class PlayerESP extends Module {
    }
 
    public void onDisable() {
-      ru.ring_c = false;
+      HUDUtils.ring_c = false;
    }
 
    public void guiUpdate() {
@@ -105,27 +105,27 @@ public class PlayerESP extends Module {
 
    private void r(Entity en, int rgb) {
       if (t1.isToggled()) {
-         ru.ee(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
+         HUDUtils.ee(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t2.isToggled()) {
-         ru.ee(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
+         HUDUtils.ee(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t3.isToggled()) {
-         ru.ee(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
+         HUDUtils.ee(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t4.isToggled()) {
-         ru.ee(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
+         HUDUtils.ee(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t5.isToggled()) {
-         ru.ee(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
+         HUDUtils.ee(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t6.isToggled()) {
-         ru.ee(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
+         HUDUtils.ee(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
    }
