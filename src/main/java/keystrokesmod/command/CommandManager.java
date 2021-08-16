@@ -34,6 +34,8 @@ public class CommandManager {
         this.addCommand(new Uwu());
         this.addCommand(new Friends());
         this.addCommand(new Version());
+        this.addCommand(new Compress());
+        this.addCommand(new Decompress());
 
     }
 

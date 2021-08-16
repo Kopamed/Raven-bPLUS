@@ -86,6 +86,11 @@ public class Module {
 
    public void setToggled(boolean enabled) {
       this.enabled = enabled;
+      if(enabled){
+         this.onEnable();
+      } else{
+         this.onDisable();
+      }
       if (Ravenb3.configManager != null && !Ravenb3.configManager.loading && !SelfDestruct.destructed)
          Ravenb3.configManager.save();
 

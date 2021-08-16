@@ -54,7 +54,7 @@ public class ClickGui extends GuiScreen {
    public void initGui() {
       super.initGui();
       this.sr = new ScaledResolution(this.mc);
-      (this.c = new GuiTextField(1, this.mc.fontRendererObj, 22, this.height - 100, 150, 20)).setMaxStringLength(256);
+      (this.c = new GuiTextField(1, this.mc.fontRendererObj, 22, this.height - 100, 150, 20)).setMaxStringLength(65536);
       this.buttonList.add(this.s = new GuiButtonExt(2, 22, this.height - 70, 150, 20, "Send"));
       this.s.visible = keystrokesmod.module.modules.client.CommandLine.a;
    }
