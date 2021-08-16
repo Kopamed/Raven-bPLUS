@@ -17,16 +17,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockHit extends Module {
     public static ModuleSettingSlider range;
-    public static ModuleSettingTick onlyPlayers;
+    public static ModuleSettingTick onlyPlayers, onRightMBHold;
     public static ModuleSettingSlider minActionTicks, maxActionTicks, minOnceEvery, maxOnceEvery;
     public static double comboLasts;
-    public static boolean comboing, hitCoolDown, alreadyHit;
+    public static boolean comboing, hitCoolDown, alreadyHit, safeGuard;
     public static int hitTimeout, hitsWaited;
 
     public BlockHit() {
         super("BlockHit", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
-        this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 75, 1, 500, 5));
+        this.registerSetting(onRightMBHold = new ModuleSettingTick("Only when holding RMB", false));
+        this.registerSetting(minActionTicks = new ModuleSettingSlider("Woman ms: ", 75, 1, 500, 5));
         this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 120, 1, 500, 5));
         this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
         this.registerSetting(maxOnceEvery = new ModuleSettingSlider("Once every max hits: ", 1, 1, 10, 1));
@@ -44,6 +45,14 @@ public class BlockHit extends Module {
         if(!ay.isPlayerInGame())
             return;
 
+        if(onRightMBHold.isToggled() && !ay.tryingToCombo()){
+            if(!safeGuard || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                safeGuard = true;
+                finishCombo();
+            }
+            return;
+        }
+
         if(comboing) {
             if(System.currentTimeMillis() >= comboLasts){
                 comboing = false;
@@ -54,12 +63,36 @@ public class BlockHit extends Module {
             }
         }
 
-
+        if(onRightMBHold.isToggled() && ay.tryingToCombo()) {
+            if(mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null) {
+                if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                    safeGuard = true;
+                    finishCombo();
+                }
+                return;
+            } else {
+                Entity target = mc.objectMouseOver.entityHit;
+                //////System.out.println(target.hurtResistantTime);
+                if(target.isDead) {
+                    if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                        safeGuard = true;
+                        finishCombo();
+                    }
+                    return;
+                }
+            }
+        }
 
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
             //////System.out.println(target.hurtResistantTime);
             if(target.isDead) {
+                if(onRightMBHold.isToggled() && Mouse.isButtonDown(1) && Mouse.isButtonDown(0)) {
+                    if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                        safeGuard = true;
+                        finishCombo();
+                    }
+                }
                 return;
             }
 
@@ -110,6 +143,7 @@ public class BlockHit extends Module {
                         startCombo();
                         //////System.out.println("Combo started");
                         alreadyHit = true;
+                        if(safeGuard) safeGuard = false;
                     }
                 } else {
                     if(alreadyHit){
@@ -117,6 +151,7 @@ public class BlockHit extends Module {
                     }
                     alreadyHit = false;
                     //////System.out.println("REEEEEEE");
+                    if(safeGuard) safeGuard = false;
                 }
             }
         }

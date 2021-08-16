@@ -576,6 +576,11 @@ public class ay {
       }
    }
 
+   public static boolean tryingToCombo() {
+      if(Mouse.isButtonDown(0) && Mouse.isButtonDown(1)) return true;
+      return false;
+   }
+
    public enum ClickEvents {
       RENDER,
       TICK

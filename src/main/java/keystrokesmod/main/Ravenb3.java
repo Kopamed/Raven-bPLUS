@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import keystrokesmod.*;
 import keystrokesmod.command.CommandManager;
+import keystrokesmod.config.ConfigCommand;
 import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
 import keystrokesmod.keystroke.KeyStroke;
@@ -79,6 +80,7 @@ public class Ravenb3 {
       mc = Minecraft.getMinecraft();
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
+      ClientCommandHandler.instance.registerCommand(new ConfigCommand());
       FMLCommonHandler.instance().bus().register(new DebugInfoRenderer());
       FMLCommonHandler.instance().bus().register(new mouseManager());
       FMLCommonHandler.instance().bus().register(new KeySrokeRenderer());

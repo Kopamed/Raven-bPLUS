@@ -42,12 +42,12 @@ public class Config extends Command {
                 //time to suffer :holsum_100:
                 boolean found = false;
                 for (File config : Ravenb3.configManager.listConfigs()) {
-                    if (config.getName().equals(args[2] + Ravenb3.configManager.getExtension())) {
+                    if (config.getName().equalsIgnoreCase(args[2] + Ravenb3.configManager.getExtension())) {
                         found = true;
                         CommandLine.print("&aFound config with the name", 1);
                         CommandLine.print("&a" + args[2], 0);
                         // FUCKING LOAD args[2]
-                        Ravenb3.configManager.loadConfig(args[2]);
+                        Ravenb3.configManager.loadConfig(config.getName().replace(Ravenb3.configManager.getExtension(), ""));
                         CommandLine.print("&aLoaded config!", 0);
                     }
                 }
