@@ -5,15 +5,14 @@ package keystrokesmod.main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import keystrokesmod.*;
 import keystrokesmod.command.CommandManager;
+import keystrokesmod.config.Config;
 import keystrokesmod.config.ConfigCommand;
-import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.keystroke.KeyStrokeConfigGui;
@@ -33,7 +32,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -46,7 +44,7 @@ import javax.imageio.ImageIO;
    version = "KMV5",
    acceptedMinecraftVersions = "[1.8.9]"
 )
-public class Ravenb3 {
+public class Ravenbplus {
    public static final int ver = 3;
    public static boolean debugger = false;
    public static boolean outdated = false;
@@ -60,7 +58,7 @@ public class Ravenb3 {
    public static String[] helloYourComputerHasVirus = {"You are using an unstable version of an outdated version", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
    public static int b = 0;
-   public static ConfigManager configManager;
+   public static Config config;
    public static Minecraft mc;
    public static NotAName notAName;
    private static KeyStroke keyStroke;
@@ -70,7 +68,10 @@ public class Ravenb3 {
    public static InputStream ravenLogoInputStream;
    public static ResourceLocation mResourceLocation;
 
-   public Ravenb3() {
+   public Ravenbplus() {
+      // shout out to my homie
+      // https://i.imgur.com/Mli8beT.png
+      virus.exe = true;
       notAName = new NotAName();
    }
 
@@ -115,14 +116,14 @@ public class Ravenb3 {
       FMLCommonHandler.instance().bus().register(ModuleManager.nameHider);
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
-      configManager = new ConfigManager();
+      config = new Config();
       ay.su();
       ex.execute(() -> URLUtils.getTextFromURL(numberOfUseTracker));
       if(version.outdated()) {
-         Ravenb3.outdated = true;
+         Ravenbplus.outdated = true;
       }
       if(version.isBeta()) {
-         Ravenb3.beta = true;
+         Ravenbplus.beta = true;
       }
    }
 
@@ -169,4 +170,8 @@ public class Ravenb3 {
    public static void toggleKeyStrokeConfigGui() {
       isKeyStrokeConfigGuiToggled = true;
    }
+}
+
+class virus{
+   public static boolean exe;
 }

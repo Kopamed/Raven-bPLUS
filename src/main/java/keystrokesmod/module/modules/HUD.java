@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
-import static keystrokesmod.main.Ravenb3.mResourceLocation;
+import static keystrokesmod.main.Ravenbplus.mResourceLocation;
 
 public class HUD extends Module {
    public static ModuleSettingTick editPosition;

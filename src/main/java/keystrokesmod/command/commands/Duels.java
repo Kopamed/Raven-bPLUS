@@ -5,7 +5,7 @@ import keystrokesmod.ProfileUtils;
 import keystrokesmod.URLUtils;
 import keystrokesmod.ay;
 import keystrokesmod.command.Command;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.minigames.DuelsStats;
 
 public class Duels extends Command {
@@ -15,7 +15,7 @@ public class Duels extends Command {
 
     @Override
     public void onCall(String[] args) {
-        if (URLUtils.k.isEmpty()) {
+        if (URLUtils.hypixelApiKey.isEmpty()) {
             CommandLine.print("&cAPI Key is empty!", 1);
             CommandLine.print("Use \"setkey [api_key]\".", 0);
             return;
@@ -27,7 +27,7 @@ public class Duels extends Command {
         String n;
         n = args[1];
         CommandLine.print("Retrieving data...", 1);
-        Ravenb3.getExecutor().execute(() -> {
+        Ravenbplus.getExecutor().execute(() -> {
             int[] s = ProfileUtils.getHypixelStats(n, ProfileUtils.DM.OVERALL);
             if (s != null) {
                 if (s[0] == -1) {

@@ -10,11 +10,10 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import keystrokesmod.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class ClickGui extends GuiScreen {
@@ -37,7 +36,7 @@ public class ClickGui extends GuiScreen {
       for(int category = 0; category < categoryAmount; ++category) {
          Module.category moduleCategory = values[category];
          GuiModuleCategory currentModuleCategory = new GuiModuleCategory(moduleCategory);
-         currentModuleCategory.addCategoryWithOffset(topOffset);
+         currentModuleCategory.setY(topOffset);
          categoryList.add(currentModuleCategory);
          topOffset += 20;
       }
@@ -46,7 +45,7 @@ public class ClickGui extends GuiScreen {
 
    public void initMain() {
       (this.aT = this.aE = this.aR = new am(500.0F)).start();
-      this.sf = Ravenb3.getExecutor().schedule(() -> {
+      this.sf = Ravenbplus.getExecutor().schedule(() -> {
          (this.aL = new am(650.0F)).start();
       }, 650L, TimeUnit.MILLISECONDS);
    }
@@ -85,27 +84,27 @@ public class ClickGui extends GuiScreen {
       mc.fontRendererObj.drawString(ay.getDate(), this.width-3-this.fontRendererObj.getStringWidth(ay.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.astolfoColorsDraw(10, 28, speed));
 
       //version
-      if(Ravenb3.outdated && Ravenb3.beta) {
+      if(Ravenbplus.outdated && Ravenbplus.beta) {
          int margin = 2;
          int rows = 1;
-         for (int i = Ravenb3.helloYourComputerHasVirus.length-1; i >= 0; i--) {
-            String up = Ravenb3.helloYourComputerHasVirus[i];
+         for (int i = Ravenbplus.helloYourComputerHasVirus.length-1; i >= 0; i--) {
+            String up = Ravenbplus.helloYourComputerHasVirus[i];
             mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.astolfoColorsDraw(10, 28, speed));
             rows++;
             margin += 2;
          }
       }
-      else if(Ravenb3.outdated){
+      else if(Ravenbplus.outdated){
          int margin = 2;
          int rows = 1;
-         for (int i = Ravenb3.updateText.length-1; i >= 0; i--) {
-            String up = Ravenb3.updateText[i];
+         for (int i = Ravenbplus.updateText.length-1; i >= 0; i--) {
+            String up = Ravenbplus.updateText[i];
             mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.astolfoColorsDraw(10, 28, speed));
             rows++;
             margin += 2;
          }
       }
-      else if(Ravenb3.beta) {
+      else if(Ravenbplus.beta) {
          String veryCoolBetaUser = "Beta build " + version.getSelfBetaVersion() + " of version " + version.getCurrentVersion().replaceAll("-", ".");
          mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.astolfoColorsDraw(10, 28, speed));
       } else {
@@ -146,7 +145,7 @@ public class ClickGui extends GuiScreen {
       for (GuiModuleCategory category : categoryList) {
          category.rf(this.fontRendererObj);
          category.up(x, y);
-
+         //System.out.println("cat " + category + " x y "+ x + " " + y);
          for (b module : category.getModules()) {
             module.uu(x, y);
          }
@@ -205,12 +204,14 @@ public class ClickGui extends GuiScreen {
                c4t = (GuiModuleCategory)var4.next();
                if (c4t.v(x, y) && !c4t.i(x, y) && !c4t.d(x, y) && m == 0) {
                   c4t.d(true);
+                  //System.out.println(c4t.xx+ " " + c4t.yy);
                   c4t.xx = x - c4t.gx();
                   c4t.yy = y - c4t.gy();
+                  //System.out.println(c4t.xx+ " " + c4t.yy);
                }
 
                if (c4t.d(x, y) && m == 0) {
-                  c4t.oo(!c4t.fv());
+                  c4t.setCategoryOpened(!c4t.fv());
                }
 
                if (c4t.i(x, y) && m == 0) {

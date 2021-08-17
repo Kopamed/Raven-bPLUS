@@ -4,7 +4,7 @@ package keystrokesmod;
 
 import java.awt.Color;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.player.Freecam;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.client.Minecraft;
@@ -18,7 +18,7 @@ public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if (Ravenb3.debugger && ev.phase == Phase.END && ay.isPlayerInGame() && !SelfDestruct.destructed) {
+      if (Ravenbplus.debugger && ev.phase == Phase.END && ay.isPlayerInGame() && !SelfDestruct.destructed) {
          if (mc.currentScreen == null) {
             ScaledResolution res = new ScaledResolution(mc);
             double bps = ay.getPlayerBPS(Freecam.en == null ? mc.thePlayer : Freecam.en, 2);

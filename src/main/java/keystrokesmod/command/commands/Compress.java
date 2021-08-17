@@ -14,7 +14,7 @@ public class Compress extends Command {
     public void onCall(String[] args) {
         if(args == null) this.incorrectArgs();
         if(args.length == 2){
-            ay.copyToClipboard(Config.encryptConfig(args[1]));
+            ay.copyToClipboard(Config.encrypt(args[1]));
             print("Successfully copied to clipboard!", 1);
         }
         else {

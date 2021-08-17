@@ -197,6 +197,9 @@ public class AutoClicker extends Module {
       // Uhh left click only, mate
       if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
          if(breakBlock()) return;
+         if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
+            return;
+         }
 
          double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
          if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {

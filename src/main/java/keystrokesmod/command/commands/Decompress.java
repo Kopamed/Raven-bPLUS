@@ -14,7 +14,7 @@ public class Decompress extends Command {
     public void onCall(String[] args) {
         if(args == null) this.incorrectArgs();
         if(args.length == 2){
-            ay.copyToClipboard(Config.decryptConfig(args[1]));
+            ay.copyToClipboard(Config.decrypt(args[1]));
             print("Successfully copied to clipboard!", 1);
         }
         else {

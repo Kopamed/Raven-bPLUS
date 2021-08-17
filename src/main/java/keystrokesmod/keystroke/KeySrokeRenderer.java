@@ -5,7 +5,7 @@ package keystrokesmod.keystroke;
 import java.awt.Color;
 import java.io.IOException;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -42,7 +42,7 @@ public class KeySrokeRenderer {
    }
 
    public void renderKeystrokes() {
-      KeyStroke f = Ravenb3.getKeyStroke();
+      KeyStroke f = Ravenbplus.getKeyStroke();
       if (KeyStroke.e) {
          int x = KeyStroke.x;
          int y = KeyStroke.y;

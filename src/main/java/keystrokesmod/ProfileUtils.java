@@ -24,7 +24,7 @@ public class ProfileUtils {
          s[0] = -1;
          return s;
       } else {
-         String c = URLUtils.getTextFromURL("https://api.hypixel.net/player?key=" + URLUtils.k + "&uuid=" + u);
+         String c = URLUtils.getTextFromURL("https://api.hypixel.net/player?key=" + URLUtils.hypixelApiKey + "&uuid=" + u);
          if (c.isEmpty()) {
             return null;
          } else if (c.equals("{\"success\":true,\"player\":null}")) {

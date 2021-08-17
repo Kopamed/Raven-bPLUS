@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.Iterator;
 
 import keystrokesmod.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -68,7 +68,7 @@ public class PlayerESP extends Module {
       if (ay.isPlayerInGame()) {
          int rgb = d.isToggled() ? 0 : this.rgb_c;
          Iterator var3;
-         if (Ravenb3.debugger) {
+         if (Ravenbplus.debugger) {
             var3 = mc.theWorld.loadedEntityList.iterator();
 
             while(var3.hasNext()) {

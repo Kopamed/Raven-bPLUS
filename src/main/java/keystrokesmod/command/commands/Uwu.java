@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.command.Command;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 
 import static keystrokesmod.CommandLine.print;
 
@@ -18,7 +18,7 @@ public class Uwu extends Command {
             return;
         }
 
-        Ravenb3.getExecutor().execute(() -> {
+        Ravenbplus.getExecutor().execute(() -> {
             u = true;
 
             for(int i = 0; i < 4; ++i) {

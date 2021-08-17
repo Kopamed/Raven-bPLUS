@@ -4,7 +4,7 @@ import keystrokesmod.CommandLine;
 import keystrokesmod.URLUtils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.BlowsyConfigManager;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 
 public class SetKey extends Command {
     public SetKey() {
@@ -26,9 +26,9 @@ public class SetKey extends Command {
         CommandLine.print("§3Setting...", 1);
         String n;
         n = args[1];
-        Ravenb3.getExecutor().execute(() -> {
+        Ravenbplus.getExecutor().execute(() -> {
             if (URLUtils.isHypixelKeyValid(n)) {
-                URLUtils.k = n;
+                URLUtils.hypixelApiKey = n;
                 CommandLine.print("&a" + "success!", 0);
                 BlowsyConfigManager.saveCheatSettingsToConfigFile();
             } else {

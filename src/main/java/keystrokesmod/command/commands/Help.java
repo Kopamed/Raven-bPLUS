@@ -2,7 +2,7 @@ package keystrokesmod.command.commands;
 
 import keystrokesmod.CommandLine;
 import keystrokesmod.command.Command;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 
 public class Help extends Command {
     public Help() {
@@ -12,11 +12,11 @@ public class Help extends Command {
     @Override
     public void onCall(String[] args) {
         if (args == null) {
-            Ravenb3.commandManager.sort();
+            Ravenbplus.commandManager.sort();
 
             CommandLine.print("Available commands:", 1);
             int index = 1;
-            for (Command command : Ravenb3.commandManager.getCommandList()) {
+            for (Command command : Ravenbplus.commandManager.getCommandList()) {
                 if(command.getName().equalsIgnoreCase("help"))
                     continue;
 
@@ -27,7 +27,7 @@ public class Help extends Command {
             CommandLine.print("&aRun 'help commandname' for more", 1);
             CommandLine.print("&ainformation about the command", 0);
         } else if (args.length == 2) {
-            Command command = Ravenb3.commandManager.getCommandByName(args[1]);
+            Command command = Ravenbplus.commandManager.getCommandByName(args[1]);
             if (command == null) {
                 CommandLine.print("&cUnable to find a command with the", 1);
                 CommandLine.print("&cname or alias with '" + args[1] + "'", 0);

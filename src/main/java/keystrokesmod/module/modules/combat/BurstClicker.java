@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import keystrokesmod.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -54,7 +54,7 @@ public class BurstClicker extends Module {
 
    public void onEnable() {
       if (clicks.getInput() != 0.0D && mc.currentScreen == null && mc.inGameHasFocus) {
-         Ravenb3.getExecutor().execute(() -> {
+         Ravenbplus.getExecutor().execute(() -> {
             try {
                int cl = (int) clicks.getInput();
                int del = (int) delay.getInput();

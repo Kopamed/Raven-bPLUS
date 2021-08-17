@@ -4,9 +4,9 @@ package keystrokesmod.keystroke;
 
 import java.io.IOException;
 
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.mouseManager;
 import keystrokesmod.main.BlowsyConfigManager;
-import keystrokesmod.main.Ravenb3;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -21,7 +21,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
    private int ly;
 
    public void initGui() {
-      KeyStroke st = Ravenb3.getKeyStroke();
+      KeyStroke st = Ravenbplus.getKeyStroke();
       this.buttonList.add(this.modeBtn = new GuiButton(0, this.width / 2 - 70, this.height / 2 - 28, 140, 20, "Mod: " + (KeyStroke.e ? "Enabled" : "Disabled")));
       this.buttonList.add(this.textColorBtn = new GuiButton(1, this.width / 2 - 70, this.height / 2 - 6, 140, 20, "Text color: " + colors[KeyStroke.currentColorNumber]));
       this.buttonList.add(this.showMouseBtn = new GuiButton(2, this.width / 2 - 70, this.height / 2 + 16, 140, 20, "Show mouse buttons: " + (KeyStroke.d ? "On" : "Off")));
@@ -29,12 +29,12 @@ public class KeyStrokeConfigGui extends GuiScreen {
    }
 
    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-      Ravenb3.getKeyStrokeRenderer().renderKeystrokes();
+      Ravenbplus.getKeyStrokeRenderer().renderKeystrokes();
       super.drawScreen(mouseX, mouseY, partialTicks);
    }
 
    protected void actionPerformed(GuiButton button) {
-      KeyStroke st = Ravenb3.getKeyStroke();
+      KeyStroke st = Ravenbplus.getKeyStroke();
       if (button == this.modeBtn) {
          KeyStroke.e = !KeyStroke.e;
          this.modeBtn.displayString = "Mod: " + (KeyStroke.e ? "Enabled" : "Disabled");
@@ -59,7 +59,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
 
       if (button == 0) {
          mouseManager.addLeftClick();
-         KeyStroke st = Ravenb3.getKeyStroke();
+         KeyStroke st = Ravenbplus.getKeyStroke();
          int startX = KeyStroke.x;
          int startY = KeyStroke.y;
          int endX = startX + 74;
@@ -83,7 +83,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
    protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick) {
       super.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
       if (this.d) {
-         KeyStroke st = Ravenb3.getKeyStroke();
+         KeyStroke st = Ravenbplus.getKeyStroke();
          KeyStroke.x = KeyStroke.x + mouseX - this.lx;
          KeyStroke.y = KeyStroke.y + mouseY - this.ly;
          this.lx = mouseX;

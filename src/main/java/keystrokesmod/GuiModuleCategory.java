@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
@@ -42,7 +42,7 @@ public class GuiModuleCategory {
       this.marginX = 80;
       this.marginY = 4.5;
 
-      for(Iterator var3 = Ravenb3.notAName.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+      for(Iterator var3 = Ravenbplus.notAName.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
          Module mod = (Module) var3.next();
          m3 b = new m3(mod, this, tY);
          this.modulesInCategory.add(b);
@@ -67,11 +67,13 @@ public class GuiModuleCategory {
       return this.modulesInCategory;
    }
 
-   public void x(int n) {
+   public void setX(int n) {
+      System.out.println(n);
       this.x = n;
    }
 
-   public void addCategoryWithOffset(int y) {
+   public void setY(int y) {
+      System.out.println(y);
       this.y = y;
    }
 
@@ -91,7 +93,7 @@ public class GuiModuleCategory {
       return this.categoryOpened;
    }
 
-   public void oo(boolean on) {
+   public void setCategoryOpened(boolean on) {
       this.categoryOpened = on;
    }
 
@@ -153,8 +155,8 @@ public class GuiModuleCategory {
 
    public void up(int x, int y) {
       if (this.id) {
-         this.x(x - this.xx);
-         this.addCategoryWithOffset(y - this.yy);
+         this.setX(x - this.xx);
+         this.setY(y - this.yy);
       }
 
    }

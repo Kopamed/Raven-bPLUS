@@ -70,6 +70,7 @@ public class kk extends b {
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
       Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.p.c4t.gx() + 4) * 2), (float)((this.p.c4t.gy() + this.o + 4) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+      System.out.println("l " + (float)((this.p.c4t.gx() + 4) * 2) + " r "  + (float)((this.p.c4t.gy() + this.o + 4) * 2));
       GL11.glPopMatrix();
    }
 

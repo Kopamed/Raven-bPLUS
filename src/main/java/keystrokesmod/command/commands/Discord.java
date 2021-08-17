@@ -1,11 +1,9 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.CommandLine;
-import keystrokesmod.URLUtils;
 import keystrokesmod.ay;
 import keystrokesmod.command.Command;
-import keystrokesmod.main.BlowsyConfigManager;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 
 public class Discord extends Command {
     public Discord() {
@@ -20,8 +18,8 @@ public class Discord extends Command {
         int argCurrent = 0;
         if(args == null) {
             CommandLine.print("§3Opening Discord...", 1);
-            CommandLine.print("§a" + Ravenb3.discord, 0);
-            ay.openWebpage(Ravenb3.discord);
+            CommandLine.print("§a" + Ravenbplus.discord, 0);
+            ay.openWebpage(Ravenbplus.discord);
             opened = true;
             return;
         }
@@ -29,21 +27,21 @@ public class Discord extends Command {
         for (String argument : args) {
             if(argument.equalsIgnoreCase("copy")){
                 if (!copied) {
-                    ay.copyToClipboard(Ravenb3.discord);
+                    ay.copyToClipboard(Ravenbplus.discord);
                     copied = true;
                     CommandLine.print("§aCopied to clipboard!", 1);
                 }
             }
             else if(argument.equalsIgnoreCase("open")){
                 if (!opened) {
-                    ay.openWebpage(Ravenb3.discord);
+                    ay.openWebpage(Ravenbplus.discord);
                     opened = true;
                     CommandLine.print("§aOpened invite link!", 1);
                 }
             }
             else if(argument.equalsIgnoreCase("print")){
                 if (!showed){
-                    CommandLine.print("§a" + Ravenb3.discord, 1);
+                    CommandLine.print("§a" + Ravenbplus.discord, 1);
                     showed = true;
                 }
             } else {

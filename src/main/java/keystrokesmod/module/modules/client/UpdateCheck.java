@@ -1,8 +1,7 @@
 package keystrokesmod.module.modules.client;
 
-import keystrokesmod.CommandLine;
 import keystrokesmod.ay;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -10,9 +9,6 @@ import keystrokesmod.version;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -30,12 +26,12 @@ public class UpdateCheck extends Module {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
         if (version.outdated()) {
-            Ravenb3.outdated = true;
+            Ravenbplus.outdated = true;
             ay.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
             ay.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
         if (version.isBeta()) {
-            Ravenb3.beta = true;
+            Ravenbplus.beta = true;
             ay.sendMessageToSelf("Man is on beta and asking for stable. You mad bruv?");
             ay.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
@@ -43,13 +39,13 @@ public class UpdateCheck extends Module {
             ay.sendMessageToSelf("You are on the latest public version!");
         }
         if (copyToClipboard.isToggled()) {
-            if (ay.copyToClipboard(Ravenb3.sourceLocation))
+            if (ay.copyToClipboard(Ravenbplus.sourceLocation))
                 ay.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
         if(openLink.isToggled()) {
             URL url = null;
             try {
-                url = new URL(Ravenb3.sourceLocation);
+                url = new URL(Ravenbplus.sourceLocation);
                 ay.openWebpage(url);
             } catch (MalformedURLException bruh) {
                 bruh.printStackTrace();

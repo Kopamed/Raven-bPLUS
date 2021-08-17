@@ -5,7 +5,7 @@ package keystrokesmod;
 import java.util.ArrayList;
 import java.util.List;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.MouseEvent;
@@ -22,8 +22,8 @@ public class mouseManager {
       if (mouse.buttonstate) {
          if (mouse.button == 0) {
             addLeftClick();
-            if (Ravenb3.debugger && Ravenb3.mc.objectMouseOver != null) {
-               Entity en = Ravenb3.mc.objectMouseOver.entityHit;
+            if (Ravenbplus.debugger && Ravenbplus.mc.objectMouseOver != null) {
+               Entity en = Ravenbplus.mc.objectMouseOver.entityHit;
                if (en == null) {
                   return;
                }

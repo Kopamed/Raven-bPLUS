@@ -1,10 +1,5 @@
 package keystrokesmod;
 
-import keystrokesmod.main.Ravenb3;
-import org.lwjgl.Sys;
-import scala.Int;
-import scala.reflect.internal.pickling.UnPickler;
-
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;

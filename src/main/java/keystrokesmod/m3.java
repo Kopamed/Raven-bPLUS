@@ -132,6 +132,7 @@ public class m3 extends b {
 
    public void r3nd3r() {
       v((float)this.c4t.gx(), (float)(this.c4t.gy() + this.o), (float)(this.c4t.gx() + this.c4t.gw()), (float)(this.c4t.gy() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
+      System.out.println("x y "+ (float)this.c4t.gx() + " " + (float)(this.c4t.gy() + this.o));
       GL11.glPushMatrix();
       int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : Color.lightGray.getRGB();
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.c4t.gx() + this.c4t.gw() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.c4t.gy() + this.o + 4), button_rgb);

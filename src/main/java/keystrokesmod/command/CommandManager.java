@@ -3,7 +3,7 @@ package keystrokesmod.command;
 import keystrokesmod.CommandLine;
 import keystrokesmod.ay;
 import keystrokesmod.command.commands.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.HUD;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class CommandManager {
     }
 
     public void executeCommand(String commandName, String[] args) {
-        Command command = Ravenb3.commandManager.getCommandByName(commandName);
+        Command command = Ravenbplus.commandManager.getCommandByName(commandName);
 
         if (command == null) {
             this.noSuchCommand(commandName);

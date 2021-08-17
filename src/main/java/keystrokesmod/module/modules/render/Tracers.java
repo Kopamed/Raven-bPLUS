@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.Iterator;
 
 import keystrokesmod.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -65,7 +65,7 @@ public class Tracers extends Module {
       if (ay.isPlayerInGame()) {
          int rgb = e.isToggled() ? ay.rainbowDraw(2L, 0L) : this.rgb_c;
          Iterator var3;
-         if (Ravenb3.debugger) {
+         if (Ravenbplus.debugger) {
             var3 = mc.theWorld.loadedEntityList.iterator();
 
             while(var3.hasNext()) {

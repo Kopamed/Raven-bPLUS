@@ -1,10 +1,7 @@
 package keystrokesmod.config;
 
 import keystrokesmod.main.NotAName;
-import keystrokesmod.main.Ravenb3;
 import keystrokesmod.module.*;
-import keystrokesmod.module.modules.HUD;
-import keystrokesmod.module.modules.client.CommandLine;
 import keystrokesmod.version;
 import net.minecraft.client.Minecraft;
 

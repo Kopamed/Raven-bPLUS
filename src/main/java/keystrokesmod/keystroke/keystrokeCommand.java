@@ -2,7 +2,7 @@
 
 package keystrokesmod.keystroke;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
@@ -12,7 +12,7 @@ public class keystrokeCommand extends CommandBase {
    }
 
    public void processCommand(ICommandSender sender, String[] args) {
-      Ravenb3.toggleKeyStrokeConfigGui();
+      Ravenbplus.toggleKeyStrokeConfigGui();
    }
 
    public String getCommandUsage(ICommandSender sender) {

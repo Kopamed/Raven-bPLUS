@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import keystrokesmod.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -110,11 +110,11 @@ public class DuelsStats extends Module {
          ay.sendMessageToSelf("&eOpponent found: " + "&3" + n);
       }
 
-      if (URLUtils.k.isEmpty()) {
+      if (URLUtils.hypixelApiKey.isEmpty()) {
          ay.sendMessageToSelf("&cAPI Key is empty!");
       } else {
          ProfileUtils.DM dm = ProfileUtils.DM.values()[(int)(value.getInput() - 1.0D)];
-         Ravenb3.getExecutor().execute(() -> {
+         Ravenbplus.getExecutor().execute(() -> {
             int[] s = ProfileUtils.getHypixelStats(n, dm);
             if (s != null) {
                if (s[0] == -1) {

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.*;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
@@ -73,7 +73,7 @@ public class AimAssist extends Module {
             if ((clickAim.isToggled() && ay.autoClickerClicking()) || (Mouse.isButtonDown(0) && !ModuleManager.autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();
                if (en != null) {
-                  if (Ravenb3.debugger) {
+                  if (Ravenbplus.debugger) {
                      ay.sendMessageToSelf(this.getName() + " &e" + en.getName());
                   }
 
@@ -104,7 +104,7 @@ public class AimAssist extends Module {
       }
       try {
          EntityPlayer bruhentity = (EntityPlayer) entity;
-         if(Ravenb3.debugger){
+         if(Ravenbplus.debugger){
             ay.sendMessageToSelf("unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
 
             ay.sendMessageToSelf("susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
@@ -112,7 +112,7 @@ public class AimAssist extends Module {
          }
          if(mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName().getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2))) return true;
       } catch (Exception fhwhfhwe) {
-         if(Ravenb3.debugger) {
+         if(Ravenbplus.debugger) {
             ay.sendMessageToSelf(fhwhfhwe.getMessage());
          }
       }

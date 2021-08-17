@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
@@ -31,7 +31,7 @@ public class CommandLine {
          String[] args = hasArgs ? c.split(" ") : null;
          String n;
 
-         Ravenb3.commandManager.executeCommand(cm.split(" ")[0], args);
+         Ravenbplus.commandManager.executeCommand(cm.split(" ")[0], args);
 
          /*
          if (cm.startsWith("update")) {

@@ -5,9 +5,7 @@ package keystrokesmod.main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 
-import keystrokesmod.ab;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
@@ -23,7 +21,7 @@ public class BlowsyConfigManager {
    //public static String ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed_is_sexy = "https://imgur.com/a/hYd1023";
 
    public static void saveKeyStrokeSettingsToConfigFile() {
-      try {
+      /*try {
          //ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed_is_sexy.equalsIgnoreCase("Lol gotta add usages to make this funnier XD");
          File file = new File(mc.mcDataDir + File.separator + "keystrokesmod", "config");
          if (!file.exists()) {
@@ -36,7 +34,7 @@ public class BlowsyConfigManager {
          writer.close();
       } catch (Throwable var2) {
          var2.printStackTrace();
-      }
+      }*/
 
    }
 
@@ -82,7 +80,7 @@ public class BlowsyConfigManager {
    }
 
    public static void saveCheatSettingsToConfigFile() {
-      try {
+      /*try {
          File file = new File(mc.mcDataDir + File.separator + "keystrokes", "config");
          if (!file.exists()) {
             file.getParentFile().mkdirs();
@@ -90,12 +88,12 @@ public class BlowsyConfigManager {
          }
 
          FileWriter writer = new FileWriter(file, false);
-         writer.write("api: " + URLUtils.k + "\n");
+         writer.write("api: " + URLUtils.hypixelApiKey + "\n");
          writer.write(ab.theme + "\n" + ab.r1 + "\n" + ab.r2 + "\n" + ab.r3 + "\n" + ab.r4 + "\n" + ab.r5 + "\n" + ab.r6 + "\n" + ab.r7 + "\n" + ab.v1 + "\n" + ab.v2 + "\n" + ab.v3 + "\n" + ab.v4 + "\n" + ab.au1 + "\n" + ab.au2 + "\n" + ab.au3 + "\n" + ab.au4 + "\n" + ab.au5 + "\n" + ab.au6 + "\n" + ab.au7 + "\n" + ab.au8 + "\n" + ab.au9);
          writer.close();
       } catch (Throwable var2) {
       }
-
+*/
    }
 
    public static void applyCheatSettingsFromConfigFile() {
@@ -113,7 +111,7 @@ public class BlowsyConfigManager {
             ++i;
             switch(i) {
             case 0:
-               URLUtils.k = line.split(": ")[1];
+               URLUtils.hypixelApiKey = line.split(": ")[1];
                break;
             case 1:
                Gui.guiTheme.setValue(Double.parseDouble(line));
@@ -181,9 +179,9 @@ public class BlowsyConfigManager {
          }
 
          reader.close();
-         Ravenb3.getExecutor().execute(() -> {
-            if (!URLUtils.isHypixelKeyValid(URLUtils.k)) {
-               URLUtils.k = "";
+         Ravenbplus.getExecutor().execute(() -> {
+            if (!URLUtils.isHypixelKeyValid(URLUtils.hypixelApiKey)) {
+               URLUtils.hypixelApiKey = "";
             }
 
          });

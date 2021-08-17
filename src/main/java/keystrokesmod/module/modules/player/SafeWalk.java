@@ -2,7 +2,7 @@
 
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.ay;
 import keystrokesmod.module.ModuleDesc;
@@ -178,7 +178,7 @@ public class SafeWalk extends Module {
                String t = totalBlocks + " blocks";
                int x = res.getScaledWidth() / 2 - mc.fontRendererObj.getStringWidth(t) / 2;
                int y;
-               if(Ravenb3.debugger) {
+               if(Ravenbplus.debugger) {
                   y = res.getScaledHeight() / 2 + 17 + mc.fontRendererObj.FONT_HEIGHT;
                } else {
                   y = res.getScaledHeight() / 2 + 15;

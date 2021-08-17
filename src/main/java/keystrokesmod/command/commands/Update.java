@@ -3,7 +3,7 @@ package keystrokesmod.command.commands;
 import keystrokesmod.CommandLine;
 import keystrokesmod.ay;
 import keystrokesmod.command.Command;
-import keystrokesmod.main.Ravenb3;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.version;
 
 import java.net.MalformedURLException;
@@ -17,11 +17,11 @@ public class Update extends Command {
     @Override
     public void onCall(String[] args) {
         ////System.out.println("Called update");
-        if (Ravenb3.outdated || version.outdated()) {
+        if (Ravenbplus.outdated || version.outdated()) {
             CommandLine.print("§3Opening page...", 1);
             URL url = null;
             try {
-                url = new URL(Ravenb3.sourceLocation);
+                url = new URL(Ravenbplus.sourceLocation);
                 ay.openWebpage(url);
                 CommandLine.print("&aOpened page successfully!", 0);
             } catch (MalformedURLException e) {
@@ -32,7 +32,7 @@ public class Update extends Command {
 
             }
         }
-        else if (Ravenb3.beta || version.isBeta()) {
+        else if (Ravenbplus.beta || version.isBeta()) {
             CommandLine.print("&aMate.", 1);
             CommandLine.print("&aYou are on a beta build,", 0);
             CommandLine.print("&aYou are all set", 0);
