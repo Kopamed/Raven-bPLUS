@@ -16,7 +16,7 @@ public class Update extends Command {
 
     @Override
     public void onCall(String[] args) {
-        //////System.out.println("Called update");
+        ////System.out.println("Called update");
         if (Ravenbplus.outdated || version.outdated()) {
             CommandLine.print("§3Opening page...", 1);
             URL url = null;

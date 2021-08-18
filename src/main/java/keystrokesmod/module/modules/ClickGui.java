@@ -53,7 +53,7 @@ public class ClickGui extends GuiScreen {
    public void initGui() {
       super.initGui();
       this.sr = new ScaledResolution(this.mc);
-      (this.c = new GuiTextField(1, this.mc.fontRendererObj, 22, this.height - 100, 150, 20)).setMaxStringLength(65536);
+      (this.c = new GuiTextField(1, this.mc.fontRendererObj, 22, this.height - 100, 150, 20)).setMaxStringLength(256);
       this.buttonList.add(this.s = new GuiButtonExt(2, 22, this.height - 70, 150, 20, "Send"));
       this.s.visible = keystrokesmod.module.modules.client.CommandLine.a;
    }
@@ -145,7 +145,7 @@ public class ClickGui extends GuiScreen {
       for (GuiModuleCategory category : categoryList) {
          category.rf(this.fontRendererObj);
          category.up(x, y);
-         ////System.out.println("cat " + category + " x y "+ x + " " + y);
+
          for (b module : category.getModules()) {
             module.uu(x, y);
          }
@@ -204,14 +204,12 @@ public class ClickGui extends GuiScreen {
                c4t = (GuiModuleCategory)var4.next();
                if (c4t.v(x, y) && !c4t.i(x, y) && !c4t.d(x, y) && m == 0) {
                   c4t.d(true);
-                  ////System.out.println(c4t.xx+ " " + c4t.yy);
                   c4t.xx = x - c4t.getX();
                   c4t.yy = y - c4t.getY();
-                  ////System.out.println(c4t.xx+ " " + c4t.yy);
                }
 
                if (c4t.d(x, y) && m == 0) {
-                  c4t.setCategoryOpened(!c4t.isOpened());
+                  c4t.setOpened(!c4t.isOpened());
                }
 
                if (c4t.i(x, y) && m == 0) {
@@ -254,9 +252,8 @@ public class ClickGui extends GuiScreen {
             }
          }
       }
-
-      if(Ravenbplus.config != null){
-         Ravenbplus.config.updateConfigFile();
+      if(Ravenbplus.clientConfig != null){
+         Ravenbplus.clientConfig.saveConfig();
       }
    }
 

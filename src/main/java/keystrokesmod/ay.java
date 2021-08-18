@@ -8,10 +8,6 @@ import com.google.common.collect.Lists;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -45,8 +41,6 @@ import org.lwjgl.input.Mouse;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 public class ay {
    private static final Random rand = new Random();
@@ -587,35 +581,6 @@ public class ay {
       return false;
    }
 
-   public static byte[] compressString(String str) throws Exception {
-      if (str == null || str.length() == 0) {
-         return str.getBytes();
-      }
-      ////System.out.println("String length : " + str.length());
-      ByteArrayOutputStream obj=new ByteArrayOutputStream();
-      GZIPOutputStream gzip = new GZIPOutputStream(obj);
-      gzip.write(str.getBytes("UTF-8"));
-      gzip.close();
-      String outStr = obj.toString("UTF-8");
-      ////System.out.println("Output String length : " + outStr.length());
-      return obj.toByteArray();
-   }
-
-   public static String decompressString(byte[] str) throws Exception {
-      if (str == null || str.length == 0) {
-         return str.toString();
-      }
-      ////System.out.println("Input String length : " + str.length);
-      GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(str));
-      BufferedReader bf = new BufferedReader(new InputStreamReader(gis, "UTF-8"));
-      String outStr = "";
-      String line;
-      while ((line=bf.readLine())!=null) {
-         outStr += line;
-      }
-      ////System.out.println("Output String lenght : " + outStr.length());
-      return outStr;
-   }
 
    public static List<String> StringListToList(String[] whytho){
       List<String> howTohackNasaWorking2021NoScamDotCom = new ArrayList<String>();

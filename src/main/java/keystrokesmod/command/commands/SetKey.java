@@ -3,8 +3,7 @@ package keystrokesmod.command.commands;
 import keystrokesmod.CommandLine;
 import keystrokesmod.URLUtils;
 import keystrokesmod.command.Command;
-import keystrokesmod.config.Config;
-import keystrokesmod.main.BlowsyConfigManager;
+import keystrokesmod.main.ClientConfig;
 import keystrokesmod.main.Ravenbplus;
 
 public class SetKey extends Command {
@@ -31,8 +30,7 @@ public class SetKey extends Command {
             if (URLUtils.isHypixelKeyValid(n)) {
                 URLUtils.hypixelApiKey = n;
                 CommandLine.print("&a" + "success!", 0);
-                Ravenbplus.config.setHypixelApiKey(n);
-                //BlowsyConfigManager.saveCheatSettingsToConfigFile();
+                Ravenbplus.clientConfig.saveConfig();
             } else {
                 CommandLine.print("&c" + "Invalid key.", 0);
             }

@@ -69,13 +69,13 @@ public class BridgeAssist extends Module {
         }
 
         if (!(ay.playerOverAir() && mc.thePlayer.onGround)) {
-            ////////System.out.println("Return bc not on air ");
+            //////System.out.println("Return bc not on air ");
             return;
         }
 
         if (onSneak.isToggled()) {
             if (!mc.thePlayer.isSneaking()) {
-                ////////System.out.println("Nibba aint shiftin");
+                //////System.out.println("Nibba aint shiftin");
                 return;
             }
         }
@@ -124,23 +124,23 @@ public class BridgeAssist extends Module {
                 gliding = false;
                 this.waitingForAim = false;
             }
-            ////////System.out.println("gliding to " + this.waitingForPitch + " " + this.waitingForYaw);
+            //////System.out.println("gliding to " + this.waitingForPitch + " " + this.waitingForYaw);
             return;
         }
 
-        ////////System.out.println("Checking if waiting for aim");
+        //////System.out.println("Checking if waiting for aim");
         if (!waitingForAim) {
             waitingForAim = true;
             startWaitTime = System.currentTimeMillis();
-            //////////System.out.println("Timer start");
-            ////////System.out.println("Started waiting for aim");
+            ////////System.out.println("Timer start");
+            //////System.out.println("Started waiting for aim");
             return;
         }
 
         if (System.currentTimeMillis() - startWaitTime < waitFor.getInput())
             return;
 
-        ////////System.out.println("Yes starting");
+        //////System.out.println("Yes starting");
         float fuckedYaw = mc.thePlayer.rotationYaw;
         float fuckedPitch = mc.thePlayer.rotationPitch;
 
@@ -163,7 +163,7 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    ////////System.out.println(pitch + " " + yaw);
+                    //////System.out.println(pitch + " " + yaw);
                 }
 
 
@@ -176,7 +176,7 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    ////////System.out.println(pitch + " " + yaw);
+                    //////System.out.println(pitch + " " + yaw);
                 }
 
             case BREEZILY:
@@ -188,7 +188,7 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    ////////System.out.println(pitch + " " + yaw);
+                    //////System.out.println(pitch + " " + yaw);
                 }
 
             case NORMAL:
@@ -200,7 +200,7 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    ////////System.out.println(pitch + " " + yaw);
+                    //////System.out.println(pitch + " " + yaw);
                 }
         }
         this.waitingForAim = false;
@@ -208,7 +208,7 @@ public class BridgeAssist extends Module {
 
     public void aimAt(float pitch, float yaw, float fuckedYaw, float fuckedPitch){
        if(setLook.isToggled()) {
-           //////////System.out.println("Setting aim");
+           ////////System.out.println("Setting aim");
            if (ay.LookMode.values()[(int)(setLookMode.getInput() - 1.0D)] == ay.LookMode.SNAP) {
                mc.thePlayer.rotationPitch = pitch + ((int)fuckedPitch/360) * 360;
                mc.thePlayer.rotationYaw = yaw;

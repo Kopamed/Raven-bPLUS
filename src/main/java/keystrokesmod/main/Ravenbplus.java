@@ -11,8 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import keystrokesmod.*;
 import keystrokesmod.command.CommandManager;
-import keystrokesmod.config.Config;
-import keystrokesmod.config.ConfigCommand;
+import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.keystroke.KeyStrokeConfigGui;
@@ -27,6 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -58,7 +58,8 @@ public class Ravenbplus {
    public static String[] helloYourComputerHasVirus = {"You are using an unstable version of an outdated version", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
    public static int b = 0;
-   public static Config config;
+   public static ConfigManager configManager;
+   public static ClientConfig clientConfig;
    public static Minecraft mc;
    public static NotAName notAName;
    private static KeyStroke keyStroke;
@@ -69,10 +70,10 @@ public class Ravenbplus {
    public static ResourceLocation mResourceLocation;
 
    public Ravenbplus() {
+      notAName = new NotAName();
       // shout out to my homie
       // https://i.imgur.com/Mli8beT.png
       virus.exe = true;
-      notAName = new NotAName();
    }
 
    @EventHandler
@@ -81,7 +82,6 @@ public class Ravenbplus {
       mc = Minecraft.getMinecraft();
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
-      ClientCommandHandler.instance.registerCommand(new ConfigCommand());
       FMLCommonHandler.instance().bus().register(new DebugInfoRenderer());
       FMLCommonHandler.instance().bus().register(new mouseManager());
       FMLCommonHandler.instance().bus().register(new KeySrokeRenderer());
@@ -116,7 +116,9 @@ public class Ravenbplus {
       FMLCommonHandler.instance().bus().register(ModuleManager.nameHider);
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
-      config = new Config();
+      configManager = new ConfigManager();
+      clientConfig = new ClientConfig();
+      clientConfig.applyConfig();
       ay.su();
       ex.execute(() -> URLUtils.getTextFromURL(numberOfUseTracker));
       if(version.outdated()) {
@@ -155,6 +157,17 @@ public class Ravenbplus {
       }
    }
 
+   @SubscribeEvent
+   public void onChatMessageRecieved(ClientChatReceivedEvent event) {
+      if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
+         if(event.message.getUnformattedText().startsWith("Your new API key is")){
+            URLUtils.hypixelApiKey = event.message.getUnformattedText().replace("Your new API key is ", "");
+            //ay.sendMessageToSelf(event.message.getUnformattedText().replace("Your new API key is ", ""));
+            this.clientConfig.saveConfig();
+         }
+      }
+   }
+
    public static ScheduledExecutorService getExecutor() {
       return ex;
    }
@@ -173,5 +186,5 @@ public class Ravenbplus {
 }
 
 class virus{
-   public static boolean exe;
+    public static boolean exe;
 }

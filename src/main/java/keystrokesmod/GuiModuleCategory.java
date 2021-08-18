@@ -68,13 +68,17 @@ public class GuiModuleCategory {
    }
 
    public void setX(int n) {
-      //System.out.println(n);
       this.x = n;
+      if(Ravenbplus.clientConfig != null){
+         Ravenbplus.clientConfig.saveConfig();
+      }
    }
 
    public void setY(int y) {
-      //System.out.println(y);
       this.y = y;
+      if(Ravenbplus.clientConfig != null){
+         Ravenbplus.clientConfig.saveConfig();
+      }
    }
 
    public void d(boolean d) {
@@ -93,8 +97,11 @@ public class GuiModuleCategory {
       return this.categoryOpened;
    }
 
-   public void setCategoryOpened(boolean on) {
+   public void setOpened(boolean on) {
       this.categoryOpened = on;
+      if(Ravenbplus.clientConfig != null){
+         Ravenbplus.clientConfig.saveConfig();
+      }
    }
 
    public void rf(FontRenderer renderer) {

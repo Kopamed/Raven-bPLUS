@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import keystrokesmod.main.Ravenbplus;
+import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -73,8 +74,8 @@ public class Module {
       MinecraftForge.EVENT_BUS.register(this);
       FMLCommonHandler.instance().bus().register(this);
       this.onEnable();
-      if(Ravenbplus.config != null){
-         Ravenbplus.config.updateConfigFile();
+      if(Ravenbplus.configManager != null){
+         Ravenbplus.configManager.save();
       }
    }
 
@@ -84,20 +85,16 @@ public class Module {
       MinecraftForge.EVENT_BUS.unregister(this);
       FMLCommonHandler.instance().bus().unregister(this);
       this.onDisable();
-      if(Ravenbplus.config != null){
-         Ravenbplus.config.updateConfigFile();
+      if(Ravenbplus.configManager != null){
+         Ravenbplus.configManager.save();
       }
    }
 
    public void setToggled(boolean enabled) {
       this.enabled = enabled;
-      if(enabled){
-         this.onEnable();
-      } else{
-         this.onDisable();
+      if(Ravenbplus.configManager != null){
+         Ravenbplus.configManager.save();
       }
-      //if (Ravenb3.config != null && !Ravenb3.config.loading && !SelfDestruct.destructed)
-        // Ravenb3.config.save();
    }
 
    public String getName() {
@@ -129,7 +126,6 @@ public class Module {
    }
 
    public void onEnable() {
-
    }
 
    public void onDisable() {
@@ -141,8 +137,9 @@ public class Module {
       } else {
          this.enable();
       }
-      //if (Ravenb3.config != null && !Ravenb3.config.loading && !SelfDestruct.destructed)
-        // Ravenb3.config.save();
+      if(Ravenbplus.configManager != null){
+         Ravenbplus.configManager.save();
+      }
    }
 
    public void update() {
@@ -160,10 +157,8 @@ public class Module {
 
    public void setbind(int keybind) {
       this.keycode = keybind;
-      //if (Ravenb3.config != null && !Ravenb3.config.loading && !SelfDestruct.destructed)
-        // Ravenb3.config.save();
-      if(Ravenbplus.config != null){
-         Ravenbplus.config.updateConfigFile();
+      if(Ravenbplus.configManager != null){
+         Ravenbplus.configManager.save();
       }
    }
 

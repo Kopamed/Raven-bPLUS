@@ -4,9 +4,9 @@ package keystrokesmod.keystroke;
 
 import java.io.IOException;
 
-import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.mouseManager;
-import keystrokesmod.main.BlowsyConfigManager;
+import keystrokesmod.main.ClientConfig;
+import keystrokesmod.main.Ravenbplus;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -96,6 +96,6 @@ public class KeyStrokeConfigGui extends GuiScreen {
    }
 
    public void onGuiClosed() {
-      BlowsyConfigManager.saveKeyStrokeSettingsToConfigFile();
+      Ravenbplus.clientConfig.saveConfig();
    }
 }

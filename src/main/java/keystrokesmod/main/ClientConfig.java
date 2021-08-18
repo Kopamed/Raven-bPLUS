@@ -2,10 +2,15 @@
 
 package keystrokesmod.main;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
+import keystrokesmod.GuiModuleCategory;
+import keystrokesmod.ab;
+import keystrokesmod.ay;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
@@ -15,13 +20,36 @@ import keystrokesmod.module.modules.combat.Velocity;
 import keystrokesmod.URLUtils;
 import net.minecraft.client.Minecraft;
 
-public class BlowsyConfigManager {
+public class ClientConfig {
    private static final Minecraft mc = Minecraft.getMinecraft();
+   private final File configFile;
+   private final File configDir;
+   private final String fileName = "config";
+   private final String hypixelApiKeyPrefix = "hypixel-api~ ";
+   private final String pasteApiKeyPrefix = "paste-api~ ";
+   private final String clickGuiPosPrefix = "clickgui-pos~ ";
+   private final String loadedConfigPrefix = "loaded-cfg~ ";
    //when you are coding the config manager and life be like
    //public static String ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed_is_sexy = "https://imgur.com/a/hYd1023";
 
+   public ClientConfig(){
+      configDir = new File(Minecraft.getMinecraft().mcDataDir, "keystrokes");
+      if(!configDir.exists()){
+         configDir.mkdir();
+      }
+
+      configFile = new File(configDir, fileName);
+      if(!configFile.exists()){
+         try {
+            configFile.createNewFile();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      }
+   }
+
    public static void saveKeyStrokeSettingsToConfigFile() {
-      /*try {
+      try {
          //ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed_is_sexy.equalsIgnoreCase("Lol gotta add usages to make this funnier XD");
          File file = new File(mc.mcDataDir + File.separator + "keystrokesmod", "config");
          if (!file.exists()) {
@@ -34,12 +62,12 @@ public class BlowsyConfigManager {
          writer.close();
       } catch (Throwable var2) {
          var2.printStackTrace();
-      }*/
+      }
 
    }
 
    public static void applyKeyStrokeSettingsFromConfigFile() {
-      /*try {
+      try {
          File file = new File(mc.mcDataDir + File.separator + "keystrokesmod", "config");
          if (!file.exists()) {
             return;
@@ -75,12 +103,12 @@ public class BlowsyConfigManager {
          reader.close();
       } catch (Throwable var4) {
          var4.printStackTrace();
-      }*/
+      }
 
    }
 
    public static void saveCheatSettingsToConfigFile() {
-      /*try {
+      try {
          File file = new File(mc.mcDataDir + File.separator + "keystrokes", "config");
          if (!file.exists()) {
             file.getParentFile().mkdirs();
@@ -93,11 +121,11 @@ public class BlowsyConfigManager {
          writer.close();
       } catch (Throwable var2) {
       }
-*/
+
    }
 
    public static void applyCheatSettingsFromConfigFile() {
-      /*try {
+      try {
          File file = new File(mc.mcDataDir + File.separator + "keystrokes", "config");
          if (!file.exists()) {
             return;
@@ -188,6 +216,96 @@ public class BlowsyConfigManager {
       } catch (Throwable var4) {
          saveCheatSettingsToConfigFile();
       }
-*/
+
+   }
+
+   public void saveConfig() {
+      List<String> config = new ArrayList<String>();
+      config.add(hypixelApiKeyPrefix + URLUtils.hypixelApiKey);
+      config.add(pasteApiKeyPrefix + URLUtils.pasteApiKey);
+      config.add(clickGuiPosPrefix + getClickGuiPos());
+      config.add(loadedConfigPrefix + Ravenbplus.configManager.getCurrentConfig());
+
+      PrintWriter writer = null;
+      try {
+         writer = new PrintWriter(this.configFile);
+         for (String line : config) {
+            writer.println(line);
+         }
+         writer.close();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void applyConfig(){
+      List<String> config = this.parseConfigFile();
+
+      for(String line : config){
+         if(line.startsWith(hypixelApiKeyPrefix)){
+            URLUtils.hypixelApiKey = line.replace(hypixelApiKeyPrefix, "");
+            Ravenbplus.getExecutor().execute(() -> {
+               if (!URLUtils.isHypixelKeyValid(URLUtils.hypixelApiKey)) {
+                  URLUtils.hypixelApiKey = "";
+                  System.out.println("Invalid key!");
+               } else{
+                  System.out.println("Valid key!");
+               }
+
+            });
+         } else if(line.startsWith(pasteApiKeyPrefix)){
+            URLUtils.pasteApiKey = line.replace(pasteApiKeyPrefix, "");
+         } else if(line.startsWith(clickGuiPosPrefix)){
+            loadClickGuiCoords(line.replace(clickGuiPosPrefix, ""));
+         } else if(line.startsWith(loadedConfigPrefix)){
+            Ravenbplus.configManager.loadConfig(line.replace(loadedConfigPrefix, ""));
+         }
+      }
+   }
+
+   private List<String> parseConfigFile() {
+      List<String> configFileContents = new ArrayList<String>();
+      Scanner reader = null;
+      try {
+         reader = new Scanner(this.configFile);
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
+      }
+      while (reader.hasNextLine())
+         configFileContents.add(reader.nextLine());
+
+      return configFileContents;
+   }
+
+   private void loadClickGuiCoords(String decryptedString) {
+      //clickgui config
+      // categoryname:x:y:opened
+      System.out.println(decryptedString);
+      for (String what : decryptedString.split("/")){
+         for (GuiModuleCategory cat : NotAName.clickGui.categoryList) {
+            if(what.startsWith(cat.categoryName.name())){
+               List<String> cfg = ay.StringListToList(what.split("~"));
+               cat.setX(Integer.parseInt(cfg.get(1)));
+               cat.setY(Integer.parseInt(cfg.get(2)));
+               cat.setOpened(Boolean.parseBoolean(cfg.get(3)));
+            }
+         }
+      }
+   }
+
+   public String getClickGuiPos() {
+      StringBuilder posConfig = new StringBuilder();
+      for (GuiModuleCategory cat : NotAName.clickGui.categoryList) {
+         posConfig.append(cat.categoryName.name());
+         posConfig.append("~");
+         posConfig.append(cat.getX());
+         posConfig.append("~");
+         posConfig.append(cat.getY());
+         posConfig.append("~");
+         posConfig.append(cat.isOpened());
+         posConfig.append("/");
+      }
+      return posConfig.toString().substring(0, posConfig.toString().length() - 2);
+
    }
 }

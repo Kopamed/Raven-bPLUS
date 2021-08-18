@@ -10,6 +10,7 @@ import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.module.modules.client.UpdateCheck;
 import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.debug.Click;
+import keystrokesmod.module.modules.debug.MessageInfo;
 import keystrokesmod.module.modules.debug.MouseClick;
 import keystrokesmod.module.modules.fun.Fun;
 import keystrokesmod.module.modules.hotkey.*;
@@ -122,6 +123,7 @@ public class ModuleManager {
       this.addModule(new WTap());
       this.addModule(new BlockHit());
       this.addModule(new STap());
+      this.addModule(new MessageInfo());
       //this.addModule(new TargetHUD());
       this.defEn();
    }

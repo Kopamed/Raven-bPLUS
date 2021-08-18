@@ -1,6 +1,7 @@
 package keystrokesmod.config;
 
 import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.version;
 import net.minecraft.client.Minecraft;
@@ -42,37 +43,37 @@ public class ConfigManager {
     }
 
     public void save() {
-        //////System.out.println("i save to " + this.currentConfig.getName());
+        ////System.out.println("i save to " + this.currentConfig.getName());
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
 
             String moduleAttributes = "module:" +
-                    clientModule.getName() + "~" +
-                    clientModule.isEnabled() + "~" +
+                    clientModule.getName() + ":" +
+                    clientModule.isEnabled() + ":" +
                     clientModule.getKeycode();
             finalString.add(moduleAttributes);
 
             for (ModuleSettingsList moduleSetting : clientModule.getSettings()) {
                 StringBuilder settingString = new StringBuilder();
-                String base = "setting:" + clientModule.getName() + "~" + moduleSetting.getName();
+                String base = "setting:" + clientModule.getName() + ":" + moduleSetting.getName();
                 settingString.append(base);
                 if (moduleSetting.mode.equalsIgnoreCase("slider")) {
                     ModuleSettingSlider setting = (ModuleSettingSlider) moduleSetting;
 
-                    settingString.append("~").append(moduleSetting.mode);
-                    settingString.append("~").append(setting.getInput());
+                    settingString.append(":").append(moduleSetting.mode);
+                    settingString.append(":").append(setting.getInput());
                 }
                 else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
                     ModuleSettingTick setting = (ModuleSettingTick) moduleSetting;
 
-                    settingString.append("~").append(moduleSetting.mode);
-                    settingString.append("~").append(setting.isToggled());
+                    settingString.append(":").append(moduleSetting.mode);
+                    settingString.append(":").append(setting.isToggled());
                 } else if (moduleSetting.mode.equalsIgnoreCase("desc")) {
                     ModuleDesc setting = (ModuleDesc) moduleSetting;
 
-                    settingString.append("~").append(moduleSetting.mode);
-                    settingString.append("~").append(setting.getDesc());
+                    settingString.append(":").append(moduleSetting.mode);
+                    settingString.append(":").append(setting.getDesc());
                 }
 
                 if (settingString.length() > base.length())
@@ -95,13 +96,13 @@ public class ConfigManager {
     }
 
     public void load() throws FileNotFoundException {
-        //////System.out.println("iLOAD from " + this.currentConfig.getName());
+        ////System.out.println("iLOAD from " + this.currentConfig.getName());
         Scanner reader = new Scanner(this.currentConfig);
         while (reader.hasNextLine()) {
             String current = reader.nextLine();
             if(current.startsWith("module:")){
 
-                String[] currentModule = current.split("~");
+                String[] currentModule = current.split(":");
                 Module module = NotAName.moduleManager.getModuleByName(currentModule[1]);
 
                 if (module == null)
@@ -137,7 +138,7 @@ public class ConfigManager {
 
             else if (current.startsWith("setting:")){
 
-                String[] currentSetting = current.split("~");
+                String[] currentSetting = current.split(":");
                 Module module = NotAName.moduleManager.getModuleByName(currentSetting[1]);
 
                 if (module == null)
@@ -181,7 +182,7 @@ public class ConfigManager {
 
     public void loadConfig(String fileName) {
         this.loading = true;
-        //////System.out.println("no saving");
+        ////System.out.println("no saving");
         this.fileName = fileName;
         this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
         try {
@@ -191,7 +192,7 @@ public class ConfigManager {
         }
 
         this.loading = false;
-        //////System.out.println("yes saving");
+        ////System.out.println("yes saving");
     }
 
     public void saveConfig(String fileName) {

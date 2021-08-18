@@ -30,7 +30,6 @@ public class dg extends b {
 
    public void r3nd3r() {
       net.minecraft.client.gui.Gui.drawRect(this.p.c4t.getX() + 4, this.p.c4t.getY() + this.o + 11, this.p.c4t.getX() + 4 + this.p.c4t.gw() - 8, this.p.c4t.getY() + this.o + 15, -12302777);
-      //System.out.println("left " + this.p.c4t.getX() + 4 + ", top "+ this.p.c4t.getY() + this.o + 11);
       int l = this.p.c4t.getX() + 4;
       int r = this.p.c4t.getX() + 4 + (int)this.w;
       if (r - l > 84) {

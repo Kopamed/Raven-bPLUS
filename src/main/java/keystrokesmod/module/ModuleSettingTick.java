@@ -23,25 +23,29 @@ public class ModuleSettingTick extends ModuleSettingsList {
 
    public void toggle() {
       this.isEnabled = !this.isEnabled;
-      if(Ravenbplus.config != null)
-         Ravenbplus.config.updateConfigFile();
+       if(Ravenbplus.configManager != null){
+           Ravenbplus.configManager.save();
+       }
    }
 
    public void enable() {
       this.isEnabled = true;
-      if(Ravenbplus.config != null)
-         Ravenbplus.config.updateConfigFile();
+       if(Ravenbplus.configManager != null){
+           Ravenbplus.configManager.save();
+       }
    }
 
    public void disable() {
       this.isEnabled = false;
-      if(Ravenbplus.config != null)
-         Ravenbplus.config.updateConfigFile();
+       if(Ravenbplus.configManager != null){
+           Ravenbplus.configManager.save();
+       }
    }
 
    public void setEnabled(boolean b) {
       this.isEnabled = b;
-      if(Ravenbplus.config != null)
-         Ravenbplus.config.updateConfigFile();
+       if(Ravenbplus.configManager != null){
+           Ravenbplus.configManager.save();
+       }
    }
 }
