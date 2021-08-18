@@ -1,5 +1,7 @@
 package keystrokesmod.module;
 
+import keystrokesmod.main.Ravenbplus;
+
 public class ModuleDesc extends ModuleSettingsList {
    static String settingType = "desc";
    private String desc;
@@ -15,5 +17,7 @@ public class ModuleDesc extends ModuleSettingsList {
 
    public void setDesc(String t) {
       this.desc = t;
+      //if(Ravenbplus.config != null)
+      //   Ravenbplus.config.updateConfigFile();
    }
 }

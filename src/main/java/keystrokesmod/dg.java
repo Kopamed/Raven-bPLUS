@@ -23,24 +23,24 @@ public class dg extends b {
    public dg(ModuleSettingSlider v, m3 b, int o) {
       this.v = v;
       this.p = b;
-      this.x = b.c4t.gx() + b.c4t.gw();
-      this.y = b.c4t.gy() + b.o;
+      this.x = b.c4t.getX() + b.c4t.gw();
+      this.y = b.c4t.getY() + b.o;
       this.o = o;
    }
 
    public void r3nd3r() {
-      net.minecraft.client.gui.Gui.drawRect(this.p.c4t.gx() + 4, this.p.c4t.gy() + this.o + 11, this.p.c4t.gx() + 4 + this.p.c4t.gw() - 8, this.p.c4t.gy() + this.o + 15, -12302777);
-      System.out.println("left " + this.p.c4t.gx() + 4 + ", top "+ this.p.c4t.gy() + this.o + 11);
-      int l = this.p.c4t.gx() + 4;
-      int r = this.p.c4t.gx() + 4 + (int)this.w;
+      net.minecraft.client.gui.Gui.drawRect(this.p.c4t.getX() + 4, this.p.c4t.getY() + this.o + 11, this.p.c4t.getX() + 4 + this.p.c4t.gw() - 8, this.p.c4t.getY() + this.o + 15, -12302777);
+      //System.out.println("left " + this.p.c4t.getX() + 4 + ", top "+ this.p.c4t.getY() + this.o + 11);
+      int l = this.p.c4t.getX() + 4;
+      int r = this.p.c4t.getX() + 4 + (int)this.w;
       if (r - l > 84) {
          r = l + 84;
       }
 
-      net.minecraft.client.gui.Gui.drawRect(l, this.p.c4t.gy() + this.o + 11, r, this.p.c4t.gy() + this.o + 15, Color.getHSBColor((float)(System.currentTimeMillis() % 11000L) / 11000.0F, 0.75F, 0.9F).getRGB());
+      net.minecraft.client.gui.Gui.drawRect(l, this.p.c4t.getY() + this.o + 11, r, this.p.c4t.getY() + this.o + 15, Color.getHSBColor((float)(System.currentTimeMillis() % 11000L) / 11000.0F, 0.75F, 0.9F).getRGB());
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
-      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.v.getName() + ": " + this.v.getInput(), (float)((int)((float)(this.p.c4t.gx() + 4) * 2.0F)), (float)((int)((float)(this.p.c4t.gy() + this.o + 3) * 2.0F)), -1);
+      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.v.getName() + ": " + this.v.getInput(), (float)((int)((float)(this.p.c4t.getX() + 4) * 2.0F)), (float)((int)((float)(this.p.c4t.getY() + this.o + 3) * 2.0F)), -1);
       GL11.glPopMatrix();
    }
 
@@ -49,8 +49,8 @@ public class dg extends b {
    }
 
    public void uu(int x, int y) {
-      this.y = this.p.c4t.gy() + this.o;
-      this.x = this.p.c4t.gx();
+      this.y = this.p.c4t.getY() + this.o;
+      this.x = this.p.c4t.getX();
       double d = Math.min(this.p.c4t.gw() - 8, Math.max(0, x - this.x));
       this.w = (double)(this.p.c4t.gw() - 8) * (this.v.getInput() - this.v.g3ti()) / (this.v.g3ta() - this.v.g3ti());
       if (this.d) {

@@ -591,13 +591,13 @@ public class ay {
       if (str == null || str.length() == 0) {
          return str.getBytes();
       }
-      //System.out.println("String length : " + str.length());
+      ////System.out.println("String length : " + str.length());
       ByteArrayOutputStream obj=new ByteArrayOutputStream();
       GZIPOutputStream gzip = new GZIPOutputStream(obj);
       gzip.write(str.getBytes("UTF-8"));
       gzip.close();
       String outStr = obj.toString("UTF-8");
-      //System.out.println("Output String length : " + outStr.length());
+      ////System.out.println("Output String length : " + outStr.length());
       return obj.toByteArray();
    }
 
@@ -605,7 +605,7 @@ public class ay {
       if (str == null || str.length == 0) {
          return str.toString();
       }
-      //System.out.println("Input String length : " + str.length);
+      ////System.out.println("Input String length : " + str.length);
       GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(str));
       BufferedReader bf = new BufferedReader(new InputStreamReader(gis, "UTF-8"));
       String outStr = "";
@@ -613,7 +613,7 @@ public class ay {
       while ((line=bf.readLine())!=null) {
          outStr += line;
       }
-      //System.out.println("Output String lenght : " + outStr.length());
+      ////System.out.println("Output String lenght : " + outStr.length());
       return outStr;
    }
 

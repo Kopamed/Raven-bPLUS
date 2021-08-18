@@ -2,6 +2,7 @@ package keystrokesmod.command.commands;
 
 import keystrokesmod.CommandLine;
 import keystrokesmod.command.Command;
+import keystrokesmod.main.Ravenbplus;
 
 public class Config extends Command {
     public Config() {
@@ -12,7 +13,7 @@ public class Config extends Command {
     public void onCall(String[] args){
         if (args == null) {
             CommandLine.print("&aCurrent config: ", 1);
-            //CommandLine.print("§3" + Ravenb3.config.getCurrentConfig(), 0);
+            CommandLine.print("§3" + Ravenbplus.config.getCurrentConfigName(), 0);
         }
 
         else if (args.length == 2) {
@@ -21,7 +22,7 @@ public class Config extends Command {
             } else if(args[1].equalsIgnoreCase("clear")){
                 CommandLine.print("&eAre you sure you want to", 1);
                 CommandLine.print("&ereset the config", 0);
-                //CommandLine.print("§3" + Ravenb3.config.getCurrentConfig(), 0);
+                CommandLine.print("§3" + Ravenbplus.config.getCurrentConfigName(), 0);
                 CommandLine.print("&eif so, enter", 0);
                 CommandLine.print("§3'config clear confirm'", 0);
             }else {
@@ -37,16 +38,16 @@ public class Config extends Command {
             else if (args[1].equalsIgnoreCase("load")) {
                 //time to suffer :holsum_100:
                 boolean found = false;
-                //for (File config : Ravenb3.config.listConfigs()) {
-                   // if (config.getName().equalsIgnoreCase(args[2] + Ravenb3.config.getExtension())) {
+                for(String configName : Ravenbplus.config.getConfigList()){
+                    if(configName.equalsIgnoreCase(args[2])){
                         found = true;
-                     //   CommandLine.print("&aFound config with the name", 1);
-                    //    CommandLine.print("&a" + args[2], 0);
+                        CommandLine.print("&aFound config with the name", 1);
+                        CommandLine.print("&a" + args[2], 0);
                         // FUCKING LOAD args[2]
-                      //  Ravenb3.config.loadConfig(config.getName().replace(Ravenb3.config.getExtension(), ""));
-                    //    CommandLine.print("&aLoaded config!", 0);
-               // //    }
-              //  }
+                        Ravenbplus.config.loadConfig(configName);
+                        CommandLine.print("&aLoaded config!", 0);
+                    }
+                }
                 if (!found) {
                     CommandLine.print("&cUnable to find a config with the name", 1);
                     CommandLine.print("&c" + args[2], 0);
@@ -56,7 +57,7 @@ public class Config extends Command {
                 //me coding the save command be like https://imgur.com/u1EJ4op
                 CommandLine.print("&aSaving...", 1);
                 //FUCKING SAVE TO A FILE
-                //Ravenb3.config.saveConfig(args[2]);
+                Ravenbplus.config.cloneWithName(args[2]);
                 CommandLine.print("&aSaved as '" + args[2] + "'", 0);
                 CommandLine.print("&aTo transition to config " + args[2] + " run", 0);
                 CommandLine.print("§3'config load " + args[2]+ "'", 0);
@@ -65,18 +66,18 @@ public class Config extends Command {
                 //me coding the save command be like https://imgur.com/u1EJ4op
                 CommandLine.print("&aRemoving " + args[2] + "...", 1);
                 //FUCKING SAVE TO A FILE
-                //if (Ravenb3.config.removeConfig(args[2])) {
-                 //   CommandLine.print("&aRemoved " + args[2] + " successfully!", 0);
-                 //   CommandLine.print("§3Current config: " + Ravenb3.config.getCurrentConfig(), 0);
-               // }
-                //else {
-                  //  CommandLine.print("&cFailed to delete " + args[2], 0);
-                  //  CommandLine.print("&cUnable to find a config with the name", 0);
-                //    CommandLine.print("&cOr an error occurred during removal", 0);
-                //}
+                if (Ravenbplus.config.removeConfig(args[2])) {
+                    CommandLine.print("&aRemoved " + args[2] + " successfully!", 0);
+                    CommandLine.print("§3Current config: " + Ravenbplus.config.getCurrentConfigName(), 0);
+                }
+                else {
+                    CommandLine.print("&cFailed to delete " + args[2], 0);
+                    CommandLine.print("&cUnable to find a config with the name", 0);
+                    CommandLine.print("&cOr an error occurred during removal", 0);
+                }
             } else if(args[1].equalsIgnoreCase("clear")) {
                 if(args[2].equalsIgnoreCase("confirm")){
-                    //Ravenb3.config.clearConfig();
+                    Ravenbplus.config.clearCurrentConfig();
                     CommandLine.print("&aCleared config!",1);
                 } else {
                     CommandLine.print("&cIt is confirm, not " + args[2], 0);
@@ -91,13 +92,12 @@ public class Config extends Command {
 
     public void listConfigs() {
         CommandLine.print("&aAvailable configs: ", 1);
-        //for (File config : Ravenb3.config.listConfigs()) {
-         //   if (config.getName().endsWith(Ravenb3.config.getExtension())) {
-          //      if (Ravenb3.config.getCurrentConfig().equalsIgnoreCase(config.getName().replace(Ravenb3.config.getExtension(), "")))
-         //           CommandLine.print("§3Current config: " + config.getName().replace(Ravenb3.config.getExtension(), ""), 0);
-          //      else
-           //         CommandLine.print(config.getName().replace(Ravenb3.config.getExtension(), ""), 0);
-          ///  }
-       // }
+        for(String config : Ravenbplus.config.getConfigList()){
+            if(config.equalsIgnoreCase(Ravenbplus.config.getCurrentConfigName())){
+                CommandLine.print("§3Current config: " + config, 0);
+            } else{
+                CommandLine.print(config, 0);
+            }
+        }
     }
 }

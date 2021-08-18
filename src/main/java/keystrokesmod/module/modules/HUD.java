@@ -78,7 +78,7 @@ public class HUD extends Module {
          int del = 0;
 
          if(mResourceLocation == null && !showedError) {
-            System.out.println("Showed error");
+            //System.out.println("Showed error");
             ay.sendMessageToSelf("Error! Failed to load the raven B+ logo. Please report this in our discord!");
             showedError = true;
          }
@@ -100,7 +100,7 @@ public class HUD extends Module {
 
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
          int textBoxHeight = ModuleManager.getBoxHeight(mc.fontRendererObj, margin);
-         //System.out.println(mc.displayWidth + " " + mc.displayHeight + " || " + hudX + " " + hudY);
+         ////System.out.println(mc.displayWidth + " " + mc.displayHeight + " || " + hudX + " " + hudY);
          if(logo.isToggled() && mResourceLocation != null) {
             y += (logoSize * 0.8);
          }

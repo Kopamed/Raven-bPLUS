@@ -39,7 +39,7 @@ public class BlowsyConfigManager {
    }
 
    public static void applyKeyStrokeSettingsFromConfigFile() {
-      try {
+      /*try {
          File file = new File(mc.mcDataDir + File.separator + "keystrokesmod", "config");
          if (!file.exists()) {
             return;
@@ -75,7 +75,7 @@ public class BlowsyConfigManager {
          reader.close();
       } catch (Throwable var4) {
          var4.printStackTrace();
-      }
+      }*/
 
    }
 
@@ -97,7 +97,7 @@ public class BlowsyConfigManager {
    }
 
    public static void applyCheatSettingsFromConfigFile() {
-      try {
+      /*try {
          File file = new File(mc.mcDataDir + File.separator + "keystrokes", "config");
          if (!file.exists()) {
             return;
@@ -188,6 +188,6 @@ public class BlowsyConfigManager {
       } catch (Throwable var4) {
          saveCheatSettingsToConfigFile();
       }
-
+*/
    }
 }

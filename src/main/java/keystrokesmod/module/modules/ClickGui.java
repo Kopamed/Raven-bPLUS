@@ -145,7 +145,7 @@ public class ClickGui extends GuiScreen {
       for (GuiModuleCategory category : categoryList) {
          category.rf(this.fontRendererObj);
          category.up(x, y);
-         //System.out.println("cat " + category + " x y "+ x + " " + y);
+         ////System.out.println("cat " + category + " x y "+ x + " " + y);
          for (b module : category.getModules()) {
             module.uu(x, y);
          }
@@ -204,20 +204,20 @@ public class ClickGui extends GuiScreen {
                c4t = (GuiModuleCategory)var4.next();
                if (c4t.v(x, y) && !c4t.i(x, y) && !c4t.d(x, y) && m == 0) {
                   c4t.d(true);
-                  //System.out.println(c4t.xx+ " " + c4t.yy);
-                  c4t.xx = x - c4t.gx();
-                  c4t.yy = y - c4t.gy();
-                  //System.out.println(c4t.xx+ " " + c4t.yy);
+                  ////System.out.println(c4t.xx+ " " + c4t.yy);
+                  c4t.xx = x - c4t.getX();
+                  c4t.yy = y - c4t.getY();
+                  ////System.out.println(c4t.xx+ " " + c4t.yy);
                }
 
                if (c4t.d(x, y) && m == 0) {
-                  c4t.setCategoryOpened(!c4t.fv());
+                  c4t.setCategoryOpened(!c4t.isOpened());
                }
 
                if (c4t.i(x, y) && m == 0) {
                   c4t.cv(!c4t.p());
                }
-            } while(!c4t.fv());
+            } while(!c4t.isOpened());
          } while(c4t.getModules().isEmpty());
 
          for (b c : c4t.getModules()) {
@@ -246,13 +246,17 @@ public class ClickGui extends GuiScreen {
                   }
 
                   c4t = (GuiModuleCategory)var4.next();
-               } while(!c4t.fv());
+               } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
             for (b c : c4t.getModules()) {
                c.mr(x, y, s);
             }
          }
+      }
+
+      if(Ravenbplus.config != null){
+         Ravenbplus.config.updateConfigFile();
       }
    }
 
@@ -282,7 +286,7 @@ public class ClickGui extends GuiScreen {
                   }
 
                   c4t = (GuiModuleCategory)var3.next();
-               } while(!c4t.fv());
+               } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
             for (b c : c4t.getModules()) {

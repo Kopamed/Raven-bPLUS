@@ -21,8 +21,8 @@ public class AutoConfig extends b {
 
    public AutoConfig(m3 b, int o) {
       this.p = b;
-      this.x = b.c4t.gx() + b.c4t.gw();
-      this.y = b.c4t.gy() + b.o;
+      this.x = b.c4t.getX() + b.c4t.gw();
+      this.y = b.c4t.getY() + b.o;
       this.o = o;
    }
 
@@ -44,8 +44,8 @@ public class AutoConfig extends b {
 
    public void uu(int x, int y) {
       boolean h = this.i(x, y);
-      this.y = this.p.c4t.gy() + this.o;
-      this.x = this.p.c4t.gx();
+      this.y = this.p.c4t.getY() + this.o;
+      this.x = this.p.c4t.getX();
    }
 
    public void onCl1ck(int x, int y, int b) {
@@ -83,6 +83,6 @@ public class AutoConfig extends b {
    }
 
    private void dr(String s) {
-      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(s, (float)((this.p.c4t.gx() + 4) * 2), (float)((this.p.c4t.gy() + this.o + 3) * 2), Color.HSBtoRGB((float)(System.currentTimeMillis() % 3750L) / 3750.0F, 0.8F, 0.8F));
+      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(s, (float)((this.p.c4t.getX() + 4) * 2), (float)((this.p.c4t.getY() + this.o + 3) * 2), Color.HSBtoRGB((float)(System.currentTimeMillis() % 3750L) / 3750.0F, 0.8F, 0.8F));
    }
 }

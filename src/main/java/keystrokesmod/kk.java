@@ -22,8 +22,8 @@ public class kk extends b {
       this.mod = mod;
       this.cl1ckbUtt0n = op;
       this.p = b;
-      this.x = b.c4t.gx() + b.c4t.gw();
-      this.y = b.c4t.gy() + b.o;
+      this.x = b.c4t.getX() + b.c4t.gw();
+      this.y = b.c4t.getY() + b.o;
       this.o = o;
    }
 
@@ -69,8 +69,8 @@ public class kk extends b {
    public void r3nd3r() {
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
-      Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.p.c4t.gx() + 4) * 2), (float)((this.p.c4t.gy() + this.o + 4) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
-      System.out.println("l " + (float)((this.p.c4t.gx() + 4) * 2) + " r "  + (float)((this.p.c4t.gy() + this.o + 4) * 2));
+      Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.p.c4t.getX() + 4) * 2), (float)((this.p.c4t.getY() + this.o + 4) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+      //System.out.println("l " + (float)((this.p.c4t.getX() + 4) * 2) + " r "  + (float)((this.p.c4t.getY() + this.o + 4) * 2));
       GL11.glPopMatrix();
    }
 
@@ -79,8 +79,8 @@ public class kk extends b {
    }
 
    public void uu(int x, int y) {
-      this.y = this.p.c4t.gy() + this.o;
-      this.x = this.p.c4t.gx();
+      this.y = this.p.c4t.getY() + this.o;
+      this.x = this.p.c4t.getX();
    }
 
    public void onCl1ck(int x, int y, int b) {

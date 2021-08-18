@@ -1,5 +1,7 @@
 package keystrokesmod.module;
 
+import keystrokesmod.main.Ravenbplus;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -40,6 +42,8 @@ public class ModuleSettingSlider extends ModuleSettingsList {
       n = c(n, this.m, this.a);
       n = (double)Math.round(n * (1.0D / this.i)) / (1.0D / this.i);
       this.v = n;
+      if(Ravenbplus.config != null)
+         Ravenbplus.config.updateConfigFile();
    }
 
    public static double c(double v, double i, double a) {

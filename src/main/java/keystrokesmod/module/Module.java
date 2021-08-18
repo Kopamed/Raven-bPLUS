@@ -5,6 +5,7 @@ package keystrokesmod.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.main.Ravenbplus;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -72,6 +73,9 @@ public class Module {
       MinecraftForge.EVENT_BUS.register(this);
       FMLCommonHandler.instance().bus().register(this);
       this.onEnable();
+      if(Ravenbplus.config != null){
+         Ravenbplus.config.updateConfigFile();
+      }
    }
 
    public void disable() {
@@ -80,6 +84,9 @@ public class Module {
       MinecraftForge.EVENT_BUS.unregister(this);
       FMLCommonHandler.instance().bus().unregister(this);
       this.onDisable();
+      if(Ravenbplus.config != null){
+         Ravenbplus.config.updateConfigFile();
+      }
    }
 
    public void setToggled(boolean enabled) {
@@ -91,7 +98,6 @@ public class Module {
       }
       //if (Ravenb3.config != null && !Ravenb3.config.loading && !SelfDestruct.destructed)
         // Ravenb3.config.save();
-
    }
 
    public String getName() {
@@ -123,6 +129,7 @@ public class Module {
    }
 
    public void onEnable() {
+
    }
 
    public void onDisable() {
@@ -155,6 +162,9 @@ public class Module {
       this.keycode = keybind;
       //if (Ravenb3.config != null && !Ravenb3.config.loading && !SelfDestruct.destructed)
         // Ravenb3.config.save();
+      if(Ravenbplus.config != null){
+         Ravenbplus.config.updateConfigFile();
+      }
    }
 
    public enum category {

@@ -68,12 +68,12 @@ public class GuiModuleCategory {
    }
 
    public void setX(int n) {
-      System.out.println(n);
+      //System.out.println(n);
       this.x = n;
    }
 
    public void setY(int y) {
-      System.out.println(y);
+      //System.out.println(y);
       this.y = y;
    }
 
@@ -89,7 +89,7 @@ public class GuiModuleCategory {
       this.pin = on;
    }
 
-   public boolean fv() {
+   public boolean isOpened() {
       return this.categoryOpened;
    }
 
@@ -141,11 +141,11 @@ public class GuiModuleCategory {
 
    }
 
-   public int gx() {
+   public int getX() {
       return this.x;
    }
 
-   public int gy() {
+   public int getY() {
       return this.y;
    }
 
