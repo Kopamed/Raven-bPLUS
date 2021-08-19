@@ -19,6 +19,8 @@ public class ConfigManager {
     private final String defaultConfigLocation;
     public boolean loading;
     public String seperator ="~";
+    private boolean firstRun = false;
+    public List<String> defaultConfig;
 
     public ConfigManager() {
         this.loading = false;
@@ -29,6 +31,7 @@ public class ConfigManager {
         this.fileName = "default";
         this.extension = "bplus";
         this.defaultConfigLocation = "/assets/keystrokes/default.bplus";
+
         currentConfig = new File(configDirecotry, fileName + "." + extension);
         if (!currentConfig.exists()) {
             try {
@@ -38,6 +41,9 @@ public class ConfigManager {
                 e.printStackTrace();
             }
         }
+
+        defaultConfig = this.getCurrentLoadedConfig();
+
         try {
             this.load();
         } catch (FileNotFoundException e) {
@@ -45,8 +51,49 @@ public class ConfigManager {
         }
     }
 
+    private List<String> getCurrentLoadedConfig() {
+        List<String> finalString = new ArrayList<String>();
+
+        for(Module clientModule : NotAName.moduleManager.listofmods()){
+
+            String moduleAttributes = "module" + seperator +
+                    clientModule.getName() + seperator +
+                    clientModule.isEnabled() + seperator +
+                    clientModule.getKeycode();
+            finalString.add(moduleAttributes);
+
+            for (ModuleSettingsList moduleSetting : clientModule.getSettings()) {
+                StringBuilder settingString = new StringBuilder();
+                String base = "setting" + seperator + clientModule.getName() + seperator + moduleSetting.getName();
+                settingString.append(base);
+                if (moduleSetting.mode.equalsIgnoreCase("slider")) {
+                    ModuleSettingSlider setting = (ModuleSettingSlider) moduleSetting;
+
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.getInput());
+                }
+                else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
+                    ModuleSettingTick setting = (ModuleSettingTick) moduleSetting;
+
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.isToggled());
+                } else if (moduleSetting.mode.equalsIgnoreCase("desc")) {
+                    ModuleDesc setting = (ModuleDesc) moduleSetting;
+
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.getDesc());
+                }
+
+                if (settingString.length() > base.length())
+                    finalString.add(settingString.toString());
+            }
+        }
+
+        return finalString;
+    }
+
     public void save() {
-        System.out.println("i save ");
+        //System.out.println("i save ");
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
@@ -280,22 +327,29 @@ public class ConfigManager {
     }
 
     public void saveConfig(String fileName) {
-        StringBuilder prevFileName = new StringBuilder();
-        for (int bruh = 0; bruh <= this.fileName.length()-1; bruh++){
-            prevFileName.append(this.fileName.charAt(bruh));
-        }
-        this.fileName = fileName;
-        this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
-        if(!this.currentConfig.exists()) {
+        List<String> configToSave = this.parseConfigFile();
+
+        File newConfigFile = new File(configDirecotry, fileName + "." + extension);
+        if (!newConfigFile.exists()) {
             try {
-                this.currentConfig.createNewFile();
+                newConfigFile.createNewFile();
+                this.save();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        this.save();
 
-        this.loadConfig(prevFileName.toString());
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(newConfigFile);
+            for (String line : configToSave) {
+                writer.println(line);
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean removeConfig(String fileName) {
@@ -327,23 +381,13 @@ public class ConfigManager {
     }
 
     public void clearConfig() {
-        ArrayList<String> finalString = new ArrayList<String>();
-        InputStream input = version.class.getResourceAsStream(defaultConfigLocation);
-        Scanner scanner = new Scanner(input);
-        while(true) {
-            try {
-                finalString.add(scanner.nextLine());
-            } catch (Exception var467) {
-                var467.printStackTrace();
-                break;
-            }
-        }
+
 
 
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(this.currentConfig);
-            for (String line : finalString) {
+            for (String line : defaultConfig) {
                 writer.println(line);
             }
             writer.close();
