@@ -30,6 +30,7 @@ public class AntiBot extends Module {
 
    @SubscribeEvent
    public void w(EntityJoinWorldEvent j) {
+      if(!ay.isPlayerInGame()) return;
       if (a.isToggled() && j.entity instanceof EntityPlayer && j.entity != mc.thePlayer) {
          newEnt.put((EntityPlayer)j.entity, System.currentTimeMillis());
       }
@@ -47,6 +48,7 @@ public class AntiBot extends Module {
    }
 
    public static boolean bot(Entity en) {
+      if(!ay.isPlayerInGame() || mc.currentScreen != null) return false;
       if (Freecam.en != null && Freecam.en == en) {
          return true;
       } else if (!ModuleManager.antiBot.isEnabled()) {

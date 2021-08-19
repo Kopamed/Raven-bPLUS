@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConfigManager {
@@ -17,6 +18,7 @@ public class ConfigManager {
     private final String extension;
     private final String defaultConfigLocation;
     public boolean loading;
+    public String seperator ="~";
 
     public ConfigManager() {
         this.loading = false;
@@ -31,6 +33,7 @@ public class ConfigManager {
         if (!currentConfig.exists()) {
             try {
                 currentConfig.createNewFile();
+                this.save();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -43,37 +46,37 @@ public class ConfigManager {
     }
 
     public void save() {
-        ////System.out.println("i save to " + this.currentConfig.getName());
+        System.out.println("i save ");
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
 
-            String moduleAttributes = "module:" +
-                    clientModule.getName() + ":" +
-                    clientModule.isEnabled() + ":" +
+            String moduleAttributes = "module" + seperator +
+                    clientModule.getName() + seperator +
+                    clientModule.isEnabled() + seperator +
                     clientModule.getKeycode();
             finalString.add(moduleAttributes);
 
             for (ModuleSettingsList moduleSetting : clientModule.getSettings()) {
                 StringBuilder settingString = new StringBuilder();
-                String base = "setting:" + clientModule.getName() + ":" + moduleSetting.getName();
+                String base = "setting" + seperator + clientModule.getName() + seperator + moduleSetting.getName();
                 settingString.append(base);
                 if (moduleSetting.mode.equalsIgnoreCase("slider")) {
                     ModuleSettingSlider setting = (ModuleSettingSlider) moduleSetting;
 
-                    settingString.append(":").append(moduleSetting.mode);
-                    settingString.append(":").append(setting.getInput());
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.getInput());
                 }
                 else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
                     ModuleSettingTick setting = (ModuleSettingTick) moduleSetting;
 
-                    settingString.append(":").append(moduleSetting.mode);
-                    settingString.append(":").append(setting.isToggled());
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.isToggled());
                 } else if (moduleSetting.mode.equalsIgnoreCase("desc")) {
                     ModuleDesc setting = (ModuleDesc) moduleSetting;
 
-                    settingString.append(":").append(moduleSetting.mode);
-                    settingString.append(":").append(setting.getDesc());
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.getDesc());
                 }
 
                 if (settingString.length() > base.length())
@@ -97,12 +100,31 @@ public class ConfigManager {
 
     public void load() throws FileNotFoundException {
         ////System.out.println("iLOAD from " + this.currentConfig.getName());
+        boolean error = false;
         Scanner reader = new Scanner(this.currentConfig);
         while (reader.hasNextLine()) {
             String current = reader.nextLine();
-            if(current.startsWith("module:")){
+            error = false;
 
-                String[] currentModule = current.split(":");
+            if(current.split("~").length == 0){
+                this.updateConfig(true);
+                return;
+            }
+            if(current.contains("::")){
+                System.out.println("Error detected! - " + current);
+                error = true;
+                this.updateConfig(true);
+                return;
+            }
+            if(current.startsWith("module" + seperator)){
+
+                if(!error && current.split(":").length > 4){
+                    System.out.println("Module error! - " + current);
+                    this.updateConfig(true);
+                    return;
+                }
+
+                String[] currentModule = current.split(seperator);
                 Module module = NotAName.moduleManager.getModuleByName(currentModule[1]);
 
                 if (module == null)
@@ -131,14 +153,20 @@ public class ConfigManager {
                         module.onDisable();
                     }
                 } catch (Exception hnfsaofsh) {
-                    hnfsaofsh.printStackTrace();
+                    //hnfsaofsh.printStackTrace();
                 }
 
             }
 
-            else if (current.startsWith("setting:")){
+            else if (current.startsWith("setting" + seperator)){
 
-                String[] currentSetting = current.split(":");
+                if(!error && current.split(":").length > 5){
+                    System.out.println("Setting error! - " + current);
+                    this.updateConfig(true);
+                    return;
+                }
+
+                String[] currentSetting = current.split(seperator);
                 Module module = NotAName.moduleManager.getModuleByName(currentSetting[1]);
 
                 if (module == null)
@@ -166,6 +194,62 @@ public class ConfigManager {
                 }
             }
         }
+    }
+
+    private void updateConfig(boolean reboot) {
+        List<String> config = this.parseConfigFile();
+        List<String> newConfig = new ArrayList<String>();
+        String newSep = "~";
+
+        for(String line : config){
+            if(line.startsWith("setting") && line.split(":").length > 5){
+                String settingName = line.split(":")[2] + ":" + line.split(":")[3];
+                StringBuilder newline = new StringBuilder();
+                String[] currentLine = line.split(":");
+                newline.append(currentLine[0]).append(newSep).append(currentLine[1]).append(newSep).append(settingName).append(newSep).append(currentLine[4]).append(newSep).append(currentLine[5]);
+                newConfig.add(newline.toString());
+                        //0145
+            }else {
+                newConfig.add(line.replace(":", newSep));
+            }
+        }
+
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(this.currentConfig);
+            for (String line : newConfig) {
+                writer.println(line);
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(reboot) {
+            try {
+                this.load();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private List<String> parseConfigFile() {
+        List<String> configFileContents = new ArrayList<String>();
+        Scanner reader = null;
+        try {
+            reader = new Scanner(this.currentConfig);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (reader.hasNextLine())
+            configFileContents.add(reader.nextLine());
+
+        return configFileContents;
+    }
+
+    private void updateConfig() {
+        updateConfig(false);
     }
 
     public String getExtension() {
