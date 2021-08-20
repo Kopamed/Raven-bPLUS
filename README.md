@@ -49,3 +49,5 @@ Discord:<br>
 
 
 #### Readme last updated on 01/08/2021. Bug and update info and other stuff may be out of date. 
+
+[![Stargazers over time](https://starchart.cc/Kopamed/Raven-bPLUS.svg)](https://starchart.cc/Kopamed/Raven-bPLUS)
