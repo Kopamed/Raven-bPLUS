@@ -590,6 +590,11 @@ public class ay {
       return howTohackNasaWorking2021NoScamDotCom;
    }
 
+   public static double roundAvoid(double value, int places) {
+      double scale = Math.pow(10, places);
+      return Math.round(value * scale) / scale;
+   }
+
    public enum ClickEvents {
       RENDER,
       TICK

@@ -354,10 +354,10 @@ public class ConfigManager {
 
     public boolean removeConfig(String fileName) {
         boolean found = false;
-        for (File config : this.listConfigs()) {
-            if (config.getName().replace(this.getExtension(), "").equalsIgnoreCase(fileName)){
+        for (String config : this.listConfigs()) {
+            if (config.equalsIgnoreCase(fileName)){
                 found = true;
-                File toDelete = new File(this.configDirecotry, fileName + this.getExtension());
+                File toDelete = new File(this.configDirecotry, config + this.getExtension());
                 if(toDelete.delete()) {
                     this.loadConfig("default");
                     return true;
@@ -369,11 +369,11 @@ public class ConfigManager {
         return false;
     }
 
-    public ArrayList<File> listConfigs() {
-        ArrayList<File> proBlockGameCheater = new ArrayList<File>();
+    public ArrayList<String> listConfigs() {
+        ArrayList<String> proBlockGameCheater = new ArrayList<String>();
         for (File config : this.configDirecotry.listFiles()) {
             if (config.getName().endsWith(this.extension)) {
-                proBlockGameCheater.add(config);
+                proBlockGameCheater.add(config.getName().replace(this.getExtension(), ""));
             }
         }
 
@@ -381,9 +381,6 @@ public class ConfigManager {
     }
 
     public void clearConfig() {
-
-
-
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(this.currentConfig);
@@ -396,5 +393,19 @@ public class ConfigManager {
         }
 
         this.loadConfig(this.getCurrentConfig());
+    }
+
+    public void saveNewConfig(List<String> config, String configName){
+        PrintWriter writer = null;
+        try {
+            File newFile = new File(this.configDirecotry, configName + this.getExtension());
+            writer = new PrintWriter(newFile);
+            for (String line : config) {
+                writer.println(line);
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
