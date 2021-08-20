@@ -2,6 +2,7 @@ package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.ay;
 import keystrokesmod.module.Module;
+import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
@@ -16,7 +17,8 @@ import org.lwjgl.input.Mouse;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockHit extends Module {
-    public static ModuleSettingSlider range;
+    public static ModuleSettingSlider range, eventType;
+    public static ModuleDesc eventTypeDesc;
     public static ModuleSettingTick onlyPlayers, onRightMBHold;
     public static ModuleSettingSlider minActionTicks, maxActionTicks, minOnceEvery, maxOnceEvery;
     public static double comboLasts;
@@ -32,11 +34,14 @@ public class BlockHit extends Module {
         this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
         this.registerSetting(maxOnceEvery = new ModuleSettingSlider("Once every max hits: ", 1, 1, 10, 1));
         this.registerSetting(range = new ModuleSettingSlider("Range: ", 2.85, 1, 6, 0.05));
+        this.registerSetting(eventType = new ModuleSettingSlider("Value: ", 2, 1, 2, 1));
+        this.registerSetting(eventTypeDesc = new ModuleDesc("Mode: POST"));
     }
 
     public void guiUpdate() {
         ay.correctSliders(minActionTicks, maxActionTicks);
         ay.correctSliders(minOnceEvery, maxOnceEvery);
+        eventTypeDesc.setDesc(ay.md + ay.SprintResetTimings.values()[(int) eventType.getInput() - 1]);
     }
 
 
@@ -97,7 +102,7 @@ public class BlockHit extends Module {
             }
 
             if (mc.thePlayer.getDistanceToEntity(target) <= range.getInput()) {
-                if (target.hurtResistantTime >= 10) {
+                if ((target.hurtResistantTime >= 10 && ay.SprintResetTimings.values()[(int) eventType.getInput() - 1] == ay.SprintResetTimings.POST) || (target.hurtResistantTime <= 10 && ay.SprintResetTimings.values()[(int) eventType.getInput() - 1] == ay.SprintResetTimings.PRE)) {
 
                     if (onlyPlayers.isToggled()){
                         if (!(target instanceof EntityPlayer)){

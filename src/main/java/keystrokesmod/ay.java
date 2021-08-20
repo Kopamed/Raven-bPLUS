@@ -646,4 +646,9 @@ public class ay {
       RAVEN,
       SKID
    }
+
+   public enum SprintResetTimings {
+      PRE,
+      POST
+   }
 }

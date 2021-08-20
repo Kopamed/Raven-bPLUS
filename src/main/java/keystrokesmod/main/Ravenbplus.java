@@ -100,7 +100,7 @@ public class Ravenbplus {
       MinecraftForge.EVENT_BUS.register(new TransformerMinecraft());
 
       //lodaing assest
-      ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
+      ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.gif");
       BufferedImage bf = null;
       try {
          bf = ImageIO.read(ravenLogoInputStream);

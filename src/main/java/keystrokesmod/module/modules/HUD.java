@@ -13,6 +13,7 @@ import keystrokesmod.main.NotAName;
 import keystrokesmod.module.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -62,6 +63,13 @@ public class HUD extends Module {
          ModuleManager.sort();
       }
 
+   }
+
+   @SubscribeEvent
+   public void L(RenderGameOverlayEvent e){
+      if(e.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
+
+      }
    }
 
    @SubscribeEvent
