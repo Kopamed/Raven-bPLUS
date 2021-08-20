@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Config extends Command {
     public Config() {
-        super("config", "Manages configs", 0, 3, new String[] {"load/save/list/remove/clear", "config's name / url"}, new String[] {"cfg", "profiles"});
+        super("config", "Manages configs", 0, 3, new String[] {"load,save,list,remove,clear,s", "config's name / url"}, new String[] {"cfg", "profiles"});
     }
 
     @Override
@@ -96,6 +96,8 @@ public class Config extends Command {
                             CommandLine.print("&aTo transition to config " + configName + " run", 0);
                             CommandLine.print("§3'cfg load " + configName+ "'", 0);
                         }
+                    }else {
+                        CommandLine.print("&cOnly pastebin links are supported!", 1);
                     }
                 } else{
                     CommandLine.print("&aSaving...", 1);
@@ -133,7 +135,42 @@ public class Config extends Command {
 
         } else if(args.length == 4){
             if(args[1].equalsIgnoreCase("save")){
-
+                if(URLUtils.isLink(args[2].toLowerCase())){
+                    if(URLUtils.isPastebinLink(args[2])){
+                        CommandLine.print("&aVerified link!", 1);
+                        String link = URLUtils.makeRawPastebinPaste(args[2]);
+                        CommandLine.print("§3Downloading...", 0);
+                        float startTime = System.currentTimeMillis();
+                        List<String> info = URLUtils.getConfigFromURL(link);
+                        CommandLine.print("&aDownloaded in " + ay.roundAvoid(System.currentTimeMillis() - startTime, 3)  + "s!", 0);
+                        List<String> config = info.subList(1, info.size());
+                        //Ravenbplus.configManager.updateConfig();
+                        String configName = args[3];
+                        boolean exists = false;
+                        String filename = "";
+                        for(String cfg : Ravenbplus.configManager.listConfigs()){
+                            if(cfg.equalsIgnoreCase(configName)){
+                                exists = true;
+                                filename = cfg;
+                            }
+                        }
+                        if(exists){
+                            Ravenbplus.configManager.saveNewConfig(config, filename);
+                            CommandLine.print("&aSaved config!", 0);
+                            CommandLine.print("&aTo transition to config " + args[3] + " run", 0);
+                            CommandLine.print("§3'cfg load " + args[3]+ "'", 0);
+                        }else{
+                            Ravenbplus.configManager.saveNewConfig(config, args[3]);
+                            CommandLine.print("&aSaved config!", 0);
+                            CommandLine.print("&aTo transition to config " + args[3] + " run", 0);
+                            CommandLine.print("§3'cfg load " + args[3]+ "'", 0);
+                        }
+                    } else {
+                        CommandLine.print("&cOnly pastebin links are supported!", 1);
+                    }
+                } else {
+                    this.incorrectArgs();
+                }
             }
             else{
                 this.incorrectArgs();

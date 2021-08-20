@@ -18,7 +18,7 @@ public class ConfigManager {
     private final String extension;
     private final String defaultConfigLocation;
     public boolean loading;
-    public String seperator ="~";
+    public static String seperator ="~";
     private boolean firstRun = false;
     public List<String> defaultConfig;
 
@@ -93,7 +93,7 @@ public class ConfigManager {
     }
 
     public void save() {
-        //System.out.println("i save ");
+        ////System.out.println("i save ");
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
@@ -146,11 +146,12 @@ public class ConfigManager {
     }
 
     public void load() throws FileNotFoundException {
-        ////System.out.println("iLOAD from " + this.currentConfig.getName());
+        //////System.out.println("iLOAD from " + this.currentConfig.getName());
         boolean error = false;
         Scanner reader = new Scanner(this.currentConfig);
         while (reader.hasNextLine()) {
             String current = reader.nextLine();
+            //System.out.println("parsing lin "+ current);
             error = false;
 
             if(current.split("~").length == 0){
@@ -158,7 +159,7 @@ public class ConfigManager {
                 return;
             }
             if(current.contains("::")){
-                System.out.println("Error detected! - " + current);
+                //System.out.println("Error detected! - " + current);
                 error = true;
                 this.updateConfig(true);
                 return;
@@ -166,7 +167,7 @@ public class ConfigManager {
             if(current.startsWith("module" + seperator)){
 
                 if(!error && current.split(":").length > 4){
-                    System.out.println("Module error! - " + current);
+                    //System.out.println("Module error! - " + current);
                     this.updateConfig(true);
                     return;
                 }
@@ -208,7 +209,7 @@ public class ConfigManager {
             else if (current.startsWith("setting" + seperator)){
 
                 if(!error && current.split(":").length > 5){
-                    System.out.println("Setting error! - " + current);
+                    //System.out.println("Setting error! - " + current);
                     this.updateConfig(true);
                     return;
                 }
@@ -243,7 +244,7 @@ public class ConfigManager {
         }
     }
 
-    private void updateConfig(boolean reboot) {
+    public void updateConfig(boolean reboot) {
         List<String> config = this.parseConfigFile();
         List<String> newConfig = new ArrayList<String>();
         String newSep = "~";
@@ -265,6 +266,7 @@ public class ConfigManager {
         try {
             writer = new PrintWriter(this.currentConfig);
             for (String line : newConfig) {
+                //System.out.println(line);
                 writer.println(line);
             }
             writer.close();
@@ -313,7 +315,7 @@ public class ConfigManager {
 
     public void loadConfig(String fileName) {
         this.loading = true;
-        ////System.out.println("no saving");
+        //////System.out.println("no saving");
         this.fileName = fileName;
         this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
         try {
@@ -323,7 +325,7 @@ public class ConfigManager {
         }
 
         this.loading = false;
-        ////System.out.println("yes saving");
+        //////System.out.println("yes saving");
     }
 
     public void saveConfig(String fileName) {
@@ -401,6 +403,7 @@ public class ConfigManager {
             File newFile = new File(this.configDirecotry, configName + this.getExtension());
             writer = new PrintWriter(newFile);
             for (String line : config) {
+                //System.out.println(line);
                 writer.println(line);
             }
             writer.close();

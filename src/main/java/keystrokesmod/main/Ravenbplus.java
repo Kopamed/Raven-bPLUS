@@ -74,6 +74,12 @@ public class Ravenbplus {
       // shout out to my homie
       // https://i.imgur.com/Mli8beT.png
       virus.exe = true;
+      // Fuuuuuuuuui think i am retarded, i have spent 4 hours TRYNNG TO SEND S A POST REQUESR TO PASTEBIN FUI AEHFIU ESIFUY UESOF YESOUF
+      /*try {
+         URLUtils.createPaste();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }*/
    }
 
    @EventHandler

@@ -247,9 +247,9 @@ public class ClientConfig {
             Ravenbplus.getExecutor().execute(() -> {
                if (!URLUtils.isHypixelKeyValid(URLUtils.hypixelApiKey)) {
                   URLUtils.hypixelApiKey = "";
-                  System.out.println("Invalid key!");
+                  //System.out.println("Invalid key!");
                } else{
-                  System.out.println("Valid key!");
+                  //System.out.println("Valid key!");
                }
 
             });
@@ -280,7 +280,7 @@ public class ClientConfig {
    private void loadClickGuiCoords(String decryptedString) {
       //clickgui config
       // categoryname:x:y:opened
-      System.out.println(decryptedString);
+      //System.out.println(decryptedString);
       for (String what : decryptedString.split("/")){
          for (GuiModuleCategory cat : NotAName.clickGui.categoryList) {
             if(what.startsWith(cat.categoryName.name())){

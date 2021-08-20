@@ -125,6 +125,7 @@ public class ModuleManager {
       this.addModule(new STap());
       this.addModule(new MessageInfo());
       //this.addModule(new TargetHUD());
+      this.addModule(new AutoWeapon());
       this.defEn();
    }
 

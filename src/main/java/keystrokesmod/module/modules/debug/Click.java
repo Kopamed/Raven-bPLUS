@@ -38,13 +38,13 @@ public class Click extends Module {
 
         if(currentHook == hook.MOUSE) {
             if(Mouse.isButtonDown(0) && lastEvent == event.buttonUp){
-                //System.out.println("Nohold lasted " + (System.currentTimeMillis() - lastEventTime));
+                ////System.out.println("Nohold lasted " + (System.currentTimeMillis() - lastEventTime));
                 lastEvent = event.buttonDown;
                 lastEventTime = System.currentTimeMillis();
             }
 
             if(!Mouse.isButtonDown(0) && lastEvent == event.buttonDown) {
-                //System.out.println("Hold lasted " + (System.currentTimeMillis() - lastEventTime));
+                ////System.out.println("Hold lasted " + (System.currentTimeMillis() - lastEventTime));
                 lastEvent = event.buttonUp;
                 lastEventTime = System.currentTimeMillis();
             }
@@ -52,13 +52,13 @@ public class Click extends Module {
 
         if (currentHook == hook.MINECRAFT){
             if(minecraftDown && lastEvent == event.buttonUp){
-                //System.out.println("Nohold lasted " + (System.currentTimeMillis() - lastEventTime));
+                ////System.out.println("Nohold lasted " + (System.currentTimeMillis() - lastEventTime));
                 lastEvent = event.buttonDown;
                 lastEventTime = System.currentTimeMillis();
             }
 
             if(!minecraftDown && lastEvent == event.buttonDown) {
-                //System.out.println("Hold lasted " + (System.currentTimeMillis() - lastEventTime));
+                ////System.out.println("Hold lasted " + (System.currentTimeMillis() - lastEventTime));
                 lastEvent = event.buttonUp;
                 lastEventTime = System.currentTimeMillis();
             }

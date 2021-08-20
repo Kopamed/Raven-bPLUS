@@ -9,10 +9,11 @@ import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 
 public class AutoHeader extends Module {
     public static ModuleDesc desc;
-    public static ModuleSettingTick cancelDuringShift;
+    public static ModuleSettingTick cancelDuringShift, onlyWhenHoldingSpacebar;
     public static ModuleSettingSlider pbs;
     private boolean holding;
     private double pressSpeed, holdLength;
@@ -27,6 +28,7 @@ public class AutoHeader extends Module {
         super("AutoHeadHitter", category.movement, 0);
         this.registerSetting(desc = new ModuleDesc("Spams spacebar when under blocks"));
         this.registerSetting(cancelDuringShift = new ModuleSettingTick("Cancel if snkeaing", true));
+        this.registerSetting(onlyWhenHoldingSpacebar = new ModuleSettingTick("Only when holding jump", true));
         this.registerSetting(pbs = new ModuleSettingSlider("Jump Presses per second", 12, 1, 20, 1));
 
         boolean jumping = false;
@@ -45,6 +47,11 @@ public class AutoHeader extends Module {
         if (cancelDuringShift.isToggled() && mc.thePlayer.isSneaking())
             return;
 
+        if(onlyWhenHoldingSpacebar.isToggled()){
+            if(!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())){
+                return;
+            }
+        }
 
 
         if (ay.playerUnderBlock() && mc.thePlayer.onGround){

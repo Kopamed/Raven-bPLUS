@@ -23,6 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.*;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
 import net.minecraft.potion.Potion;
@@ -500,6 +501,35 @@ public class ay {
    }
 
 
+   public static int getMaxDamageSlot(){
+      int index = -1;
+      double damage = -1;
+
+      for (int slot = 0; slot <= 8; slot++) {
+         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+         if(itemInSlot == null)
+            continue;
+         for (AttributeModifier mooommHelp :itemInSlot.getAttributeModifiers().values()){
+            if(mooommHelp.getAmount() > damage) {
+               damage = mooommHelp.getAmount();
+               index = slot;
+            }
+         }
+
+
+      }
+         return index;
+   }
+
+   public static double getSlotDamage(int slot) {
+      ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+      if (itemInSlot == null)
+         return -1;
+      for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values()) {
+            return mooommHelp.getAmount();
+      }
+      return -1;
+   }
 
    public static String getDate() {
       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

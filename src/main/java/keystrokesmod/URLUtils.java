@@ -1,13 +1,17 @@
 package keystrokesmod;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+
+import org.apache.http.client.methods.HttpPost;
+import org.lwjgl.Sys;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.net.*;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class URLUtils {
    public static String hypixelApiKey = "";
@@ -131,5 +135,64 @@ public class URLUtils {
       rawLink.append("/raw");
       rawLink.append(arg.substring(arg.lastIndexOf("/")));
       return rawLink.toString();
+   }
+
+   public static String createPaste() throws IOException {
+
+      String paste_api = "https://pastebin.com/api/api_post.php";
+      /*
+      HttpURLConnection con5 = (HttpURLConnection)(new URL(paste_api)).openConnection();
+      con5.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+      con5.setRequestProperty("api_dev_key", "jRCgqXVQswMFxePS_2XkL5W-wsT6PyMg");
+      con5.setRequestProperty("api_option", "paste");
+      con5.setRequestProperty("api_paste_code", "yes" + System.currentTimeMillis());
+      con5.setRequestMethod("POST");
+      con5.setDoOutput(true);
+      con5.connect();
+      OutputStream os = con5.getOutputStream();
+      os.flush();
+      System.out.println(con5.getResponseMessage());
+      con5.disconnect();
+
+      URL url = new URL(paste_api);
+      URLConnection con = url.openConnection();
+      HttpURLConnection http = (HttpURLConnection)con;
+      http.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+      http.setRequestProperty("api_dev_key", "jRCgqXVQswMFxePS_2XkL5W-wsT6PyMg");
+      http.setRequestProperty("api_option", "paste");
+      http.setRequestProperty("api_paste_code", "yes" + System.currentTimeMillis());
+      http.setRequestMethod("POST"); // PUT is another valid option
+      http.setDoOutput(true);
+      try(OutputStream oss = http.getOutputStream()){
+
+      }
+      http.connect();
+      System.out.println(http.getResponseMessage());
+
+*/
+      URL url = new URL(paste_api);
+
+// Open a connection(?) on the URL(??) and cast the response(???)
+      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+// Now it's "open", we can set the request method, headers etc.
+      connection.setRequestProperty("accept", "application/json");
+      connection.setRequestProperty("api_dev_key", "nopeeking");
+      connection.setRequestProperty("api_option", "paste");
+      connection.setRequestProperty("api_paste_code", "yes" + System.currentTimeMillis());
+      connection.setRequestMethod("POST");
+      System.out.println(connection.getResponseCode());
+      connection.connect();
+      System.out.println(connection.getResponseCode());
+// This line makes the request
+      InputStream responseStream = connection.getInputStream();
+      connection.disconnect();
+// Manually converting the response body InputStream to APOD using Jackson
+      Scanner scanner = new Scanner(responseStream);
+      while(scanner.hasNextLine()){
+         System.out.println(scanner.nextLine());
+      }
+
+      return "";
    }
 }
