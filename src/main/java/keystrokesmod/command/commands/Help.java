@@ -52,8 +52,17 @@ public class Help extends Command {
                 CommandLine.print(command.getName() + "'s argument description:", 1);
                 CommandLine.print("§3Min args: " + command.getMinArgs() + ", max args: " + command.getMaxArgs(), 0);
                 int argIndex = 1;
+                int printLine;
                 for (String argText : command.getArgs()){
-                    CommandLine.print("§3Argument " + argIndex + ": " + argText, 0);
+                    printLine = 0;
+                    for(String line : argText.split("<br>")){
+                        if(printLine == 1) {
+                            CommandLine.print("§3Argument " + argIndex + ": " + argText, 0);
+                        }else{
+                            CommandLine.print("§" + argIndex + ": " + argText, 0);
+                        }
+                        printLine++;
+                    }
                     argIndex++;
                 }
             }

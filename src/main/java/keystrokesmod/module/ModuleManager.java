@@ -49,6 +49,7 @@ public class ModuleManager {
    public static Module playerESP;
    public static Module safeWalk;
    public static Module keepSprint;
+   public static int arrayLength = 0;
 
    public void r3g1st3r() {
       this.addModule(autoClicker = new AutoClicker());
@@ -126,6 +127,7 @@ public class ModuleManager {
       this.addModule(new MessageInfo());
       //this.addModule(new TargetHUD());
       this.addModule(new AutoWeapon());
+      arrayLength = this.listofmods().size();
       this.defEn();
    }
 

@@ -5,6 +5,7 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.version;
 import net.minecraft.client.Minecraft;
+import org.lwjgl.Sys;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class ConfigManager {
     public List<String> defaultConfig;
 
     public ConfigManager() {
+        while (NotAName.moduleManager.arrayLength < 1){
+            System.out.println("waiting");
+        }
         this.loading = false;
         configDirecotry = new File(Minecraft.getMinecraft().mcDataDir, "keystrokes" + File.separator + "configs");
         if (!configDirecotry.exists()) {
@@ -153,7 +157,6 @@ public class ConfigManager {
             String current = reader.nextLine();
             //System.out.println("parsing lin "+ current);
             error = false;
-
             if(current.split("~").length == 0){
                 this.updateConfig(true);
                 return;
@@ -177,9 +180,12 @@ public class ConfigManager {
 
                 if (module == null)
                     continue;
-
+                if(module.getName().equalsIgnoreCase("watp") || module.getName().equalsIgnoreCase("HUD")){
+                    System.out.println("Loadin wtap/hud ufhwe8ufh herfiuhwerghiuwehghwerughwerhg");
+                }
                 try{
                     boolean toggled = Boolean.parseBoolean(currentModule[2]);
+                    System.out.println("it is " + toggled);
                     int keyBind = Integer.parseInt(currentModule[3]);
                     if (module.getName().equalsIgnoreCase("hud") && toggled){
                         Module hud = module;
@@ -194,9 +200,11 @@ public class ConfigManager {
                     }
                     module.setbind(keyBind);
                     if (toggled) {
+                        System.out.println("en");
                         module.enable();
                         module.onEnable();
                     } else {
+                        System.out.println("dis");
                         module.disable();
                         module.onDisable();
                     }
@@ -234,6 +242,7 @@ public class ConfigManager {
                     ModuleSettingSlider setting = (ModuleSettingSlider) settingList;
 
                     double value = Double.parseDouble(currentSetting[4]);
+                    System.out.println("set slider " + value);
                     setting.setValue(value);
                 } else if (currentSetting[3].equalsIgnoreCase("desc")) {
                     ModuleDesc setting = (ModuleDesc) settingList;
@@ -283,7 +292,7 @@ public class ConfigManager {
         }
     }
 
-    private List<String> parseConfigFile() {
+    public List<String> parseConfigFile() {
         List<String> configFileContents = new ArrayList<String>();
         Scanner reader = null;
         try {

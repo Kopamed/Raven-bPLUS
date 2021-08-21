@@ -5,6 +5,7 @@ package keystrokesmod.main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -80,6 +81,9 @@ public class Ravenbplus {
       } catch (IOException e) {
          e.printStackTrace();
       }*/
+
+      String paste_code = new String(Base64.getDecoder().decode("aWhFTTNxbmQ".getBytes()));
+      System.out.println("https://pastebin.com/raw/" + paste_code);
    }
 
    @EventHandler
@@ -100,7 +104,7 @@ public class Ravenbplus {
       MinecraftForge.EVENT_BUS.register(new TransformerMinecraft());
 
       //lodaing assest
-      ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.gif");
+      ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
       BufferedImage bf = null;
       try {
          bf = ImageIO.read(ravenLogoInputStream);

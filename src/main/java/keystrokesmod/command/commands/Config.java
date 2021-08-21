@@ -1,17 +1,18 @@
 package keystrokesmod.command.commands;
 
+import com.google.gson.JsonObject;
 import keystrokesmod.CommandLine;
 import keystrokesmod.URLUtils;
 import keystrokesmod.ay;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 
-import java.io.File;
+import java.util.Base64;
 import java.util.List;
 
 public class Config extends Command {
     public Config() {
-        super("config", "Manages configs", 0, 3, new String[] {"load,save,list,remove,clear,s", "config's name / url"}, new String[] {"cfg", "profiles"});
+        super("config", "Manages configs", 0, 3, new String[] {"load,save,list,remove,clear<br>upload", "config's name / url"}, new String[] {"cfg", "profiles"});
     }
 
     @Override
@@ -33,7 +34,31 @@ public class Config extends Command {
                 CommandLine.print("§3" + Ravenbplus.configManager.getCurrentConfig(), 0);
                 CommandLine.print("&eif so, enter", 0);
                 CommandLine.print("§3'config clear confirm'", 0);
-            }else {
+            } else if(args[1].equalsIgnoreCase("upload")){
+                CommandLine.print("&aUploading current config..", 1);
+                StringBuilder config = new StringBuilder();
+                List<String> parsedCfg = Ravenbplus.configManager.parseConfigFile();
+                for(int e = 0; e<parsedCfg.size(); e++){
+                    if(e == 0){
+                        config.append(parsedCfg.get(e));
+                    }
+                    else {
+                        config.append("/").append(parsedCfg.get(e));
+                    }
+                }
+                String link = URLUtils.createPaste(Ravenbplus.configManager.getCurrentConfig(), config.toString());
+                if(link.isEmpty()){
+                    CommandLine.print("&cFailed to upload config!", 0);
+                    CommandLine.print("&cMake sure api key is set!", 0);
+                    CommandLine.print("§3'setkey paste <key>'", 0);
+                } else {
+                    CommandLine.print("&aUploaded!", 0);
+                    CommandLine.print("§3" + link, 0);
+                    CommandLine.print("&aCopied link to clipboard", 0);
+                    ay.copyToClipboard(link);
+                }
+            }
+            else {
                 this.incorrectArgs();
             }
         }
@@ -69,14 +94,16 @@ public class Config extends Command {
             else if (args[1].equalsIgnoreCase("save")) {
                 //me coding the save command be like https://imgur.com/u1EJ4op
                 if(URLUtils.isLink(args[2].toLowerCase())){
-                    if(URLUtils.isPastebinLink(args[2])){
+                    if(URLUtils.isPasteeLink(args[2])){
                         CommandLine.print("&aVerified link!", 1);
-                        String link = URLUtils.makeRawPastebinPaste(args[2]);
+                        String link = URLUtils.makeRawPasteePaste(args[2]);
+                        CommandLine.print(link, 0);
+                        System.out.println(link);
                         CommandLine.print("§3Downloading...", 0);
                         float startTime = System.currentTimeMillis();
-                        List<String> info = URLUtils.getConfigFromURL(link);
+                        /*List<String> info = URLUtils.getConfigFromURL(link);
                         CommandLine.print("&aDownloaded in " + ay.roundAvoid(System.currentTimeMillis() - startTime, 3)  + "s!", 0);
-                        List<String> config = info.subList(1, info.size());
+                        List<String> config = info.subList(1, info.size()-1);
                         String configName = info.get(0);
                         boolean exists = false;
                         String filename;
@@ -95,7 +122,7 @@ public class Config extends Command {
                             CommandLine.print("&aSaved config!", 0);
                             CommandLine.print("&aTo transition to config " + configName + " run", 0);
                             CommandLine.print("§3'cfg load " + configName+ "'", 0);
-                        }
+                        }*/
                     }else {
                         CommandLine.print("&cOnly pastebin links are supported!", 1);
                     }
@@ -129,6 +156,29 @@ public class Config extends Command {
                     CommandLine.print("&cIt is confirm, not " + args[2], 0);
                 }
 
+            }else if(args[1].equalsIgnoreCase("upload")){
+                CommandLine.print("&aUploading current config..", 1);
+                StringBuilder config = new StringBuilder();
+                List<String> parsedCfg = Ravenbplus.configManager.parseConfigFile();
+                for(int e = 0; e<parsedCfg.size(); e++){
+                    if(e == 0){
+                        config.append(parsedCfg.get(e));
+                    }
+                    else {
+                        config.append("/").append(parsedCfg.get(e));
+                    }
+                }
+                String link = URLUtils.createPaste(Ravenbplus.configManager.getCurrentConfig(), config.toString());
+                if(link.isEmpty()){
+                    CommandLine.print("&cFailed to upload config!", 0);
+                    CommandLine.print("&cMake sure api key is set!", 0);
+                    CommandLine.print("§3'setkey paste <key>'", 0);
+                } else {
+                    CommandLine.print("&aUploaded!", 0);
+                    CommandLine.print("§3" + link, 0);
+                    CommandLine.print("&aCopied link to clipboard", 0);
+                    ay.copyToClipboard(link);
+                }
             } else {
                 this.incorrectArgs();
             }
@@ -136,12 +186,14 @@ public class Config extends Command {
         } else if(args.length == 4){
             if(args[1].equalsIgnoreCase("save")){
                 if(URLUtils.isLink(args[2].toLowerCase())){
-                    if(URLUtils.isPastebinLink(args[2])){
+                    if(URLUtils.isPasteeLink(args[2])){
                         CommandLine.print("&aVerified link!", 1);
-                        String link = URLUtils.makeRawPastebinPaste(args[2]);
+                        String link = URLUtils.makeRawPasteePaste(args[2]);
+                        CommandLine.print(link, 0);
+                        System.out.println(link);
                         CommandLine.print("§3Downloading...", 0);
                         float startTime = System.currentTimeMillis();
-                        List<String> info = URLUtils.getConfigFromURL(link);
+                        /*List<String> info = URLUtils.getConfigFromURL(link);
                         CommandLine.print("&aDownloaded in " + ay.roundAvoid(System.currentTimeMillis() - startTime, 3)  + "s!", 0);
                         List<String> config = info.subList(1, info.size());
                         //Ravenbplus.configManager.updateConfig();
@@ -164,7 +216,7 @@ public class Config extends Command {
                             CommandLine.print("&aSaved config!", 0);
                             CommandLine.print("&aTo transition to config " + args[3] + " run", 0);
                             CommandLine.print("§3'cfg load " + args[3]+ "'", 0);
-                        }
+                        }*/
                     } else {
                         CommandLine.print("&cOnly pastebin links are supported!", 1);
                     }
