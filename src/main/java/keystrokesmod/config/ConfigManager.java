@@ -25,7 +25,7 @@ public class ConfigManager {
 
     public ConfigManager() {
         while (NotAName.moduleManager.arrayLength < 1){
-            System.out.println("waiting");
+            //System.out.println("waiting");
         }
         this.loading = false;
         configDirecotry = new File(Minecraft.getMinecraft().mcDataDir, "keystrokes" + File.separator + "configs");
@@ -97,7 +97,7 @@ public class ConfigManager {
     }
 
     public void save() {
-        ////System.out.println("i save ");
+        //////System.out.println("i save ");
         ArrayList<String> finalString = new ArrayList<String>();
 
         for(Module clientModule : NotAName.moduleManager.listofmods()){
@@ -150,19 +150,19 @@ public class ConfigManager {
     }
 
     public void load() throws FileNotFoundException {
-        //////System.out.println("iLOAD from " + this.currentConfig.getName());
+        ////////System.out.println("iLOAD from " + this.currentConfig.getName());
         boolean error = false;
         Scanner reader = new Scanner(this.currentConfig);
         while (reader.hasNextLine()) {
             String current = reader.nextLine();
-            //System.out.println("parsing lin "+ current);
+            ////System.out.println("parsing lin "+ current);
             error = false;
             if(current.split("~").length == 0){
                 this.updateConfig(true);
                 return;
             }
             if(current.contains("::")){
-                //System.out.println("Error detected! - " + current);
+                ////System.out.println("Error detected! - " + current);
                 error = true;
                 this.updateConfig(true);
                 return;
@@ -170,7 +170,7 @@ public class ConfigManager {
             if(current.startsWith("module" + seperator)){
 
                 if(!error && current.split(":").length > 4){
-                    //System.out.println("Module error! - " + current);
+                    ////System.out.println("Module error! - " + current);
                     this.updateConfig(true);
                     return;
                 }
@@ -181,11 +181,11 @@ public class ConfigManager {
                 if (module == null)
                     continue;
                 if(module.getName().equalsIgnoreCase("watp") || module.getName().equalsIgnoreCase("HUD")){
-                    System.out.println("Loadin wtap/hud ufhwe8ufh herfiuhwerghiuwehghwerughwerhg");
+                    //System.out.println("Loadin wtap/hud ufhwe8ufh herfiuhwerghiuwehghwerughwerhg");
                 }
                 try{
                     boolean toggled = Boolean.parseBoolean(currentModule[2]);
-                    System.out.println("it is " + toggled);
+                    //System.out.println("it is " + toggled);
                     int keyBind = Integer.parseInt(currentModule[3]);
                     if (module.getName().equalsIgnoreCase("hud") && toggled){
                         Module hud = module;
@@ -200,11 +200,11 @@ public class ConfigManager {
                     }
                     module.setbind(keyBind);
                     if (toggled) {
-                        System.out.println("en");
+                        //System.out.println("en");
                         module.enable();
                         module.onEnable();
                     } else {
-                        System.out.println("dis");
+                        //System.out.println("dis");
                         module.disable();
                         module.onDisable();
                     }
@@ -217,7 +217,7 @@ public class ConfigManager {
             else if (current.startsWith("setting" + seperator)){
 
                 if(!error && current.split(":").length > 5){
-                    //System.out.println("Setting error! - " + current);
+                    ////System.out.println("Setting error! - " + current);
                     this.updateConfig(true);
                     return;
                 }
@@ -242,7 +242,7 @@ public class ConfigManager {
                     ModuleSettingSlider setting = (ModuleSettingSlider) settingList;
 
                     double value = Double.parseDouble(currentSetting[4]);
-                    System.out.println("set slider " + value);
+                    //System.out.println("set slider " + value);
                     setting.setValue(value);
                 } else if (currentSetting[3].equalsIgnoreCase("desc")) {
                     ModuleDesc setting = (ModuleDesc) settingList;
@@ -275,7 +275,7 @@ public class ConfigManager {
         try {
             writer = new PrintWriter(this.currentConfig);
             for (String line : newConfig) {
-                //System.out.println(line);
+                ////System.out.println(line);
                 writer.println(line);
             }
             writer.close();
@@ -306,6 +306,20 @@ public class ConfigManager {
         return configFileContents;
     }
 
+    public List<String> parseConfigFile(String cfg) {
+        List<String> configFileContents = new ArrayList<String>();
+        Scanner reader = null;
+        try {
+            reader = new Scanner(new File(this.configDirecotry, cfg + this.getExtension()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (reader.hasNextLine())
+            configFileContents.add(reader.nextLine());
+
+        return configFileContents;
+    }
+
     private void updateConfig() {
         updateConfig(false);
     }
@@ -324,7 +338,7 @@ public class ConfigManager {
 
     public void loadConfig(String fileName) {
         this.loading = true;
-        //////System.out.println("no saving");
+        ////////System.out.println("no saving");
         this.fileName = fileName;
         this.currentConfig = new File(this.configDirecotry, fileName + "." + this.extension);
         try {
@@ -334,7 +348,7 @@ public class ConfigManager {
         }
 
         this.loading = false;
-        //////System.out.println("yes saving");
+        ////////System.out.println("yes saving");
     }
 
     public void saveConfig(String fileName) {
@@ -412,7 +426,7 @@ public class ConfigManager {
             File newFile = new File(this.configDirecotry, configName + this.getExtension());
             writer = new PrintWriter(newFile);
             for (String line : config) {
-                //System.out.println(line);
+                ////System.out.println(line);
                 writer.println(line);
             }
             writer.close();

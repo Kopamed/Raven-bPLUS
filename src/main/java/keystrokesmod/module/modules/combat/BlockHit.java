@@ -77,7 +77,7 @@ public class BlockHit extends Module {
                 return;
             } else {
                 Entity target = mc.objectMouseOver.entityHit;
-                ////////System.out.println(target.hurtResistantTime);
+                //////////System.out.println(target.hurtResistantTime);
                 if(target.isDead) {
                     if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
                         safeGuard = true;
@@ -90,7 +90,7 @@ public class BlockHit extends Module {
 
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
-            ////////System.out.println(target.hurtResistantTime);
+            //////////System.out.println(target.hurtResistantTime);
             if(target.isDead) {
                 if(onRightMBHold.isToggled() && Mouse.isButtonDown(1) && Mouse.isButtonDown(0)) {
                     if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
@@ -116,23 +116,23 @@ public class BlockHit extends Module {
 
 
                     if (hitCoolDown && !alreadyHit) {
-                        ////////System.out.println("coolDownCheck");
+                        //////////System.out.println("coolDownCheck");
                         hitsWaited++;
                         if(hitsWaited >= hitTimeout){
-                            ////////System.out.println("hiit cool down reached");
+                            //////////System.out.println("hiit cool down reached");
                             hitCoolDown = false;
                             hitsWaited = 0;
                         } else {
-                            ////////System.out.println("still waiting for cooldown");
+                            //////////System.out.println("still waiting for cooldown");
                             alreadyHit = true;
                             return;
                         }
                     }
 
-                    ////////System.out.println("Continued");
+                    //////////System.out.println("Continued");
 
                     if(!alreadyHit){
-                        ////////System.out.println("Startring combo code");
+                        //////////System.out.println("Startring combo code");
                         guiUpdate();
                         if(minOnceEvery.getInput() == maxOnceEvery.getInput()) {
                             hitTimeout =  (int)minOnceEvery.getInput();
@@ -146,16 +146,16 @@ public class BlockHit extends Module {
                         comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.01) + System.currentTimeMillis();
                         comboing = true;
                         startCombo();
-                        ////////System.out.println("Combo started");
+                        //////////System.out.println("Combo started");
                         alreadyHit = true;
                         if(safeGuard) safeGuard = false;
                     }
                 } else {
                     if(alreadyHit){
-                        ////////System.out.println("UnHit");
+                        //////////System.out.println("UnHit");
                     }
                     alreadyHit = false;
-                    ////////System.out.println("REEEEEEE");
+                    //////////System.out.println("REEEEEEE");
                     if(safeGuard) safeGuard = false;
                 }
             }

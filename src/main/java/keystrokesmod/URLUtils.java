@@ -109,7 +109,7 @@ public class URLUtils {
          OutputStream outputStream = request.getOutputStream();
          Throwable occuredErrors = null;
          String payload = base_paste.replace("TitleGoesHere", name).replace("BodyGoesHere", content).replace("\\", "");
-         System.out.println(payload);
+         //System.out.println(payload);
          try {
             // sending data
             outputStream.write(payload.getBytes("UTF-8"));
@@ -136,13 +136,49 @@ public class URLUtils {
          BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
          JsonParser parser = new JsonParser();
          JsonObject json = (JsonObject) parser.parse(bufferedReader.readLine());
-         System.out.println(json);
-         System.out.println(json.get("link"));
-         System.out.println(pasteApiKey);
+         //System.out.println(json);
+         //System.out.println(json.get("link"));
+         //System.out.println(pasteApiKey);
          return json.get("link").toString().replace("\"", "");
       } catch (Exception var51) {
-         System.out.println(pasteApiKey);
+         //System.out.println(pasteApiKey);
       }
       return "";
+   }
+
+   public static List<String> getConfigFromPastee(String link) {
+      try {
+         //System.out.println(link);
+         HttpURLConnection request = (HttpURLConnection)(new URL(link)).openConnection();
+         request.setRequestProperty("X-Auth-Token", pasteApiKey);
+         request.setRequestMethod("GET");
+         request.setDoOutput(true);
+         //System.out.println(request.getResponseMessage());
+         request.connect();
+
+         //System.out.println(request.getResponseMessage());
+         //System.out.println(request.getResponseCode());
+         List<String> finall = new ArrayList<>();
+         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+         JsonParser parser = new JsonParser();
+         JsonObject json = (JsonObject) parser.parse(bufferedReader.readLine());
+         //System.out.println(json);
+         JsonObject json2 = json.getAsJsonObject("paste");
+         finall.add(true + "");
+         JsonObject json3 = (JsonObject)  json2.getAsJsonArray("sections").get(0);
+         finall.add(json3.get("name") + "");
+         finall.add(json3.get("contents") + "");
+
+         //System.out.println(json2.getAsJsonArray("sections"));
+         //System.out.println(pasteApiKey);
+         request.disconnect();
+         return finall;
+      } catch (Exception var51) {
+         //System.out.println(pasteApiKey + "FUUUUUUU");
+         var51.printStackTrace();
+      }
+      List<String> welp = new ArrayList<>();
+      welp.add("false");
+      return welp;
    }
 }

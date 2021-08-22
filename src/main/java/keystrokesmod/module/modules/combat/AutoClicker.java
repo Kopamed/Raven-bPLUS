@@ -122,7 +122,7 @@ public class AutoClicker extends Module {
 
       this.rightClickWaiting = false;
       this.allowedClick = false;
-      ////System.out.println("Reset allowedClick");
+      //////System.out.println("Reset allowedClick");
       this.rand = new Random();
       autoClickerEnabled = true;
    }
@@ -155,7 +155,7 @@ public class AutoClicker extends Module {
          ravenClick();
       }
       else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.SKID){
-         ////System.out.println("skidlcick");
+         //////System.out.println("skidlcick");
          skidClick(ev, null);
       }
    }
@@ -169,11 +169,11 @@ public class AutoClicker extends Module {
          return;
 
       if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
-         ////System.out.println("ravern");
+         //////System.out.println("ravern");
          ravenClick();
       }
       else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.SKID){
-         ////System.out.println("skidlcick");
+         //////System.out.println("skidlcick");
          skidClick(null, ev);
       }
    }
@@ -284,7 +284,7 @@ public class AutoClicker extends Module {
       } else if (!Mouse.isButtonDown(1)){
          this.rightClickWaiting = false;
          this.allowedClick = false;
-         ////System.out.println("Reset allowedClick");
+         //////System.out.println("Reset allowedClick");
       }
    }
 
@@ -303,7 +303,7 @@ public class AutoClicker extends Module {
          } else if (!Mouse.isButtonDown(1)){
             this.rightClickWaiting = false;
             this.allowedClick = false;
-            ////System.out.println("Reset allowedClick");
+            //////System.out.println("Reset allowedClick");
             this.righti = 0L;
             this.rightj = 0L;
             this.leftDownTime = 0L;
@@ -358,22 +358,22 @@ public class AutoClicker extends Module {
          if(!rightClickWaiting && !allowedClick) {
             this.rightClickWaitStartTime = System.currentTimeMillis();
             this.rightClickWaiting = true;
-            ////System.out.println("Started waiting");
+            //////System.out.println("Started waiting");
             return  false;
          } else if(this.rightClickWaiting && !allowedClick) {
             double passedTime = System.currentTimeMillis() - this.rightClickWaitStartTime;
-            ////System.out.println("Waiting but not allowed");
+            //////System.out.println("Waiting but not allowed");
             if (passedTime >= rightClickDelay.getInput()) {
                this.allowedClick = true;
                this.rightClickWaiting = false;
-               ////System.out.println("allowed");
+               //////System.out.println("allowed");
                return true;
             } else {
-               ////System.out.println("Waiting");
+               //////System.out.println("Waiting");
                return false;
             }
          } else {
-            ////System.out.println("Something else " + this.rightClickWaiting + " " + allowedClick);
+            //////System.out.println("Something else " + this.rightClickWaiting + " " + allowedClick);
          }
       }
 
@@ -414,7 +414,7 @@ public class AutoClicker extends Module {
             KeyBinding.setKeyBindState(key, false);
          }
       } else {
-         ////System.out.println("gen");
+         //////System.out.println("gen");
          this.genLeftTimings();
       }
 

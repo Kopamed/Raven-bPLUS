@@ -57,9 +57,9 @@ public class Help extends Command {
                     printLine = 0;
                     for(String line : argText.split("<br>")){
                         if(printLine == 1) {
-                            CommandLine.print("§3Argument " + argIndex + ": " + argText, 0);
+                            CommandLine.print("§3Argument " + argIndex + ": " + line, 0);
                         }else{
-                            CommandLine.print("§" + argIndex + ": " + argText, 0);
+                            CommandLine.print("§" + argIndex + ": " + line, 0);
                         }
                         printLine++;
                     }

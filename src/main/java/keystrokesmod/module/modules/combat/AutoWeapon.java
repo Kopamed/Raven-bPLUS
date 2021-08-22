@@ -24,8 +24,8 @@ public class AutoWeapon extends Module {
     public void datsDaSoundOfDaPolis(TickEvent.RenderTickEvent ev){
         if(!ay.isPlayerInGame() || mc.currentScreen != null) return;
 
-        Entity target = mc.objectMouseOver.entityHit;
-        if(target==null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))){
+
+        if(mc.objectMouseOver==null || mc.objectMouseOver.entityHit==null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))){
             if(onWeapon){
                 onWeapon = false;
                 if(goBackToPrevSlot.isToggled()){
@@ -33,6 +33,7 @@ public class AutoWeapon extends Module {
                 }
             }
         } else{
+            Entity target = mc.objectMouseOver.entityHit;
             if(onlyWhenHoldingDown.isToggled()){
                 if(!Mouse.isButtonDown(0)) return;
             }

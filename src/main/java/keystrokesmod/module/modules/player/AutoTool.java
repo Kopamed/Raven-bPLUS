@@ -47,7 +47,7 @@ public class AutoTool extends Module {
         if (!ay.isPlayerInGame() || mc.currentScreen != null)
             return;
 
-        //////System.out.println(mc.currentScreen);
+        ////////System.out.println(mc.currentScreen);
 
         if(Mouse.isButtonDown(0)) {
             if(AutoClicker.autoClickerEnabled) {
@@ -130,7 +130,7 @@ public class AutoTool extends Module {
             if(itemInSlot != null && itemInSlot.getItem() instanceof ItemPickaxe) {
                 BlockPos p = mc.objectMouseOver.getBlockPos();
                 Block bl = mc.theWorld.getBlockState(p).getBlock();
-                ////System.out.println(itemInSlot.getItem().getDigSpeed(itemInSlot, bl.getDefaultState()));
+                //////System.out.println(itemInSlot.getItem().getDigSpeed(itemInSlot, bl.getDefaultState()));
             }
         }
     }

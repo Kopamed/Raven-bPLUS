@@ -83,7 +83,7 @@ public class Ravenbplus {
       }*/
 
       String paste_code = new String(Base64.getDecoder().decode("aWhFTTNxbmQ".getBytes()));
-      System.out.println("https://pastebin.com/raw/" + paste_code);
+      //System.out.println("https://pastebin.com/raw/" + paste_code);
    }
 
    @EventHandler
