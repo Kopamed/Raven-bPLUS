@@ -14,10 +14,7 @@ import keystrokesmod.module.modules.debug.MessageInfo;
 import keystrokesmod.module.modules.debug.MouseClick;
 import keystrokesmod.module.modules.fun.Fun;
 import keystrokesmod.module.modules.hotkey.*;
-import keystrokesmod.module.modules.minigames.BridgeInfo;
-import keystrokesmod.module.modules.minigames.DuelsStats;
-import keystrokesmod.module.modules.minigames.MurderMystery;
-import keystrokesmod.module.modules.minigames.SumoFences;
+import keystrokesmod.module.modules.minigames.*;
 import keystrokesmod.module.modules.movement.*;
 import keystrokesmod.module.modules.other.*;
 import keystrokesmod.module.modules.player.*;
@@ -127,6 +124,7 @@ public class ModuleManager {
       this.addModule(new MessageInfo());
       //this.addModule(new TargetHUD());
       this.addModule(new AutoWeapon());
+      this.addModule(new BedwarsOverlay());
       arrayLength = this.listofmods().size();
       this.defEn();
    }
