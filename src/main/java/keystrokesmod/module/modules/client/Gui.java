@@ -41,6 +41,5 @@ public class Gui extends Module {
          break;
 
       }
-
    }
 }

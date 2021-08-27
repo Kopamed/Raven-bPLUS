@@ -126,6 +126,7 @@ public class ModuleManager {
       this.addModule(new AutoWeapon());
       this.addModule(new BedwarsOverlay());
       arrayLength = this.listofmods().size();
+      this.addModule(new DiscordRPCModule());
       this.defEn();
    }
 

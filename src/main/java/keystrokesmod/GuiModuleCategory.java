@@ -42,7 +42,7 @@ public class GuiModuleCategory {
       this.marginX = 80;
       this.marginY = 4.5;
 
-      for(Iterator var3 = Ravenbplus.notAName.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+      for(Iterator<Module> var3 = Ravenbplus.notAName.getm0dmanager().inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
          Module mod = (Module) var3.next();
          m3 b = new m3(mod, this, tY);
          this.modulesInCategory.add(b);

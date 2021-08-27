@@ -12,7 +12,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
 public class ASMTransformerClass implements IClassTransformer {
-   public static String eventHandlerClassName = ASMEventHandler.class.getName();
+   public static String eventHandlerClassName = ASMEventHandler.class.getName().replace(".", "/"); //added replace or it won't launch
    private final Multimap<String, Transformer> m = ArrayListMultimap.create();
    public static final boolean outputBytecode = Boolean.parseBoolean(System.getProperty("debugBytecode", "false"));
 

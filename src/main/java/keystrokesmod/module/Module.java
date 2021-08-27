@@ -21,13 +21,21 @@ public class Module {
    protected static Minecraft mc;
    private boolean isToggled = false;
 
+   public Module(String name, Module.category moduleCategory) {
+      this.moduleName = name;
+      this.moduleCategory = moduleCategory;
+      this.keycode = 0;
+      this.enabled = false;
+      this.settings = new ArrayList<>();
+   }
+
    public Module(String moduleName, Module.category moduleCategory, int keycode) {
       this.moduleName = moduleName;
       this.moduleCategory = moduleCategory;
       this.keycode = keycode;
       this.enabled = false;
       mc = Minecraft.getMinecraft();
-      this.settings = new ArrayList();
+      this.settings = new ArrayList<>();
    }
 
    public static Module getModule(Class<? extends Module> a) {
@@ -43,13 +51,6 @@ public class Module {
       } while(module.getClass() != a);
 
       return module;
-   }
-
-   public Module(String name, Module.category moduleCategory) {
-      this.moduleName = name;
-      this.moduleCategory = moduleCategory;
-      this.keycode = 0;
-      this.enabled = false;
    }
 
    public void keybind() {
