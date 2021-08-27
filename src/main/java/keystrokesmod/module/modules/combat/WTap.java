@@ -27,11 +27,11 @@ public class WTap extends Module {
     public WTap(){
         super("WTap", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
-        this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 75, 1, 500, 5));
-        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 120, 1, 500, 5));
+        this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 25, 1, 500, 5));
+        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 55, 1, 500, 5));
         this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
         this.registerSetting(maxOnceEvery = new ModuleSettingSlider("Once every max hits: ", 1, 1, 10, 1));
-        this.registerSetting(range = new ModuleSettingSlider("Range: ", 2.85, 1, 6, 0.05));
+        this.registerSetting(range = new ModuleSettingSlider("Range: ", 3, 1, 6, 0.05));
         this.registerSetting(eventType = new ModuleSettingSlider("Value: ", 2, 1, 2, 1));
         this.registerSetting(eventTypeDesc = new ModuleDesc("Mode: POST"));
     }
@@ -134,7 +134,9 @@ public class WTap extends Module {
     }
 
     private static void startCombo() {
-        KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), false);
-        KeyBinding.onTick(mc.gameSettings.keyBindForward.getKeyCode());
+        if(Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode())) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), false);
+            KeyBinding.onTick(mc.gameSettings.keyBindForward.getKeyCode());
+        }
     }
 }
