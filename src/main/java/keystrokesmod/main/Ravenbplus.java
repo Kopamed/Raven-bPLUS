@@ -43,7 +43,8 @@ import javax.imageio.ImageIO;
    modid = "keystrokesmod",
    name = "KeystrokesMod",
    version = "KMV5",
-   acceptedMinecraftVersions = "[1.8.9]"
+   acceptedMinecraftVersions = "[1.8.9]",
+   clientSideOnly = true
 )
 public class Ravenbplus {
    public static final int ver = 3;
