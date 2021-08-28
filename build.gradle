@@ -10,28 +10,21 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
 }
-
-apply plugin: 'net.minecraftforge.gradle.forge'
 
 apply plugin: 'java'
 compileJava {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 }
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
-repositories {
-    jcenter()
-}
-
-configurations {
-    jarLibs // to include deps in jar (like discord-rpc)
-}
 
 dependencies {
-    compile 'club.minnced:java-discord-rpc:+'
-    jarLibs 'club.minnced:java-discord-rpc:+'
+    implementation files("libs/discord-rpc.jar")
 }
 
 
@@ -56,10 +49,11 @@ minecraft {
 
 /* -Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin*/
 jar {
-    from {
-        configurations.jarLibs.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    enabled = false
+    dependsOn(shadowJar { classifier = null })
+}
 
+shadowJar {
     manifest {
         attributes(
                 "FMLCorePlugin": "keystrokesmod.tweaker.FMLLoadingPlugin",
@@ -68,7 +62,9 @@ jar {
                 "ModSide": "CLIENT"
         )
     }
-
+}
+reobf {
+    shadowJar {} // Reobfuscate the shadowed JAR
 }
 
 processResources {
