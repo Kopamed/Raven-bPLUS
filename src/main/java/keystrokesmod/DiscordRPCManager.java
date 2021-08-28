@@ -59,10 +59,7 @@ public class DiscordRPCManager {
     private void updateRPC_ingame() {
         int toggled_module = 0;
         for (int i = 0; i < Ravenbplus.notAName.getm0dmanager().listofmods().size(); i++) {
-            if (Ravenbplus.notAName.getm0dmanager().listofmods().get(i).isEnabled()) {
-                toggled_module++;
-                System.out.println(Ravenbplus.notAName.getm0dmanager().listofmods().get(i).getName());
-            }
+            if (Ravenbplus.notAName.getm0dmanager().listofmods().get(i).isEnabled()) toggled_module++;
         }
         updateRavenRPC("In game", toggled_module + "/" + Ravenbplus.notAName.getm0dmanager().listofmods().size() + " Modules activated");
     }
@@ -76,7 +73,7 @@ public class DiscordRPCManager {
 
     @SubscribeEvent
     public void onLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.player.getName() == Minecraft.getMinecraft().thePlayer.getName()) {
+        if (event.player.getName().equals(Minecraft.getMinecraft().thePlayer.getName())) {
             updateRavenRPC("In menus", null);
         }
     }
