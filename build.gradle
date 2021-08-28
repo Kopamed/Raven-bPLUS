@@ -10,24 +10,23 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
 }
-
-apply plugin: 'net.minecraftforge.gradle.forge'
 
 apply plugin: 'java'
 compileJava {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 }
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
-repositories {
-    jcenter()
-}
 
 dependencies {
-    compile 'club.minnced:java-discord-rpc:+'
+    implementation files("libs/discord-rpc.jar")
 }
+
 
 /*
 // for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
@@ -35,6 +34,7 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
+
 version = "1.1.0"
 group= "club.sk1er.keystrokes"
 archivesBaseName = "[1.8.9] BetterKeystrokes V"
@@ -46,26 +46,38 @@ minecraft {
     mappings = "stable_20"
     //clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin"
 }
-/* -Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin
 
+/* -Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin*/
 jar {
-        manifest {
-            attributes("FMLCorePlugin": "keystrokesmod.tweaker.FMLLoadingPlugin", "ForceLoadAsMod": true, FMLCorePluginContainsFMLMod: true, "ModSide": "CLIENT")
-        }
-}*/
+    enabled = false
+    dependsOn(shadowJar { classifier = null })
+}
 
-processResources
-        {
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
+shadowJar {
+    manifest {
+        attributes(
+                "FMLCorePlugin": "keystrokesmod.tweaker.FMLLoadingPlugin",
+                "ForceLoadAsMod": true,
+                FMLCorePluginContainsFMLMod: true,
+                "ModSide": "CLIENT"
+        )
+    }
+}
+reobf {
+    shadowJar {} // Reobfuscate the shadowed JAR
+}
 
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
 
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

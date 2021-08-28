@@ -1,16 +1,15 @@
 package keystrokesmod;
 
-import club.minnced.discord.rpc.DiscordEventHandlers;
-import club.minnced.discord.rpc.DiscordRPC;
-import club.minnced.discord.rpc.DiscordRichPresence;
 import keystrokesmod.main.Ravenbplus;
+import net.arikia.dev.drpc.DiscordEventHandlers;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class DiscordRPCManager {
-    private final DiscordRPC raven_rpc = DiscordRPC.INSTANCE;
 
     private Thread rpc_thread;
 
@@ -21,13 +20,14 @@ public class DiscordRPCManager {
 
     public void shutdown_rpc() {
         rpc_thread.interrupt();
-        raven_rpc.Discord_ClearPresence();
+        DiscordRPC.discordClearPresence();
     }
 
     private void initRavenRPC() {
-        String applicationId = "880735714805968896";
-        DiscordEventHandlers handlers = new DiscordEventHandlers();
-        raven_rpc.Discord_Initialize(applicationId, handlers, true, "");
+        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
+            System.out.println("Starting RPC on : " + user.username + "#" + user.discriminator);
+        }).build();
+        DiscordRPC.discordInitialize("880735714805968896", handlers, true);
     }
 
     public void updateRavenRPC() {
@@ -44,12 +44,12 @@ public class DiscordRPCManager {
         presence.details = details;
         if (state != null && !state.equals("")) presence.state = state;
         presence.largeImageKey = "raven";
-        raven_rpc.Discord_UpdatePresence(presence);
+        DiscordRPC.discordUpdatePresence(presence);
         (rpc_thread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
-                raven_rpc.Discord_RunCallbacks();
+                DiscordRPC.discordRunCallbacks();
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException ignored) {}
             }
         }, "RPC-Callback-Handler")).start();
@@ -59,10 +59,7 @@ public class DiscordRPCManager {
     private void updateRPC_ingame() {
         int toggled_module = 0;
         for (int i = 0; i < Ravenbplus.notAName.getm0dmanager().listofmods().size(); i++) {
-            if (Ravenbplus.notAName.getm0dmanager().listofmods().get(i).isEnabled()) {
-                toggled_module++;
-                System.out.println(Ravenbplus.notAName.getm0dmanager().listofmods().get(i).getName());
-            }
+            if (Ravenbplus.notAName.getm0dmanager().listofmods().get(i).isEnabled()) toggled_module++;
         }
         updateRavenRPC("In game", toggled_module + "/" + Ravenbplus.notAName.getm0dmanager().listofmods().size() + " Modules activated");
     }
@@ -76,7 +73,7 @@ public class DiscordRPCManager {
 
     @SubscribeEvent
     public void onLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.player.getName() == Minecraft.getMinecraft().thePlayer.getName()) {
+        if (event.player.getName().equals(Minecraft.getMinecraft().thePlayer.getName())) {
             updateRavenRPC("In menus", null);
         }
     }
