@@ -28,7 +28,7 @@ public class ConfigManager {
             //System.out.println("waiting");
         }
         this.loading = false;
-        configDirecotry = new File(Minecraft.getMinecraft().mcDataDir, "keystrokes" + File.separator + "configs");
+        configDirecotry = new File(Minecraft.getMinecraft().mcDataDir, "keystrokes" + File.separator + "configs" + File.separator);
         if (!configDirecotry.exists()) {
             configDirecotry.mkdir();
         }
@@ -136,8 +136,15 @@ public class ConfigManager {
         }
 
 
-        PrintWriter writer = null;
+        PrintWriter writer;
         try {
+            if (!this.currentConfig.exists()){
+                if (!this.configDirecotry.exists()) {
+                    this.configDirecotry.mkdirs();
+                }
+                this.currentConfig.createNewFile();
+            }
+
             writer = new PrintWriter(this.currentConfig);
             for (String line : finalString) {
                 writer.println(line);
