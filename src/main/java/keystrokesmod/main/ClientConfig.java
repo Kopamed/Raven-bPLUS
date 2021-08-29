@@ -3,7 +3,6 @@
 package keystrokesmod.main;
 
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -145,22 +144,22 @@ public class ClientConfig {
                Gui.guiTheme.setValue(Double.parseDouble(line));
                break;
             case 2:
-               Reach.a.setValue(Double.parseDouble(line));
+               Reach.min.setValue(Double.parseDouble(line));
                break;
             case 3:
-               Reach.b.setValue(Double.parseDouble(line));
+               Reach.max.setValue(Double.parseDouble(line));
                break;
             case 4:
-               Reach.c.setEnabled(Boolean.parseBoolean(line));
+               Reach.weapon_only.setEnabled(Boolean.parseBoolean(line));
                break;
             case 5:
-               Reach.d.setEnabled(Boolean.parseBoolean(line));
+               Reach.moving_only.setEnabled(Boolean.parseBoolean(line));
                break;
             case 6:
-               Reach.e.setEnabled(Boolean.parseBoolean(line));
+               Reach.sprint_only.setEnabled(Boolean.parseBoolean(line));
                break;
             case 7:
-               Reach.f.setEnabled(Boolean.parseBoolean(line));
+               Reach.hit_through_blocks.setEnabled(Boolean.parseBoolean(line));
                break;
             case 8:
                Module.getModule(Reach.class).setbind(Integer.parseInt(line));
