@@ -13,13 +13,13 @@ public class DiscordRPCManager {
 
     private Thread rpc_thread;
 
-
     public void init_rpc() {
         initRavenRPC();
     }
 
     public void shutdown_rpc() {
-        rpc_thread.interrupt();
+        if (rpc_thread != null)
+            rpc_thread.interrupt();
         DiscordRPC.discordClearPresence();
     }
 
