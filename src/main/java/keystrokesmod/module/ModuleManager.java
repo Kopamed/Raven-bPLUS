@@ -48,6 +48,8 @@ public class ModuleManager {
    public static Module keepSprint;
    public static int arrayLength = 0;
 
+   public static boolean initialized = false;
+
    public void r3g1st3r() {
       this.addModule(autoClicker = new AutoClicker());
       this.addModule(new AimAssist());
@@ -128,6 +130,8 @@ public class ModuleManager {
       arrayLength = this.listofmods().size();
       this.addModule(new DiscordRPCModule());
       this.defEn();
+
+      initialized = true;
    }
 
    private void defEn() {
