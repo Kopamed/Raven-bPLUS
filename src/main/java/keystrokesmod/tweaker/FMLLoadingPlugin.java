@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 public class FMLLoadingPlugin implements net.minecraftforge.fml.relauncher.IFMLLoadingPlugin {
    public String[] getASMTransformerClass() {
       return new String[]{ASMTransformerClass.class.getName()};
-      //ASMTransformerClass.class.getName()
    }
 
    public String getModContainerClass() {
