@@ -1,6 +1,5 @@
 package keystrokesmod;
 
-import keystrokesmod.main.ClientConfig;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.module.modules.combat.AutoClicker;
@@ -32,12 +31,12 @@ public class ab {
 
    public static void ss() {
       theme = Gui.guiTheme.getInput();
-      r1 = Reach.a.getInput();
-      r2 = Reach.b.getInput();
-      r3 = Reach.c.isToggled();
-      r4 = Reach.d.isToggled();
-      r5 = Reach.e.isToggled();
-      r6 = Reach.f.isToggled();
+      r1 = Reach.min.getInput();
+      r2 = Reach.max.getInput();
+      r3 = Reach.weapon_only.isToggled();
+      r4 = Reach.moving_only.isToggled();
+      r5 = Reach.sprint_only.isToggled();
+      r6 = Reach.hit_through_blocks.isToggled();
       r7 = Module.getModule(Reach.class).getKeycode();
       v1 = Velocity.a.getInput();
       v2 = Velocity.b.getInput();

@@ -27,10 +27,10 @@ public class ASMTransformerClass implements IClassTransformer {
    }
 
    private void addTransformer(Transformer transformer) {
-      String[] var2 = transformer.getClassName();
+      String[] targetClasses = transformer.getClassName();
 
-      for (String c : var2) {
-         this.m.put(c, transformer);
+      for (String targetClass : targetClasses) {
+         this.m.put(targetClass, transformer);
       }
    }
 
@@ -52,8 +52,7 @@ public class ASMTransformerClass implements IClassTransformer {
 
       try {
          classNode.accept(classWriter);
-      } catch (Throwable var9) {
-      }
+      } catch (Throwable ignored) {}
 
       return classWriter.toByteArray();
    }

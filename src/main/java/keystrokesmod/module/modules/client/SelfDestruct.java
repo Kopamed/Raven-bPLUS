@@ -15,6 +15,8 @@ public class SelfDestruct extends Module {
    }
 
    public void onEnable() {
+      this.disable();
+
       mc.displayGuiScreen(null);
       destructed = true;
 
@@ -23,7 +25,5 @@ public class SelfDestruct extends Module {
             module.disable();
          }
       }
-
-      this.disable();
    }
 }

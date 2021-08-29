@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class AntiBot extends Module {
-   private static final HashMap<EntityPlayer, Long> newEnt = new HashMap();
+   private static final HashMap<EntityPlayer, Long> newEnt = new HashMap<>();
    private final long ms = 4000L;
    public static ModuleSettingTick a;
 
@@ -29,10 +29,10 @@ public class AntiBot extends Module {
    }
 
    @SubscribeEvent
-   public void w(EntityJoinWorldEvent j) {
+   public void onEntityJoinWorld(EntityJoinWorldEvent event) {
       if(!ay.isPlayerInGame()) return;
-      if (a.isToggled() && j.entity instanceof EntityPlayer && j.entity != mc.thePlayer) {
-         newEnt.put((EntityPlayer)j.entity, System.currentTimeMillis());
+      if (a.isToggled() && event.entity instanceof EntityPlayer && event.entity != mc.thePlayer) {
+         newEnt.put((EntityPlayer)event.entity, System.currentTimeMillis());
       }
 
    }

@@ -3,6 +3,7 @@ package keystrokesmod.config;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
+import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.version;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.Sys;
@@ -117,8 +118,7 @@ public class ConfigManager {
 
                     settingString.append(seperator).append(moduleSetting.mode);
                     settingString.append(seperator).append(setting.getInput());
-                }
-                else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
+                } else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
                     ModuleSettingTick setting = (ModuleSettingTick) moduleSetting;
 
                     settingString.append(seperator).append(moduleSetting.mode);

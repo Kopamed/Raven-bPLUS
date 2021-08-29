@@ -23,29 +23,29 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class Reach extends Module {
-   public static ModuleSettingSlider a;
-   public static ModuleSettingSlider b;
-   public static ModuleSettingTick c;
-   public static ModuleSettingTick d;
-   public static ModuleSettingTick e;
-   public static ModuleSettingTick f;
+   public static ModuleSettingSlider min;
+   public static ModuleSettingSlider max;
+   public static ModuleSettingTick weapon_only;
+   public static ModuleSettingTick moving_only;
+   public static ModuleSettingTick sprint_only;
+   public static ModuleSettingTick hit_through_blocks;
 
    public Reach() {
       super("Reach", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleSettingSlider("Min", 3.1D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(b = new ModuleSettingSlider("Max", 3.3D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(c = new ModuleSettingTick("Weapon only", false));
-      this.registerSetting(d = new ModuleSettingTick("Moving only", false));
-      this.registerSetting(e = new ModuleSettingTick("Sprint only", false));
-      this.registerSetting(f = new ModuleSettingTick("Hit through blocks", false));
+      this.registerSetting(min = new ModuleSettingSlider("Min", 3.1D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(max = new ModuleSettingSlider("Max", 3.3D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(weapon_only = new ModuleSettingTick("Weapon only", false));
+      this.registerSetting(moving_only = new ModuleSettingTick("Moving only", false));
+      this.registerSetting(sprint_only = new ModuleSettingTick("Sprint only", false));
+      this.registerSetting(hit_through_blocks = new ModuleSettingTick("Hit through blocks", false));
    }
 
    public void guiUpdate() {
-      ay.correctSliders(a, b);
+      ay.correctSliders(min, max);
    }
 
    @SubscribeEvent
-   public void e(MouseEvent ev) {
+   public void onMouse(MouseEvent ev) {
       // legit event
       if(!ay.isPlayerInGame()) return;
       if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
@@ -55,7 +55,7 @@ public class Reach extends Module {
    }
 
    @SubscribeEvent
-   public void ef(TickEvent.RenderTickEvent ev) {
+   public void onRenderTick(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!ay.isPlayerInGame()) return;
 
@@ -67,32 +67,26 @@ public class Reach extends Module {
    }
 
    public static boolean call() {
-      if (!ay.isPlayerInGame()) {
-         return false;
-      } else if (c.isToggled() && !ay.isPlayerHoldingWeapon()) {
-         return false;
-      } else if (d.isToggled() && (double)mc.thePlayer.moveForward == 0.0D && (double)mc.thePlayer.moveStrafing == 0.0D) {
-         return false;
-      } else if (e.isToggled() && !mc.thePlayer.isSprinting()) {
+      if (!ay.isPlayerInGame()) return false;
+      if (weapon_only.isToggled() && !ay.isPlayerHoldingWeapon()) return false;
+      if (moving_only.isToggled() && (double)mc.thePlayer.moveForward == 0.0D && (double)mc.thePlayer.moveStrafing == 0.0D) return false;
+      if (sprint_only.isToggled() && !mc.thePlayer.isSprinting()) return false;
+      if (!hit_through_blocks.isToggled() && mc.objectMouseOver != null) {
+         BlockPos p = mc.objectMouseOver.getBlockPos();
+         if (p != null && mc.theWorld.getBlockState(p).getBlock() != Blocks.air) {
+            return false;
+         }
+      }
+
+      double r = ay.ranModuleVal(min, max, ay.rand());
+      Object[] o = zz(r, 0.0D);
+      if (o == null) {
          return false;
       } else {
-         if (!f.isToggled() && mc.objectMouseOver != null) {
-            BlockPos p = mc.objectMouseOver.getBlockPos();
-            if (p != null && mc.theWorld.getBlockState(p).getBlock() != Blocks.air) {
-               return false;
-            }
-         }
-
-         double r = ay.ranModuleVal(a, b, ay.rand());
-         Object[] o = zz(r, 0.0D);
-         if (o == null) {
-            return false;
-         } else {
-            Entity en = (Entity)o[0];
-            mc.objectMouseOver = new MovingObjectPosition(en, (Vec3)o[1]);
-            mc.pointedEntity = en;
-            return true;
-         }
+         Entity en = (Entity)o[0];
+         mc.objectMouseOver = new MovingObjectPosition(en, (Vec3)o[1]);
+         mc.pointedEntity = en;
+         return true;
       }
    }
 
@@ -101,17 +95,17 @@ public class Reach extends Module {
          zzD = mc.playerController.extendedReach() ? 6.0D : 3.0D;
       }
 
-      Entity zz2 = mc.getRenderViewEntity();
+      Entity entity1 = mc.getRenderViewEntity();
       Entity entity = null;
-      if (zz2 == null) {
+      if (entity1 == null) {
          return null;
       } else {
          mc.mcProfiler.startSection("pick");
-         Vec3 zz3 = zz2.getPositionEyes(1.0F);
-         Vec3 zz4 = zz2.getLook(1.0F);
-         Vec3 zz5 = zz3.addVector(zz4.xCoord * zzD, zz4.yCoord * zzD, zz4.zCoord * zzD);
+         Vec3 eyes_positions = entity1.getPositionEyes(1.0F);
+         Vec3 look = entity1.getLook(1.0F);
+         Vec3 new_eyes_pos = eyes_positions.addVector(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD);
          Vec3 zz6 = null;
-         List zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(zz2, zz2.getEntityBoundingBox().addCoord(zz4.xCoord * zzD, zz4.yCoord * zzD, zz4.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
+         List<Entity> zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(entity1, entity1.getEntityBoundingBox().addCoord(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
          double zz9 = zzD;
 
          for (Object o : zz8) {
@@ -120,17 +114,17 @@ public class Reach extends Module {
                float ex = (float) ((double) zz11.getCollisionBorderSize() * HitBox.exp(zz11));
                AxisAlignedBB zz13 = zz11.getEntityBoundingBox().expand(ex, ex, ex);
                zz13 = zz13.expand(zzE, zzE, zzE);
-               MovingObjectPosition zz14 = zz13.calculateIntercept(zz3, zz5);
-               if (zz13.isVecInside(zz3)) {
+               MovingObjectPosition zz14 = zz13.calculateIntercept(eyes_positions, new_eyes_pos);
+               if (zz13.isVecInside(eyes_positions)) {
                   if (0.0D < zz9 || zz9 == 0.0D) {
                      entity = zz11;
-                     zz6 = zz14 == null ? zz3 : zz14.hitVec;
+                     zz6 = zz14 == null ? eyes_positions : zz14.hitVec;
                      zz9 = 0.0D;
                   }
                } else if (zz14 != null) {
-                  double zz15 = zz3.distanceTo(zz14.hitVec);
+                  double zz15 = eyes_positions.distanceTo(zz14.hitVec);
                   if (zz15 < zz9 || zz9 == 0.0D) {
-                     if (zz11 == zz2.ridingEntity) {
+                     if (zz11 == entity1.ridingEntity) {
                         if (zz9 == 0.0D) {
                            entity = zz11;
                            zz6 = zz14.hitVec;
