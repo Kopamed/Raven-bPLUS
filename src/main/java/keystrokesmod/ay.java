@@ -37,6 +37,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 
 import java.time.format.DateTimeFormatter;
@@ -99,6 +100,11 @@ public class ay {
          String m = r("&7[&dR&7]&r " + txt);
          mc.thePlayer.addChatMessage(new ChatComponentText(m));
       }
+   }
+
+   public static long getSystemTime()
+   {
+      return Sys.getTime() * 1000L / Sys.getTimerResolution();
    }
 
    public static String r(String txt) {
