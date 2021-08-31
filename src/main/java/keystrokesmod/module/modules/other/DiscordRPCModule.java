@@ -16,7 +16,7 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onEnable() {
-        if (new OSUtil().isMac()) {
+        if (!new OSUtil().isMac()) {
             rpc.init_rpc();
             rpc.updateRavenRPC();
             MinecraftForge.EVENT_BUS.register(rpc);
