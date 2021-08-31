@@ -34,11 +34,11 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
-       uses: "marvinpinto/action-automatic-releases@latest"
-          with:
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             automatic_release_tag: "latest"
             prerelease: true
             title: "Latest Build"
             files: |
-              ./build/libs/
+              ./build/libs/*.jar
