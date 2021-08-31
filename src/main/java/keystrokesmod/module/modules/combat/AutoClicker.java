@@ -15,7 +15,9 @@ import keystrokesmod.module.modules.debug.Click;
 import keystrokesmod.utils.ay;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
@@ -146,7 +148,7 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if(!ay.currentScreenMinecraft())
+      if(!ay.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
          return;
 
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
@@ -163,7 +165,7 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onTick(TickEvent.PlayerTickEvent ev) {
-      if(!ay.currentScreenMinecraft())
+      if(!ay.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
          return;
 
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
