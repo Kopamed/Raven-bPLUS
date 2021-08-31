@@ -19,8 +19,8 @@ public class FPSSpoofer extends Module {
     public FPSSpoofer() {
         super("FPSSpoof", category.render, 0);
         this.registerSetting(desc = new ModuleDesc("Spoofs your fps"));
-        this.registerSetting(min =  new ModuleSettingSlider("Min FPS:", 10000, 0, 25000, 100));
-        this.registerSetting(max =  new ModuleSettingSlider("Max FPS:", 14000, 0, 25000, 100));
+        this.registerSetting(min =  new ModuleSettingSlider("Min FPS:", 10000, 0, 100000, 100));
+        this.registerSetting(max =  new ModuleSettingSlider("Max FPS:", 14000, 0, 100000, 100));
 
         try {
             r = mc.getClass().getDeclaredField("field_71420_M");
