@@ -34,8 +34,8 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
-      - name: Upload artifact
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@v1.2.1
           with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             automatic_release_tag: "latest"
