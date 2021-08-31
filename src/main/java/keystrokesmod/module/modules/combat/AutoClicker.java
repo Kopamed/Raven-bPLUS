@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
@@ -148,7 +149,10 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if(!ay.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
+      if(!ay.currentScreenMinecraft() &&
+              !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
+          && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
+      )
          return;
 
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
@@ -165,7 +169,9 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onTick(TickEvent.PlayerTickEvent ev) {
-      if(!ay.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
+      if(!ay.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
+              && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
+      )
          return;
 
       if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
@@ -312,7 +318,7 @@ public class AutoClicker extends Module {
             this.leftDownTime = 0L;
             this.leftUpTime = 0L;
          }
-      } else if (inventoryFill.isToggled() && mc.currentScreen instanceof GuiInventory) {
+      } else if (inventoryFill.isToggled() && (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChest)) {
          if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
             this.leftDownTime = 0L;
             this.leftUpTime = 0L;

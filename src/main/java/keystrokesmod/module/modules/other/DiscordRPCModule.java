@@ -16,7 +16,7 @@ public class DiscordRPCModule extends Module {
 
     public DiscordRPCModule() {
         super("DiscordRPC", category.other);
-        this.registerSetting(rpcMode = new ModuleSettingSlider("Mode", 5.0D, 1.0D, 4.0D, 1.0D));
+        this.registerSetting(rpcMode = new ModuleSettingSlider("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
         this.registerSetting(rpcModeDesc = new ModuleDesc("Raven b+"));
     }
 
