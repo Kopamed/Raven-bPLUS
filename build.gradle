@@ -24,7 +24,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 dependencies {
-    implementation files("libs/discord-rpc.jar")
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.9.0'
 }
 
 
