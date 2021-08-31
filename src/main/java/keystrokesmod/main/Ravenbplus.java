@@ -146,16 +146,16 @@ public class Ravenbplus {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-               List<Module> pain = notAName.getm0dmanager().listofmods();
-            for (Module pleaseStopCrashing : pain) {
+            for (int i = 0; i < ModuleManager.modsList.size(); i++) {
+               Module module = ModuleManager.modsList.get(i);
                if (mc.currentScreen == null) {
-                  pleaseStopCrashing.keybind();
+                  module.keybind();
                } else if (mc.currentScreen instanceof ClickGui) {
-                  pleaseStopCrashing.guiUpdate();
+                  module.guiUpdate();
                }
 
-               if (pleaseStopCrashing.isEnabled()) {
-                  pleaseStopCrashing.update();
+               if (module.isEnabled()) {
+                  module.update();
                }
             }
 
