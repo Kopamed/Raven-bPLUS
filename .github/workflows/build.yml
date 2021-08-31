@@ -34,11 +34,9 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
-      - uses: "marvinpinto/action-automatic-releases@v1.2.1"
-          with:
-            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-            automatic_release_tag: "latest"
-            prerelease: true
-            title: "Latest Build"
-            files: |
-              ./build/libs/*.jar
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: Raven B+
+          path: build/libs
+          retention-days: 30
