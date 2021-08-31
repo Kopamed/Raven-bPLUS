@@ -146,19 +146,17 @@ public class Ravenbplus {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-               List<Module> pain = notAName.getm0dmanager().listofmods();
-               for(int indianScammerTech = 0; indianScammerTech < pain.size(); indianScammerTech++){
-                  Module pleaseStopCrashing = pain.get(indianScammerTech);
-                  if (mc.currentScreen == null) {
-                     pleaseStopCrashing.keybind();
-                  } else if (mc.currentScreen instanceof ClickGui) {
-                     pleaseStopCrashing.guiUpdate();
-                  }
-
-                  if (pleaseStopCrashing.isEnabled()) {
-                     pleaseStopCrashing.update();
-                  }
+            for (Module module : notAName.getm0dmanager().listofmods()) {
+               if (mc.currentScreen == null) {
+                  module.keybind();
+               } else if (mc.currentScreen instanceof ClickGui) {
+                  module.guiUpdate();
                }
+
+               if (module.isEnabled()) {
+                  module.update();
+               }
+            }
 
          }
 
