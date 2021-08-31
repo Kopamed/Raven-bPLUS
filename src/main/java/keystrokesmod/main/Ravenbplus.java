@@ -147,18 +147,17 @@ public class Ravenbplus {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
                List<Module> pain = notAName.getm0dmanager().listofmods();
-               for(int indianScammerTech = 0; indianScammerTech < pain.size(); indianScammerTech++){
-                  Module pleaseStopCrashing = pain.get(indianScammerTech);
-                  if (mc.currentScreen == null) {
-                     pleaseStopCrashing.keybind();
-                  } else if (mc.currentScreen instanceof ClickGui) {
-                     pleaseStopCrashing.guiUpdate();
-                  }
-
-                  if (pleaseStopCrashing.isEnabled()) {
-                     pleaseStopCrashing.update();
-                  }
+            for (Module pleaseStopCrashing : pain) {
+               if (mc.currentScreen == null) {
+                  pleaseStopCrashing.keybind();
+               } else if (mc.currentScreen instanceof ClickGui) {
+                  pleaseStopCrashing.guiUpdate();
                }
+
+               if (pleaseStopCrashing.isEnabled()) {
+                  pleaseStopCrashing.update();
+               }
+            }
 
          }
 
@@ -175,7 +174,7 @@ public class Ravenbplus {
       if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
          if(event.message.getUnformattedText().startsWith("Your new API key is")){
             URLUtils.hypixelApiKey = event.message.getUnformattedText().replace("Your new API key is ", "");
-            //ay.sendMessageToSelf(event.message.getUnformattedText().replace("Your new API key is ", ""));
+            ay.sendMessageToSelf("&aSet api key to " + URLUtils.hypixelApiKey + "!");
             this.clientConfig.saveConfig();
          }
       }

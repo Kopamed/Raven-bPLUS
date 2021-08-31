@@ -128,9 +128,7 @@ public class ShiftTap extends Module {
     }
 
     private static void finishCombo() {
-        if(Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode()) && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())){
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), true);
-        }
     }
 
     private static void startCombo() {

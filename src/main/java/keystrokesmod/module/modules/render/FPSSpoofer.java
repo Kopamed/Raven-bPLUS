@@ -50,7 +50,7 @@ public class FPSSpoofer extends Module {
     @SubscribeEvent
     public void Tick(TickEvent.ClientTickEvent e){
         if(e.phase == TickEvent.Phase.START){
-            if(ticksPassed % 20 == 0) {
+            //if(ticksPassed % 20 == 0) {
                 guiUpdate();
                 if(r != null) {
                     try {
@@ -58,7 +58,7 @@ public class FPSSpoofer extends Module {
                     } catch (IllegalAccessException var4) {}
                 }
                 ticksPassed = 0;
-            }
+           // }
             ticksPassed++;
         }
     }
