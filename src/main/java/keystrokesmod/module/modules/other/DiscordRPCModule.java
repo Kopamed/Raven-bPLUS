@@ -22,8 +22,8 @@ public class DiscordRPCModule extends Module {
             MinecraftForge.EVENT_BUS.register(rpc);
         } else {
             mc.thePlayer.addChatMessage(new ChatComponentText(ay.r("<JMRaich> I'm sorry but Discord RPC don't work on Mac OS for now.")));
+            this.disable();
         }
-        this.disable();
     }
 
     public void onDisable() {
