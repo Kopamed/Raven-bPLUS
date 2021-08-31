@@ -129,6 +129,8 @@ public class ModuleManager {
       this.addModule(new BedwarsOverlay());
       arrayLength = this.listofmods().size();
       this.addModule(new DiscordRPCModule());
+      this.addModule(new ShiftTap());
+      this.addModule(new FPSSpoofer());
       this.defEn();
 
       initialized = true;

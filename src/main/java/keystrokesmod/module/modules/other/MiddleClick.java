@@ -1,22 +1,17 @@
 package keystrokesmod.module.modules.other;
 
-import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.combat.AimAssist;
-import keystrokesmod.module.modules.debug.Click;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public class MiddleClick extends Module {
