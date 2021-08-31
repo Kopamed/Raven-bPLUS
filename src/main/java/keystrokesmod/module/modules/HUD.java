@@ -34,6 +34,8 @@ public class HUD extends Module {
    public static HUDUtils.PositionMode positionMode;
    public static int logoSize;
    public static boolean showedError;
+   public static final String HUDX_prefix = "HUDX~ ";
+   public static final String HUDY_prefix = "HUDY~ ";
 
 
    public HUD() {
@@ -318,5 +320,21 @@ public class HUD extends Module {
       ASTOLFO2,
       ASTOLFO3,
       KOPAMED
+   }
+
+   public static int getHudX() {
+      return hudX;
+   }
+
+   public static int getHudY() {
+      return hudY;
+   }
+
+   public static void setHudX(int hudX) {
+      HUD.hudX = hudX;
+   }
+
+   public static void setHudY(int hudY) {
+      HUD.hudY = hudY;
    }
 }
