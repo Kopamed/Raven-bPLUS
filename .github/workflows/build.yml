@@ -41,4 +41,4 @@ jobs:
             prerelease: true
             title: "Latest Build"
             files: |
-              ./build/libs/.jar
+              ./build/libs/
