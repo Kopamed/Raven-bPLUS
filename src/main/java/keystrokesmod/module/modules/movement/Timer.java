@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.ClickGui;
 

@@ -1,10 +1,9 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 

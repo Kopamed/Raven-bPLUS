@@ -1,9 +1,8 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.CommandLine;
-import keystrokesmod.URLUtils;
+import keystrokesmod.utils.URLUtils;
 import keystrokesmod.command.Command;
-import keystrokesmod.main.ClientConfig;
 import keystrokesmod.main.Ravenbplus;
 
 public class SetKey extends Command {

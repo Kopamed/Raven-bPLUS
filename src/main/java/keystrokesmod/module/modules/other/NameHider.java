@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.modules.minigames.DuelsStats;
 
 public class NameHider extends Module {

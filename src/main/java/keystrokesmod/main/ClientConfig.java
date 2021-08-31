@@ -9,14 +9,14 @@ import java.util.Scanner;
 
 import keystrokesmod.GuiModuleCategory;
 import keystrokesmod.ab;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.module.modules.combat.AutoClicker;
 import keystrokesmod.module.modules.combat.Reach;
 import keystrokesmod.module.modules.combat.Velocity;
-import keystrokesmod.URLUtils;
+import keystrokesmod.utils.URLUtils;
 import net.minecraft.client.Minecraft;
 
 public class ClientConfig {

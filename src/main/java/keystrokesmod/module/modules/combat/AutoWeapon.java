@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.combat;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.entity.Entity;

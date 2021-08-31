@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.*;
+import keystrokesmod.utils.HUDUtils;
+import keystrokesmod.utils.ay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;

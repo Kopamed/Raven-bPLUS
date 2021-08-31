@@ -2,11 +2,11 @@
 
 package keystrokesmod.module.modules.client;
 
-import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ay;
 
 public class Gui extends Module {
    public static final int bind = 54;

@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.CommandLine;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.other.FakeChat;
 

@@ -4,11 +4,11 @@ package keystrokesmod.module.modules.world;
 
 import java.util.HashMap;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.player.Freecam;
+import keystrokesmod.utils.ay;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;

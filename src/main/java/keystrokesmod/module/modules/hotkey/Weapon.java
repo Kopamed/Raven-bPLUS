@@ -1,13 +1,9 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.*;
-
-import java.util.Collections;
 
 public class Weapon extends Module {
     public Weapon() {

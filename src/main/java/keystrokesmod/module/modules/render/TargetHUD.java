@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.render;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.Minecraft;
@@ -9,7 +9,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class TargetHUD extends Module {
     public static ModuleSettingTick editPosition;

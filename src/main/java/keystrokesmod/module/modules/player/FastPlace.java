@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

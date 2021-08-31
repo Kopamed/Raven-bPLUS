@@ -1,13 +1,11 @@
 package keystrokesmod.module.modules.debug;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 
 public class Click extends Module {

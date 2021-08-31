@@ -1,9 +1,9 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.CommandLine;
-import keystrokesmod.ProfileUtils;
-import keystrokesmod.URLUtils;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ProfileUtils;
+import keystrokesmod.utils.URLUtils;
+import keystrokesmod.utils.ay;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.minigames.DuelsStats;

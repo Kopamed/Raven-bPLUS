@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ay;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

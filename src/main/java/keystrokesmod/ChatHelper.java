@@ -3,6 +3,7 @@
 package keystrokesmod;
 
 import keystrokesmod.module.modules.client.SelfDestruct;
+import keystrokesmod.utils.ay;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

@@ -5,7 +5,7 @@ package keystrokesmod.module.modules.movement;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import net.minecraft.client.settings.KeyBinding;
 
 public class BHop extends Module {

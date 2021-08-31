@@ -4,10 +4,11 @@ package keystrokesmod.module.modules.player;
 
 import java.awt.Color;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.HUDUtils;
+import keystrokesmod.utils.ay;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;

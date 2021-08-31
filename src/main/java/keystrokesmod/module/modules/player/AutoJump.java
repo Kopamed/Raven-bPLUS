@@ -3,7 +3,7 @@
 package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

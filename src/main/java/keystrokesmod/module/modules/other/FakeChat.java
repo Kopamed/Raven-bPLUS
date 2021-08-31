@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import net.minecraft.util.ChatComponentText;
 
 public class FakeChat extends Module {

@@ -1,7 +1,7 @@
 package keystrokesmod.module.modules.movement;
 
 import io.netty.util.internal.ThreadLocalRandom;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;

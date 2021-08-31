@@ -1,12 +1,9 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemLilyPad;
-import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 
 public class Ladders extends Module {

@@ -1,7 +1,7 @@
 package keystrokesmod.command;
 
 import keystrokesmod.CommandLine;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.command.commands.*;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.HUD;

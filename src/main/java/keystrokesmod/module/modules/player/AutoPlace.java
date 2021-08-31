@@ -2,9 +2,9 @@
 
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.*;
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
+import keystrokesmod.utils.ay;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;

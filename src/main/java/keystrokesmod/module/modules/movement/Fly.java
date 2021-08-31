@@ -5,7 +5,7 @@ package keystrokesmod.module.modules.movement;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 
 public class Fly extends Module {
    private final Fly.VanFly vanFly = new VanFly();

@@ -5,12 +5,14 @@ package keystrokesmod.module.modules.minigames;
 import java.util.ArrayList;
 import java.util.List;
 
-import keystrokesmod.*;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ProfileUtils;
+import keystrokesmod.utils.URLUtils;
+import keystrokesmod.utils.ay;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;

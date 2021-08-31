@@ -2,11 +2,11 @@
 
 package keystrokesmod.module.modules.movement;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ay;
 
 public class Boost extends Module {
    public static ModuleDesc c;

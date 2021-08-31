@@ -3,7 +3,7 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;

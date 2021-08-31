@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.render;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

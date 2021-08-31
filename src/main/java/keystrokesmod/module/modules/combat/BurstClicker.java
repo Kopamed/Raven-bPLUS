@@ -5,12 +5,12 @@ package keystrokesmod.module.modules.combat;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import keystrokesmod.*;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ay;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

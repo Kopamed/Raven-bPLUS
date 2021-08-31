@@ -2,7 +2,7 @@ package keystrokesmod.module.modules.render;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 
 public class AntiShuffle extends Module {
    public static ModuleDesc a;

@@ -1,14 +1,12 @@
 package keystrokesmod.command.commands;
 
-import com.google.gson.JsonObject;
 import keystrokesmod.CommandLine;
-import keystrokesmod.URLUtils;
-import keystrokesmod.ay;
+import keystrokesmod.utils.URLUtils;
+import keystrokesmod.utils.ay;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 public class Config extends Command {

@@ -2,7 +2,7 @@
 
 package keystrokesmod.module;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.modules.*;
 import keystrokesmod.module.modules.client.CommandLine;
 import keystrokesmod.module.modules.client.Gui;

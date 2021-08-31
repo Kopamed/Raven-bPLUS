@@ -23,6 +23,8 @@ import keystrokesmod.module.modules.ClickGui;
 import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.tweaker.transformers.*;
+import keystrokesmod.utils.URLUtils;
+import keystrokesmod.utils.ay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;

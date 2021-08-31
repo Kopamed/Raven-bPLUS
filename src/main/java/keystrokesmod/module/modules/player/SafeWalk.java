@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;

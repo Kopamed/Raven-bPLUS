@@ -1,6 +1,6 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod;
+package keystrokesmod.utils;
 
 import java.awt.Color;
 
@@ -54,7 +54,7 @@ public class HUDUtils {
 
    public static void ee(Entity e, int type, double expand, double shift, int color, boolean damage) {
       if (e instanceof EntityLivingBase) {
-         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
+         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
          double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
          double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
          float d = (float)expand / 40.0F;

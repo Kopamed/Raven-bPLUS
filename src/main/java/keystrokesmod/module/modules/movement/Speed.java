@@ -2,11 +2,11 @@
 
 package keystrokesmod.module.modules.movement;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ay;
 import org.lwjgl.input.Keyboard;
 
 public class Speed extends Module {

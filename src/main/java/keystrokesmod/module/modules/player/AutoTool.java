@@ -1,25 +1,18 @@
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.combat.AutoClicker;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
-import scala.actors.threadpool.Arrays;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AutoTool extends Module {
     private final ModuleSettingTick hotkeyBack;

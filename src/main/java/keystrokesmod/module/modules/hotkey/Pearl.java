@@ -1,17 +1,12 @@
 package keystrokesmod.module.modules.hotkey;
 
-import com.sun.jna.platform.mac.Carbon;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.*;
-import net.minecraftforge.event.world.NoteBlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.nio.file.FileSystem;
 import java.util.ArrayList;
 
 public class Pearl extends Module {

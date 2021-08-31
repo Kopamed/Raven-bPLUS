@@ -8,10 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TimerTask;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.HUDUtils;
+import keystrokesmod.utils.ay;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

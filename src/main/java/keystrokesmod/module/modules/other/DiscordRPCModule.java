@@ -1,15 +1,14 @@
 package keystrokesmod.module.modules.other;
 
 import keystrokesmod.DiscordRPCManager;
-import keystrokesmod.ay;
+import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
 import net.arikia.dev.drpc.OSUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.MinecraftForge;
 
 public class DiscordRPCModule extends Module {
-    private final DiscordRPCManager rpc = new DiscordRPCManager();
+    public static final DiscordRPCManager rpc = new DiscordRPCManager();
 
     public DiscordRPCModule() {
         super("DiscordRPC", category.other);

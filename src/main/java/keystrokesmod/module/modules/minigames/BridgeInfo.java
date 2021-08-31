@@ -6,10 +6,11 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.Iterator;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.HUDUtils;
+import keystrokesmod.utils.ay;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
