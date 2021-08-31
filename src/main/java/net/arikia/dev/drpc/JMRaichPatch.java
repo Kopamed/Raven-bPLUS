@@ -2,6 +2,7 @@ package net.arikia.dev.drpc;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.lwjgl.Sys;
 
 import java.io.File;
 import java.io.InputStream;
@@ -20,7 +21,7 @@ public class JMRaichPatch {
         String libName;
 
         if (os.isMac()) {
-            libName = "libdiscord-rpc.dylib";
+            libName = "discord-rpc";
         } else if (os.isWindows()){
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
             libName = "discord-rpc" + (is64bit ? "-x64" : "-x86") + ".dll";
@@ -45,7 +46,12 @@ public class JMRaichPatch {
             IOUtils.copy(in, out);
             in.close();
             out.close();
-            System.load(fileOut.toString());
+            if (new OSUtil().isMac()) {
+                System.setProperty("java.library.path", fileOut.getParent());
+                System.loadLibrary(name);
+            } else {
+                System.load(fileOut.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

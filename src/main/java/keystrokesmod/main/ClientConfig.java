@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import keystrokesmod.GuiModuleCategory;
 import keystrokesmod.ab;
+import keystrokesmod.module.modules.HUD;
 import keystrokesmod.utils.ay;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.module.Module;
@@ -224,6 +225,8 @@ public class ClientConfig {
       config.add(pasteApiKeyPrefix + URLUtils.pasteApiKey);
       config.add(clickGuiPosPrefix + getClickGuiPos());
       config.add(loadedConfigPrefix + Ravenbplus.configManager.getCurrentConfig());
+      config.add(HUD.HUDX_prefix + HUD.getHudX());
+      config.add(HUD.HUDY_prefix + HUD.getHudY());
 
       PrintWriter writer = null;
       try {
@@ -258,6 +261,14 @@ public class ClientConfig {
             loadClickGuiCoords(line.replace(clickGuiPosPrefix, ""));
          } else if(line.startsWith(loadedConfigPrefix)){
             Ravenbplus.configManager.loadConfig(line.replace(loadedConfigPrefix, ""));
+         } else if (line.startsWith(HUD.HUDX_prefix)) {
+            try {
+               HUD.setHudX(Integer.parseInt(line.replace(HUD.HUDX_prefix, "")));
+            } catch (Exception e) {e.printStackTrace();}
+         } else if (line.startsWith(HUD.HUDY_prefix)) {
+            try {
+               HUD.setHudY(Integer.parseInt(line.replace(HUD.HUDY_prefix, "")));
+            } catch (Exception e) {e.printStackTrace();}
          }
       }
    }

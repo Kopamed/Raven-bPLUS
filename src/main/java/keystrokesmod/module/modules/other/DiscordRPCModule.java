@@ -6,6 +6,7 @@ import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.Module;
 import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.OSUtil;
 import net.minecraftforge.common.MinecraftForge;
 
 public class DiscordRPCModule extends Module {
