@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.client.SelfDestruct;
+import keystrokesmod.module.modules.other.DiscordRPCModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -78,6 +79,11 @@ public class Module {
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
       }
+
+      DiscordRPCModule discordRPCModule = (DiscordRPCModule) getModule(DiscordRPCModule.class);
+      if (discordRPCModule != null && discordRPCModule.isEnabled()) {
+         DiscordRPCModule.rpc.updateRavenRPC();
+      }
    }
 
    public void disable() {
@@ -88,6 +94,11 @@ public class Module {
       this.onDisable();
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
+      }
+
+      DiscordRPCModule discordRPCModule = (DiscordRPCModule) getModule(DiscordRPCModule.class);
+      if (discordRPCModule != null && discordRPCModule.isEnabled()) {
+         DiscordRPCModule.rpc.updateRavenRPC();
       }
    }
 
