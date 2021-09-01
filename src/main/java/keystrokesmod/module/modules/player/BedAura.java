@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.ay;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
@@ -45,16 +46,18 @@ public class BedAura extends Module {
             for(int y = ra; y >= -ra; --y) {
                for(int x = -ra; x <= ra; ++x) {
                   for(int z = -ra; z <= ra; ++z) {
-                     BlockPos p = new BlockPos(Module.mc.thePlayer.posX + (double)x, Module.mc.thePlayer.posY + (double)y, Module.mc.thePlayer.posZ + (double)z);
-                     boolean bed = Module.mc.theWorld.getBlockState(p).getBlock() == Blocks.bed;
-                     if (BedAura.this.m == p) {
-                        if (!bed) {
-                           BedAura.this.m = null;
+                     if (ay.isPlayerInGame()) {
+                        BlockPos p = new BlockPos(Module.mc.thePlayer.posX + (double) x, Module.mc.thePlayer.posY + (double) y, Module.mc.thePlayer.posZ + (double) z);
+                        boolean bed = Module.mc.theWorld.getBlockState(p).getBlock() == Blocks.bed;
+                        if (BedAura.this.m == p) {
+                           if (!bed) {
+                              BedAura.this.m = null;
+                           }
+                        } else if (bed) {
+                           BedAura.this.mi(p);
+                           BedAura.this.m = p;
+                           break;
                         }
-                     } else if (bed) {
-                        BedAura.this.mi(p);
-                        BedAura.this.m = p;
-                        break;
                      }
                   }
                }
