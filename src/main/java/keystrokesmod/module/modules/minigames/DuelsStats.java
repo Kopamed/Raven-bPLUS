@@ -20,8 +20,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DuelsStats extends Module {
    public static ModuleSettingSlider value;
+   public static ModuleSettingSlider threatLeaveMode;
    public static ModuleDesc moduleDesc;
    public static ModuleSettingTick a;
+   public static ModuleSettingTick autoLeave;
    public static ModuleSettingTick threatLevel;
    public static String nk = "";
    private String ign = "";

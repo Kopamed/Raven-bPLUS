@@ -14,11 +14,14 @@ import net.minecraftforge.common.MinecraftForge;
 public class DiscordRPCModule extends Module {
     public static final DiscordRPCManager rpc = new DiscordRPCManager();
     public static ModuleSettingSlider rpcMode;
-    public static ModuleDesc rpcModeDesc;
+    public static ModuleDesc rpcModeDesc, unsupportedOS;
 
 
     public DiscordRPCModule() {
         super("DiscordRPC", category.other);
+        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) {
+            this.registerSetting(unsupportedOS = new ModuleDesc("Unsupported OS!"));
+        }
         this.registerSetting(rpcMode = new ModuleSettingSlider("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
         this.registerSetting(rpcModeDesc = new ModuleDesc("Raven b+"));
     }
@@ -60,6 +63,7 @@ public class DiscordRPCModule extends Module {
 
     private int lastRPC;
     public void guiUpdate() {
+        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) return;
         if (lastRPC != (int) rpcMode.getInput()) { // prevent lags
             lastRPC = (int) rpcMode.getInput();
 
