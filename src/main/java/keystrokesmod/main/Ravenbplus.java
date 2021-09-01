@@ -146,7 +146,7 @@ public class Ravenbplus {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-            for (int i = 0; i < ModuleManager.modsList.size(); i++) {
+            for (int i = 0; i < ModuleManager.modListSize(); i++) {
                Module module = ModuleManager.modsList.get(i);
                if (mc.currentScreen == null) {
                   module.keybind();
