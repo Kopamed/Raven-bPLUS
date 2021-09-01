@@ -72,6 +72,7 @@ public class Ravenbplus {
    private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
    public static InputStream ravenLogoInputStream;
    public static ResourceLocation mResourceLocation;
+   public static String osName, osArch;
 
    public Ravenbplus() {
       notAName = new NotAName();
@@ -122,6 +123,9 @@ public class Ravenbplus {
          nowayV3.printStackTrace();
          mResourceLocation = null;
       }
+
+      osName = System.getProperty("os.name");
+      osArch = System.getProperty("os.arch");
 
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();

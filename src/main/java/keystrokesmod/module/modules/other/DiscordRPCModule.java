@@ -2,9 +2,11 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.discordRPC.DiscordRPCManager;
 import keystrokesmod.discordRPC.RPCMode;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.Module;
+import keystrokesmod.utils.ay;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.OSUtil;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,6 +24,11 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onEnable() {
+        if(Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) {
+            ay.sendMessageToSelf("&cYour computer OS/architecture is not supported yet!");
+            this.disable();
+            return;
+        }
         switch ((int) rpcMode.getInput()) {
             case 1: // BADLION
                 rpc.init_rpc(RPCMode.BADLION);
@@ -43,6 +50,7 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onDisable() {
+        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) return;
         MinecraftForge.EVENT_BUS.unregister(rpc);
         if (rpc.rpc_thread != null)
             rpc.rpc_thread.interrupt();

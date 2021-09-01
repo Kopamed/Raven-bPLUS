@@ -19,28 +19,28 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class ClickAssist extends Module {
-   public static ModuleDesc a;
-   public static ModuleSettingSlider b;
+   public static ModuleDesc desc;
+   public static ModuleSettingSlider chance;
    public static ModuleSettingTick L;
    public static ModuleSettingTick R;
-   public static ModuleSettingTick c;
-   public static ModuleSettingTick d;
-   public static ModuleSettingTick e;
-   public static ModuleSettingTick f;
+   public static ModuleSettingTick blocksOnly;
+   public static ModuleSettingTick weaponOnly;
+   public static ModuleSettingTick onlyWhileTargeting;
+   public static ModuleSettingTick above5;
    private Robot bot;
-   private boolean ignNL = false;
-   private boolean ignNR = false;
+   private boolean engagedLeft = false;
+   private boolean engagedRight = false;
 
    public ClickAssist() {
       super("ClickAssist", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleDesc("Boost your CPS."));
-      this.registerSetting(b = new ModuleSettingSlider("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(desc = new ModuleDesc("Boost your CPS."));
+      this.registerSetting(chance = new ModuleSettingSlider("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(L = new ModuleSettingTick("Left click", true));
-      this.registerSetting(d = new ModuleSettingTick("Weapon only", true));
-      this.registerSetting(e = new ModuleSettingTick("Only while targeting", false));
+      this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", true));
+      this.registerSetting(onlyWhileTargeting = new ModuleSettingTick("Only while targeting", false));
       this.registerSetting(R = new ModuleSettingTick("Right click", false));
-      this.registerSetting(c = new ModuleSettingTick("Blocks only", true));
-      this.registerSetting(f = new ModuleSettingTick("Above 5 cps", false));
+      this.registerSetting(blocksOnly = new ModuleSettingTick("Blocks only", true));
+      this.registerSetting(above5 = new ModuleSettingTick("Above 5 cps", false));
    }
 
    public void onEnable() {
@@ -53,8 +53,8 @@ public class ClickAssist extends Module {
    }
 
    public void onDisable() {
-      this.ignNL = false;
-      this.ignNR = false;
+      this.engagedLeft = false;
+      this.engagedRight = false;
       this.bot = null;
    }
 
@@ -62,24 +62,24 @@ public class ClickAssist extends Module {
       priority = EventPriority.HIGH
    )
    public void onMouseUpdate(MouseEvent ev) {
-      if (ev.button >= 0 && ev.buttonstate && b.getInput() != 0.0D && ay.isPlayerInGame()) {
-         if (mc.currentScreen == null && !mc.thePlayer.isEating()) {
+      if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && ay.isPlayerInGame()) {
+         if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
             double ch;
             if (ev.button == 0 && L.isToggled()) {
-               if (this.ignNL) {
-                  this.ignNL = false;
+               if (this.engagedLeft) {
+                  this.engagedLeft = false;
                } else {
-                  if (d.isToggled() && !ay.isPlayerHoldingWeapon()) {
+                  if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
                      return;
                   }
 
-                  if (e.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+                  if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
                      return;
                   }
 
-                  if (b.getInput() != 100.0D) {
+                  if (chance.getInput() != 100.0D) {
                      ch = Math.random();
-                     if (ch >= b.getInput() / 100.0D) {
+                     if (ch >= chance.getInput() / 100.0D) {
                         this.fix(0);
                         return;
                      }
@@ -87,13 +87,13 @@ public class ClickAssist extends Module {
 
                   this.bot.mouseRelease(16);
                   this.bot.mousePress(16);
-                  this.ignNL = true;
+                  this.engagedLeft = true;
                }
             } else if (ev.button == 1 && R.isToggled()) {
-               if (this.ignNR) {
-                  this.ignNR = false;
+               if (this.engagedRight) {
+                  this.engagedRight = false;
                } else {
-                  if (c.isToggled()) {
+                  if (blocksOnly.isToggled()) {
                      ItemStack item = mc.thePlayer.getHeldItem();
                      if (item == null || !(item.getItem() instanceof ItemBlock)) {
                         this.fix(1);
@@ -101,14 +101,14 @@ public class ClickAssist extends Module {
                      }
                   }
 
-                  if (f.isToggled() && mouseManager.getRightClickCounter() <= 5) {
+                  if (above5.isToggled() && mouseManager.getRightClickCounter() <= 5) {
                      this.fix(1);
                      return;
                   }
 
-                  if (b.getInput() != 100.0D) {
+                  if (chance.getInput() != 100.0D) {
                      ch = Math.random();
-                     if (ch >= b.getInput() / 100.0D) {
+                     if (ch >= chance.getInput() / 100.0D) {
                         this.fix(1);
                         return;
                      }
@@ -116,7 +116,7 @@ public class ClickAssist extends Module {
 
                   this.bot.mouseRelease(4);
                   this.bot.mousePress(4);
-                  this.ignNR = true;
+                  this.engagedRight = true;
                }
             }
 
@@ -131,10 +131,10 @@ public class ClickAssist extends Module {
 
    private void fix(int t) {
       if (t == 0) {
-         if (this.ignNL && !Mouse.isButtonDown(0)) {
+         if (this.engagedLeft && !Mouse.isButtonDown(0)) {
             this.bot.mouseRelease(16);
          }
-      } else if (t == 1 && this.ignNR && !Mouse.isButtonDown(1)) {
+      } else if (t == 1 && this.engagedRight && !Mouse.isButtonDown(1)) {
          this.bot.mouseRelease(4);
       }
 
