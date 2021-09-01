@@ -29,7 +29,6 @@ public class BlockHit extends Module {
         super("BlockHit", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
         this.registerSetting(onRightMBHold = new ModuleSettingTick("When holding down rmb", true));
-        this.registerSetting(onRightMBHold = new ModuleSettingTick("On right mouse button hold", true));
         this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 25, 1, 500, 5));
         this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 55, 1, 500, 5));
         this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
