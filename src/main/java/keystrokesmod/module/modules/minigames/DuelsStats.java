@@ -20,8 +20,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DuelsStats extends Module {
    public static ModuleSettingSlider value;
+   public static ModuleDesc bruh;
+   public static ModuleSettingSlider threatLeaveMode;
    public static ModuleDesc moduleDesc;
    public static ModuleSettingTick a;
+   public static ModuleSettingTick queueDodge;
    public static ModuleSettingTick threatLevel;
    public static String nk = "";
    private String ign = "";
@@ -35,6 +38,9 @@ public class DuelsStats extends Module {
       this.registerSetting(moduleDesc = new ModuleDesc("Mode: OVERALL"));
       this.registerSetting(a = new ModuleSettingTick("Send ign on join", false));
       this.registerSetting(threatLevel = new ModuleSettingTick("Threat Level", true));
+      this.registerSetting(queueDodge = new ModuleSettingTick("Queue dodge", false));
+      this.registerSetting(threatLeaveMode = new ModuleSettingSlider("Value:", 4, 1, 4, 1));
+      this.registerSetting(bruh = new ModuleDesc("Dodge threat level: HIGH"));
    }
 
    public void onEnable() {
@@ -53,6 +59,7 @@ public class DuelsStats extends Module {
 
    public void guiUpdate() {
       moduleDesc.setDesc(ay.md + ProfileUtils.DM.values()[(int)(value.getInput() - 1.0D)].name());
+      bruh.setDesc("Dodge levels: " + thr_lvl[(int)threatLeaveMode.getInput() - 1].substring(2, thr_lvl[(int)threatLeaveMode.getInput() - 1].length() -1));
    }
 
    public void update() {
@@ -138,8 +145,18 @@ public class DuelsStats extends Module {
                if (threatLevel.isToggled()) {
                   ay.sendMessageToSelf("&eThreat: &3" + gtl(s[0], s[1], wlr, s[2]));
                }
+               if(queueDodge.isToggled()) {
+                  if(ay.indexOf(thr_lvl[(int)threatLeaveMode.getInput() - 1], thr_lvl) <= (int)threatLeaveMode.getInput() - 1) {
+                     ay.sendMessageToSelf("&cLeaving because the player was too dangerous!");
+                     mc.thePlayer.sendChatMessage("/l");
+                  }else{
+                     ay.sendMessageToSelf("&2Player meets queue expectations!");
+                  }
+               }
 
                ay.sendMessageToSelf("&7&m-------------------------");
+
+
             } else {
                ay.sendMessageToSelf("&cThere was an error.");
             }

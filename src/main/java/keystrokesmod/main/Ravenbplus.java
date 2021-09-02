@@ -72,6 +72,7 @@ public class Ravenbplus {
    private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
    public static InputStream ravenLogoInputStream;
    public static ResourceLocation mResourceLocation;
+   public static String osName, osArch;
 
    public Ravenbplus() {
       notAName = new NotAName();
@@ -123,6 +124,9 @@ public class Ravenbplus {
          mResourceLocation = null;
       }
 
+      osName = System.getProperty("os.name");
+      osArch = System.getProperty("os.arch");
+
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
       FMLCommonHandler.instance().bus().register(ModuleManager.reach);
@@ -146,7 +150,7 @@ public class Ravenbplus {
    public void onTick(ClientTickEvent e) {
       if (e.phase == Phase.END) {
          if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-            for (int i = 0; i < ModuleManager.modsList.size(); i++) {
+            for (int i = 0; i < ModuleManager.modListSize(); i++) {
                Module module = ModuleManager.modsList.get(i);
                if (mc.currentScreen == null) {
                   module.keybind();

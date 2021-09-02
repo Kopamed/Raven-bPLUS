@@ -2,9 +2,11 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.discordRPC.DiscordRPCManager;
 import keystrokesmod.discordRPC.RPCMode;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.Module;
+import keystrokesmod.utils.ay;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.OSUtil;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,16 +14,24 @@ import net.minecraftforge.common.MinecraftForge;
 public class DiscordRPCModule extends Module {
     public static final DiscordRPCManager rpc = new DiscordRPCManager();
     public static ModuleSettingSlider rpcMode;
-    public static ModuleDesc rpcModeDesc;
+    public static ModuleDesc rpcModeDesc, unsupportedOS;
 
 
     public DiscordRPCModule() {
         super("DiscordRPC", category.other);
+        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) {
+            this.registerSetting(unsupportedOS = new ModuleDesc("Unsupported OS!"));
+        }
         this.registerSetting(rpcMode = new ModuleSettingSlider("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
         this.registerSetting(rpcModeDesc = new ModuleDesc("Raven b+"));
     }
 
     public void onEnable() {
+        if(Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) {
+            ay.sendMessageToSelf("&cYour computer OS/architecture is not supported yet!");
+            this.disable();
+            return;
+        }
         switch ((int) rpcMode.getInput()) {
             case 1: // BADLION
                 rpc.init_rpc(RPCMode.BADLION);
@@ -43,6 +53,7 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onDisable() {
+        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) return;
         MinecraftForge.EVENT_BUS.unregister(rpc);
         if (rpc.rpc_thread != null)
             rpc.rpc_thread.interrupt();
@@ -52,6 +63,7 @@ public class DiscordRPCModule extends Module {
 
     private int lastRPC;
     public void guiUpdate() {
+        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) return;
         if (lastRPC != (int) rpcMode.getInput()) { // prevent lags
             lastRPC = (int) rpcMode.getInput();
 

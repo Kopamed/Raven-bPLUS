@@ -28,7 +28,10 @@ public class Velocity extends Module {
 
    @SubscribeEvent
    public void c(LivingUpdateEvent ev) {
-      if (ay.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
+      if (ay.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime)
+      {
+         //System.out.println(ev.entity.getName());
+         //System.out.println(mc.objectMouseOver.hitInfo);
          if (d.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
             return;
          }

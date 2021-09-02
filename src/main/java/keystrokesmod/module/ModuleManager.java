@@ -177,6 +177,10 @@ public class ModuleManager {
 
    }
 
+   public static int modListSize() {
+      return modsList.size();
+   }
+
    public static void sortLongShort() {
       modsList.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
    }
