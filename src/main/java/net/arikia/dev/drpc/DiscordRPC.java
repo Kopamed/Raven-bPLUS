@@ -19,7 +19,6 @@ public final class DiscordRPC {
 
 	static {
 		/*loadDLL();*/
-		JMRaichPatch.loadLib();
 	}
 
 	/**
@@ -123,6 +122,8 @@ public final class DiscordRPC {
 	}
 
 	//Load DLL depending on the user's architecture.
+	// seems to be broken on Mac OS
+	/*
 	private static void loadDLL() {
 		String name = System.mapLibraryName("discord-rpc");
 		OSUtil osUtil = new OSUtil();
@@ -133,7 +134,7 @@ public final class DiscordRPC {
 
 		if (osUtil.isMac()) {
 			homeDir = new File(System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator);
-			dir = "libs";
+			dir = "darwin";
 			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
 		} else if (osUtil.isWindows()) {
 			homeDir = new File(System.getenv("TEMP"));
@@ -158,7 +159,7 @@ public final class DiscordRPC {
 		}
 
 		System.load(f.getAbsolutePath());
-	}
+	}*/
 
 	private static void copyFile(final InputStream input, final OutputStream output) throws IOException {
 		byte[] buffer = new byte[1024 * 4];
@@ -224,7 +225,7 @@ public final class DiscordRPC {
 	//JNA Interface
 	private interface DLL extends Library {
 		//DLL INSTANCE = Native.load("discord-rpc", DLL.class);
-		DLL INSTANCE = (DLL) Native.loadLibrary(JMRaichPatch.libName, DLL.class);
+		DLL INSTANCE = (DLL) Native.loadLibrary(JMRaichPatch.getLibName(), DLL.class);
 
 		void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
 		void Discord_Register(String applicationId, String command);
