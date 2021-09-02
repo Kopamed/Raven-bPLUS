@@ -23,29 +23,33 @@ public class TransformerEntityPlayerSP implements Transformer {
                if (arr[i].getOpcode() == ALOAD) {
                   to_remove.add(arr[i]);
                   i++;
-                  if (arr[i].getOpcode() == GETFIELD && ((FieldInsnNode) arr[i]).desc.equals("Lnet/minecraft/util/MovementInput;")) {
-                     to_remove.add(arr[i]);
-                     i++;
-                     if (arr[i].getOpcode() == DUP) {
+                  if (arr[i].getOpcode() == GETFIELD
+                    && arr[i] instanceof FieldInsnNode
+                  ) {
+                     if (((FieldInsnNode) arr[i]).desc.equals("Lnet/minecraft/util/MovementInput;") || ((FieldInsnNode) arr[i]).desc.equals("Lbeu;" /* obf name */)) {
                         to_remove.add(arr[i]);
                         i++;
-                        if (arr[i].getOpcode() == GETFIELD && ((FieldInsnNode) arr[i]).desc.equals("F")) {
+                        if (arr[i].getOpcode() == DUP) {
                            to_remove.add(arr[i]);
                            i++;
-                           if (arr[i].getOpcode() == LDC) {
+                           if (arr[i].getOpcode() == GETFIELD && ((FieldInsnNode) arr[i]).desc.equals("F")) {
                               to_remove.add(arr[i]);
                               i++;
-                              if (arr[i].getOpcode() == FMUL) {
+                              if (arr[i].getOpcode() == LDC) {
                                  to_remove.add(arr[i]);
                                  i++;
-                                 if (arr[i].getOpcode() == PUTFIELD && ((FieldInsnNode) arr[i]).desc.equals("F")) {
+                                 if (arr[i].getOpcode() == FMUL) {
                                     to_remove.add(arr[i]);
-                                    if (!isASMEvntHandlerAdded) {
-                                       isASMEvntHandlerAdded = true;
-                                       methodNode.instructions.insert(arr[i], getEventInsn());
-                                    }
-                                    for (AbstractInsnNode abstractInsnNode : to_remove) {
-                                       methodNode.instructions.remove(abstractInsnNode);
+                                    i++;
+                                    if (arr[i].getOpcode() == PUTFIELD && ((FieldInsnNode) arr[i]).desc.equals("F")) {
+                                       to_remove.add(arr[i]);
+                                       if (!isASMEvntHandlerAdded) {
+                                          isASMEvntHandlerAdded = true;
+                                          methodNode.instructions.insert(arr[i], getEventInsn());
+                                       }
+                                       for (AbstractInsnNode abstractInsnNode : to_remove) {
+                                          methodNode.instructions.remove(abstractInsnNode);
+                                       }
                                     }
                                  }
                               }
