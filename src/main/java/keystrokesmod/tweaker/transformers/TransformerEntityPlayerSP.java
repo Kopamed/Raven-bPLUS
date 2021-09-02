@@ -1,11 +1,9 @@
 package keystrokesmod.tweaker.transformers;
 
 import keystrokesmod.tweaker.ASMTransformerClass;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
+
+import java.util.ArrayList;
 
 public class TransformerEntityPlayerSP implements Transformer {
    public String[] getClassName() {
@@ -16,23 +14,51 @@ public class TransformerEntityPlayerSP implements Transformer {
       for (MethodNode methodNode : classNode.methods) {
          String mappedMethodName = this.mapMethodName(classNode, methodNode);
          if (mappedMethodName.equalsIgnoreCase("onLivingUpdate") || mappedMethodName.equalsIgnoreCase("func_70636_d")) {
+            int i = 0;
+            ArrayList<AbstractInsnNode> to_remove = new ArrayList<>();
             AbstractInsnNode[] arr = methodNode.instructions.toArray();
+            boolean isASMEvntHandlerAdded = false;
 
-            for (int i = 0; i < arr.length; ++i) {
-               AbstractInsnNode ins = arr[i];
-               if (i == 243) {
-                  methodNode.instructions.insert(ins, this.getEventInsn());
-               } else if (i >= 244 && i <= 261) {
-                  methodNode.instructions.remove(ins);
-               } else if (i == 262) {
-                  return;
+            while (i < methodNode.instructions.toArray().length) {
+               if (arr[i].getOpcode() == ALOAD) {
+                  to_remove.add(arr[i]);
+                  i++;
+                  if (arr[i].getOpcode() == GETFIELD && ((FieldInsnNode) arr[i]).desc.equals("Lnet/minecraft/util/MovementInput;")) {
+                     to_remove.add(arr[i]);
+                     i++;
+                     if (arr[i].getOpcode() == DUP) {
+                        to_remove.add(arr[i]);
+                        i++;
+                        if (arr[i].getOpcode() == GETFIELD && ((FieldInsnNode) arr[i]).desc.equals("F")) {
+                           to_remove.add(arr[i]);
+                           i++;
+                           if (arr[i].getOpcode() == LDC) {
+                              to_remove.add(arr[i]);
+                              i++;
+                              if (arr[i].getOpcode() == FMUL) {
+                                 to_remove.add(arr[i]);
+                                 i++;
+                                 if (arr[i].getOpcode() == PUTFIELD && ((FieldInsnNode) arr[i]).desc.equals("F")) {
+                                    to_remove.add(arr[i]);
+                                    if (!isASMEvntHandlerAdded) {
+                                       isASMEvntHandlerAdded = true;
+                                       methodNode.instructions.insert(arr[i], getEventInsn());
+                                    }
+                                    for (AbstractInsnNode abstractInsnNode : to_remove) {
+                                       methodNode.instructions.remove(abstractInsnNode);
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
                }
+               to_remove.clear();
+               i++;
             }
-
-            return;
          }
       }
-
    }
 
    private InsnList getEventInsn() {

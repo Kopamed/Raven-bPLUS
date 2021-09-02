@@ -18,7 +18,7 @@ public final class DiscordRPC {
 	private static final String LIB_VERSION = "1.6.2";
 
 	static {
-		/*loadDLL();*/
+		loadDLL();
 	}
 
 	/**
@@ -123,7 +123,6 @@ public final class DiscordRPC {
 
 	//Load DLL depending on the user's architecture.
 	// seems to be broken on Mac OS
-	/*
 	private static void loadDLL() {
 		String name = System.mapLibraryName("discord-rpc");
 		OSUtil osUtil = new OSUtil();
@@ -132,11 +131,11 @@ public final class DiscordRPC {
 		String tempPath;
 		String dir;
 
-		if (osUtil.isMac()) {
+		/*if (osUtil.isMac()) {
 			homeDir = new File(System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator);
 			dir = "darwin";
 			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
-		} else if (osUtil.isWindows()) {
+		} else */if (osUtil.isWindows()) {
 			homeDir = new File(System.getenv("TEMP"));
 			boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
 			dir = (is64bit ? "win-x64" : "win-x86");
@@ -159,7 +158,7 @@ public final class DiscordRPC {
 		}
 
 		System.load(f.getAbsolutePath());
-	}*/
+	}
 
 	private static void copyFile(final InputStream input, final OutputStream output) throws IOException {
 		byte[] buffer = new byte[1024 * 4];

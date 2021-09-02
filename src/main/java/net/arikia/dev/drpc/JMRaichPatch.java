@@ -9,7 +9,7 @@ public class JMRaichPatch {
             libName = "libdiscord-rpc.dylib";
         } else if (os.isWindows()){
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            libName = (is64bit ? "x64" : "x86") + "-discord-rpc.dll";
+            libName = "discord-rpc.dll";
         } else {
             libName = "libdiscord-rpc.so";
         }
