@@ -102,6 +102,13 @@ public class ay {
       }
    }
 
+   public static int indexOf(String key, String[] wut){
+      for(int o = 0; o < wut.length; o++) {
+         if(wut[o].equals(key)) return o;
+      }
+      return -1;
+   }
+
    public static long getSystemTime()
    {
       return Sys.getTime() * 1000L / Sys.getTimerResolution();
