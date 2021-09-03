@@ -57,10 +57,8 @@ public class AutoClicker extends Module {
    private long leftl, rightl;
    private double leftm, rightm;
    private boolean leftn, rightn;
-   private boolean rightHeld;
    private boolean breakHeld;
    private boolean watingForBreakTimeout;
-   private double breakTimerStart;
    private double breakBlockFinishWaitTime;
    private long lastClick;
    private long leftHold, rightHold;
@@ -70,6 +68,8 @@ public class AutoClicker extends Module {
    public static boolean autoClickerEnabled, breakTimeDone;
    public static int clickFinder;
    public static int clickCount;
+   private boolean leftDown;
+   private boolean rightDown;
 
    public AutoClicker() {
       super("AutoClicker", Module.category.combat, 0);
@@ -134,7 +134,6 @@ public class AutoClicker extends Module {
    public void onDisable() {
       this.leftDownTime = 0L;
       this.leftUpTime = 0L;
-      boolean leftHeld = false;
       this.rightClickWaiting = false;
       autoClickerEnabled = false;
    }
@@ -202,106 +201,118 @@ public class AutoClicker extends Module {
       // return;
       //}
 
+      if (mc.currentScreen == null && mc.inGameHasFocus) {
+         // Uhh left click only, mate
+         if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
+            if(breakBlock()) return;
+            if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
+               return;
+            }
+            if (jitterLeft.getInput() > 0.0D) {
+               double a = jitterLeft.getInput() * 0.45D;
+               EntityPlayerSP entityPlayer;
+               if (this.rand.nextBoolean()) {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
+               } else {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * a);
+               }
 
-      // Uhh left click only, mate
-      if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
-         if(breakBlock()) return;
-         if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
-            return;
+               if (this.rand.nextBoolean()) {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
+               } else {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
+               }
+            }
+
+            double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
+            if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
+               lastClick = System.currentTimeMillis();
+               if (leftHold < lastClick){
+                  leftHold = lastClick;
+               }
+               int key = mc.gameSettings.keyBindAttack.getKeyCode();
+               KeyBinding.setKeyBindState(key, true);
+               Click.minecraftPressed(true);
+               KeyBinding.onTick(key);
+               ay.setMouseButtonState(0, true);
+            } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
+               KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
+               Click.minecraftPressed(false);
+               ay.setMouseButtonState(0, false);
+            }
          }
-         if (jitterLeft.getInput() > 0.0D) {
-            double a = jitterLeft.getInput() * 0.45D;
-            EntityPlayerSP entityPlayer;
-            if (this.rand.nextBoolean()) {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
-            } else {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * a);
+         //we cheat in a block game ft. right click
+         if (Mouse.isButtonDown(1) && rightClick.isToggled() || rightDown) {
+            if (!this.rightClickAllowed())
+               return;
+
+
+            if (jitterRight.getInput() > 0.0D) {
+               double jitterMultiplier = jitterRight.getInput() * 0.45D;
+               EntityPlayerSP entityPlayer;
+               if (this.rand.nextBoolean()) {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * jitterMultiplier);
+               } else {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * jitterMultiplier);
+               }
+
+               if (this.rand.nextBoolean()) {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * jitterMultiplier * 0.45D);
+               } else {
+                  entityPlayer = mc.thePlayer;
+                  entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * jitterMultiplier * 0.45D);
+               }
             }
 
-            if (this.rand.nextBoolean()) {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
-            } else {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
+            if (System.currentTimeMillis() - lastClick > speedRight * 1000) {
+               lastClick = System.currentTimeMillis();
+               if (rightHold < lastClick){
+                  rightHold = lastClick;
+               }
+               int key = mc.gameSettings.keyBindUseItem.getKeyCode();
+               KeyBinding.setKeyBindState(key, true);
+               ay.setMouseButtonState(1, true);
+               KeyBinding.onTick(key);
+               rightDown = false;
+            } else if (System.currentTimeMillis() - rightHold > rightHoldLength * 1000) {
+               rightDown = true;
+               KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+               ay.setMouseButtonState(1, false);
+
             }
+         } else if (!Mouse.isButtonDown(1)){
+            this.rightClickWaiting = false;
+            this.allowedClick = false;
+            //////System.out.println("Reset allowedClick");
          }
-
-         double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
-         if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
-            lastClick = System.currentTimeMillis();
-            if (leftHold < lastClick){
-               leftHold = lastClick;
+      }else if (inventoryFill.isToggled() && (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChest)) {
+         if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
+            this.leftDownTime = 0L;
+            this.leftUpTime = 0L;
+         } else if (this.leftDownTime != 0L && this.leftUpTime != 0L) {
+            if (System.currentTimeMillis() > this.leftUpTime) {
+               this.genLeftTimings();
+               this.inInvClick(mc.currentScreen);
             }
-            int key = mc.gameSettings.keyBindAttack.getKeyCode();
-            KeyBinding.setKeyBindState(key, true);
-            Click.minecraftPressed(true);
-            KeyBinding.onTick(key);
-            ay.setMouseButtonState(0, true);
-         } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-            Click.minecraftPressed(false);
-            ay.setMouseButtonState(0, false);
+         } else {
+            this.genLeftTimings();
          }
       }
-      //we cheat in a block game ft. right click
-      if (Mouse.isButtonDown(1) && rightClick.isToggled()) {
-         if (!this.rightClickAllowed())
-            return;
 
-
-         if (jitterRight.getInput() > 0.0D) {
-            double jitterMultiplier = jitterRight.getInput() * 0.45D;
-            EntityPlayerSP entityPlayer;
-            if (this.rand.nextBoolean()) {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * jitterMultiplier);
-            } else {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * jitterMultiplier);
-            }
-
-            if (this.rand.nextBoolean()) {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * jitterMultiplier * 0.45D);
-            } else {
-               entityPlayer = mc.thePlayer;
-               entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * jitterMultiplier * 0.45D);
-            }
-         }
-
-         if (System.currentTimeMillis() - lastClick > speedRight * 1000) {
-            lastClick = System.currentTimeMillis();
-            if (rightHold < lastClick){
-               rightHold = lastClick;
-            }
-            int key = mc.gameSettings.keyBindUseItem.getKeyCode();
-            KeyBinding.setKeyBindState(key, true);
-            //ay.setMouseButtonState(1, true);
-            if(clickCount/clickFinder == 0) {
-               mouseManager.addRightClick();
-            }
-            clickCount++;
-            KeyBinding.onTick(key);
-         } else if (System.currentTimeMillis() - rightHold > rightHoldLength * 1000) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-            //ay.setMouseButtonState(1, false);
-
-         }
-      } else if (!Mouse.isButtonDown(1)){
-         this.rightClickWaiting = false;
-         this.allowedClick = false;
-         //////System.out.println("Reset allowedClick");
-      }
    }
 
    private void ravenClick() {
       if (mc.currentScreen == null && mc.inGameHasFocus) {
 
          //Mouse.poll();
-         if (leftClick.isToggled() && Mouse.isButtonDown(0)) {
+         if (leftClick.isToggled() && Mouse.isButtonDown(0) || leftDown) {
             if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
                return;
             }
@@ -415,12 +426,16 @@ public class AutoClicker extends Module {
       }
 
       if (this.leftUpTime > 0L && this.leftDownTime > 0L) {
-         if (System.currentTimeMillis() > this.leftUpTime) {
+         if (System.currentTimeMillis() > this.leftUpTime && leftDown) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
             this.genLeftTimings();
+            ay.setMouseButtonState(0, true);
+            leftDown = false;
          } else if (System.currentTimeMillis() > this.leftDownTime) {
             KeyBinding.setKeyBindState(key, false);
+            leftDown = true;
+            ay.setMouseButtonState(0, false);
          }
       } else {
          //////System.out.println("gen");

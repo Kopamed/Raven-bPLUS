@@ -49,6 +49,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
          this.outlineBtn.displayString = "Outline: " + (KeyStroke.f ? "On" : "Off");
       }
 
+
    }
 
    protected void mouseClicked(int mouseX, int mouseY, int button) {
@@ -97,5 +98,6 @@ public class KeyStrokeConfigGui extends GuiScreen {
 
    public void onGuiClosed() {
       Ravenbplus.clientConfig.saveConfig();
+      ClientConfig.saveKeyStrokeSettingsToConfigFile();
    }
 }

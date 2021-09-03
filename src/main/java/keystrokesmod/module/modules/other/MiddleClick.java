@@ -14,98 +14,80 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
+import java.awt.*;
+import java.awt.event.InputEvent;
+
 public class MiddleClick extends Module {
-    public static ModuleSettingSlider action, minCPS, maxCPS;
+    public static ModuleSettingSlider action;
     public static ModuleSettingTick showHelp;
-    public static ModuleDesc actionDesc, cpsClarification;
-    public static boolean holding, clicking;
-    public static double ppsDelay, holdTime, holdStart, releaseStart, releaseTime;
-    int prevSlot, tickLastest, currentTick;
-    public static double speedRight;
-    public static double rightHoldLength;
-    public static long lastClick;
-    public static double leftHold;
+    public static ModuleDesc actionDesc;
+    int prevSlot;
     public static boolean a;
-    public static boolean moveback, timeOut;
+    private Robot bot;
+    private boolean hasClicked;
+    private int pearlEvent;
 
     public MiddleClick() {
         super("Middleclick", category.other, 0);
         this.registerSetting(showHelp = new ModuleSettingTick("Show friend help in chat", true));
-        this.registerSetting(minCPS = new ModuleSettingSlider("Min CPS:", 8,1, 20, 0.5));
-        this.registerSetting(maxCPS = new ModuleSettingSlider("Max CPS:", 12,1, 20, 0.5));
-        this.registerSetting(cpsClarification = new ModuleDesc("CPS only applies to PEARL_THROW"));
         this.registerSetting(action = new ModuleSettingSlider("Value:", 1,1, 3, 1));
         this.registerSetting(actionDesc = new ModuleDesc("Mode: PEARL_THROW"));
-        tickLastest = 15;
     }
 
     public void guiUpdate() {
         actionDesc.setDesc(ay.md + actions.values()[(int)(action.getInput() -1)]);
-        ay.correctSliders(minCPS, maxCPS);
     }
 
     public void onEnable() {
-        clicking = false;
-        holding = false;
-        timeOut = false;
+        try {
+            this.bot = new Robot();
+        } catch (AWTException var2) {
+            this.disable();
+        }
+        hasClicked = false;
+        pearlEvent = 4;
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent e) {
-        if(timeOut){
-            if (currentTick <= tickLastest){
-                currentTick++;
-                return;
-            }else {
-                currentTick = 1;
-                timeOut = false;
+        if(!ay.isPlayerInGame()) return;
+
+        if(pearlEvent < 4){
+            if(pearlEvent==3) mc.thePlayer.inventory.currentItem = prevSlot;
+            pearlEvent++;
+        }
+
+        if(Mouse.isButtonDown(2) && !hasClicked) {
+            switch (actions.values()[(int)(action.getInput() -1)]){
+                case PEARL_THROW:
+                    for (int slot = 0; slot <= 8; slot++) {
+                        ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+                        if(itemInSlot != null && itemInSlot.getItem() instanceof ItemEnderPearl) {
+                            prevSlot = mc.thePlayer.inventory.currentItem;
+                            mc.thePlayer.inventory.currentItem = slot;
+                            this.bot.mousePress(InputEvent.BUTTON3_MASK);
+                            this.bot.mouseRelease(InputEvent.BUTTON3_MASK);
+                            pearlEvent = 0;
+                            hasClicked = true;
+                            return;
+                        }
+                    }
+                    break;
+
+                case ADD_FRIEND:
+                    addFriend();
+                    if(showHelp.isToggled()) showHelpMessage();
+                    break;
+
+                case REMOVE_FRIEND:
+                    removeFriend();
+                    if(showHelp.isToggled()) showHelpMessage();
+                    break;
+
             }
-        }
-
-        if(moveback){
-            moveback = false;
-            mc.thePlayer.inventory.currentItem = prevSlot;
-        }
-
-        if(clicking){
-
-            if (System.currentTimeMillis() - lastClick > speedRight * 1000 && a) {
-                lastClick = System.currentTimeMillis();
-                if (leftHold < lastClick){
-                    leftHold = lastClick;
-                }
-                int key = mc.gameSettings.keyBindUseItem.getKeyCode();
-                KeyBinding.setKeyBindState(key, true);
-                a = false;
-                KeyBinding.onTick(key);
-            } else if (System.currentTimeMillis() - leftHold > rightHoldLength * 1000 && !a) {
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-                clicking = false;
-                a = true;
-                moveback = true;
-            }
-
-
-
-            return;
-        }
-
-        if(!Mouse.isButtonDown(2))
-            return;
-
-
-        actions middleClickAction = actions.values()[(int) action.getInput() - 1];
-
-        if(middleClickAction == actions.PEARL_THROW){
-            throwPearl();
-        } else if(middleClickAction == actions.ADD_FRIEND) {
-            addFriend();
-            showHelpMessage();
-            timeOut = true;
-        } else if(middleClickAction == actions.REMOVE_FRIEND) {
-            removeFriend();
-            showHelpMessage();
-            timeOut = true;
+            hasClicked = true;
+        } else if(!Mouse.isButtonDown(2) && hasClicked) {
+            hasClicked = false;
         }
     }
 
@@ -139,28 +121,9 @@ public class MiddleClick extends Module {
         }
     }
 
-    private void throwPearl() {
-
-        for (int slot = 0; slot <= 8; slot++) {
-            ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-            if(itemInSlot != null && itemInSlot.getItem() instanceof ItemEnderPearl) {
-                prevSlot = mc.thePlayer.inventory.currentItem;
-                mc.thePlayer.inventory.currentItem = slot;
-                lastClick = System.currentTimeMillis();
-                genTimings(minCPS.getInput(), maxCPS.getInput() + 0.2);
-                clicking = true;
-            }
-        }
-    }
-
     public enum actions {
         PEARL_THROW,
         ADD_FRIEND,
         REMOVE_FRIEND
-    }
-
-    public static void genTimings(double withMinCps, double withMaxCps) {
-        speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble( withMinCps, withMaxCps);
-        rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(withMinCps, withMaxCps);
     }
 }

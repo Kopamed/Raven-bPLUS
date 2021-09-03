@@ -127,6 +127,7 @@ public class Ravenbplus {
       osName = System.getProperty("os.name");
       osArch = System.getProperty("os.arch");
 
+      ClientConfig.applyKeyStrokeSettingsFromConfigFile();
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
       FMLCommonHandler.instance().bus().register(ModuleManager.reach);

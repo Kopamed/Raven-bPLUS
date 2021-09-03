@@ -59,7 +59,7 @@ public class ClickAssist extends Module {
    }
 
    @SubscribeEvent(
-      priority = EventPriority.HIGH
+           priority = EventPriority.HIGH
    )
    public void onMouseUpdate(MouseEvent ev) {
       if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && ay.isPlayerInGame()) {
