@@ -246,6 +246,11 @@ public class AutoClicker extends Module {
             }
          }
          //we cheat in a block game ft. right click
+         if(!Mouse.isButtonDown(1) && !rightDown){
+               KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+               ay.setMouseButtonState(1, false);
+         }
+
          if (Mouse.isButtonDown(1) && rightClick.isToggled() || rightDown) {
             if (!this.rightClickAllowed())
                return;
@@ -304,6 +309,10 @@ public class AutoClicker extends Module {
          } else {
             this.genLeftTimings();
          }
+      } else{
+         if(!Mouse.isButtonDown(0)) {
+
+         }
       }
 
    }
@@ -312,6 +321,10 @@ public class AutoClicker extends Module {
       if (mc.currentScreen == null && mc.inGameHasFocus) {
 
          //Mouse.poll();
+         if(!Mouse.isButtonDown(0) && !leftDown) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
+            ay.setMouseButtonState(0, false);
+         }
          if (leftClick.isToggled() && Mouse.isButtonDown(0) || leftDown) {
             if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
                return;
@@ -392,9 +405,8 @@ public class AutoClicker extends Module {
                //////System.out.println("Waiting");
                return false;
             }
-         } else {
-            //////System.out.println("Something else " + this.rightClickWaiting + " " + allowedClick);
          }
+            //////System.out.println("Something else " + this.rightClickWaiting + " " + allowedClick);
       }
 
 
