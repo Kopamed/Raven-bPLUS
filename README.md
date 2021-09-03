@@ -35,8 +35,10 @@ Discord:<br>
 
 # Client
 
+## Screenshots
+https://imgur.com/a/X3G5R6W
+
 ## Known bugs
- - Safewalk does not work without the shift setting turned on
  - Discord RPC don't work on DARWIN (Mac OS)
 
 ## Improved Modules
