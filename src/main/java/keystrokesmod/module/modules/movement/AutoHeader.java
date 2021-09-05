@@ -15,13 +15,6 @@ public class AutoHeader extends Module {
     public static ModuleDesc desc;
     public static ModuleSettingTick cancelDuringShift, onlyWhenHoldingSpacebar;
     public static ModuleSettingSlider pbs;
-    private boolean holding;
-    private double pressSpeed, holdLength;
-    private double lastPress;
-    private double holdingSince;
-    private double releaseTime;
-    private double holdStart;
-    private double releaseStart;
     private double startWait;
 
     public AutoHeader() {
@@ -42,7 +35,7 @@ public class AutoHeader extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
-        if (!ay.isPlayerInGame())
+        if (!ay.isPlayerInGame() || mc.currentScreen != null)
             return;
         if (cancelDuringShift.isToggled() && mc.thePlayer.isSneaking())
             return;
@@ -61,34 +54,5 @@ public class AutoHeader extends Module {
             }
         }
 
-/*
-        if(ay.playerUnderBlock()){
-            if (holding && System.currentTimeMillis() - holdStart > holdTime){
-                holding = false;
-                releaseStart = System.currentTimeMillis();
-                if (holdStart + holdTime < releaseStart){
-                    releaseStart = holdStart + holdTime;
-                }
-                jump(false);
-            } else if (!holding && System.currentTimeMillis() - releaseStart > releaseTime) {
-                holding = true;
-                holdStart = System.currentTimeMillis();
-                jump(true);
-                genTimings();
-            }
-*/
-
-    }
-
-
-    private void jump(boolean jump) {
-        KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), jump);
-        //KeyBinding.onTick(mc.gameSettings.keyBindJump.getKeyCode());
-    }
-
-    private void genTimings() {
-        double ppsDelay = 1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.5, pbs.getInput() + 0.5);
-        double holdTime = ppsDelay * ThreadLocalRandom.current().nextDouble(57.6432889, 86.84237846);
-        double releasedSince = ppsDelay - holdTime;
     }
 }

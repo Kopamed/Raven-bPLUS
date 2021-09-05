@@ -1,4 +1,4 @@
-package keystrokesmod.module.modules.render;
+package keystrokesmod.module.modules.fun;
 
 import keystrokesmod.utils.ay;
 import keystrokesmod.module.Module;
@@ -17,7 +17,7 @@ public class FPSSpoofer extends Module {
     public static int ticksPassed;
 
     public FPSSpoofer() {
-        super("FPSSpoof", category.render, 0);
+        super("FPSSpoof", category.fun, 0);
         this.registerSetting(desc = new ModuleDesc("Spoofs your fps"));
         this.registerSetting(min =  new ModuleSettingSlider("Min FPS:", 10000, 0, 100000, 100));
         this.registerSetting(max =  new ModuleSettingSlider("Max FPS:", 14000, 0, 100000, 100));

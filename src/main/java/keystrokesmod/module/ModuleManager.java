@@ -2,17 +2,14 @@
 
 package keystrokesmod.module;
 
+import keystrokesmod.module.modules.client.*;
+import keystrokesmod.module.modules.fun.*;
 import keystrokesmod.utils.ay;
 import keystrokesmod.module.modules.*;
-import keystrokesmod.module.modules.client.CommandLine;
-import keystrokesmod.module.modules.client.Gui;
-import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.module.modules.client.UpdateCheck;
 import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.debug.Click;
 import keystrokesmod.module.modules.debug.MessageInfo;
 import keystrokesmod.module.modules.debug.MouseClick;
-import keystrokesmod.module.modules.fun.Fun;
 import keystrokesmod.module.modules.hotkey.*;
 import keystrokesmod.module.modules.minigames.*;
 import keystrokesmod.module.modules.movement.*;
@@ -92,10 +89,13 @@ public class ModuleManager {
       this.addModule(new DuelsStats());
       this.addModule(new MurderMystery());
       this.addModule(new SumoFences());
-      this.addModule(new Fun.ExtraBobbing());
-      this.addModule(new Fun.FlameTrail());
-      this.addModule(new Fun.SlyPort());
-      this.addModule(new Fun.Spin());
+      this.addModule(new ExtraBobbing());
+      this.addModule(new Twerk());
+      this.addModule(new ParticleTrail());
+      this.addModule(new SlyPort());
+      this.addModule(new Spin());
+      this.addModule(new FovLSD());
+      this.addModule(new ClientNameSpoof());
       this.addModule(new FakeChat());
       this.addModule(nameHider = new NameHider());
       this.addModule(stringEncrypt = new StringEncrypt());
@@ -131,6 +131,7 @@ public class ModuleManager {
       this.addModule(new DiscordRPCModule());
       this.addModule(new ShiftTap());
       this.addModule(new FPSSpoofer());
+      this.addModule(new CustomFOV());
       this.defEn();
 
       initialized = true;
