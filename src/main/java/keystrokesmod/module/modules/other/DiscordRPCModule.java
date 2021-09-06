@@ -19,7 +19,7 @@ public class DiscordRPCModule extends Module {
 
     public DiscordRPCModule() {
         super("DiscordRPC", category.other);
-        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) {
+        if (Ravenbplus.osArch.contains("arm")) {
             this.registerSetting(unsupportedOS = new ModuleDesc("Unsupported OS!"));
         }
         this.registerSetting(rpcMode = new ModuleSettingSlider("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
@@ -27,7 +27,7 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onEnable() {
-        if(Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) {
+        if(Ravenbplus.osArch.contains("arm")) {
             ay.sendMessageToSelf("&cYour computer OS/architecture is not supported yet!");
             this.disable();
             return;
@@ -53,7 +53,7 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onDisable() {
-        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) return;
+        if (Ravenbplus.osArch.contains("arm")) return;
         MinecraftForge.EVENT_BUS.unregister(rpc);
         if (rpc.rpc_thread != null)
             rpc.rpc_thread.interrupt();
@@ -63,7 +63,7 @@ public class DiscordRPCModule extends Module {
 
     private int lastRPC;
     public void guiUpdate() {
-        if (Ravenbplus.osName.contains("Mac") || Ravenbplus.osArch.contains("arm")) return;
+        if (Ravenbplus.osArch.contains("arm")) return;
         if (lastRPC != (int) rpcMode.getInput()) { // prevent lags
             lastRPC = (int) rpcMode.getInput();
 
