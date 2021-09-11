@@ -1,10 +1,10 @@
-package keystrokesmod;
+package keystrokesmod.clickgui;
 
-public class b {
+public class ClickGUIRenderManager {
    public void r3nd3r() {
    }
 
-   public void uu(int x, int y) {
+   public void render(int x, int y) {
    }
 
    public void onCl1ck(int x, int y, int b) {
@@ -19,7 +19,7 @@ public class b {
    public void so(int n) {
    }
 
-   public int getH() {
+   public int getHeight() {
       return 0;
    }
 }

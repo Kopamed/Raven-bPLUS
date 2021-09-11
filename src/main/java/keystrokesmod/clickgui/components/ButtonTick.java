@@ -1,24 +1,25 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod;
+package keystrokesmod.clickgui.components;
 
 import java.awt.Color;
 
+import keystrokesmod.clickgui.ClickGUIRenderManager;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class kk extends b {
+public class ButtonTick extends ClickGUIRenderManager {
    private final int c = (new Color(20, 255, 0)).getRGB();
    private final Module mod;
    private final ModuleSettingTick cl1ckbUtt0n;
-   private final m3 p;
+   private final ButtonModule p;
    private int o;
    private int x;
    private int y;
 
-   public kk(Module mod, ModuleSettingTick op, m3 b, int o) {
+   public ButtonTick(Module mod, ModuleSettingTick op, ButtonModule b, int o) {
       this.mod = mod;
       this.cl1ckbUtt0n = op;
       this.p = b;
@@ -37,7 +38,7 @@ public class kk extends b {
       GL11.glHint(3155, 4354);
    }
 
-   public static void d() {
+   public static void draw() {
       GL11.glEnable(3553);
       GL11.glEnable(2929);
       GL11.glDisable(2848);
@@ -45,14 +46,14 @@ public class kk extends b {
       GL11.glHint(3155, 4352);
    }
 
-   public static void d(float x, float y, float x1, float y1, int c) {
+   public static void draw(float x, float y, float x1, float y1, int c) {
       e();
-      b(c);
-      d(x, y, x1, y1);
-      d();
+      colour(c);
+      draw(x, y, x1, y1);
+      draw();
    }
 
-   public static void d(float x, float y, float x1, float y1) {
+   public static void draw(float x, float y, float x1, float y1) {
       GL11.glBegin(7);
       GL11.glVertex2f(x, y1);
       GL11.glVertex2f(x1, y1);
@@ -61,7 +62,7 @@ public class kk extends b {
       GL11.glEnd();
    }
 
-   public static void b(int h) {
+   public static void colour(int h) {
       float a1pha = (float)(h >> 24 & 255) / 350.0F;
       GL11.glColor4f(0.0F, 0.0F, 0.0F, a1pha);
    }
@@ -77,7 +78,7 @@ public class kk extends b {
       this.o = n;
    }
 
-   public void uu(int x, int y) {
+   public void render(int x, int y) {
       this.y = this.p.c4t.getY() + this.o;
       this.x = this.p.c4t.getX();
    }

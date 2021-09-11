@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -22,12 +22,12 @@ public class Healing extends Module {
     }
 
     public void guiUpdate() {
-        modeDesc.setDesc(ay.md + HealingItems.values()[(int) itemMode.getInput() - 1]);
+        modeDesc.setDesc(Utils.md + HealingItems.values()[(int) itemMode.getInput() - 1]);
     }
 
     @Override
     public void onEnable() {
-        if (!ay.isPlayerInGame())
+        if (!Utils.Player.isPlayerInGame())
             return;
 
         if (preferSlot.isToggled()) {

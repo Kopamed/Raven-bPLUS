@@ -1,11 +1,12 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod;
+package keystrokesmod.clickgui.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.clickgui.ClickGUIRenderManager;
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.AutoConfig;
@@ -13,16 +14,16 @@ import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class m3 extends b {
+public class ButtonModule extends ClickGUIRenderManager {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
    public Module mod;
-   public GuiModuleCategory c4t;
+   public ButtonCategory c4t;
    public int o;
-   private final ArrayList<b> sn;
+   private final ArrayList<ClickGUIRenderManager> sn;
    public boolean po;
 
-   public m3(Module mod, GuiModuleCategory p, int o) {
+   public ButtonModule(Module mod, ButtonCategory p, int o) {
       this.mod = mod;
       this.c4t = p;
       this.o = o;
@@ -33,17 +34,17 @@ public class m3 extends b {
          for (ModuleSettingsList v : mod.getSettings()) {
             if (v instanceof ModuleSettingSlider) {
                ModuleSettingSlider n = (ModuleSettingSlider) v;
-               dg s = new dg(n, this, y);
+               ButtonSlider s = new ButtonSlider(n, this, y);
                this.sn.add(s);
                y += 12;
             } else if (v instanceof ModuleSettingTick) {
                ModuleSettingTick b = (ModuleSettingTick) v;
-               kk c = new kk(mod, b, this, y);
+               ButtonTick c = new ButtonTick(mod, b, this, y);
                this.sn.add(c);
                y += 12;
             } else if (v instanceof ModuleDesc) {
                ModuleDesc d = (ModuleDesc) v;
-               d1 m = new d1(d, this, y);
+               ButtonDesc m = new ButtonDesc(d, this, y);
                this.sn.add(m);
                y += 12;
             }
@@ -60,11 +61,11 @@ public class m3 extends b {
 
       while(true) {
          while(var3.hasNext()) {
-            b co = (b)var3.next();
+            ClickGUIRenderManager co = (ClickGUIRenderManager)var3.next();
             co.so(y);
-            if (co instanceof dg) {
+            if (co instanceof ButtonSlider) {
                y += 16;
-            } else if (co instanceof kk || co instanceof AutoConfig || co instanceof d1) {
+            } else if (co instanceof ButtonTick || co instanceof AutoConfig || co instanceof ButtonDesc) {
                y += 12;
             }
          }
@@ -133,18 +134,19 @@ public class m3 extends b {
    public void r3nd3r() {
       v((float)this.c4t.getX(), (float)(this.c4t.getY() + this.o), (float)(this.c4t.getX() + this.c4t.gw()), (float)(this.c4t.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
+      // module text button
       int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : Color.lightGray.getRGB();
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.c4t.getX() + this.c4t.gw() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.c4t.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.sn.isEmpty()) {
-         for (b c : this.sn) {
+         for (ClickGUIRenderManager c : this.sn) {
             c.r3nd3r();
          }
       }
 
    }
 
-   public int getH() {
+   public int getHeight() {
       if (!this.po) {
          return 16;
       } else {
@@ -153,10 +155,10 @@ public class m3 extends b {
 
          while(true) {
             while(var2.hasNext()) {
-               b c = (b)var2.next();
-               if (c instanceof dg) {
+               ClickGUIRenderManager c = (ClickGUIRenderManager)var2.next();
+               if (c instanceof ButtonSlider) {
                   h += 16;
-               } else if (c instanceof kk || c instanceof AutoConfig || c instanceof d1) {
+               } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc) {
                   h += 12;
                }
             }
@@ -166,10 +168,10 @@ public class m3 extends b {
       }
    }
 
-   public void uu(int x, int y) {
+   public void render(int x, int y) {
       if (!this.sn.isEmpty()) {
-         for (b c : this.sn) {
-            c.uu(x, y);
+         for (ClickGUIRenderManager c : this.sn) {
+            c.render(x, y);
          }
       }
 
@@ -185,21 +187,21 @@ public class m3 extends b {
          this.c4t.r3nd3r();
       }
 
-      for (keystrokesmod.b c : this.sn) {
+      for (ClickGUIRenderManager c : this.sn) {
          c.onCl1ck(x, y, b);
       }
 
    }
 
    public void mr(int x, int y, int m) {
-      for (b c : this.sn) {
+      for (ClickGUIRenderManager c : this.sn) {
          c.mr(x, y, m);
       }
 
    }
 
    public void ky(char t, int k) {
-      for (b c : this.sn) {
+      for (ClickGUIRenderManager c : this.sn) {
          c.ky(t, k);
       }
 

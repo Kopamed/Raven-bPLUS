@@ -2,7 +2,7 @@ package keystrokesmod.module.modules.fun;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 
 public class FovLSD extends Module {
     public static ModuleSettingSlider speed;
@@ -18,11 +18,11 @@ public class FovLSD extends Module {
     }
 
     public void guiUpdate(){
-        ay.correctSliders(minFov, maxFov);
+        Utils.Client.correctSliders(minFov, maxFov);
     }
 
     public void update(){
-        if(!ay.isPlayerInGame()) return;
+        if(!Utils.Player.isPlayerInGame()) return;
 
         guiUpdate();
         if(maxFov.getInput() == 0){

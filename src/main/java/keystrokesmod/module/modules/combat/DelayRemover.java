@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -40,7 +40,7 @@ public class DelayRemover extends Module {
 
    @SubscribeEvent
    public void a(PlayerTickEvent b) {
-      if (ay.isPlayerInGame() && this.l != null) {
+      if (Utils.Player.isPlayerInGame() && this.l != null) {
          if (!mc.inGameHasFocus || mc.thePlayer.capabilities.isCreativeMode) {
             return;
          }

@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
@@ -48,7 +48,7 @@ public class SafeWalk extends Module {
    }
 
    public void onDisable() {
-      if (doShift.isToggled() && ay.playerOverAir()) {
+      if (doShift.isToggled() && Utils.Player.playerOverAir()) {
          this.setShift(false);
       }
 
@@ -57,16 +57,16 @@ public class SafeWalk extends Module {
    }
 
    public void guiUpdate() {
-      ay.correctSliders(pitchRange, pitchIgnorePoint);
-      blockShowModeDesc.setDesc(ay.md + BlockAmountInfo.values()[(int)blockShowMode.getInput() - 1]);
+      Utils.Client.correctSliders(pitchRange, pitchIgnorePoint);
+      blockShowModeDesc.setDesc(Utils.md + BlockAmountInfo.values()[(int)blockShowMode.getInput() - 1]);
    }
 
    @SubscribeEvent
    public void p(PlayerTickEvent e) {
-      if(!ay.currentScreenMinecraft())
+      if(!Utils.Client.currentScreenMinecraft())
          return;
 
-      if (!ay.isPlayerInGame()) {
+      if (!Utils.Player.isPlayerInGame()) {
          return;
       }
       if(doShift.isToggled()) {
@@ -86,7 +86,7 @@ public class SafeWalk extends Module {
             }
          }
          if (mc.thePlayer.onGround) {
-            if (ay.playerOverAir()) {
+            if (Utils.Player.playerOverAir()) {
                if (blocksOnly.isToggled()) {
                   ItemStack i = mc.thePlayer.getHeldItem();
                   if (i == null || !(i.getItem() instanceof ItemBlock)) {
@@ -130,7 +130,7 @@ public class SafeWalk extends Module {
             shouldBridge = false;
          }
 
-         else if (shouldBridge && ay.playerOverAir() && shiftOnJump.isToggled()) {
+         else if (shouldBridge && Utils.Player.playerOverAir() && shiftOnJump.isToggled()) {
             isShifting = true;
             this.setShift(true);
          } else {
@@ -143,7 +143,7 @@ public class SafeWalk extends Module {
 
    @SubscribeEvent
    public void r(TickEvent.RenderTickEvent e) {
-      if(!showBlockAmount.isToggled() || !ay.isPlayerInGame()) return;
+      if(!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame()) return;
       if (e.phase == TickEvent.Phase.END && !SelfDestruct.destructed) {
          if (mc.currentScreen == null) {
             if(shouldBridge) {
@@ -151,10 +151,10 @@ public class SafeWalk extends Module {
 
                int totalBlocks = 0;
                if(BlockAmountInfo.values()[(int)blockShowMode.getInput() - 1] == BlockAmountInfo.BLOCKS_IN_CURRENT_STACK) {
-                  totalBlocks = ay.getBlockAmountInCurrentStack(mc.thePlayer.inventory.currentItem);
+                  totalBlocks = Utils.Player.getBlockAmountInCurrentStack(mc.thePlayer.inventory.currentItem);
                } else {
                   for (int slot = 0; slot < 36; slot++){
-                     totalBlocks += ay.getBlockAmountInCurrentStack(slot);
+                     totalBlocks += Utils.Player.getBlockAmountInCurrentStack(slot);
                   }
                }
 

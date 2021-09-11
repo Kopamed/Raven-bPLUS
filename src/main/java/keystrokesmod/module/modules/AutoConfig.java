@@ -4,22 +4,22 @@ package keystrokesmod.module.modules;
 
 import java.awt.Color;
 
-import keystrokesmod.b;
-import keystrokesmod.BindKey;
-import keystrokesmod.m3;
+import keystrokesmod.clickgui.ClickGUIRenderManager;
+import keystrokesmod.clickgui.components.ButtonBind;
+import keystrokesmod.clickgui.components.ButtonModule;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-public class AutoConfig extends b {
+public class AutoConfig extends ClickGUIRenderManager {
    private boolean isBinding;
-   private final m3 p;
+   private final ButtonModule p;
    private int o;
    private int x;
    private int y;
 
-   public AutoConfig(m3 b, int o) {
+   public AutoConfig(ButtonModule b, int o) {
       this.p = b;
       this.x = b.c4t.getX() + b.c4t.gw();
       this.y = b.c4t.getY() + b.o;
@@ -37,12 +37,12 @@ public class AutoConfig extends b {
          this.dr("Auto-configure modules.");
          GL11.glPopMatrix();
       } else {
-         this.dr(this.isBinding ? BindKey.binding : BindKey.bind + ": " + Keyboard.getKeyName(this.p.mod.getKeycode()));
+         this.dr(this.isBinding ? ButtonBind.binding : ButtonBind.bind + ": " + Keyboard.getKeyName(this.p.mod.getKeycode()));
          GL11.glPopMatrix();
       }
    }
 
-   public void uu(int x, int y) {
+   public void render(int x, int y) {
       boolean h = this.i(x, y);
       this.y = this.p.c4t.getY() + this.o;
       this.x = this.p.c4t.getX();
@@ -78,7 +78,7 @@ public class AutoConfig extends b {
       return x > this.x && x < this.x + this.p.c4t.gw() && y > this.y - 1 && y < this.y + 12;
    }
 
-   public int getH() {
+   public int getHeight() {
       return 16;
    }
 

@@ -9,7 +9,7 @@ import java.util.TimerTask;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -45,7 +45,7 @@ public class SumoFences extends Module {
       this.registerSetting(a = new ModuleDesc("Fences for Hypixel sumo."));
       this.registerSetting(b = new ModuleSettingSlider("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
       this.registerSetting(c = new ModuleSettingSlider("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
-      this.registerSetting(d = new ModuleDesc(ay.md + this.c2));
+      this.registerSetting(d = new ModuleDesc(Utils.md + this.c2));
    }
 
    public void onEnable() {
@@ -72,7 +72,7 @@ public class SumoFences extends Module {
 
    @SubscribeEvent
    public void m(MouseEvent e) {
-      if (e.buttonstate && (e.button == 0 || e.button == 1) && ay.isPlayerInGame() && this.is()) {
+      if (e.buttonstate && (e.button == 0 || e.button == 1) && Utils.Player.isPlayerInGame() && this.is()) {
          MovingObjectPosition mop = mc.objectMouseOver;
          if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
             int x = mop.getBlockPos().getX();
@@ -82,7 +82,7 @@ public class SumoFences extends Module {
                if (pos.getX() == x && pos.getZ() == z) {
                   e.setCanceled(true);
                   if (e.button == 0) {
-                     ay.rsa();
+                     Utils.Player.swing();
                   }
 
                   Mouse.poll();
@@ -114,10 +114,10 @@ public class SumoFences extends Module {
    }
 
    private boolean is() {
-      if (ay.isHyp()) {
+      if (Utils.Client.isHyp()) {
 
-         for (String l : ay.gsl()) {
-            String s = ay.str(l);
+         for (String l : Utils.Client.getPlayersFromScoreboard()) {
+            String s = Utils.Java.str(l);
             if (s.startsWith("Map:")) {
                if (this.m.contains(s.substring(5))) {
                   return true;
@@ -135,19 +135,19 @@ public class SumoFences extends Module {
       switch((int)c.getInput()) {
       case 1:
          this.f = Blocks.oak_fence.getDefaultState();
-         d.setDesc(ay.md + this.c2);
+         d.setDesc(Utils.md + this.c2);
          break;
       case 2:
          this.f = Blocks.leaves.getDefaultState();
-         d.setDesc(ay.md + this.c3);
+         d.setDesc(Utils.md + this.c3);
          break;
       case 3:
          this.f = Blocks.glass.getDefaultState();
-         d.setDesc(ay.md + this.c4);
+         d.setDesc(Utils.md + this.c4);
          break;
       case 4:
          this.f = Blocks.barrier.getDefaultState();
-         d.setDesc(ay.md + this.c5);
+         d.setDesc(Utils.md + this.c5);
       }
 
    }

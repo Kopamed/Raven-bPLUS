@@ -9,8 +9,7 @@ import java.util.Iterator;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -84,12 +83,12 @@ public class BridgeInfo extends Module {
          }
 
          if (this.g1p != null && this.g2p != null) {
-            this.d1 = ay.round(mc.thePlayer.getDistance(this.g2p.getX(), this.g2p.getY(), this.g2p.getZ()) - 1.4D, 1);
+            this.d1 = Utils.Java.round(mc.thePlayer.getDistance(this.g2p.getX(), this.g2p.getY(), this.g2p.getZ()) - 1.4D, 1);
             if (this.d1 < 0.0D) {
                this.d1 = 0.0D;
             }
 
-            this.d2 = enem == null ? 0.0D : ay.round(enem.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D, 1);
+            this.d2 = enem == null ? 0.0D : Utils.Java.round(enem.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D, 1);
             if (this.d2 < 0.0D) {
                this.d2 = 0.0D;
             }
@@ -110,7 +109,7 @@ public class BridgeInfo extends Module {
 
    @SubscribeEvent
    public void a(RenderTickEvent ev) {
-      if (ev.phase == Phase.END && ay.isPlayerInGame() && this.ibd()) {
+      if (ev.phase == Phase.END && Utils.Player.isPlayerInGame() && this.ibd()) {
          if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
          }
@@ -129,8 +128,8 @@ public class BridgeInfo extends Module {
 
    @SubscribeEvent
    public void o(ClientChatReceivedEvent c) {
-      if (ay.isPlayerInGame()) {
-         String s = ay.str(c.message.getUnformattedText());
+      if (Utils.Player.isPlayerInGame()) {
+         String s = Utils.Java.str(c.message.getUnformattedText());
          if (s.startsWith(" ")) {
             String qt = "First player to score 5 goals wins";
             if (s.contains(qt)) {
@@ -158,8 +157,8 @@ public class BridgeInfo extends Module {
    }
 
    private boolean ibd() {
-      if (ay.isHyp()) {
-         Iterator var1 = ay.gsl().iterator();
+      if (Utils.Client.isHyp()) {
+         Iterator var1 = Utils.Client.getPlayersFromScoreboard().iterator();
 
          while(var1.hasNext()) {
             String s = (String)var1.next();
@@ -222,7 +221,7 @@ public class BridgeInfo extends Module {
          ScaledResolution res = new ScaledResolution(this.mc);
          int x = res.getScaledWidth() / 2 - 84;
          int y = res.getScaledHeight() / 2 - 20;
-         HUDUtils.drawColouredText("Edit the HUD position by dragging.", '-', x, y, 2L, 0L, true, this.mc.fontRendererObj);
+         Utils.HUD.drawColouredText("Edit the HUD position by dragging.", '-', x, y, 2L, 0L, true, this.mc.fontRendererObj);
 
          try {
             this.handleInput();

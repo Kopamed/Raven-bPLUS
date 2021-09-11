@@ -1,20 +1,21 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod;
+package keystrokesmod.clickgui.components;
 
 import java.awt.Color;
 
+import keystrokesmod.clickgui.ClickGUIRenderManager;
 import keystrokesmod.module.ModuleDesc;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class d1 extends b {
+public class ButtonDesc extends ClickGUIRenderManager {
    private final int c = (new Color(226, 83, 47)).getRGB();
    private final ModuleDesc desc;
-   private final m3 p;
+   private final ButtonModule p;
    private int o;
 
-   public d1(ModuleDesc desc, m3 b, int o) {
+   public ButtonDesc(ModuleDesc desc, ButtonModule b, int o) {
       this.desc = desc;
       this.p = b;
       int x = b.c4t.getX() + b.c4t.gw();

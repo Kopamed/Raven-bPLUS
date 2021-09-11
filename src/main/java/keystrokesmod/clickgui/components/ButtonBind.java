@@ -1,6 +1,6 @@
-package keystrokesmod;
+package keystrokesmod.clickgui.components;
 
-public class BindKey {
+public class ButtonBind {
    public static String bind = "Bind";
    public static String binding = "Press a key...";
 }

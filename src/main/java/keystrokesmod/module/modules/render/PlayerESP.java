@@ -11,8 +11,7 @@ import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,7 +56,7 @@ public class PlayerESP extends Module {
    }
 
    public void onDisable() {
-      HUDUtils.ring_c = false;
+      Utils.HUD.ring_c = false;
    }
 
    public void guiUpdate() {
@@ -66,7 +65,7 @@ public class PlayerESP extends Module {
 
    @SubscribeEvent
    public void r1(RenderWorldLastEvent e) {
-      if (ay.isPlayerInGame()) {
+      if (Utils.Player.isPlayerInGame()) {
          int rgb = d.isToggled() ? 0 : this.rgb_c;
          Iterator var3;
          if (Ravenbplus.debugger) {
@@ -106,27 +105,27 @@ public class PlayerESP extends Module {
 
    private void r(Entity en, int rgb) {
       if (t1.isToggled()) {
-         HUDUtils.ee(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.ee(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t2.isToggled()) {
-         HUDUtils.ee(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.ee(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t3.isToggled()) {
-         HUDUtils.ee(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.ee(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t4.isToggled()) {
-         HUDUtils.ee(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.ee(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t5.isToggled()) {
-         HUDUtils.ee(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.ee(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t6.isToggled()) {
-         HUDUtils.ee(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.ee(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
    }

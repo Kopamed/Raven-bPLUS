@@ -10,8 +10,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -63,8 +62,8 @@ public class Tracers extends Module {
 
    @SubscribeEvent
    public void o(RenderWorldLastEvent ev) {
-      if (ay.isPlayerInGame()) {
-         int rgb = e.isToggled() ? ay.rainbowDraw(2L, 0L) : this.rgb_c;
+      if (Utils.Player.isPlayerInGame()) {
+         int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
          Iterator var3;
          if (Ravenbplus.debugger) {
             var3 = mc.theWorld.loadedEntityList.iterator();
@@ -72,7 +71,7 @@ public class Tracers extends Module {
             while(var3.hasNext()) {
                Entity en = (Entity)var3.next();
                if (en instanceof EntityLivingBase && en != mc.thePlayer) {
-                  HUDUtils.dtl(en, rgb, (float)f.getInput());
+                  Utils.HUD.dtl(en, rgb, (float)f.getInput());
                }
             }
 
@@ -94,7 +93,7 @@ public class Tracers extends Module {
                } while(!a.isToggled() && en.isInvisible());
 
                if (!AntiBot.bot(en)) {
-                  HUDUtils.dtl(en, rgb, (float)f.getInput());
+                  Utils.HUD.dtl(en, rgb, (float)f.getInput());
                }
             }
          }

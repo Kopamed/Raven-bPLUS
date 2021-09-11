@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -8,8 +8,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class BridgeAssist extends Module {
     private final ModuleSettingTick setLook;
     private final ModuleSettingTick onSneak;
-    private final ModuleSettingSlider setLookMode;
-    private final ModuleDesc setLookModeDesc;
     private final ModuleSettingTick workWithSafeWalk;
     private final ModuleSettingSlider waitFor;
     private final ModuleSettingSlider glideTime;
@@ -18,7 +16,6 @@ public class BridgeAssist extends Module {
     private final ModuleDesc assistModeDesc;
     private boolean waitingForAim;
     private boolean gliding;
-    private long waitTime;
     private long startWaitTime;
     private final float[] godbridgePos = {75.6f, -315, -225, -135, -45, 0, 45, 135, 225, 315};
     private final float[] moonwalkPos = {79.6f, -340, -290, -250, -200, -160, -110, -70, -20, 0, 20, 70, 110, 160, 200, 250, 290, 340};
@@ -32,8 +29,6 @@ public class BridgeAssist extends Module {
         super("Bridge Assist", category.player, 0);
         ModuleDesc goodAdvice;
         this.registerSetting(goodAdvice = new ModuleDesc("Best with fastplace, not autoplace"));
-        this.registerSetting(setLookMode = new ModuleSettingSlider("Value", 1.0D, 1.0D, 2.0D, 1.0D));
-        this.registerSetting(setLookModeDesc = new ModuleDesc("Mode: Snap"));
         this.registerSetting(waitFor = new ModuleSettingSlider("Wait time (ms)", 500, 0, 5000, 25));
         this.registerSetting(setLook = new ModuleSettingTick("Set look pos", true));
         this.registerSetting(onSneak = new ModuleSettingTick("Work only when sneaking", true));
@@ -45,8 +40,7 @@ public class BridgeAssist extends Module {
     }
 
     public void guiUpdate() {
-        assistModeDesc.setDesc(ay.md + ay.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)].name());
-        setLookModeDesc.setDesc(ay.md + ay.LookMode.values()[(int)(setLookMode.getInput() - 1.0D)].name());
+        assistModeDesc.setDesc(Utils.md + Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)].name());
     }
 
     @Override
@@ -58,7 +52,7 @@ public class BridgeAssist extends Module {
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent e) {
-        if (!ay.isPlayerInGame()) {
+        if (!Utils.Player.isPlayerInGame()) {
             return;
         }
 
@@ -68,7 +62,7 @@ public class BridgeAssist extends Module {
             }
         }
 
-        if (!(ay.playerOverAir() && mc.thePlayer.onGround)) {
+        if (!(Utils.Player.playerOverAir() && mc.thePlayer.onGround)) {
             //////////System.out.println("Return bc not on air ");
             return;
         }
@@ -153,7 +147,7 @@ public class BridgeAssist extends Module {
         //-45 east
         float range = (float) assistRange.getInput();
 
-        switch (ay.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)]) {
+        switch (Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)]) {
             case GODBRIDGE:
                 if (godbridgePos[0] >= (pitch - range) && godbridgePos[0] <= (pitch + range)) {
                     for (int k = 1; k < godbridgePos.length; k++) {
@@ -208,25 +202,8 @@ public class BridgeAssist extends Module {
 
     public void aimAt(float pitch, float yaw, float fuckedYaw, float fuckedPitch){
        if(setLook.isToggled()) {
-           ////////////System.out.println("Setting aim");
-           if (ay.LookMode.values()[(int)(setLookMode.getInput() - 1.0D)] == ay.LookMode.SNAP) {
                mc.thePlayer.rotationPitch = pitch + ((int)fuckedPitch/360) * 360;
                mc.thePlayer.rotationYaw = yaw;
-           } else if (ay.LookMode.values()[(int)(setLookMode.getInput() - 1.0D)] == ay.LookMode.GLIDE) {
-               this.speedYaw = (yaw - mc.thePlayer.rotationYaw) / glideTime.getInput();
-               this.speedPitch = (pitch - mc.thePlayer.rotationPitch) / glideTime.getInput();
-
-               if (this.speedYaw < 0)
-                   this.speedYaw *= -1;
-
-               if (this.speedPitch < 0)
-                   this.speedPitch *= -1;
-
-               this.waitingForYaw = yaw + fuckedYaw;
-               this.waitingForPitch = pitch + fuckedPitch;
-
-               this.gliding = true;
-           }
         }
     }
 }

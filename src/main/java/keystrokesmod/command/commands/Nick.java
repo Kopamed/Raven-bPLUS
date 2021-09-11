@@ -1,6 +1,6 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
+import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.minigames.DuelsStats;
 

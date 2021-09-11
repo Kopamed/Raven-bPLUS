@@ -10,7 +10,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
@@ -62,14 +62,14 @@ public class ClickAssist extends Module {
            priority = EventPriority.HIGH
    )
    public void onMouseUpdate(MouseEvent ev) {
-      if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && ay.isPlayerInGame()) {
+      if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
             double ch;
             if (ev.button == 0 && L.isToggled()) {
                if (this.engagedLeft) {
                   this.engagedLeft = false;
                } else {
-                  if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
+                  if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
                      return;
                   }
 

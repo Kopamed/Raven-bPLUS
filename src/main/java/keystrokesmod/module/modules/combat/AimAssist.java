@@ -12,7 +12,7 @@ import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -51,10 +51,10 @@ public class AimAssist extends Module {
 
    public void update() {
 
-      if(!ay.currentScreenMinecraft()){
+      if(!Utils.Client.currentScreenMinecraft()){
          return;
       }
-      if(!ay.isPlayerInGame()) return;
+      if(!Utils.Player.isPlayerInGame()) return;
 
          if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
             BlockPos p = mc.objectMouseOver.getBlockPos();
@@ -67,20 +67,20 @@ public class AimAssist extends Module {
          }
 
 
-         if (!weaponOnly.isToggled() || ay.isPlayerHoldingWeapon()) {
+         if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
             //what if player clicking but mouse not down ????
-            if ((clickAim.isToggled() && ay.autoClickerClicking()) || (Mouse.isButtonDown(0) && !ModuleManager.autoClicker.isEnabled()) || !clickAim.isToggled()) {
+            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && !ModuleManager.autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Ravenbplus.debugger) {
-                     ay.sendMessageToSelf(this.getName() + " &e" + en.getName());
+                     Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
                   }
 
                   if (blatantMode.isToggled()) {
-                     ay.aim(en, 0.0F, false);
+                     Utils.Player.aim(en, 0.0F, false);
                   } else {
-                     double n = ay.fovFromEntity(en);
+                     double n = Utils.Player.fovFromEntity(en);
                      if (n > 1.0D || n < -1.0D) {
                         double complimentSpeed = n*(ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328, compliment.getInput() + 2.48293)/100);
                         double val2 = complimentSpeed + ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput());
@@ -105,15 +105,15 @@ public class AimAssist extends Module {
       try {
          EntityPlayer bruhentity = (EntityPlayer) entity;
          if(Ravenbplus.debugger){
-            ay.sendMessageToSelf("unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
+            Utils.Player.sendMessageToSelf("unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
 
-            ay.sendMessageToSelf("susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
-            ay.sendMessageToSelf("substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
+            Utils.Player.sendMessageToSelf("susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
+            Utils.Player.sendMessageToSelf("substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
          }
          if(mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName().getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2))) return true;
       } catch (Exception fhwhfhwe) {
          if(Ravenbplus.debugger) {
-            ay.sendMessageToSelf(fhwhfhwe.getMessage());
+            Utils.Player.sendMessageToSelf(fhwhfhwe.getMessage());
          }
       }
 
@@ -145,7 +145,7 @@ public class AimAssist extends Module {
                } while(!aimInvis.isToggled() && en.isInvisible());
             } while((double)mc.thePlayer.getDistanceToEntity(en) > distance.getInput());
          } while(AntiBot.bot(en));
-      } while(!blatantMode.isToggled() && !ay.fov(en, (float)fov));
+      } while(!blatantMode.isToggled() && !Utils.Player.fov(en, (float)fov));
 
       return en;
    }

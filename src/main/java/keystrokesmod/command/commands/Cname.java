@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.other.NameHider;
 
@@ -18,7 +18,7 @@ public class Cname extends Command {
         }
 
         NameHider.n = args[1];
-        CommandLine.print("&a" + ay.uf("name") + "Nick has been set to:".substring(4), 1);
+        CommandLine.print("&a" + Utils.Java.uf("name") + "Nick has been set to:".substring(4), 1);
         CommandLine.print("\"" + NameHider.n + "\"", 0);
     }
 }

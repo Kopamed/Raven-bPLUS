@@ -3,7 +3,7 @@ package keystrokesmod.module.modules.fun;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.Vec3;
@@ -19,7 +19,7 @@ public class ParticleTrail extends Module {
     }
 
     public void guiUpdate() {
-        b.setDesc(ay.md + EnumParticleTypes.values()[(int)a.getInput() - 1]);
+        b.setDesc(Utils.md + EnumParticleTypes.values()[(int)a.getInput() - 1]);
     }
 
     public void update() {

@@ -10,7 +10,7 @@ import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -43,7 +43,7 @@ public class HitBox extends Module {
 
    @SubscribeEvent
    public void m(MouseEvent e) {
-      if(!ay.isPlayerInGame()) return;
+      if(!Utils.Player.isPlayerInGame()) return;
       if (e.button == 0 && e.buttonstate && mv != null) {
          mc.objectMouseOver = mv;
       }
@@ -52,7 +52,7 @@ public class HitBox extends Module {
    @SubscribeEvent
    public void ef(TickEvent.RenderTickEvent ev) {
       // autoclick event
-      if(!ay.isPlayerInGame()) return;
+      if(!Utils.Player.isPlayerInGame()) return;
       if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
 
       if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
@@ -64,7 +64,7 @@ public class HitBox extends Module {
 
    @SubscribeEvent
    public void r1(RenderWorldLastEvent e) {
-      if (b.isToggled() && ay.isPlayerInGame()) {
+      if (b.isToggled() && Utils.Player.isPlayerInGame()) {
          for (Entity en : mc.theWorld.loadedEntityList) {
             if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase) en).deathTime == 0 && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
                this.rh(en, Color.WHITE);
@@ -139,9 +139,9 @@ public class HitBox extends Module {
 
    private void rh(Entity e, Color c) {
       if (e instanceof EntityLivingBase) {
-         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
-         double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
-         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double)ay.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+         double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
+         double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
+         double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Utils.Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
          float ex = (float)((double)e.getCollisionBorderSize() * a.getInput());
          AxisAlignedBB bbox = e.getEntityBoundingBox().expand(ex, ex, ex);
          AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y, bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);

@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.combat;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -39,19 +39,19 @@ public class BlockHit extends Module {
     }
 
     public void guiUpdate() {
-        ay.correctSliders(minActionTicks, maxActionTicks);
-        ay.correctSliders(minOnceEvery, maxOnceEvery);
-        eventTypeDesc.setDesc(ay.md + ay.SprintResetTimings.values()[(int) eventType.getInput() - 1]);
+        Utils.Client.correctSliders(minActionTicks, maxActionTicks);
+        Utils.Client.correctSliders(minOnceEvery, maxOnceEvery);
+        eventTypeDesc.setDesc(Utils.md + Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1]);
     }
 
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
-        if(!ay.isPlayerInGame())
+        if(!Utils.Player.isPlayerInGame())
             return;
 
-        if(onRightMBHold.isToggled() && !ay.tryingToCombo()){
-            if(!safeGuard || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+        if(onRightMBHold.isToggled() && !Utils.Player.tryingToCombo()){
+            if(!safeGuard || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
                 safeGuard = true;
                 finishCombo();
             }
@@ -68,9 +68,9 @@ public class BlockHit extends Module {
             }
         }
 
-        if(onRightMBHold.isToggled() && ay.tryingToCombo()) {
+        if(onRightMBHold.isToggled() && Utils.Player.tryingToCombo()) {
             if(mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null) {
-                if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
                     safeGuard = true;
                     finishCombo();
                 }
@@ -79,7 +79,7 @@ public class BlockHit extends Module {
                 Entity target = mc.objectMouseOver.entityHit;
                 //////////System.out.println(target.hurtResistantTime);
                 if(target.isDead) {
-                    if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                    if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
                         safeGuard = true;
                         finishCombo();
                     }
@@ -93,7 +93,7 @@ public class BlockHit extends Module {
             //////////System.out.println(target.hurtResistantTime);
             if(target.isDead) {
                 if(onRightMBHold.isToggled() && Mouse.isButtonDown(1) && Mouse.isButtonDown(0)) {
-                    if(!safeGuard  || ay.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
+                    if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
                         safeGuard = true;
                         finishCombo();
                     }
@@ -102,7 +102,7 @@ public class BlockHit extends Module {
             }
 
             if (mc.thePlayer.getDistanceToEntity(target) <= range.getInput()) {
-                if ((target.hurtResistantTime >= 10 && ay.SprintResetTimings.values()[(int) eventType.getInput() - 1] == ay.SprintResetTimings.POST) || (target.hurtResistantTime <= 10 && ay.SprintResetTimings.values()[(int) eventType.getInput() - 1] == ay.SprintResetTimings.PRE)) {
+                if ((target.hurtResistantTime >= 10 && Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1] == Utils.Modes.SprintResetTimings.POST) || (target.hurtResistantTime <= 10 && Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1] == Utils.Modes.SprintResetTimings.PRE)) {
 
                     if (onlyPlayers.isToggled()){
                         if (!(target instanceof EntityPlayer)){
@@ -165,7 +165,7 @@ public class BlockHit extends Module {
     private static void finishCombo() {
         int key = mc.gameSettings.keyBindUseItem.getKeyCode();
         KeyBinding.setKeyBindState(key, false);
-        ay.setMouseButtonState(1, false);
+        Utils.Client.setMouseButtonState(1, false);
     }
 
     private static void startCombo() {
@@ -173,7 +173,7 @@ public class BlockHit extends Module {
             int key = mc.gameSettings.keyBindUseItem.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            ay.setMouseButtonState(1, true);
+            Utils.Client.setMouseButtonState(1, true);
         }
     }
 }

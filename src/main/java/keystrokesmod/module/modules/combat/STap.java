@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.combat;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -38,15 +38,15 @@ public class STap extends Module {
     }
 
     public void guiUpdate(){
-        ay.correctSliders(minActionTicks, maxActionTicks);
-        ay.correctSliders(minOnceEvery, maxOnceEvery);
-        eventTypeDesc.setDesc(ay.md + ay.SprintResetTimings.values()[(int) eventType.getInput() - 1]);
+        Utils.Client.correctSliders(minActionTicks, maxActionTicks);
+        Utils.Client.correctSliders(minOnceEvery, maxOnceEvery);
+        eventTypeDesc.setDesc(Utils.md + Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1]);
     }
 
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
-        if(!ay.isPlayerInGame())
+        if(!Utils.Player.isPlayerInGame())
             return;
 
         if(comboing) {
@@ -69,7 +69,7 @@ public class STap extends Module {
             }
 
             if (mc.thePlayer.getDistanceToEntity(target) <= range.getInput()) {
-                if ((target.hurtResistantTime >= 10 && ay.SprintResetTimings.values()[(int) eventType.getInput() - 1] == ay.SprintResetTimings.POST) || (target.hurtResistantTime <= 10 && ay.SprintResetTimings.values()[(int) eventType.getInput() - 1] == ay.SprintResetTimings.PRE)) {
+                if ((target.hurtResistantTime >= 10 && Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1] == Utils.Modes.SprintResetTimings.POST) || (target.hurtResistantTime <= 10 && Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1] == Utils.Modes.SprintResetTimings.PRE)) {
 
                     if (onlyPlayers.isToggled()){
                         if (!(target instanceof EntityPlayer)){

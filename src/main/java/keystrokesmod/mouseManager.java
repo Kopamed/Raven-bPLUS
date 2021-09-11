@@ -7,7 +7,7 @@ import java.util.List;
 
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,12 +29,12 @@ public class mouseManager {
                   return;
                }
 
-               ay.sendMessageToSelf("&7&m-------------------------");
-               ay.sendMessageToSelf("n: " + en.getName());
-               ay.sendMessageToSelf("rn: " + en.getName().replace("§", "%"));
-               ay.sendMessageToSelf("d: " + en.getDisplayName().getUnformattedText());
-               ay.sendMessageToSelf("rd: " + en.getDisplayName().getUnformattedText().replace("§", "%"));
-               ay.sendMessageToSelf("b?: " + AntiBot.bot(en));
+               Utils.Player.sendMessageToSelf("&7&m-------------------------");
+               Utils.Player.sendMessageToSelf("n: " + en.getName());
+               Utils.Player.sendMessageToSelf("rn: " + en.getName().replace("§", "%"));
+               Utils.Player.sendMessageToSelf("d: " + en.getDisplayName().getUnformattedText());
+               Utils.Player.sendMessageToSelf("rd: " + en.getDisplayName().getUnformattedText().replace("§", "%"));
+               Utils.Player.sendMessageToSelf("b?: " + AntiBot.bot(en));
             }
          } else if (mouse.button == 1) {
             addRightClick();
@@ -54,10 +54,11 @@ public class mouseManager {
 
    //prev f
    public static int getLeftClickCounter() {
-      try{
-         leftClicks.removeIf(o -> o < System.currentTimeMillis() - 1000L);
-      } catch (Exception welpTheKeystrokes){
-         welpTheKeystrokes.printStackTrace();
+      for(Long lon : leftClicks) {
+         if(lon < System.currentTimeMillis() - 1000L){
+            leftClicks.remove(lon);
+            break;
+         }
       }
       return leftClicks.size();
    }
@@ -65,7 +66,12 @@ public class mouseManager {
 
    // prev i
    public static int getRightClickCounter() {
-      rightClicks.removeIf(o -> o < System.currentTimeMillis() - 1000L);
+      for(Long lon : rightClicks) {
+         if(lon < System.currentTimeMillis() - 1000L){
+            rightClicks.remove(lon);
+            break;
+         }
+      }
       return rightClicks.size();
    }
 }

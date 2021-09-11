@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.debug;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -28,7 +28,7 @@ public class Click extends Module {
     }
 
     public void guiUpdate() {
-        hookDesc.setDesc(ay.md + hook.values()[(int) (hookMode.getInput() - 1)]);
+        hookDesc.setDesc(Utils.md + hook.values()[(int) (hookMode.getInput() - 1)]);
     }
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent e) {

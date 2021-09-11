@@ -3,7 +3,7 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
@@ -21,10 +21,10 @@ public class Sprint extends Module {
 
    @SubscribeEvent
    public void p(PlayerTickEvent e) {
-      if (ay.isPlayerInGame() && mc.inGameHasFocus) {
+      if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus) {
          EntityPlayerSP p = mc.thePlayer;
          if (a.isToggled()) {
-            if (ay.isMoving() && p.getFoodStats().getFoodLevel() > 6) {
+            if (Utils.Player.isMoving() && p.getFoodStats().getFoodLevel() > 6) {
                p.setSprinting(true);
             }
          } else {

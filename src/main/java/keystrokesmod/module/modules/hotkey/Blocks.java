@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
@@ -19,7 +19,7 @@ public class Blocks extends Module {
 
     @Override
     public void onEnable() {
-        if (!ay.isPlayerInGame())
+        if (!Utils.Player.isPlayerInGame())
             return;
 
         if (preferSlot.isToggled()) {

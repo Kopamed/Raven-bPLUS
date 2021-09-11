@@ -1,9 +1,9 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.URLUtils;
+import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
+import keystrokesmod.utils.Utils;
 
 public class SetKey extends Command {
     public SetKey() {
@@ -23,12 +23,12 @@ public class SetKey extends Command {
         n = args[2];
         if(args[1].equalsIgnoreCase("paste")){
             Ravenbplus.getExecutor().execute(() -> {
-                URLUtils.pasteApiKey = n;
+                Utils.URLS.pasteApiKey = n;
             });
         } else if(args[1].equalsIgnoreCase("hypixel")){
             Ravenbplus.getExecutor().execute(() -> {
-                if (URLUtils.isHypixelKeyValid(n)) {
-                    URLUtils.hypixelApiKey = n;
+                if (Utils.URLS.isHypixelKeyValid(n)) {
+                    Utils.URLS.hypixelApiKey = n;
                     CommandLine.print("&a" + "success!", 0);
                     Ravenbplus.clientConfig.saveConfig();
                 } else {

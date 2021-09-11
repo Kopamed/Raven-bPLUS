@@ -6,7 +6,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 
 public class Boost extends Module {
    public static ModuleDesc c;
@@ -32,8 +32,8 @@ public class Boost extends Module {
 
    public void onDisable() {
       this.i = 0;
-      if (ay.getTimer().timerSpeed != 1.0F) {
-         ay.resetTimer();
+      if (Utils.Client.getTimer().timerSpeed != 1.0F) {
+         Utils.Client.resetTimer();
       }
 
       if (this.t) {
@@ -48,9 +48,9 @@ public class Boost extends Module {
          this.i = mc.thePlayer.ticksExisted;
       }
 
-      ay.getTimer().timerSpeed = (float)a.getInput();
+      Utils.Client.getTimer().timerSpeed = (float)a.getInput();
       if ((double)this.i == (double)mc.thePlayer.ticksExisted - b.getInput()) {
-         ay.resetTimer();
+         Utils.Client.resetTimer();
          this.disable();
       }
 

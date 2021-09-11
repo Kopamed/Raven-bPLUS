@@ -11,8 +11,7 @@ import java.util.TimerTask;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -69,7 +68,7 @@ public class Xray extends Module {
             for(int y = ra; y >= -ra; --y) {
                for(int x = -ra; x <= ra; ++x) {
                   for(int z = -ra; z <= ra; ++z) {
-                     if (ay.isPlayerInGame()) {
+                     if (Utils.Player.isPlayerInGame()) {
                         BlockPos p = new BlockPos(Module.mc.thePlayer.posX + (double)x, Module.mc.thePlayer.posY + (double)y, Module.mc.thePlayer.posZ + (double)z);
                         Block bl = Module.mc.theWorld.getBlockState(p).getBlock();
                         if (Xray.a.isToggled() && bl.equals(Blocks.iron_ore) || Xray.b.isToggled() && bl.equals(Blocks.gold_ore) || Xray.c.isToggled() && bl.equals(Blocks.diamond_ore) || Xray.d.isToggled() && bl.equals(Blocks.emerald_ore) || Xray.e.isToggled() && bl.equals(Blocks.lapis_ore) || Xray.f.isToggled() && bl.equals(Blocks.redstone_ore) || Xray.g.isToggled() && bl.equals(Blocks.coal_ore) || Xray.h.isToggled() && bl.equals(Blocks.mob_spawner)) {
@@ -87,7 +86,7 @@ public class Xray extends Module {
 
    @SubscribeEvent
    public void orl(RenderWorldLastEvent ev) {
-      if (ay.isPlayerInGame() && !this.ren.isEmpty()) {
+      if (Utils.Player.isPlayerInGame() && !this.ren.isEmpty()) {
          List<BlockPos> tRen = new ArrayList(this.ren);
          Iterator var3 = tRen.iterator();
 
@@ -102,7 +101,7 @@ public class Xray extends Module {
    private void dr(BlockPos p) {
       int[] rgb = this.c(mc.theWorld.getBlockState(p).getBlock());
       if (rgb[0] + rgb[1] + rgb[2] != 0) {
-         HUDUtils.re(p, (new Color(rgb[0], rgb[1], rgb[2])).getRGB(), true);
+         Utils.HUD.re(p, (new Color(rgb[0], rgb[1], rgb[2])).getRGB(), true);
       }
 
    }

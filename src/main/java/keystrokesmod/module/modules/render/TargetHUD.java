@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.render;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.client.Minecraft;
@@ -25,7 +25,7 @@ public class TargetHUD extends Module {
 
     @SubscribeEvent
     public void r(RenderGameOverlayEvent ev) {
-        if (ev.type != RenderGameOverlayEvent.ElementType.CROSSHAIRS || !ay.isPlayerInGame()) return;
+        if (ev.type != RenderGameOverlayEvent.ElementType.CROSSHAIRS || !Utils.Player.isPlayerInGame()) return;
         ////System.out.println("render");
         if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;

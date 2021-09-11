@@ -1,18 +1,19 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod;
+package keystrokesmod.clickgui.components;
 
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import keystrokesmod.clickgui.ClickGUIRenderManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class dg extends b {
+public class ButtonSlider extends ClickGUIRenderManager {
    private final ModuleSettingSlider v;
-   private final m3 p;
+   private final ButtonModule p;
    private int o;
    private int x;
    private int y;
@@ -20,7 +21,7 @@ public class dg extends b {
    private double w;
    private final int msl = 84;
 
-   public dg(ModuleSettingSlider v, m3 b, int o) {
+   public ButtonSlider(ModuleSettingSlider v, ButtonModule b, int o) {
       this.v = v;
       this.p = b;
       this.x = b.c4t.getX() + b.c4t.gw();
@@ -47,7 +48,7 @@ public class dg extends b {
       this.o = n;
    }
 
-   public void uu(int x, int y) {
+   public void render(int x, int y) {
       this.y = this.p.c4t.getY() + this.o;
       this.x = this.p.c4t.getX();
       double d = Math.min(this.p.c4t.gw() - 8, Math.max(0, x - this.x));

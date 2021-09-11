@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.render;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -32,7 +32,7 @@ public class Fullbright extends Module {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
-        if (!ay.isPlayerInGame()) {
+        if (!Utils.Player.isPlayerInGame()) {
             onDisable();
             return;
         }

@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,7 +28,7 @@ public class Velocity extends Module {
 
    @SubscribeEvent
    public void c(LivingUpdateEvent ev) {
-      if (ay.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime)
+      if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime)
       {
          //System.out.println(ev.entity.getName());
          //System.out.println(mc.objectMouseOver.hitInfo);

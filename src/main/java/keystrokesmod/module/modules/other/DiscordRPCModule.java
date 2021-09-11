@@ -6,9 +6,8 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.OSUtil;
 import net.minecraftforge.common.MinecraftForge;
 
 public class DiscordRPCModule extends Module {
@@ -28,7 +27,7 @@ public class DiscordRPCModule extends Module {
 
     public void onEnable() {
         if(Ravenbplus.osArch.contains("arm")) {
-            ay.sendMessageToSelf("&cYour computer OS/architecture is not supported yet!");
+            Utils.Player.sendMessageToSelf("&cYour computer OS/architecture is not supported yet!");
             this.disable();
             return;
         }

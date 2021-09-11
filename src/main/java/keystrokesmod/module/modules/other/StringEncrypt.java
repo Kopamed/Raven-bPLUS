@@ -2,7 +2,7 @@
 
 package keystrokesmod.module.modules.other;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -26,12 +26,12 @@ public class StringEncrypt extends Module {
       this.registerSetting(a = new ModuleSettingTick("Ignore debug", false));
       this.registerSetting(b = new ModuleSettingTick("Ignore all GUI", false));
       this.registerSetting(c = new ModuleSettingSlider("Value", 1.0D, 1.0D, 4.0D, 1.0D));
-      this.registerSetting(d = new ModuleDesc(ay.md + m1));
+      this.registerSetting(d = new ModuleDesc(Utils.md + m1));
    }
 
    public void onEnable() {
       if (c.getInput() == 3.0D) {
-         m3s = ay.rand().nextInt(10) - 5;
+         m3s = Utils.Java.rand().nextInt(10) - 5;
          if (m3s == 0) {
             m3s = 1;
          }
@@ -43,26 +43,26 @@ public class StringEncrypt extends Module {
       switch((int)c.getInput()) {
       case 1:
          this.m3t = false;
-         d.setDesc(ay.md + m1);
+         d.setDesc(Utils.md + m1);
          break;
       case 2:
          this.m3t = false;
-         d.setDesc(ay.md + m2);
+         d.setDesc(Utils.md + m2);
          break;
       case 3:
          if (!this.m3t) {
-            m3s = ay.rand().nextInt(10) - 5;
+            m3s = Utils.Java.rand().nextInt(10) - 5;
             if (m3s == 0) {
                m3s = 1;
             }
          }
 
          this.m3t = true;
-         d.setDesc(ay.md + m3);
+         d.setDesc(Utils.md + m3);
          break;
       case 4:
          this.m3t = false;
-         d.setDesc(ay.md + m4);
+         d.setDesc(Utils.md + m4);
       }
 
    }

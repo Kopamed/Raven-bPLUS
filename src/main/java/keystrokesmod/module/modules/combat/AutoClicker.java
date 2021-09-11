@@ -5,19 +5,17 @@ import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import keystrokesmod.*;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.debug.Click;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -139,28 +137,28 @@ public class AutoClicker extends Module {
    }
 
    public void guiUpdate() {
-      ay.correctSliders(leftMinCPS, leftMaxCPS);
-      ay.correctSliders(rightMinCPS, rightMaxCPS);
-      ay.correctSliders(breakBlocksMin, breakBlocksMax);
-      modeDesc.setDesc(ay.md + ay.ClickEvents.values()[(int)(clickEvent.getInput() - 1.0D)].name());
-      timingsDesc.setDesc(ay.md + ay.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
+      Utils.Client.correctSliders(leftMinCPS, leftMaxCPS);
+      Utils.Client.correctSliders(rightMinCPS, rightMaxCPS);
+      Utils.Client.correctSliders(breakBlocksMin, breakBlocksMax);
+      modeDesc.setDesc(Utils.md + Utils.Modes.ClickEvents.values()[(int)(clickEvent.getInput() - 1.0D)].name());
+      timingsDesc.setDesc(Utils.md + Utils.Modes.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
    }
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if(!ay.currentScreenMinecraft() &&
+      if(!Utils.Client.currentScreenMinecraft() &&
               !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
           && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
       )
          return;
 
-      if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.RENDER)
+      if(Utils.Modes.ClickEvents.values()[(int)clickEvent.getInput() - 1] != Utils.Modes.ClickEvents.RENDER)
          return;
 
-      if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
+      if(Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.RAVEN){
          ravenClick();
       }
-      else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.SKID){
+      else if (Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.SKID){
          //////System.out.println("skidlcick");
          skidClick(ev, null);
       }
@@ -168,26 +166,26 @@ public class AutoClicker extends Module {
 
    @SubscribeEvent
    public void onTick(TickEvent.PlayerTickEvent ev) {
-      if(!ay.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
+      if(!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
               && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
       )
          return;
 
-      if(ay.ClickEvents.values()[(int)clickEvent.getInput() - 1] != ay.ClickEvents.TICK)
+      if(Utils.Modes.ClickEvents.values()[(int)clickEvent.getInput() - 1] != Utils.Modes.ClickEvents.TICK)
          return;
 
-      if(ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.RAVEN){
+      if(Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.RAVEN){
          //////System.out.println("ravern");
          ravenClick();
       }
-      else if (ay.ClickTimings.values()[(int)clickTimings.getInput() - 1] == ay.ClickTimings.SKID){
+      else if (Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.SKID){
          //////System.out.println("skidlcick");
          skidClick(null, ev);
       }
    }
 
    private void skidClick(RenderTickEvent er, TickEvent.PlayerTickEvent e) {
-      if (!ay.isPlayerInGame())
+      if (!Utils.Player.isPlayerInGame())
          return;
 
       guiUpdate();
@@ -205,7 +203,7 @@ public class AutoClicker extends Module {
          // Uhh left click only, mate
          if (Mouse.isButtonDown(0) && leftClick.isToggled()) {
             if(breakBlock()) return;
-            if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
+            if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
                return;
             }
             if (jitterLeft.getInput() > 0.0D) {
@@ -238,17 +236,17 @@ public class AutoClicker extends Module {
                KeyBinding.setKeyBindState(key, true);
                Click.minecraftPressed(true);
                KeyBinding.onTick(key);
-               ay.setMouseButtonState(0, true);
+               Utils.Client.setMouseButtonState(0, true);
             } else if (System.currentTimeMillis() - leftHold > leftHoldLength * 1000) {
                KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
                Click.minecraftPressed(false);
-               ay.setMouseButtonState(0, false);
+               Utils.Client.setMouseButtonState(0, false);
             }
          }
          //we cheat in a block game ft. right click
          if(!Mouse.isButtonDown(1) && !rightDown){
                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-               ay.setMouseButtonState(1, false);
+               Utils.Client.setMouseButtonState(1, false);
          }
 
          if (Mouse.isButtonDown(1) && rightClick.isToggled() || rightDown) {
@@ -283,13 +281,13 @@ public class AutoClicker extends Module {
                }
                int key = mc.gameSettings.keyBindUseItem.getKeyCode();
                KeyBinding.setKeyBindState(key, true);
-               ay.setMouseButtonState(1, true);
+               Utils.Client.setMouseButtonState(1, true);
                KeyBinding.onTick(key);
                rightDown = false;
             } else if (System.currentTimeMillis() - rightHold > rightHoldLength * 1000) {
                rightDown = true;
                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-               ay.setMouseButtonState(1, false);
+               Utils.Client.setMouseButtonState(1, false);
 
             }
          } else if (!Mouse.isButtonDown(1)){
@@ -323,10 +321,10 @@ public class AutoClicker extends Module {
          //Mouse.poll();
          if(!Mouse.isButtonDown(0) && !leftDown) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-            ay.setMouseButtonState(0, false);
+            Utils.Client.setMouseButtonState(0, false);
          }
          if (leftClick.isToggled() && Mouse.isButtonDown(0) || leftDown) {
-            if (weaponOnly.isToggled() && !ay.isPlayerHoldingWeapon()) {
+            if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
                return;
             }
             this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
@@ -442,12 +440,12 @@ public class AutoClicker extends Module {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
             this.genLeftTimings();
-            ay.setMouseButtonState(0, true);
+            Utils.Client.setMouseButtonState(0, true);
             leftDown = false;
          } else if (System.currentTimeMillis() > this.leftDownTime) {
             KeyBinding.setKeyBindState(key, false);
             leftDown = true;
-            ay.setMouseButtonState(0, false);
+            Utils.Client.setMouseButtonState(0, false);
          }
       } else {
          //////System.out.println("gen");
@@ -484,8 +482,8 @@ public class AutoClicker extends Module {
          if (System.currentTimeMillis() > this.rightj) {
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            ay.setMouseButtonState(1, false);
-            ay.setMouseButtonState(1, true);
+            Utils.Client.setMouseButtonState(1, false);
+            Utils.Client.setMouseButtonState(1, true);
             this.genRightTimings();
          } else if (System.currentTimeMillis() > this.righti) {
             KeyBinding.setKeyBindState(key, false);
@@ -498,7 +496,7 @@ public class AutoClicker extends Module {
    }
 
    public void genLeftTimings() {
-      double clickSpeed = ay.ranModuleVal(leftMinCPS, leftMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
+      double clickSpeed = Utils.Client.ranModuleVal(leftMinCPS, leftMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
       long delay = (int)Math.round(1000.0D / clickSpeed);
       if (System.currentTimeMillis() > this.leftk) {
          if (!this.leftn && this.rand.nextInt(100) >= 85) {
@@ -528,7 +526,7 @@ public class AutoClicker extends Module {
    }
 
    public void genRightTimings() {
-      double clickSpeed = ay.ranModuleVal(rightMinCPS, rightMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
+      double clickSpeed = Utils.Client.ranModuleVal(rightMinCPS, rightMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
       long delay = (int)Math.round(1000.0D / clickSpeed);
       if (System.currentTimeMillis() > this.rightk) {
          if (!this.rightn && this.rand.nextInt(100) >= 85) {

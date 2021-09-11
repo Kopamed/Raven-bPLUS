@@ -5,7 +5,7 @@ import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,7 +49,7 @@ public class SlyPort extends Module {
         double z = en.posZ - vec.zCoord * 2.5D;
         mc.thePlayer.setPosition(x, mc.thePlayer.posY, z);
         if (e.isToggled()) {
-            ay.aim(en, 0.0F, false);
+            Utils.Player.aim(en, 0.0F, false);
         }
 
     }

@@ -9,8 +9,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
@@ -37,8 +36,8 @@ public class ChestESP extends Module {
 
    @SubscribeEvent
    public void o(RenderWorldLastEvent ev) {
-      if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
-         int rgb = d.isToggled() ? ay.rainbowDraw(2L, 0L) : (new Color((int)a.getInput(), (int)b.getInput(), (int)c.getInput())).getRGB();
+      if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
+         int rgb = d.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : (new Color((int)a.getInput(), (int)b.getInput(), (int)c.getInput())).getRGB();
          Iterator var3 = mc.theWorld.loadedTileEntityList.iterator();
 
          while(true) {
@@ -51,7 +50,7 @@ public class ChestESP extends Module {
                te = (TileEntity)var3.next();
             } while(!(te instanceof TileEntityChest) && !(te instanceof TileEntityEnderChest));
 
-            HUDUtils.re(te.getPos(), rgb, true);
+            Utils.HUD.re(te.getPos(), rgb, true);
          }
       }
    }

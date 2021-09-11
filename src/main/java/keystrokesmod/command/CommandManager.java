@@ -1,7 +1,7 @@
 package keystrokesmod.command;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.commands.*;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.HUD;
@@ -80,7 +80,7 @@ public class CommandManager {
             Collections.sort(this.sortedCommandList, Comparator.comparing(Command::getName));
         } else {
             Collections.sort(this.sortedCommandList, (o1, o2) -> {
-                return ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName());
+                return Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName());
             });
         }
 

@@ -2,7 +2,7 @@
 
 package keystrokesmod.module.modules;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,23 +10,27 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import keystrokesmod.*;
+import keystrokesmod.clickgui.components.ButtonCategory;
+import keystrokesmod.clickgui.ClickGUIRenderManager;
+import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Timer;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class ClickGui extends GuiScreen {
    private ScheduledFuture sf;
-   private am aT;
-   private am aL;
-   private am aE;
-   private am aR;
+   private Timer aT;
+   private Timer aL;
+   private Timer aE;
+   private Timer aR;
    private ScaledResolution sr;
    private GuiButtonExt s;
    private GuiTextField c;
-   public static ArrayList<GuiModuleCategory> categoryList;
+   public static ArrayList<ButtonCategory> categoryList;
 
    public ClickGui() {
       categoryList = new ArrayList();
@@ -36,19 +40,19 @@ public class ClickGui extends GuiScreen {
 
       for(int category = 0; category < categoryAmount; ++category) {
          Module.category moduleCategory = values[category];
-         GuiModuleCategory currentModuleCategory = new GuiModuleCategory(moduleCategory);
+         ButtonCategory currentModuleCategory = new ButtonCategory(moduleCategory);
          currentModuleCategory.setY(topOffset);
          categoryList.add(currentModuleCategory);
          topOffset += 20;
       }
-
    }
 
    public void initMain() {
-      (this.aT = this.aE = this.aR = new am(500.0F)).start();
+      (this.aT = this.aE = this.aR = new Timer(500.0F)).start();
       this.sf = Ravenbplus.getExecutor().schedule(() -> {
-         (this.aL = new am(650.0F)).start();
+         (this.aL = new Timer(650.0F)).start();
       }, 650L, TimeUnit.MILLISECONDS);
+
    }
 
    public void initGui() {
@@ -64,12 +68,12 @@ public class ClickGui extends GuiScreen {
       int quarterScreenHeight = this.height / 4;
       int halfScreenWidth = this.width / 2;
       int w_c = 30 - this.aT.getValueInt(0, 30, 3);
-      this.drawCenteredString(this.fontRendererObj, "r", halfScreenWidth + 1 - w_c, quarterScreenHeight - 25, ay.rainbowDraw(2L, 1500L));
-      this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15, ay.rainbowDraw(2L, 1200L));
-      this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, ay.rainbowDraw(2L, 900L));
-      this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, ay.rainbowDraw(2L, 600L));
-      this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, ay.rainbowDraw(2L, 300L));
-      this.drawCenteredString(this.fontRendererObj, "b+", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, ay.rainbowDraw(2L, 0L));
+      this.drawCenteredString(this.fontRendererObj, "r", halfScreenWidth + 1 - w_c, quarterScreenHeight - 25, Utils.Client.rainbowDraw(2L, 1500L));
+      this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15, Utils.Client.rainbowDraw(2L, 1200L));
+      this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, Utils.Client.rainbowDraw(2L, 900L));
+      this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, Utils.Client.rainbowDraw(2L, 600L));
+      this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, Utils.Client.rainbowDraw(2L, 300L));
+      this.drawCenteredString(this.fontRendererObj, "b+", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, Utils.Client.rainbowDraw(2L, 0L));
 
       //task bar
       Gui.drawRect(0, this.height, this.width, this.height  - 6 - this.fontRendererObj.FONT_HEIGHT, 0xff3c3f41);
@@ -79,10 +83,10 @@ public class ClickGui extends GuiScreen {
       float speed = 4890;
 
       // info text
-      mc.fontRendererObj.drawString("Made by Kopamed and Blowsy", 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, ay.astolfoColorsDraw(10, 28, speed));
+      mc.fontRendererObj.drawString("Made by Kopamed and Blowsy", 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 28, speed));
 
       //date
-      mc.fontRendererObj.drawString(ay.getDate(), this.width-3-this.fontRendererObj.getStringWidth(ay.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, ay.astolfoColorsDraw(10, 28, speed));
+      mc.fontRendererObj.drawString(Utils.Java.getDate(), this.width-3-this.fontRendererObj.getStringWidth(Utils.Java.getDate()), this.height - 3 - this.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 28, speed));
 
       //version
       if(Ravenbplus.outdated && Ravenbplus.beta) {
@@ -90,7 +94,7 @@ public class ClickGui extends GuiScreen {
          int rows = 1;
          for (int i = Ravenbplus.helloYourComputerHasVirus.length-1; i >= 0; i--) {
             String up = Ravenbplus.helloYourComputerHasVirus[i];
-            mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.astolfoColorsDraw(10, 28, speed));
+            mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, Utils.Client.astolfoColorsDraw(10, 28, speed));
             rows++;
             margin += 2;
          }
@@ -100,16 +104,16 @@ public class ClickGui extends GuiScreen {
          int rows = 1;
          for (int i = Ravenbplus.updateText.length-1; i >= 0; i--) {
             String up = Ravenbplus.updateText[i];
-            mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, ay.astolfoColorsDraw(10, 28, speed));
+            mc.fontRendererObj.drawString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, Utils.Client.astolfoColorsDraw(10, 28, speed));
             rows++;
             margin += 2;
          }
       }
       else if(Ravenbplus.beta) {
          String veryCoolBetaUser = "Beta build " + version.getSelfBetaVersion() + " of version " + version.getCurrentVersion().replaceAll("-", ".");
-         mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.astolfoColorsDraw(10, 28, speed));
+         mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, Utils.Client.astolfoColorsDraw(10, 28, speed));
       } else {
-         mc.fontRendererObj.drawString("On latest version", halfScreenWidth - this.fontRendererObj.getStringWidth("On latest version") / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, ay.astolfoColorsDraw(10, 14, speed));
+         mc.fontRendererObj.drawString("On latest version", halfScreenWidth - this.fontRendererObj.getStringWidth("On latest version") / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, Utils.Client.astolfoColorsDraw(10, 14, speed));
       }
 
       /* old code
@@ -143,12 +147,12 @@ public class ClickGui extends GuiScreen {
          this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - r, quarterScreenHeight + 42, -1);
       }
 
-      for (GuiModuleCategory category : categoryList) {
+      for (ButtonCategory category : categoryList) {
          category.rf(this.fontRendererObj);
          category.up(x, y);
 
-         for (b module : category.getModules()) {
-            module.uu(x, y);
+         for (ClickGUIRenderManager module : category.getModules()) {
+            module.render(x, y);
          }
       }
 
@@ -190,7 +194,7 @@ public class ClickGui extends GuiScreen {
       Iterator var4 = categoryList.iterator();
 
       while(true) {
-         GuiModuleCategory c4t;
+         ButtonCategory c4t;
          do {
             do {
                if (!var4.hasNext()) {
@@ -202,7 +206,7 @@ public class ClickGui extends GuiScreen {
                   return;
                }
 
-               c4t = (GuiModuleCategory)var4.next();
+               c4t = (ButtonCategory)var4.next();
                if (c4t.v(x, y) && !c4t.i(x, y) && !c4t.d(x, y) && m == 0) {
                   c4t.d(true);
                   c4t.xx = x - c4t.getX();
@@ -219,7 +223,7 @@ public class ClickGui extends GuiScreen {
             } while(!c4t.isOpened());
          } while(c4t.getModules().isEmpty());
 
-         for (b c : c4t.getModules()) {
+         for (ClickGUIRenderManager c : c4t.getModules()) {
             c.onCl1ck(x, y, m);
          }
       }
@@ -229,9 +233,9 @@ public class ClickGui extends GuiScreen {
       if (s == 0) {
          Iterator var4 = categoryList.iterator();
 
-         GuiModuleCategory c4t;
+         ButtonCategory c4t;
          while(var4.hasNext()) {
-            c4t = (GuiModuleCategory)var4.next();
+            c4t = (ButtonCategory)var4.next();
             c4t.d(false);
          }
 
@@ -244,11 +248,11 @@ public class ClickGui extends GuiScreen {
                      return;
                   }
 
-                  c4t = (GuiModuleCategory)var4.next();
+                  c4t = (ButtonCategory)var4.next();
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
-            for (b c : c4t.getModules()) {
+            for (ClickGUIRenderManager c : c4t.getModules()) {
                c.mr(x, y, s);
             }
          }
@@ -265,7 +269,7 @@ public class ClickGui extends GuiScreen {
          Iterator var3 = categoryList.iterator();
 
          while(true) {
-            GuiModuleCategory c4t;
+            ButtonCategory c4t;
             do {
                do {
                   if (!var3.hasNext()) {
@@ -283,11 +287,11 @@ public class ClickGui extends GuiScreen {
                      return;
                   }
 
-                  c4t = (GuiModuleCategory)var3.next();
+                  c4t = (ButtonCategory)var3.next();
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
-            for (b c : c4t.getModules()) {
+            for (ClickGUIRenderManager c : c4t.getModules()) {
                c.ky(t, k);
             }
          }
@@ -303,12 +307,13 @@ public class ClickGui extends GuiScreen {
    }
 
    public void onGuiClosed() {
-      ab.ss();
       this.aL = null;
       if (this.sf != null) {
          this.sf.cancel(true);
          this.sf = null;
       }
+
+
 
    }
 

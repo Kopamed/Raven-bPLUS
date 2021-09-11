@@ -6,7 +6,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import org.lwjgl.input.Keyboard;
 
 public class Speed extends Module {
@@ -22,14 +22,14 @@ public class Speed extends Module {
    }
 
    public void update() {
-      double csp = ay.gs();
+      double csp = Utils.Player.pythagorasMovement();
       if (csp != 0.0D) {
          if (mc.thePlayer.onGround && !mc.thePlayer.capabilities.isFlying) {
             if (!b.isToggled() || mc.thePlayer.moveStrafing != 0.0F) {
                if (mc.thePlayer.hurtTime != mc.thePlayer.maxHurtTime || mc.thePlayer.maxHurtTime <= 0) {
                   if (!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) {
                      double val = a.getInput() - (a.getInput() - 1.0D) * 0.5D;
-                     ay.ss(csp * val, true);
+                     Utils.Player.fixMovementSpeed(csp * val, true);
                   }
                }
             }

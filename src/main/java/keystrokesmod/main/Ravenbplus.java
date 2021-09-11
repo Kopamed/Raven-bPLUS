@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -23,8 +22,7 @@ import keystrokesmod.module.modules.ClickGui;
 import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.tweaker.transformers.*;
-import keystrokesmod.utils.URLUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
@@ -137,8 +135,8 @@ public class Ravenbplus {
       configManager = new ConfigManager();
       clientConfig = new ClientConfig();
       clientConfig.applyConfig();
-      ay.su();
-      ex.execute(() -> URLUtils.getTextFromURL(numberOfUseTracker));
+      Utils.Client.setTimer();
+      ex.execute(() -> Utils.URLS.getTextFromURL(numberOfUseTracker));
       if(version.outdated()) {
          Ravenbplus.outdated = true;
       }
@@ -149,8 +147,9 @@ public class Ravenbplus {
 
    @SubscribeEvent
    public void onTick(ClientTickEvent e) {
+
       if (e.phase == Phase.END) {
-         if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
+         if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
             for (int i = 0; i < ModuleManager.modListSize(); i++) {
                Module module = ModuleManager.modsList.get(i);
                if (mc.currentScreen == null) {
@@ -176,10 +175,10 @@ public class Ravenbplus {
 
    @SubscribeEvent
    public void onChatMessageRecieved(ClientChatReceivedEvent event) {
-      if (ay.isPlayerInGame() && !SelfDestruct.destructed) {
+      if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
          if(event.message.getUnformattedText().startsWith("Your new API key is")){
-            URLUtils.hypixelApiKey = event.message.getUnformattedText().replace("Your new API key is ", "");
-            ay.sendMessageToSelf("&aSet api key to " + URLUtils.hypixelApiKey + "!");
+            Utils.URLS.hypixelApiKey = event.message.getUnformattedText().replace("Your new API key is ", "");
+            Utils.Player.sendMessageToSelf("&aSet api key to " + Utils.URLS.hypixelApiKey + "!");
             this.clientConfig.saveConfig();
          }
       }

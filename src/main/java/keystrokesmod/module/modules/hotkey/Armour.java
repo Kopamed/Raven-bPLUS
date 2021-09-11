@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.item.ItemArmor;
@@ -16,7 +16,7 @@ public class Armour extends Module {
 
     @Override
     public void onEnable() {
-        if (!ay.isPlayerInGame()) {
+        if (!Utils.Player.isPlayerInGame()) {
             return;
         }
 
@@ -34,7 +34,7 @@ public class Armour extends Module {
                     ItemArmor armorPiece = (ItemArmor) itemStack.getItem();
 
                     ////////System.out.println(ay.playerWearingArmor());
-                    if(!ay.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()){
+                    if(!Utils.Player.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()){
                         ////////System.out.println("match found of " + armorPiece.armorType + " in slotr " + slot);
                         ////////System.out.println(strength + " "+ armorPiece.getArmorMaterial().getDamageReductionAmount(armorType));
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {
@@ -42,7 +42,7 @@ public class Armour extends Module {
                             index = slot;
                         }
 
-                    } else if (ay.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
+                    } else if (Utils.Player.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
                         ////////System.out.println("found betta");
                         ItemArmor playerArmor;
                         if(armorType == 0){
@@ -62,7 +62,7 @@ public class Armour extends Module {
                             strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                             index = slot;
                         }
-                    } else if(!ay.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
+                    } else if(!Utils.Player.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
                         ////////System.out.println("playa aint have amo and is off");
 
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {

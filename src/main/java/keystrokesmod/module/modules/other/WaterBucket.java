@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -29,7 +29,7 @@ public class WaterBucket extends Module {
 
    @SubscribeEvent
    public void onTick(ClientTickEvent ev) {
-      if (ev.phase != Phase.END && ay.isPlayerInGame() && !mc.isGamePaused()) {
+      if (ev.phase != Phase.END && Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
          if (this.inPosition() && this.holdWaterBucket()) {
             this.handling = true;
          }

@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.debug;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -14,7 +14,7 @@ public class MessageInfo extends Module {
     @SubscribeEvent
     public void onChatMessageRecieved(ClientChatReceivedEvent event){
         if(!SelfDestruct.destructed){
-            ay.sendMessageToSelf("&eUnformatted: " + event.message.getUnformattedText().replace("§", "%"));
+            Utils.Player.sendMessageToSelf("&eUnformatted: " + event.message.getUnformattedText().replace("§", "%"));
         }
     }
 }

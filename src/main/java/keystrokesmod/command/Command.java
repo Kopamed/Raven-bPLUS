@@ -1,6 +1,6 @@
 package keystrokesmod.command;
 
-import keystrokesmod.CommandLine;
+import keystrokesmod.clickgui.CommandLine;
 
 public class Command {
     private final String name;

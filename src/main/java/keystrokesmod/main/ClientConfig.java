@@ -7,17 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import keystrokesmod.GuiModuleCategory;
-import keystrokesmod.ab;
+import keystrokesmod.clickgui.components.ButtonCategory;
 import keystrokesmod.module.modules.HUD;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.keystroke.KeyStroke;
-import keystrokesmod.module.Module;
-import keystrokesmod.module.modules.client.Gui;
-import keystrokesmod.module.modules.combat.AutoClicker;
-import keystrokesmod.module.modules.combat.Reach;
-import keystrokesmod.module.modules.combat.Velocity;
-import keystrokesmod.utils.URLUtils;
 import net.minecraft.client.Minecraft;
 
 public class ClientConfig {
@@ -110,8 +103,8 @@ public class ClientConfig {
 
    public void saveConfig() {
       List<String> config = new ArrayList<String>();
-      config.add(hypixelApiKeyPrefix + URLUtils.hypixelApiKey);
-      config.add(pasteApiKeyPrefix + URLUtils.pasteApiKey);
+      config.add(hypixelApiKeyPrefix + Utils.URLS.hypixelApiKey);
+      config.add(pasteApiKeyPrefix + Utils.URLS.pasteApiKey);
       config.add(clickGuiPosPrefix + getClickGuiPos());
       config.add(loadedConfigPrefix + Ravenbplus.configManager.getCurrentConfig());
       config.add(HUD.HUDX_prefix + HUD.getHudX());
@@ -134,10 +127,10 @@ public class ClientConfig {
 
       for(String line : config){
          if(line.startsWith(hypixelApiKeyPrefix)){
-            URLUtils.hypixelApiKey = line.replace(hypixelApiKeyPrefix, "");
+            Utils.URLS.hypixelApiKey = line.replace(hypixelApiKeyPrefix, "");
             Ravenbplus.getExecutor().execute(() -> {
-               if (!URLUtils.isHypixelKeyValid(URLUtils.hypixelApiKey)) {
-                  URLUtils.hypixelApiKey = "";
+               if (!Utils.URLS.isHypixelKeyValid(Utils.URLS.hypixelApiKey)) {
+                  Utils.URLS.hypixelApiKey = "";
                   ////System.out.println("Invalid key!");
                } else{
                   ////System.out.println("Valid key!");
@@ -145,7 +138,7 @@ public class ClientConfig {
 
             });
          } else if(line.startsWith(pasteApiKeyPrefix)){
-            URLUtils.pasteApiKey = line.replace(pasteApiKeyPrefix, "");
+            Utils.URLS.pasteApiKey = line.replace(pasteApiKeyPrefix, "");
          } else if(line.startsWith(clickGuiPosPrefix)){
             loadClickGuiCoords(line.replace(clickGuiPosPrefix, ""));
          } else if(line.startsWith(loadedConfigPrefix)){
@@ -181,9 +174,9 @@ public class ClientConfig {
       // categoryname:x:y:opened
       ////System.out.println(decryptedString);
       for (String what : decryptedString.split("/")){
-         for (GuiModuleCategory cat : NotAName.clickGui.categoryList) {
+         for (ButtonCategory cat : NotAName.clickGui.categoryList) {
             if(what.startsWith(cat.categoryName.name())){
-               List<String> cfg = ay.StringListToList(what.split("~"));
+               List<String> cfg = Utils.Java.StringListToList(what.split("~"));
                cat.setX(Integer.parseInt(cfg.get(1)));
                cat.setY(Integer.parseInt(cfg.get(2)));
                cat.setOpened(Boolean.parseBoolean(cfg.get(3)));
@@ -194,7 +187,7 @@ public class ClientConfig {
 
    public String getClickGuiPos() {
       StringBuilder posConfig = new StringBuilder();
-      for (GuiModuleCategory cat : NotAName.clickGui.categoryList) {
+      for (ButtonCategory cat : NotAName.clickGui.categoryList) {
          posConfig.append(cat.categoryName.name());
          posConfig.append("~");
          posConfig.append(cat.getX());

@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
@@ -37,7 +37,7 @@ public class AutoTool extends Module {
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent e) {
-        if (!ay.isPlayerInGame() || mc.currentScreen != null)
+        if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
 
         ////////System.out.println(mc.currentScreen);
@@ -54,7 +54,7 @@ public class AutoTool extends Module {
                 Block stateBlock = mc.theWorld.getBlockState(lookingAtBlock).getBlock();
                 if (stateBlock != Blocks.air && !(stateBlock instanceof BlockLiquid) && stateBlock instanceof Block) {
                     if(!mining) {
-                        previousSlot = ay.getCurrentPlayerSlot();
+                        previousSlot = Utils.Player.getCurrentPlayerSlot();
                         mining = true;
                     }
                     int index = -1;
@@ -85,7 +85,7 @@ public class AutoTool extends Module {
 
                     if(index == -1 || speed <= 1.1 || speed == 0) {
                     } else {
-                        ay.hotkeyToSlot(index);
+                        Utils.Player.hotkeyToSlot(index);
                     }
 
 
@@ -130,7 +130,7 @@ public class AutoTool extends Module {
 
     public void finishMining(){
         if(hotkeyBack.isToggled()) {
-            ay.hotkeyToSlot(previousSlot);
+            Utils.Player.hotkeyToSlot(previousSlot);
         }
         justFinishedMining = false;
         mining = false;

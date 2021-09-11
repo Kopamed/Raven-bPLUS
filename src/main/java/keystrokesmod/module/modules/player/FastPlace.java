@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -49,7 +49,7 @@ public class FastPlace extends Module {
    @SubscribeEvent
    public void a(PlayerTickEvent e) {
       if (e.phase == Phase.END) {
-         if (ay.isPlayerInGame() && mc.inGameHasFocus && r != null) {
+         if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus && r != null) {
             if (b.isToggled()) {
                ItemStack item = mc.thePlayer.getHeldItem();
                if (item == null || !(item.getItem() instanceof ItemBlock)) {

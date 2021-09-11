@@ -3,7 +3,7 @@ package keystrokesmod.command.commands;
 import keystrokesmod.command.Command;
 import keystrokesmod.version;
 
-import static keystrokesmod.CommandLine.print;
+import static keystrokesmod.clickgui.CommandLine.print;
 
 public class Version extends Command {
     public Version() {

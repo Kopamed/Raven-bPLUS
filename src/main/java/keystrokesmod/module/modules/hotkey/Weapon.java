@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.*;
@@ -12,7 +12,7 @@ public class Weapon extends Module {
 
     @Override
     public void onEnable() {
-        if (!ay.isPlayerInGame())
+        if (!Utils.Player.isPlayerInGame())
             return;
 
         int index = -1;
@@ -33,7 +33,7 @@ public class Weapon extends Module {
         }
         if(index > -1 && damage > -1) {
             if (mc.thePlayer.inventory.currentItem != index) {
-                ay.hotkeyToSlot(index);
+                Utils.Player.hotkeyToSlot(index);
             }
         }
         this.disable();

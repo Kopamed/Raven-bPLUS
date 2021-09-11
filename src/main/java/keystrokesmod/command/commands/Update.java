@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.version;
@@ -22,7 +22,7 @@ public class Update extends Command {
             URL url = null;
             try {
                 url = new URL(Ravenbplus.sourceLocation);
-                ay.openWebpage(url);
+                Utils.Client.openWebpage(url);
                 CommandLine.print("&aOpened page successfully!", 0);
             } catch (MalformedURLException e) {
                 e.printStackTrace();

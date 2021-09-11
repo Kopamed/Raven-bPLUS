@@ -10,7 +10,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -59,13 +59,13 @@ public class BurstClicker extends Module {
                int cl = (int) clicks.getInput();
                int del = (int) delay.getInput();
 
-               for(int i = 0; i < cl * 2 && this.isEnabled() && ay.isPlayerInGame() && mc.currentScreen == null && mc.inGameHasFocus; ++i) {
+               for(int i = 0; i < cl * 2 && this.isEnabled() && Utils.Player.isPlayerInGame() && mc.currentScreen == null && mc.inGameHasFocus; ++i) {
                   if (i % 2 == 0) {
                      this.l_c = true;
                      if (del != 0) {
                         int realDel = del;
                         if (delayRandomizer.isToggled()) {
-                           realDel = del + ay.rand().nextInt(25) * (ay.rand().nextBoolean() ? -1 : 1);
+                           realDel = del + Utils.Java.rand().nextInt(25) * (Utils.Java.rand().nextBoolean() ? -1 : 1);
                            if (realDel <= 0) {
                               realDel = del / 3 - realDel;
                            }
@@ -95,7 +95,7 @@ public class BurstClicker extends Module {
 
    @SubscribeEvent
    public void r(RenderTickEvent ev) {
-      if (ay.isPlayerInGame()) {
+      if (Utils.Player.isPlayerInGame()) {
          if (this.l_c) {
             this.c(true);
             this.l_c = false;
@@ -122,6 +122,6 @@ public class BurstClicker extends Module {
          }
       }
 
-      ay.setMouseButtonState(r ? 1 : 0, st);
+      Utils.Client.setMouseButtonState(r ? 1 : 0, st);
    }
 }

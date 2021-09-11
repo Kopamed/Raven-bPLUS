@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.entity.Entity;
@@ -29,12 +29,12 @@ public class RodAimbot extends Module {
 
    @SubscribeEvent
    public void x(MouseEvent ev) {
-      if (ev.button == 1 && ev.buttonstate && ay.isPlayerInGame() && mc.currentScreen == null) {
+      if (ev.button == 1 && ev.buttonstate && Utils.Player.isPlayerInGame() && mc.currentScreen == null) {
          if (mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemFishingRod && mc.thePlayer.fishEntity == null) {
             Entity en = this.gE();
             if (en != null) {
                ev.setCanceled(true);
-               ay.aim(en, -7.0F, true);
+               Utils.Player.aim(en, -7.0F, true);
                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem());
             }
          }
@@ -59,7 +59,7 @@ public class RodAimbot extends Module {
                } while(en == mc.thePlayer);
             } while(en.deathTime != 0);
          } while(!c.isToggled() && en.isInvisible());
-      } while((double)mc.thePlayer.getDistanceToEntity(en) > b.getInput() || AntiBot.bot(en) || !ay.fov(en, (float)f));
+      } while((double)mc.thePlayer.getDistanceToEntity(en) > b.getInput() || AntiBot.bot(en) || !Utils.Player.fov(en, (float)f));
 
       return en;
    }

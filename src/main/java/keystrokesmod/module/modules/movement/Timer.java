@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.ClickGui;
 
@@ -23,18 +23,18 @@ public class Timer extends Module {
    public void update() {
       if (!(mc.currentScreen instanceof ClickGui)) {
          if (b.isToggled() && mc.thePlayer.moveStrafing == 0.0F) {
-            ay.resetTimer();
+            Utils.Client.resetTimer();
             return;
          }
 
-         ay.getTimer().timerSpeed = (float)a.getInput();
+         Utils.Client.getTimer().timerSpeed = (float)a.getInput();
       } else {
-         ay.resetTimer();
+         Utils.Client.resetTimer();
       }
 
    }
 
    public void onDisable() {
-      ay.resetTimer();
+      Utils.Client.resetTimer();
    }
 }

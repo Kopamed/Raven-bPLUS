@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
@@ -70,7 +70,7 @@ public class AutoPlace extends Module {
       priority = EventPriority.HIGHEST
    )
    public void bh(DrawBlockHighlightEvent ev) {
-      if (ay.isPlayerInGame()) {
+      if (Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null && !mc.thePlayer.capabilities.isFlying) {
             ItemStack i = mc.thePlayer.getHeldItem();
             if (i != null && i.getItem() instanceof ItemBlock) {
@@ -89,10 +89,10 @@ public class AutoPlace extends Module {
                               if (n - this.l >= 25L) {
                                  this.l = n;
                                  if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, i, pos, m.sideHit, m.hitVec)) {
-                                    ay.setMouseButtonState(1, true);
+                                    Utils.Client.setMouseButtonState(1, true);
                                     mc.thePlayer.swingItem();
                                     mc.getItemRenderer().resetEquippedProgress();
-                                    ay.setMouseButtonState(1, false);
+                                    Utils.Client.setMouseButtonState(1, false);
                                     this.lp = pos;
                                     this.f = 0;
                                  }

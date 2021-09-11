@@ -10,8 +10,7 @@ import java.util.List;
 
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.*;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -31,7 +30,7 @@ public class HUD extends Module {
    public static ModuleDesc colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
-   public static HUDUtils.PositionMode positionMode;
+   public static Utils.HUD.PositionMode positionMode;
    public static int logoSize;
    public static boolean showedError;
    public static final String HUDX_prefix = "HUDX~ ";
@@ -51,7 +50,7 @@ public class HUD extends Module {
    }
 
    public void guiUpdate(){
-      colourModeDesc.setDesc(ay.md + ColourModes.values()[(int) colourMode.getInput()-1]);
+      colourModeDesc.setDesc(Utils.md + ColourModes.values()[(int) colourMode.getInput()-1]);
    }
 
    public void onEnable() {
@@ -79,7 +78,7 @@ public class HUD extends Module {
    public void a(RenderTickEvent ev) {
       // IK THIS METHOD IS INNEFECTIVE I WILL OPTIMISE IT LATER DONT BULLY ME
 
-      if (ev.phase == Phase.END && ay.isPlayerInGame()) {
+      if (ev.phase == Phase.END && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
          }
@@ -90,7 +89,7 @@ public class HUD extends Module {
 
          if(mResourceLocation == null && !showedError) {
             ////System.out.println("Showed error");
-            ay.sendMessageToSelf("Error! Failed to load the raven B+ logo. Please report this in our discord!");
+            Utils.Player.sendMessageToSelf("Error! Failed to load the raven B+ logo. Please report this in our discord!");
             showedError = true;
          }
 
@@ -99,10 +98,10 @@ public class HUD extends Module {
             Gui.drawModalRectWithCustomSizedTexture(hudX - 13, hudY, 0, 0, logoSize, logoSize, logoSize, logoSize);
          }
          if (!alphabeticalSort.isToggled()){
-            if (positionMode == HUDUtils.PositionMode.UPLEFT || positionMode == HUDUtils.PositionMode.UPRIGHT) {
+            if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                ModuleManager.sortShortLong();
             }
-            else if(positionMode == HUDUtils.PositionMode.DOWNLEFT || positionMode == HUDUtils.PositionMode.DOWNRIGHT) {
+            else if(positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
                ModuleManager.sortLongShort();
             }
          }
@@ -140,47 +139,47 @@ public class HUD extends Module {
          while(var5.hasNext()) {
             Module m = (Module)var5.next();
             if (m.isEnabled() && m != this) {
-               if(HUD.positionMode == HUDUtils.PositionMode.DOWNRIGHT || HUD.positionMode == HUDUtils.PositionMode.UPRIGHT){
+               if(HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT){
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN2) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.astolfoColorsDraw(10, 14), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, 14), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO2) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO3) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   }
                } else {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN2) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.rainbowDraw(2L, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.astolfoColorsDraw(10, 14), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, 14), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO2) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 120;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO3) {
-                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, ay.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                     mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   }
@@ -213,7 +212,7 @@ public class HUD extends Module {
          this.marginX = HUD.hudX;
          this.marginY = HUD.hudY;
          sr = new ScaledResolution(mc);
-         HUD.positionMode = HUDUtils.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
+         HUD.positionMode = Utils.HUD.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
       }
 
       public void drawScreen(int mX, int mY, float pt) {
@@ -234,7 +233,7 @@ public class HUD extends Module {
          ScaledResolution res = new ScaledResolution(this.mc);
          int descriptionOffsetX = res.getScaledWidth() / 2 - 84;
          int descriptionOffsetY = res.getScaledHeight() / 2 - 20;
-         HUDUtils.drawColouredText("Edit the HUD position by dragging.", '-', descriptionOffsetX, descriptionOffsetY, 2L, 0L, true, this.mc.fontRendererObj);
+         Utils.HUD.drawColouredText("Edit the HUD position by dragging.", '-', descriptionOffsetX, descriptionOffsetY, 2L, 0L, true, this.mc.fontRendererObj);
 
          try {
             this.handleInput();
@@ -250,15 +249,15 @@ public class HUD extends Module {
          int y = this.textBoxStartY;
          double marginY = fr.FONT_HEIGHT + 2;
          String[] var4 = t.split("-");
-         ArrayList<String> var5 = ay.toArrayList(var4);
-         if (HUD.positionMode == HUDUtils.PositionMode.UPLEFT || HUD.positionMode == HUDUtils.PositionMode.UPRIGHT) {
-            var5.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2) - ay.mc.fontRendererObj.getStringWidth(o1));
+         ArrayList<String> var5 = Utils.Java.toArrayList(var4);
+         if (HUD.positionMode == Utils.HUD.PositionMode.UPLEFT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
+            var5.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2) - Utils.mc.fontRendererObj.getStringWidth(o1));
          }
-         else if(HUD.positionMode == HUDUtils.PositionMode.DOWNLEFT || HUD.positionMode == HUDUtils.PositionMode.DOWNRIGHT) {
-            var5.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2) - ay.mc.fontRendererObj.getStringWidth(o1));
+         else if(HUD.positionMode == Utils.HUD.PositionMode.DOWNLEFT || HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
+            var5.sort((o2, o1) -> Utils.mc.fontRendererObj.getStringWidth(o2) - Utils.mc.fontRendererObj.getStringWidth(o1));
          }
 
-         if(HUD.positionMode == HUDUtils.PositionMode.DOWNRIGHT || HUD.positionMode == HUDUtils.PositionMode.UPRIGHT){
+         if(HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT){
             for (String s : var5) {
                fr.drawString(s, (float) x + (gap - fr.getStringWidth(s)), (float) y, Color.white.getRGB(), HUD.dropShadow.isToggled());
                y += marginY;
@@ -278,7 +277,7 @@ public class HUD extends Module {
                this.marginX = this.lastMousePosX + (mousePosX - this.sessionMousePosX);
                this.marginY = this.lastMousePosY + (mousePosY - this.sessionMousePosY);
                sr = new ScaledResolution(mc);
-               HUD.positionMode = HUDUtils.getPostitionMode(marginX, marginY,sr.getScaledWidth(), sr.getScaledHeight());
+               HUD.positionMode = Utils.HUD.getPostitionMode(marginX, marginY,sr.getScaledWidth(), sr.getScaledHeight());
 
                //in the else if statement, we check if the mouse is clicked AND inside the "text box"
             } else if (mousePosX > this.textBoxStartX && mousePosX < this.textBoxEndX && mousePosY > this.textBoxStartY && mousePosY < this.textBoxEndY) {

@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.client;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
@@ -18,7 +18,7 @@ public class UpdateCheck extends Module {
     public static ModuleSettingTick openLink;
     public UpdateCheck() {
         super("Update", category.client, 0);
-        this.registerSetting(howToUse = new ModuleDesc(ay.uf("command") + ": update"));
+        this.registerSetting(howToUse = new ModuleDesc(Utils.Java.uf("command") + ": update"));
         this.registerSetting(copyToClipboard = new ModuleSettingTick("Copy to clipboard", true));
         this.registerSetting(openLink = new ModuleSettingTick("Open dl in browser", true));
     }
@@ -27,29 +27,29 @@ public class UpdateCheck extends Module {
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
         if (version.outdated()) {
             Ravenbplus.outdated = true;
-            ay.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
-            ay.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
+            Utils.Player.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
+            Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
         if (version.isBeta()) {
             Ravenbplus.beta = true;
-            ay.sendMessageToSelf("Man is on beta and asking for stable. You mad bruv?");
-            ay.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
+            Utils.Player.sendMessageToSelf("Man is on beta and asking for stable. You mad bruv?");
+            Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
         else {
-            ay.sendMessageToSelf("You are on the latest public version!");
+            Utils.Player.sendMessageToSelf("You are on the latest public version!");
         }
         if (copyToClipboard.isToggled()) {
-            if (ay.copyToClipboard(Ravenbplus.sourceLocation))
-                ay.sendMessageToSelf("Successfully copied download link to clipboard!");
+            if (Utils.Client.copyToClipboard(Ravenbplus.sourceLocation))
+                Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
         if(openLink.isToggled()) {
             URL url = null;
             try {
                 url = new URL(Ravenbplus.sourceLocation);
-                ay.openWebpage(url);
+                Utils.Client.openWebpage(url);
             } catch (MalformedURLException bruh) {
                 bruh.printStackTrace();
-                ay.sendMessageToSelf("&cFailed to open page! Please report this bug in Raven b+'s discord");
+                Utils.Player.sendMessageToSelf("&cFailed to open page! Please report this bug in Raven b+'s discord");
             }
         }
         this.disable();

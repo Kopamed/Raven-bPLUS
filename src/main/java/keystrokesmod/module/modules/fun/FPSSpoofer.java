@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.fun;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -37,7 +37,7 @@ public class FPSSpoofer extends Module {
     }
 
     public void guiUpdate() {
-        ay.correctSliders(min, max);
+        Utils.Client.correctSliders(min, max);
     }
 
     public void onEnable(){

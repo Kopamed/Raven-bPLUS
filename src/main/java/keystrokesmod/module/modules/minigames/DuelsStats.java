@@ -10,9 +10,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ProfileUtils;
-import keystrokesmod.utils.URLUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -58,7 +56,7 @@ public class DuelsStats extends Module {
    }
 
    public void guiUpdate() {
-      moduleDesc.setDesc(ay.md + ProfileUtils.DM.values()[(int)(value.getInput() - 1.0D)].name());
+      moduleDesc.setDesc(Utils.md + Utils.Profiles.DM.values()[(int)(value.getInput() - 1.0D)].name());
       bruh.setDesc("Dodge levels: " + thr_lvl[(int)threatLeaveMode.getInput() - 1].substring(2, thr_lvl[(int)threatLeaveMode.getInput() - 1].length() -1));
    }
 
@@ -80,8 +78,8 @@ public class DuelsStats extends Module {
 
    @SubscribeEvent
    public void onMessageRecieved(ClientChatReceivedEvent c) {
-      if (ay.isPlayerInGame() && this.id()) {
-         String s = ay.str(c.message.getUnformattedText());
+      if (Utils.Player.isPlayerInGame() && this.id()) {
+         String s = Utils.Java.str(c.message.getUnformattedText());
          if (s.contains(" ")) {
             String[] sp = s.split(" ");
             String n;
@@ -116,49 +114,49 @@ public class DuelsStats extends Module {
    private void ef(String n) {
       this.en = n;
       if (a.isToggled()) {
-         ay.sendMessageToSelf("&eOpponent found: " + "&3" + n);
+         Utils.Player.sendMessageToSelf("&eOpponent found: " + "&3" + n);
       }
 
-      if (URLUtils.hypixelApiKey.isEmpty()) {
-         ay.sendMessageToSelf("&cAPI Key is empty!");
+      if (Utils.URLS.hypixelApiKey.isEmpty()) {
+         Utils.Player.sendMessageToSelf("&cAPI Key is empty!");
       } else {
-         ProfileUtils.DM dm = ProfileUtils.DM.values()[(int)(value.getInput() - 1.0D)];
+         Utils.Profiles.DM dm = Utils.Profiles.DM.values()[(int)(value.getInput() - 1.0D)];
          Ravenbplus.getExecutor().execute(() -> {
-            int[] s = ProfileUtils.getHypixelStats(n, dm);
+            int[] s = Utils.Profiles.getHypixelStats(n, dm);
             if (s != null) {
                if (s[0] == -1) {
-                  ay.sendMessageToSelf("&3" + n + " " + "&eis nicked!");
+                  Utils.Player.sendMessageToSelf("&3" + n + " " + "&eis nicked!");
                   return;
                }
 
-               double wlr = s[1] != 0 ? ay.round((double)s[0] / (double)s[1], 2) : (double)s[0];
-               ay.sendMessageToSelf("&7&m-------------------------");
-               if (dm != ProfileUtils.DM.OVERALL) {
-                  ay.sendMessageToSelf("&e" + ay.md + "&3" + dm.name());
+               double wlr = s[1] != 0 ? Utils.Java.round((double)s[0] / (double)s[1], 2) : (double)s[0];
+               Utils.Player.sendMessageToSelf("&7&m-------------------------");
+               if (dm != Utils.Profiles.DM.OVERALL) {
+                  Utils.Player.sendMessageToSelf("&e" + Utils.md + "&3" + dm.name());
                }
 
-               ay.sendMessageToSelf("&eOpponent: &3" + n);
-               ay.sendMessageToSelf("&eWins: &3" + s[0]);
-               ay.sendMessageToSelf("&eLosses: &3" + s[1]);
-               ay.sendMessageToSelf("&eWLR: &3" + wlr);
-               ay.sendMessageToSelf("&eWS: &3" + s[2]);
+               Utils.Player.sendMessageToSelf("&eOpponent: &3" + n);
+               Utils.Player.sendMessageToSelf("&eWins: &3" + s[0]);
+               Utils.Player.sendMessageToSelf("&eLosses: &3" + s[1]);
+               Utils.Player.sendMessageToSelf("&eWLR: &3" + wlr);
+               Utils.Player.sendMessageToSelf("&eWS: &3" + s[2]);
                if (threatLevel.isToggled()) {
-                  ay.sendMessageToSelf("&eThreat: &3" + gtl(s[0], s[1], wlr, s[2]));
+                  Utils.Player.sendMessageToSelf("&eThreat: &3" + gtl(s[0], s[1], wlr, s[2]));
                }
                if(queueDodge.isToggled()) {
-                  if(ay.indexOf(thr_lvl[(int)threatLeaveMode.getInput() - 1], thr_lvl) <= (int)threatLeaveMode.getInput() - 1) {
-                     ay.sendMessageToSelf("&cLeaving because the player was too dangerous!");
+                  if(Utils.Java.indexOf(thr_lvl[(int)threatLeaveMode.getInput() - 1], thr_lvl) <= (int)threatLeaveMode.getInput() - 1) {
+                     Utils.Player.sendMessageToSelf("&cLeaving because the player was too dangerous!");
                      mc.thePlayer.sendChatMessage("/l");
                   }else{
-                     ay.sendMessageToSelf("&2Player meets queue expectations!");
+                     Utils.Player.sendMessageToSelf("&2Player meets queue expectations!");
                   }
                }
 
-               ay.sendMessageToSelf("&7&m-------------------------");
+               Utils.Player.sendMessageToSelf("&7&m-------------------------");
 
 
             } else {
-               ay.sendMessageToSelf("&cThere was an error.");
+               Utils.Player.sendMessageToSelf("&cThere was an error.");
             }
 
          });
@@ -166,10 +164,10 @@ public class DuelsStats extends Module {
    }
 
    private boolean id() {
-      if (ay.isHyp()) {
+      if (Utils.Client.isHyp()) {
          int l = 0;
 
-         for (String s : ay.gsl()) {
+         for (String s : Utils.Client.getPlayersFromScoreboard()) {
             if (s.contains("Map:")) {
                ++l;
             } else if (s.contains("Players:") && s.contains("/2")) {

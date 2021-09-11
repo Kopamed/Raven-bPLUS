@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 
@@ -19,7 +19,7 @@ public class Discord extends Command {
         if(args == null) {
             CommandLine.print("§3Opening Discord...", 1);
             CommandLine.print("§a" + Ravenbplus.discord, 0);
-            ay.openWebpage(Ravenbplus.discord);
+            Utils.Client.openWebpage(Ravenbplus.discord);
             opened = true;
             return;
         }
@@ -27,14 +27,14 @@ public class Discord extends Command {
         for (String argument : args) {
             if(argument.equalsIgnoreCase("copy")){
                 if (!copied) {
-                    ay.copyToClipboard(Ravenbplus.discord);
+                    Utils.Client.copyToClipboard(Ravenbplus.discord);
                     copied = true;
                     CommandLine.print("§aCopied to clipboard!", 1);
                 }
             }
             else if(argument.equalsIgnoreCase("open")){
                 if (!opened) {
-                    ay.openWebpage(Ravenbplus.discord);
+                    Utils.Client.openWebpage(Ravenbplus.discord);
                     opened = true;
                     CommandLine.print("§aOpened invite link!", 1);
                 }

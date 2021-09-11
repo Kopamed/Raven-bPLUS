@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.minigames.DuelsStats;
 
 public class NameHider extends Module {
@@ -13,7 +13,7 @@ public class NameHider extends Module {
 
    public NameHider() {
       super("Name Hider", Module.category.other, 0);
-      this.registerSetting(a = new ModuleDesc(ay.uf("command") + ": cname [name]"));
+      this.registerSetting(a = new ModuleDesc(Utils.Java.uf("command") + ": cname [name]"));
    }
 
    public static String getUnformattedTextForChat(String s) {

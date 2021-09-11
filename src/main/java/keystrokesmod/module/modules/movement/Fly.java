@@ -5,7 +5,7 @@ package keystrokesmod.module.modules.movement;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 
 public class Fly extends Module {
    private final Fly.VanFly vanFly = new VanFly();
@@ -19,7 +19,7 @@ public class Fly extends Module {
    public Fly() {
       super("Fly", Module.category.movement, 0);
       this.registerSetting(a = new ModuleSettingSlider("Value", 1.0D, 1.0D, 2.0D, 1.0D));
-      this.registerSetting(dc = new ModuleDesc(ay.md + c1));
+      this.registerSetting(dc = new ModuleDesc(Utils.md + c1));
       this.registerSetting(b = new ModuleSettingSlider("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
    }
 
@@ -59,10 +59,10 @@ public class Fly extends Module {
    public void guiUpdate() {
       switch((int)a.getInput()) {
       case 1:
-         dc.setDesc(ay.md + c1);
+         dc.setDesc(Utils.md + c1);
          break;
       case 2:
-         dc.setDesc(ay.md + c2);
+         dc.setDesc(Utils.md + c2);
       }
 
    }

@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.render;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.renderer.GlStateManager;
@@ -52,7 +52,7 @@ public class Nametags extends Module {
             String str = en.getDisplayName().getFormattedText();
             if (c.isToggled()) {
                double r = en.getHealth() / en.getMaxHealth();
-               String h = (r < 0.3D ? "§c" : (r < 0.5D ? "§6" : (r < 0.7D ? "§e" : "§a"))) + ay.round(en.getHealth(), 1);
+               String h = (r < 0.3D ? "§c" : (r < 0.5D ? "§6" : (r < 0.7D ? "§e" : "§a"))) + Utils.Java.round(en.getHealth(), 1);
                str = str + " " + h;
             }
 

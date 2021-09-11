@@ -1,12 +1,11 @@
 package keystrokesmod.module.modules.other;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.combat.AimAssist;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
@@ -35,7 +34,7 @@ public class MiddleClick extends Module {
     }
 
     public void guiUpdate() {
-        actionDesc.setDesc(ay.md + actions.values()[(int)(action.getInput() -1)]);
+        actionDesc.setDesc(Utils.md + actions.values()[(int)(action.getInput() -1)]);
     }
 
     public void onEnable() {
@@ -50,7 +49,7 @@ public class MiddleClick extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent e) {
-        if(!ay.isPlayerInGame()) return;
+        if(!Utils.Player.isPlayerInGame()) return;
 
         if(pearlEvent < 4){
             if(pearlEvent==3) mc.thePlayer.inventory.currentItem = prevSlot;
@@ -93,19 +92,19 @@ public class MiddleClick extends Module {
 
     private void showHelpMessage() {
         if(showHelp.isToggled()) {
-            ay.sendMessageToSelf("Run 'help friends' in CommandLine to find out how to add, remove and view friends.");
+            Utils.Player.sendMessageToSelf("Run 'help friends' in CommandLine to find out how to add, remove and view friends.");
         }
     }
 
     private void removeFriend() {
         Entity player = mc.objectMouseOver.entityHit;
         if(player == null) {
-            ay.sendMessageToSelf("Please aim at a player/entity when removing them.");
+            Utils.Player.sendMessageToSelf("Please aim at a player/entity when removing them.");
         } else {
             if (AimAssist.removeFriend(player)) {
-                ay.sendMessageToSelf("Successfully removed " + player.getName() + " from friends list!");
+                Utils.Player.sendMessageToSelf("Successfully removed " + player.getName() + " from friends list!");
             } else {
-                ay.sendMessageToSelf(player.getName() + " was not found in the friends list!");
+                Utils.Player.sendMessageToSelf(player.getName() + " was not found in the friends list!");
             }
         }
     }
@@ -113,11 +112,11 @@ public class MiddleClick extends Module {
     private void addFriend() {
         Entity player = mc.objectMouseOver.entityHit;
         if(player == null) {
-            ay.sendMessageToSelf("Please aim at a player/entity when adding them.");
+            Utils.Player.sendMessageToSelf("Please aim at a player/entity when adding them.");
         }
         else {
             AimAssist.addFriend(player);
-            ay.sendMessageToSelf("Successfully added " + player.getName() + " to friends list.");
+            Utils.Player.sendMessageToSelf("Successfully added " + player.getName() + " to friends list.");
         }
     }
 

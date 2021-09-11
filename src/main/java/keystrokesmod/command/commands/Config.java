@@ -1,8 +1,7 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.URLUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 
@@ -45,7 +44,7 @@ public class Config extends Command {
                         config.append("/").append(parsedCfg.get(e));
                     }
                 }
-                String link = URLUtils.createPaste(Ravenbplus.configManager.getCurrentConfig(), config.toString());
+                String link = Utils.URLS.createPaste(Ravenbplus.configManager.getCurrentConfig(), config.toString());
                 if(link.isEmpty()){
                     CommandLine.print("&cFailed to upload config!", 0);
                     CommandLine.print("&cMake sure api key is set!", 0);
@@ -54,7 +53,7 @@ public class Config extends Command {
                     CommandLine.print("&aUploaded!", 0);
                     CommandLine.print("§3" + link, 0);
                     CommandLine.print("&aCopied link to clipboard", 0);
-                    ay.copyToClipboard(link);
+                    Utils.Client.copyToClipboard(link);
                 }
             }
             else {
@@ -69,7 +68,7 @@ public class Config extends Command {
             }
             else if (args[1].equalsIgnoreCase("load")) {
                 //time to suffer :holsum_100:
-                if(URLUtils.isLink(args[2].toLowerCase())){
+                if(Utils.URLS.isLink(args[2].toLowerCase())){
                     CommandLine.print("&eYou can download configs with", 1);
                     CommandLine.print("§3'config save link'", 0);
                 } else{
@@ -92,15 +91,15 @@ public class Config extends Command {
             }
             else if (args[1].equalsIgnoreCase("save")) {
                 //me coding the save command be like https://imgur.com/u1EJ4op
-                if(URLUtils.isLink(args[2].toLowerCase())){
-                    if(URLUtils.isPasteeLink(args[2])){
+                if(Utils.URLS.isLink(args[2].toLowerCase())){
+                    if(Utils.URLS.isPasteeLink(args[2])){
                         CommandLine.print("&aVerified link!", 1);
-                        String link = URLUtils.makeRawPasteePaste(args[2]);
+                        String link = Utils.URLS.makeRawPasteePaste(args[2]);
                         CommandLine.print(link, 0);
                         //System.out.println(link);
                         CommandLine.print("§3Downloading...", 0);
                         float startTime = System.currentTimeMillis();
-                        List<String> info = URLUtils.getConfigFromPastee(link);
+                        List<String> info = Utils.URLS.getConfigFromPastee(link);
                         if(! Boolean.parseBoolean(info.get(0))){
                             CommandLine.print("&cAn error occured!", 1);
                             CommandLine.print("&cThe clink did not have a config!", 0);
@@ -180,7 +179,7 @@ public class Config extends Command {
                         config.append("/").append(parsedCfg.get(e));
                     }
                 }
-                String link = URLUtils.createPaste(cfgName, config.toString());
+                String link = Utils.URLS.createPaste(cfgName, config.toString());
                 if(link.isEmpty()){
                     CommandLine.print("&cFailed to upload config!", 0);
                     CommandLine.print("&cMake sure api key is set!", 0);
@@ -189,7 +188,7 @@ public class Config extends Command {
                     CommandLine.print("&aUploaded!", 0);
                     CommandLine.print("§3" + link, 0);
                     CommandLine.print("&aCopied link to clipboard", 0);
-                    ay.copyToClipboard(link);
+                    Utils.Client.copyToClipboard(link);
                 }
             } else {
                 this.incorrectArgs();
@@ -197,15 +196,15 @@ public class Config extends Command {
 
         } else if(args.length == 4){
             if(args[1].equalsIgnoreCase("save")){
-                if(URLUtils.isLink(args[2].toLowerCase())){
-                    if(URLUtils.isPasteeLink(args[2])){
+                if(Utils.URLS.isLink(args[2].toLowerCase())){
+                    if(Utils.URLS.isPasteeLink(args[2])){
                         CommandLine.print("&aVerified link!", 1);
-                        String link = URLUtils.makeRawPasteePaste(args[2]);
+                        String link = Utils.URLS.makeRawPasteePaste(args[2]);
                         CommandLine.print(link, 0);
                         //System.out.println(link);
                         CommandLine.print("§3Downloading...", 0);
                         float startTime = System.currentTimeMillis();
-                        List<String> info = URLUtils.getConfigFromPastee(link);
+                        List<String> info = Utils.URLS.getConfigFromPastee(link);
                         if(! Boolean.parseBoolean(info.get(0))){
                             CommandLine.print("&cAn error occured!", 1);
                             CommandLine.print("&cThe clink did not have a config!", 0);

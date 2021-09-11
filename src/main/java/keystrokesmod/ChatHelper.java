@@ -2,8 +2,9 @@
 
 package keystrokesmod;
 
+import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -13,8 +14,8 @@ public class ChatHelper {
 
    @SubscribeEvent
    public void onChatMessageRecieved(ClientChatReceivedEvent event) {
-      if (e && ay.isPlayerInGame() && !SelfDestruct.destructed) {
-         if (ay.str(event.message.getUnformattedText()).startsWith("Unknown")) {
+      if (e && Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
+         if (Utils.Java.str(event.message.getUnformattedText()).startsWith("Unknown")) {
             event.setCanceled(true);
             e = false;
             this.getPing();
@@ -27,7 +28,7 @@ public class ChatHelper {
       if (e) {
          CommandLine.print("§cPlease wait.", 0);
       } else {
-         ay.mc.thePlayer.sendChatMessage("/...");
+         Utils.mc.thePlayer.sendChatMessage("/...");
          e = true;
          s = System.currentTimeMillis();
       }

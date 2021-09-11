@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.other.FakeChat;
 
@@ -18,7 +18,7 @@ public class Fakechat extends Command {
         }
 
         String n;
-        String c = ay.joinStringList(args, " ");
+        String c = Utils.Java.joinStringList(args, " ");
         n = c.replaceFirst(FakeChat.command, "").substring(1);
         if (n.isEmpty() || n.equals("\\n")) {
             CommandLine.print(FakeChat.c4, 1);

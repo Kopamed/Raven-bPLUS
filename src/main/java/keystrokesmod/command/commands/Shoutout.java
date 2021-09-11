@@ -2,7 +2,7 @@ package keystrokesmod.command.commands;
 
 import keystrokesmod.command.Command;
 
-import static keystrokesmod.CommandLine.print;
+import static keystrokesmod.clickgui.CommandLine.print;
 
 public class Shoutout extends Command {
     public Shoutout() {
@@ -12,9 +12,12 @@ public class Shoutout extends Command {
     @Override
     public void onCall(String[] args){
         print("&eEveryone who made B+ possible:", 1);
-        print("- hevex", 0);
-        print("- blowsy", 0);
-        print("- jmraichdev", 0);
-        print("- nighttab", 0);
+        print("- kopamed (client dev)", 0);
+        print("- hevex (weeaboo)", 0);
+        print("- blowsy (raven owner)", 0);
+        print("- jmraichdev (client dev)", 0);
+        print("- nighttab (website dev)", 0);
+        print("- mood (java help)", 0);
+        print("- jc (b3 b2 betta tester)", 0);
     }
 }

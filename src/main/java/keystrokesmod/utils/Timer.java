@@ -1,11 +1,11 @@
-package keystrokesmod;
+package keystrokesmod.utils;
 
-public class am {
+public class Timer {
    private final float updates;
    private long last;
    private float cached;
 
-   public am(float updates) {
+   public Timer(float updates) {
       this.updates = updates;
    }
 

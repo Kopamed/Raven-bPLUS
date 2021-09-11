@@ -1,12 +1,11 @@
 package keystrokesmod.module.modules.movement;
 
 import io.netty.util.internal.ThreadLocalRandom;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
@@ -35,7 +34,7 @@ public class AutoHeader extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
-        if (!ay.isPlayerInGame() || mc.currentScreen != null)
+        if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
         if (cancelDuringShift.isToggled() && mc.thePlayer.isSneaking())
             return;
@@ -47,7 +46,7 @@ public class AutoHeader extends Module {
         }
 
 
-        if (ay.playerUnderBlock() && mc.thePlayer.onGround){
+        if (Utils.Player.playerUnderBlock() && mc.thePlayer.onGround){
             if(startWait + (1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.543543, pbs.getInput() + 1.32748923)) < System.currentTimeMillis()){
                 mc.thePlayer.jump();
                 startWait = System.currentTimeMillis();

@@ -4,7 +4,7 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.util.ChatComponentText;
 
 public class FakeChat extends Module {
@@ -15,7 +15,7 @@ public class FakeChat extends Module {
 
    public FakeChat() {
       super("Fake Chat", Module.category.other, 0);
-      this.registerSetting(a = new ModuleDesc(ay.uf("command") + ": " + command + " [msg]"));
+      this.registerSetting(a = new ModuleDesc(Utils.Java.uf("command") + ": " + command + " [msg]"));
    }
 
    public void onEnable() {
@@ -33,6 +33,6 @@ public class FakeChat extends Module {
    }
 
    private void sm(String txt) {
-      mc.thePlayer.addChatMessage(new ChatComponentText(ay.r(txt)));
+      mc.thePlayer.addChatMessage(new ChatComponentText(Utils.Client.reformat(txt)));
    }
 }

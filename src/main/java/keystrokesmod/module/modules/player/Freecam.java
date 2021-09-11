@@ -7,8 +7,7 @@ import java.awt.Color;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -31,7 +30,7 @@ public class Freecam extends Module {
 
    @Override
    public void onEnable() {
-      if(!ay.isPlayerInGame()) {
+      if(!Utils.Player.isPlayerInGame()) {
          return;
       }
       if (!mc.thePlayer.onGround) {
@@ -73,7 +72,7 @@ public class Freecam extends Module {
    }
 
    public void update() {
-      if(!ay.isPlayerInGame() || en == null)
+      if(!Utils.Player.isPlayerInGame() || en == null)
          return;
        if (b.isToggled() && mc.thePlayer.hurtTime != 0) {
          this.disable();
@@ -152,17 +151,17 @@ public class Freecam extends Module {
 
    @SubscribeEvent
    public void re(RenderWorldLastEvent e) {
-      if (ay.isPlayerInGame()) {
+      if (Utils.Player.isPlayerInGame()) {
          mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
-         HUDUtils.ee(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
-         HUDUtils.ee(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
+         Utils.HUD.ee(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
+         Utils.HUD.ee(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
       }
 
    }
 
    @SubscribeEvent
    public void m(MouseEvent e) {
-      if (ay.isPlayerInGame() && e.button != -1) {
+      if (Utils.Player.isPlayerInGame() && e.button != -1) {
          e.setCanceled(true);
       }
 

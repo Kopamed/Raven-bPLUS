@@ -8,7 +8,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -41,13 +41,13 @@ public class Reach extends Module {
    }
 
    public void guiUpdate() {
-      ay.correctSliders(min, max);
+      Utils.Client.correctSliders(min, max);
    }
 
    @SubscribeEvent
    public void onMouse(MouseEvent ev) {
       // legit event
-      if(!ay.isPlayerInGame()) return;
+      if(!Utils.Player.isPlayerInGame()) return;
       if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
       if (ev.button >= 0 && ev.buttonstate) {
          call();
@@ -57,7 +57,7 @@ public class Reach extends Module {
    @SubscribeEvent
    public void onRenderTick(TickEvent.RenderTickEvent ev) {
       // autoclick event
-      if(!ay.isPlayerInGame()) return;
+      if(!Utils.Player.isPlayerInGame()) return;
 
       if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
 
@@ -67,8 +67,8 @@ public class Reach extends Module {
    }
 
    public static boolean call() {
-      if (!ay.isPlayerInGame()) return false;
-      if (weapon_only.isToggled() && !ay.isPlayerHoldingWeapon()) return false;
+      if (!Utils.Player.isPlayerInGame()) return false;
+      if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) return false;
       if (moving_only.isToggled() && (double)mc.thePlayer.moveForward == 0.0D && (double)mc.thePlayer.moveStrafing == 0.0D) return false;
       if (sprint_only.isToggled() && !mc.thePlayer.isSprinting()) return false;
       if (!hit_through_blocks.isToggled() && mc.objectMouseOver != null) {
@@ -78,7 +78,7 @@ public class Reach extends Module {
          }
       }
 
-      double r = ay.ranModuleVal(min, max, ay.rand());
+      double r = Utils.Client.ranModuleVal(min, max, Utils.Java.rand());
       Object[] o = zz(r, 0.0D);
       if (o == null) {
          return false;

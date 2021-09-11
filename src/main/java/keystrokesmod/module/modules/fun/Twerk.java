@@ -2,10 +2,8 @@ package keystrokesmod.module.modules.fun;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class Twerk extends Module {
     public static ModuleSettingSlider a;
@@ -22,7 +20,7 @@ public class Twerk extends Module {
     }
 
     public void update(){
-        if (!ay.isPlayerInGame() || mc.currentScreen != null)
+        if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
 
 

@@ -8,7 +8,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.player.Freecam;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -30,7 +30,7 @@ public class AntiBot extends Module {
 
    @SubscribeEvent
    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-      if(!ay.isPlayerInGame()) return;
+      if(!Utils.Player.isPlayerInGame()) return;
       if (a.isToggled() && event.entity instanceof EntityPlayer && event.entity != mc.thePlayer) {
          newEnt.put((EntityPlayer)event.entity, System.currentTimeMillis());
       }
@@ -48,12 +48,12 @@ public class AntiBot extends Module {
    }
 
    public static boolean bot(Entity en) {
-      if(!ay.isPlayerInGame() || mc.currentScreen != null) return false;
+      if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return false;
       if (Freecam.en != null && Freecam.en == en) {
          return true;
       } else if (!ModuleManager.antiBot.isEnabled()) {
          return false;
-      } else if (!ay.isHyp()) {
+      } else if (!Utils.Client.isHyp()) {
          return false;
       } else if (a.isToggled() && !newEnt.isEmpty() && newEnt.containsKey(en)) {
          return true;

@@ -1,9 +1,7 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.CommandLine;
-import keystrokesmod.utils.ProfileUtils;
-import keystrokesmod.utils.URLUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.minigames.DuelsStats;
@@ -15,7 +13,7 @@ public class Duels extends Command {
 
     @Override
     public void onCall(String[] args) {
-        if (URLUtils.hypixelApiKey.isEmpty()) {
+        if (Utils.URLS.hypixelApiKey.isEmpty()) {
             CommandLine.print("&cAPI Key is empty!", 1);
             CommandLine.print("Use \"setkey [api_key]\".", 0);
             return;
@@ -28,12 +26,12 @@ public class Duels extends Command {
         n = args[1];
         CommandLine.print("Retrieving data...", 1);
         Ravenbplus.getExecutor().execute(() -> {
-            int[] s = ProfileUtils.getHypixelStats(n, ProfileUtils.DM.OVERALL);
+            int[] s = Utils.Profiles.getHypixelStats(n, Utils.Profiles.DM.OVERALL);
             if (s != null) {
                 if (s[0] == -1) {
                     CommandLine.print("&c" + (n.length() > 16 ? n.substring(0, 16) + "..." : n) + " does not exist!", 0);
                 } else {
-                    double wlr = s[1] != 0 ? ay.round((double)s[0] / (double)s[1], 2) : (double)s[0];
+                    double wlr = s[1] != 0 ? Utils.Java.round((double)s[0] / (double)s[1], 2) : (double)s[0];
                     CommandLine.print("&e" + n + " stats:", 1);
                     CommandLine.print("Wins: " + s[0], 0);
                     CommandLine.print("Losses: " + s[1], 0);

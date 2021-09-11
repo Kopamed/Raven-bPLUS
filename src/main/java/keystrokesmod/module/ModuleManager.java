@@ -4,7 +4,7 @@ package keystrokesmod.module;
 
 import keystrokesmod.module.modules.client.*;
 import keystrokesmod.module.modules.fun.*;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.*;
 import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.debug.Click;
@@ -173,7 +173,7 @@ public class ModuleManager {
       if (HUD.alphabeticalSort.isToggled()) {
          modsList.sort(Comparator.comparing(Module::getName));
       } else {
-         modsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
+         modsList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
       }
 
    }
@@ -183,11 +183,11 @@ public class ModuleManager {
    }
 
    public static void sortLongShort() {
-      modsList.sort((o2, o1) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
+      modsList.sort((o2, o1) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
    }
 
    public static void sortShortLong() {
-      modsList.sort((o1, o2) -> ay.mc.fontRendererObj.getStringWidth(o2.getName()) - ay.mc.fontRendererObj.getStringWidth(o1.getName()));
+      modsList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
    }
 
    public static int getLongestActiveModule(FontRenderer fr) {

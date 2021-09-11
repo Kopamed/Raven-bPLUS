@@ -1,13 +1,13 @@
 package keystrokesmod.module.modules.client;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.am;
+import keystrokesmod.utils.Timer;
 import keystrokesmod.module.ModuleSettingTick;
 
 public class CommandLine extends Module {
    public static boolean a = false;
    public static boolean b = false;
-   public static am an;
+   public static Timer an;
    public static ModuleSettingTick animate;
 
    public CommandLine() {
@@ -16,10 +16,10 @@ public class CommandLine extends Module {
    }
 
    public void onEnable() {
-      keystrokesmod.CommandLine.setccs();
+      keystrokesmod.clickgui.CommandLine.setccs();
       a = true;
       b = false;
-      (an = new am(500.0F)).start();
+      (an = new Timer(500.0F)).start();
    }
 
    public void onDisable() {
@@ -28,6 +28,6 @@ public class CommandLine extends Module {
          an.start();
       }
 
-      keystrokesmod.CommandLine.od();
+      keystrokesmod.clickgui.CommandLine.od();
    }
 }

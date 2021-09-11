@@ -11,8 +11,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.HUDUtils;
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
@@ -37,7 +36,7 @@ public class MurderMystery extends Module {
 
    @SubscribeEvent
    public void o(RenderWorldLastEvent e) {
-      if (ay.isPlayerInGame()) {
+      if (Utils.Player.isPlayerInGame()) {
          if (ModuleManager.playerESP.isEnabled()) {
             ModuleManager.playerESP.disable();
          }
@@ -71,7 +70,7 @@ public class MurderMystery extends Module {
                         if (a.isToggled()) {
                            String c5 = "note.pling";
                            mc.thePlayer.playSound(c5, 1.0F, 1.0F);
-                           ay.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c6);
+                           Utils.Player.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c6);
                         }
 
                         if (c.isToggled()) {
@@ -81,7 +80,7 @@ public class MurderMystery extends Module {
                         det.add(en);
                         String c7 = "has a bow!";
                         if (a.isToggled()) {
-                           ay.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c7);
+                           Utils.Player.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c7);
                         }
 
                         if (c.isToggled()) {
@@ -98,14 +97,14 @@ public class MurderMystery extends Module {
                   rgb = Color.orange.getRGB();
                }
 
-               HUDUtils.ee(en, 2, 0.0D, 0.0D, rgb, false);
+               Utils.HUD.ee(en, 2, 0.0D, 0.0D, rgb, false);
             }
          }
       }
    }
 
    private boolean imm() {
-      if (ay.isHyp()) {
+      if (Utils.Client.isHyp()) {
          if (mc.thePlayer.getWorldScoreboard() == null || mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1) == null) {
             return false;
          }
@@ -117,11 +116,11 @@ public class MurderMystery extends Module {
             return false;
          }
 
-         Iterator var2 = ay.gsl().iterator();
+         Iterator var2 = Utils.Client.getPlayersFromScoreboard().iterator();
 
          while(var2.hasNext()) {
             String l = (String)var2.next();
-            String s = ay.str(l);
+            String s = Utils.Java.str(l);
             String c3 = "Role:";
             if (s.contains(c3)) {
                return true;

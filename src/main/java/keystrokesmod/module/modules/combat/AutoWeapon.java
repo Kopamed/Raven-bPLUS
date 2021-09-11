@@ -1,6 +1,6 @@
 package keystrokesmod.module.modules.combat;
 
-import keystrokesmod.utils.ay;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ public class AutoWeapon extends Module {
 
     @SubscribeEvent
     public void datsDaSoundOfDaPolis(TickEvent.RenderTickEvent ev){
-        if(!ay.isPlayerInGame() || mc.currentScreen != null) return;
+        if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return;
 
 
         if(mc.objectMouseOver==null || mc.objectMouseOver.entityHit==null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))){
@@ -41,9 +41,9 @@ public class AutoWeapon extends Module {
                 prevSlot = mc.thePlayer.inventory.currentItem;
                 onWeapon = true;
 
-                int maxDamageSlot = ay.getMaxDamageSlot();
+                int maxDamageSlot = Utils.Player.getMaxDamageSlot();
 
-                if(maxDamageSlot > 0 && ay.getSlotDamage(maxDamageSlot) > ay.getSlotDamage(mc.thePlayer.inventory.currentItem)){
+                if(maxDamageSlot > 0 && Utils.Player.getSlotDamage(maxDamageSlot) > Utils.Player.getSlotDamage(mc.thePlayer.inventory.currentItem)){
                     mc.thePlayer.inventory.currentItem = maxDamageSlot;
                 }
             }
