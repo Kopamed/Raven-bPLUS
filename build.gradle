@@ -22,10 +22,9 @@ compileJava {
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-
 dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.9.0'
+    compile fileTree(dir: "lib", include: "discord-rpc.jar")
 }
 
 

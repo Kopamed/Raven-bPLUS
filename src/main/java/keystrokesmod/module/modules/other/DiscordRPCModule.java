@@ -58,7 +58,6 @@ public class DiscordRPCModule extends Module {
         MinecraftForge.EVENT_BUS.unregister(rpc);
         if (rpc.rpc_thread != null)
             rpc.rpc_thread.interrupt();
-        DiscordRPC.discordClearPresence();
         DiscordRPC.discordShutdown();
     }
 
