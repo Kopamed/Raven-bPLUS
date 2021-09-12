@@ -17,24 +17,20 @@ public class DiscordRPCManager {
 
     public void init_rpc(RPCMode rpcMode) {
         this.rpcMode = rpcMode;
-        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
-            System.out.println("Starting new RPC on : " + user.username + "#" + user.discriminator);
-        }).build();
-        DiscordRPC.discordInitialize(rpcMode.appID, handlers, true);
+        DiscordEventHandlers handlers = new DiscordEventHandlers();
+        DiscordRPC.discordInitialize(rpcMode.appID, handlers, true, "");
     }
 
     public void updateRPCMode(RPCMode rpcMode) {
         try { // 300ms of cooldown to prevent rpc from freezing
-            Thread.sleep(100); // cooldown 0.1s
-
             if (rpc_thread != null)
                 rpc_thread.interrupt();
-            DiscordRPC.discordClearPresence();
+            Thread.sleep(100);
             DiscordRPC.discordShutdown();
 
             Thread.sleep(100); // wait 0.1s
             this.rpcMode = rpcMode;
-            DiscordRPC.discordInitialize(rpcMode.appID, new DiscordEventHandlers.Builder().build(), true);
+            DiscordRPC.discordInitialize(rpcMode.appID, new DiscordEventHandlers(), true, "");
 
             Thread.sleep(100); // wait 0.1s
 
