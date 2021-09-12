@@ -4,7 +4,7 @@ import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.version;
+import keystrokesmod.utils.version;
 
 import java.net.MalformedURLException;
 import java.net.URL;

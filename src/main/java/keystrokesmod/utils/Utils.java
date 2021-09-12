@@ -25,6 +25,7 @@ import keystrokesmod.module.modules.combat.AutoClicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
@@ -324,6 +325,33 @@ public class Utils {
 
    public static class Client{
 
+      public static List<NetworkPlayerInfo> getPlayers() {
+         List<NetworkPlayerInfo> yes = new ArrayList<>();
+         List<NetworkPlayerInfo> mmmm = new ArrayList<>();
+         try{
+            for(NetworkPlayerInfo e : mc.getNetHandler().getPlayerInfoMap()){
+               yes.add(e);
+            }
+         }catch (NullPointerException r){
+            return yes;
+         }
+
+         for(NetworkPlayerInfo ergy43d : yes){
+            if(!mmmm.contains(ergy43d)){
+               mmmm.add(ergy43d);
+            }
+         }
+
+         return mmmm;
+      }
+
+      public static boolean othersExist() {
+         for(Entity wut : mc.theWorld.getLoadedEntityList()){
+            if(wut instanceof EntityPlayer) return  true;
+         }
+         return false;
+      }
+
       public static void setMouseButtonState(int mouseButton, boolean held) {
          if (Utils.mouseButton != null && mouseButtonState != null && mouseButtons != null) {
             MouseEvent m = new MouseEvent();
@@ -569,6 +597,14 @@ public class Utils {
 
    public static class Java {
 
+      public static int getValue(JsonObject type, String member) {
+         try {
+            return type.get(member).getAsInt();
+         } catch (NullPointerException er) {
+            return 0;
+         }
+      }
+
       public static int indexOf(String key, String[] wut){
          for(int o = 0; o < wut.length; o++) {
             if(wut[o].equals(key)) return o;
@@ -644,6 +680,10 @@ public class Utils {
             howTohackNasaWorking2021NoScamDotCom.add(istlldontunderstandwhy);
          }
          return howTohackNasaWorking2021NoScamDotCom;
+      }
+
+      public static JsonObject getStringAsJson(String text) {
+         return new JsonParser().parse(text).getAsJsonObject();
       }
    }
 

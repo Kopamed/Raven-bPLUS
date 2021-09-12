@@ -1,4 +1,4 @@
-package keystrokesmod;
+package keystrokesmod.utils;
 
 import java.io.*;
 import java.net.MalformedURLException;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import keystrokesmod.ChatHelper;
+import keystrokesmod.utils.ChatHelper;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;

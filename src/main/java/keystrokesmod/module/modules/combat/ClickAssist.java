@@ -5,12 +5,12 @@ package keystrokesmod.module.modules.combat;
 import java.awt.AWTException;
 import java.awt.Robot;
 
-import keystrokesmod.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.utils.Utils;
+import keystrokesmod.utils.mouseManager;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;

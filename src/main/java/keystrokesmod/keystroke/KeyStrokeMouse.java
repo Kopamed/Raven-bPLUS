@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import keystrokesmod.mouseManager;
+import keystrokesmod.utils.mouseManager;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;

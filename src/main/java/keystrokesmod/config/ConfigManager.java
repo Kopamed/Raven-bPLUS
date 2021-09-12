@@ -1,12 +1,8 @@
 package keystrokesmod.config;
 
 import keystrokesmod.main.NotAName;
-import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
-import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.version;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.Sys;
 
 import java.io.*;
 import java.util.ArrayList;

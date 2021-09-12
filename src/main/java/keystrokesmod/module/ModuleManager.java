@@ -126,7 +126,7 @@ public class ModuleManager {
       this.addModule(new MessageInfo());
       //this.addModule(new TargetHUD());
       this.addModule(new AutoWeapon());
-      //this.addModule(new BedwarsOverlay());
+      this.addModule(new BedwarsOverlay());
       arrayLength = this.listofmods().size();
       this.addModule(new DiscordRPCModule());
       this.addModule(new ShiftTap());

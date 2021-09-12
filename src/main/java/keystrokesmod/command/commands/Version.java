@@ -1,7 +1,7 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.command.Command;
-import keystrokesmod.version;
+import keystrokesmod.utils.version;
 
 import static keystrokesmod.clickgui.CommandLine.print;
 

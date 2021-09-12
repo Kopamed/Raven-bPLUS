@@ -1,6 +1,6 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.ChatHelper;
+import keystrokesmod.utils.ChatHelper;
 import keystrokesmod.command.Command;
 
 public class Ping extends Command {

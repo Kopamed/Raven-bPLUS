@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import keystrokesmod.*;
 import keystrokesmod.clickgui.components.ButtonCategory;
 import keystrokesmod.clickgui.ClickGUIRenderManager;
 import keystrokesmod.clickgui.CommandLine;
@@ -17,6 +16,7 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.utils.Timer;
 import keystrokesmod.utils.Utils;
+import keystrokesmod.utils.version;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;

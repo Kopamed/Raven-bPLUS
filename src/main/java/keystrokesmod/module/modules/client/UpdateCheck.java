@@ -5,7 +5,7 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.version;
+import keystrokesmod.utils.version;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 

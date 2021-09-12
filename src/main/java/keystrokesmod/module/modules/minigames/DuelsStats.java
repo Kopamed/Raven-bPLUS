@@ -181,9 +181,9 @@ public class DuelsStats extends Module {
       }
    }
 
-   public static String gtl(int w, int l, double wlr, int ws) {
+   public static String gtl(int wins, int loses, double wlr, int ws) {
       int t = 0;
-      int m = w + l;
+      int m = wins + loses;
       if (m <= 13) {
          t += 2;
       }
@@ -212,23 +212,23 @@ public class DuelsStats extends Module {
          ++t;
       }
 
-      if (w >= 20000) {
+      if (wins >= 20000) {
          t += 4;
-      } else if (w >= 10000) {
+      } else if (wins >= 10000) {
          t += 3;
-      } else if (w >= 5000) {
+      } else if (wins >= 5000) {
          t += 2;
-      } else if (w >= 1000) {
+      } else if (wins >= 1000) {
          ++t;
       }
 
-      if (l == 0) {
-         if (w == 0) {
+      if (loses == 0) {
+         if (wins == 0) {
             t += 3;
          } else {
             t += 4;
          }
-      } else if (l <= 10 && wlr >= 4.0D) {
+      } else if (loses <= 10 && wlr >= 4.0D) {
          t += 2;
       }
 

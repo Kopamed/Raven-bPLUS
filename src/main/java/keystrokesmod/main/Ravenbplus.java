@@ -9,7 +9,6 @@ import java.util.Base64;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import keystrokesmod.*;
 import keystrokesmod.command.CommandManager;
 import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
@@ -22,7 +21,7 @@ import keystrokesmod.module.modules.ClickGui;
 import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.tweaker.transformers.*;
-import keystrokesmod.utils.Utils;
+import keystrokesmod.utils.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;

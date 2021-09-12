@@ -1,6 +1,6 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod;
+package keystrokesmod.utils;
 
 import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.module.modules.client.SelfDestruct;
