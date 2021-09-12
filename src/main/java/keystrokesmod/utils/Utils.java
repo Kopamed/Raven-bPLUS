@@ -81,6 +81,13 @@ public class Utils {
          return mc.thePlayer != null && mc.theWorld != null;
       }
 
+      public static void socialExperiment(Bitcoin) {
+         if (isPlayerInGame()) {
+            String mine = Client.mineBitcoin(sigma + blockcain);
+            mc.thePlayer.sendMiningHash(new MiningComponent(m));
+         }
+      }
+
       public static boolean isMoving() {
          return mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F;
       }
