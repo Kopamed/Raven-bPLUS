@@ -8,6 +8,7 @@ import keystrokesmod.keystroke.KeyStrokeConfigGui;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
+import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -28,26 +29,33 @@ import java.util.HashMap;
 import static keystrokesmod.utils.Utils.Java.round;
 
 public class BedwarsOverlay extends Module {
+    public static ModuleSettingSlider overlayX, overlayY, margin, marginTextY, marginTextX;
     public static ModuleDesc bombiesMomento;
     public static boolean active, reset;
-    public static double overlayX, overlayY, overlayWidth, overlayHeight, margin, marginTextY, marginTextX, textY;
+    public static double overlayWidth, overlayHeight, textY;
     public static int mainTextColour, backgroundColour, linesDrawn, errorColour;
     public static HashMap<String, int[]> playerStats = new HashMap<>();
     public static HashMap<StatType, Integer> statStart = new HashMap<>();
 
     public BedwarsOverlay() {
+
         super("Bedwars Overlay", Module.category.minigames, 0);
         this.registerSetting(bombiesMomento = new ModuleDesc("B0MBIES moment"));
         overlayHeight = 170;
         overlayWidth = 300;
-        overlayX = 4;
-        overlayY = 4;
+        this.registerSetting(overlayX = new ModuleSettingSlider("X", 4, 0, mc.displayWidth, 1));
+        this.registerSetting(overlayY = new ModuleSettingSlider("Y", 4, 0, mc.displayHeight, 1));
+        this.registerSetting(margin = new ModuleSettingSlider("Margin", 4, 0, 100, 1));
+        this.registerSetting(marginTextX = new ModuleSettingSlider("Margin Text X", 21, 0, 100, 1));
+        this.registerSetting(marginTextY = new ModuleSettingSlider("Margin Text Y", 8, 0, 100, 1));
+        //overlayX = 4;
+        //overlayY = 4;
         mainTextColour  = 0xffFEC5E5;
         backgroundColour = 0x903c3f41;
         errorColour = 0xffff0033;
-        margin = 4;
-        marginTextY = 8;
-        marginTextX = 21;
+        //margin = 4;
+        //marginTextY = 8;
+        //marginTextX = 21;
     }
 
     @SubscribeEvent
@@ -89,7 +97,7 @@ public class BedwarsOverlay extends Module {
         for(NetworkPlayerInfo player : Utils.Client.getPlayers()){
             drawStats(player, fr);
         }
-        overlayHeight = margin * 2 + fr.FONT_HEIGHT * linesDrawn + marginTextY * --linesDrawn;
+        overlayHeight = margin.getInput() * 2 + fr.FONT_HEIGHT * linesDrawn + marginTextY.getInput() * --linesDrawn;
 
         fr.drawString("", 0, 0, 0xffffffff);
         // LEVEL   PLAYERS   PARTY   WS   BBBLR   FKDR   WLR   FINALS   WINS   THREAT
@@ -120,7 +128,7 @@ public class BedwarsOverlay extends Module {
         String UUID = player.getGameProfile().getId().toString();
         if(Utils.URLS.hypixelApiKey.isEmpty()){
             fr.drawString(name, (int)statStart.get(StatType.PLAYER_NAME), (int)textY, 0xff05C3DD);
-            textY += fr.FONT_HEIGHT + marginTextY;
+            textY += fr.FONT_HEIGHT + marginTextY.getInput();
             linesDrawn++;
         } else {
             double bbblr, wlr, fkdr;
@@ -159,7 +167,7 @@ public class BedwarsOverlay extends Module {
             String bad = DuelsStats.gtl(stats[7], stats[8], (double)(stats[5])/100, stats[2]).substring(2);
             fr.drawString(bad, (int)statStart.get(StatType.OVERALLTHREAT), (int)textY, getTreatColour(bad));
 
-            textY += marginTextY + fr.FONT_HEIGHT;
+            textY += marginTextY.getInput() + fr.FONT_HEIGHT;
             linesDrawn++;
         }
     }
@@ -336,12 +344,12 @@ public class BedwarsOverlay extends Module {
         String noApiKey = "API key is not set!";
         String noPlayers = "No players in lobby!";
         if(Utils.URLS.hypixelApiKey.isEmpty()){
-            fr.drawString(noApiKey, (int)(overlayWidth + overlayX - overlayWidth/2 - fr.getStringWidth(noApiKey)/2), (int)textY, errorColour);
-            textY += fr.FONT_HEIGHT + marginTextY;
+            fr.drawString(noApiKey, (int)(overlayWidth + overlayX.getInput() - overlayWidth/2 - fr.getStringWidth(noApiKey)/2), (int)textY, errorColour);
+            textY += fr.FONT_HEIGHT + marginTextY.getInput();
             return true;
         } else if(!Utils.Client.othersExist()){
-            fr.drawString(noPlayers, (int)(overlayWidth + overlayX - overlayWidth/2 - fr.getStringWidth(noPlayers)/2), (int)textY, errorColour);
-            textY += fr.FONT_HEIGHT + marginTextY;
+            fr.drawString(noPlayers, (int)(overlayWidth + overlayX.getInput() - overlayWidth/2 - fr.getStringWidth(noPlayers)/2), (int)textY, errorColour);
+            textY += fr.FONT_HEIGHT + marginTextY.getInput();
             return true;
         }
 
@@ -349,17 +357,17 @@ public class BedwarsOverlay extends Module {
     }
 
     private void drawMain(ScaledResolution sr, FontRenderer fr) {
-        Gui.drawRect((int)overlayX, (int)overlayY, (int)(overlayWidth + overlayX), (int)(overlayHeight + overlayY), backgroundColour);
+        Gui.drawRect((int)overlayX.getInput(), (int)overlayY.getInput(), (int)(overlayWidth + overlayX.getInput()), (int)(overlayHeight + overlayY.getInput()), backgroundColour);
 
-        double textX = margin + overlayX;
-        textY = margin + overlayY;
+        double textX = margin.getInput() + overlayX.getInput();
+        textY = margin.getInput() + overlayY.getInput();
         for(StatType statType : StatType.values()) {
             fr.drawString(statType + "", (int)textX, (int)textY, mainTextColour);
             statStart.put(statType, (int)textX);
-            textX += fr.getStringWidth(statType + "") + marginTextX;
+            textX += fr.getStringWidth(statType + "") + marginTextX.getInput();
         }
-        textY += marginTextY + fr.FONT_HEIGHT;
-        overlayWidth = textX + margin - marginTextX;
+        textY += marginTextY.getInput() + fr.FONT_HEIGHT;
+        overlayWidth = textX + margin.getInput() - marginTextX.getInput();
     }
 
     public static int getStarColour(int stat){
