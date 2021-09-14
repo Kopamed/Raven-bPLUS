@@ -119,7 +119,7 @@ public class BedwarsOverlay extends Module {
         String name = player.getGameProfile().getName();
         String UUID = player.getGameProfile().getId().toString();
         if(Utils.URLS.hypixelApiKey.isEmpty()){
-            fr.drawString(name, (int)statStart.get(StatType.PLAYER), (int)textY, 0xff05C3DD);
+            fr.drawString(name, (int)statStart.get(StatType.PLAYER_NAME), (int)textY, 0xff05C3DD);
             textY += fr.FONT_HEIGHT + marginTextY;
             linesDrawn++;
         } else {
@@ -143,7 +143,7 @@ public class BedwarsOverlay extends Module {
             fkdr = stats[6] != 0 ? round((double)stats[5] / (double)stats[6], 2) : stats[5];
             wlr = stats[8] != 0 ? round((double)stats[7] / (double)stats[8], 2) : stats[7];
             fr.drawString(stats[0] + "", (int)statStart.get(StatType.LEVEL), (int)textY, getStarColour(stats[0]));
-            fr.drawString(name, (int)statStart.get(StatType.PLAYER), (int)textY, Colours.WHITE);
+            fr.drawString(name, (int)statStart.get(StatType.PLAYER_NAME), (int)textY, Colours.WHITE);
             if(stats[1] == 0) {
                 fr.drawString(" -", (int)statStart.get(StatType.TAG), (int)textY, Colours.GREY);
             } else {
