@@ -118,12 +118,12 @@ public class BedwarsOverlay extends Module {
         }*/
         String name = player.getGameProfile().getName();
         String UUID = player.getGameProfile().getId().toString();
-
         if(Utils.URLS.hypixelApiKey.isEmpty()){
             fr.drawString(name, (int)statStart.get(StatType.PLAYER), (int)textY, 0xff05C3DD);
             textY += fr.FONT_HEIGHT + marginTextY;
             linesDrawn++;
         } else {
+            double bbblr, wlr, fkdr;
             if(!playerStats.containsKey(UUID)){
                 Ravenbplus.getExecutor().execute(() -> {
                     getBedwarsStats(UUID);
@@ -139,7 +139,9 @@ public class BedwarsOverlay extends Module {
                 return;
             }
 
-
+            bbblr = stats[4] != 0 ? round((double)stats[3] / (double)stats[4], 2) : stats[3];
+            fkdr = stats[6] != 0 ? round((double)stats[5] / (double)stats[6], 2) : stats[5];
+            wlr = stats[8] != 0 ? round((double)stats[7] / (double)stats[8], 2) : stats[7];
             fr.drawString(stats[0] + "", (int)statStart.get(StatType.LEVEL), (int)textY, getStarColour(stats[0]));
             fr.drawString(name, (int)statStart.get(StatType.PLAYER), (int)textY, Colours.WHITE);
             if(stats[1] == 0) {
@@ -148,9 +150,10 @@ public class BedwarsOverlay extends Module {
                 fr.drawString("nicked", (int)statStart.get(StatType.TAG), (int)textY, Colours.RED);
             }
             fr.drawString(stats[2] + "", (int)statStart.get(StatType.WS), (int)textY, getWSColour(stats[2]));
-            fr.drawString((double)(stats[3])/100 + "", (int)statStart.get(StatType.BBBLR), (int)textY, getBBBLRColour((double)(stats[3])/100));
-            fr.drawString((double)(stats[4])/100 + "", (int)statStart.get(StatType.FKDR), (int)textY, getFKDRColour((double)(stats[4])/100));
-            fr.drawString((double)(stats[5])/100 + "", (int)statStart.get(StatType.WLR), (int)textY, getWLRColour((double)(stats[5])/100));
+
+            fr.drawString(bbblr + "", (int)statStart.get(StatType.BBBLR), (int)textY, getBBBLRColour(bbblr));
+            fr.drawString(fkdr + "", (int)statStart.get(StatType.FKDR), (int)textY, getFKDRColour(fkdr));
+            fr.drawString(wlr + "", (int)statStart.get(StatType.WLR), (int)textY, getWLRColour(wlr));
             fr.drawString(stats[6] + "", (int)statStart.get(StatType.FINALS), (int)textY, getFinalColour(stats[6]));
             fr.drawString(stats[7] + "", (int)statStart.get(StatType.WINS), (int)textY, getFinalColour(stats[7]));
             String bad = DuelsStats.gtl(stats[7], stats[8], (double)(stats[5])/100, stats[2]).substring(2);
@@ -315,10 +318,13 @@ public class BedwarsOverlay extends Module {
         stats[0] = Utils.Java.getValue(ach, "bedwars_level");
         stats[1] = 0;
         stats[2] = Utils.Java.getValue(bw, "winstreak");
-        stats[3] = (int)(round(Utils.Java.getValue(bw, "beds_broken_bedwars") / Utils.Java.getValue(bw, "beds_lost_bedwars") * 100, 2));
-        stats[4] = (int)(round(Utils.Java.getValue(bw, "final_kills_bedwars") / Utils.Java.getValue(bw, "final_deaths_bedwars") * 100, 2));
-        stats[5] = (int)(round(Utils.Java.getValue(bw, "wins_bedwars") / Utils.Java.getValue(bw, "losses_bedwars") * 100, 2));
-        stats[6] = Utils.Java.getValue(bw, "final_kills_bedwars");
+        stats[3] = Utils.Java.getValue(bw, "beds_broken_bedwars");
+        stats[4] = Utils.Java.getValue(bw, "beds_lost_bedwars");
+        //stats[3] = (int)(round(Utils.Java.getValue(bw, "beds_broken_bedwars") / Utils.Java.getValue(bw, "beds_lost_bedwars") * 100, 2));
+        //stats[4] = (int)(round(Utils.Java.getValue(bw, "final_kills_bedwars") / Utils.Java.getValue(bw, "final_deaths_bedwars") * 100, 2));
+        //stats[5] = (int)(round(Utils.Java.getValue(bw, "wins_bedwars") / Utils.Java.getValue(bw, "losses_bedwars") * 100, 2));
+        stats[6] = Utils.Java.getValue(bw, "final_deaths_bedwars");
+        stats[5] = Utils.Java.getValue(bw, "final_kills_bedwars");
         stats[7] = Utils.Java.getValue(bw, "wins_bedwars");
         stats[8] = Utils.Java.getValue(bw, "losses_bedwars");
         playerStats.put(uuid, stats);
@@ -391,7 +397,7 @@ public class BedwarsOverlay extends Module {
 
     public static enum StatType {
         LEVEL,
-        PLAYER,
+        PLAYER_NAME,
         TAG,
         WS,
         BBBLR,
