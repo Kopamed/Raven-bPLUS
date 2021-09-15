@@ -52,12 +52,12 @@ public class ButtonSlider extends ClickGUIRenderManager {
       this.y = this.p.c4t.getY() + this.o;
       this.x = this.p.c4t.getX();
       double d = Math.min(this.p.c4t.gw() - 8, Math.max(0, x - this.x));
-      this.w = (double)(this.p.c4t.gw() - 8) * (this.v.getInput() - this.v.g3ti()) / (this.v.g3ta() - this.v.g3ti());
+      this.w = (double)(this.p.c4t.gw() - 8) * (this.v.getInput() - this.v.getMin()) / (this.v.getMax() - this.v.getMin());
       if (this.d) {
          if (d == 0.0D) {
-            this.v.setValue(this.v.g3ti());
+            this.v.setValue(this.v.getMin());
          } else {
-            double n = r(d / (double)(this.p.c4t.gw() - 8) * (this.v.g3ta() - this.v.g3ti()) + this.v.g3ti(), 2);
+            double n = r(d / (double)(this.p.c4t.gw() - 8) * (this.v.getMax() - this.v.getMin()) + this.v.getMin(), 2);
             this.v.setValue(n);
          }
       }

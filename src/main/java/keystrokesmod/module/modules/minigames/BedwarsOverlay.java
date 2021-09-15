@@ -3,27 +3,20 @@
 package keystrokesmod.module.modules.minigames;
 
 import com.google.gson.JsonObject;
-import com.mojang.authlib.GameProfile;
-import keystrokesmod.keystroke.KeyStrokeConfigGui;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import javax.rmi.CORBA.Util;
-import java.io.IOException;
 import java.util.HashMap;
 
 import static keystrokesmod.utils.Utils.Java.round;
@@ -153,9 +146,9 @@ public class BedwarsOverlay extends Module {
             fr.drawString(stats[0] + "", (int)statStart.get(StatType.LEVEL), (int)textY, getStarColour(stats[0]));
             fr.drawString(name, (int)statStart.get(StatType.PLAYER_NAME), (int)textY, Colours.WHITE);
             if(stats[1] == 0) {
-                fr.drawString(" -", (int)statStart.get(StatType.TAG), (int)textY, Colours.GREY);
+                fr.drawString("  -", (int)statStart.get(StatType.NICKED), (int)textY, Colours.GREY);
             } else {
-                fr.drawString("nicked", (int)statStart.get(StatType.TAG), (int)textY, Colours.RED);
+                fr.drawString("  +", (int)statStart.get(StatType.NICKED), (int)textY, Colours.RED);
             }
             fr.drawString(stats[2] + "", (int)statStart.get(StatType.WS), (int)textY, getWSColour(stats[2]));
 
@@ -324,7 +317,7 @@ public class BedwarsOverlay extends Module {
         }
         // get stats from parsed objects (check for null)
         stats[0] = Utils.Java.getValue(ach, "bedwars_level");
-        stats[1] = 0;
+        stats[1] = stats[0] < 0 ? -1 : 0;
         stats[2] = Utils.Java.getValue(bw, "winstreak");
         stats[3] = Utils.Java.getValue(bw, "beds_broken_bedwars");
         stats[4] = Utils.Java.getValue(bw, "beds_lost_bedwars");
@@ -361,13 +354,15 @@ public class BedwarsOverlay extends Module {
 
         double textX = margin.getInput() + overlayX.getInput();
         textY = margin.getInput() + overlayY.getInput();
+        int stringWidth = 0;
         for(StatType statType : StatType.values()) {
             fr.drawString(statType + "", (int)textX, (int)textY, mainTextColour);
             statStart.put(statType, (int)textX);
-            textX += fr.getStringWidth(statType + "") + marginTextX.getInput();
+            stringWidth = fr.getStringWidth(statType + "");
+            textX += stringWidth + marginTextX.getInput();
         }
         textY += marginTextY.getInput() + fr.FONT_HEIGHT;
-        overlayWidth = textX + margin.getInput() - marginTextX.getInput();
+        overlayWidth = textX + margin.getInput() - (marginTextX.getInput()) - overlayX.getInput();
     }
 
     public static int getStarColour(int stat){
@@ -406,7 +401,7 @@ public class BedwarsOverlay extends Module {
     public static enum StatType {
         LEVEL,
         PLAYER_NAME,
-        TAG,
+        NICKED,
         WS,
         BBBLR,
         FKDR,

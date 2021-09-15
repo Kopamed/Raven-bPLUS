@@ -591,7 +591,7 @@ public class Utils {
       }
 
       public static String reformat(String txt) {
-         return txt.replaceAll("&", "§");
+         return txt.replace("&", "§");
       }
    }
 

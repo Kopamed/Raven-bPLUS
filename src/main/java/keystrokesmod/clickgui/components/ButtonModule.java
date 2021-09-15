@@ -20,14 +20,14 @@ public class ButtonModule extends ClickGUIRenderManager {
    public Module mod;
    public ButtonCategory c4t;
    public int o;
-   private final ArrayList<ClickGUIRenderManager> sn;
+   private final ArrayList<ClickGUIRenderManager> settings;
    public boolean po;
 
    public ButtonModule(Module mod, ButtonCategory p, int o) {
       this.mod = mod;
       this.c4t = p;
       this.o = o;
-      this.sn = new ArrayList();
+      this.settings = new ArrayList();
       this.po = false;
       int y = o + 12;
       if (!mod.getSettings().isEmpty()) {
@@ -35,29 +35,29 @@ public class ButtonModule extends ClickGUIRenderManager {
             if (v instanceof ModuleSettingSlider) {
                ModuleSettingSlider n = (ModuleSettingSlider) v;
                ButtonSlider s = new ButtonSlider(n, this, y);
-               this.sn.add(s);
+               this.settings.add(s);
                y += 12;
             } else if (v instanceof ModuleSettingTick) {
                ModuleSettingTick b = (ModuleSettingTick) v;
                ButtonTick c = new ButtonTick(mod, b, this, y);
-               this.sn.add(c);
+               this.settings.add(c);
                y += 12;
             } else if (v instanceof ModuleDesc) {
                ModuleDesc d = (ModuleDesc) v;
                ButtonDesc m = new ButtonDesc(d, this, y);
-               this.sn.add(m);
+               this.settings.add(m);
                y += 12;
             }
          }
       }
 
-      this.sn.add(new AutoConfig(this, y));
+      this.settings.add(new AutoConfig(this, y));
    }
 
    public void so(int n) {
       this.o = n;
       int y = this.o + 16;
-      Iterator var3 = this.sn.iterator();
+      Iterator var3 = this.settings.iterator();
 
       while(true) {
          while(var3.hasNext()) {
@@ -138,8 +138,8 @@ public class ButtonModule extends ClickGUIRenderManager {
       int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : Color.lightGray.getRGB();
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.c4t.getX() + this.c4t.gw() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.c4t.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
-      if (this.po && !this.sn.isEmpty()) {
-         for (ClickGUIRenderManager c : this.sn) {
+      if (this.po && !this.settings.isEmpty()) {
+         for (ClickGUIRenderManager c : this.settings) {
             c.r3nd3r();
          }
       }
@@ -151,7 +151,7 @@ public class ButtonModule extends ClickGUIRenderManager {
          return 16;
       } else {
          int h = 16;
-         Iterator var2 = this.sn.iterator();
+         Iterator var2 = this.settings.iterator();
 
          while(true) {
             while(var2.hasNext()) {
@@ -169,8 +169,8 @@ public class ButtonModule extends ClickGUIRenderManager {
    }
 
    public void render(int x, int y) {
-      if (!this.sn.isEmpty()) {
-         for (ClickGUIRenderManager c : this.sn) {
+      if (!this.settings.isEmpty()) {
+         for (ClickGUIRenderManager c : this.settings) {
             c.render(x, y);
          }
       }
@@ -187,21 +187,21 @@ public class ButtonModule extends ClickGUIRenderManager {
          this.c4t.r3nd3r();
       }
 
-      for (ClickGUIRenderManager c : this.sn) {
+      for (ClickGUIRenderManager c : this.settings) {
          c.onCl1ck(x, y, b);
       }
 
    }
 
    public void mr(int x, int y, int m) {
-      for (ClickGUIRenderManager c : this.sn) {
+      for (ClickGUIRenderManager c : this.settings) {
          c.mr(x, y, m);
       }
 
    }
 
    public void ky(char t, int k) {
-      for (ClickGUIRenderManager c : this.sn) {
+      for (ClickGUIRenderManager c : this.settings) {
          c.ky(t, k);
       }
 

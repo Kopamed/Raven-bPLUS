@@ -6,48 +6,48 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class ModuleSettingSlider extends ModuleSettingsList {
-   private final String n;
+   private final String name;
    static String settingType = "slider";
-   private double v;
-   private final double a;
-   private final double m;
-   private final double i;
+   private double defaultVal;
+   private final double max;
+   private final double min;
+   private final double interval;
 
    public ModuleSettingSlider(String settingName, double defaultValue, double min, double max, double intervals) {
       super(settingName, settingType);
-      this.n = settingName;
-      this.v = defaultValue;
-      this.m = min;
-      this.a = max;
-      this.i = intervals;
+      this.name = settingName;
+      this.defaultVal = defaultValue;
+      this.min = min;
+      this.max = max;
+      this.interval = intervals;
    }
 
    public String getName() {
-      return this.n;
+      return this.name;
    }
 
    public double getInput() {
-      return r(this.v, 2);
+      return r(this.defaultVal, 2);
    }
 
-   public double g3ti() {
-      return this.m;
+   public double getMin() {
+      return this.min;
    }
 
-   public double g3ta() {
-      return this.a;
+   public double getMax() {
+      return this.max;
    }
 
    public void setValue(double n) {
-      n = c(n, this.m, this.a);
-      n = (double)Math.round(n * (1.0D / this.i)) / (1.0D / this.i);
-      this.v = n;
+      n = check(n, this.min, this.max);
+      n = (double)Math.round(n * (1.0D / this.interval)) / (1.0D / this.interval);
+      this.defaultVal = n;
       if(Ravenbplus.configManager != null){
           Ravenbplus.configManager.save();
       }
    }
 
-   public static double c(double v, double i, double a) {
+   public static double check(double v, double i, double a) {
       v = Math.max(i, v);
       v = Math.min(a, v);
       return v;
