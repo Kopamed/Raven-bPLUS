@@ -81,7 +81,7 @@ public class AutoClicker extends Module {
       this.registerSetting(inventoryFill = new ModuleSettingTick("Inventory fill", false));
       this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
       this.registerSetting(noBlockSword = new ModuleSettingTick("Don't rightclick sword", true));
-      this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks", false));
+      this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks and throwables", false));
       this.registerSetting(preferFastPlace = new ModuleSettingTick("Prefer fast place", false));
       this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
       this.registerSetting(breakBlocksMin = new ModuleSettingSlider("Breack blocks min delay", 20.0D, 0.0D, 1000.0D, 5D));
@@ -370,7 +370,7 @@ public class AutoClicker extends Module {
             }
          }
          if (onlyBlocks.isToggled()) {
-            if (!(item.getItem() instanceof ItemBlock))
+            if (!(item.getItem() instanceof ItemBlock) || !(item.getItem() instanceof ItemEgg) || !(item.getItem() instanceof ItemSnowball))
                return false;
          }
          if (noBlockSword.isToggled()) {
