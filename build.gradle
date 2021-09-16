@@ -48,7 +48,7 @@ group= "club.sk1er.keystrokes"
 archivesBaseName = "[1.8.9] BetterKeystrokes V"
 
 minecraft {
-    version = "1.8.9-11.15.1.2318"
+    version = "1.8.9-11.15.1.2318-1.8.9"
     runDir = "run"
 
     mappings = "stable_20"
