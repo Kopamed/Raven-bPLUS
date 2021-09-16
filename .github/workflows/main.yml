@@ -31,7 +31,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew build --warning-mode=all
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
