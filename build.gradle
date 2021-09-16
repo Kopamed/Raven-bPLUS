@@ -15,11 +15,15 @@ buildscript {
     dependencies {
         classpath "com.github.asbyth:ForgeGradle:6f53277"
     }
-    repositories {
-        jcenter()
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
-    }}
+  repositories {
+    mavenLocal()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.github.jengelman.gradle.plugins:shadow:6.0.0"
+  }
 }
 
 apply plugin: 'java'
