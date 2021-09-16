@@ -56,10 +56,8 @@ public class BridgeAssist extends Module {
             return;
         }
 
-        if (ModuleManager.safeWalk.isEnabled()) {
-            if (!workWithSafeWalk.isToggled()) {
+        if (ModuleManager.safeWalk.isEnabled() && !workWithSafeWalk.isToggled()) {
                 return;
-            }
         }
 
         if (!(Utils.Player.playerOverAir() && mc.thePlayer.onGround)) {
@@ -67,11 +65,9 @@ public class BridgeAssist extends Module {
             return;
         }
 
-        if (onSneak.isToggled()) {
-            if (!mc.thePlayer.isSneaking()) {
+        if (onSneak.isToggled() && !mc.thePlayer.isSneaking()) {
                 //////////System.out.println("Nibba aint shiftin");
                 return;
-            }
         }
 
 
