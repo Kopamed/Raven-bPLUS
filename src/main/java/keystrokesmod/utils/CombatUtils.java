@@ -9,7 +9,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class CombatUtils {
-    public static boolean canTarget(Entity entity, boolean idk) {
+    public static boolean canTarget(Entity entity, boolean idk, boolean onlyPlayers) {
         if(entity != null && entity != Minecraft.getMinecraft().thePlayer) {
             EntityLivingBase entityLivingBase = null;
 
@@ -17,10 +17,12 @@ public class CombatUtils {
                 entityLivingBase = (EntityLivingBase)entity;
             }
 
-            boolean canTarget = isTeam(Minecraft.getMinecraft().thePlayer, entity);
+            boolean isTeam = isTeam(Minecraft.getMinecraft().thePlayer, entity);
             boolean isVisible = (!entity.isInvisible());
+            boolean isPlayer = (entity instanceof EntityPlayer);
+            boolean isAllowed = !onlyPlayers || isPlayer;
 
-            return !(entity instanceof EntityArmorStand) && isVisible && (entity instanceof EntityPlayer && !canTarget && !idk || entity instanceof EntityAnimal || entity instanceof EntityMob || entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && entityLivingBase.isEntityAlive());
+            return !(entity instanceof EntityArmorStand) && isVisible && (entity instanceof EntityPlayer && !isTeam && !idk || entity instanceof EntityAnimal || entity instanceof EntityMob || entity instanceof EntityLivingBase && isAllowed && entityLivingBase.isEntityAlive());
         } else {
             return false;
         }
