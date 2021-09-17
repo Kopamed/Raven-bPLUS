@@ -29,14 +29,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ExplicitB9NameTags extends Module {
-    /*private static String[] lIIIll;
-    private static String[] llIIII;
-
-    static {
-        lIIlllll();
-        lIIllllI();
-    }*/
-
     boolean armor;
     boolean dura;
     boolean players = true;
@@ -74,171 +66,7 @@ public class ExplicitB9NameTags extends Module {
         registerSetting(armorSetting);
         registerSetting(durabilitySetting);
         registerSetting(distanceSetting);
-        /* DELETED :
-
-        ArrayList arr = new ArrayList();
-        arr.add("Hearts");
-        arr.add("Percentage");
-        Explicit.instance.sm.rSetting(new Setting("HealthMode", llllIlIIIlIIIll, "Percentage", arr));
-
-        Due to incompatibility
-        */
-
-        //Explicit.instance.sm.rSetting(new Setting("Scale", llllIlIIIlIIIll, 5.0D, 0.1D, 10.0D, false));
-        //Explicit.instance.sm.rSetting(new Setting("Range", llllIlIIIlIIIll, 0.0D, 0.0D, 512.0D, true));
-        //Explicit.instance.sm.rSetting(new Setting("Armor", llllIlIIIlIIIll, true));
-        //Explicit.instance.sm.rSetting(new Setting("Durability", llllIlIIIlIIIll, false));
-        //Explicit.instance.sm.rSetting(new Setting("Distance", llllIlIIIlIIIll, true));
     }
-
-    /*private static void lIIllllI() {
-        lIIIll = new String[56];
-        lIIIll[0] = "NameTags";
-        lIIIll[1] = "Display large nametags";
-        lIIIll[2] = "Hearts";
-        lIIIll[3] = "Percentage";
-        lIIIll[4] = "HealthMode";
-        lIIIll[5] = "Percentage";
-        lIIIll[6] = "Scale";
-        lIIIll[7] = "Range";
-        lIIIll[8] = "Armor";
-        lIIIll[9] = "Durability";
-        lIIIll[10] = "Distance";
-        lIIIll[11] = "Scale";
-        lIIIll[12] = "HealthMode";
-        lIIIll[13] = "Armor";
-        lIIIll[14] = "Durability";
-        lIIIll[15] = "";
-        lIIIll[16] = "Range";
-        lIIIll[17] = "Range";
-        lIIIll[18] = "Range";
-        lIIIll[19] = "Range";
-        lIIIll[20] = "[NPC]";
-        lIIIll[21] = "0.#";
-        // HERE
-        lIIIll[22] = "Percentage";
-        lIIIll[23] = " ";
-        lIIIll[24] = "Percentage";
-        lIIIll[25] = "Percentage";
-        lIIIll[26] = " %";
-        lIIIll[27] = " ";
-        lIIIll[28] = "Percentage";
-        lIIIll[29] = "%";
-        lIIIll[30] = " %";
-        lIIIll[31] = " ";
-        lIIIll[32] = "Distance";
-        lIIIll[33] = "#.##";
-        lIIIll[34] = "m ";
-        lIIIll[35] = "";
-        lIIIll[36] = "god";
-        lIIIll[37] = "prot";
-        lIIIll[38] = "proj";
-        lIIIll[39] = "bp";
-        lIIIll[40] = "frp";
-        lIIIll[41] = "th";
-        lIIIll[42] = "unb";
-        lIIIll[43] = "pow";
-        lIIIll[44] = "pun";
-        lIIIll[45] = "flame";
-        lIIIll[46] = "unb";
-        lIIIll[47] = "sh";
-        lIIIll[48] = "kb";
-        lIIIll[49] = "fire";
-        lIIIll[50] = "unb";
-        lIIIll[51] = "eff";
-        lIIIll[52] = "fo";
-        lIIIll[53] = "silk";
-        lIIIll[54] = "ub";
-        lIIIll[55] = "god";
-        llIIII = null;
-    }
-
-    private static void lIIlllll() {
-        llIIII[0] = "tkBMQaiIvD/WzFTc2LRUAA==";
-        llIIII[1] = "aQoFs";
-        llIIII[2] = "zUJgwKt6wbKPiZ6u8hkERn1JXyshyV+Q";
-        llIIII[3] = "Romfr";
-        llIIII[4] = "PTcRFBwG";
-        llIIII[5] = "uRpfh";
-        llIIII[6] = "7ddMnu3k5o2wHN0Xg1JraQ==";
-        llIIII[7] = "YibjF";
-        llIIII[8] = "cXnhMKnwRkgn4Zx0E+pmSg==";
-        llIIII[9] = "FZZFm";
-        llIIII[10] = "JSwaIjQbPQkmNA==";
-        llIIII[11] = "uIhAQ";
-        llIIII[12] = "595LFuG9J9c=";
-        llIIII[13] = "hBaSM";
-        llIIII[14] = "GQMmHSQ=";
-        llIIII[15] = "KbHzA";
-        llIIII[16] = "AgsKFws=";
-        llIIII[17] = "Cygxy";
-        llIIII[18] = "iyNFCKo7Pf7DdNEkJztGEw==";
-        llIIII[19] = "FBaOj";
-        llIIII[20] = "T6ZMRSuMx3jgtlzQMmvsVw==";
-        llIIII[21] = "rThEl";
-        llIIII[22] = "kszoP9cFuDc=";
-        llIIII[23] = "pRVyN";
-        llIIII[24] = "VTiZf65ZpWzT1p5YBBxmZw==";
-        llIIII[25] = "dOjYT";
-        llIIII[26] = "bZvYzREx9Ag=";
-        llIIII[27] = "hYLAk";
-        llIIII[28] = "HCAEAzExOR8WKg==";
-        llIIII[29] = "XUvbS";
-        llIIII[30] = "";
-        llIIII[31] = "CwDST";
-        llIIII[32] = "cAa/0FHzclE=";
-        llIIII[33] = "FXYUU";
-        llIIII[34] = "dTGlBVY0bjk=";
-        llIIII[35] = "asSsh";
-        llIIII[36] = "IviClm4Ssog=";
-        llIIII[37] = "qcevR";
-        llIIII[38] = "AxkAPwY=";
-        llIIII[39] = "QxnXc";
-        llIIII[40] = "KyMEFyU=";
-        llIIII[41] = "pmTTx";
-        llIIII[42] = "y1ZdanT/ZYc=";
-        llIIII[43] = "rlhxA";
-    }
-
-    private static String decrypt0(String s, String key) {
-        try {
-            SecretKeySpec keySpec = new SecretKeySpec(MessageDigest.getInstance("MD5").digest(key.getBytes(StandardCharsets.UTF_8)), "Blowfish");
-            Cipher blowfish = Cipher.getInstance("Blowfish");
-            blowfish.init(2, keySpec);
-            return new String(blowfish.doFinal(Base64.getDecoder().decode(s.getBytes(StandardCharsets.UTF_8))), StandardCharsets.UTF_8);
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            return null;
-        }
-    }
-
-    private static String decrypt1(String s, String key) {
-        try {
-            SecretKeySpec keySpec = new SecretKeySpec(Arrays.copyOf(MessageDigest.getInstance("MD5").digest(key.getBytes(StandardCharsets.UTF_8)), 8), "DES");
-            Cipher des = Cipher.getInstance("DES");
-            des.init(2, keySpec);
-            return new String(des.doFinal(Base64.getDecoder().decode(s.getBytes(StandardCharsets.UTF_8))), StandardCharsets.UTF_8);
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            return null;
-        }
-    }
-
-    private static String decrypt2(String s, String key) {
-        s = new String(Base64.getDecoder().decode(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-        StringBuilder sb = new StringBuilder();
-        char[] keyArr = key.toCharArray();
-        int index = 0;
-        char[] sArr = s.toCharArray();
-
-        for (int i = 0; i < sArr.length; ++i) {
-            char c = sArr[i];
-            sb.append((char) (c ^ keyArr[index % keyArr.length]));
-            ++index;
-        }
-
-        return String.valueOf(sb);
-    }*/
 
     @Override
     public void guiUpdate() {
@@ -246,18 +74,13 @@ public class ExplicitB9NameTags extends Module {
         armor = armorSetting.isToggled();
         dura = durabilitySetting.isToggled();
         mode = modeSetting.getInput() == 1.0D ? "Hearts" : "Percentage";
-
-        //scale = (float) Explicit.instance.sm.getSettingByName(llllIlIIIIlllll, "Scale").getValDouble();
-        //DISABLE mode = Explicit.instance.sm.getSettingByName(llllIlIIIIlllll, "HealthMode").getValString();
-        //armor = Explicit.instance.sm.getSettingByName(llllIlIIIIlllll, "Armor").getValBoolean();
-        //dura = Explicit.instance.sm.getSettingByName(llllIlIIIIlllll, "Durability").getValBoolean();
     }
 
     @SubscribeEvent
     public void nameTag(Pre<? extends EntityLivingBase> player) {
         boolean _0 = player.entity.getDisplayName().getFormattedText() != null;
         boolean _1 = !player.entity.getDisplayName().getFormattedText().equals("");
-        boolean _2 = player.entity instanceof EntityPlayer /*&& CombatUtils.canTarget(player.entity, false)*/;
+        boolean _2 = player.entity instanceof EntityPlayer && CombatUtils.canTarget(player.entity, false);
         boolean _3 = ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player.entity) <= rangeSetting.getInput() || rangeSetting.getInput() == 0.0D);
         if ( _0 && _1  && _2 && _3) {
             player.setCanceled(true);
@@ -266,41 +89,41 @@ public class ExplicitB9NameTags extends Module {
 
     @SubscribeEvent
     public void render3d(RenderWorldLastEvent renderWorldLastEvent) {
-        ArrayList<EntityLivingBase> llllIlIIIIIlllI = new ArrayList<>();
+        ArrayList<EntityLivingBase> players = new ArrayList<>();
 
         Iterator playerIterator = Minecraft.getMinecraft().theWorld.playerEntities.iterator();
 
         while (playerIterator.hasNext()) {
             EntityLivingBase entityLivingBase = (EntityLivingBase) playerIterator.next();
             if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entityLivingBase) > rangeSetting.getInput() && rangeSetting.getInput() != 0.0D) {
-                llllIlIIIIIlllI.remove(entityLivingBase);
+                players.remove(entityLivingBase);
             } else if (entityLivingBase.getName().contains("[NPC]")) {
-                llllIlIIIIIlllI.remove(entityLivingBase);
+                players.remove(entityLivingBase);
             } else if (entityLivingBase.isEntityAlive()) {
                 if (entityLivingBase.isInvisible()) {
-                    llllIlIIIIIlllI.remove(entityLivingBase);
+                    players.remove(entityLivingBase);
                 } else if (entityLivingBase == Minecraft.getMinecraft().thePlayer) {
-                    llllIlIIIIIlllI.remove(entityLivingBase);
+                    players.remove(entityLivingBase);
                 } else {
-                    if (llllIlIIIIIlllI.size() > 100) {
+                    if (players.size() > 100) {
                         break;
                     }
 
-                    if (!llllIlIIIIIlllI.contains(entityLivingBase)) {
-                        llllIlIIIIIlllI.add(entityLivingBase);
+                    if (!players.contains(entityLivingBase)) {
+                        players.add(entityLivingBase);
                     }
                 }
-            } else llllIlIIIIIlllI.remove(entityLivingBase);
+            } else players.remove(entityLivingBase);
         }
 
         _x = 0.0F;
         _y = 0.0F;
         _z = 0.0F;
-        playerIterator = llllIlIIIIIlllI.iterator();
+        playerIterator = players.iterator();
 
         while (playerIterator.hasNext()) {
             EntityPlayer player = (EntityPlayer) playerIterator.next();
-            if (/*CombatUtils.canTarget(player, false)*/ true) {
+            if (CombatUtils.canTarget(player, false)) {
                 player.setAlwaysRenderNameTag(false);
                 _x = (float) (player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosX);
                 _y = (float) (player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosY);
@@ -362,15 +185,15 @@ public class ExplicitB9NameTags extends Module {
     }
 
     private void startDrawing(float x, float y, float z, EntityPlayer player) {
-        float llllIIlllIIIlIl = Minecraft.getMinecraft().gameSettings.thirdPersonView == 2 ? -1.0F : 1.0F;
-        double llllIIlllIIIlII = (double) (getSize(player) / 10.0F * scale) * 1.5D;
+        float rotateX = Minecraft.getMinecraft().gameSettings.thirdPersonView == 2 ? -1.0F : 1.0F;
+        double scaleRatio = (double) (getSize(player) / 10.0F * scale) * 1.5D;
         GL11.glPushMatrix();
         RenderUtils.startDrawing();
         GL11.glTranslatef(x, y, z);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
         GL11.glRotatef(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-        GL11.glRotatef(Minecraft.getMinecraft().getRenderManager().playerViewX, llllIIlllIIIlIl, 0.0F, 0.0F);
-        GL11.glScaled(-0.01666666753590107D * llllIIlllIIIlII, -0.01666666753590107D * llllIIlllIIIlII, 0.01666666753590107D * llllIIlllIIIlII);
+        GL11.glRotatef(Minecraft.getMinecraft().getRenderManager().playerViewX, rotateX, 0.0F, 0.0F);
+        GL11.glScaled(-0.01666666753590107D * scaleRatio, -0.01666666753590107D * scaleRatio, 0.01666666753590107D * scaleRatio);
     }
 
     private void stopDrawing() {
@@ -393,23 +216,23 @@ public class ExplicitB9NameTags extends Module {
 
     private void renderArmor(EntityPlayer player) {
         ItemStack[] armor = player.inventory.armorInventory;
-        int llllIIllIIllIII = 0;
+        int pos = 0;
 
         for (ItemStack is : armor) {
             if (is != null) {
-                llllIIllIIllIII -= 8;
+                pos -= 8;
             }
         }
 
         if (player.getHeldItem() != null) {
-            llllIIllIIllIII -= 8;
+            pos -= 8;
             ItemStack var10 = player.getHeldItem().copy();
             if (var10.hasEffect() && (var10.getItem() instanceof ItemTool || var10.getItem() instanceof ItemArmor)) {
                 var10.stackSize = 1;
             }
 
-            renderItemStack(var10, llllIIllIIllIII, -20);
-            llllIIllIIllIII += 16;
+            renderItemStack(var10, pos, -20);
+            pos += 16;
         }
 
         armor = player.inventory.armorInventory;
@@ -417,8 +240,8 @@ public class ExplicitB9NameTags extends Module {
         for (int i = 3; i >= 0; --i) {
             ItemStack var11 = armor[i];
             if (var11 != null) {
-                renderItemStack(var11, llllIIllIIllIII, -20);
-                llllIIllIIllIII += 16;
+                renderItemStack(var11, pos, -20);
+                pos += 16;
             }
         }
 
@@ -426,8 +249,8 @@ public class ExplicitB9NameTags extends Module {
     }
 
     private String getPlayerName(EntityPlayer player) {
-        boolean llllIIllIIIIlll = distanceSetting.isToggled();
-        return (llllIIllIIIIlll ? (new DecimalFormat("#.##")).format(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player)) + "m " : "") + player.getDisplayName().getFormattedText();
+        boolean isDistanceSettingToggled = distanceSetting.isToggled();
+        return (isDistanceSettingToggled ? (new DecimalFormat("#.##")).format(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player)) + "m " : "") + player.getDisplayName().getFormattedText();
     }
 
     private float getSize(EntityPlayer player) {
@@ -464,9 +287,9 @@ public class ExplicitB9NameTags extends Module {
     }
 
     private void renderEnchantText(ItemStack is, int xPos, int yPos) {
-        int llllIIlIIlIIlII = yPos - 24;
+        int newYPos = yPos - 24;
         if (is.getEnchantmentTagList() != null && is.getEnchantmentTagList().tagCount() >= 6) {
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("god", (float) (xPos * 2), (float) llllIIlIIlIIlII, 16711680);
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("god", (float) (xPos * 2), (float) newYPos, 16711680);
         } else {
             if (is.getItem() instanceof ItemArmor) {
                 int protection = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, is);
@@ -481,33 +304,33 @@ public class ExplicitB9NameTags extends Module {
                 }
 
                 if (protection > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("prot" + protection, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("prot" + protection, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (projectileProtection > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("proj" + projectileProtection, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("proj" + projectileProtection, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (blastProtectionLvL > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("bp" + blastProtectionLvL, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("bp" + blastProtectionLvL, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (fireProtection > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("frp" + fireProtection, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("frp" + fireProtection, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (thornsLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("th" + thornsLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("th" + thornsLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (unbreakingLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("unb" + unbreakingLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("unb" + unbreakingLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
             }
 
@@ -517,23 +340,23 @@ public class ExplicitB9NameTags extends Module {
                 int flameLvl = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, is);
                 int unbreakingLvl = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, is);
                 if (powerLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("pow" + powerLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("pow" + powerLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (punchLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("pun" + punchLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("pun" + punchLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (flameLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("flame" + flameLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("flame" + flameLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (unbreakingLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("unb" + unbreakingLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("unb" + unbreakingLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
             }
 
@@ -543,22 +366,22 @@ public class ExplicitB9NameTags extends Module {
                 int fireAspectLvl = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is);
                 int unbreakingLvl = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, is);
                 if (sharpnessLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("sh" + sharpnessLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("sh" + sharpnessLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (knockbackLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("kb" + knockbackLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("kb" + knockbackLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (fireAspectLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("fire" + fireAspectLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("fire" + fireAspectLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (unbreakingLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("unb" + unbreakingLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("unb" + unbreakingLvl, (float) (xPos * 2), (float) newYPos, -1);
                 }
             }
 
@@ -568,27 +391,27 @@ public class ExplicitB9NameTags extends Module {
                 int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, is);
                 int silkTouchLvl = EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, is);
                 if (efficiencyLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("eff" + efficiencyLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("eff" + efficiencyLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (fortuneLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("fo" + fortuneLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("fo" + fortuneLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (silkTouchLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("silk" + silkTouchLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
-                    llllIIlIIlIIlII += 8;
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("silk" + silkTouchLvl, (float) (xPos * 2), (float) newYPos, -1);
+                    newYPos += 8;
                 }
 
                 if (unbreakingLvl > 0) {
-                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("ub" + unbreakingLvl, (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
+                    Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("ub" + unbreakingLvl, (float) (xPos * 2), (float) newYPos, -1);
                 }
             }
 
             if (is.getItem() == Items.golden_apple && is.hasEffect()) {
-                Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("god", (float) (xPos * 2), (float) llllIIlIIlIIlII, -1);
+                Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("god", (float) (xPos * 2), (float) newYPos, -1);
             }
 
         }
