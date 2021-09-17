@@ -46,7 +46,6 @@ public class ExplicitB9NameTags extends Module {
     private final ModuleSettingSlider scaleSetting;
     private final ModuleSettingSlider rangeSetting;
     private final ModuleSettingTick armorSetting;
-    private final ModuleSettingTick playersOnlySetting;
     private final ModuleSettingTick durabilitySetting;
     private final ModuleSettingTick distanceSetting;
 
@@ -58,7 +57,6 @@ public class ExplicitB9NameTags extends Module {
         scaleSetting = new ModuleSettingSlider("Scale", 5.0D, 0.1D, 10.0D, 0.1D);
         rangeSetting = new ModuleSettingSlider("Range", 0.0D, 0.0D, 512.0D, 1.0D);
         armorSetting = new ModuleSettingTick("Armor", true);
-        playersOnlySetting = new ModuleSettingTick("PlayersOnly", false);
         durabilitySetting = new ModuleSettingTick("Durability", false);
         distanceSetting = new ModuleSettingTick("Distance", false);
 
@@ -66,7 +64,6 @@ public class ExplicitB9NameTags extends Module {
         registerSetting(scaleSetting);
         registerSetting(rangeSetting);
         registerSetting(armorSetting);
-        registerSetting(playersOnlySetting);
         registerSetting(durabilitySetting);
         registerSetting(distanceSetting);
     }
@@ -75,7 +72,6 @@ public class ExplicitB9NameTags extends Module {
     public void guiUpdate() {
         scale = (float) scaleSetting.getInput();
         armor = armorSetting.isToggled();
-        players = playersOnlySetting.isToggled();
         dura = durabilitySetting.isToggled();
         mode = modeSetting.getInput() == 1.0D ? "Hearts" : "Percentage";
     }
@@ -84,7 +80,7 @@ public class ExplicitB9NameTags extends Module {
     public void nameTag(Pre<? extends EntityLivingBase> player) {
         boolean _0 = player.entity.getDisplayName().getFormattedText() != null;
         boolean _1 = !player.entity.getDisplayName().getFormattedText().equals("");
-        boolean _2 = player.entity instanceof EntityPlayer && CombatUtils.canTarget(player.entity, true, players);
+        boolean _2 = player.entity instanceof EntityPlayer && CombatUtils.canTarget(player.entity, true);
         boolean _3 = ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player.entity) <= rangeSetting.getInput() || rangeSetting.getInput() == 0.0D);
         if ( _0 && _1  && _2 && _3) {
             player.setCanceled(true);
@@ -127,7 +123,7 @@ public class ExplicitB9NameTags extends Module {
 
         while (playerIterator.hasNext()) {
             EntityPlayer player = (EntityPlayer) playerIterator.next();
-            if (CombatUtils.canTarget(player, true, players)) {
+            if (CombatUtils.canTarget(player, true)) {
                 player.setAlwaysRenderNameTag(false);
                 _x = (float) (player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosX);
                 _y = (float) (player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosY);
