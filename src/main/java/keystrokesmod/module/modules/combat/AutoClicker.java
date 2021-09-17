@@ -372,7 +372,7 @@ public class AutoClicker extends Module {
          }
          if (onlyBlocks.isToggled()) {
             if ((item.getItem() instanceof ItemBlock) || (item.getItem() instanceof ItemEgg) || (item.getItem() instanceof ItemSnowball))
-               return false;
+               return true;
          }
          if (noBlockSword.isToggled()) {
             if (item.getItem() instanceof ItemSword)
