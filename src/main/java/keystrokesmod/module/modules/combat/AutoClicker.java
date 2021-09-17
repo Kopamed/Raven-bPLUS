@@ -43,7 +43,7 @@ public class AutoClicker extends Module {
    public static ModuleSettingTick leftClick;
    public static ModuleSettingTick rightClick;
    public static ModuleSettingTick inventoryFill;
-   public static ModuleSettingTick allowEat, allowBow;
+   public static ModuleSettingTick allowEat, allowBow, noPotion;
    public static ModuleSettingSlider rightClickDelay;
    public static ModuleSettingSlider clickEvent, clickTimings;
 
@@ -87,6 +87,7 @@ public class AutoClicker extends Module {
       this.registerSetting(breakBlocksMin = new ModuleSettingSlider("Breack blocks min delay", 20.0D, 0.0D, 1000.0D, 5D));
       this.registerSetting(breakBlocksMax = new ModuleSettingSlider("Breack blocks max delay", 50.0D, 0.0D, 1000.0D, 5D));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
+      this.registerSetting(noPotion = new ModuleSettingTick("Allow drink", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
       this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
@@ -371,10 +372,14 @@ public class AutoClicker extends Module {
          }
          if (onlyBlocks.isToggled()) {
             if ((item.getItem() instanceof ItemBlock) || (item.getItem() instanceof ItemEgg) || (item.getItem() instanceof ItemSnowball))
-               return true;
+               return false;
          }
          if (noBlockSword.isToggled()) {
             if (item.getItem() instanceof ItemSword)
+               return false;
+         }
+         if (noPotion.isToggled()) {
+            if ((item.getItem() instanceof ItemPotion) || (item.getItem() instanceof ItemBucketMilk))
                return false;
          }
       }
