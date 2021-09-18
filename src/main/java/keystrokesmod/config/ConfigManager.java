@@ -248,10 +248,14 @@ public class ConfigManager {
                     setting.setEnabled(toggled);
                 } else if (currentSetting[3].equalsIgnoreCase("slider")) {
                     ModuleSettingSlider setting = (ModuleSettingSlider) settingList;
+                    try{
+                        double value = Double.parseDouble(currentSetting[4]);
+                        //System.out.println("set slider " + value);
+                        setting.setValue(value);
+                    } catch (Exception e){
 
-                    double value = Double.parseDouble(currentSetting[4]);
-                    //System.out.println("set slider " + value);
-                    setting.setValue(value);
+                    }
+
                 } else if (currentSetting[3].equalsIgnoreCase("desc")) {
                     ModuleDesc setting = (ModuleDesc) settingList;
 

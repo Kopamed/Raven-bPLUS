@@ -132,8 +132,12 @@ public class ModuleManager {
       this.addModule(new ShiftTap());
       this.addModule(new FPSSpoofer());
       this.addModule(new CustomFOV());
+<<<<<<< HEAD
 
       this.addModule(new ExplicitB9NameTags());
+=======
+      this.addModule(new Test());
+>>>>>>> e998f51 (the bruh)
       this.defEn();
 
       initialized = true;

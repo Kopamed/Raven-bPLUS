@@ -1,6 +1,6 @@
 package keystrokesmod.clickgui;
 
-public class ClickGUIRenderManager {
+public class RenderComponent {
    public void r3nd3r() {
    }
 
