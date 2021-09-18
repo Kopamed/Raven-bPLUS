@@ -93,16 +93,19 @@ public class Ravenbplus {
       mc = Minecraft.getMinecraft();
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
-      FMLCommonHandler.instance().bus().register(new DebugInfoRenderer());
-      FMLCommonHandler.instance().bus().register(new mouseManager());
-      FMLCommonHandler.instance().bus().register(new KeySrokeRenderer());
-      FMLCommonHandler.instance().bus().register(new ChatHelper());
+      MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
+      MinecraftForge.EVENT_BUS.register(new mouseManager());
+      MinecraftForge.EVENT_BUS.register(new KeySrokeRenderer());
+      MinecraftForge.EVENT_BUS.register(new ChatHelper());
+
+      /*
       MinecraftForge.EVENT_BUS.register(new TransformerFontRenderer());
       MinecraftForge.EVENT_BUS.register(new TransformerGuiUtilRenderComponents());
       MinecraftForge.EVENT_BUS.register(new TransformerEntityPlayerSP());
       MinecraftForge.EVENT_BUS.register(new TransformerEntity());
       MinecraftForge.EVENT_BUS.register(new TransformerEntityPlayer());
       MinecraftForge.EVENT_BUS.register(new TransformerMinecraft());
+       */
 
       //lodaing assest
       ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
@@ -121,14 +124,14 @@ public class Ravenbplus {
          mResourceLocation = null;
       }
 
-      osName = System.getProperty("os.name");
-      osArch = System.getProperty("os.arch");
+      osName = System.getProperty("os.name").toLowerCase();
+      osArch = System.getProperty("os.arch").toLowerCase();
 
       ClientConfig.applyKeyStrokeSettingsFromConfigFile();
       commandManager = new CommandManager();
       notAName.getm0dmanager().r3g1st3r();
-      FMLCommonHandler.instance().bus().register(ModuleManager.reach);
-      FMLCommonHandler.instance().bus().register(ModuleManager.nameHider);
+      MinecraftForge.EVENT_BUS.register(ModuleManager.reach);
+      MinecraftForge.EVENT_BUS.register(ModuleManager.nameHider);
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
       configManager = new ConfigManager();
@@ -146,7 +149,6 @@ public class Ravenbplus {
 
    @SubscribeEvent
    public void onTick(ClientTickEvent e) {
-
       if (e.phase == Phase.END) {
          if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
             for (int i = 0; i < ModuleManager.modListSize(); i++) {
