@@ -3,11 +3,8 @@
 package keystrokesmod.module.modules.player;
 
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.Module;
+import keystrokesmod.module.*;
 import keystrokesmod.utils.Utils;
-import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
@@ -26,8 +23,7 @@ public class SafeWalk extends Module {
    public static ModuleSettingTick onHold;
    public static ModuleSettingTick showBlockAmount;
    public static ModuleSettingTick lookDown;
-   public static ModuleSettingSlider pitchRange;
-   public static ModuleSettingSlider pitchIgnorePoint;
+   public static ModuleSettingDoubleSlider pitchRange;
    public static ModuleSettingSlider blockShowMode;
    public static ModuleDesc blockShowModeDesc;
    private static boolean shouldBridge = false;
@@ -43,8 +39,7 @@ public class SafeWalk extends Module {
       this.registerSetting(blockShowMode = new ModuleSettingSlider("Block display info:", 2D, 1D, 2D, 1D));
       this.registerSetting(blockShowModeDesc = new ModuleDesc("Mode: "));
       this.registerSetting(lookDown = new ModuleSettingTick("Only when looking down", true));
-      this.registerSetting(pitchRange = new ModuleSettingSlider("Pitch min range:", 70D, 0D, 90D, 1D));
-      this.registerSetting(pitchIgnorePoint = new ModuleSettingSlider("Pitch Max range:", 85D, 0D, 90D, 1D));
+      this.registerSetting(pitchRange = new ModuleSettingDoubleSlider("Pitch min range:", 70D, 85, 0D, 90D, 1D));
    }
 
    public void onDisable() {
@@ -57,7 +52,6 @@ public class SafeWalk extends Module {
    }
 
    public void guiUpdate() {
-      Utils.Client.correctSliders(pitchRange, pitchIgnorePoint);
       blockShowModeDesc.setDesc(Utils.md + BlockAmountInfo.values()[(int)blockShowMode.getInput() - 1]);
    }
 
@@ -71,7 +65,7 @@ public class SafeWalk extends Module {
       }
       if(doShift.isToggled()) {
          if(lookDown.isToggled()) {
-            if(mc.thePlayer.rotationPitch < pitchRange.getInput() || mc.thePlayer.rotationPitch > pitchIgnorePoint.getInput()) {
+            if(mc.thePlayer.rotationPitch < pitchRange.getInputMin() || mc.thePlayer.rotationPitch > pitchRange.getInputMax()) {
                shouldBridge = false;
                if(Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
                   setShift(true);

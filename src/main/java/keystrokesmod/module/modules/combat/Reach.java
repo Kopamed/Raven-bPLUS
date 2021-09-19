@@ -4,10 +4,7 @@ package keystrokesmod.module.modules.combat;
 
 import java.util.List;
 
-import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.*;
 import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,8 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class Reach extends Module {
-   public static ModuleSettingSlider min;
-   public static ModuleSettingSlider max;
+   public static ModuleSettingDoubleSlider reach;
    public static ModuleSettingTick weapon_only;
    public static ModuleSettingTick moving_only;
    public static ModuleSettingTick sprint_only;
@@ -32,16 +28,11 @@ public class Reach extends Module {
 
    public Reach() {
       super("Reach", Module.category.combat, 0);
-      this.registerSetting(min = new ModuleSettingSlider("Min", 3.1D, 3.0D, 6.0D, 0.05D));
-      this.registerSetting(max = new ModuleSettingSlider("Max", 3.3D, 3.0D, 6.0D, 0.05D));
+      this.registerSetting(reach = new ModuleSettingDoubleSlider("Reach (Blocks)", 3.1, 3.3, 0.05, 6, 0.05));
       this.registerSetting(weapon_only = new ModuleSettingTick("Weapon only", false));
       this.registerSetting(moving_only = new ModuleSettingTick("Moving only", false));
       this.registerSetting(sprint_only = new ModuleSettingTick("Sprint only", false));
       this.registerSetting(hit_through_blocks = new ModuleSettingTick("Hit through blocks", false));
-   }
-
-   public void guiUpdate() {
-      Utils.Client.correctSliders(min, max);
    }
 
    @SubscribeEvent
@@ -78,7 +69,7 @@ public class Reach extends Module {
          }
       }
 
-      double r = Utils.Client.ranModuleVal(min, max, Utils.Java.rand());
+      double r = Utils.Client.ranModuleVal(reach, Utils.Java.rand());
       Object[] o = zz(r, 0.0D);
       if (o == null) {
          return false;

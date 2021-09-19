@@ -26,11 +26,11 @@ public class AutoConfig extends RenderComponent {
       this.o = o;
    }
 
-   public void so(int n) {
+   public void setModuleStartAt(int n) {
       this.o = n;
    }
 
-   public void r3nd3r() {
+   public void draw() {
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
       if (/*this.p.mod instanceof AutoConfig*/1>2) {
@@ -42,13 +42,13 @@ public class AutoConfig extends RenderComponent {
       }
    }
 
-   public void render(int x, int y) {
-      boolean h = this.i(x, y);
+   public void compute(int mousePosX, int mousePosY) {
+      boolean h = this.i(mousePosX, mousePosY);
       this.y = this.p.category.getY() + this.o;
       this.x = this.p.category.getX();
    }
 
-   public void onCl1ck(int x, int y, int b) {
+   public void mouseDown(int x, int y, int b) {
       if (this.i(x, y) && b == 0 && this.p.po) {
          this.isBinding = !this.isBinding;
       }

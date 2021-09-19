@@ -38,7 +38,7 @@ public class ButtonTick extends RenderComponent {
       GL11.glHint(3155, 4354);
    }
 
-   public static void draw() {
+   public static void renderMain() {
       GL11.glEnable(3553);
       GL11.glEnable(2929);
       GL11.glDisable(2848);
@@ -46,14 +46,14 @@ public class ButtonTick extends RenderComponent {
       GL11.glHint(3155, 4352);
    }
 
-   public static void draw(float x, float y, float x1, float y1, int c) {
+   public static void renderMain(float x, float y, float x1, float y1, int c) {
       e();
       colour(c);
-      draw(x, y, x1, y1);
-      draw();
+      renderMain(x, y, x1, y1);
+      renderMain();
    }
 
-   public static void draw(float x, float y, float x1, float y1) {
+   public static void renderMain(float x, float y, float x1, float y1) {
       GL11.glBegin(7);
       GL11.glVertex2f(x, y1);
       GL11.glVertex2f(x1, y1);
@@ -67,23 +67,23 @@ public class ButtonTick extends RenderComponent {
       GL11.glColor4f(0.0F, 0.0F, 0.0F, a1pha);
    }
 
-   public void r3nd3r() {
+   public void draw() {
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
       Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.p.category.getX() + 4) * 2), (float)((this.p.category.getY() + this.o + 4) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
       GL11.glPopMatrix();
    }
 
-   public void so(int n) {
+   public void setModuleStartAt(int n) {
       this.o = n;
    }
 
-   public void render(int x, int y) {
+   public void compute(int mousePosX, int mousePosY) {
       this.y = this.p.category.getY() + this.o;
       this.x = this.p.category.getX();
    }
 
-   public void onCl1ck(int x, int y, int b) {
+   public void mouseDown(int x, int y, int b) {
       if (this.i(x, y) && b == 0 && this.p.po) {
          this.cl1ckbUtt0n.toggle();
          this.mod.guiButtonToggled(this.cl1ckbUtt0n);

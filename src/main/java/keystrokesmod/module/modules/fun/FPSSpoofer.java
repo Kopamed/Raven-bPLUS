@@ -1,5 +1,6 @@
 package keystrokesmod.module.modules.fun;
 
+import keystrokesmod.module.ModuleSettingDoubleSlider;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
@@ -12,15 +13,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class FPSSpoofer extends Module {
     public static ModuleDesc desc;
-    public static ModuleSettingSlider min, max;
+    public static ModuleSettingDoubleSlider fps;
     public static Field r = null;
     public static int ticksPassed;
 
     public FPSSpoofer() {
         super("FPSSpoof", category.fun, 0);
         this.registerSetting(desc = new ModuleDesc("Spoofs your fps"));
-        this.registerSetting(min =  new ModuleSettingSlider("Min FPS:", 10000, 0, 100000, 100));
-        this.registerSetting(max =  new ModuleSettingSlider("Max FPS:", 14000, 0, 100000, 100));
+        this.registerSetting(fps = new ModuleSettingDoubleSlider("FPS", 99860, 100000, 0, 100000, 100));
 
         try {
             r = mc.getClass().getDeclaredField("field_71420_M");
@@ -36,9 +36,6 @@ public class FPSSpoofer extends Module {
         }
     }
 
-    public void guiUpdate() {
-        Utils.Client.correctSliders(min, max);
-    }
 
     public void onEnable(){
         if(r == null){
@@ -54,7 +51,7 @@ public class FPSSpoofer extends Module {
                 guiUpdate();
                 if(r != null) {
                     try {
-                        r.set(mc, ThreadLocalRandom.current().nextInt((int)min.getInput(), (int)max.getInput()+1));
+                        r.set(mc, ThreadLocalRandom.current().nextInt((int)fps.getInputMin(), (int)fps.getInputMax()+1));
                     } catch (IllegalAccessException var4) {}
                 }
                 ticksPassed = 0;

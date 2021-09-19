@@ -1,6 +1,5 @@
 package me.superblaubeere27.client.notifications;
 
-import com.sun.javafx.geom.Vec3d;
 import keystrokesmod.module.modules.ClickGui;
 import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.utils.Utils;

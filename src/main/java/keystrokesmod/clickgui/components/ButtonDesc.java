@@ -23,14 +23,14 @@ public class ButtonDesc extends RenderComponent {
       this.o = o;
    }
 
-   public void r3nd3r() {
+   public void draw() {
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
       Minecraft.getMinecraft().fontRendererObj.drawString(this.desc.getDesc(), (float)((this.p.category.getX() + 4) * 2), (float)((this.p.category.getY() + this.o + 4) * 2), this.c, true);
       GL11.glPopMatrix();
    }
 
-   public void so(int n) {
+   public void setModuleStartAt(int n) {
       this.o = n;
    }
 }

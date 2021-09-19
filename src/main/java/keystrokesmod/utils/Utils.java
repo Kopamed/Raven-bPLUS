@@ -19,10 +19,8 @@ import java.util.*;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.scene.input.MouseButton;
-import keystrokesmod.main.NotAName;
-import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.ModuleManager;
+import keystrokesmod.module.ModuleSettingDoubleSlider;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
 import net.minecraft.client.Minecraft;
@@ -377,6 +375,10 @@ public class Utils {
 
       public static double ranModuleVal(ModuleSettingSlider a, ModuleSettingSlider b, Random r) {
          return a.getInput() == b.getInput() ? a.getInput() : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
+      }
+
+      public static double ranModuleVal(ModuleSettingDoubleSlider a, Random r) {
+         return a.getInputMin() == a.getInputMax() ? a.getInputMin() : a.getInputMin() + r.nextDouble() * (a.getInputMax() - a.getInputMin());
       }
 
       public static boolean isHyp() {

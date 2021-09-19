@@ -26,13 +26,13 @@ public class AutoTool extends Module {
     public AutoTool() {
         super("Auto Tool", category.player, 0);
 
-        this.registerSetting(hotkeyBack = new ModuleSettingTick("Hotkey back", true));
+        this.registerSetting(hotkeyBack = new ModuleSettingTick("Hotkey back", true));/*
         ModuleSettingTick doDelay;
         this.registerSetting(doDelay = new ModuleSettingTick("Random delay", true));
         ModuleSettingSlider minDelay;
         this.registerSetting(minDelay = new ModuleSettingSlider("Min delay", 100, 0, 3000, 5));
         ModuleSettingSlider maxDelay;
-        this.registerSetting(maxDelay = new ModuleSettingSlider("Max delay", 390, 0, 3000, 5));
+        this.registerSetting(maxDelay = new ModuleSettingSlider("Max delay", 390, 0, 3000, 5));*/
     }
 
     @SubscribeEvent

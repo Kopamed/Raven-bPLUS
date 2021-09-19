@@ -29,7 +29,7 @@ public class ButtonSlider extends RenderComponent {
       this.o = o;
    }
 
-   public void r3nd3r() {
+   public void draw() {
       net.minecraft.client.gui.Gui.drawRect(this.p.category.getX() + 4, this.p.category.getY() + this.o + 11, this.p.category.getX() + 4 + this.p.category.getWidth() - 8, this.p.category.getY() + this.o + 15, -12302777);
       int l = this.p.category.getX() + 4;
       int r = this.p.category.getX() + 4 + (int)this.w;
@@ -44,14 +44,14 @@ public class ButtonSlider extends RenderComponent {
       GL11.glPopMatrix();
    }
 
-   public void so(int n) {
+   public void setModuleStartAt(int n) {
       this.o = n;
    }
 
-   public void render(int x, int y) {
+   public void compute(int mousePosX, int mousePosY) {
       this.y = this.p.category.getY() + this.o;
       this.x = this.p.category.getX();
-      double d = Math.min(this.p.category.getWidth() - 8, Math.max(0, x - this.x));
+      double d = Math.min(this.p.category.getWidth() - 8, Math.max(0, mousePosX - this.x));
       this.w = (double)(this.p.category.getWidth() - 8) * (this.v.getInput() - this.v.getMin()) / (this.v.getMax() - this.v.getMin());
       if (this.d) {
          if (d == 0.0D) {
@@ -74,7 +74,7 @@ public class ButtonSlider extends RenderComponent {
       }
    }
 
-   public void onCl1ck(int x, int y, int b) {
+   public void mouseDown(int x, int y, int b) {
       if (this.u(x, y) && b == 0 && this.p.po) {
          this.d = true;
       }
@@ -85,7 +85,7 @@ public class ButtonSlider extends RenderComponent {
 
    }
 
-   public void mr(int x, int y, int m) {
+   public void mouseReleased(int x, int y, int m) {
       this.d = false;
    }
 

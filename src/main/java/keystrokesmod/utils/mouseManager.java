@@ -54,6 +54,7 @@ public class mouseManager {
 
    //prev f
    public static int getLeftClickCounter() {
+      if(!Utils.Player.isPlayerInGame())return leftClicks.size();
       for(Long lon : leftClicks) {
          if(lon < System.currentTimeMillis() - 1000L){
             leftClicks.remove(lon);
@@ -66,6 +67,7 @@ public class mouseManager {
 
    // prev i
    public static int getRightClickCounter() {
+      if(!Utils.Player.isPlayerInGame())return leftClicks.size();
       for(Long lon : rightClicks) {
          if(lon < System.currentTimeMillis() - 1000L){
             rightClicks.remove(lon);

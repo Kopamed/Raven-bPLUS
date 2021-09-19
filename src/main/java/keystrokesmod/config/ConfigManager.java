@@ -83,6 +83,12 @@ public class ConfigManager {
 
                     settingString.append(seperator).append(moduleSetting.mode);
                     settingString.append(seperator).append(setting.getDesc());
+                } else if(moduleSetting.mode.equalsIgnoreCase("doubleslider")) {
+                    ModuleSettingDoubleSlider setting = (ModuleSettingDoubleSlider) moduleSetting;
+
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.getInputMin());
+                    settingString.append(seperator).append(setting.getInputMax());
                 }
 
                 if (settingString.length() > base.length())
@@ -114,7 +120,15 @@ public class ConfigManager {
 
                     settingString.append(seperator).append(moduleSetting.mode);
                     settingString.append(seperator).append(setting.getInput());
-                } else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
+                } else if (moduleSetting.mode.equalsIgnoreCase("doubleslider")) {
+                    ModuleSettingDoubleSlider setting = (ModuleSettingDoubleSlider) moduleSetting;
+
+                    settingString.append(seperator).append(moduleSetting.mode);
+                    settingString.append(seperator).append(setting.getInputMin());
+                    settingString.append(seperator).append(setting.getInputMax());
+                }
+
+                else if (moduleSetting.mode.equalsIgnoreCase("tick")) {
                     ModuleSettingTick setting = (ModuleSettingTick) moduleSetting;
 
                     settingString.append(seperator).append(moduleSetting.mode);
@@ -241,7 +255,19 @@ public class ConfigManager {
                 if (settingList == null)
                     continue;
 
-                if (currentSetting[3].equalsIgnoreCase("tick")) {
+                if(currentSetting[3].equalsIgnoreCase("doubleslider")) {
+                    ModuleSettingDoubleSlider setting = (ModuleSettingDoubleSlider) settingList;
+                    try{
+                        double value = Double.parseDouble(currentSetting[4]);
+                        //System.out.println("set slider " + value);
+                        setting.setValueMin(value);
+                        value = Double.parseDouble(currentSetting[5]);
+                        //System.out.println("set slider " + value);
+                        setting.setValueMax(value);
+                    } catch (Exception e){
+
+                    }
+                }else if (currentSetting[3].equalsIgnoreCase("tick")) {
                     ModuleSettingTick setting = (ModuleSettingTick) settingList;
 
                     boolean toggled = Boolean.parseBoolean(currentSetting[4]);

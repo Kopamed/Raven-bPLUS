@@ -152,7 +152,7 @@ public class ClickGui extends GuiScreen {
          category.up(x, y);
 
          for (RenderComponent module : category.getModules()) {
-            module.render(x, y);
+            module.compute(x, y);
          }
       }
 
@@ -207,13 +207,13 @@ public class ClickGui extends GuiScreen {
                }
 
                category = (ButtonCategory)var4.next();
-               if (category.insideArea(x, y) && !category.i(x, y) && !category.insideCategoryBox(x, y) && mouseButton == 0) {
-                  category.insideCategoryBox(true);
+               if (category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y) && mouseButton == 0) {
+                  category.mousePressed(true);
                   category.xx = x - category.getX();
                   category.yy = y - category.getY();
                }
 
-               if (category.insideCategoryBox(x, y) && mouseButton == 0) {
+               if (category.mousePressed(x, y) && mouseButton == 0) {
                   category.setOpened(!category.isOpened());
                }
 
@@ -224,7 +224,7 @@ public class ClickGui extends GuiScreen {
          } while(category.getModules().isEmpty());
 
          for (RenderComponent c : category.getModules()) {
-            c.onCl1ck(x, y, mouseButton);
+            c.mouseDown(x, y, mouseButton);
          }
       }
    }
@@ -236,7 +236,7 @@ public class ClickGui extends GuiScreen {
          ButtonCategory c4t;
          while(var4.hasNext()) {
             c4t = (ButtonCategory)var4.next();
-            c4t.insideCategoryBox(false);
+            c4t.mousePressed(false);
          }
 
          var4 = categoryList.iterator();
@@ -253,7 +253,7 @@ public class ClickGui extends GuiScreen {
             } while(c4t.getModules().isEmpty());
 
             for (RenderComponent c : c4t.getModules()) {
-               c.mr(x, y, s);
+               c.mouseReleased(x, y, s);
             }
          }
       }

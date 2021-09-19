@@ -21,7 +21,7 @@ public class ButtonCategory {
    private int y;
    private int x;
    private final int bh;
-   private boolean inUse;
+   public boolean inUse;
    public int xx;
    public int yy;
    public boolean n4m = false;
@@ -83,7 +83,7 @@ public class ButtonCategory {
       }
    }
 
-   public void insideCategoryBox(boolean d) {
+   public void mousePressed(boolean d) {
       this.inUse = d;
    }
 
@@ -121,7 +121,7 @@ public class ButtonCategory {
       }
 
       if(Gui.categoryBackground.isToggled())
-         ButtonTick.draw((float)(this.x - 2), (float)this.y, (float)(this.x + this.width + 2), (float)(this.y + this.bh + 3), -1);
+         ButtonTick.renderMain((float)(this.x - 2), (float)this.y, (float)(this.x + this.width + 2), (float)(this.y + this.bh + 3), -1);
       renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
       //renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), ay.astolfoColorsDraw(10, 14), false);
       if (!this.n4m) {
@@ -134,7 +134,7 @@ public class ButtonCategory {
 
             while(var5.hasNext()) {
                RenderComponent c2 = (RenderComponent)var5.next();
-               c2.r3nd3r();
+               c2.draw();
             }
          }
 
@@ -147,7 +147,7 @@ public class ButtonCategory {
       RenderComponent c;
       for(Iterator var2 = this.modulesInCategory.iterator(); var2.hasNext(); o += c.getHeight()) {
          c = (RenderComponent)var2.next();
-         c.so(o);
+         c.setModuleStartAt(o);
       }
 
    }
@@ -176,7 +176,7 @@ public class ButtonCategory {
       return x >= this.x + 92 - 13 && x <= this.x + this.width && (float)y >= (float)this.y + 2.0F && y <= this.y + this.bh + 1;
    }
 
-   public boolean insideCategoryBox(int x, int y) {
+   public boolean mousePressed(int x, int y) {
       return x >= this.x + 77 && x <= this.x + this.width - 6 && (float)y >= (float)this.y + 2.0F && y <= this.y + this.bh + 1;
    }
 

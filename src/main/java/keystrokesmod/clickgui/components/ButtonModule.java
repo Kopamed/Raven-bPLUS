@@ -49,7 +49,7 @@ public class ButtonModule extends RenderComponent {
                y += 12;
             } else if (v instanceof ModuleSettingDoubleSlider) {
                ModuleSettingDoubleSlider n = (ModuleSettingDoubleSlider) v;
-               ButtonDoubleSlider s = new ButtonDoubleSlider(n, this, y);
+               ButtonMinMaxSlider s = new ButtonMinMaxSlider(n, this, y);
                this.settings.add(s);
                y += 12;
             }
@@ -59,7 +59,7 @@ public class ButtonModule extends RenderComponent {
       this.settings.add(new AutoConfig(this, y));
    }
 
-   public void so(int n) {
+   public void setModuleStartAt(int n) {
       this.o = n;
       int y = this.o + 16;
       Iterator var3 = this.settings.iterator();
@@ -67,8 +67,8 @@ public class ButtonModule extends RenderComponent {
       while(true) {
          while(var3.hasNext()) {
             RenderComponent co = (RenderComponent)var3.next();
-            co.so(y);
-            if (co instanceof ButtonSlider  || co instanceof ButtonDoubleSlider) {
+            co.setModuleStartAt(y);
+            if (co instanceof ButtonSlider  || co instanceof ButtonMinMaxSlider) {
                y += 16;
             } else if (co instanceof ButtonTick || co instanceof AutoConfig || co instanceof ButtonDesc) {
                y += 12;
@@ -136,7 +136,7 @@ public class ButtonModule extends RenderComponent {
       f();
    }
 
-   public void r3nd3r() {
+   public void draw() {
       v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
       // module text button
@@ -145,7 +145,7 @@ public class ButtonModule extends RenderComponent {
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
          for (RenderComponent c : this.settings) {
-            c.r3nd3r();
+            c.draw();
          }
       }
 
@@ -161,7 +161,7 @@ public class ButtonModule extends RenderComponent {
          while(true) {
             while(var2.hasNext()) {
                RenderComponent c = (RenderComponent)var2.next();
-               if (c instanceof ButtonSlider) {
+               if (c instanceof ButtonSlider || c instanceof ButtonMinMaxSlider) {
                   h += 16;
                } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc) {
                   h += 12;
@@ -173,16 +173,16 @@ public class ButtonModule extends RenderComponent {
       }
    }
 
-   public void render(int x, int y) {
+   public void compute(int mousePosX, int mousePosY) {
       if (!this.settings.isEmpty()) {
          for (RenderComponent c : this.settings) {
-            c.render(x, y);
+            c.compute(mousePosX, mousePosY);
          }
       }
 
    }
 
-   public void onCl1ck(int x, int y, int b) {
+   public void mouseDown(int x, int y, int b) {
       if (this.ii(x, y) && b == 0) {
          this.mod.toggle();
       }
@@ -193,14 +193,14 @@ public class ButtonModule extends RenderComponent {
       }
 
       for (RenderComponent c : this.settings) {
-         c.onCl1ck(x, y, b);
+         c.mouseDown(x, y, b);
       }
 
    }
 
-   public void mr(int x, int y, int m) {
+   public void mouseReleased(int x, int y, int m) {
       for (RenderComponent c : this.settings) {
-         c.mr(x, y, m);
+         c.mouseReleased(x, y, m);
       }
 
    }

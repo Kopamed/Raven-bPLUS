@@ -27,7 +27,7 @@ public class ButtonDoubleSlider extends RenderComponent {
         this.o = o;
     }
 
-    public void r3nd3r() {
+    public void draw() {
         net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 4, this.module.category.getY() + this.o + 11, this.module.category.getX() + 4 + this.module.category.getWidth() - 8, this.module.category.getY() + this.o + 15, -12302777);
         int l = this.module.category.getX() + 4 + (int)settingDoubleSlider.getInputMin();
         int r = this.module.category.getX() + 4 + (int)this.slidersWidthToDraw;
@@ -47,14 +47,14 @@ public class ButtonDoubleSlider extends RenderComponent {
         GL11.glPopMatrix();
     }
 
-    public void so(int n) {
+    public void setModuleStartAt(int n) {
         this.o = n;
     }
 
-    public void render(int x, int y) {
+    public void compute(int mousePosX, int mousePosY) {
         this.y = this.module.category.getY() + this.o;
         this.x = this.module.category.getX();
-        double d = Math.min(this.module.category.getWidth() - 8, Math.max(0, x - this.x));
+        double d = Math.min(this.module.category.getWidth() - 8, Math.max(0, mousePosX - this.x));
         System.out.println(d);
         this.slidersWidthToDraw = (double)(this.module.category.getWidth() - 8) * (this.settingDoubleSlider.getInputMax() - this.settingDoubleSlider.getMin()) / (this.settingDoubleSlider.getMax() - this.settingDoubleSlider.getMin());
         if (this.visible) {
@@ -81,7 +81,7 @@ public class ButtonDoubleSlider extends RenderComponent {
         }
     }
 
-    public void onCl1ck(int x, int y, int mouseButton) {
+    public void mouseDown(int x, int y, int mouseButton) {
         System.out.println("Clicked");
         if (this.u(x, y) && mouseButton == 0 && this.module.po) {
             this.visible = true;
@@ -93,7 +93,7 @@ public class ButtonDoubleSlider extends RenderComponent {
 
     }
 
-    public void mr(int x, int y, int m) {
+    public void mouseReleased(int x, int y, int m) {
         this.visible = false;
     }
 
