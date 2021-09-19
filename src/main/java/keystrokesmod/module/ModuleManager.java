@@ -133,7 +133,6 @@ public class ModuleManager {
       this.addModule(new FPSSpoofer());
       this.addModule(new CustomFOV());
 
-
       this.addModule(new ExplicitB9NameTags());
       this.defEn();
 

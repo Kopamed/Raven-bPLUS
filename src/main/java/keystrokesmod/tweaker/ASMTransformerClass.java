@@ -27,8 +27,6 @@ public class ASMTransformerClass implements IClassTransformer {
 
       this.addTransformer(new TransformerSplashProgress());
       this.addTransformer(new TransformerFMLCommonHandler());
-
-      this.addTransformer(new TransformerGuiIngame_optForge());
    }
 
    private void addTransformer(Transformer transformer) {
@@ -39,7 +37,6 @@ public class ASMTransformerClass implements IClassTransformer {
       }
    }
 
-   @SuppressWarnings("ResultOfMethodCallIgnored")
    @Override
    public byte[] transform(String name, String transformedName, byte[] basicClass) {
       if (basicClass == null) return null;

@@ -1,17 +1,19 @@
 package keystrokesmod;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.Gui;
 import me.superblaubeere27.client.notifications.Notification;
 import me.superblaubeere27.client.notifications.NotificationManager;
 import me.superblaubeere27.client.notifications.NotificationType;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class NotificationRenderer {
-    /**
-     * @see keystrokesmod.tweaker.transformers.TransformerGuiIngame_optForge
-     */
-    public static void render() {
+    public static final NotificationRenderer notificationRenderer = new NotificationRenderer();
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void onRender(TickEvent.RenderTickEvent event) {
         if (Gui.toggleNotification.isToggled()) NotificationManager.render();
     }
 
