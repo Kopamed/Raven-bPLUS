@@ -23,7 +23,7 @@ public class WTap extends Module {
     public static int hitTimeout, hitsWaited;
 
     public WTap(){
-        super("STap", category.combat, 0);
+        super("WTap", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
         this.registerSetting(actionTicks = new ModuleSettingDoubleSlider("Action Time (MS)",  25, 55, 1, 500, 1));
         this.registerSetting(onceEvery =  new ModuleSettingDoubleSlider("Once every ... hits", 25, 55, 1, 500, 1));
