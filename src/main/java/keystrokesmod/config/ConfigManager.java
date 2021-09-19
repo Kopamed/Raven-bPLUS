@@ -273,8 +273,9 @@ public class ConfigManager {
                     boolean toggled = Boolean.parseBoolean(currentSetting[4]);
                     setting.setEnabled(toggled);
                 } else if (currentSetting[3].equalsIgnoreCase("slider")) {
-                    ModuleSettingSlider setting = (ModuleSettingSlider) settingList;
+
                     try{
+                        ModuleSettingSlider setting = (ModuleSettingSlider) settingList;
                         double value = Double.parseDouble(currentSetting[4]);
                         //System.out.println("set slider " + value);
                         setting.setValue(value);
