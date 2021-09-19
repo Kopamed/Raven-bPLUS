@@ -19,6 +19,9 @@ import java.util.*;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import javafx.scene.input.MouseButton;
+import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.modules.combat.AutoClicker;
@@ -45,6 +48,7 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.*;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -52,15 +56,12 @@ import org.lwjgl.opengl.GL11;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Timer;
 
 public class Utils {
    private static final Random rand = new Random();
    public static final Minecraft mc = Minecraft.getMinecraft();
    public static final String md = "Mode: ";
-   private static Field timerField = null;
-   private static Field mouseButton = null;
-   private static Field mouseButtonState = null;
-   private static Field mouseButtons = null;
 
    public static class Player {
       public static void hotkeyToSlot(int slot) {
@@ -353,23 +354,16 @@ public class Utils {
       }
 
       public static void setMouseButtonState(int mouseButton, boolean held) {
-         if (Utils.mouseButton != null && mouseButtonState != null && mouseButtons != null) {
-            MouseEvent m = new MouseEvent();
+         MouseEvent m = new MouseEvent();
 
-            try {
-               Utils.mouseButton.setAccessible(true);
-               Utils.mouseButton.set(m, mouseButton);
-               mouseButtonState.setAccessible(true);
-               mouseButtonState.set(m, held);
-               MinecraftForge.EVENT_BUS.post(m);
-               mouseButtons.setAccessible(true);
-               ByteBuffer bf = (ByteBuffer) mouseButtons.get(null);
-               mouseButtons.setAccessible(false);
-               bf.put(mouseButton, (byte)(held ? 1 : 0));
-            } catch (IllegalAccessException var4) {
-            }
+         ObfuscationReflectionHelper.setPrivateValue(MouseEvent.class, m, mouseButton, "button");
+         ObfuscationReflectionHelper.setPrivateValue(MouseEvent.class, m, held, "buttonstate");
+         MinecraftForge.EVENT_BUS.post(m);
 
-         }
+         ByteBuffer buttons = (ByteBuffer) ObfuscationReflectionHelper.getPrivateValue(Mouse.class, null, "buttons");
+         buttons.put(mouseButton, (byte)(held ? 1 : 0));
+         ObfuscationReflectionHelper.setPrivateValue(Mouse.class, null, buttons, "buttons");
+
       }
 
       public static void correctSliders(ModuleSettingSlider c, ModuleSettingSlider d) {
@@ -396,11 +390,7 @@ public class Utils {
       }
 
       public static net.minecraft.util.Timer getTimer() {
-         try {
-            return (net.minecraft.util.Timer) timerField.get(mc);
-         } catch (IndexOutOfBoundsException | IllegalAccessException var1) {
-            return null;
-         }
+         return ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "timer", "field_71428_T");
       }
 
       public static void resetTimer() {
@@ -519,28 +509,6 @@ public class Utils {
 
       public static boolean currentScreenMinecraft() {
          return mc.currentScreen == null;
-      }
-
-      public static void setTimer() {
-         try {
-            timerField = Minecraft.class.getDeclaredField("field_71428_T");
-         } catch (Exception var4) {
-            try {
-               timerField = Minecraft.class.getDeclaredField("timer");
-            } catch (Exception ignored) {}
-         }
-
-         if (timerField != null) {
-            timerField.setAccessible(true);
-         }
-
-         try {
-            mouseButton = MouseEvent.class.getDeclaredField("button");
-            mouseButtonState = MouseEvent.class.getDeclaredField("buttonstate");
-            mouseButtons = Mouse.class.getDeclaredField("buttons");
-         } catch (Exception var2) {
-         }
-
       }
 
       public static int serverResponseTime() {

@@ -137,7 +137,6 @@ public class Ravenbplus {
       configManager = new ConfigManager();
       clientConfig = new ClientConfig();
       clientConfig.applyConfig();
-      Utils.Client.setTimer();
       ex.execute(() -> Utils.URLS.getTextFromURL(numberOfUseTracker));
       if(version.outdated()) {
          Ravenbplus.outdated = true;

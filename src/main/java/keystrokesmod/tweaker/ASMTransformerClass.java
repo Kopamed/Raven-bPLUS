@@ -27,6 +27,8 @@ public class ASMTransformerClass implements IClassTransformer {
 
       this.addTransformer(new TransformerSplashProgress());
       this.addTransformer(new TransformerFMLCommonHandler());
+
+      this.addTransformer(new TransformerGuiIngame_optForge());
    }
 
    private void addTransformer(Transformer transformer) {

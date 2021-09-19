@@ -2,29 +2,20 @@
 
 package keystrokesmod.tweaker;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import keystrokesmod.module.modules.render.AntiShuffle;
-import keystrokesmod.module.modules.combat.AutoClicker;
-import keystrokesmod.module.modules.movement.KeepSprint;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.modules.other.NameHider;
-import keystrokesmod.module.modules.movement.NoSlow;
+import keystrokesmod.module.modules.combat.AutoClicker;
 import keystrokesmod.module.modules.combat.Reach;
-import keystrokesmod.module.modules.player.SafeWalk;
+import keystrokesmod.module.modules.movement.KeepSprint;
+import keystrokesmod.module.modules.movement.NoSlow;
+import keystrokesmod.module.modules.other.NameHider;
 import keystrokesmod.module.modules.other.StringEncrypt;
+import keystrokesmod.module.modules.player.SafeWalk;
+import keystrokesmod.module.modules.render.AntiShuffle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovementInput;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.input.Mouse;
-
-import java.util.List;
 
 public class ASMEventHandler {
    private static final Minecraft mc = Minecraft.getMinecraft();

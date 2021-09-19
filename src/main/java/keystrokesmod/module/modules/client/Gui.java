@@ -2,6 +2,7 @@
 
 package keystrokesmod.module.modules.client;
 
+import keystrokesmod.NotificationRenderer;
 import keystrokesmod.main.NotAName;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
@@ -14,6 +15,8 @@ public class Gui extends Module {
    public static ModuleSettingSlider guiTheme, backgroundOpacity;
    public static ModuleDesc guiThemeDesc;
    public static ModuleSettingTick categoryBackground;
+   public static ModuleSettingTick toggleNotification;
+   public static ModuleSettingTick rainbowNotification;
 
    public Gui() {
       super("Gui", Module.category.client, 54);
@@ -21,6 +24,8 @@ public class Gui extends Module {
       this.registerSetting(guiThemeDesc = new ModuleDesc(Utils.md + "b+"));
       this.registerSetting(backgroundOpacity = new ModuleSettingSlider("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(categoryBackground = new ModuleSettingTick("Category Background", true));
+      this.registerSetting(toggleNotification = new ModuleSettingTick("Toggle Notifications", true));
+      this.registerSetting(rainbowNotification = new ModuleSettingTick("Rainbow Notifications", true));
    }
 
    public void onEnable() {
@@ -47,7 +52,6 @@ public class Gui extends Module {
       case 4:
          guiThemeDesc.setDesc(Utils.md + "b+");
          break;
-
       }
    }
 }

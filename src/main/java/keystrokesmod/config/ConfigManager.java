@@ -196,20 +196,25 @@ public class ConfigManager {
                     }
 
                     if (module.getName().equalsIgnoreCase("Command line") && toggled){
-                        Module cmd = module;
-                        cmd.disable();
-                        cmd.onDisable();
+                        if (module.isEnabled()) {
+                            module.disable();
+                        }
+                        // module.onDisable();   ~~~~   called in Module.disable()V;
                         continue;
                     }
                     module.setbind(keyBind);
                     if (toggled) {
                         //System.out.println("en");
-                        module.enable();
-                        module.onEnable();
+                        if (!module.isEnabled()) {
+                            module.enable();
+                        }
+                        // module.onEnable();   ~~~~   called in Module.enable()V;
                     } else {
                         //System.out.println("dis");
-                        module.disable();
-                        module.onDisable();
+                        if (module.isEnabled()) {
+                            module.disable();
+                        }
+                        // module.onDisable();   ~~~~   called in Module.disable()V;
                     }
                 } catch (Exception hnfsaofsh) {
                     //hnfsaofsh.printStackTrace();
@@ -274,14 +279,11 @@ public class ConfigManager {
             }
         }
 
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(this.currentConfig);
+        try (PrintWriter writer = new PrintWriter(this.currentConfig);) {
             for (String line : newConfig) {
                 ////System.out.println(line);
                 writer.println(line);
             }
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -297,28 +299,26 @@ public class ConfigManager {
 
     public List<String> parseConfigFile() {
         List<String> configFileContents = new ArrayList<String>();
-        Scanner reader = null;
-        try {
-            reader = new Scanner(this.currentConfig);
+
+        try (Scanner reader = new Scanner(this.currentConfig)){
+            while (reader.hasNextLine())
+                configFileContents.add(reader.nextLine());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        while (reader.hasNextLine())
-            configFileContents.add(reader.nextLine());
 
         return configFileContents;
     }
 
     public List<String> parseConfigFile(String cfg) {
         List<String> configFileContents = new ArrayList<String>();
-        Scanner reader = null;
-        try {
-            reader = new Scanner(new File(this.configDirecotry, cfg + this.getExtension()));
+
+        try (Scanner reader = new Scanner(new File(this.configDirecotry, cfg + this.getExtension()));) {
+            while (reader.hasNextLine())
+                configFileContents.add(reader.nextLine());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        while (reader.hasNextLine())
-            configFileContents.add(reader.nextLine());
 
         return configFileContents;
     }
@@ -367,13 +367,11 @@ public class ConfigManager {
             }
         }
 
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(newConfigFile);
+
+        try (PrintWriter writer = new PrintWriter(newConfigFile);){
             for (String line : configToSave) {
                 writer.println(line);
             }
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -409,13 +407,10 @@ public class ConfigManager {
     }
 
     public void clearConfig() {
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(this.currentConfig);
+        try (PrintWriter writer = new PrintWriter(this.currentConfig)){
             for (String line : defaultConfig) {
                 writer.println(line);
             }
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -424,15 +419,13 @@ public class ConfigManager {
     }
 
     public void saveNewConfig(List<String> config, String configName){
-        PrintWriter writer = null;
-        try {
-            File newFile = new File(this.configDirecotry, configName + this.getExtension());
-            writer = new PrintWriter(newFile);
+        File newFile = new File(this.configDirecotry, configName + this.getExtension());
+
+        try (PrintWriter writer = new PrintWriter(newFile);){
             for (String line : config) {
                 ////System.out.println(line);
                 writer.println(line);
             }
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
