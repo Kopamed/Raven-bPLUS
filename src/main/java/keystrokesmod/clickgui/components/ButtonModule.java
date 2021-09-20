@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 public class ButtonModule extends RenderComponent {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
+   private final int c3 = (new Color(175, 143, 233) ).getRGB();
    public Module mod;
    public ButtonCategory category;
    public int o;
@@ -140,7 +141,7 @@ public class ButtonModule extends RenderComponent {
       v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
       // module text button
-      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : Color.lightGray.getRGB();
+      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isEnabled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {

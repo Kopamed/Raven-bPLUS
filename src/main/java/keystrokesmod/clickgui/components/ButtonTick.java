@@ -7,22 +7,25 @@ import java.awt.Color;
 import keystrokesmod.clickgui.RenderComponent;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class ButtonTick extends RenderComponent {
    private final int c = (new Color(20, 255, 0)).getRGB();
+   private final int boxC = (new Color(169,169,169)).getRGB();
    private final Module mod;
    private final ModuleSettingTick cl1ckbUtt0n;
-   private final ButtonModule p;
+   private final ButtonModule module;
    private int o;
    private int x;
    private int y;
+   private int boxSize = 6;
 
    public ButtonTick(Module mod, ModuleSettingTick op, ButtonModule b, int o) {
       this.mod = mod;
       this.cl1ckbUtt0n = op;
-      this.p = b;
+      this.module = b;
       this.x = b.category.getX() + b.category.getWidth();
       this.y = b.category.getY() + b.o;
       this.o = o;
@@ -68,9 +71,21 @@ public class ButtonTick extends RenderComponent {
    }
 
    public void draw() {
+      // drawing main bg rect
+      if (Gui.guiTheme.getInput() == 4) {
+         net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 4, this.module.category.getY() + this.o + 4, this.module.category.getX() + 4 + boxSize, this.module.category.getY() + this.o + 4 + boxSize, this.boxC);
+         if(this.cl1ckbUtt0n.isToggled()){
+            net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 5, this.module.category.getY() + this.o + 5, this.module.category.getX() + 5 + boxSize-2, this.module.category.getY() + this.o + 5 + boxSize-2, this.c);
+         }
+      }
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
-      Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.p.category.getX() + 4) * 2), (float)((this.p.category.getY() + this.o + 4) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+      if(Gui.guiTheme.getInput() == 4){
+         Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "     " + this.cl1ckbUtt0n.getName() : "     " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+      }else {
+         Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+      }
+
       GL11.glPopMatrix();
    }
 
@@ -79,12 +94,12 @@ public class ButtonTick extends RenderComponent {
    }
 
    public void compute(int mousePosX, int mousePosY) {
-      this.y = this.p.category.getY() + this.o;
-      this.x = this.p.category.getX();
+      this.y = this.module.category.getY() + this.o;
+      this.x = this.module.category.getX();
    }
 
    public void mouseDown(int x, int y, int b) {
-      if (this.i(x, y) && b == 0 && this.p.po) {
+      if (this.i(x, y) && b == 0 && this.module.po) {
          this.cl1ckbUtt0n.toggle();
          this.mod.guiButtonToggled(this.cl1ckbUtt0n);
       }
@@ -92,6 +107,6 @@ public class ButtonTick extends RenderComponent {
    }
 
    public boolean i(int x, int y) {
-      return x > this.x && x < this.x + this.p.category.getWidth() && y > this.y && y < this.y + 11;
+      return x > this.x && x < this.x + this.module.category.getWidth() && y > this.y && y < this.y + 11;
    }
 }
