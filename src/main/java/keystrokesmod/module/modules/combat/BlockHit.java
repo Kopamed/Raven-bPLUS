@@ -1,10 +1,7 @@
 package keystrokesmod.module.modules.combat;
 
+import keystrokesmod.module.*;
 import keystrokesmod.utils.Utils;
-import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -20,7 +17,7 @@ public class BlockHit extends Module {
     public static ModuleSettingSlider range, eventType;
     public static ModuleDesc eventTypeDesc;
     public static ModuleSettingTick onlyPlayers, onRightMBHold;
-    public static ModuleSettingSlider minActionTicks, maxActionTicks, minOnceEvery, maxOnceEvery;
+    public static ModuleSettingDoubleSlider waitMs, hitPer;
     public static double comboLasts;
     public static boolean comboing, hitCoolDown, alreadyHit, safeGuard;
     public static int hitTimeout, hitsWaited;
@@ -29,18 +26,14 @@ public class BlockHit extends Module {
         super("BlockHit", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
         this.registerSetting(onRightMBHold = new ModuleSettingTick("When holding down rmb", true));
-        this.registerSetting(minActionTicks = new ModuleSettingSlider("Min ms: ", 25, 1, 500, 5));
-        this.registerSetting(maxActionTicks = new ModuleSettingSlider("Man ms: ", 55, 1, 500, 5));
-        this.registerSetting(minOnceEvery = new ModuleSettingSlider("Once every min hits: ", 1, 1, 10, 1));
-        this.registerSetting(maxOnceEvery = new ModuleSettingSlider("Once every max hits: ", 1, 1, 10, 1));
+        this.registerSetting(waitMs = new ModuleSettingDoubleSlider("Action Time (MS)", 110, 150, 1, 500, 1));
+        this.registerSetting(hitPer = new ModuleSettingDoubleSlider("Once every ... hits", 1, 1, 1, 10, 1));
         this.registerSetting(range = new ModuleSettingSlider("Range: ", 3, 1, 6, 0.05));
         this.registerSetting(eventType = new ModuleSettingSlider("Value: ", 2, 1, 2, 1));
         this.registerSetting(eventTypeDesc = new ModuleDesc("Mode: POST"));
     }
 
     public void guiUpdate() {
-        Utils.Client.correctSliders(minActionTicks, maxActionTicks);
-        Utils.Client.correctSliders(minOnceEvery, maxOnceEvery);
         eventTypeDesc.setDesc(Utils.md + Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1]);
     }
 
@@ -134,16 +127,16 @@ public class BlockHit extends Module {
                     if(!alreadyHit){
                         //////////System.out.println("Startring combo code");
                         guiUpdate();
-                        if(minOnceEvery.getInput() == maxOnceEvery.getInput()) {
-                            hitTimeout =  (int)minOnceEvery.getInput();
+                        if(hitPer.getInputMin() == hitPer.getInputMax()) {
+                            hitTimeout =  (int) hitPer.getInputMin();
                         } else {
 
-                            hitTimeout = ThreadLocalRandom.current().nextInt((int)minOnceEvery.getInput(), (int)maxOnceEvery.getInput());
+                            hitTimeout = ThreadLocalRandom.current().nextInt((int) hitPer.getInputMin(), (int) hitPer.getInputMax());
                         }
                         hitCoolDown = true;
                         hitsWaited = 0;
 
-                        comboLasts = ThreadLocalRandom.current().nextDouble(minActionTicks.getInput(),  maxActionTicks.getInput()+0.01) + System.currentTimeMillis();
+                        comboLasts = ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(),  waitMs.getInputMax()+0.01) + System.currentTimeMillis();
                         comboing = true;
                         startCombo();
                         //////////System.out.println("Combo started");

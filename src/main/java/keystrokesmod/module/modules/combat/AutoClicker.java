@@ -6,10 +6,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.main.NotAName;
-import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.*;
 import keystrokesmod.module.modules.debug.Click;
 import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
@@ -31,8 +28,6 @@ import org.lwjgl.input.Mouse;
 
 public class AutoClicker extends Module {
    public static ModuleDesc bestWithDelayRemover, modeDesc, timingsDesc;
-   public static ModuleSettingSlider leftMinCPS, rightMinCPS, breakBlocksMin, breakBlocksMax;
-   public static ModuleSettingSlider leftMaxCPS, rightMaxCPS;
    public static ModuleSettingSlider jitterLeft;
    public static ModuleSettingSlider jitterRight;
    public static ModuleSettingTick weaponOnly;
@@ -46,6 +41,7 @@ public class AutoClicker extends Module {
    public static ModuleSettingTick allowEat, allowBow, noPotion;
    public static ModuleSettingSlider rightClickDelay;
    public static ModuleSettingSlider clickEvent, clickTimings;
+   public static ModuleSettingDoubleSlider leftCPS, rightCPS, breakBlocksDelay;
 
    private Random rand = null;
    private Method playerMouseInput;
@@ -72,26 +68,27 @@ public class AutoClicker extends Module {
    public AutoClicker() {
       super("AutoClicker", Module.category.combat, 0);
       this.registerSetting(bestWithDelayRemover = new ModuleDesc("Best with delay remover."));
+
       this.registerSetting(leftClick = new ModuleSettingTick("Left click", true));
-      this.registerSetting(leftMinCPS = new ModuleSettingSlider("Left Min CPS", 9.0D, 1.0D, 60.0D, 0.5D));
-      this.registerSetting(leftMaxCPS = new ModuleSettingSlider("Left Max CPS", 13.0D, 1.0D, 60.0D, 0.5D));
-      this.registerSetting(rightClick = new ModuleSettingTick("Right click", false));
-      this.registerSetting(rightMinCPS = new ModuleSettingSlider("Right Min CPS", 12.0D, 1.0D, 60.0D, 0.5D));
-      this.registerSetting(rightMaxCPS = new ModuleSettingSlider("Right Max CPS", 16.0D, 1.0D, 60.0D, 0.5D));
+      this.registerSetting(leftCPS = new ModuleSettingDoubleSlider("Left CPS", 9, 13, 1, 60, 0.5));
+      this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(inventoryFill = new ModuleSettingTick("Inventory fill", false));
       this.registerSetting(weaponOnly = new ModuleSettingTick("Weapon only", false));
+      this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
+      this.registerSetting(breakBlocksDelay = new ModuleSettingDoubleSlider("Breack blocks delay (MS)", 20, 50, 0,1000, 1));
+
+      this.registerSetting(rightClick = new ModuleSettingTick("Right click", false));
+      this.registerSetting(rightCPS = new ModuleSettingDoubleSlider("RightCPS", 12, 16, 1,60, 0.5));
+      this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
+      this.registerSetting(rightClickDelay = new ModuleSettingSlider("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
       this.registerSetting(noBlockSword = new ModuleSettingTick("Don't rightclick sword", true));
       this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks and throwables", false));
       this.registerSetting(preferFastPlace = new ModuleSettingTick("Prefer fast place", false));
-      this.registerSetting(breakBlocks = new ModuleSettingTick("Break blocks", false));
-      this.registerSetting(breakBlocksMin = new ModuleSettingSlider("Breack blocks min delay", 20.0D, 0.0D, 1000.0D, 5D));
-      this.registerSetting(breakBlocksMax = new ModuleSettingSlider("Breack blocks max delay", 50.0D, 0.0D, 1000.0D, 5D));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
       this.registerSetting(noPotion = new ModuleSettingTick("Allow drink", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
-      this.registerSetting(jitterLeft = new ModuleSettingSlider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(rightClickDelay = new ModuleSettingSlider("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
+
+
       this.registerSetting(clickTimings = new ModuleSettingSlider("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(timingsDesc = new ModuleDesc("Mode: RAVEN"));
       this.registerSetting(clickEvent = new ModuleSettingSlider("Event", 2.0D, 1.0D, 2.0D, 1.0D));
@@ -138,9 +135,6 @@ public class AutoClicker extends Module {
    }
 
    public void guiUpdate() {
-      Utils.Client.correctSliders(leftMinCPS, leftMaxCPS);
-      Utils.Client.correctSliders(rightMinCPS, rightMaxCPS);
-      Utils.Client.correctSliders(breakBlocksMin, breakBlocksMax);
       modeDesc.setDesc(Utils.md + Utils.Modes.ClickEvents.values()[(int)(clickEvent.getInput() - 1.0D)].name());
       timingsDesc.setDesc(Utils.md + Utils.Modes.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
    }
@@ -191,10 +185,10 @@ public class AutoClicker extends Module {
 
       guiUpdate();
 
-      double speedLeft1 = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2D, leftMaxCPS.getInput());
-      double leftHoldLength = speedLeft1 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.02D, leftMaxCPS.getInput());
-      double speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.2D, rightMaxCPS.getInput());
-      double rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightMinCPS.getInput() - 0.02D, rightMaxCPS.getInput());
+      double speedLeft1 = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2D, leftCPS.getInputMax());
+      double leftHoldLength = speedLeft1 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.02D, leftCPS.getInputMax());
+      double speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightCPS.getInputMin() - 0.2D, rightCPS.getInputMax());
+      double rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightCPS.getInputMin() - 0.02D, rightCPS.getInputMax());
       //If none of the buttons are allowed to click, what is the point in generating clicktimes anyway?
       //if (!leftActive && !rightActive) {
       // return;
@@ -227,7 +221,7 @@ public class AutoClicker extends Module {
                }
             }
 
-            double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftMinCPS.getInput() - 0.2, leftMaxCPS.getInput());
+            double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2, leftCPS.getInputMax());
             if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
                lastClick = System.currentTimeMillis();
                if (leftHold < lastClick){
@@ -501,7 +495,7 @@ public class AutoClicker extends Module {
    }
 
    public void genLeftTimings() {
-      double clickSpeed = Utils.Client.ranModuleVal(leftMinCPS, leftMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
+      double clickSpeed = Utils.Client.ranModuleVal(leftCPS, this.rand) + 0.4D * this.rand.nextDouble();
       long delay = (int)Math.round(1000.0D / clickSpeed);
       if (System.currentTimeMillis() > this.leftk) {
          if (!this.leftn && this.rand.nextInt(100) >= 85) {
@@ -531,7 +525,7 @@ public class AutoClicker extends Module {
    }
 
    public void genRightTimings() {
-      double clickSpeed = Utils.Client.ranModuleVal(rightMinCPS, rightMaxCPS, this.rand) + 0.4D * this.rand.nextDouble();
+      double clickSpeed = Utils.Client.ranModuleVal(rightCPS, this.rand) + 0.4D * this.rand.nextDouble();
       long delay = (int)Math.round(1000.0D / clickSpeed);
       if (System.currentTimeMillis() > this.rightk) {
          if (!this.rightn && this.rand.nextInt(100) >= 85) {
@@ -577,7 +571,7 @@ public class AutoClicker extends Module {
          if (p != null) {
             Block bl = mc.theWorld.getBlockState(p).getBlock();
             if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
-               if(breakBlocksMax.getInput() == 0){
+               if(breakBlocksDelay.getInputMax() == 0){
                   if(!breakHeld) {
                      int e = mc.gameSettings.keyBindAttack.getKeyCode();
                      KeyBinding.setKeyBindState(e, true);
@@ -589,7 +583,7 @@ public class AutoClicker extends Module {
                if(!breakTimeDone && !watingForBreakTimeout) {
                   watingForBreakTimeout = true;
                   guiUpdate();
-                  breakBlockFinishWaitTime = ThreadLocalRandom.current().nextDouble(breakBlocksMin.getInput(), breakBlocksMax.getInput()+1) + System.currentTimeMillis();
+                  breakBlockFinishWaitTime = ThreadLocalRandom.current().nextDouble(breakBlocksDelay.getInputMin(), breakBlocksDelay.getInputMax()+1) + System.currentTimeMillis();
                   return false;
                } else if(!breakTimeDone && watingForBreakTimeout) {
                   if (System.currentTimeMillis() > breakBlockFinishWaitTime) {

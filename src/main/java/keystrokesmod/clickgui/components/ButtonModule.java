@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.clickgui.ClickGUIRenderManager;
+import keystrokesmod.clickgui.RenderComponent;
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.AutoConfig;
@@ -14,18 +14,19 @@ import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class ButtonModule extends ClickGUIRenderManager {
+public class ButtonModule extends RenderComponent {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
+   private final int c3 = (new Color(175, 143, 233) ).getRGB();
    public Module mod;
-   public ButtonCategory c4t;
+   public ButtonCategory category;
    public int o;
-   private final ArrayList<ClickGUIRenderManager> settings;
+   private final ArrayList<RenderComponent> settings;
    public boolean po;
 
    public ButtonModule(Module mod, ButtonCategory p, int o) {
       this.mod = mod;
-      this.c4t = p;
+      this.category = p;
       this.o = o;
       this.settings = new ArrayList();
       this.po = false;
@@ -47,6 +48,11 @@ public class ButtonModule extends ClickGUIRenderManager {
                ButtonDesc m = new ButtonDesc(d, this, y);
                this.settings.add(m);
                y += 12;
+            } else if (v instanceof ModuleSettingDoubleSlider) {
+               ModuleSettingDoubleSlider n = (ModuleSettingDoubleSlider) v;
+               ButtonMinMaxSlider s = new ButtonMinMaxSlider(n, this, y);
+               this.settings.add(s);
+               y += 12;
             }
          }
       }
@@ -54,16 +60,16 @@ public class ButtonModule extends ClickGUIRenderManager {
       this.settings.add(new AutoConfig(this, y));
    }
 
-   public void so(int n) {
+   public void setModuleStartAt(int n) {
       this.o = n;
       int y = this.o + 16;
       Iterator var3 = this.settings.iterator();
 
       while(true) {
          while(var3.hasNext()) {
-            ClickGUIRenderManager co = (ClickGUIRenderManager)var3.next();
-            co.so(y);
-            if (co instanceof ButtonSlider) {
+            RenderComponent co = (RenderComponent)var3.next();
+            co.setModuleStartAt(y);
+            if (co instanceof ButtonSlider  || co instanceof ButtonMinMaxSlider) {
                y += 16;
             } else if (co instanceof ButtonTick || co instanceof AutoConfig || co instanceof ButtonDesc) {
                y += 12;
@@ -131,16 +137,16 @@ public class ButtonModule extends ClickGUIRenderManager {
       f();
    }
 
-   public void r3nd3r() {
-      v((float)this.c4t.getX(), (float)(this.c4t.getY() + this.o), (float)(this.c4t.getX() + this.c4t.gw()), (float)(this.c4t.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
+   public void draw() {
+      v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
       // module text button
-      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : Color.lightGray.getRGB();
-      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.c4t.getX() + this.c4t.gw() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.c4t.getY() + this.o + 4), button_rgb);
+      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isEnabled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
+      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
-         for (ClickGUIRenderManager c : this.settings) {
-            c.r3nd3r();
+         for (RenderComponent c : this.settings) {
+            c.draw();
          }
       }
 
@@ -155,8 +161,8 @@ public class ButtonModule extends ClickGUIRenderManager {
 
          while(true) {
             while(var2.hasNext()) {
-               ClickGUIRenderManager c = (ClickGUIRenderManager)var2.next();
-               if (c instanceof ButtonSlider) {
+               RenderComponent c = (RenderComponent)var2.next();
+               if (c instanceof ButtonSlider || c instanceof ButtonMinMaxSlider) {
                   h += 16;
                } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc) {
                   h += 12;
@@ -168,46 +174,46 @@ public class ButtonModule extends ClickGUIRenderManager {
       }
    }
 
-   public void render(int x, int y) {
+   public void compute(int mousePosX, int mousePosY) {
       if (!this.settings.isEmpty()) {
-         for (ClickGUIRenderManager c : this.settings) {
-            c.render(x, y);
+         for (RenderComponent c : this.settings) {
+            c.compute(mousePosX, mousePosY);
          }
       }
 
    }
 
-   public void onCl1ck(int x, int y, int b) {
+   public void mouseDown(int x, int y, int b) {
       if (this.ii(x, y) && b == 0) {
          this.mod.toggle();
       }
 
       if (this.ii(x, y) && b == 1) {
          this.po = !this.po;
-         this.c4t.r3nd3r();
+         this.category.r3nd3r();
       }
 
-      for (ClickGUIRenderManager c : this.settings) {
-         c.onCl1ck(x, y, b);
+      for (RenderComponent c : this.settings) {
+         c.mouseDown(x, y, b);
       }
 
    }
 
-   public void mr(int x, int y, int m) {
-      for (ClickGUIRenderManager c : this.settings) {
-         c.mr(x, y, m);
+   public void mouseReleased(int x, int y, int m) {
+      for (RenderComponent c : this.settings) {
+         c.mouseReleased(x, y, m);
       }
 
    }
 
    public void ky(char t, int k) {
-      for (ClickGUIRenderManager c : this.settings) {
+      for (RenderComponent c : this.settings) {
          c.ky(t, k);
       }
 
    }
 
    public boolean ii(int x, int y) {
-      return x > this.c4t.getX() && x < this.c4t.getX() + this.c4t.gw() && y > this.c4t.getY() + this.o && y < this.c4t.getY() + 16 + this.o;
+      return x > this.category.getX() && x < this.category.getX() + this.category.getWidth() && y > this.category.getY() + this.o && y < this.category.getY() + 16 + this.o;
    }
 }

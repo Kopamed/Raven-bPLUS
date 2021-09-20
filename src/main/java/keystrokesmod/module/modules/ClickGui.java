@@ -10,7 +10,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import keystrokesmod.clickgui.components.ButtonCategory;
-import keystrokesmod.clickgui.ClickGUIRenderManager;
+import keystrokesmod.clickgui.RenderComponent;
 import keystrokesmod.clickgui.CommandLine;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
@@ -151,8 +151,8 @@ public class ClickGui extends GuiScreen {
          category.rf(this.fontRendererObj);
          category.up(x, y);
 
-         for (ClickGUIRenderManager module : category.getModules()) {
-            module.render(x, y);
+         for (RenderComponent module : category.getModules()) {
+            module.compute(x, y);
          }
       }
 
@@ -190,41 +190,41 @@ public class ClickGui extends GuiScreen {
 
    }
 
-   public void mouseClicked(int x, int y, int m) throws IOException {
+   public void mouseClicked(int x, int y, int mouseButton) throws IOException {
       Iterator var4 = categoryList.iterator();
 
       while(true) {
-         ButtonCategory c4t;
+         ButtonCategory category;
          do {
             do {
                if (!var4.hasNext()) {
                   if (keystrokesmod.module.modules.client.CommandLine.a) {
-                     this.c.mouseClicked(x, y, m);
-                     super.mouseClicked(x, y, m);
+                     this.c.mouseClicked(x, y, mouseButton);
+                     super.mouseClicked(x, y, mouseButton);
                   }
 
                   return;
                }
 
-               c4t = (ButtonCategory)var4.next();
-               if (c4t.v(x, y) && !c4t.i(x, y) && !c4t.d(x, y) && m == 0) {
-                  c4t.d(true);
-                  c4t.xx = x - c4t.getX();
-                  c4t.yy = y - c4t.getY();
+               category = (ButtonCategory)var4.next();
+               if (category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y) && mouseButton == 0) {
+                  category.mousePressed(true);
+                  category.xx = x - category.getX();
+                  category.yy = y - category.getY();
                }
 
-               if (c4t.d(x, y) && m == 0) {
-                  c4t.setOpened(!c4t.isOpened());
+               if (category.mousePressed(x, y) && mouseButton == 0) {
+                  category.setOpened(!category.isOpened());
                }
 
-               if (c4t.i(x, y) && m == 0) {
-                  c4t.cv(!c4t.p());
+               if (category.i(x, y) && mouseButton == 0) {
+                  category.cv(!category.p());
                }
-            } while(!c4t.isOpened());
-         } while(c4t.getModules().isEmpty());
+            } while(!category.isOpened());
+         } while(category.getModules().isEmpty());
 
-         for (ClickGUIRenderManager c : c4t.getModules()) {
-            c.onCl1ck(x, y, m);
+         for (RenderComponent c : category.getModules()) {
+            c.mouseDown(x, y, mouseButton);
          }
       }
    }
@@ -236,7 +236,7 @@ public class ClickGui extends GuiScreen {
          ButtonCategory c4t;
          while(var4.hasNext()) {
             c4t = (ButtonCategory)var4.next();
-            c4t.d(false);
+            c4t.mousePressed(false);
          }
 
          var4 = categoryList.iterator();
@@ -252,8 +252,8 @@ public class ClickGui extends GuiScreen {
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
-            for (ClickGUIRenderManager c : c4t.getModules()) {
-               c.mr(x, y, s);
+            for (RenderComponent c : c4t.getModules()) {
+               c.mouseReleased(x, y, s);
             }
          }
       }
@@ -291,7 +291,7 @@ public class ClickGui extends GuiScreen {
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
-            for (ClickGUIRenderManager c : c4t.getModules()) {
+            for (RenderComponent c : c4t.getModules()) {
                c.ky(t, k);
             }
          }

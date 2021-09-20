@@ -37,7 +37,6 @@ public class ASMTransformerClass implements IClassTransformer {
       }
    }
 
-   @SuppressWarnings("ResultOfMethodCallIgnored")
    @Override
    public byte[] transform(String name, String transformedName, byte[] basicClass) {
       if (basicClass == null) return null;

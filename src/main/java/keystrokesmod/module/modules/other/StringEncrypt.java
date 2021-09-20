@@ -2,12 +2,12 @@
 
 package keystrokesmod.module.modules.other;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.utils.Utils;
 
 public class StringEncrypt extends Module {
    private static final String m1 = "&k";
@@ -16,21 +16,21 @@ public class StringEncrypt extends Module {
    private static final String m4 = "Blank";
    private static int m3s = 1;
    private boolean m3t = false;
-   public static ModuleSettingTick a;
-   public static ModuleSettingTick b;
-   public static ModuleSettingSlider c;
-   public static ModuleDesc d;
+   public static ModuleSettingTick ignoreDebug;
+   public static ModuleSettingTick ignoreAllGui;
+   public static ModuleSettingSlider value;
+   public static ModuleDesc moduleDesc;
 
    public StringEncrypt() {
       super("String Encrypt", Module.category.other, 0);
-      this.registerSetting(a = new ModuleSettingTick("Ignore debug", false));
-      this.registerSetting(b = new ModuleSettingTick("Ignore all GUI", false));
-      this.registerSetting(c = new ModuleSettingSlider("Value", 1.0D, 1.0D, 4.0D, 1.0D));
-      this.registerSetting(d = new ModuleDesc(Utils.md + m1));
+      this.registerSetting(ignoreDebug = new ModuleSettingTick("Ignore debug", false));
+      this.registerSetting(ignoreAllGui = new ModuleSettingTick("Ignore all GUI", false));
+      this.registerSetting(value = new ModuleSettingSlider("Value", 1.0D, 1.0D, 4.0D, 1.0D));
+      this.registerSetting(moduleDesc = new ModuleDesc(Utils.md + m1));
    }
 
    public void onEnable() {
-      if (c.getInput() == 3.0D) {
+      if (value.getInput() == 3.0D) {
          m3s = Utils.Java.rand().nextInt(10) - 5;
          if (m3s == 0) {
             m3s = 1;
@@ -40,14 +40,14 @@ public class StringEncrypt extends Module {
    }
 
    public void guiUpdate() {
-      switch((int)c.getInput()) {
+      switch((int) value.getInput()) {
       case 1:
          this.m3t = false;
-         d.setDesc(Utils.md + m1);
+         moduleDesc.setDesc(Utils.md + m1);
          break;
       case 2:
          this.m3t = false;
-         d.setDesc(Utils.md + m2);
+         moduleDesc.setDesc(Utils.md + m2);
          break;
       case 3:
          if (!this.m3t) {
@@ -58,25 +58,24 @@ public class StringEncrypt extends Module {
          }
 
          this.m3t = true;
-         d.setDesc(Utils.md + m3);
+         moduleDesc.setDesc(Utils.md + m3);
          break;
       case 4:
          this.m3t = false;
-         d.setDesc(Utils.md + m4);
+         moduleDesc.setDesc(Utils.md + m4);
       }
-
    }
 
    public static String getUnformattedTextForChat(String s) {
       if (mc.currentScreen instanceof ClickGui) {
          return s;
-      } else if (a.isToggled() && mc.gameSettings.showDebugInfo) {
+      } else if (ignoreDebug.isToggled() && mc.gameSettings.showDebugInfo) {
          return s;
-      } else if (b.isToggled() && mc.currentScreen != null) {
+      } else if (ignoreAllGui.isToggled() && mc.currentScreen != null) {
          return s;
       } else {
          StringBuilder s2;
-         if (StringEncrypt.c.getInput() == 1.0D) {
+         if (StringEncrypt.value.getInput() == 1.0D) {
             s2 = new StringBuilder();
             StringBuilder s3 = new StringBuilder();
             boolean w = false;
@@ -96,9 +95,9 @@ public class StringEncrypt extends Module {
             }
 
             return s2.toString();
-         } else if (StringEncrypt.c.getInput() == 2.0D) {
+         } else if (StringEncrypt.value.getInput() == 2.0D) {
             return s.length() > 3 ? s.substring(0, 3) : s;
-         } else if (StringEncrypt.c.getInput() != 3.0D) {
+         } else if (StringEncrypt.value.getInput() != 3.0D) {
             return "";
          } else {
             s2 = new StringBuilder();

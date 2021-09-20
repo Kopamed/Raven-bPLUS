@@ -38,7 +38,7 @@ public class RenderUtils {
         } catch (Exception exception) {
             try {
                 Class oclass1 = Minecraft.getMinecraft().entityRenderer.getClass();
-                Method method1 = oclass1.getDeclaredMethod("func_78479_a", Float.TYPE, Integer.TYPE);
+                Method method1 = oclass1.getDeclaredMethod("func_78479_a", float.class, int.class);
 
                 method1.setAccessible(true);
                 method1.invoke(Minecraft.getMinecraft().entityRenderer, Utils.Client.getTimer().renderPartialTicks, 0);

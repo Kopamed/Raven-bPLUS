@@ -9,6 +9,7 @@ import java.util.Base64;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import keystrokesmod.NotificationRenderer;
 import keystrokesmod.command.CommandManager;
 import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
@@ -132,12 +133,12 @@ public class Ravenbplus {
       notAName.getm0dmanager().r3g1st3r();
       MinecraftForge.EVENT_BUS.register(ModuleManager.reach);
       MinecraftForge.EVENT_BUS.register(ModuleManager.nameHider);
+      MinecraftForge.EVENT_BUS.register(NotificationRenderer.notificationRenderer);
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
       configManager = new ConfigManager();
       clientConfig = new ClientConfig();
       clientConfig.applyConfig();
-      Utils.Client.setTimer();
       ex.execute(() -> Utils.URLS.getTextFromURL(numberOfUseTracker));
       if(version.outdated()) {
          Ravenbplus.outdated = true;

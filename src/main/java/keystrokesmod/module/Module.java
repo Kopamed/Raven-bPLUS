@@ -5,6 +5,7 @@ package keystrokesmod.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.NotificationRenderer;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.module.modules.other.DiscordRPCModule;
@@ -67,7 +68,11 @@ public class Module {
    }
 
    public void enable() {
+      boolean oldState = this.enabled;
       this.setToggled(true);
+      if (oldState != this.enabled) {
+         NotificationRenderer.moduleStateChanged(this);
+      }
       ModuleManager.enModsList.add(this);
       if (ModuleManager.hud.isEnabled()) {
          ModuleManager.sort();
@@ -87,7 +92,11 @@ public class Module {
    }
 
    public void disable() {
+      boolean oldState = this.enabled;
       this.setToggled(false);
+      if (oldState != this.enabled) {
+         NotificationRenderer.moduleStateChanged(this);
+      }
       ModuleManager.enModsList.remove(this);
       MinecraftForge.EVENT_BUS.unregister(this);
       FMLCommonHandler.instance().bus().unregister(this);
