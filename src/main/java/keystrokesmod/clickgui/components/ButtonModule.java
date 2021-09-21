@@ -184,6 +184,7 @@ public class ButtonModule extends RenderComponent {
    }
 
    public void mouseDown(int x, int y, int b) {
+
       if (this.ii(x, y) && b == 0) {
          this.mod.toggle();
       }

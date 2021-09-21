@@ -1,29 +1,30 @@
 package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.*;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.world.AntiBot;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class BlockHit extends Module {
+public class BlockHitV2 extends Module {
     public static ModuleSettingSlider range, eventType;
     public static ModuleDesc eventTypeDesc;
     public static ModuleSettingTick onlyPlayers, onRightMBHold;
     public static ModuleSettingDoubleSlider waitMs, hitPer, postDelay;
-    public static double comboLasts;
-    public static boolean comboing, hitCoolDown, alreadyHit, safeGuard;
-    public static int hitTimeout, hitsWaited;
 
-    public BlockHit() {
-        super("BlockHit", category.combat, 0);
+    public static double blockHitFinishTime;
+    public static boolean engagedInAction, alreadyHit;
+
+    public BlockHitV2() {
+        super("BlockHitv2", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
         this.registerSetting(onRightMBHold = new ModuleSettingTick("When holding down rmb", true));
         this.registerSetting(waitMs = new ModuleSettingDoubleSlider("Action Time (MS)", 110, 150, 1, 500, 1));
@@ -41,56 +42,26 @@ public class BlockHit extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
-        if(!Utils.Player.isPlayerInGame())
+        if (!Utils.Player.isPlayerInGame())
             return;
-
-        if(onRightMBHold.isToggled() && !Utils.Player.tryingToCombo()){
-            if(!safeGuard || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
-                safeGuard = true;
-                finishCombo();
-            }
-            return;
+        //finish combo checks
+        if(engagedInAction && System.currentTimeMillis() >= blockHitFinishTime) {
+            finishCombo();
+            engagedInAction = false;
         }
 
-        if(comboing) {
-            if(System.currentTimeMillis() >= comboLasts){
-                comboing = false;
-                finishCombo();
-                return;
-            }else {
-                return;
-            }
-        }
 
-        if(onRightMBHold.isToggled() && Utils.Player.tryingToCombo()) {
-            if(mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null) {
-                if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
-                    safeGuard = true;
-                    finishCombo();
-                }
-                return;
-            } else {
-                Entity target = mc.objectMouseOver.entityHit;
-                //////////System.out.println(target.hurtResistantTime);
-                if(target.isDead) {
-                    if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
-                        safeGuard = true;
-                        finishCombo();
-                    }
-                    return;
-                }
-            }
-        }
 
+
+
+        //start combo checks
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
             //////////System.out.println(target.hurtResistantTime);
             if(target.isDead) {
-                if(onRightMBHold.isToggled() && Mouse.isButtonDown(1) && Mouse.isButtonDown(0)) {
-                    if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
-                        safeGuard = true;
-                        finishCombo();
-                    }
+                if(engagedInAction && blockHitFinishTime <= System.currentTimeMillis()) {
+                    finishCombo();
+                    engagedInAction = false;
                 }
                 return;
             }
@@ -107,6 +78,15 @@ public class BlockHit extends Module {
                     if(AntiBot.bot(target)){
                         return;
                     }
+
+                    if(!alreadyHit){
+                        blockHitFinishTime = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt((int)waitMs.getInputMin(), (int)waitMs.getInputMax() + 1);
+                        engagedInAction = true;
+                        alreadyHit = true;
+                        startCombo();
+                    }
+
+                    /*
 
 
                     if (hitCoolDown && !alreadyHit) {
@@ -148,14 +128,10 @@ public class BlockHit extends Module {
                         //////////System.out.println("Combo started");
                         alreadyHit = true;
                         if(safeGuard) safeGuard = false;
-                    }
+                    }*/
                 } else {
-                    if(alreadyHit){
-                        //////////System.out.println("UnHit");
-                    }
-                    alreadyHit = false;
-                    //////////System.out.println("REEEEEEE");
-                    if(safeGuard) safeGuard = false;
+                    if(alreadyHit)
+                        alreadyHit = false;
                 }
             }
         }

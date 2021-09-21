@@ -28,7 +28,7 @@ public class Reach extends Module {
 
    public Reach() {
       super("Reach", Module.category.combat, 0);
-      this.registerSetting(reach = new ModuleSettingDoubleSlider("Reach (Blocks)", 3.1, 3.3, 0.05, 6, 0.05));
+      this.registerSetting(reach = new ModuleSettingDoubleSlider("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
       this.registerSetting(weapon_only = new ModuleSettingTick("Weapon only", false));
       this.registerSetting(moving_only = new ModuleSettingTick("Moving only", false));
       this.registerSetting(sprint_only = new ModuleSettingTick("Sprint only", false));
