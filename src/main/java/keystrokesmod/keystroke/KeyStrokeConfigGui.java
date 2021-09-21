@@ -4,6 +4,8 @@ package keystrokesmod.keystroke;
 
 import java.io.IOException;
 
+import keystrokesmod.main.NotAName;
+import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.utils.mouseManager;
 import keystrokesmod.main.ClientConfig;
 import keystrokesmod.main.Ravenbplus;
@@ -16,6 +18,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
    private GuiButton textColorBtn;
    private GuiButton showMouseBtn;
    private GuiButton outlineBtn;
+   private GuiButton clickGui;
    private boolean d = false;
    private int lx;
    private int ly;
@@ -26,6 +29,10 @@ public class KeyStrokeConfigGui extends GuiScreen {
       this.buttonList.add(this.textColorBtn = new GuiButton(1, this.width / 2 - 70, this.height / 2 - 6, 140, 20, "Text color: " + colors[KeyStroke.currentColorNumber]));
       this.buttonList.add(this.showMouseBtn = new GuiButton(2, this.width / 2 - 70, this.height / 2 + 16, 140, 20, "Show mouse buttons: " + (KeyStroke.d ? "On" : "Off")));
       this.buttonList.add(this.outlineBtn = new GuiButton(3, this.width / 2 - 70, this.height / 2 + 38, 140, 20, "Outline: " + (KeyStroke.f ? "On" : "Off")));
+      Gui gui = (Gui) NotAName.moduleManager.getModuleByName("Gui");
+      if(gui.getKeycode() != 54){
+         this.buttonList.add(this.clickGui = new GuiButton(3, this.width / 2 - 70, this.height / 2 + 60, 140, 20, "ClickGui"));
+      }
    }
 
    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -47,6 +54,10 @@ public class KeyStrokeConfigGui extends GuiScreen {
       } else if (button == this.outlineBtn) {
          KeyStroke.f = !KeyStroke.f;
          this.outlineBtn.displayString = "Outline: " + (KeyStroke.f ? "On" : "Off");
+      } else if(button == this.clickGui){
+         mc.currentScreen = null;
+         mc.displayGuiScreen(NotAName.clickGui);
+         NotAName.clickGui.initMain();
       }
 
 
