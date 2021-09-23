@@ -365,8 +365,11 @@ public class AutoClicker extends Module {
             }
          }
          if (onlyBlocks.isToggled()) {
-            if ((item.getItem() instanceof ItemBlock) || (item.getItem() instanceof ItemEgg) || (item.getItem() instanceof ItemSnowball))
+            if ((item.getItem() instanceof ItemBlock) || (item.getItem() instanceof ItemEgg) || (item.getItem() instanceof ItemSnowball)) {
                return true;
+            } else {
+               return false;
+            }
          }
          if (noBlockSword.isToggled()) {
             if (item.getItem() instanceof ItemSword)
