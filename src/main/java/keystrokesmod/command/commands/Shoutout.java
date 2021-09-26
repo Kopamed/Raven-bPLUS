@@ -2,7 +2,7 @@ package keystrokesmod.command.commands;
 
 import keystrokesmod.command.Command;
 
-import static keystrokesmod.clickgui.CommandLine.print;
+import static keystrokesmod.clickgui.raven.CommandLine.print;
 
 public class Shoutout extends Command {
     public Shoutout() {

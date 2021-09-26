@@ -1,6 +1,7 @@
 package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.*;
+import keystrokesmod.utils.CoolDown;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.settings.KeyBinding;
@@ -17,16 +18,17 @@ public class STap extends Module {
     public static ModuleSettingSlider range, eventType;
     public static ModuleDesc eventTypeDesc;
     public static ModuleSettingTick onlyPlayers;
-    public static ModuleSettingDoubleSlider actionTicks, onceEvery;
-    public static double comboLasts;
-    public static boolean comboing, hitCoolDown, alreadyHit;
+    public static ModuleSettingDoubleSlider actionTicks, onceEvery, postDelay;
+    public static boolean comboing, hitCoolDown, alreadyHit, waitingForPostDelay;
     public static int hitTimeout, hitsWaited;
+    private CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
 
     public STap(){
         super("STap", category.combat, 0);
         this.registerSetting(onlyPlayers = new ModuleSettingTick("Only combo players", true));
         this.registerSetting(actionTicks = new ModuleSettingDoubleSlider("Action Time (MS)",  25, 55, 1, 500, 1));
-        this.registerSetting(onceEvery =  new ModuleSettingDoubleSlider("Once every ... hits", 25, 55, 1, 500, 1));
+        this.registerSetting(onceEvery =  new ModuleSettingDoubleSlider("Once every ... hits", 1, 1, 1, 10, 1));
+        this.registerSetting(postDelay = new ModuleSettingDoubleSlider("Post Delay (MS)", 10, 40, 0, 500, 1));
         this.registerSetting(range = new ModuleSettingSlider("Range: ", 3, 1, 6, 0.05));
         this.registerSetting(eventType = new ModuleSettingSlider("Value: ", 2, 1, 2, 1));
         this.registerSetting(eventTypeDesc = new ModuleDesc("Mode: POST"));
@@ -42,8 +44,18 @@ public class STap extends Module {
         if(!Utils.Player.isPlayerInGame())
             return;
 
+        if(waitingForPostDelay){
+            if(postDelayTimer.hasTimeElapsed()){
+                waitingForPostDelay = false;
+                comboing = true;
+                startCombo();
+                actionTimer.start();
+            }
+            return;
+        }
+
         if(comboing) {
-            if(System.currentTimeMillis() >= comboLasts){
+            if(actionTimer.hasTimeElapsed()){
                 comboing = false;
                 finishCombo();
                 return;
@@ -103,17 +115,29 @@ public class STap extends Module {
                         hitCoolDown = true;
                         hitsWaited = 0;
 
-                        comboLasts = ThreadLocalRandom.current().nextDouble(actionTicks.getInputMin(),  actionTicks.getInputMax()+0.01) + System.currentTimeMillis();
-                        comboing = true;
-                        startCombo();
+                        actionTimer.setCooldown((long)ThreadLocalRandom.current().nextDouble(actionTicks.getInputMin(),  actionTicks.getInputMax()+0.01));
+
+                        if(postDelay.getInputMax() != 0){
+                            postDelayTimer.setCooldown((long)ThreadLocalRandom.current().nextDouble(postDelay.getInputMin(),  postDelay.getInputMax()+0.01));
+                            postDelayTimer.start();
+                            waitingForPostDelay = true;
+                        } else {
+                            comboing = true;
+                            startCombo();
+                            actionTimer.start();
+                            //////////System.out.println("Combo started");
+                            alreadyHit = true;
+                        }
+
                         //////////System.out.println("Combo started");
                         alreadyHit = true;
                     }
                 } else {
                     if(alreadyHit){
                         //////////System.out.println("UnHit");
+                        alreadyHit = false;
                     }
-                    alreadyHit = false;
+
                     //////////System.out.println("REEEEEEE");
                 }
             }

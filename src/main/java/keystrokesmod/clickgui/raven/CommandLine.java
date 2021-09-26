@@ -1,6 +1,6 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod.clickgui;
+package keystrokesmod.clickgui.raven;
 
 import java.awt.Color;
 import java.util.ArrayList;

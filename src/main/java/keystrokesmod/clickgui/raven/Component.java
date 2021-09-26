@@ -1,6 +1,6 @@
-package keystrokesmod.clickgui;
+package keystrokesmod.clickgui.raven;
 
-public class RenderComponent {
+public class Component {
    public void draw() {
    }
 

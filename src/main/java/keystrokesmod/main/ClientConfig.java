@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import keystrokesmod.clickgui.components.ButtonCategory;
+import keystrokesmod.clickgui.raven.components.ButtonCategory;
 import keystrokesmod.module.modules.HUD;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.keystroke.KeyStroke;

@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import keystrokesmod.NotificationRenderer;
+import keystrokesmod.clickgui.kopagui.TabGui;
 import keystrokesmod.command.CommandManager;
 import keystrokesmod.config.ConfigManager;
 import keystrokesmod.keystroke.KeySrokeRenderer;
@@ -18,10 +19,9 @@ import keystrokesmod.keystroke.KeyStrokeConfigGui;
 import keystrokesmod.keystroke.keystrokeCommand;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.clickgui.raven.ClickGui;
 import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.tweaker.transformers.*;
 import keystrokesmod.utils.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -29,7 +29,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -56,8 +55,8 @@ public class Ravenbplus {
    public static final String numberOfFirstLaunchesTracker = "https://pastebin.com/raw/AyRARCeU";
    public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
    public static final String discord = "https://discord.gg/N4zn4FwPcz";
-   public static String[] updateText = {"Your version of Raven B+ (" + version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
-   public static String[] helloYourComputerHasVirus = {"You are using an unstable version of an outdated version", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + version.getLatestVersion().replaceAll("-", ".")};
+   public static String[] updateText = {"Your version of Raven B+ (" + Version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + Version.getLatestVersion().replaceAll("-", ".")};
+   public static String[] helloYourComputerHasVirus = {"You are using an unstable version of an outdated version", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + Version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
    public static int b = 0;
    public static ConfigManager configManager;
@@ -71,6 +70,8 @@ public class Ravenbplus {
    public static InputStream ravenLogoInputStream;
    public static ResourceLocation mResourceLocation;
    public static String osName, osArch;
+   public static String clientName = "Raven B+";
+   public static String version = Version.getFullversion();
 
    public Ravenbplus() {
       notAName = new NotAName();
@@ -136,14 +137,15 @@ public class Ravenbplus {
       MinecraftForge.EVENT_BUS.register(NotificationRenderer.notificationRenderer);
       keySrokeRenderer = new KeySrokeRenderer();
       NotAName.clickGui = new ClickGui();
+      NotAName.tabGui = new TabGui();
       configManager = new ConfigManager();
       clientConfig = new ClientConfig();
       clientConfig.applyConfig();
       ex.execute(() -> Utils.URLS.getTextFromURL(numberOfUseTracker));
-      if(version.outdated()) {
+      if(Version.outdated()) {
          Ravenbplus.outdated = true;
       }
-      if(version.isBeta()) {
+      if(Version.isBeta()) {
          Ravenbplus.beta = true;
       }
    }

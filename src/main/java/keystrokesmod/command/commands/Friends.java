@@ -1,6 +1,6 @@
 package keystrokesmod.command.commands;
 
-import static keystrokesmod.clickgui.CommandLine.print;
+import static keystrokesmod.clickgui.raven.CommandLine.print;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.combat.AimAssist;
 import net.minecraft.entity.Entity;

@@ -4,15 +4,15 @@ package keystrokesmod.module.modules;
 
 import java.awt.Color;
 
-import keystrokesmod.clickgui.RenderComponent;
-import keystrokesmod.clickgui.components.ButtonBind;
-import keystrokesmod.clickgui.components.ButtonModule;
+import keystrokesmod.clickgui.raven.Component;
+import keystrokesmod.clickgui.raven.components.ButtonBind;
+import keystrokesmod.clickgui.raven.components.ButtonModule;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-public class AutoConfig extends RenderComponent {
+public class AutoConfig extends Component {
    private boolean isBinding;
    private final ButtonModule p;
    private int o;

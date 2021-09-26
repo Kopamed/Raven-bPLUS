@@ -1,6 +1,6 @@
-package keystrokesmod.clickgui.components;
+package keystrokesmod.clickgui.raven.components;
 
-import keystrokesmod.clickgui.RenderComponent;
+import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.ModuleSettingDoubleSlider;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ButtonMinMaxSlider extends RenderComponent {
+public class ButtonMinMaxSlider extends Component {
     private final ModuleSettingDoubleSlider doubleSlider;
     private final ButtonModule module;
     private double barWidth;
@@ -37,10 +37,11 @@ public class ButtonMinMaxSlider extends RenderComponent {
         net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + boxMargin, this.module.category.getY() + this.moduleStartY + textSize, this.module.category.getX() - boxMargin + this.module.category.getWidth(), this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
         int startToDrawFrom = this.module.category.getX() + boxMargin + (int) this.blankWidth;
         int finishDrawingAt = startToDrawFrom + (int)this.barWidth;
+        int middleThing = (int)Utils.Java.round(this.barWidth/2, 0) + this.module.category.getX() + (int) this.blankWidth + boxMargin - 1;
 
         //drwing the main colourded bar
         net.minecraft.client.gui.Gui.drawRect(startToDrawFrom, this.module.category.getY() + this.moduleStartY + textSize, finishDrawingAt, this.module.category.getY() + this.moduleStartY + textSize + boxHeight, Utils.Client.astolfoColorsDraw(14, 10));
-
+        net.minecraft.client.gui.Gui.drawRect(middleThing, this.module.category.getY() + this.moduleStartY + textSize - 1, middleThing+(middleThing%2==0? 2:1), this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, 0xff1D1D1F);
         //drawing le text
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);

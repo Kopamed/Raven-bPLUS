@@ -249,7 +249,7 @@ public class Utils {
          }
       }
 
-      public static void noSlowMovement(double s) {
+      public static void bop(double s) {
          double forward = mc.thePlayer.movementInput.moveForward;
          double strafe = mc.thePlayer.movementInput.moveStrafe;
          float yaw = mc.thePlayer.rotationYaw;

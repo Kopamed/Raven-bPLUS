@@ -1,12 +1,12 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod.clickgui.components;
+package keystrokesmod.clickgui.raven.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.clickgui.RenderComponent;
+import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
@@ -14,7 +14,7 @@ import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
 public class ButtonCategory {
-   public ArrayList<RenderComponent> modulesInCategory = new ArrayList();
+   public ArrayList<Component> modulesInCategory = new ArrayList();
    public Module.category categoryName;
    private boolean categoryOpened;
    private int width;
@@ -65,7 +65,7 @@ public class ButtonCategory {
       this.n4m = true;
    }
 
-   public ArrayList<RenderComponent> getModules() {
+   public ArrayList<Component> getModules() {
       return this.modulesInCategory;
    }
 
@@ -111,9 +111,9 @@ public class ButtonCategory {
       if (!this.modulesInCategory.isEmpty() && this.categoryOpened) {
          int categoryHeight = 0;
 
-         RenderComponent moduleRenderManager;
+         Component moduleRenderManager;
          for(Iterator moduleInCategoryIterator = this.modulesInCategory.iterator(); moduleInCategoryIterator.hasNext(); categoryHeight += moduleRenderManager.getHeight()) {
-            moduleRenderManager = (RenderComponent)moduleInCategoryIterator.next();
+            moduleRenderManager = (Component)moduleInCategoryIterator.next();
          }
 
          //drawing the background for every module in the category
@@ -133,7 +133,7 @@ public class ButtonCategory {
             Iterator var5 = this.modulesInCategory.iterator();
 
             while(var5.hasNext()) {
-               RenderComponent c2 = (RenderComponent)var5.next();
+               Component c2 = (Component)var5.next();
                c2.draw();
             }
          }
@@ -144,9 +144,9 @@ public class ButtonCategory {
    public void r3nd3r() {
       int o = this.bh + 3;
 
-      RenderComponent c;
+      Component c;
       for(Iterator var2 = this.modulesInCategory.iterator(); var2.hasNext(); o += c.getHeight()) {
-         c = (RenderComponent)var2.next();
+         c = (Component)var2.next();
          c.setModuleStartAt(o);
       }
 

@@ -1,10 +1,10 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.clickgui.raven.CommandLine;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.utils.version;
+import keystrokesmod.utils.Version;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +17,7 @@ public class Update extends Command {
     @Override
     public void onCall(String[] args) {
         ////////System.out.println("Called update");
-        if (Ravenbplus.outdated || version.outdated()) {
+        if (Ravenbplus.outdated || Version.outdated()) {
             CommandLine.print("§3Opening page...", 1);
             URL url = null;
             try {
@@ -32,7 +32,7 @@ public class Update extends Command {
 
             }
         }
-        else if (Ravenbplus.beta || version.isBeta()) {
+        else if (Ravenbplus.beta || Version.isBeta()) {
             CommandLine.print("&aMate.", 1);
             CommandLine.print("&aYou are on a beta build,", 0);
             CommandLine.print("&aYou are all set", 0);

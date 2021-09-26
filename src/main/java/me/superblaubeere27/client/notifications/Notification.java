@@ -1,11 +1,10 @@
 package me.superblaubeere27.client.notifications;
 
-import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.clickgui.raven.ClickGui;
 import keystrokesmod.module.modules.client.Gui;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,11 +12,6 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.awt.Color;
-import java.nio.FloatBuffer;
-import java.util.*;
-
-import net.minecraft.util.Vec3;
-import org.lwjgl.BufferUtils;
 
 public class Notification {
     private NotificationType type;

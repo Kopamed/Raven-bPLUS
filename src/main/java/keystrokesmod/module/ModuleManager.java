@@ -134,6 +134,7 @@ public class ModuleManager {
       this.addModule(new CustomFOV());
 
       this.addModule(new ExplicitB9NameTags());
+      this.addModule(new AutoBlock());
       this.defEn();
 
       initialized = true;

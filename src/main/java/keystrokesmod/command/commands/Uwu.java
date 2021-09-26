@@ -3,7 +3,7 @@ package keystrokesmod.command.commands;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 
-import static keystrokesmod.clickgui.CommandLine.print;
+import static keystrokesmod.clickgui.raven.CommandLine.print;
 
 public class Uwu extends Command {
     private static boolean u;

@@ -1,6 +1,6 @@
 package keystrokesmod.command;
 
-import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.clickgui.raven.CommandLine;
 
 public class Command {
     private final String name;

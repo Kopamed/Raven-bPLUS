@@ -1,17 +1,17 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod.clickgui.components;
+package keystrokesmod.clickgui.raven.components;
 
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import keystrokesmod.clickgui.RenderComponent;
+import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class ButtonSlider extends RenderComponent {
+public class ButtonSlider extends Component {
    private final ModuleSettingSlider v;
    private final ButtonModule p;
    private int o;

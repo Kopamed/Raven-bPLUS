@@ -6,7 +6,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.clickgui.raven.ClickGui;
 
 public class Timer extends Module {
    public static ModuleSettingSlider a;

@@ -1,6 +1,7 @@
 package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.*;
+import keystrokesmod.utils.CoolDown;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.settings.KeyBinding;
@@ -18,9 +19,10 @@ public class BlockHit extends Module {
     public static ModuleDesc eventTypeDesc;
     public static ModuleSettingTick onlyPlayers, onRightMBHold;
     public static ModuleSettingDoubleSlider waitMs, hitPer, postDelay;
-    public static double comboLasts;
-    public static boolean comboing, hitCoolDown, alreadyHit, safeGuard;
+    public static boolean executingAction, hitCoolDown, alreadyHit, safeGuard;
     public static int hitTimeout, hitsWaited;
+    private CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
+    private boolean waitingForPostDelay;
 
     public BlockHit() {
         super("BlockHit", category.combat, 0);
@@ -51,10 +53,21 @@ public class BlockHit extends Module {
             }
             return;
         }
+        if(waitingForPostDelay){
+            if(postDelayTimer.hasTimeElapsed()){
+                executingAction = true;
+                startCombo();
+                //////////System.out.println("Combo started");
+                waitingForPostDelay = false;
+                if(safeGuard) safeGuard = false;
+                actionTimer.start();
+            }
+            return;
+        }
 
-        if(comboing) {
-            if(System.currentTimeMillis() >= comboLasts){
-                comboing = false;
+        if(executingAction) {
+            if(actionTimer.hasTimeElapsed()){
+                executingAction = false;
                 finishCombo();
                 return;
             }else {
@@ -71,7 +84,6 @@ public class BlockHit extends Module {
                 return;
             } else {
                 Entity target = mc.objectMouseOver.entityHit;
-                //////////System.out.println(target.hurtResistantTime);
                 if(target.isDead) {
                     if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
                         safeGuard = true;
@@ -137,23 +149,26 @@ public class BlockHit extends Module {
                         hitCoolDown = true;
                         hitsWaited = 0;
 
-                        comboLasts = ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(),  waitMs.getInputMax()+0.01) + System.currentTimeMillis();
-                        if(postDelay.getMax() != 0){
-
+                        actionTimer.setCooldown((long)ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(),  waitMs.getInputMax()+0.01));
+                        if(postDelay.getInputMax() != 0){
+                            postDelayTimer.setCooldown((long)ThreadLocalRandom.current().nextDouble(postDelay.getInputMin(),  postDelay.getInputMax()+0.01));
+                            postDelayTimer.start();
+                            waitingForPostDelay = true;
                         } else {
-
+                            executingAction = true;
+                            startCombo();
+                            actionTimer.start();
+                            //////////System.out.println("Combo started");
+                            alreadyHit = true;
+                            if(safeGuard) safeGuard = false;
                         }
-                        comboing = true;
-                        startCombo();
-                        //////////System.out.println("Combo started");
                         alreadyHit = true;
-                        if(safeGuard) safeGuard = false;
                     }
                 } else {
                     if(alreadyHit){
-                        //////////System.out.println("UnHit");
+                        alreadyHit = false;
                     }
-                    alreadyHit = false;
+
                     //////////System.out.println("REEEEEEE");
                     if(safeGuard) safeGuard = false;
                 }
