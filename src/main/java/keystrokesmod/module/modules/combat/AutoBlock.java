@@ -17,6 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoBlock extends Module {
     public static ModuleSettingDoubleSlider duration, distance;
+    public static ModuleSettingSlider chance;
     private boolean engaged;
     private CoolDown engagedTime = new CoolDown(0);
 
@@ -25,6 +26,7 @@ public class AutoBlock extends Module {
 
         this.registerSetting(duration = new ModuleSettingDoubleSlider("Block duration (MS)", 20, 100, 1, 500, 1));
         this.registerSetting(distance = new ModuleSettingDoubleSlider("Distance to player (blocks)", 0, 3, 0, 6, 0.01));
+        this.registerSetting(chance = new ModuleSettingSlider("Chance %", 100, 0, 100, 1));
     }
 
     @SubscribeEvent
@@ -40,7 +42,7 @@ public class AutoBlock extends Module {
             return;
         }
 
-        if(Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin()&& mc.objectMouseOver.entityHit instanceof Entity && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax()){
+        if(Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin()&& mc.objectMouseOver.entityHit instanceof Entity && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax() && (chance.getInput() == 100 ? true : Math.random() <= chance.getInput()/100)){
             engaged = true;
             engagedTime.setCooldown((long)duration.getInputMax());
             engagedTime.start();

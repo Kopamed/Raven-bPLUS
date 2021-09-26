@@ -15,7 +15,7 @@ import org.lwjgl.input.Mouse;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WTap extends Module {
-    public static ModuleSettingSlider range, eventType;
+    public static ModuleSettingSlider range, eventType, chance;
     public static ModuleDesc eventTypeDesc;
     public static ModuleSettingTick onlyPlayers;
     public static ModuleSettingDoubleSlider actionTicks, onceEvery, postDelay;
@@ -29,6 +29,7 @@ public class WTap extends Module {
         this.registerSetting(actionTicks = new ModuleSettingDoubleSlider("Action Time (MS)",  25, 55, 1, 500, 1));
         this.registerSetting(onceEvery =  new ModuleSettingDoubleSlider("Once every ... hits", 1, 1, 1, 10, 1));
         this.registerSetting(postDelay =  new ModuleSettingDoubleSlider("Post delay (MS)", 25, 55, 1, 500, 1));
+        this.registerSetting(chance =  new ModuleSettingSlider("Chance %", 100, 0, 100, 1));
         this.registerSetting(range = new ModuleSettingSlider("Range: ", 3, 1, 6, 0.05));
         this.registerSetting(eventType = new ModuleSettingSlider("Value: ", 2, 1, 2, 1));
         this.registerSetting(eventTypeDesc = new ModuleDesc("Mode: POST"));
@@ -103,6 +104,9 @@ public class WTap extends Module {
                     }
 
                     //////////System.out.println("Continued");
+
+                    if(!(chance.getInput() == 100 ? true : Math.random() <= chance.getInput()/100))
+                        return;
 
                     if(!alreadyHit){
                         //////////System.out.println("Startring combo code");
