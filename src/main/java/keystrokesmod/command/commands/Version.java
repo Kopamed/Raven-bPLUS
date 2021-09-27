@@ -1,9 +1,8 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.command.Command;
-import keystrokesmod.utils.version;
 
-import static keystrokesmod.clickgui.CommandLine.print;
+import static keystrokesmod.clickgui.raven.CommandLine.print;
 
 public class Version extends Command {
     public Version() {
@@ -13,16 +12,16 @@ public class Version extends Command {
     @Override
     public void onCall(String[] args) {
         String currentBranch;
-        if(version.isBeta()){
+        if(keystrokesmod.utils.Version.isBeta()){
             currentBranch = "beta";
         }else {
             currentBranch = "main";
         }
 
-        String latestBranch = version.getSelfBranch();
+        String latestBranch = keystrokesmod.utils.Version.getSelfBranch();
 
-        print("&eYour build: " + currentBranch + " build " + version.getSelfBetaVersion() + " of " + version.getCurrentVersion().replace("-", "."), 1);
-        print("&aLatest version: " + latestBranch + " build " + version.getLatestBetaVersion() + " of " + version.getLatestVersion().replace("-", "."), 0);
+        print("&eYour build: " + currentBranch + " build " + keystrokesmod.utils.Version.getSelfBetaVersion() + " of " + keystrokesmod.utils.Version.getCurrentVersion().replace("-", "."), 1);
+        print("&aLatest version: " + latestBranch + " build " + keystrokesmod.utils.Version.getLatestBetaVersion() + " of " + keystrokesmod.utils.Version.getLatestVersion().replace("-", "."), 0);
 
     }
 }

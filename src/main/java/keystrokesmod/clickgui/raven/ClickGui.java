@@ -1,6 +1,6 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod.module.modules;
+package keystrokesmod.clickgui.raven;
 
 import java.awt.*;
 import java.io.IOException;
@@ -9,14 +9,12 @@ import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import keystrokesmod.clickgui.components.ButtonCategory;
-import keystrokesmod.clickgui.RenderComponent;
-import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.clickgui.raven.components.ButtonCategory;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.utils.Timer;
 import keystrokesmod.utils.Utils;
-import keystrokesmod.utils.version;
+import keystrokesmod.utils.Version;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
@@ -82,7 +80,7 @@ public class ClickGui extends GuiScreen {
 
       float speed = 4890;
 
-      // info text
+      // info t2ext
       mc.fontRendererObj.drawString("Made by Kopamed and Blowsy", 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 28, speed));
 
       //date
@@ -110,7 +108,7 @@ public class ClickGui extends GuiScreen {
          }
       }
       else if(Ravenbplus.beta) {
-         String veryCoolBetaUser = "Beta build " + version.getSelfBetaVersion() + " of version " + version.getCurrentVersion().replaceAll("-", ".");
+         String veryCoolBetaUser = "Beta build " + Version.getSelfBetaVersion() + " of version " + Version.getCurrentVersion().replaceAll("-", ".");
          mc.fontRendererObj.drawString(veryCoolBetaUser, halfScreenWidth - this.fontRendererObj.getStringWidth(veryCoolBetaUser) / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, Utils.Client.astolfoColorsDraw(10, 28, speed));
       } else {
          mc.fontRendererObj.drawString("On latest version", halfScreenWidth - this.fontRendererObj.getStringWidth("On latest version") / 2, this.height - this.fontRendererObj.FONT_HEIGHT - 3, Utils.Client.astolfoColorsDraw(10, 14, speed));
@@ -151,7 +149,7 @@ public class ClickGui extends GuiScreen {
          category.rf(this.fontRendererObj);
          category.up(x, y);
 
-         for (RenderComponent module : category.getModules()) {
+         for (Component module : category.getModules()) {
             module.compute(x, y);
          }
       }
@@ -223,7 +221,7 @@ public class ClickGui extends GuiScreen {
             } while(!category.isOpened());
          } while(category.getModules().isEmpty());
 
-         for (RenderComponent c : category.getModules()) {
+         for (Component c : category.getModules()) {
             c.mouseDown(x, y, mouseButton);
          }
       }
@@ -252,7 +250,7 @@ public class ClickGui extends GuiScreen {
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
-            for (RenderComponent c : c4t.getModules()) {
+            for (Component c : c4t.getModules()) {
                c.mouseReleased(x, y, s);
             }
          }
@@ -291,7 +289,7 @@ public class ClickGui extends GuiScreen {
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
-            for (RenderComponent c : c4t.getModules()) {
+            for (Component c : c4t.getModules()) {
                c.ky(t, k);
             }
          }

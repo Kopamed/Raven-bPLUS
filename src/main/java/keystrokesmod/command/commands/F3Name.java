@@ -1,6 +1,6 @@
 package keystrokesmod.command.commands;
 
-import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.clickgui.raven.CommandLine;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.client.ClientNameSpoof;
 

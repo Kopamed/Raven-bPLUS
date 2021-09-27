@@ -5,7 +5,7 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.utils.version;
+import keystrokesmod.utils.Version;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -25,12 +25,12 @@ public class UpdateCheck extends Module {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
-        if (version.outdated()) {
+        if (Version.outdated()) {
             Ravenbplus.outdated = true;
             Utils.Player.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
             Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
-        if (version.isBeta()) {
+        if (Version.isBeta()) {
             Ravenbplus.beta = true;
             Utils.Player.sendMessageToSelf("Man is on beta and asking for stable. You mad bruv?");
             Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");

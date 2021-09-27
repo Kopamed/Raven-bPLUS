@@ -1,12 +1,13 @@
 package keystrokesmod.main;
 
-import keystrokesmod.config.ConfigManager;
+import keystrokesmod.clickgui.kopagui.TabGui;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.clickgui.raven.ClickGui;
 
 public class NotAName {
    public static ModuleManager moduleManager;
    public static ClickGui clickGui;
+   public static TabGui tabGui;
    private static final int c = -1;
 
    public NotAName() {

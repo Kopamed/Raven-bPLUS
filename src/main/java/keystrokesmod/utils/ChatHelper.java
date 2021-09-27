@@ -2,9 +2,8 @@
 
 package keystrokesmod.utils;
 
-import keystrokesmod.clickgui.CommandLine;
+import keystrokesmod.clickgui.raven.CommandLine;
 import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

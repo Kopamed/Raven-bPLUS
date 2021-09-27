@@ -1,12 +1,12 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod.clickgui.components;
+package keystrokesmod.clickgui.raven.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.clickgui.RenderComponent;
+import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.*;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.AutoConfig;
@@ -14,14 +14,14 @@ import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class ButtonModule extends RenderComponent {
+public class ButtonModule extends Component {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
    private final int c3 = (new Color(175, 143, 233) ).getRGB();
    public Module mod;
    public ButtonCategory category;
    public int o;
-   private final ArrayList<RenderComponent> settings;
+   private final ArrayList<Component> settings;
    public boolean po;
 
    public ButtonModule(Module mod, ButtonCategory p, int o) {
@@ -67,7 +67,7 @@ public class ButtonModule extends RenderComponent {
 
       while(true) {
          while(var3.hasNext()) {
-            RenderComponent co = (RenderComponent)var3.next();
+            Component co = (Component)var3.next();
             co.setModuleStartAt(y);
             if (co instanceof ButtonSlider  || co instanceof ButtonMinMaxSlider) {
                y += 16;
@@ -145,7 +145,7 @@ public class ButtonModule extends RenderComponent {
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
-         for (RenderComponent c : this.settings) {
+         for (Component c : this.settings) {
             c.draw();
          }
       }
@@ -161,7 +161,7 @@ public class ButtonModule extends RenderComponent {
 
          while(true) {
             while(var2.hasNext()) {
-               RenderComponent c = (RenderComponent)var2.next();
+               Component c = (Component)var2.next();
                if (c instanceof ButtonSlider || c instanceof ButtonMinMaxSlider) {
                   h += 16;
                } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc) {
@@ -176,7 +176,7 @@ public class ButtonModule extends RenderComponent {
 
    public void compute(int mousePosX, int mousePosY) {
       if (!this.settings.isEmpty()) {
-         for (RenderComponent c : this.settings) {
+         for (Component c : this.settings) {
             c.compute(mousePosX, mousePosY);
          }
       }
@@ -194,21 +194,21 @@ public class ButtonModule extends RenderComponent {
          this.category.r3nd3r();
       }
 
-      for (RenderComponent c : this.settings) {
+      for (Component c : this.settings) {
          c.mouseDown(x, y, b);
       }
 
    }
 
    public void mouseReleased(int x, int y, int m) {
-      for (RenderComponent c : this.settings) {
+      for (Component c : this.settings) {
          c.mouseReleased(x, y, m);
       }
 
    }
 
    public void ky(char t, int k) {
-      for (RenderComponent c : this.settings) {
+      for (Component c : this.settings) {
          c.ky(t, k);
       }
 

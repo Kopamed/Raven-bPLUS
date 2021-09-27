@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class version {
+public class Version {
     public static final String versionFileName = "/assets/keystrokes/version";
     public static final String branchFileName = "/assets/keystrokes/branch";
     public static String currentVersion = null;
@@ -15,6 +15,7 @@ public class version {
     public static String beta = null;
     public static int betaSelfVersion = -1;
     public static int betaLatestVersion = -1;
+    public static String readBranch = null;
 
     public static boolean outdated() {
         currentVersion = getCurrentVersion();
@@ -51,7 +52,7 @@ public class version {
             //////////System.out.println("Fast return");
             return currentVersion;
         }
-        InputStream input = version.class.getResourceAsStream(versionFileName);
+        InputStream input = Version.class.getResourceAsStream(versionFileName);
         Scanner scanner = new Scanner(input);
         try {
             currentVersion = scanner.nextLine();
@@ -131,7 +132,7 @@ public class version {
             return beta == "beta";
         }
 
-        InputStream input = version.class.getResourceAsStream(branchFileName);
+        InputStream input = Version.class.getResourceAsStream(branchFileName);
         Scanner scanner = new Scanner(input);
         try {
             if(scanner.nextLine().split("-")[0].equalsIgnoreCase("beta")){
@@ -170,7 +171,7 @@ public class version {
             return betaSelfVersion;
         }
 
-        InputStream input = version.class.getResourceAsStream(branchFileName);
+        InputStream input = Version.class.getResourceAsStream(branchFileName);
         Scanner scanner = new Scanner(input);
         try {
             String meinkfragt = scanner.nextLine();
@@ -217,5 +218,20 @@ public class version {
             return -1;
         }
         return -1;
+    }
+
+    public static String getFullversion(){
+        return getCurrentVersion().replace("-", ".") + "." + getReadBranch().replace("-", ".");
+    }
+
+    public static String getReadBranch(){
+        if(readBranch != null)
+            return readBranch;
+
+        InputStream input = Version.class.getResourceAsStream(branchFileName);
+        Scanner scanner = new Scanner(input);
+
+        readBranch = scanner.nextLine();
+        return readBranch;
     }
 }

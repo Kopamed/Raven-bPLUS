@@ -1,17 +1,17 @@
 //Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
-package keystrokesmod.clickgui.components;
+package keystrokesmod.clickgui.raven.components;
 
 import java.awt.Color;
 
-import keystrokesmod.clickgui.RenderComponent;
+import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class ButtonTick extends RenderComponent {
+public class ButtonTick extends Component {
    private final int c = (new Color(20, 255, 0)).getRGB();
    private final int boxC = (new Color(169,169,169)).getRGB();
    private final Module mod;

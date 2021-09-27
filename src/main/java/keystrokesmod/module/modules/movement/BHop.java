@@ -28,7 +28,7 @@ public class BHop extends Module {
          mc.thePlayer.setSprinting(true);
          double spd = 0.0025D * a.getInput();
          double m = (float)(Math.sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ) + spd);
-         Utils.Player.noSlowMovement(m);
+         Utils.Player.bop(m);
       }
    }
 }

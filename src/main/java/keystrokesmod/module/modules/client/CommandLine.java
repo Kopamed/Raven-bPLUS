@@ -16,7 +16,7 @@ public class CommandLine extends Module {
    }
 
    public void onEnable() {
-      keystrokesmod.clickgui.CommandLine.setccs();
+      keystrokesmod.clickgui.raven.CommandLine.setccs();
       a = true;
       b = false;
       (an = new Timer(500.0F)).start();
@@ -28,6 +28,6 @@ public class CommandLine extends Module {
          an.start();
       }
 
-      keystrokesmod.clickgui.CommandLine.od();
+      keystrokesmod.clickgui.raven.CommandLine.od();
    }
 }

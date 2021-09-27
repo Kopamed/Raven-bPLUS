@@ -6,7 +6,7 @@ import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.module.modules.ClickGui;
+import keystrokesmod.clickgui.raven.ClickGui;
 import keystrokesmod.utils.Utils;
 
 public class StringEncrypt extends Module {
