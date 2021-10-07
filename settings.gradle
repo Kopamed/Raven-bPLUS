@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+
+        maven {
+            name = 'Forge'
+            url = 'https://maven.minecraftforge.net'
+        }
+        maven {
+            name = 'JitPack'
+            url = 'https://jitpack.io'
+        }
+        flatDir dirs: 'libs'
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == 'net.minecraftforge.gradle.forge') {
+                useModule("com.github.asbyth:ForgeGradle:${requested.version}")
+            }
+        }
+    }
+}
+
+rootProject.name = "Raven-bPLUS"
