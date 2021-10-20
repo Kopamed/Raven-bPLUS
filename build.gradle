@@ -35,19 +35,19 @@ plugins {
 }
 */
 
-version = "1.1.0"
-group= "club.sk1er.keystrokes"
-archivesBaseName = "[1.8.9] BetterKeystrokes V"
+version = "1"
+group= "me.kopamed.keystrokes"
+archivesBaseName = "[1.8.9]LunarKeystrokes B"
 
 minecraft {
     version = "1.8.9-11.15.1.1722"
     runDir = "run"
 
     mappings = "stable_20"
-    //clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin"
+    //clientJvmArgs += "-Dfml.coreMods.load=me.kopamed.lunarkeystrokes.tweaker.FMLLoadingPlugin"
 }
 
-/* -Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin*/
+/* -Dfml.coreMods.load=me.kopamed.lunarkeystrokes.tweaker.FMLLoadingPlugin*/
 jar {
     enabled = false
     dependsOn(shadowJar { classifier = null })
@@ -56,7 +56,7 @@ jar {
 shadowJar {
     manifest {
         attributes(
-                "FMLCorePlugin": "keystrokesmod.tweaker.FMLLoadingPlugin",
+                "FMLCorePlugin": "me.kopamed.lunarkeystrokes.tweaker.FMLLoadingPlugin",
                 "ForceLoadAsMod": true,
                 FMLCorePluginContainsFMLMod: true,
                 "ModSide": "CLIENT"

@@ -1,8 +1,8 @@
 package me.superblaubeere27.client.notifications;
 
-import keystrokesmod.clickgui.raven.ClickGui;
-import keystrokesmod.module.modules.client.Gui;
-import keystrokesmod.utils.Utils;
+import me.kopamed.lunarkeystrokes.clickgui.raven.ClickGui;
+import me.kopamed.lunarkeystrokes.module.modules.client.Gui;
+import me.kopamed.lunarkeystrokes.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
