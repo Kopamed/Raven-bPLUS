@@ -11,8 +11,8 @@ public class ButtonMode extends Component {
     private final int c = (new Color(30, 144, 255)).getRGB();
     private final Mode mode;
     private final ButtonModule p;
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
     private int o;
     private boolean registeredClick = false;
     private boolean md = false;
@@ -34,18 +34,25 @@ public class ButtonMode extends Component {
         GL11.glPopMatrix();
     }
 
+    public void compute(int mousePosX, int mousePosY) {
+        this.y = this.p.category.getY() + this.o;
+        this.x = this.p.category.getX();
+    }
+
     public void setModuleStartAt(int n) {
         this.o = n;
     }
 
 
     public void mouseDown(int x, int y, int b) {
-        System.out.println("before cchange: " + this.mode.getMode());
-        this.mode.nextMode();
-        System.out.println("after cchange: " + this.mode.getMode());
+        System.out.println(i(x,y) + " " + this.p.po + " " + b);
+        if (this.i(x, y) && b == 0 && this.p.po) {
+            this.mode.nextMode();
+        }
     }
 
     private boolean i(int x, int y) {
-        return x > this.x && x < this.x + this.p.category.getWidth() && y > this.y && y < this.y + 11;
+        System.out.println(x + ", " + y + " : " + this.x + " " + this.y);
+        return x > this.x && x < this.x + this.p.category.getWidth() && y > this.y && y < this.y + 12;
     }
 }

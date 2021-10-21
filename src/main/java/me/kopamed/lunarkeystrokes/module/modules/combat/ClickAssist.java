@@ -7,6 +7,7 @@ import java.awt.Robot;
 
 import me.kopamed.lunarkeystrokes.module.Module;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Description;
+import me.kopamed.lunarkeystrokes.module.setting.settings.Mode;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Slider;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Tick;
 import me.kopamed.lunarkeystrokes.utils.Utils;
@@ -19,28 +20,40 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class ClickAssist extends Module {
-   public static Description desc;
-   public static Slider chance;
-   public static Tick L;
-   public static Tick R;
+   // settings
+   public static Description desc, linux;
+   public static Mode mode;
+   public static Slider leftChance, rightChance;
+   public static Slider minCPSLeft, minCPSRight;
+   public static Tick left;
+   public static Tick right;
    public static Tick blocksOnly;
    public static Tick weaponOnly;
    public static Tick onlyWhileTargeting;
-   public static Tick above5;
+
+   // misc
    private Robot bot;
    private boolean engagedLeft = false;
    private boolean engagedRight = false;
 
    public ClickAssist() {
       super("ClickAssist", Module.category.combat, 0);
+
+      // registering settings
       this.registerSetting(desc = new Description("Boost your CPS."));
-      this.registerSetting(chance = new Slider("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(L = new Tick("Left click", true));
+      this.registerSetting(mode = new Mode("Assist__ click", new String[] {"After", "Before"}, 0));
+      this.registerSetting(linux = new Description("Use AFTER on linux"));
+
+      this.registerSetting(left = new Tick("Left click", true));
       this.registerSetting(weaponOnly = new Tick("Weapon only", true));
       this.registerSetting(onlyWhileTargeting = new Tick("Only while targeting", false));
-      this.registerSetting(R = new Tick("Right click", false));
+      this.registerSetting(leftChance = new Slider("Left chance", 80.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(minCPSRight = new Slider("Above _ cps (left)", 3, 0, 20, 1));
+
+      this.registerSetting(right = new Tick("Right click", false));
       this.registerSetting(blocksOnly = new Tick("Blocks only", true));
-      this.registerSetting(above5 = new Tick("Above 5 cps", false));
+      this.registerSetting(rightChance = new Slider("Right chance", 95.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(minCPSRight = new Slider("Above _ cps (right)", 3, 0, 20, 1));
    }
 
    public void onEnable() {
@@ -62,6 +75,27 @@ public class ClickAssist extends Module {
            priority = EventPriority.HIGH
    )
    public void onMouseUpdate(MouseEvent ev) {
+      if(mode.getMode().equals("After")){
+         if(ev.buttonstate)  // make sure that the button is released
+            return;
+
+         if(ev.button == 0 && left.isToggled()){
+            // execute left
+         } else if(ev.button == 1 && right.isToggled()){
+            // execute right
+         }
+
+      } else {
+         if(!ev.buttonstate)  // make sure that the button is pressed
+            return;
+
+         if(ev.button == 0 && left.isToggled()){
+            // execute left
+         } else if(ev.button == 1 && right.isToggled()){
+            // execute right
+         }
+      }
+/*
       if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
             double ch;
@@ -127,6 +161,8 @@ public class ClickAssist extends Module {
             this.fix(1);
          }
       }
+
+ */
    }
 
    private void fix(int t) {

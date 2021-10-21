@@ -653,6 +653,10 @@ public class Utils {
       public static JsonObject getStringAsJson(String text) {
          return new JsonParser().parse(text).getAsJsonObject();
       }
+
+      public static int randomInt(double inputMin, double v) {
+         return (int)(Math.random() * (v - inputMin) + inputMin);
+      }
    }
 
    public static class URLS {

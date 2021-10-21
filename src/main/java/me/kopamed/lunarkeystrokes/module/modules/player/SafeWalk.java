@@ -8,6 +8,8 @@ import me.kopamed.lunarkeystrokes.module.setting.settings.Description;
 import me.kopamed.lunarkeystrokes.module.setting.settings.RangeSlider;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Slider;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Tick;
+import me.kopamed.lunarkeystrokes.utils.CoolDown;
+import me.kopamed.lunarkeystrokes.utils.Timer;
 import me.kopamed.lunarkeystrokes.utils.Utils;
 import me.kopamed.lunarkeystrokes.module.modules.client.SelfDestruct;
 import net.minecraft.client.gui.ScaledResolution;
@@ -30,13 +32,18 @@ public class SafeWalk extends Module {
    public static RangeSlider pitchRange;
    public static Slider blockShowMode;
    public static Description blockShowModeDesc;
+   public static RangeSlider shiftTime;
+
    private static boolean shouldBridge = false;
    private static boolean isShifting = false;
+   private boolean allowedShift;
+   private CoolDown shiftTimer = new CoolDown(0);
 
    public SafeWalk() {
       super("SafeWalk", Module.category.player, 0);
       this.registerSetting(doShift = new Tick("Shift", false));
       this.registerSetting(shiftOnJump = new Tick("Shift during jumps", false));
+      this.registerSetting(shiftTime = new RangeSlider("Shift time: (s)", 10, 20, 0, 500, 1));
       this.registerSetting(onHold = new Tick("On shift hold", false));
       this.registerSetting(blocksOnly = new Tick("Blocks only", true));
       this.registerSetting(showBlockAmount = new Tick("Show amount of blocks", true));
@@ -67,6 +74,9 @@ public class SafeWalk extends Module {
       if (!Utils.Player.isPlayerInGame()) {
          return;
       }
+
+      boolean shiftTimeSettingActive = shiftTime.getInputMax() > 0;
+
       if(doShift.isToggled()) {
          if(lookDown.isToggled()) {
             if(mc.thePlayer.rotationPitch < pitchRange.getInputMin() || mc.thePlayer.rotationPitch > pitchRange.getInputMax()) {
@@ -97,26 +107,32 @@ public class SafeWalk extends Module {
                   }
                }
 
+               // code fo the timer
+               if(shiftTimeSettingActive){ // making sure that the player has set the value so some number
+                  shiftTimer.setCooldown(Utils.Java.randomInt(shiftTime.getInputMin(), shiftTime.getInputMax() + 0.1));
+                  shiftTimer.start();
+               }
+
                isShifting = true;
                this.setShift(true);
                shouldBridge = true;
             }
-            else if (mc.thePlayer.isSneaking() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled()) {
+            else if (mc.thePlayer.isSneaking() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled()) { // if player is smeaking and shiftDown and holdSetting turned on
                isShifting = false;
                shouldBridge = false;
                this.setShift(false);
             }
-            else if(onHold.isToggled() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
+            else if(onHold.isToggled() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) { // if shiftDown and holdSetting turned on
                isShifting = false;
                shouldBridge = false;
                this.setShift(false);
             }
-            else if(mc.thePlayer.isSneaking() && (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled())) {
+            else if(mc.thePlayer.isSneaking() && (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled()) && (!shiftTimeSettingActive|| shiftTimer.hasTimeElapsed())) {
                isShifting = false;
                this.setShift(false);
                shouldBridge = true;
             }
-            else if(mc.thePlayer.isSneaking() && !onHold.isToggled()) {
+            else if(mc.thePlayer.isSneaking() && !onHold.isToggled()  && (!shiftTimeSettingActive|| shiftTimer.hasTimeElapsed())) {
                isShifting = false;
                this.setShift(false);
                shouldBridge = true;
