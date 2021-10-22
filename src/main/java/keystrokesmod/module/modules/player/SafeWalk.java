@@ -6,6 +6,8 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.client.SelfDestruct;
+import keystrokesmod.utils.CoolDown;
+import keystrokesmod.utils.Timer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.*;
@@ -26,13 +28,18 @@ public class SafeWalk extends Module {
    public static ModuleSettingDoubleSlider pitchRange;
    public static ModuleSettingSlider blockShowMode;
    public static ModuleDesc blockShowModeDesc;
+   public static ModuleSettingDoubleSlider shiftTime;
+
    private static boolean shouldBridge = false;
    private static boolean isShifting = false;
+   private boolean allowedShift;
+   private CoolDown shiftTimer = new CoolDown(0);
 
    public SafeWalk() {
       super("SafeWalk", Module.category.player, 0);
       this.registerSetting(doShift = new ModuleSettingTick("Shift", false));
       this.registerSetting(shiftOnJump = new ModuleSettingTick("Shift during jumps", false));
+      this.registerSetting(shiftTime = new ModuleSettingDoubleSlider("Shift time: (s)", 10, 20, 0, 500, 1));
       this.registerSetting(onHold = new ModuleSettingTick("On shift hold", false));
       this.registerSetting(blocksOnly = new ModuleSettingTick("Blocks only", true));
       this.registerSetting(showBlockAmount = new ModuleSettingTick("Show amount of blocks", true));
@@ -63,6 +70,9 @@ public class SafeWalk extends Module {
       if (!Utils.Player.isPlayerInGame()) {
          return;
       }
+
+      boolean shiftTimeSettingActive = shiftTime.getInputMax() > 0;
+
       if(doShift.isToggled()) {
          if(lookDown.isToggled()) {
             if(mc.thePlayer.rotationPitch < pitchRange.getInputMin() || mc.thePlayer.rotationPitch > pitchRange.getInputMax()) {
@@ -91,6 +101,12 @@ public class SafeWalk extends Module {
 
                      return;
                   }
+               }
+
+               // code fo the timer
+               if(shiftTimeSettingActive){ // making sure that the player has set the value so some number
+                  shiftTimer.setCooldown(Utils.Java.randomInt(shiftTime.getInputMin(), shiftTime.getInputMax() + 0.1));
+                  shiftTimer.start();
                }
 
                isShifting = true;
