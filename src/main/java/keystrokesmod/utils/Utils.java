@@ -657,6 +657,11 @@ public class Utils {
       }
    }
 
+      public static int randomInt(double inputMin, double v) {
+         return (int)(Math.random() * (v - inputMin) + inputMin);
+      }
+   }
+
    public static class URLS {
 
       public static final String base_url = "https://api.paste.ee/v1/pastes/";
