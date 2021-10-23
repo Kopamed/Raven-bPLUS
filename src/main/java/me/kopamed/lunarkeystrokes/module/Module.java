@@ -5,6 +5,7 @@ package me.kopamed.lunarkeystrokes.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import me.kopamed.lunarkeystrokes.main.NotAName;
 import me.kopamed.lunarkeystrokes.utils.NotificationRenderer;
 import me.kopamed.lunarkeystrokes.main.Ravenbplus;
 import me.kopamed.lunarkeystrokes.module.modules.other.DiscordRPCModule;
@@ -82,6 +83,7 @@ public class Module {
       MinecraftForge.EVENT_BUS.register(this);
       FMLCommonHandler.instance().bus().register(this);
       this.onEnable();
+
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
       }

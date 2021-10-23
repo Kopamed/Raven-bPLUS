@@ -91,10 +91,10 @@ public class DiscordRPCManager {
         if (this.rpcMode == RPCMode.RAVEN_BP) {
             if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null) {
                 int toggled_module = 0;
-                for (int i = 0; i < Ravenbplus.notAName.getm0dmanager().listofmods().size(); i++) {
-                    if (Ravenbplus.notAName.getm0dmanager().listofmods().get(i).isEnabled()) toggled_module++;
+                for (int i = 0; i < Ravenbplus.notAName.getm0dmanager().getModules().size(); i++) {
+                    if (Ravenbplus.notAName.getm0dmanager().getModules().get(i).isEnabled()) toggled_module++;
                 }
-                updateRavenRPC("In game", toggled_module + "/" + Ravenbplus.notAName.getm0dmanager().listofmods().size() + " Modules activated");
+                updateRavenRPC("In game", toggled_module + "/" + Ravenbplus.notAName.getm0dmanager().getModules().size() + " Modules activated");
             } else {
                 updateRavenRPC("Playing Minecraft", null);
             }

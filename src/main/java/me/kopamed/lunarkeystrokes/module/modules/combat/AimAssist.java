@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import me.kopamed.lunarkeystrokes.main.Ravenbplus;
 import me.kopamed.lunarkeystrokes.module.Module;
 import me.kopamed.lunarkeystrokes.module.ModuleManager;
+import me.kopamed.lunarkeystrokes.module.setting.settings.Mode;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Slider;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Tick;
 import me.kopamed.lunarkeystrokes.module.modules.world.AntiBot;
@@ -24,6 +25,13 @@ import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Mouse;
 
 public class AimAssist extends Module {
+   //recode
+   public static Slider verticalSpeed; // todo
+   public static Tick ignoreTeam;
+   public static Mode priority; // todo
+   public static Tick lock; // todo done
+
+
    public static Slider speed, compliment;
    public static Slider fov;
    public static Slider distance;
@@ -34,19 +42,22 @@ public class AimAssist extends Module {
    public static Tick blatantMode;
    public static Tick ignoreFriends;
    public static ArrayList<Entity> friends = new ArrayList<>();
+   private Entity lockedEntity = null;
 
    public AimAssist() {
       super("AimAssist", Module.category.combat, 0);
-      this.registerSetting(speed = new Slider("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));
-      this.registerSetting(compliment = new Slider("Speed 2", 15.0D, 2D, 97.0D, 1.0D));
+      this.registerSetting(speed = new Slider("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));// todo
+      this.registerSetting(compliment = new Slider("Speed 2", 15.0D, 2D, 97.0D, 1.0D));// todo
       this.registerSetting(fov = new Slider("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
-      this.registerSetting(distance = new Slider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(distance = new Slider("Distance", 3.3D, 1.0D, 10.0D, 0.1D));
       this.registerSetting(clickAim = new Tick("Click aim", true));
       this.registerSetting(breakBlocks = new Tick("Break blocks", true));
       this.registerSetting(ignoreFriends = new Tick("Ignore Friends", true));
+      this.registerSetting(ignoreTeam = new Tick("Ignore teammates", true)); // todo
       this.registerSetting(weaponOnly = new Tick("Weapon only", false));
       this.registerSetting(aimInvis = new Tick("Aim invis", false));
       this.registerSetting(blatantMode = new Tick("Blatant mode", false));
+      this.registerSetting(lock = new Tick("Lock", true));
    }
 
    public void update() {
@@ -81,7 +92,7 @@ public class AimAssist extends Module {
                      Utils.Player.aim(en, 0.0F, false);
                   } else {
                      double n = Utils.Player.fovFromEntity(en);
-                     if (n > 1.0D || n < -1.0D) {
+                     if (n > 1.5D || n < -1.5D) {
                         double complimentSpeed = n*(ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328, compliment.getInput() + 2.48293)/100);
                         double val2 = complimentSpeed + ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput());
                         float val = (float)(-(complimentSpeed + n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
@@ -124,31 +135,43 @@ public class AimAssist extends Module {
 
    public Entity getEnemy() {
       int fov = (int) AimAssist.fov.getInput();
-      Iterator var2 = mc.theWorld.playerEntities.iterator();
+      Iterator playerEntitiesIter = mc.theWorld.playerEntities.iterator();
+      EntityPlayer entityPlayer;
 
-      EntityPlayer en;
-      do {
+      if(lockedEntity != null && lock.isToggled()){
+         if(Utils.Player.isEntityInFOV(lockedEntity, (float)fov) && (double)mc.thePlayer.getDistanceToEntity(lockedEntity) < distance.getInput()){
+            return lockedEntity;
+         }
+      }
+
+
+      do {// what the fuck
          do {
             do {
                do {
                   do {
                      do {
                         do {
-                           if (!var2.hasNext()) {
+                           if (!playerEntitiesIter.hasNext()) {
                               return null;
                            }
 
-                           en = (EntityPlayer) var2.next();
-                        } while (ignoreFriends.isToggled() && isAFriend(en));
-                     } while(en == mc.thePlayer);
-                  } while(en.deathTime != 0);
-               } while(!aimInvis.isToggled() && en.isInvisible());
-            } while((double)mc.thePlayer.getDistanceToEntity(en) > distance.getInput());
-         } while(AntiBot.bot(en));
-      } while(!blatantMode.isToggled() && !Utils.Player.fov(en, (float)fov));
+                           entityPlayer = (EntityPlayer) playerEntitiesIter.next();
+                        } while (ignoreFriends.isToggled() && isAFriend(entityPlayer));
+                     } while(entityPlayer == mc.thePlayer);
+                  } while(entityPlayer.deathTime != 0);
+               } while(!aimInvis.isToggled() && entityPlayer.isInvisible());
+            } while((double)mc.thePlayer.getDistanceToEntity(entityPlayer) > distance.getInput());
+         } while(AntiBot.bot(entityPlayer));
+      } while(!blatantMode.isToggled() && !Utils.Player.isEntityInFOV(entityPlayer, (float)fov));
 
-      return en;
+      this.lockedEntity = entityPlayer;
+
+
+      return entityPlayer;
    }
+
+
 
    public static void addFriend(Entity entityPlayer) {
       friends.add(entityPlayer);

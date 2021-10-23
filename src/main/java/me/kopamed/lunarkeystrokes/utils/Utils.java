@@ -100,20 +100,33 @@ public class Utils {
       }
 
       public static double fovFromEntity(Entity en) {
-         return ((double)(mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D + 540.0D) % 360.0D - 180.0D;
+         return ((double)(mc.thePlayer.rotationYaw - fovToEntityHorizontal(en)) % 360.0D + 540.0D) % 360.0D - 180.0D;
       }
 
-      public static float fovToEntity(Entity ent) {
+      public static float fovToEntityHorizontal(Entity ent) {
          double x = ent.posX - mc.thePlayer.posX;
          double z = ent.posZ - mc.thePlayer.posZ;
-         double yaw = Math.atan2(x, z) * 57.2957795D;
-         return (float)(yaw * -1.0D);
+         double yaw = Math.atan2(x, z) * 57.2957795D; // returns theta angle to the player
+
+         return (float)(yaw * -1.0D); // reverse fov?
       }
 
-      public static boolean fov(Entity entity, float fov) {
-         fov = (float)((double)fov * 0.5D);
-         double v = ((double)(mc.thePlayer.rotationYaw - fovToEntity(entity)) % 360.0D + 540.0D) % 360.0D - 180.0D;
-         return v > 0.0D && v < (double)fov || (double)(-fov) < v && v < 0.0D;
+      public static float fovToEntityVertical(Entity ent) {
+         double thefuckinx = (ent.getEyeHeight() + ent.posY) - (mc.thePlayer.getEyeHeight() + mc.thePlayer.posY);
+         double x = ent.posX - mc.thePlayer.posX;
+         double z = ent.posZ - mc.thePlayer.posZ;
+         double theuhhfuckiny = Math.hypot(x, z);
+         double pitch = Math.atan2(thefuckinx, theuhhfuckiny) * 57.2957795D; // returns theta angle to the player
+
+
+
+         return (float)(pitch * -1.0D); // reverse fov?
+      }
+
+      public static boolean isEntityInFOV(Entity entity, float fov) {
+         float half = (float)((double)fov * 0.5D);
+         double v = ((double)(mc.thePlayer.rotationYaw - fovToEntityHorizontal(entity)) % 360.0D + 540.0D) % 360.0D - 180.0D;// hmmmm
+         return v > 0.0D && v < (double)half || (double)(-half) < v && v < 0.0D;
       }
 
       public static double getPlayerBPS(Entity en, int d) {

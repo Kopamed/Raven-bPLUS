@@ -103,7 +103,7 @@ public class Ravenbplus {
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
       MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
-      MinecraftForge.EVENT_BUS.register(new mouseManager());
+      MinecraftForge.EVENT_BUS.register(new MouseManager());
       MinecraftForge.EVENT_BUS.register(new KeySrokeRenderer());
       MinecraftForge.EVENT_BUS.register(new ChatHelper());
 

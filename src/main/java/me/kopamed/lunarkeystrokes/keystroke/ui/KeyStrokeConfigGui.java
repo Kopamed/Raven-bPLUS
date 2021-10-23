@@ -15,7 +15,7 @@ import me.kopamed.lunarkeystrokes.keystroke.ui.component.Component;
 import me.kopamed.lunarkeystrokes.keystroke.ui.component.components.Colour;
 import me.kopamed.lunarkeystrokes.keystroke.ui.component.components.Slider;
 import me.kopamed.lunarkeystrokes.keystroke.ui.component.components.Tick;
-import me.kopamed.lunarkeystrokes.utils.mouseManager;
+import me.kopamed.lunarkeystrokes.utils.MouseManager;
 import me.kopamed.lunarkeystrokes.main.ClientConfig;
 import me.kopamed.lunarkeystrokes.main.Ravenbplus;
 import net.minecraft.client.gui.GuiScreen;
@@ -263,7 +263,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
       }
 
       if (button == 0) {
-         mouseManager.addLeftClick();
+         MouseManager.addLeftClick();
          KeyStroke st = Ravenbplus.getKeyStroke();
          int startX = KeyStroke.x;
          int startY = KeyStroke.y;
@@ -286,7 +286,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
             this.moveType = MoveType.BAR;
          }
       } else if (button == 1) {
-         mouseManager.addRightClick();
+         MouseManager.addRightClick();
       }
 
    }

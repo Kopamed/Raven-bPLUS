@@ -4,14 +4,15 @@ package me.kopamed.lunarkeystrokes.module.modules.combat;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 
 import me.kopamed.lunarkeystrokes.module.Module;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Description;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Mode;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Slider;
 import me.kopamed.lunarkeystrokes.module.setting.settings.Tick;
+import me.kopamed.lunarkeystrokes.utils.MouseManager;
 import me.kopamed.lunarkeystrokes.utils.Utils;
-import me.kopamed.lunarkeystrokes.utils.mouseManager;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
@@ -35,6 +36,8 @@ public class ClickAssist extends Module {
    private Robot bot;
    private boolean engagedLeft = false;
    private boolean engagedRight = false;
+   private boolean skipLeft;
+   private boolean skipRight;
 
    public ClickAssist() {
       super("ClickAssist", Module.category.combat, 0);
@@ -48,7 +51,7 @@ public class ClickAssist extends Module {
       this.registerSetting(weaponOnly = new Tick("Weapon only", true));
       this.registerSetting(onlyWhileTargeting = new Tick("Only while targeting", false));
       this.registerSetting(leftChance = new Slider("Left chance", 80.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(minCPSRight = new Slider("Above _ cps (left)", 3, 0, 20, 1));
+      this.registerSetting(minCPSRight = new Slider("Above _ cps (left)", 3, 0, 20, 1)); // todo
 
       this.registerSetting(right = new Tick("Right click", false));
       this.registerSetting(blocksOnly = new Tick("Blocks only", true));
@@ -71,6 +74,59 @@ public class ClickAssist extends Module {
       this.bot = null;
    }
 
+   private void click(MouseEvent ev){
+      if(ev.button == 0 && left.isToggled() && !skipLeft){ // ad hecks for skip left
+         if(leftChance.getInput()/100 < Math.random()){
+            return;
+         }
+
+         //checks
+         if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
+            return;
+         }
+
+         if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+            return;
+         }
+
+         if(MouseManager.getLeftClickCounter() < minCPSLeft.getInput())
+            return;
+
+         // click
+         this.bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+         this.bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+         skipLeft = true;
+         this.fix(0);
+         // execute left
+      } else if(ev.button == 1 && right.isToggled()  && !skipRight){
+         if(rightChance.getInput()/100 < Math.random()){
+            return;
+         }
+
+         //checks
+         if (blocksOnly.isToggled()) {
+            ItemStack item = mc.thePlayer.getHeldItem();
+            if (item == null || !(item.getItem() instanceof ItemBlock)) {
+               this.fix(1);
+               return;
+            }
+         }
+
+         if(MouseManager.getRightClickCounter() < minCPSRight.getInput())
+            return;
+
+         // click
+         this.bot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+         this.bot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+         skipRight = true;
+         this.fix(1);
+         // execute right
+      } else if(skipLeft || skipRight){
+         skipLeft = false;
+         skipRight = false;
+      }
+   }
+
    @SubscribeEvent(
            priority = EventPriority.HIGH
    )
@@ -79,98 +135,24 @@ public class ClickAssist extends Module {
          if(ev.buttonstate)  // make sure that the button is released
             return;
 
-         if(ev.button == 0 && left.isToggled()){
-            // execute left
-         } else if(ev.button == 1 && right.isToggled()){
-            // execute right
-         }
+         click(ev);
 
       } else {
          if(!ev.buttonstate)  // make sure that the button is pressed
             return;
 
-         if(ev.button == 0 && left.isToggled()){
-            // execute left
-         } else if(ev.button == 1 && right.isToggled()){
-            // execute right
-         }
+         click(ev);
       }
-/*
-      if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && Utils.Player.isPlayerInGame()) {
-         if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
-            double ch;
-            if (ev.button == 0 && L.isToggled()) {
-               if (this.engagedLeft) {
-                  this.engagedLeft = false;
-               } else {
-                  if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
-                     return;
-                  }
-
-                  if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
-                     return;
-                  }
-
-                  if (chance.getInput() != 100.0D) {
-                     ch = Math.random();
-                     if (ch >= chance.getInput() / 100.0D) {
-                        this.fix(0);
-                        return;
-                     }
-                  }
-
-                  this.bot.mouseRelease(16);
-                  this.bot.mousePress(16);
-                  this.engagedLeft = true;
-               }
-            } else if (ev.button == 1 && R.isToggled()) {
-               if (this.engagedRight) {
-                  this.engagedRight = false;
-               } else {
-                  if (blocksOnly.isToggled()) {
-                     ItemStack item = mc.thePlayer.getHeldItem();
-                     if (item == null || !(item.getItem() instanceof ItemBlock)) {
-                        this.fix(1);
-                        return;
-                     }
-                  }
-
-                  if (above5.isToggled() && mouseManager.getRightClickCounter() <= 5) {
-                     this.fix(1);
-                     return;
-                  }
-
-                  if (chance.getInput() != 100.0D) {
-                     ch = Math.random();
-                     if (ch >= chance.getInput() / 100.0D) {
-                        this.fix(1);
-                        return;
-                     }
-                  }
-
-                  this.bot.mouseRelease(4);
-                  this.bot.mousePress(4);
-                  this.engagedRight = true;
-               }
-            }
-
-            this.fix(0);
-            this.fix(1);
-         } else {
-            this.fix(0);
-            this.fix(1);
-         }
-      }
-
- */
    }
+
+
 
    private void fix(int t) {
       if (t == 0) {
-         if (this.engagedLeft && !Mouse.isButtonDown(0)) {
+         if (skipLeft && !Mouse.isButtonDown(0)) {
             this.bot.mouseRelease(16);
          }
-      } else if (t == 1 && this.engagedRight && !Mouse.isButtonDown(1)) {
+      } else if (t == 1 && skipRight && !Mouse.isButtonDown(1)) {
          this.bot.mouseRelease(4);
       }
 

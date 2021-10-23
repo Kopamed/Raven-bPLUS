@@ -59,7 +59,7 @@ public class RodAimbot extends Module {
                } while(en == mc.thePlayer);
             } while(en.deathTime != 0);
          } while(!c.isToggled() && en.isInvisible());
-      } while((double)mc.thePlayer.getDistanceToEntity(en) > b.getInput() || AntiBot.bot(en) || !Utils.Player.fov(en, (float)f));
+      } while((double)mc.thePlayer.getDistanceToEntity(en) > b.getInput() || AntiBot.bot(en) || !Utils.Player.isEntityInFOV(en, (float)f));
 
       return en;
    }

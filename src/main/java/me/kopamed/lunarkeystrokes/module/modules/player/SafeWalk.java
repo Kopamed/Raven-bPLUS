@@ -93,20 +93,21 @@ public class SafeWalk extends Module {
                return;
             }
          }
-         if (mc.thePlayer.onGround) {
-            if (Utils.Player.playerOverAir()) {
-               if (blocksOnly.isToggled()) {
-                  ItemStack i = mc.thePlayer.getHeldItem();
-                  if (i == null || !(i.getItem() instanceof ItemBlock)) {
-                     if (isShifting) {
-                        isShifting = false;
-                        this.setShift(false);
-                     }
 
-                     return;
-                  }
+         if (blocksOnly.isToggled()) {
+            ItemStack i = mc.thePlayer.getHeldItem();
+            if (i == null || !(i.getItem() instanceof ItemBlock)) {
+               if (isShifting) {
+                  isShifting = false;
+                  this.setShift(false);
                }
 
+               return;
+            }
+         }
+
+         if (mc.thePlayer.onGround) {
+            if (Utils.Player.playerOverAir()) {
                // code fo the timer
                if(shiftTimeSettingActive){ // making sure that the player has set the value so some number
                   shiftTimer.setCooldown(Utils.Java.randomInt(shiftTime.getInputMin(), shiftTime.getInputMax() + 0.1));

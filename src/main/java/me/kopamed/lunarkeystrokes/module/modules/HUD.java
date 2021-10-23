@@ -108,7 +108,7 @@ public class HUD extends Module {
                ModuleManager.sortLongShort();
             }
          }
-         List<Module> en = new ArrayList(NotAName.moduleManager.listofmods());
+         List<Module> en = new ArrayList(NotAName.moduleManager.getModules());
          if(en.isEmpty()) return;
 
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);

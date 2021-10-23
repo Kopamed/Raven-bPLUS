@@ -127,7 +127,7 @@ public class ModuleManager {
       //this.addModule(new TargetHUD());
       this.addModule(new AutoWeapon());
       this.addModule(new BedwarsOverlay());
-      arrayLength = this.listofmods().size();
+      arrayLength = this.getModules().size();
       this.addModule(new DiscordRPCModule());
       this.addModule(new ShiftTap());
       this.addModule(new FPSSpoofer());
@@ -158,14 +158,14 @@ public class ModuleManager {
       modsList.add(m);
    }
 
-   public List<Module> listofmods() {
+   public List<Module> getModules() {
       return this.modsList;
    }
 
    public List<Module> inCateg(Module.category categ) {
       ArrayList<Module> categML = new ArrayList<>();
 
-      for (Module mod : this.listofmods()) {
+      for (Module mod : this.getModules()) {
          if (mod.moduleCategory().equals(categ)) {
             categML.add(mod);
          }
@@ -173,6 +173,7 @@ public class ModuleManager {
 
       return categML;
    }
+
 
    public static void sort() {
       if (HUD.alphabeticalSort.isToggled()) {

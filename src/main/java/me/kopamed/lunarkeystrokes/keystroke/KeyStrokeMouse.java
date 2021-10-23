@@ -2,14 +2,10 @@
 
 package me.kopamed.lunarkeystrokes.keystroke;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.kopamed.lunarkeystrokes.utils.mouseManager;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 public class KeyStrokeMouse {
    private static final String[] a = new String[]{"LMB", "RMB"};
