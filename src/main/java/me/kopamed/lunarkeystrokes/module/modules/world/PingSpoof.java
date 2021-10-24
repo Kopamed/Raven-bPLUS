@@ -10,7 +10,7 @@ public class PingSpoof extends Module {
 
     public PingSpoof(){
         super("PingSpoof", category.world, 0);
-        this.registerSetting(spoof = new Slider("Increase ping by", 300, 1, 100000, 10));
+        this.registerSetting(spoof = new Slider("Increase ping by", 300, 1, 500, 10));
     }
 
     @Override
