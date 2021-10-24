@@ -51,7 +51,7 @@ public class ClickAssist extends Module {
       this.registerSetting(weaponOnly = new Tick("Weapon only", true));
       this.registerSetting(onlyWhileTargeting = new Tick("Only while targeting", false));
       this.registerSetting(leftChance = new Slider("Left chance", 80.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(minCPSRight = new Slider("Above _ cps (left)", 3, 0, 20, 1)); // todo
+      this.registerSetting(minCPSLeft = new Slider("Above _ cps (left)", 3, 0, 20, 1)); // todo
 
       this.registerSetting(right = new Tick("Right click", false));
       this.registerSetting(blocksOnly = new Tick("Blocks only", true));
@@ -88,6 +88,7 @@ public class ClickAssist extends Module {
          if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
             return;
          }
+
 
          if(MouseManager.getLeftClickCounter() < minCPSLeft.getInput())
             return;

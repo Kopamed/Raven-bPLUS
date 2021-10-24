@@ -19,10 +19,10 @@ import org.lwjgl.input.Mouse;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockHit extends Module {
-    public static Slider range, eventType, chance;
+    public static Slider eventType, chance;
     public static Description eventTypeDesc;
     public static Tick onlyPlayers, onRightMBHold;
-    public static RangeSlider waitMs, hitPer, postDelay;
+    public static RangeSlider waitMs, hitPer, postDelay, range;
     public static boolean executingAction, hitCoolDown, alreadyHit, safeGuard;
     public static int hitTimeout, hitsWaited;
     private CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
@@ -36,7 +36,7 @@ public class BlockHit extends Module {
         this.registerSetting(hitPer = new RangeSlider("Once every ... hits", 1, 1, 1, 10, 1));
         this.registerSetting(postDelay = new RangeSlider("Post Delay (MS)", 10, 40, 0, 500, 1));
         this.registerSetting(chance =  new Slider("Chance %", 100, 0, 100, 1));
-        this.registerSetting(range = new Slider("Range: ", 3, 1, 6, 0.05));
+        this.registerSetting(range = new RangeSlider("Range: ", 0, 2.8, 0, 6, 0.05));
         this.registerSetting(eventType = new Slider("Value: ", 2, 1, 2, 1));
         this.registerSetting(eventTypeDesc = new Description("Mode: POST"));
     }
@@ -112,7 +112,7 @@ public class BlockHit extends Module {
                 return;
             }
 
-            if (mc.thePlayer.getDistanceToEntity(target) <= range.getInput()) {
+            if (mc.thePlayer.getDistanceToEntity(target) <= range.getInputMax() && mc.thePlayer.getDistanceToEntity(target) >= range.getInputMin()) {
                 if ((target.hurtResistantTime >= 10 && Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1] == Utils.Modes.SprintResetTimings.POST) || (target.hurtResistantTime <= 10 && Utils.Modes.SprintResetTimings.values()[(int) eventType.getInput() - 1] == Utils.Modes.SprintResetTimings.PRE)) {
 
                     if (onlyPlayers.isToggled()){

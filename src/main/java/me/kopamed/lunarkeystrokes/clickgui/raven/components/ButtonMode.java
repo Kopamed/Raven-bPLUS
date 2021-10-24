@@ -45,14 +45,14 @@ public class ButtonMode extends Component {
 
 
     public void mouseDown(int x, int y, int b) {
-        System.out.println(i(x,y) + " " + this.p.po + " " + b);
+        //System.out.println(i(x,y) + " " + this.p.po + " " + b);
         if (this.i(x, y) && b == 0 && this.p.po) {
             this.mode.nextMode();
         }
     }
 
     private boolean i(int x, int y) {
-        System.out.println(x + ", " + y + " : " + this.x + " " + this.y);
+        //System.out.println(x + ", " + y + " : " + this.x + " " + this.y);
         return x > this.x && x < this.x + this.p.category.getWidth() && y > this.y && y < this.y + 12;
     }
 }

@@ -24,7 +24,9 @@ import me.kopamed.lunarkeystrokes.module.modules.HUD;
 import me.kopamed.lunarkeystrokes.module.modules.client.SelfDestruct;
 import me.kopamed.lunarkeystrokes.utils.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.network.INetHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -158,6 +160,13 @@ public class Ravenbplus {
 
    @SubscribeEvent
    public void onTick(ClientTickEvent e) {
+      if (mc.theWorld != null) {
+         INetHandler inethandler = mc.thePlayer.sendQueue.getNetworkManager().getNetHandler();
+         NetHandler myHandler = new NetHandler((NetHandlerPlayClient) inethandler);
+         if (!(inethandler instanceof NetHandler)) {
+            mc.thePlayer.sendQueue.getNetworkManager().setNetHandler(myHandler);
+         }
+      }
       if (e.phase == Phase.END) {
          if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
             for (int i = 0; i < ModuleManager.modListSize(); i++) {

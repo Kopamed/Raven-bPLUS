@@ -574,6 +574,7 @@ public class AutoClicker extends Module {
    public boolean breakBlock() {
       if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
          BlockPos p = mc.objectMouseOver.getBlockPos();
+
          if (p != null) {
             Block bl = mc.theWorld.getBlockState(p).getBlock();
             if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {

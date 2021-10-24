@@ -4,6 +4,7 @@ package me.kopamed.lunarkeystrokes.module;
 
 import me.kopamed.lunarkeystrokes.module.modules.client.*;
 import me.kopamed.lunarkeystrokes.module.modules.fun.*;
+import me.kopamed.lunarkeystrokes.module.modules.world.PingSpoof;
 import me.kopamed.lunarkeystrokes.utils.Utils;
 import me.kopamed.lunarkeystrokes.module.modules.*;
 import me.kopamed.lunarkeystrokes.module.modules.combat.*;
@@ -137,6 +138,8 @@ public class ModuleManager {
       this.addModule(new AutoBlock());
       this.addModule(new RandomPack());
       this.addModule(new SuperAutoClicker());
+      this.addModule(new PingSpoof());
+      this.addModule(new GhostBlocks());
       this.defEn();
 
       initialized = true;
