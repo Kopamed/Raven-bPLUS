@@ -1,8 +1,8 @@
 package me.superblaubeere27.client.notifications;
 
-import me.kopamed.lunarkeystrokes.clickgui.raven.ClickGui;
-import me.kopamed.lunarkeystrokes.module.modules.client.Gui;
-import me.kopamed.lunarkeystrokes.utils.Utils;
+import me.kopamed.raven.bplus.client.visual.clickgui.raven.ClickGui;
+import me.kopamed.raven.bplus.client.feature.module.modules.client.Gui;
+import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;

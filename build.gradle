@@ -44,10 +44,10 @@ minecraft {
     runDir = "run"
 
     mappings = "stable_20"
-    //clientJvmArgs += "-Dfml.coreMods.load=me.kopamed.lunarkeystrokes.tweaker.FMLLoadingPlugin"
+    //clientJvmArgs += "-Dfml.coreMods.load=FMLLoadingPlugin"
 }
 
-/* -Dfml.coreMods.load=me.kopamed.lunarkeystrokes.tweaker.FMLLoadingPlugin*/
+/* -Dfml.coreMods.load=FMLLoadingPlugin*/
 jar {
     enabled = false
     dependsOn(shadowJar { classifier = null })
@@ -56,7 +56,7 @@ jar {
 shadowJar {
     manifest {
         attributes(
-                "FMLCorePlugin": "me.kopamed.lunarkeystrokes.tweaker.FMLLoadingPlugin",
+                "FMLCorePlugin": "FMLLoadingPlugin",
                 "ForceLoadAsMod": true,
                 FMLCorePluginContainsFMLMod: true,
                 "ModSide": "CLIENT"
