@@ -21,7 +21,7 @@ public class AntiBot extends Module {
    public static Tick a;
 
    public AntiBot() {
-      super("AntiBot", ModuleCategory.world, 0);
+      super("AntiBot", ModuleCategory.World, 0);
       this.registerSetting(a = new Tick("Wait 80 ticks", false));
    }
 

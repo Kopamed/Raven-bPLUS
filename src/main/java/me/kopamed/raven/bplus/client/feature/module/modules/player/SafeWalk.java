@@ -40,7 +40,7 @@ public class SafeWalk extends Module {
    private CoolDown shiftTimer = new CoolDown(0);
 
    public SafeWalk() {
-      super("SafeWalk", ModuleCategory.player, 0);
+      super("SafeWalk", ModuleCategory.Player, 0);
       this.registerSetting(doShift = new Tick("Shift", false));
       this.registerSetting(shiftOnJump = new Tick("Shift during jumps", false));
       this.registerSetting(shiftTime = new RangeSlider("Shift time: (s)", 10, 20, 0, 500, 1));

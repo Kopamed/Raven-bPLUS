@@ -29,7 +29,7 @@ public class WTap extends Module {
     public static CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
 
     public WTap(){
-        super("WTap", ModuleCategory.combat, 0);
+        super("WTap", ModuleCategory.Combat, 0);
         this.registerSetting(onlyPlayers = new Tick("Only combo players", true));
         this.registerSetting(actionTicks = new RangeSlider("Action Time (MS)",  25, 55, 1, 500, 1));
         this.registerSetting(onceEvery =  new RangeSlider("Once every ... hits", 1, 1, 1, 10, 1));

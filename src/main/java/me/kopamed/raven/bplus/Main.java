@@ -5,6 +5,9 @@ import me.kopamed.raven.bplus.keystroke.KeyStroke;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
+import java.awt.*;
+import java.io.IOException;
+
 @Mod(modid = Main.MODID, version = Main.VERSION)
 public class Main
 {
@@ -12,8 +15,7 @@ public class Main
     public static final String VERSION = "b1";
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
      // new KeyStroke(); //todo
         new Raven();
     }

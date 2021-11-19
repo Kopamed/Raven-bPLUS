@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Chams extends Module {
    public Chams() {
-      super("Chams", ModuleCategory.render, 0);
+      super("Chams", ModuleCategory.Render, 0);
    }
 
    @SubscribeEvent

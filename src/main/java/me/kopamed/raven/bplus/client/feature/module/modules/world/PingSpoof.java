@@ -9,7 +9,7 @@ public class PingSpoof extends Module {
     public static boolean toggled = false;
 
     public PingSpoof(){
-        super("PingSpoof", ModuleCategory.world, 0);
+        super("PingSpoof", ModuleCategory.World, 0);
         this.registerSetting(spoof = new Slider("Increase ping by", 300, 1, 100000, 10));
     }
 

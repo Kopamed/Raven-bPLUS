@@ -15,7 +15,7 @@ public class Sprint extends Module {
    public static Tick a;
 
    public Sprint() {
-      super("Sprint", ModuleCategory.movement, 0);
+      super("Sprint", ModuleCategory.Movement, 0);
       a = new Tick("OmniSprint", false);
       this.registerSetting(a);
    }

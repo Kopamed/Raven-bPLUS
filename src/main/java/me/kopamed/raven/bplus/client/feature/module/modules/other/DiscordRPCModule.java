@@ -19,7 +19,7 @@ public class DiscordRPCModule extends Module {
 
 
     public DiscordRPCModule() {
-        super("DiscordRPC", ModuleCategory.other.other);
+        super("DiscordRPC", ModuleCategory.Other.Other);
 
         Tracker tracker = Raven.client.getTracker();
         String osArch = tracker.getOsArch();

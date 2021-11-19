@@ -17,7 +17,7 @@ public class Boost extends Module {
    private boolean t = false;
 
    public Boost() {
-      super("Boost", ModuleCategory.movement, 0);
+      super("Boost", ModuleCategory.Movement, 0);
       this.registerSetting(c = new Description("20 ticks are in 1 second"));
       this.registerSetting(a = new Slider("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
       this.registerSetting(b = new Slider("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));

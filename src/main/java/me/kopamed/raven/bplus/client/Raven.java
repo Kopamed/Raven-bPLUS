@@ -1,6 +1,8 @@
 package me.kopamed.raven.bplus.client;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -28,7 +30,7 @@ public class Raven {
 
    private boolean destroyed = false;
 
-   public Raven() {
+   public Raven() throws IOException, FontFormatException {
       client = this;
       this.mc = Minecraft.getMinecraft();
       this.moduleManager = new ModuleManager();
@@ -52,22 +54,30 @@ public class Raven {
 
    }
 
-   private void setUpFontRenderer() {
+   private void setUpFontRenderer() throws IOException, FontFormatException {
       char[] chars = new char[256];
       for(int i = 0; i < chars.length; i++){
          chars[i] = (char) i;
       }
 
-      GlyphPage glyphPage = new GlyphPage(new Font("Adventure", Font.PLAIN, 80), true, true);
+      InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("assets/raven/font/Adventure.ttf");
+      System.out.println(stream == null);
+      //Font font = Font.createFont(Font.TRUETYPE_FONT, stream);
+      Font font = new Font("Heavitas", Font.PLAIN, 80);
+      //System.out.println(font.getSize());
+
+
+
+      GlyphPage glyphPage = new GlyphPage(font, true, true);
       glyphPage.generateGlyphPage(chars);
       glyphPage.setupTexture();
-      GlyphPage glyphPageBold = new GlyphPage(new Font("Adventure", Font.BOLD, 80), true, true);
+      GlyphPage glyphPageBold = new GlyphPage(font, true, true);
       glyphPage.generateGlyphPage(chars);
       glyphPage.setupTexture();
-      GlyphPage glyphPageItalic = new GlyphPage(new Font("Adventure", Font.ITALIC, 80), true, true);
+      GlyphPage glyphPageItalic = new GlyphPage(font, true, true);
       glyphPage.generateGlyphPage(chars);
       glyphPage.setupTexture();
-      GlyphPage glyphPageBoth = new GlyphPage(new Font("Adventure", Font.CENTER_BASELINE, 80), true, true);
+      GlyphPage glyphPageBoth = new GlyphPage(font, true, true);
       glyphPage.generateGlyphPage(chars);
       glyphPage.setupTexture();
 

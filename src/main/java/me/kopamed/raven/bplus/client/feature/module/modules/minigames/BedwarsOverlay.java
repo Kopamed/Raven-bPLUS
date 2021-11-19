@@ -33,7 +33,7 @@ public class BedwarsOverlay extends Module {
 
     public BedwarsOverlay() {
 
-        super("Bedwars Overlay", ModuleCategory.minigames, 0);
+        super("Bedwars Overlay", ModuleCategory.Minigames, 0);
         this.registerSetting(bombiesMomento = new Description("B0MBIES moment"));
         overlayHeight = 170;
         overlayWidth = 300;

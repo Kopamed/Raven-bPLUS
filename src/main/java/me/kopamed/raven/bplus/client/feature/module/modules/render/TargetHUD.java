@@ -17,7 +17,7 @@ public class TargetHUD extends Module {
     public static FontRenderer fr;
     ScaledResolution sr;
     public TargetHUD() {
-        super("Target HUD", ModuleCategory.render, 0);
+        super("Target HUD", ModuleCategory.Render, 0);
         sr = new ScaledResolution(Minecraft.getMinecraft());
         height = sr.getScaledHeight();
         width = sr.getScaledWidth();

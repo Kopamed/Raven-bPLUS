@@ -24,7 +24,7 @@ public class Freecam extends Module {
    private final float[] sAng = new float[]{0.0F, 0.0F};
 
    public Freecam() {
-      super("Freecam", ModuleCategory.player, 0);
+      super("Freecam", ModuleCategory.Player, 0);
       this.registerSetting(a = new Slider("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
       this.registerSetting(b = new Tick("Disable on damage", true));
    }

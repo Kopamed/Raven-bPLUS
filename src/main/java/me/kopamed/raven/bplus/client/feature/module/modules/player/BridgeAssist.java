@@ -31,7 +31,7 @@ public class BridgeAssist extends Module {
 
 
     public BridgeAssist() {
-        super("Bridge Assist", ModuleCategory.player, 0);
+        super("Bridge Assist", ModuleCategory.Player, 0);
         Description goodAdvice;
         this.registerSetting(goodAdvice = new Description("Best with fastplace, not autoplace"));
         this.registerSetting(waitFor = new Slider("Wait time (ms)", 500, 0, 5000, 25));

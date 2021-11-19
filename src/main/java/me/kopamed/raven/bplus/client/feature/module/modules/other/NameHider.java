@@ -13,7 +13,7 @@ public class NameHider extends Module {
    public static String n = "ravenb+";
 
    public NameHider() {
-      super("Name Hider", ModuleCategory.other, 0);
+      super("Name Hider", ModuleCategory.Other, 0);
       this.registerSetting(a = new Description(Utils.Java.uf("command") + ": cname [name]"));
    }
 

@@ -21,7 +21,7 @@ public class FastPlace extends Module {
    public static Field r = null;
 
    public FastPlace() {
-      super("FastPlace", ModuleCategory.player, 0);
+      super("FastPlace", ModuleCategory.Player, 0);
       this.registerSetting(a = new Slider("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
       this.registerSetting(b = new Tick("Blocks only", true));
 

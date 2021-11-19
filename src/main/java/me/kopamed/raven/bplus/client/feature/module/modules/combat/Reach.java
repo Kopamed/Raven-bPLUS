@@ -31,7 +31,7 @@ public class Reach extends Module {
    public static Tick hit_through_blocks;
 
    public Reach() {
-      super("Reach", ModuleCategory.combat, 0);
+      super("Reach", ModuleCategory.Combat, 0);
       this.registerSetting(reach = new RangeSlider("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
       this.registerSetting(weapon_only = new Tick("Weapon only", false));
       this.registerSetting(moving_only = new Tick("Moving only", false));

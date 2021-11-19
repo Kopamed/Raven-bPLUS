@@ -17,7 +17,7 @@ public class DelayRemover extends Module {
    private Field l = null;
 
    public DelayRemover() {
-      super("Delay Remover", ModuleCategory.combat, 0);
+      super("Delay Remover", ModuleCategory.Combat, 0);
       this.registerSetting(a = new Description("Gives you 1.7 hitreg."));
    }
 

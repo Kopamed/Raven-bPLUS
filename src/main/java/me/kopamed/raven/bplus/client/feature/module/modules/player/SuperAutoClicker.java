@@ -20,7 +20,7 @@ public class SuperAutoClicker extends Module {
     private int currentFPS = 0;
 
     public SuperAutoClicker(){
-        super("SuperAutoClicker", ModuleCategory.player);
+        super("SuperAutoClicker", ModuleCategory.Player);
 
         this.registerSetting(credits = new Description("Huge thanks to Caterpillow"));
         this.registerSetting(warning = new Description("Ban speedruns be like"));

@@ -13,7 +13,7 @@ public class NoSlow extends Module {
    public static Slider b;
 
    public NoSlow() {
-      super("NoSlow", ModuleCategory.movement, 0);
+      super("NoSlow", ModuleCategory.Movement, 0);
       this.registerSetting(a = new Description("Default is 80% motion reduction."));
       this.registerSetting(c = new Description("Hypixel max: 22%"));
       this.registerSetting(b = new Slider("Slow %", 80.0D, 0.0D, 80.0D, 1.0D));

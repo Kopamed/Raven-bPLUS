@@ -12,7 +12,7 @@ public class Fullbright extends Module {
     private final float clientGamma;
 
     public Fullbright() {
-        super("Fullbright", ModuleCategory.render, 0);
+        super("Fullbright", ModuleCategory.Render, 0);
 
         Description description;
         this.registerSetting(description = new Description("No more darkness!"));

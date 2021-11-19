@@ -29,7 +29,7 @@ public class STap extends Module {
     private CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
 
     public STap(){
-        super("STap", ModuleCategory.combat, 0);
+        super("STap", ModuleCategory.Combat, 0);
         this.registerSetting(onlyPlayers = new Tick("Only combo players", true));
         this.registerSetting(actionTicks = new RangeSlider("Action Time (MS)",  25, 55, 1, 500, 1));
         this.registerSetting(onceEvery =  new RangeSlider("Once every ... hits", 1, 1, 1, 10, 1));

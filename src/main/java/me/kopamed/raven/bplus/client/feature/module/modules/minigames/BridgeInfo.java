@@ -44,7 +44,7 @@ public class BridgeInfo extends Module {
    private int blc = 0;
 
    public BridgeInfo() {
-      super("Bridge Info", ModuleCategory.minigames, 0);
+      super("Bridge Info", ModuleCategory.Minigames, 0);
       this.registerSetting(a = new Description("Only for solos."));
       this.registerSetting(ep = new Tick("Edit position", false));
    }

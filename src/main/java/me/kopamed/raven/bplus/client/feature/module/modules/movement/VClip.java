@@ -10,7 +10,7 @@ public class VClip extends Module {
    public static Slider a;
 
    public VClip() {
-      super("VClip", ModuleCategory.movement, 0);
+      super("VClip", ModuleCategory.Movement, 0);
       this.registerSetting(a = new Slider("Distace", 2.0D, -10.0D, 10.0D, 0.5D));
    }
 

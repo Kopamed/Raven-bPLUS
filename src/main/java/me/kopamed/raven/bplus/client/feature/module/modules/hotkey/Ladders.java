@@ -11,7 +11,7 @@ public class Ladders extends Module {
     private final Tick preferSlot;
     private final Slider hotbarSlotPreference;
     public Ladders() {
-        super("Ladders", ModuleCategory.hotkey, 0);
+        super("Ladders", ModuleCategory.Hotkey, 0);
 
         this.registerSetting(preferSlot = new Tick("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new Slider("Prefer wich slot", 8, 1, 9, 1));

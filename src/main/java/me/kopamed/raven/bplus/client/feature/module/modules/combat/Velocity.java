@@ -19,7 +19,7 @@ public class Velocity extends Module {
    public static Tick e;
 
    public Velocity() {
-      super("Velocity", ModuleCategory.combat, 0);
+      super("Velocity", ModuleCategory.Combat, 0);
       this.registerSetting(a = new Slider("Horizontal", 90.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(b = new Slider("Vertical", 100.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(c = new Slider("Chance", 100.0D, 0.0D, 100.0D, 1.0D));

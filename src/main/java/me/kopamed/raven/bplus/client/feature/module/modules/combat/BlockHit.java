@@ -30,7 +30,7 @@ public class BlockHit extends Module {
     private boolean waitingForPostDelay;
 
     public BlockHit() {
-        super("BlockHit", ModuleCategory.combat, 0);
+        super("BlockHit", ModuleCategory.Combat, 0);
         this.registerSetting(onlyPlayers = new Tick("Only combo players", true));
         this.registerSetting(onRightMBHold = new Tick("When holding down rmb", true));
         this.registerSetting(waitMs = new RangeSlider("Action Time (MS)", 110, 150, 1, 500, 1));

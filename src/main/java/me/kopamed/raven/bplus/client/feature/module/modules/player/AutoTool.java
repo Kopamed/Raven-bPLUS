@@ -29,7 +29,7 @@ public class AutoTool extends Module {
     //public static List<Block> pickaxe = Arrays.asList(ItemBlock.class, BlockIce.class);
 
     public AutoTool() {
-        super("Auto Tool", ModuleCategory.player, 0);
+        super("Auto Tool", ModuleCategory.Player, 0);
 
         this.registerSetting(hotkeyBack = new Tick("Hotkey back", true));
         this.registerSetting(mineDelay = new RangeSlider("Max delay", 10, 50, 0, 2000, 1));

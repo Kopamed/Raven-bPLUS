@@ -41,7 +41,7 @@ public class ClickAssist extends Module {
    private boolean skipRight;
 
    public ClickAssist() {
-      super("ClickAssist", ModuleCategory.combat, 0);
+      super("ClickAssist", ModuleCategory.Combat, 0);
 
       // registering settings
       this.registerSetting(desc = new Description("Boost your CPS."));

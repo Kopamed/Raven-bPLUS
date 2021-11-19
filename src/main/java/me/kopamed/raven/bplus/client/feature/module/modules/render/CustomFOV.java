@@ -8,7 +8,7 @@ public class CustomFOV extends Module {
     public static Slider FOV;
 
     public CustomFOV(){
-        super("CustomFOV", ModuleCategory.render, 0);
+        super("CustomFOV", ModuleCategory.Render, 0);
         this.registerSetting(FOV = new Slider("FOV:", 180, 0, 420, 1));
     }
 

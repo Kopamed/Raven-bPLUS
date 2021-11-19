@@ -34,7 +34,7 @@ public class GhostBlocks extends Module {
     private World inWorld;
 
     public GhostBlocks(){
-        super("GhostBlocks", ModuleCategory.player);
+        super("GhostBlocks", ModuleCategory.Player);
         this.registerSetting(help = new Description("RMB w/ fist to place blocks"));
         this.registerSetting(withItem = new Mode("When holding", new String[]{"Nothing", "Sword", "Tool", "Block"}, 0));
         this.registerSetting(airRange = new Slider("Range when looking at air", 3, 0, 50, 1));

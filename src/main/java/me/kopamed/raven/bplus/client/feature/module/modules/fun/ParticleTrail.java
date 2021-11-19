@@ -14,7 +14,7 @@ public class ParticleTrail extends Module {
     public static Description b;
 
     public ParticleTrail() {
-        super("Particle Trail", ModuleCategory.fun, 0);
+        super("Particle Trail", ModuleCategory.Fun, 0);
         this.registerSetting(a = new Slider("Value:", 1, 1, EnumParticleTypes.values().length, 1));
         this.registerSetting(b = new Description("Mode: FLAME"));
     }

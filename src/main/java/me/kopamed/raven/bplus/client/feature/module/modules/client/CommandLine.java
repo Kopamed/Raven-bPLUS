@@ -12,7 +12,7 @@ public class CommandLine extends Module {
    public static Tick animate;
 
    public CommandLine() {
-      super("Command line", ModuleCategory.client, 0);
+      super("Command line", ModuleCategory.Client, 0);
       this.registerSetting(animate = new Tick("Animate", true));
    }
 

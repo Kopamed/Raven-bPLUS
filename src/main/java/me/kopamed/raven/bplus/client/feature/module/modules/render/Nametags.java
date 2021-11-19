@@ -26,7 +26,7 @@ public class Nametags extends Module {
    public static Tick e;
 
    public Nametags() {
-      super("Nametags", ModuleCategory.render, 0);
+      super("Nametags", ModuleCategory.Render, 0);
       this.registerSetting(a = new Slider("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
       this.registerSetting(b = new Tick("Rect", true));
       this.registerSetting(c = new Tick("Show health", true));

@@ -5,7 +5,7 @@ import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 
 public class KillAura extends Module {
     public KillAura(){
-        super("KillAura", ModuleCategory.blatant);
+        super("KillAura", ModuleCategory.Blatant);
     }
 
     @Override

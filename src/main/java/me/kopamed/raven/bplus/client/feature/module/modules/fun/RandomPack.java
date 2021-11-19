@@ -14,7 +14,7 @@ public class RandomPack extends Module {
     private File dir;
 
     public RandomPack(){
-        super("RandomPack", ModuleCategory.fun);
+        super("RandomPack", ModuleCategory.Fun);
 
         dir = new File(mc.mcDataDir + File.separator + "resourcepacks");
         this.registerSetting(packAmount = new Description("You have " + getPackAmount() + " packs"));

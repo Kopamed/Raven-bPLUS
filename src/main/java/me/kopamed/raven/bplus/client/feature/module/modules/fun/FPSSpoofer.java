@@ -17,7 +17,7 @@ public class FPSSpoofer extends Module {
     public static int ticksPassed;
 
     public FPSSpoofer() {
-        super("FPSSpoof", ModuleCategory.fun, 0);
+        super("FPSSpoof", ModuleCategory.Fun, 0);
         this.registerSetting(desc = new Description("Spoofs your fps"));
         this.registerSetting(fps = new RangeSlider("FPS", 99860, 100000, 0, 100000, 100));
 

@@ -22,7 +22,7 @@ public class RodAimbot extends Module {
    public static Tick c;
 
    public RodAimbot() {
-      super("RodAimbot", ModuleCategory.combat, 0);
+      super("RodAimbot", ModuleCategory.Combat, 0);
       this.registerSetting(a = new Slider("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
       this.registerSetting(b = new Slider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(c = new Tick("Aim invis", false));

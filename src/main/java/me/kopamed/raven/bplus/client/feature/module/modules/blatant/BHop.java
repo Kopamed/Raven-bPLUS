@@ -14,7 +14,7 @@ public class BHop extends Module {
    private final double bspd = 0.0025D;
 
    public BHop() {
-      super("Bhop", ModuleCategory.blatant, 0);
+      super("Bhop", ModuleCategory.Blatant, 0);
       this.registerSetting(a = new Slider("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 

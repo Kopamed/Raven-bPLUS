@@ -92,6 +92,6 @@ public class MaterialDark implements Theme {
 
     @Override
     public Color getBackdropColour() {
-        return new Color(46, 46, 46);
+        return new Color(46, 46, 46, 90);
     }
 }

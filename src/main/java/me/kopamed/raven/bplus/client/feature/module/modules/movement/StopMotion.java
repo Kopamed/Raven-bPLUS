@@ -13,7 +13,7 @@ public class StopMotion extends Module {
    public static Tick c;
 
    public StopMotion() {
-      super("Stop Motion", ModuleCategory.movement, 0);
+      super("Stop Motion", ModuleCategory.Movement, 0);
       this.registerSetting(a = new Tick("Stop X", true));
       this.registerSetting(b = new Tick("Stop Y", true));
       this.registerSetting(c = new Tick("Stop Z", true));

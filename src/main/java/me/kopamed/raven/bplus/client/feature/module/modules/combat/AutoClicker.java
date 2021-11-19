@@ -71,7 +71,7 @@ public class AutoClicker extends Module {
    private String[] clickStyles = new String[]{"Jitter1", "Jitter2"};
 
    public AutoClicker() {
-      super("AutoClicker", ModuleCategory.combat, 0);
+      super("AutoClicker", ModuleCategory.Combat, 0);
       this.registerSetting(bestWithDelayRemover = new Description("Best with delay remover."));
 
       this.registerSetting(leftClick = new Tick("Left click", true));

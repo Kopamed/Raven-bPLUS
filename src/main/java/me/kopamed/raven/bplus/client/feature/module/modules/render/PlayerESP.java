@@ -38,7 +38,7 @@ public class PlayerESP extends Module {
    private int rgb_c = 0;
 
    public PlayerESP() {
-      super("PlayerESP", ModuleCategory.render, 0);
+      super("PlayerESP", ModuleCategory.Render, 0);
       this.registerSetting(a = new Slider("Red", 0.0D, 0.0D, 255.0D, 1.0D));
       this.registerSetting(b = new Slider("Green", 255.0D, 0.0D, 255.0D, 1.0D));
       this.registerSetting(c = new Slider("Blue", 0.0D, 0.0D, 255.0D, 1.0D));

@@ -11,7 +11,7 @@ public class Spin extends Module {
     private float yaw;
 
     public Spin() {
-        super("Spin", ModuleCategory.fun, 0);
+        super("Spin", ModuleCategory.Fun, 0);
         this.registerSetting(a = new Slider("Rotation", 360.0D, 30.0D, 360.0D, 1.0D));
         this.registerSetting(b = new Slider("Speed", 25.0D, 1.0D, 60.0D, 1.0D));
     }

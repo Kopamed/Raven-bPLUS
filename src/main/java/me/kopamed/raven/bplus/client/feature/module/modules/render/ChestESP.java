@@ -24,7 +24,7 @@ public class ChestESP extends Module {
    public static Tick d;
 
    public ChestESP() {
-      super("ChestESP", ModuleCategory.render, 0);
+      super("ChestESP", ModuleCategory.Render, 0);
       a = new Slider("Red", 0.0D, 0.0D, 255.0D, 1.0D);
       b = new Slider("Green", 0.0D, 0.0D, 255.0D, 1.0D);
       c = new Slider("Blue", 255.0D, 0.0D, 255.0D, 1.0D);

@@ -8,7 +8,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class NoFall extends Module {
    public NoFall() {
-      super("NoFall", ModuleCategory.player, 0);
+      super("NoFall", ModuleCategory.Player, 0);
    }
 
    public void update() {

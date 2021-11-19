@@ -15,7 +15,7 @@ public class AutoJump extends Module {
    private boolean c = false;
 
    public AutoJump() {
-      super("AutoJump", ModuleCategory.player, 0);
+      super("AutoJump", ModuleCategory.Player, 0);
       this.registerSetting(b = new Tick("Cancel when shifting", true));
    }
 

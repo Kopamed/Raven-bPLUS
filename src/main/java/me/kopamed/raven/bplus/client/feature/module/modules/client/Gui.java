@@ -19,7 +19,7 @@ public class Gui extends Module {
    public static Tick rainbowNotification;
 
    public Gui() {
-      super("Gui", ModuleCategory.client, 54);
+      super("Gui", ModuleCategory.Client, 54);
       this.registerSetting(guiTheme = new Slider("Theme", 3.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(guiThemeDesc = new Description(Utils.md + "b+"));
       this.registerSetting(backgroundOpacity = new Slider("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));

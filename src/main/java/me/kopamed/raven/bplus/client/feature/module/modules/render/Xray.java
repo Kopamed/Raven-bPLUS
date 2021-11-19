@@ -34,7 +34,7 @@ public class Xray extends Module {
    private final long per = 200L;
 
    public Xray() {
-      super("Xray", ModuleCategory.render, 0);
+      super("Xray", ModuleCategory.Render, 0);
       this.registerSetting(r = new Slider("Range", 20.0D, 5.0D, 50.0D, 1.0D));
       this.registerSetting(a = new Tick("Iron", true));
       this.registerSetting(b = new Tick("Gold", true));

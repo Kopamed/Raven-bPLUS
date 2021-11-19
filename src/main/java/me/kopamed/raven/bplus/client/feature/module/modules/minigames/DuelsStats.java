@@ -32,7 +32,7 @@ public class DuelsStats extends Module {
    private final List<String> q = new ArrayList();
 
    public DuelsStats() {
-      super("Duels Stats", ModuleCategory.minigames, 0);
+      super("Duels Stats", ModuleCategory.Minigames, 0);
       this.registerSetting(value = new Slider("Value", 1.0D, 1.0D, 7.0D, 1.0D));
       this.registerSetting(moduleDesc = new Description("Mode: OVERALL"));
       this.registerSetting(a = new Tick("Send ign on join", false));

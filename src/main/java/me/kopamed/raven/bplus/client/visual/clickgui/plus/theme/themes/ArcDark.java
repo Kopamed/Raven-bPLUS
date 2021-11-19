@@ -92,6 +92,6 @@ public class ArcDark implements Theme {
 
     @Override
     public Color getBackdropColour() {
-        return new Color(68,73,86);
+        return new Color(68,73,86, 40);
     }
 }

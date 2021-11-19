@@ -16,7 +16,7 @@ public class Speed extends Module {
    public static Tick b;
 
    public Speed() {
-      super("Speed", ModuleCategory.movement, 0);
+      super("Speed", ModuleCategory.Movement, 0);
       this.registerSetting(dc = new Description("Hypixel max: 1.13"));
       this.registerSetting(a = new Slider("Speed", 1.2D, 1.0D, 1.5D, 0.01D));
       this.registerSetting(b = new Tick("Strafe only", false));

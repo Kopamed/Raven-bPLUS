@@ -51,7 +51,7 @@ public class ExplicitB9NameTags extends Module {
     private final Tick distanceSetting;
 
     public ExplicitB9NameTags() {
-        super("(ExplicitB9)NameTags", ModuleCategory.render);
+        super("(ExplicitB9)NameTags", ModuleCategory.Render);
 
         modeSetting = new Slider("Mode (Hearts/Percentage)", 1.0D, 1.0D, 2.0D, 1.0D);
         mode = "Percentage"; // default value

@@ -16,7 +16,7 @@ public class KeepSprint extends Module {
    public static Tick c;
 
    public KeepSprint() {
-      super("KeepSprint", ModuleCategory.movement, 0);
+      super("KeepSprint", ModuleCategory.Movement, 0);
       this.registerSetting(a = new Description("Default is 40% motion reduction."));
       this.registerSetting(b = new Slider("Slow %", 40.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(c = new Tick("Only reduce reach hits", false));

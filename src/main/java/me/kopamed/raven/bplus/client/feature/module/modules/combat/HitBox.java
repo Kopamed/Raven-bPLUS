@@ -33,7 +33,7 @@ public class HitBox extends Module {
    private static MovingObjectPosition mv;
 
    public HitBox() {
-      super("HitBox", ModuleCategory.combat, 0);
+      super("HitBox", ModuleCategory.Combat, 0);
       this.registerSetting(a = new Slider("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
       this.registerSetting(b = new Tick("Show new hitbox", false));
    }

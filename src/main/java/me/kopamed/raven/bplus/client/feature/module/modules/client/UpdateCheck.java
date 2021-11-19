@@ -18,7 +18,7 @@ public class UpdateCheck extends Module {
     public static Tick copyToClipboard;
     public static Tick openLink;
     public UpdateCheck() {
-        super("Update", ModuleCategory.client, 0);
+        super("Update", ModuleCategory.Client, 0);
         this.registerSetting(howToUse = new Description(Utils.Java.uf("command") + ": update"));
         this.registerSetting(copyToClipboard = new Tick("Copy to clipboard", true));
         this.registerSetting(openLink = new Tick("Open dl in browser", true));

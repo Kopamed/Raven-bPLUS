@@ -5,6 +5,7 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.C
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.ArcDark;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.MaterialDark;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.Vape;
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.CommandLine;
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.components.ButtonCategory;
 import me.kopamed.raven.bplus.client.Raven;
@@ -46,7 +47,7 @@ public class PlusGui extends GuiScreen {
     public PlusGui() {
         this.categories = new ArrayList<>();
         this.tooltip = "";
-        this.theme = new MaterialDark();
+        this.theme = new Vape();
 
         for(ModuleCategory moduleCategory : ModuleCategory.values()){
             CategoryComponent categoryComponent = new CategoryComponent(moduleCategory);

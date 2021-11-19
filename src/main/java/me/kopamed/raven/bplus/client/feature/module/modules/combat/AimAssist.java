@@ -46,7 +46,7 @@ public class AimAssist extends Module {
    private Entity lockedEntity = null;
 
    public AimAssist() {
-      super("AimAssist", ModuleCategory.combat, 0);
+      super("AimAssist", ModuleCategory.Combat, 0);
       this.registerSetting(speed = new Slider("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));// todo
       this.registerSetting(compliment = new Slider("Speed 2", 15.0D, 2D, 97.0D, 1.0D));// todo
       this.registerSetting(fov = new Slider("FOV", 90.0D, 15.0D, 360.0D, 1.0D));

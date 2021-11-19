@@ -10,7 +10,7 @@ public class ExtraBobbing extends Module {
     private boolean b;
 
     public ExtraBobbing() {
-        super("Extra Bobbing", ModuleCategory.fun, 0);
+        super("Extra Bobbing", ModuleCategory.Fun, 0);
         this.registerSetting(a = new Slider("Level", 1.0D, 0.0D, 8.0D, 0.1D));
     }
 

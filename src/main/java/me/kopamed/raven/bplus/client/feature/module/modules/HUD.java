@@ -37,7 +37,7 @@ public class HUD extends Module {
 
 
    public HUD() {
-      super("HUD", ModuleCategory.render, 0);
+      super("HUD", ModuleCategory.Render, 0);
       this.registerSetting(editPosition = new Tick("Edit position", false));
       this.registerSetting(dropShadow = new Tick("Drop shadow", true));
       this.registerSetting(logo = new Tick("Logo", false));
