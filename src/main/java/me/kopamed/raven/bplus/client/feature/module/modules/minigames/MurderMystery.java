@@ -29,7 +29,7 @@ public class MurderMystery extends Module {
    private static final List<EntityPlayer> det = new ArrayList();
 
    public MurderMystery() {
-      super("Murder Mystery", ModuleCategory.Minigames, 0);
+      super("Murder Mystery", ModuleCategory.Misc, 0);
       this.registerSetting(a = new Tick("Alert", true));
       this.registerSetting(b = new Tick("Search detectives", true));
       this.registerSetting(c = new Tick("Announce murderer", false));

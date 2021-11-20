@@ -8,7 +8,7 @@ import net.minecraft.item.*;
 
 public class Weapon extends Module {
     public Weapon() {
-        super("Weapon", ModuleCategory.Hotkey, 0);
+        super("Weapon", ModuleCategory.Hotkeys, 0);
     }
 
     @Override

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 public class Armour extends Module {
     public static Tick ignoreIfAlreadyEquipped;
     public Armour() {
-        super("Armour", ModuleCategory.Hotkey, 0);
+        super("Armour", ModuleCategory.Hotkeys, 0);
 
         this.registerSetting(ignoreIfAlreadyEquipped = new Tick("Ignore if already equipped", true));
     }

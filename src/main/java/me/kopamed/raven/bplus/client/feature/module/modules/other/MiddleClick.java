@@ -26,7 +26,7 @@ public class MiddleClick extends Module {
     public Method cpsCap;
 
     public MiddleClick() {
-        super("Middleclick", ModuleCategory.Other, 0);
+        super("Middleclick", ModuleCategory.Misc, 0);
         this.registerSetting(showHelp = new Tick("Show friend help in chat", true));
         this.registerSetting(action = new Slider("Value:", 1,1, 3, 1));
         this.registerSetting(actionDesc = new Description("Mode: PEARL_THROW"));

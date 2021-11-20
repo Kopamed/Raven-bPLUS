@@ -11,7 +11,7 @@ public class SelfDestruct extends Module {
    public static boolean destructed = false;
 
    public SelfDestruct() {
-      super("Self Destruct", ModuleCategory.Client, Keyboard.KEY_BACK);
+      super("Self Destruct", ModuleCategory.Misc, Keyboard.KEY_BACK);
    }
 
    public void onEnable() {

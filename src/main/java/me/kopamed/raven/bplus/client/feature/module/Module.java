@@ -60,8 +60,8 @@ public abstract class Module {
    }
 
    public void keybind() {
-      if (keycode != -1) {
-         if(Keyboard.isKeyDown (keycode)){
+      if (this.keycode != -1) {
+         if(Keyboard.isKeyDown(this.keycode)){
             if(!isToggled){
                if (bindMode == BindMode.HOLD){
                   enable();

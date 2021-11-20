@@ -6,27 +6,22 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.ArcDark;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.MaterialDark;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.Vape;
-import me.kopamed.raven.bplus.client.visual.clickgui.raven.CommandLine;
-import me.kopamed.raven.bplus.client.visual.clickgui.raven.components.ButtonCategory;
 import me.kopamed.raven.bplus.client.Raven;
-import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.helper.manager.VersionManager;
+import me.kopamed.raven.bplus.helper.manager.version.Version;
 import me.kopamed.raven.bplus.helper.utils.Timer;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class PlusGui extends GuiScreen {
+    private final String defaultTooltip;
     private ScheduledFuture sf;
     private Timer aT;
     private Timer aL;
@@ -43,11 +38,15 @@ public class PlusGui extends GuiScreen {
     private ArrayList<CategoryComponent> categories;
     private GlyphPageFontRenderer fontRenderer;
 
+    private final double goldenRatio = 1.618033988749894;
+
 
     public PlusGui() {
         this.categories = new ArrayList<>();
         this.tooltip = "";
-        this.theme = new Vape();
+        Version clientVersion = Raven.client.getVersionManager().getClientVersion();
+        this.defaultTooltip = "b" + clientVersion.getBranchCommit() + " of v" + clientVersion.getVersion() + " on branch " + clientVersion.getBranchName();
+        this.theme = new MaterialDark();
 
         for(ModuleCategory moduleCategory : ModuleCategory.values()){
             CategoryComponent categoryComponent = new CategoryComponent(moduleCategory);
@@ -69,16 +68,20 @@ public class PlusGui extends GuiScreen {
         this.sr = new ScaledResolution(this.mc);
         this.fontRenderer = Raven.client.getFontRenderer();
 
+        int categoryNumber = ModuleCategory.values().length;
         double marginX = sr.getScaledWidth() * 0.01;
         double marginY = sr.getScaledHeight() * 0.01;
-        double catWidth = width * 0.1083;
-        double catHeight = height * 0.04;
-        double currentY = marginY;
+        double totalMarginSpace = (categoryNumber + 1) * marginX;
+        double catWidth = (width - totalMarginSpace) / categoryNumber;
+        double catHeight = catWidth * (1/(goldenRatio * 3));
+        double currentX = marginX;
 
+        // todo @Kopamed one thing u should add is instead of having the category tabs be closed and vertically stacked by default have them open and stacked horizontally instead
         for(CategoryComponent categoryComponent : categories){
             categoryComponent.setSize(catWidth, catHeight);
-            categoryComponent.setLocation(marginX, currentY);
-            currentY += catHeight + marginY;
+            categoryComponent.setLocation(currentX, marginY);
+            categoryComponent.onResize();
+            currentX += catWidth + marginX;
         }
     }
 
@@ -97,6 +100,10 @@ public class PlusGui extends GuiScreen {
         double barHeight = desiredTextSize * 1.6;
         double barTextY = (height - barHeight + (barHeight - desiredTextSize) / 2);
         double dateX = (width - (fontRenderer.getStringWidth(Utils.Java.getDate()) * scaleFactor + marginX));
+        double tooltipX = 0;
+        double tooltipSize = fontRenderer.getStringWidth(tooltip.isEmpty() ? defaultTooltip : tooltip) * scaleFactor;
+        tooltipX = (width - tooltipSize) / 2;
+
 
         double entitySize = width * 0.05;
         double entityX = width - marginX - entitySize;
@@ -105,7 +112,7 @@ public class PlusGui extends GuiScreen {
         //bg
         drawRect(0, 0, (int)width, (int)height, (int)this.aR.getValueFloat(0.0F, Utils.Java.setTransparent(theme.getBackdropColour(), 90).getRGB(), 2));
 
-        GuiInventory.drawEntityOnScreen((int) (entityX - entitySize * 0.2), (int) (entityY + entitySize * 0.2), (int) entitySize, (float)(entityX + entitySize/2 - x), (float)(entityY + entitySize/2 - y), this.mc.thePlayer);
+        //GuiInventory.drawEntityOnScreen((int) (entityX - entitySize * 0.2), (int) (entityY + entitySize * 0.2), (int) entitySize, (float)(entityX + entitySize/2 - x), (float)(entityY + entitySize/2 - y), this.mc.thePlayer);
 
         //task bar
         Gui.drawRect(0, (int)(height - barHeight), (int)width, (int) height, theme.getBackgroundColour().getRGB());
@@ -116,6 +123,7 @@ public class PlusGui extends GuiScreen {
         GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
         fontRenderer.drawString("Made by Kopamed and Blowsy", (float)(marginX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
         fontRenderer.drawString(Utils.Java.getDate(), (float)(dateX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
+        fontRenderer.drawString(tooltip.isEmpty() ? defaultTooltip : tooltip, (float) (tooltipX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
         GL11.glPopMatrix();
 
         for (CategoryComponent category : categories) {

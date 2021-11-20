@@ -1,38 +1,33 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components;
 
+import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.module.modules.AutoConfig;
-import me.kopamed.raven.bplus.client.feature.module.modules.client.Gui;
-import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.components.*;
-import me.kopamed.raven.bplus.client.feature.setting.settings.*;
-import net.minecraft.client.Minecraft;
+import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
+import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ModuleComponent extends Component {
     private final int c1 = (new Color(0, 85, 255)).getRGB();
     private final int c2 = (new Color(154, 2, 255)).getRGB();
     private final int c3 = (new Color(175, 143, 233) ).getRGB();
-    public Module mod;
+    private final CategoryComponent categoryComponent;
+    public Module module;
     public ButtonCategory category;
     public int o;
     private final ArrayList<me.kopamed.raven.bplus.client.visual.clickgui.raven.Component> settings;
     public boolean po;
 
-    public ModuleComponent(Module mod, CategoryComponent p) {
-        this.mod = mod;
-        //this.category = p;
-        this.o = o;
+    public ModuleComponent(Module mod, CategoryComponent categoryComponent) {
+        this.module = mod;
         this.settings = new ArrayList();
-        this.po = false;
-        int y = o + 12;
-
-    }
+        this.categoryComponent = categoryComponent;
+    }/*
 
     public void setModuleStartAt(int n) {
         this.o = n;
@@ -168,5 +163,43 @@ public class ModuleComponent extends Component {
 
     public boolean ii(int x, int y) {
         return x > this.category.getX() && x < this.category.getX() + this.category.getWidth() && y > this.category.getY() + this.o && y < this.category.getY() + 16 + this.o;
+    }*/
+
+    @Override
+    public void paint(GlyphPageFontRenderer fr) {
+        Theme currentTheme = Raven.client.getClickGui().getTheme();
+        float textMargin = (float)this.getWidth() * 0.0625f;
+        double desiredTextSize = this.getHeight() * 0.6;
+        double scaleFactor = desiredTextSize/ fr.getFontHeight();
+        double coordFactor = 1/scaleFactor;
+        double textY = this.getY() + (this.getHeight() - desiredTextSize) /2;
+
+        Gui.drawRect((int)this.getX(), (int)this.getY(), (int)(this.getX() + this.getWidth()), (int)(this.getY() + this.getHeight()), module.isEnabled() ? currentTheme.getAccentColour().getRGB() : currentTheme.getSecondBackgroundColour().getRGB());
+
+        GL11.glPushMatrix();
+        GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
+        fr.drawString(module.getName(), (float)((this.getX() + textMargin) * coordFactor), (float)(textY * coordFactor), module.isEnabled() ? currentTheme.getSecondBackgroundColour().getRGB() : currentTheme.getTextColour().getRGB(), false);
+        GL11.glPopMatrix();
+        for(Component component: this.getComponents()){
+            component.paint(fr);
+        }
+    }
+
+    @Override
+    public void update(int x, int y) {
+        super.update(x, y);
+    }
+
+    @Override
+    public void onResize() {
+        this.setSize(categoryComponent.getWidth() - 2, categoryComponent.getHeight() * 0.8);
+        super.onResize();
+    }
+
+    @Override
+    public void mouseDown(int x, int y, int mb) {
+        if(mouseOver(x, y))
+            module.toggle();
+        super.mouseDown(x, y, mb);
     }
 }

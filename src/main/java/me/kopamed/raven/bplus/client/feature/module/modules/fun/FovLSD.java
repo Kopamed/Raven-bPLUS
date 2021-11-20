@@ -12,7 +12,7 @@ public class FovLSD extends Module {
     private boolean up = true;
 
     public FovLSD() {
-        super("FovLSD", ModuleCategory.Fun, 0);
+        super("FovLSD", ModuleCategory.Misc, 0);
         this.registerSetting(speed = new Slider("Speed:", 0.1D, 0.01D, 16D, 0.01D));
         this.registerSetting(fov = new RangeSlider("Fov Min/Max", 25, 180, 0, 360, 1));
     }

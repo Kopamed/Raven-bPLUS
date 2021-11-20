@@ -6,10 +6,7 @@ public enum ModuleCategory {
     Player,
     World,
     Render,
-    Minigames,
-    Fun,
-    Other,
-    Client,
-    Hotkey,
+    Hotkeys,
+    Misc,
     Blatant
 }

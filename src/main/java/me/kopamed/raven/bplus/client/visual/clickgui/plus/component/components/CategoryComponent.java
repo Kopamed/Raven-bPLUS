@@ -91,8 +91,20 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
         } else if(!this.mouseOver(x, y) && clickGui.getTooltipSetter() == this){
             clickGui.clearTooltip();
         }
-        if(opened) {
-            super.update(x, y);
+
+        if(draggable && dragging){
+            double xt = windowStartDragX + (x - mouseStartDragX);
+            double yt = windowStartDragY + (y - mouseStartDragY);
+            this.setLocation(xt, yt);
+        }
+
+        double startX = this.getX() + 1;
+        double currentY = this.getY() + this.getHeight();
+
+        for(Component component : getComponents()){
+            component.setLocation(startX, currentY);
+            component.update(x, y);
+            currentY += component.getHeight();
         }
     }
 
@@ -106,6 +118,8 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
             this.mouseStartDragY = y;
             this.windowStartDragX = getX();
             this.windowStartDragY = getY();
+        } else if(mouseOver(x, y)){
+            this.opened = !opened;
         }
 
         if(opened){

@@ -24,7 +24,7 @@ public class WaterBucket extends Module {
    private boolean handling;
 
    public WaterBucket() {
-      super("Water bucket", ModuleCategory.Other, 0);
+      super("Water bucket", ModuleCategory.Misc, 0);
       this.registerSetting(a = new Description("Credits: aycy"));
    }
 

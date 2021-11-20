@@ -12,7 +12,7 @@ public class Twerk extends Module {
     private boolean sneaking;
 
     public Twerk(){
-        super("Twerk", ModuleCategory.Fun, 0);
+        super("Twerk", ModuleCategory.Misc, 0);
         this.registerSetting(a =  new Slider("Duration:", 1, 1, 100, 1));
     }
 

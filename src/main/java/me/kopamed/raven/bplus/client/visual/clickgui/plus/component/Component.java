@@ -161,5 +161,11 @@ public abstract class Component {
     public void stopDragging(){
         this.dragging = false;
     }
+
+    public void onResize(){
+        for(Component component : components){
+            component.onResize();
+        }
+    }
 }
 

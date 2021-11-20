@@ -2,7 +2,8 @@ package me.kopamed.raven.bplus.client.feature.module.modules.client;
 
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.helper.manager.VersionManager;
+import me.kopamed.raven.bplus.helper.manager.version.Version;
+import me.kopamed.raven.bplus.helper.manager.version.VersionManager;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
@@ -18,7 +19,7 @@ public class UpdateCheck extends Module {
     public static Tick copyToClipboard;
     public static Tick openLink;
     public UpdateCheck() {
-        super("Update", ModuleCategory.Client, 0);
+        super("Update", ModuleCategory.Misc, 0);
         this.registerSetting(howToUse = new Description(Utils.Java.uf("command") + ": update"));
         this.registerSetting(copyToClipboard = new Tick("Copy to clipboard", true));
         this.registerSetting(openLink = new Tick("Open dl in browser", true));
@@ -27,25 +28,29 @@ public class UpdateCheck extends Module {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
         VersionManager versionManager = Raven.client.getVersionManager();
-        if (versionManager.isOutdated()) {
+        Version now = versionManager.getClientVersion();
+        Version nvw = versionManager.getLatestVersion();
+
+        if (nvw.isNewerThan(now)) {
             Utils.Player.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
             Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
-        if (versionManager.isBeta()) {
+        if (now.isNewerThan(nvw)) {
             Utils.Player.sendMessageToSelf("Man is on beta and asking for stable. You mad bruv?"); // todo change this weird gay shit
             Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
         else {
             Utils.Player.sendMessageToSelf("You are on the latest public version!");
         }
+
         if (copyToClipboard.isToggled()) {
-            if (Utils.Client.copyToClipboard(Raven.client.getVersionManager().getSourceURL()))
+            if (Utils.Client.copyToClipboard(VersionManager.sourceURL))
                 Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
         if(openLink.isToggled()) {
             URL url = null;
             try {
-                url = new URL(Raven.client.getVersionManager().getSourceURL());
+                url = new URL(VersionManager.sourceURL);
                 Utils.Client.openWebpage(url);
             } catch (MalformedURLException bruh) {
                 bruh.printStackTrace();

@@ -6,6 +6,7 @@ import me.kopamed.raven.bplus.client.feature.module.Module;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.util.Iterator;
 
@@ -25,8 +26,12 @@ public class KeybindManager {
                 module.keybind();
 
 
-            if(module.isEnabled())
-                System.out.println(module.getName());
+            //if(module.isEnabled())
+                //System.out.println(module.getName());
+        }
+        for (int i = 0; i < Keyboard.getKeyCount(); i++){
+            if(Keyboard.isKeyDown(i))
+                System.out.println(i + " " + Keyboard.getKeyName(i));
         }
 
         System.out.println("=============================");

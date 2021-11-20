@@ -8,6 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.manager.*;
+import me.kopamed.raven.bplus.helper.manager.version.VersionManager;
 import me.kopamed.raven.bplus.helper.utils.*;
 import me.superblaubeere27.client.utils.fontRenderer.GlyphPage;
 import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
@@ -35,11 +36,11 @@ public class Raven {
       this.mc = Minecraft.getMinecraft();
       this.moduleManager = new ModuleManager();
       this.configManager = new ConfigManager();
+      this.versionManager = new VersionManager();
       this.clickGui = new PlusGui();
       this.debugManager = new DebugManager();
       this.registerListeners();
       this.setUpFontRenderer();
-      this.versionManager = new VersionManager();
       tracker.registerLaunch();
    }
 
@@ -60,10 +61,10 @@ public class Raven {
          chars[i] = (char) i;
       }
 
-      InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("assets/raven/font/Adventure.ttf");
+      InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("assets/raven/font/Outfit-Thin.ttf");
       System.out.println(stream == null);
       //Font font = Font.createFont(Font.TRUETYPE_FONT, stream);
-      Font font = new Font("Heavitas", Font.PLAIN, 80);
+      Font font = new Font("Roboto", Font.TRUETYPE_FONT, 80);
       //System.out.println(font.getSize());
 
 
