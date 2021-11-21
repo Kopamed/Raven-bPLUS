@@ -1,6 +1,8 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components;
 
 import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
@@ -13,20 +15,21 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ModuleComponent extends Component {
-    private final int c1 = (new Color(0, 85, 255)).getRGB();
-    private final int c2 = (new Color(154, 2, 255)).getRGB();
-    private final int c3 = (new Color(175, 143, 233) ).getRGB();
     private final CategoryComponent categoryComponent;
     public Module module;
-    public ButtonCategory category;
-    public int o;
-    private final ArrayList<me.kopamed.raven.bplus.client.visual.clickgui.raven.Component> settings;
-    public boolean po;
+    private boolean opened = false;
 
     public ModuleComponent(Module mod, CategoryComponent categoryComponent) {
         this.module = mod;
-        this.settings = new ArrayList();
         this.categoryComponent = categoryComponent;
+        for(Setting setting : module.getSettings()){
+            if(setting instanceof Tick){
+                Tick tick = (Tick) setting;
+                ComponentTick componentTick = new ComponentTick(tick, this);
+                //this.add(componentTick);
+            }
+
+        }
     }/*
 
     public void setModuleStartAt(int n) {
@@ -198,8 +201,15 @@ public class ModuleComponent extends Component {
 
     @Override
     public void mouseDown(int x, int y, int mb) {
-        if(mouseOver(x, y))
+        if(mouseOver(x, y) && mb == 0){
             module.toggle();
+        } else if(mouseOver(x, y) && mb == 1) {
+
+        }
         super.mouseDown(x, y, mb);
+    }
+
+    public double getFullHeight() {
+        return 0;
     }
 }

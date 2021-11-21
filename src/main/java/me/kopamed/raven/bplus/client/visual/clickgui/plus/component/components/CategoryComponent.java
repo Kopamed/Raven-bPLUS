@@ -56,7 +56,7 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
                 (int) (this.getY() + this.getHeight()),
                 currentTheme.getBackgroundColour().getRGB());
 
-        float textmargin = (float)this.getWidth() * 0.0625f;
+        float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = this.getHeight() * 0.6;
         double scaleFactor = desiredTextSize/ fr.getFontHeight();
         double coordFactor = 1/scaleFactor;
@@ -64,19 +64,19 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
 
         GL11.glPushMatrix();
         GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
-        double retard = this.getX() + this.getWidth() - textmargin - fr.getStringWidth(status) * scaleFactor;
+        double retard = this.getX() + this.getWidth() - textMargin - fr.getStringWidth(status) * scaleFactor;
         fr.drawString(status, (float)(retard * coordFactor), (float)((this.getY() + this.getHeight() * 0.2) * coordFactor), currentTheme.getTextColour().getRGB(), false);
-        fr.drawString(getName(), (float)((this.getX() + textmargin) * coordFactor), (float)((this.getY() + this.getHeight() * 0.2) * coordFactor), currentTheme.getTextColour().getRGB(), false);
+        fr.drawString(getName(), (float)((this.getX() + textMargin) * coordFactor), (float)((this.getY() + this.getHeight() * 0.2) * coordFactor), currentTheme.getTextColour().getRGB(), false);
         GL11.glPopMatrix();
 
         if(opened){
             double renderY = this.getY() + this.getHeight();
             for(Component component: this.getComponents()){
                 if(component instanceof ModuleComponent){
-                    component.setLocation(this.getX() + 1, renderY);
                     ModuleComponent moduleComponent = (ModuleComponent) component;
+                    moduleComponent.setLocation(this.getX() + 1, renderY);
                     moduleComponent.paint(fr);
-                    renderY += component.getHeight();
+                    renderY += moduleComponent.isOpened() ? moduleComponent.getFullHeight() : moduleComponent.getHeight();
                 }
             }
         }

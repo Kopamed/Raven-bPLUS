@@ -2,10 +2,12 @@ package me.kopamed.raven.bplus.client.feature.setting;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public abstract class Setting {
    public String mode;
    public String settingName;
+   public ArrayList<SelectorRunnable> selectors = new ArrayList<>();
 
    public Setting(String name, String mode) {
       this.settingName = name;
@@ -56,5 +58,20 @@ public abstract class Setting {
       } else {
          return i == 1 ? System.getProperty(k) : File.separator;
       }
+   }
+
+   public boolean canShow(){
+      if(selectors.isEmpty())
+         return true;
+
+      for(SelectorRunnable selectorRunnable : selectors){
+         if(!selectorRunnable.showOnlyIf())
+            return false;
+      }
+      return true;
+   }
+
+   public void addSelector(SelectorRunnable selectorRunnable){
+      this.selectors.add(selectorRunnable);
    }
 }
