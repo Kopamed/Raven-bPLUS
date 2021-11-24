@@ -54,7 +54,7 @@ public class Ravenbplus {
    private static final String numberOfUseTracker = "https://pastebin.com/raw/EgBH4cxS";
    public static final String numberOfFirstLaunchesTracker = "https://pastebin.com/raw/AyRARCeU";
    public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
-   public static final String discord = "https://discord.gg/N4zn4FwPcz";
+   public static final String discord = "https://discord.gg/PZeAAUEAwz";
    public static String[] updateText = {"Your version of Raven B+ (" + Version.getCurrentVersion().replaceAll("-", ".") + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + Version.getLatestVersion().replaceAll("-", ".")};
    public static String[] helloYourComputerHasVirus = {"You are using an unstable version of an outdated version", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + Version.getLatestVersion().replaceAll("-", ".")};
    public static int a = 1;
