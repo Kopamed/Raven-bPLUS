@@ -8,10 +8,10 @@ import java.awt.event.InputEvent;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Mode;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.MouseManager;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.item.ItemBlock;
@@ -23,15 +23,15 @@ import org.lwjgl.input.Mouse;
 
 public class ClickAssist extends Module {
    // settings
-   public static Description desc, linux;
-   public static Mode mode;
-   public static Slider leftChance, rightChance;
-   public static Slider minCPSLeft, minCPSRight;
-   public static Tick left;
-   public static Tick right;
-   public static Tick blocksOnly;
-   public static Tick weaponOnly;
-   public static Tick onlyWhileTargeting;
+   public static DescriptionSetting desc, linux;
+   public static ComboSetting mode;
+   public static NumberSetting leftChance, rightChance;
+   public static NumberSetting minCPSLeft, minCPSRight;
+   public static BooleanSetting left;
+   public static BooleanSetting right;
+   public static BooleanSetting blocksOnly;
+   public static BooleanSetting weaponOnly;
+   public static BooleanSetting onlyWhileTargeting;
 
    // misc
    private Robot bot;
@@ -44,20 +44,20 @@ public class ClickAssist extends Module {
       super("ClickAssist", ModuleCategory.Combat, 0);
 
       // registering settings
-      this.registerSetting(desc = new Description("Boost your CPS."));
-      this.registerSetting(mode = new Mode("Assist__ click", new String[] {"After", "Before"}, 0));
-      this.registerSetting(linux = new Description("Use AFTER on linux"));
+      this.registerSetting(desc = new DescriptionSetting("Boost your CPS."));
+      this.registerSetting(mode = new ComboSetting("Assist__ click", new String[] {"After", "Before"}, 0));
+      this.registerSetting(linux = new DescriptionSetting("Use AFTER on linux"));
 
-      this.registerSetting(left = new Tick("Left click", true));
-      this.registerSetting(weaponOnly = new Tick("Weapon only", true));
-      this.registerSetting(onlyWhileTargeting = new Tick("Only while targeting", false));
-      this.registerSetting(leftChance = new Slider("Left chance", 80.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(minCPSLeft = new Slider("Above _ cps (left)", 3, 0, 20, 1)); // todo
+      this.registerSetting(left = new BooleanSetting("Left click", true));
+      this.registerSetting(weaponOnly = new BooleanSetting("Weapon only", true));
+      this.registerSetting(onlyWhileTargeting = new BooleanSetting("Only while targeting", false));
+      this.registerSetting(leftChance = new NumberSetting("Left chance", 80.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(minCPSLeft = new NumberSetting("Above _ cps (left)", 3, 0, 20, 1)); // todo
 
-      this.registerSetting(right = new Tick("Right click", false));
-      this.registerSetting(blocksOnly = new Tick("Blocks only", true));
-      this.registerSetting(rightChance = new Slider("Right chance", 95.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(minCPSRight = new Slider("Above _ cps (right)", 3, 0, 20, 1));
+      this.registerSetting(right = new BooleanSetting("Right click", false));
+      this.registerSetting(blocksOnly = new BooleanSetting("Blocks only", true));
+      this.registerSetting(rightChance = new NumberSetting("Right chance", 95.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(minCPSRight = new NumberSetting("Above _ cps (right)", 3, 0, 20, 1));
    }
 
    public void onEnable() {

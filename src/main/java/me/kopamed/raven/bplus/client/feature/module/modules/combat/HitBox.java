@@ -8,8 +8,8 @@ import java.util.List;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -28,14 +28,14 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public class HitBox extends Module {
-   public static Slider a;
-   public static Tick b;
+   public static NumberSetting a;
+   public static BooleanSetting b;
    private static MovingObjectPosition mv;
 
    public HitBox() {
       super("HitBox", ModuleCategory.Combat, 0);
-      this.registerSetting(a = new Slider("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
-      this.registerSetting(b = new Tick("Show new hitbox", false));
+      this.registerSetting(a = new NumberSetting("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
+      this.registerSetting(b = new BooleanSetting("Show new hitbox", false));
    }
 
    public void update() {

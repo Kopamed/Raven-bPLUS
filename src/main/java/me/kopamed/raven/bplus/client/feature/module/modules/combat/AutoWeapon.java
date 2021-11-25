@@ -3,22 +3,22 @@ package me.kopamed.raven.bplus.client.feature.module.modules.combat;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoWeapon extends Module {
-    public static Tick onlyWhenHoldingDown;
-    public static Tick goBackToPrevSlot;
+    public static BooleanSetting onlyWhenHoldingDown;
+    public static BooleanSetting goBackToPrevSlot;
     private boolean onWeapon;
     private int prevSlot;
 
     public AutoWeapon(){
         super("AutoWeapon", ModuleCategory.Combat, 0);
-        this.registerSetting(onlyWhenHoldingDown = new Tick("Only when holding lmb", true));
-        this.registerSetting(goBackToPrevSlot = new Tick("Revert to old slot", true));
+        this.registerSetting(onlyWhenHoldingDown = new BooleanSetting("Only when holding lmb", true));
+        this.registerSetting(goBackToPrevSlot = new BooleanSetting("Revert to old slot", true));
     }
 
     @SubscribeEvent

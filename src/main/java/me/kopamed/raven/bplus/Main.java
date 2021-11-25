@@ -1,7 +1,6 @@
 package me.kopamed.raven.bplus;
 
 import me.kopamed.raven.bplus.client.Raven;
-import me.kopamed.raven.bplus.keystroke.KeyStroke;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -16,7 +15,6 @@ public class Main
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
-     // new KeyStroke(); //todo
         new Raven();
     }
 }

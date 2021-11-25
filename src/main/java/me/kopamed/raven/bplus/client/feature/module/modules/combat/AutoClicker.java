@@ -28,22 +28,22 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public class AutoClicker extends Module {
-   public static Description bestWithDelayRemover, modeDesc, timingsDesc;
-   public static Slider jitterLeft;
-   public static Slider jitterRight;
-   public static Tick weaponOnly;
-   public static Tick breakBlocks;
-   public static Tick onlyBlocks;
-   public static Tick preferFastPlace;
-   public static Tick noBlockSword;
-   public static Tick leftClick;
-   public static Tick rightClick;
-   public static Tick inventoryFill;
-   public static Tick allowEat, allowBow;
-   public static Slider rightClickDelay;
-   public static Slider clickEvent, clickTimings;
-   public static RangeSlider leftCPS, rightCPS, breakBlocksDelay;
-   public static Mode event, clickStyle;
+   public static DescriptionSetting bestWithDelayRemover, modeDesc, timingsDesc;
+   public static NumberSetting jitterLeft;
+   public static NumberSetting jitterRight;
+   public static BooleanSetting weaponOnly;
+   public static BooleanSetting breakBlocks;
+   public static BooleanSetting onlyBlocks;
+   public static BooleanSetting preferFastPlace;
+   public static BooleanSetting noBlockSword;
+   public static BooleanSetting leftClick;
+   public static BooleanSetting rightClick;
+   public static BooleanSetting inventoryFill;
+   public static BooleanSetting allowEat, allowBow;
+   public static NumberSetting rightClickDelay;
+   public static NumberSetting clickEvent, clickTimings;
+   public static RangeSetting leftCPS, rightCPS, breakBlocksDelay;
+   public static ComboSetting event, clickStyle;
 
    private Random rand = null;
    private Method playerMouseInput;
@@ -72,31 +72,31 @@ public class AutoClicker extends Module {
 
    public AutoClicker() {
       super("AutoClicker", ModuleCategory.Combat, 0);
-      this.registerSetting(bestWithDelayRemover = new Description("Best with delay remover."));
+      this.registerSetting(bestWithDelayRemover = new DescriptionSetting("Best with delay remover."));
 
-      this.registerSetting(leftClick = new Tick("Left click", true));
-      this.registerSetting(leftCPS = new RangeSlider("Left CPS", 9, 13, 1, 60, 0.5));
-      this.registerSetting(jitterLeft = new Slider("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(inventoryFill = new Tick("Inventory fill", false));
-      this.registerSetting(weaponOnly = new Tick("Weapon only", false));
-      this.registerSetting(breakBlocks = new Tick("Break blocks", false));
-      this.registerSetting(breakBlocksDelay = new RangeSlider("Breack blocks delay (MS)", 20, 50, 0,1000, 1));
+      this.registerSetting(leftClick = new BooleanSetting("Left click", true));
+      this.registerSetting(leftCPS = new RangeSetting("Left CPS", 9, 13, 1, 60, 0.5));
+      this.registerSetting(jitterLeft = new NumberSetting("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
+      this.registerSetting(inventoryFill = new BooleanSetting("Inventory fill", false));
+      this.registerSetting(weaponOnly = new BooleanSetting("Weapon only", false));
+      this.registerSetting(breakBlocks = new BooleanSetting("Break blocks", false));
+      this.registerSetting(breakBlocksDelay = new RangeSetting("Breack blocks delay (MS)", 20, 50, 0,1000, 1));
 
-      this.registerSetting(rightClick = new Tick("Right click", false));
-      this.registerSetting(rightCPS = new RangeSlider("RightCPS", 12, 16, 1,60, 0.5));
-      this.registerSetting(jitterRight = new Slider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
-      this.registerSetting(rightClickDelay = new Slider("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
-      this.registerSetting(noBlockSword = new Tick("Don't rightclick sword", true));
-      this.registerSetting(onlyBlocks = new Tick("Only rightclick with blocks", false));
-      this.registerSetting(preferFastPlace = new Tick("Prefer fast place", false));
-      this.registerSetting(allowEat = new Tick("Allow eat", true));
-      this.registerSetting(allowBow = new Tick("Allow bow", true));
+      this.registerSetting(rightClick = new BooleanSetting("Right click", false));
+      this.registerSetting(rightCPS = new RangeSetting("RightCPS", 12, 16, 1,60, 0.5));
+      this.registerSetting(jitterRight = new NumberSetting("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
+      this.registerSetting(rightClickDelay = new NumberSetting("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
+      this.registerSetting(noBlockSword = new BooleanSetting("Don't rightclick sword", true));
+      this.registerSetting(onlyBlocks = new BooleanSetting("Only rightclick with blocks", false));
+      this.registerSetting(preferFastPlace = new BooleanSetting("Prefer fast place", false));
+      this.registerSetting(allowEat = new BooleanSetting("Allow eat", true));
+      this.registerSetting(allowBow = new BooleanSetting("Allow bow", true));
 
 
-      this.registerSetting(clickTimings = new Slider("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
-      this.registerSetting(timingsDesc = new Description("Mode: RAVEN"));
-      this.registerSetting(clickEvent = new Slider("Event", 2.0D, 1.0D, 2.0D, 1.0D));
-      this.registerSetting(modeDesc = new Description("Mode: LEGIT"));
+      this.registerSetting(clickTimings = new NumberSetting("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
+      this.registerSetting(timingsDesc = new DescriptionSetting("Mode: RAVEN"));
+      this.registerSetting(clickEvent = new NumberSetting("Event", 2.0D, 1.0D, 2.0D, 1.0D));
+      this.registerSetting(modeDesc = new DescriptionSetting("Mode: LEGIT"));
 
       try {
          this.playerMouseInput = GuiScreen.class.getDeclaredMethod("func_73864_a", Integer.TYPE, Integer.TYPE, Integer.TYPE);

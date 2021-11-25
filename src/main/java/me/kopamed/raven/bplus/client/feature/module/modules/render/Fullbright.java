@@ -3,7 +3,7 @@ package me.kopamed.raven.bplus.client.feature.module.modules.render;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -14,8 +14,8 @@ public class Fullbright extends Module {
     public Fullbright() {
         super("Fullbright", ModuleCategory.Render, 0);
 
-        Description description;
-        this.registerSetting(description = new Description("No more darkness!"));
+        DescriptionSetting description;
+        this.registerSetting(description = new DescriptionSetting("No more darkness!"));
         this.clientGamma = 10000;
     }
 

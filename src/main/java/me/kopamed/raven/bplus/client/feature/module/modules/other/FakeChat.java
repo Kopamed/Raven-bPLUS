@@ -4,19 +4,19 @@ package me.kopamed.raven.bplus.client.feature.module.modules.other;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.util.ChatComponentText;
 
 public class FakeChat extends Module {
-   public static Description a;
+   public static DescriptionSetting a;
    public static String msg = "&eThis is a fake chat message.";
    public static final String command = "fakechat";
    public static final String c4 = "&cInvalid message.";
 
    public FakeChat() {
       super("Fake Chat", ModuleCategory.Misc, 0);
-      this.registerSetting(a = new Description(Utils.Java.uf("command") + ": " + command + " [msg]"));
+      this.registerSetting(a = new DescriptionSetting(Utils.Java.uf("command") + ": " + command + " [msg]"));
    }
 
    public void onEnable() {

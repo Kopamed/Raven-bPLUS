@@ -61,13 +61,13 @@ public class Raven {
          chars[i] = (char) i;
       }
 
+
+      //todo clean up this shit hole
       InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("assets/raven/font/Outfit-Thin.ttf");
       System.out.println(stream == null);
       //Font font = Font.createFont(Font.TRUETYPE_FONT, stream);
       Font font = new Font("Roboto", Font.TRUETYPE_FONT, 80);
       //System.out.println(font.getSize());
-
-
 
       GlyphPage glyphPage = new GlyphPage(font, true, true);
       glyphPage.generateGlyphPage(chars);

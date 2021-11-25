@@ -3,7 +3,7 @@ package me.kopamed.raven.bplus.client.feature.module.modules.render;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TargetHUD extends Module {
-    public static Tick editPosition;
+    public static BooleanSetting editPosition;
     public static int height, width;
     public static FontRenderer fr;
     ScaledResolution sr;

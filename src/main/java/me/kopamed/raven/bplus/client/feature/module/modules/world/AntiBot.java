@@ -7,7 +7,7 @@ import java.util.HashMap;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.player.Freecam;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -18,11 +18,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AntiBot extends Module {
    private static final HashMap<EntityPlayer, Long> newEnt = new HashMap<>();
    private final long ms = 4000L;
-   public static Tick a;
+   public static BooleanSetting a;
 
    public AntiBot() {
       super("AntiBot", ModuleCategory.World, 0);
-      this.registerSetting(a = new Tick("Wait 80 ticks", false));
+      this.registerSetting(a = new BooleanSetting("Wait 80 ticks", false));
    }
 
    public void onDisable() {

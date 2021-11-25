@@ -6,8 +6,8 @@ import me.kopamed.raven.bplus.helper.manager.version.Version;
 import me.kopamed.raven.bplus.helper.manager.version.VersionManager;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -15,14 +15,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class UpdateCheck extends Module {
-    public static Description howToUse;
-    public static Tick copyToClipboard;
-    public static Tick openLink;
+    public static DescriptionSetting howToUse;
+    public static BooleanSetting copyToClipboard;
+    public static BooleanSetting openLink;
     public UpdateCheck() {
         super("Update", ModuleCategory.Misc, 0);
-        this.registerSetting(howToUse = new Description(Utils.Java.uf("command") + ": update"));
-        this.registerSetting(copyToClipboard = new Tick("Copy to clipboard", true));
-        this.registerSetting(openLink = new Tick("Open dl in browser", true));
+        this.registerSetting(howToUse = new DescriptionSetting(Utils.Java.uf("command") + ": update"));
+        this.registerSetting(copyToClipboard = new BooleanSetting("Copy to clipboard", true));
+        this.registerSetting(openLink = new BooleanSetting("Open dl in browser", true));
     }
 
     @SubscribeEvent

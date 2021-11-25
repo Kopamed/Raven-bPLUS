@@ -1,5 +1,9 @@
 package me.kopamed.raven.bplus.client.feature.setting;
 
+import com.google.gson.JsonObject;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -74,4 +78,14 @@ public abstract class Setting {
    public void addSelector(SelectorRunnable selectorRunnable){
       this.selectors.add(selectorRunnable);
    }
+
+   public JsonObject getSettingsAsJson(){
+      //todo
+      return new JsonObject();
+   }
+
+    public Component createComponent(ModuleComponent moduleComponent) {
+      return new Component() {
+      };
+    }
 }

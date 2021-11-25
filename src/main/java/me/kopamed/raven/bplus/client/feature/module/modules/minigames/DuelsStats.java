@@ -8,9 +8,9 @@ import java.util.List;
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -18,13 +18,13 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DuelsStats extends Module {
-   public static Slider value;
-   public static Description bruh;
-   public static Slider threatLeaveMode;
-   public static Description moduleDesc;
-   public static Tick a;
-   public static Tick queueDodge;
-   public static Tick threatLevel;
+   public static NumberSetting value;
+   public static DescriptionSetting bruh;
+   public static NumberSetting threatLeaveMode;
+   public static DescriptionSetting moduleDesc;
+   public static BooleanSetting a;
+   public static BooleanSetting queueDodge;
+   public static BooleanSetting threatLevel;
    public static String nk = "";
    private String ign = "";
    private String en = "";
@@ -33,13 +33,13 @@ public class DuelsStats extends Module {
 
    public DuelsStats() {
       super("Duels Stats", ModuleCategory.Misc, 0);
-      this.registerSetting(value = new Slider("Value", 1.0D, 1.0D, 7.0D, 1.0D));
-      this.registerSetting(moduleDesc = new Description("Mode: OVERALL"));
-      this.registerSetting(a = new Tick("Send ign on join", false));
-      this.registerSetting(threatLevel = new Tick("Threat Level", true));
-      this.registerSetting(queueDodge = new Tick("Queue dodge", false));
-      this.registerSetting(threatLeaveMode = new Slider("Value:", 4, 1, 4, 1));
-      this.registerSetting(bruh = new Description("Dodge threat level: HIGH"));
+      this.registerSetting(value = new NumberSetting("Value", 1.0D, 1.0D, 7.0D, 1.0D));
+      this.registerSetting(moduleDesc = new DescriptionSetting("Mode: OVERALL"));
+      this.registerSetting(a = new BooleanSetting("Send ign on join", false));
+      this.registerSetting(threatLevel = new BooleanSetting("Threat Level", true));
+      this.registerSetting(queueDodge = new BooleanSetting("Queue dodge", false));
+      this.registerSetting(threatLeaveMode = new NumberSetting("Value:", 4, 1, 4, 1));
+      this.registerSetting(bruh = new DescriptionSetting("Dodge threat level: HIGH"));
    }
 
    public void onEnable() {

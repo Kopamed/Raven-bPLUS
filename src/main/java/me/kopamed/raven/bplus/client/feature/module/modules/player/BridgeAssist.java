@@ -3,22 +3,22 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class BridgeAssist extends Module {
-    private final Tick setLook;
-    private final Tick onSneak;
-    private final Tick workWithSafeWalk;
-    private final Slider waitFor;
-    private final Slider glideTime;
-    private final Slider assistMode;
-    private final Slider assistRange;
-    private final Description assistModeDesc;
+    private final BooleanSetting setLook;
+    private final BooleanSetting onSneak;
+    private final BooleanSetting workWithSafeWalk;
+    private final NumberSetting waitFor;
+    private final NumberSetting glideTime;
+    private final NumberSetting assistMode;
+    private final NumberSetting assistRange;
+    private final DescriptionSetting assistModeDesc;
     private boolean waitingForAim;
     private boolean gliding;
     private long startWaitTime;
@@ -32,16 +32,16 @@ public class BridgeAssist extends Module {
 
     public BridgeAssist() {
         super("Bridge Assist", ModuleCategory.Player, 0);
-        Description goodAdvice;
-        this.registerSetting(goodAdvice = new Description("Best with fastplace, not autoplace"));
-        this.registerSetting(waitFor = new Slider("Wait time (ms)", 500, 0, 5000, 25));
-        this.registerSetting(setLook = new Tick("Set look pos", true));
-        this.registerSetting(onSneak = new Tick("Work only when sneaking", true));
-        this.registerSetting(workWithSafeWalk= new Tick("Work with safewalk", false));
-        this.registerSetting(assistRange = new Slider("Assist range", 10.0D, 1.0D, 40.0D, 1.0D));
-        this.registerSetting(glideTime = new Slider("Glide speed", 500, 1, 201, 5));
-        this.registerSetting(assistMode = new Slider("Value", 1.0D, 1.0D, 4.0D, 1.0D));
-        this.registerSetting(assistModeDesc = new Description("Mode: GodBridge"));
+        DescriptionSetting goodAdvice;
+        this.registerSetting(goodAdvice = new DescriptionSetting("Best with fastplace, not autoplace"));
+        this.registerSetting(waitFor = new NumberSetting("Wait time (ms)", 500, 0, 5000, 25));
+        this.registerSetting(setLook = new BooleanSetting("Set look pos", true));
+        this.registerSetting(onSneak = new BooleanSetting("Work only when sneaking", true));
+        this.registerSetting(workWithSafeWalk= new BooleanSetting("Work with safewalk", false));
+        this.registerSetting(assistRange = new NumberSetting("Assist range", 10.0D, 1.0D, 40.0D, 1.0D));
+        this.registerSetting(glideTime = new NumberSetting("Glide speed", 500, 1, 201, 5));
+        this.registerSetting(assistMode = new NumberSetting("Value", 1.0D, 1.0D, 4.0D, 1.0D));
+        this.registerSetting(assistModeDesc = new DescriptionSetting("Mode: GodBridge"));
     }
 
     public void guiUpdate() {

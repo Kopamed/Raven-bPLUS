@@ -1,11 +1,11 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.player;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
 import me.kopamed.raven.bplus.helper.utils.CoolDown;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.AutoClicker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -19,10 +19,10 @@ import org.lwjgl.input.Mouse;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoTool extends Module {
-    private final Tick hotkeyBack;
+    private final BooleanSetting hotkeyBack;
     private Block previousBlock;
     private boolean isWaiting;
-    public static RangeSlider mineDelay;
+    public static RangeSetting mineDelay;
     public static int previousSlot;
     public static boolean justFinishedMining, mining;
     public static CoolDown delay;
@@ -31,8 +31,8 @@ public class AutoTool extends Module {
     public AutoTool() {
         super("Auto Tool", ModuleCategory.Player, 0);
 
-        this.registerSetting(hotkeyBack = new Tick("Hotkey back", true));
-        this.registerSetting(mineDelay = new RangeSlider("Max delay", 10, 50, 0, 2000, 1));
+        this.registerSetting(hotkeyBack = new BooleanSetting("Hotkey back", true));
+        this.registerSetting(mineDelay = new RangeSetting("Max delay", 10, 50, 0, 2000, 1));
         delay = new CoolDown(0);
     }
 

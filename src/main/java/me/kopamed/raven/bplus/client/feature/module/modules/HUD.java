@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -21,12 +21,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class HUD extends Module {
-   public static Tick editPosition;
-   public static Tick dropShadow;
-   public static Tick logo;
-   public static Tick alphabeticalSort;
-   public static Slider colourMode;
-   public static Description colourModeDesc;
+   public static BooleanSetting editPosition;
+   public static BooleanSetting dropShadow;
+   public static BooleanSetting logo;
+   public static BooleanSetting alphabeticalSort;
+   public static NumberSetting colourMode;
+   public static DescriptionSetting colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
    public static Utils.HUD.PositionMode positionMode;
@@ -38,12 +38,12 @@ public class HUD extends Module {
 
    public HUD() {
       super("HUD", ModuleCategory.Render, 0);
-      this.registerSetting(editPosition = new Tick("Edit position", false));
-      this.registerSetting(dropShadow = new Tick("Drop shadow", true));
-      this.registerSetting(logo = new Tick("Logo", false));
-      this.registerSetting(alphabeticalSort = new Tick("Alphabetical sort", false));
-      this.registerSetting(colourMode = new Slider("Value: ", 1, 1, 5, 1));
-      this.registerSetting(colourModeDesc = new Description("Mode: RAVEN"));
+      this.registerSetting(editPosition = new BooleanSetting("Edit position", false));
+      this.registerSetting(dropShadow = new BooleanSetting("Drop shadow", true));
+      this.registerSetting(logo = new BooleanSetting("Logo", false));
+      this.registerSetting(alphabeticalSort = new BooleanSetting("Alphabetical sort", false));
+      this.registerSetting(colourMode = new NumberSetting("Value: ", 1, 1, 5, 1));
+      this.registerSetting(colourModeDesc = new DescriptionSetting("Mode: RAVEN"));
       logoSize = 64;
       showedError = false;
    }
@@ -56,7 +56,7 @@ public class HUD extends Module {
       ModuleManager.sort();
    }
 
-   public void guiButtonToggled(Tick b) {
+   public void guiButtonToggled(BooleanSetting b) {
       if (b == editPosition) {
          editPosition.disable();
          mc.displayGuiScreen(new EditHudPositionScreen());

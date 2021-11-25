@@ -5,9 +5,9 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -24,10 +24,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoPlace extends Module {
-   public static Description ds;
-   public static Tick a;
-   public static Tick b;
-   public static Slider c;
+   public static DescriptionSetting ds;
+   public static BooleanSetting a;
+   public static BooleanSetting b;
+   public static NumberSetting c;
    private double lfd = 0.0D;
    private final int d = 25;
    private long l = 0L;
@@ -37,9 +37,9 @@ public class AutoPlace extends Module {
 
    public AutoPlace() {
       super("AutoPlace", ModuleCategory.Player, 0);
-      this.registerSetting(ds = new Description("FD: FPS/80"));
-      this.registerSetting(c = new Slider("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
-      this.registerSetting(a = new Tick("Hold right", true));
+      this.registerSetting(ds = new DescriptionSetting("FD: FPS/80"));
+      this.registerSetting(c = new NumberSetting("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
+      this.registerSetting(a = new BooleanSetting("Hold right", true));
    }
 
    public void guiUpdate() {

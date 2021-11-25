@@ -9,7 +9,7 @@ import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
 import me.kopamed.raven.bplus.client.feature.module.modules.other.DiscordRPCModule;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.NotificationRenderer;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -171,7 +171,7 @@ public abstract class Module {
    public void guiUpdate() {
    }
 
-   public void guiButtonToggled(Tick b) {
+   public void guiButtonToggled(BooleanSetting b) {
    }
 
    public int getKeycode() {

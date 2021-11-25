@@ -8,9 +8,9 @@ import java.lang.reflect.Method;
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
@@ -18,22 +18,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class BurstClicker extends Module {
-   public static Description artificialDragClicking;
-   public static Slider clicks;
-   public static Slider delay;
-   public static Tick delayRandomizer;
-   public static Tick placeWhenBlock;
+   public static DescriptionSetting artificialDragClicking;
+   public static NumberSetting clicks;
+   public static NumberSetting delay;
+   public static BooleanSetting delayRandomizer;
+   public static BooleanSetting placeWhenBlock;
    private boolean l_c = false;
    private boolean l_r = false;
    private Method rightClickMouse = null;
 
    public BurstClicker() {
       super("BurstClicker", ModuleCategory.Blatant, 0);
-      this.registerSetting(artificialDragClicking = new Description("Artificial dragclicking."));
-      this.registerSetting(clicks = new Slider("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
-      this.registerSetting(delay = new Slider("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
-      this.registerSetting(delayRandomizer = new Tick("Delay randomizer", true));
-      this.registerSetting(placeWhenBlock = new Tick("Place when block", false));
+      this.registerSetting(artificialDragClicking = new DescriptionSetting("Artificial dragclicking."));
+      this.registerSetting(clicks = new NumberSetting("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
+      this.registerSetting(delay = new NumberSetting("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
+      this.registerSetting(delayRandomizer = new BooleanSetting("Delay randomizer", true));
+      this.registerSetting(placeWhenBlock = new BooleanSetting("Place when block", false));
       try {
          try {
             this.rightClickMouse = mc.getClass().getDeclaredMethod("func_147121_ag");

@@ -1,24 +1,24 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.hotkey;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.*;
 
 import java.util.ArrayList;
 
 public class Pearl extends Module {
-    private final Tick preferSlot;
-    private final Slider hotbarSlotPreference;
+    private final BooleanSetting preferSlot;
+    private final NumberSetting hotbarSlotPreference;
     public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<KeyBinding>();
     public Pearl() {
         super("Pearl", ModuleCategory.Hotkeys, 0);
 
-        this.registerSetting(preferSlot = new Tick("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new Slider("Prefer wich slot", 6, 1, 9, 1));
+        this.registerSetting(preferSlot = new BooleanSetting("Prefer a slot", false));
+        this.registerSetting(hotbarSlotPreference = new NumberSetting("Prefer wich slot", 6, 1, 9, 1));
     }
 
     public static boolean checkSlot(int slot) {

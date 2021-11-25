@@ -19,8 +19,8 @@ import java.util.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.AutoClicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -375,7 +375,7 @@ public class Utils {
 
       }
 
-      public static void correctSliders(Slider c, Slider d) {
+      public static void correctSliders(NumberSetting c, NumberSetting d) {
          if (c.getInput() > d.getInput()) {
             double p = c.getInput();
             c.setValue(d.getInput());
@@ -384,11 +384,11 @@ public class Utils {
 
       }
 
-      public static double ranModuleVal(Slider a, Slider b, Random r) {
+      public static double ranModuleVal(NumberSetting a, NumberSetting b, Random r) {
          return a.getInput() == b.getInput() ? a.getInput() : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
       }
 
-      public static double ranModuleVal(RangeSlider a, Random r) {
+      public static double ranModuleVal(RangeSetting a, Random r) {
          return a.getInputMin() == a.getInputMax() ? a.getInputMin() : a.getInputMin() + r.nextDouble() * (a.getInputMax() - a.getInputMin());
       }
 

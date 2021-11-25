@@ -6,19 +6,19 @@ import java.lang.reflect.Field;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class DelayRemover extends Module {
-   public static Description a;
+   public static DescriptionSetting a;
    private Field l = null;
 
    public DelayRemover() {
       super("Delay Remover", ModuleCategory.Combat, 0);
-      this.registerSetting(a = new Description("Gives you 1.7 hitreg."));
+      this.registerSetting(a = new DescriptionSetting("Gives you 1.7 hitreg."));
    }
 
    public void onEnable() {

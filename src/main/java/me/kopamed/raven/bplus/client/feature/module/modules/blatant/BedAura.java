@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
@@ -15,14 +15,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class BedAura extends Module {
-   public static Slider r;
+   public static NumberSetting r;
    private java.util.Timer t;
    private BlockPos m = null;
    private final long per = 600L;
 
    public BedAura() {
       super("BedAura", ModuleCategory.Blatant, 0);
-      this.registerSetting(r = new Slider("Range", 5.0D, 2.0D, 10.0D, 1.0D));
+      this.registerSetting(r = new NumberSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
    }
 
    public void onEnable() {

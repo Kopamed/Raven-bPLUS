@@ -10,8 +10,8 @@ import java.util.TimerTask;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -20,30 +20,30 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Xray extends Module {
-   public static Slider r;
-   public static Tick a;
-   public static Tick b;
-   public static Tick c;
-   public static Tick d;
-   public static Tick e;
-   public static Tick f;
-   public static Tick g;
-   public static Tick h;
+   public static NumberSetting r;
+   public static BooleanSetting a;
+   public static BooleanSetting b;
+   public static BooleanSetting c;
+   public static BooleanSetting d;
+   public static BooleanSetting e;
+   public static BooleanSetting f;
+   public static BooleanSetting g;
+   public static BooleanSetting h;
    private java.util.Timer t;
    private List<BlockPos> ren;
    private final long per = 200L;
 
    public Xray() {
       super("Xray", ModuleCategory.Render, 0);
-      this.registerSetting(r = new Slider("Range", 20.0D, 5.0D, 50.0D, 1.0D));
-      this.registerSetting(a = new Tick("Iron", true));
-      this.registerSetting(b = new Tick("Gold", true));
-      this.registerSetting(c = new Tick("Diamond", true));
-      this.registerSetting(d = new Tick("Emerald", true));
-      this.registerSetting(e = new Tick("Lapis", true));
-      this.registerSetting(f = new Tick("Redstone", true));
-      this.registerSetting(g = new Tick("Coal", true));
-      this.registerSetting(h = new Tick("Spawner", true));
+      this.registerSetting(r = new NumberSetting("Range", 20.0D, 5.0D, 50.0D, 1.0D));
+      this.registerSetting(a = new BooleanSetting("Iron", true));
+      this.registerSetting(b = new BooleanSetting("Gold", true));
+      this.registerSetting(c = new BooleanSetting("Diamond", true));
+      this.registerSetting(d = new BooleanSetting("Emerald", true));
+      this.registerSetting(e = new BooleanSetting("Lapis", true));
+      this.registerSetting(f = new BooleanSetting("Redstone", true));
+      this.registerSetting(g = new BooleanSetting("Coal", true));
+      this.registerSetting(h = new BooleanSetting("Spawner", true));
    }
 
    public void onEnable() {

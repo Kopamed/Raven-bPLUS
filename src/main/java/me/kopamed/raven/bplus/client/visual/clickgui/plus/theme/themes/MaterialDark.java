@@ -52,7 +52,7 @@ public class MaterialDark implements Theme {
 
     @Override
     public Color getContrastColour() {
-        return new Color(30, 39, 44);
+        return getAccentColour().brighter().brighter();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MaterialDark implements Theme {
     }
 
     @Override
-    public Color getTreeColour() {
+    public Color getHeadingColour() {
         return new Color(70, 231, 167);
     }
 

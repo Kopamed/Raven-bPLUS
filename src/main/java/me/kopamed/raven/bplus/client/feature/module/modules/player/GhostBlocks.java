@@ -2,10 +2,10 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Mode;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
@@ -23,28 +23,28 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class GhostBlocks extends Module {
-    public static Description help;
-    public static Mode withItem;
-    public static Mode usedItemRight, usedItemLeft;
-    public static Slider airRange;
-    public static Tick placeIfOccupied;
-    public static Tick right, left;
+    public static DescriptionSetting help;
+    public static ComboSetting withItem;
+    public static ComboSetting usedItemRight, usedItemLeft;
+    public static NumberSetting airRange;
+    public static BooleanSetting placeIfOccupied;
+    public static BooleanSetting right, left;
 
     private BlockPos placedPos;
     private World inWorld;
 
     public GhostBlocks(){
         super("GhostBlocks", ModuleCategory.Player);
-        this.registerSetting(help = new Description("RMB w/ fist to place blocks"));
-        this.registerSetting(withItem = new Mode("When holding", new String[]{"Nothing", "Sword", "Tool", "Block"}, 0));
-        this.registerSetting(airRange = new Slider("Range when looking at air", 3, 0, 50, 1));
-        this.registerSetting(placeIfOccupied = new Tick("Place if area is occupied" , false));
+        this.registerSetting(help = new DescriptionSetting("RMB w/ fist to place blocks"));
+        this.registerSetting(withItem = new ComboSetting("When holding", new String[]{"Nothing", "Sword", "Tool", "Block"}, 0));
+        this.registerSetting(airRange = new NumberSetting("Range when looking at air", 3, 0, 50, 1));
+        this.registerSetting(placeIfOccupied = new BooleanSetting("Place if area is occupied" , false));
 
-        this.registerSetting(left = new Tick("Place on left click", false));
-        this.registerSetting(usedItemLeft = new Mode("With block", new String[]{"Diamond", "Wool", "Logs", "Barrier", "Air"}, 4));
+        this.registerSetting(left = new BooleanSetting("Place on left click", false));
+        this.registerSetting(usedItemLeft = new ComboSetting("With block", new String[]{"Diamond", "Wool", "Logs", "Barrier", "Air"}, 4));
 
-        this.registerSetting(right = new Tick("Place on right click", true));
-        this.registerSetting(usedItemRight = new Mode("With block", new String[]{"Diamond", "Wool", "Logs", "Barrier", "Air"}, 0));
+        this.registerSetting(right = new BooleanSetting("Place on right click", true));
+        this.registerSetting(usedItemRight = new ComboSetting("With block", new String[]{"Diamond", "Wool", "Logs", "Barrier", "Air"}, 0));
     }
 
     @SubscribeEvent(

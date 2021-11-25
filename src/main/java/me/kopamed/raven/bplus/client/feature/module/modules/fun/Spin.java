@@ -2,18 +2,18 @@ package me.kopamed.raven.bplus.client.feature.module.modules.fun;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import net.minecraft.client.entity.EntityPlayerSP;
 
 public class Spin extends Module {
-    public static Slider a;
-    public static Slider b;
+    public static NumberSetting a;
+    public static NumberSetting b;
     private float yaw;
 
     public Spin() {
         super("Spin", ModuleCategory.Misc, 0);
-        this.registerSetting(a = new Slider("Rotation", 360.0D, 30.0D, 360.0D, 1.0D));
-        this.registerSetting(b = new Slider("Speed", 25.0D, 1.0D, 60.0D, 1.0D));
+        this.registerSetting(a = new NumberSetting("Rotation", 360.0D, 30.0D, 360.0D, 1.0D));
+        this.registerSetting(b = new NumberSetting("Speed", 25.0D, 1.0D, 60.0D, 1.0D));
     }
 
     public void onEnable() {

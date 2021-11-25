@@ -1,21 +1,21 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.hotkey;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class Blocks extends Module {
-    private final Tick preferSlot;
-    private final Slider hotbarSlotPreference;
+    private final BooleanSetting preferSlot;
+    private final NumberSetting hotbarSlotPreference;
     public Blocks() {
         super("Blocks", ModuleCategory.Hotkeys, 0);
 
-        this.registerSetting(preferSlot = new Tick("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new Slider("Prefer wich slot", 9, 1, 9, 1));
+        this.registerSetting(preferSlot = new BooleanSetting("Prefer a slot", false));
+        this.registerSetting(hotbarSlotPreference = new NumberSetting("Prefer wich slot", 9, 1, 9, 1));
     }
 
     @Override

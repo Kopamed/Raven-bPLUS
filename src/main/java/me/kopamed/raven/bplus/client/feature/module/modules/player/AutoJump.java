@@ -5,18 +5,18 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class AutoJump extends Module {
-   public static Tick b;
+   public static BooleanSetting b;
    private boolean c = false;
 
    public AutoJump() {
       super("AutoJump", ModuleCategory.Player, 0);
-      this.registerSetting(b = new Tick("Cancel when shifting", true));
+      this.registerSetting(b = new BooleanSetting("Cancel when shifting", true));
    }
 
    public void onDisable() {

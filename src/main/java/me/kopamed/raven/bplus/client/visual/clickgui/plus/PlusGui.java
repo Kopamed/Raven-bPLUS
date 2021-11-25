@@ -46,7 +46,7 @@ public class PlusGui extends GuiScreen {
         this.tooltip = "";
         Version clientVersion = Raven.client.getVersionManager().getClientVersion();
         this.defaultTooltip = "b" + clientVersion.getBranchCommit() + " of v" + clientVersion.getVersion() + " on branch " + clientVersion.getBranchName();
-        this.theme = new MaterialDark();
+        this.theme = new ArcDark();
 
         for(ModuleCategory moduleCategory : ModuleCategory.values()){
             CategoryComponent categoryComponent = new CategoryComponent(moduleCategory);

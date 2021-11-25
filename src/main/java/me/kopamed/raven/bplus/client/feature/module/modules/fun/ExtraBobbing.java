@@ -2,16 +2,16 @@ package me.kopamed.raven.bplus.client.feature.module.modules.fun;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import net.minecraft.client.entity.EntityPlayerSP;
 
 public class ExtraBobbing extends Module {
-    public static Slider a;
+    public static NumberSetting a;
     private boolean b;
 
     public ExtraBobbing() {
         super("Extra Bobbing", ModuleCategory.Misc, 0);
-        this.registerSetting(a = new Slider("Level", 1.0D, 0.0D, 8.0D, 0.1D));
+        this.registerSetting(a = new NumberSetting("Level", 1.0D, 0.0D, 8.0D, 0.1D));
     }
 
     public void onEnable() {

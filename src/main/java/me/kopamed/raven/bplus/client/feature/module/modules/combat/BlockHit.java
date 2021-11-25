@@ -1,10 +1,10 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.combat;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.CoolDown;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
@@ -20,10 +20,10 @@ import org.lwjgl.input.Mouse;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockHit extends Module {
-    public static Slider eventType, chance;
-    public static Description eventTypeDesc;
-    public static Tick onlyPlayers, onRightMBHold;
-    public static RangeSlider waitMs, hitPer, postDelay, range;
+    public static NumberSetting eventType, chance;
+    public static DescriptionSetting eventTypeDesc;
+    public static BooleanSetting onlyPlayers, onRightMBHold;
+    public static RangeSetting waitMs, hitPer, postDelay, range;
     public static boolean executingAction, hitCoolDown, alreadyHit, safeGuard;
     public static int hitTimeout, hitsWaited;
     private CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
@@ -31,15 +31,15 @@ public class BlockHit extends Module {
 
     public BlockHit() {
         super("BlockHit", ModuleCategory.Combat, 0);
-        this.registerSetting(onlyPlayers = new Tick("Only combo players", true));
-        this.registerSetting(onRightMBHold = new Tick("When holding down rmb", true));
-        this.registerSetting(waitMs = new RangeSlider("Action Time (MS)", 110, 150, 1, 500, 1));
-        this.registerSetting(hitPer = new RangeSlider("Once every ... hits", 1, 1, 1, 10, 1));
-        this.registerSetting(postDelay = new RangeSlider("Post Delay (MS)", 10, 40, 0, 500, 1));
-        this.registerSetting(chance =  new Slider("Chance %", 100, 0, 100, 1));
-        this.registerSetting(range = new RangeSlider("Range: ", 0, 2.8, 0, 6, 0.05));
-        this.registerSetting(eventType = new Slider("Value: ", 2, 1, 2, 1));
-        this.registerSetting(eventTypeDesc = new Description("Mode: POST"));
+        this.registerSetting(onlyPlayers = new BooleanSetting("Only combo players", true));
+        this.registerSetting(onRightMBHold = new BooleanSetting("When holding down rmb", true));
+        this.registerSetting(waitMs = new RangeSetting("Action Time (MS)", 110, 150, 1, 500, 1));
+        this.registerSetting(hitPer = new RangeSetting("Once every ... hits", 1, 1, 1, 10, 1));
+        this.registerSetting(postDelay = new RangeSetting("Post Delay (MS)", 10, 40, 0, 500, 1));
+        this.registerSetting(chance =  new NumberSetting("Chance %", 100, 0, 100, 1));
+        this.registerSetting(range = new RangeSetting("Range: ", 0, 2.8, 0, 6, 0.05));
+        this.registerSetting(eventType = new NumberSetting("Value: ", 2, 1, 2, 1));
+        this.registerSetting(eventTypeDesc = new DescriptionSetting("Mode: POST"));
     }
 
     public void guiUpdate() {

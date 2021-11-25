@@ -7,8 +7,8 @@ import java.util.Iterator;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.client.SelfDestruct;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.tileentity.TileEntity;
@@ -18,17 +18,17 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChestESP extends Module {
-   public static Slider a;
-   public static Slider b;
-   public static Slider c;
-   public static Tick d;
+   public static NumberSetting a;
+   public static NumberSetting b;
+   public static NumberSetting c;
+   public static BooleanSetting d;
 
    public ChestESP() {
       super("ChestESP", ModuleCategory.Render, 0);
-      a = new Slider("Red", 0.0D, 0.0D, 255.0D, 1.0D);
-      b = new Slider("Green", 0.0D, 0.0D, 255.0D, 1.0D);
-      c = new Slider("Blue", 255.0D, 0.0D, 255.0D, 1.0D);
-      d = new Tick("Rainbow", false);
+      a = new NumberSetting("Red", 0.0D, 0.0D, 255.0D, 1.0D);
+      b = new NumberSetting("Green", 0.0D, 0.0D, 255.0D, 1.0D);
+      c = new NumberSetting("Blue", 255.0D, 0.0D, 255.0D, 1.0D);
+      d = new BooleanSetting("Rainbow", false);
       this.registerSetting(a);
       this.registerSetting(b);
       this.registerSetting(c);

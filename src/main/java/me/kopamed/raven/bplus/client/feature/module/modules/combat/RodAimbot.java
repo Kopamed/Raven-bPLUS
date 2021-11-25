@@ -6,9 +6,9 @@ import java.util.Iterator;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,15 +17,15 @@ import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class RodAimbot extends Module {
-   public static Slider a;
-   public static Slider b;
-   public static Tick c;
+   public static NumberSetting a;
+   public static NumberSetting b;
+   public static BooleanSetting c;
 
    public RodAimbot() {
       super("RodAimbot", ModuleCategory.Combat, 0);
-      this.registerSetting(a = new Slider("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
-      this.registerSetting(b = new Slider("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
-      this.registerSetting(c = new Tick("Aim invis", false));
+      this.registerSetting(a = new NumberSetting("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
+      this.registerSetting(b = new NumberSetting("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(c = new BooleanSetting("Aim invis", false));
    }
 
    @SubscribeEvent

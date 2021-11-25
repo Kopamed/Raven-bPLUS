@@ -1,9 +1,9 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.fun;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -11,15 +11,15 @@ import java.lang.reflect.Field;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FPSSpoofer extends Module {
-    public static Description desc;
-    public static RangeSlider fps;
+    public static DescriptionSetting desc;
+    public static RangeSetting fps;
     public static Field r = null;
     public static int ticksPassed;
 
     public FPSSpoofer() {
         super("FPSSpoof", ModuleCategory.Misc, 0);
-        this.registerSetting(desc = new Description("Spoofs your fps"));
-        this.registerSetting(fps = new RangeSlider("FPS", 99860, 100000, 0, 100000, 100));
+        this.registerSetting(desc = new DescriptionSetting("Spoofs your fps"));
+        this.registerSetting(fps = new RangeSetting("FPS", 99860, 100000, 0, 100000, 100));
 
         try {
             r = mc.getClass().getDeclaredField("field_71420_M");

@@ -3,17 +3,17 @@ package me.kopamed.raven.bplus.client.feature.module.modules.client;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Timer;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 
 public class CommandLine extends Module {
    public static boolean a = false;
    public static boolean b = false;
    public static Timer an;
-   public static Tick animate;
+   public static BooleanSetting animate;
 
    public CommandLine() {
       super("Command line", ModuleCategory.Misc, 0);
-      this.registerSetting(animate = new Tick("Animate", true));
+      this.registerSetting(animate = new BooleanSetting("Animate", true));
    }
 
    public void onEnable() {

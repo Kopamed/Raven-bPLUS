@@ -4,9 +4,9 @@ package me.kopamed.raven.bplus.client.feature.module.modules.other;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.ClickGui;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 
@@ -17,17 +17,17 @@ public class StringEncrypt extends Module {
    private static final String m4 = "Blank";
    private static int m3s = 1;
    private boolean m3t = false;
-   public static Tick ignoreDebug;
-   public static Tick ignoreAllGui;
-   public static Slider value;
-   public static Description moduleDesc;
+   public static BooleanSetting ignoreDebug;
+   public static BooleanSetting ignoreAllGui;
+   public static NumberSetting value;
+   public static DescriptionSetting moduleDesc;
 
    public StringEncrypt() {
       super("String Encrypt", ModuleCategory.Misc, 0);
-      this.registerSetting(ignoreDebug = new Tick("Ignore blatant", false));
-      this.registerSetting(ignoreAllGui = new Tick("Ignore all GUI", false));
-      this.registerSetting(value = new Slider("Value", 1.0D, 1.0D, 4.0D, 1.0D));
-      this.registerSetting(moduleDesc = new Description(Utils.md + m1));
+      this.registerSetting(ignoreDebug = new BooleanSetting("Ignore blatant", false));
+      this.registerSetting(ignoreAllGui = new BooleanSetting("Ignore all GUI", false));
+      this.registerSetting(value = new NumberSetting("Value", 1.0D, 1.0D, 4.0D, 1.0D));
+      this.registerSetting(moduleDesc = new DescriptionSetting(Utils.md + m1));
    }
 
    public void onEnable() {

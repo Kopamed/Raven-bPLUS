@@ -5,17 +5,17 @@ package me.kopamed.raven.bplus.client.feature.module.modules.blatant;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 
 public class BHop extends Module {
-   public static Slider a;
+   public static NumberSetting a;
    private final double bspd = 0.0025D;
 
    public BHop() {
       super("Bhop", ModuleCategory.Blatant, 0);
-      this.registerSetting(a = new Slider("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
+      this.registerSetting(a = new NumberSetting("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 
    public void update() {

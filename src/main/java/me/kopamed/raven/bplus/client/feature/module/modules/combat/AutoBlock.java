@@ -2,8 +2,8 @@ package me.kopamed.raven.bplus.client.feature.module.modules.combat;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.CoolDown;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
@@ -13,17 +13,17 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoBlock extends Module {
-    public static RangeSlider duration, distance;
-    public static Slider chance;
+    public static RangeSetting duration, distance;
+    public static NumberSetting chance;
     private boolean engaged;
     private CoolDown engagedTime = new CoolDown(0);
 
     public AutoBlock(){
         super("AutoBlock", ModuleCategory.Combat, 0);
 
-        this.registerSetting(duration = new RangeSlider("Block duration (MS)", 20, 100, 1, 500, 1));
-        this.registerSetting(distance = new RangeSlider("Distance to player (blocks)", 0, 3, 0, 6, 0.01));
-        this.registerSetting(chance = new Slider("Chance %", 100, 0, 100, 1));
+        this.registerSetting(duration = new RangeSetting("Block duration (MS)", 20, 100, 1, 500, 1));
+        this.registerSetting(distance = new RangeSetting("Distance to player (blocks)", 0, 3, 0, 6, 0.01));
+        this.registerSetting(chance = new NumberSetting("Chance %", 100, 0, 100, 1));
     }
 
     @SubscribeEvent

@@ -5,20 +5,20 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 
 public class FallSpeed extends Module {
-   public static Description dc;
-   public static Slider a;
-   public static Tick b;
+   public static DescriptionSetting dc;
+   public static NumberSetting a;
+   public static BooleanSetting b;
 
    public FallSpeed() {
       super("FallSpeed", ModuleCategory.Player, 0);
-      this.registerSetting(dc = new Description("Vanilla max: 3.92"));
-      this.registerSetting(a = new Slider("Motion", 5.0D, 0.0D, 8.0D, 0.1D));
-      this.registerSetting(b = new Tick("Disable XZ motion", true));
+      this.registerSetting(dc = new DescriptionSetting("Vanilla max: 3.92"));
+      this.registerSetting(a = new NumberSetting("Motion", 5.0D, 0.0D, 8.0D, 0.1D));
+      this.registerSetting(b = new BooleanSetting("Disable XZ motion", true));
    }
 
    public void update() {

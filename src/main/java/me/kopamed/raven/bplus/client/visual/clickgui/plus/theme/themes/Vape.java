@@ -52,7 +52,7 @@ public class Vape implements Theme {
 
     @Override
     public Color getContrastColour() {
-        return new Color(36, 39, 43);
+        return new Color(249, 125, 1);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Vape implements Theme {
     }
 
     @Override
-    public Color getTreeColour() {
+    public Color getHeadingColour() {
         return getAccentColour();
     }
 

@@ -5,18 +5,18 @@ package me.kopamed.raven.bplus.client.feature.module.modules.movement;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class Sprint extends Module {
-   public static Tick a;
+   public static BooleanSetting a;
 
    public Sprint() {
       super("Sprint", ModuleCategory.Movement, 0);
-      a = new Tick("OmniSprint", false);
+      a = new BooleanSetting("OmniSprint", false);
       this.registerSetting(a);
    }
 

@@ -6,8 +6,8 @@ import java.awt.Color;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 public class Freecam extends Module {
-   public static Slider a;
-   public static Tick b;
+   public static NumberSetting a;
+   public static BooleanSetting b;
    private final double toRad = 0.017453292519943295D;
    public static EntityOtherPlayerMP en = null;
    private int[] lcc = new int[]{Integer.MAX_VALUE, 0};
@@ -25,8 +25,8 @@ public class Freecam extends Module {
 
    public Freecam() {
       super("Freecam", ModuleCategory.Player, 0);
-      this.registerSetting(a = new Slider("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
-      this.registerSetting(b = new Tick("Disable on damage", true));
+      this.registerSetting(a = new NumberSetting("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
+      this.registerSetting(b = new BooleanSetting("Disable on damage", true));
    }
 
    @Override

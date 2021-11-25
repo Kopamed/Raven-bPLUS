@@ -4,10 +4,10 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.CoolDown;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.modules.client.SelfDestruct;
@@ -23,16 +23,16 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 
 public class SafeWalk extends Module {
-   public static Tick doShift;
-   public static Tick blocksOnly;
-   public static Tick shiftOnJump;
-   public static Tick onHold;
-   public static Tick showBlockAmount;
-   public static Tick lookDown;
-   public static RangeSlider pitchRange;
-   public static Slider blockShowMode;
-   public static Description blockShowModeDesc;
-   public static RangeSlider shiftTime;
+   public static BooleanSetting doShift;
+   public static BooleanSetting blocksOnly;
+   public static BooleanSetting shiftOnJump;
+   public static BooleanSetting onHold;
+   public static BooleanSetting showBlockAmount;
+   public static BooleanSetting lookDown;
+   public static RangeSetting pitchRange;
+   public static NumberSetting blockShowMode;
+   public static DescriptionSetting blockShowModeDesc;
+   public static RangeSetting shiftTime;
 
    private static boolean shouldBridge = false;
    private static boolean isShifting = false;
@@ -41,16 +41,16 @@ public class SafeWalk extends Module {
 
    public SafeWalk() {
       super("SafeWalk", ModuleCategory.Player, 0);
-      this.registerSetting(doShift = new Tick("Shift", false));
-      this.registerSetting(shiftOnJump = new Tick("Shift during jumps", false));
-      this.registerSetting(shiftTime = new RangeSlider("Shift time: (s)", 10, 20, 0, 500, 1));
-      this.registerSetting(onHold = new Tick("On shift hold", false));
-      this.registerSetting(blocksOnly = new Tick("Blocks only", true));
-      this.registerSetting(showBlockAmount = new Tick("Show amount of blocks", true));
-      this.registerSetting(blockShowMode = new Slider("Block display info:", 2D, 1D, 2D, 1D));
-      this.registerSetting(blockShowModeDesc = new Description("Mode: "));
-      this.registerSetting(lookDown = new Tick("Only when looking down", true));
-      this.registerSetting(pitchRange = new RangeSlider("Pitch min range:", 70D, 85, 0D, 90D, 1D));
+      this.registerSetting(doShift = new BooleanSetting("Shift", false));
+      this.registerSetting(shiftOnJump = new BooleanSetting("Shift during jumps", false));
+      this.registerSetting(shiftTime = new RangeSetting("Shift time: (s)", 10, 20, 0, 500, 1));
+      this.registerSetting(onHold = new BooleanSetting("On shift hold", false));
+      this.registerSetting(blocksOnly = new BooleanSetting("Blocks only", true));
+      this.registerSetting(showBlockAmount = new BooleanSetting("Show amount of blocks", true));
+      this.registerSetting(blockShowMode = new NumberSetting("Block display info:", 2D, 1D, 2D, 1D));
+      this.registerSetting(blockShowModeDesc = new DescriptionSetting("Mode: "));
+      this.registerSetting(lookDown = new BooleanSetting("Only when looking down", true));
+      this.registerSetting(pitchRange = new RangeSetting("Pitch min range:", 70D, 85, 0D, 90D, 1D));
    }
 
    public void onDisable() {

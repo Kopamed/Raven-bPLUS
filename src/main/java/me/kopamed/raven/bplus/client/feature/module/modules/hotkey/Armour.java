@@ -3,16 +3,16 @@ package me.kopamed.raven.bplus.client.feature.module.modules.hotkey;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
 public class Armour extends Module {
-    public static Tick ignoreIfAlreadyEquipped;
+    public static BooleanSetting ignoreIfAlreadyEquipped;
     public Armour() {
         super("Armour", ModuleCategory.Hotkeys, 0);
 
-        this.registerSetting(ignoreIfAlreadyEquipped = new Tick("Ignore if already equipped", true));
+        this.registerSetting(ignoreIfAlreadyEquipped = new BooleanSetting("Ignore if already equipped", true));
     }
 
     @Override

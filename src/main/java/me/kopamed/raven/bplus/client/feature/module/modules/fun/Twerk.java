@@ -2,18 +2,18 @@ package me.kopamed.raven.bplus.client.feature.module.modules.fun;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 
 public class Twerk extends Module {
-    public static Slider a;
+    public static NumberSetting a;
     private int tickCount;
     private boolean sneaking;
 
     public Twerk(){
         super("Twerk", ModuleCategory.Misc, 0);
-        this.registerSetting(a =  new Slider("Duration:", 1, 1, 100, 1));
+        this.registerSetting(a =  new NumberSetting("Duration:", 1, 1, 100, 1));
     }
 
     public void onEnable(){

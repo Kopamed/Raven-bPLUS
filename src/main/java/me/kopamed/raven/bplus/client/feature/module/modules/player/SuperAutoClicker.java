@@ -2,9 +2,9 @@ package me.kopamed.raven.bplus.client.feature.module.modules.player;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -12,9 +12,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.lang.reflect.Method;
 
 public class SuperAutoClicker extends Module {
-    public Description credits, warning, cps;
-    public Tick left, right;
-    public Slider everyFps;
+    public DescriptionSetting credits, warning, cps;
+    public BooleanSetting left, right;
+    public NumberSetting everyFps;
     public Method cpsCap;
 
     private int currentFPS = 0;
@@ -22,12 +22,12 @@ public class SuperAutoClicker extends Module {
     public SuperAutoClicker(){
         super("SuperAutoClicker", ModuleCategory.Player);
 
-        this.registerSetting(credits = new Description("Huge thanks to Caterpillow"));
-        this.registerSetting(warning = new Description("Ban speedruns be like"));
-        this.registerSetting(left = new Tick("Left Click", false));
-        this.registerSetting(cps = new Description("Warning: CPS = FPS"));
-        this.registerSetting(right = new Tick("Rigth Click", true));
-        this.registerSetting(everyFps = new Slider("Frame Delay: ", 1, 1, 100, 1));
+        this.registerSetting(credits = new DescriptionSetting("Huge thanks to Caterpillow"));
+        this.registerSetting(warning = new DescriptionSetting("Ban speedruns be like"));
+        this.registerSetting(left = new BooleanSetting("Left Click", false));
+        this.registerSetting(cps = new DescriptionSetting("Warning: CPS = FPS"));
+        this.registerSetting(right = new BooleanSetting("Rigth Click", true));
+        this.registerSetting(everyFps = new NumberSetting("Frame Delay: ", 1, 1, 100, 1));
     }
 
     @SubscribeEvent

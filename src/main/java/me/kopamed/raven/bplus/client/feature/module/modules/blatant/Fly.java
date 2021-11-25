@@ -4,24 +4,24 @@ package me.kopamed.raven.bplus.client.feature.module.modules.blatant;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 
 public class Fly extends Module {
    private final Fly.VanFly vanFly = new VanFly();
    private final Fly.GliFly gliFly = new Fly.GliFly();
-   public static Description dc;
-   public static Slider a;
-   public static Slider b;
+   public static DescriptionSetting dc;
+   public static NumberSetting a;
+   public static NumberSetting b;
    private static final String c1 = "Vanilla";
    private static final String c2 = "Glide";
 
    public Fly() {
       super("Fly", ModuleCategory.Blatant, 0);
-      this.registerSetting(a = new Slider("Value", 1.0D, 1.0D, 2.0D, 1.0D));
-      this.registerSetting(dc = new Description(Utils.md + c1));
-      this.registerSetting(b = new Slider("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
+      this.registerSetting(a = new NumberSetting("Value", 1.0D, 1.0D, 2.0D, 1.0D));
+      this.registerSetting(dc = new DescriptionSetting(Utils.md + c1));
+      this.registerSetting(b = new NumberSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
    }
 
    public void onEnable() {

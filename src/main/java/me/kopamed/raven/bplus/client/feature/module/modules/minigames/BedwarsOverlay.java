@@ -6,8 +6,8 @@ import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -23,8 +23,8 @@ import java.util.HashMap;
 import static me.kopamed.raven.bplus.helper.utils.Utils.Java.round;
 
 public class BedwarsOverlay extends Module {
-    public static Slider overlayX, overlayY, margin, marginTextY, marginTextX;
-    public static Description bombiesMomento;
+    public static NumberSetting overlayX, overlayY, margin, marginTextY, marginTextX;
+    public static DescriptionSetting bombiesMomento;
     public static boolean active, reset;
     public static double overlayWidth, overlayHeight, textY;
     public static int mainTextColour, backgroundColour, linesDrawn, errorColour;
@@ -34,14 +34,14 @@ public class BedwarsOverlay extends Module {
     public BedwarsOverlay() {
 
         super("Bedwars Overlay", ModuleCategory.Misc, 0);
-        this.registerSetting(bombiesMomento = new Description("B0MBIES moment"));
+        this.registerSetting(bombiesMomento = new DescriptionSetting("B0MBIES moment"));
         overlayHeight = 170;
         overlayWidth = 300;
-        this.registerSetting(overlayX = new Slider("X", 4, 0, mc.displayWidth, 1));
-        this.registerSetting(overlayY = new Slider("Y", 4, 0, mc.displayHeight, 1));
-        this.registerSetting(margin = new Slider("Margin", 4, 0, 100, 1));
-        this.registerSetting(marginTextX = new Slider("Margin Text X", 21, 0, 100, 1));
-        this.registerSetting(marginTextY = new Slider("Margin Text Y", 8, 0, 100, 1));
+        this.registerSetting(overlayX = new NumberSetting("X", 4, 0, mc.displayWidth, 1));
+        this.registerSetting(overlayY = new NumberSetting("Y", 4, 0, mc.displayHeight, 1));
+        this.registerSetting(margin = new NumberSetting("Margin", 4, 0, 100, 1));
+        this.registerSetting(marginTextX = new NumberSetting("Margin Text X", 21, 0, 100, 1));
+        this.registerSetting(marginTextY = new NumberSetting("Margin Text Y", 8, 0, 100, 1));
         //overlayX = 4;
         //overlayY = 4;
         mainTextColour  = 0xffFEC5E5;

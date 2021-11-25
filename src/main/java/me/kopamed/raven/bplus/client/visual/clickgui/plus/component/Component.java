@@ -31,6 +31,7 @@ public abstract class Component {
     protected double windowStartDragY;
     protected double mouseStartDragX;
     protected double mouseStartDragY;
+    private boolean visible = true;
 
     public double getX() {
         if(!locationSet)
@@ -163,9 +164,17 @@ public abstract class Component {
     }
 
     public void onResize(){
-        for(Component component : components){
+        for (Component component : components){
             component.onResize();
         }
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }
 

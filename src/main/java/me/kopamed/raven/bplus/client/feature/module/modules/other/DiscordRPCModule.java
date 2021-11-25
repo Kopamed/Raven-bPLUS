@@ -2,8 +2,8 @@ package me.kopamed.raven.bplus.client.feature.module.modules.other;
 
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.module.Module;;
 import me.kopamed.raven.bplus.helper.discordRPC.DiscordRPCManager;
 import me.kopamed.raven.bplus.helper.discordRPC.RPCMode;
@@ -14,8 +14,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class DiscordRPCModule extends Module {
     public static final DiscordRPCManager rpc = new DiscordRPCManager();
-    public static Slider rpcMode;
-    public static Description rpcModeDesc, unsupportedOS;
+    public static NumberSetting rpcMode;
+    public static DescriptionSetting rpcModeDesc, unsupportedOS;
 
 
     public DiscordRPCModule() {
@@ -26,10 +26,10 @@ public class DiscordRPCModule extends Module {
         String osName = tracker.getOsName();
 
         if (osArch.contains("arm") || osArch.contains("aarch64") || osName.toLowerCase().contains("mac")) {
-            this.registerSetting(unsupportedOS = new Description("Unsupported OS!"));
+            this.registerSetting(unsupportedOS = new DescriptionSetting("Unsupported OS!"));
         }
-        this.registerSetting(rpcMode = new Slider("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
-        this.registerSetting(rpcModeDesc = new Description("Raven b+"));
+        this.registerSetting(rpcMode = new NumberSetting("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
+        this.registerSetting(rpcModeDesc = new DescriptionSetting("Raven b+"));
     }
 
     public void onEnable() {

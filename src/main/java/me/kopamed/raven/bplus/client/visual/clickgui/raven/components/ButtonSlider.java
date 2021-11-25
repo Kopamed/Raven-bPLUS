@@ -7,12 +7,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.Component;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class ButtonSlider extends Component {
-   private final Slider v;
+   private final NumberSetting v;
    private final ButtonModule p;
    private int o;
    private int x;
@@ -21,7 +21,7 @@ public class ButtonSlider extends Component {
    private double w;
    private final int msl = 84;
 
-   public ButtonSlider(Slider v, ButtonModule b, int o) {
+   public ButtonSlider(NumberSetting v, ButtonModule b, int o) {
       this.v = v;
       this.p = b;
       this.x = b.category.getX() + b.category.getWidth();

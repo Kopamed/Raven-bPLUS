@@ -34,28 +34,28 @@ public class ButtonModule extends Component {
       int y = o + 12;
       if (!mod.getSettings().isEmpty()) {
          for (Setting v : mod.getSettings()) {
-            if (v instanceof Slider) {
-               Slider n = (Slider) v;
+            if (v instanceof NumberSetting) {
+               NumberSetting n = (NumberSetting) v;
                ButtonSlider s = new ButtonSlider(n, this, y);
                this.settings.add(s);
                y += 12;
-            } else if (v instanceof Tick) {
-               Tick b = (Tick) v;
+            } else if (v instanceof BooleanSetting) {
+               BooleanSetting b = (BooleanSetting) v;
                ButtonTick c = new ButtonTick(mod, b, this, y);
                this.settings.add(c);
                y += 12;
-            } else if (v instanceof Description) {
-               Description d = (Description) v;
+            } else if (v instanceof DescriptionSetting) {
+               DescriptionSetting d = (DescriptionSetting) v;
                ButtonDesc m = new ButtonDesc(d, this, y);
                this.settings.add(m);
                y += 12;
-            } else if (v instanceof RangeSlider) {
-               RangeSlider n = (RangeSlider) v;
+            } else if (v instanceof RangeSetting) {
+               RangeSetting n = (RangeSetting) v;
                ButtonMinMaxSlider s = new ButtonMinMaxSlider(n, this, y);
                this.settings.add(s);
                y += 12;
-            }else if (v instanceof Mode) {
-               Mode n = (Mode) v;
+            }else if (v instanceof ComboSetting) {
+               ComboSetting n = (ComboSetting) v;
                ButtonMode s = new ButtonMode(n, this, y);
                this.settings.add(s);
                y += 12;

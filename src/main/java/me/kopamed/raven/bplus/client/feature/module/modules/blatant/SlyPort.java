@@ -2,9 +2,9 @@ package me.kopamed.raven.bplus.client.feature.module.modules.blatant;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -15,20 +15,20 @@ import net.minecraft.util.Vec3;
 import java.util.Iterator;
 
 public class SlyPort extends Module {
-    public static Description f;
-    public static Slider r;
-    public static Tick b;
-    public static Tick d;
-    public static Tick e;
+    public static DescriptionSetting f;
+    public static NumberSetting r;
+    public static BooleanSetting b;
+    public static BooleanSetting d;
+    public static BooleanSetting e;
     private final boolean s = false;
 
     public SlyPort() {
         super("SlyPort", ModuleCategory.Blatant, 0);
-        this.registerSetting(f = new Description("Teleport behind enemies."));
-        this.registerSetting(r = new Slider("Range", 6.0D, 2.0D, 15.0D, 1.0D));
-        this.registerSetting(e = new Tick("Aim", true));
-        this.registerSetting(b = new Tick("Play sound", true));
-        this.registerSetting(d = new Tick("Players only", true));
+        this.registerSetting(f = new DescriptionSetting("Teleport behind enemies."));
+        this.registerSetting(r = new NumberSetting("Range", 6.0D, 2.0D, 15.0D, 1.0D));
+        this.registerSetting(e = new BooleanSetting("Aim", true));
+        this.registerSetting(b = new BooleanSetting("Play sound", true));
+        this.registerSetting(d = new BooleanSetting("Players only", true));
     }
 
     public void onEnable() {

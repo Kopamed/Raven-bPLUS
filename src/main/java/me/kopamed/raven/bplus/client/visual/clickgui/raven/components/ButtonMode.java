@@ -1,7 +1,7 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.raven.components;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.Component;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Mode;
+import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class ButtonMode extends Component {
     private final int c = (new Color(30, 144, 255)).getRGB();
-    private final Mode mode;
+    private final ComboSetting mode;
     private final ButtonModule p;
     private int x;
     private int y;
@@ -17,7 +17,7 @@ public class ButtonMode extends Component {
     private boolean registeredClick = false;
     private boolean md = false;
 
-    public ButtonMode(Mode desc, ButtonModule b, int o) {
+    public ButtonMode(ComboSetting desc, ButtonModule b, int o) {
         this.mode = desc;
         this.p = b;
         this.x = b.category.getX() + b.category.getWidth();

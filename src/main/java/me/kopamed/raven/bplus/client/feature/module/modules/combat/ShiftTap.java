@@ -1,10 +1,10 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.combat;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.CoolDown;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
@@ -20,24 +20,24 @@ import org.lwjgl.input.Mouse;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ShiftTap extends Module {
-    public static Slider range, eventType, chance;
-    public static Description eventTypeDesc;
-    public static Tick onlyPlayers;
-    public static RangeSlider actionTicks, onceEvery, postDelay;
+    public static NumberSetting range, eventType, chance;
+    public static DescriptionSetting eventTypeDesc;
+    public static BooleanSetting onlyPlayers;
+    public static RangeSetting actionTicks, onceEvery, postDelay;
     public static boolean comboing, hitCoolDown, alreadyHit, waitingForPostDelay;
     public static int hitTimeout, hitsWaited;
     public static CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
 
     public ShiftTap(){
         super("ShiftTap", ModuleCategory.Combat, 0);
-        this.registerSetting(onlyPlayers = new Tick("Only combo players", true));
-        this.registerSetting(actionTicks = new RangeSlider("Action Time (MS)",  25, 55, 1, 500, 1));
-        this.registerSetting(onceEvery =  new RangeSlider("Once every ... hits", 1, 1, 1, 10, 1));
-        this.registerSetting(postDelay =  new RangeSlider("Post delay (MS)", 25, 55, 1, 500, 1));
-        this.registerSetting(chance =  new Slider("Chance %", 100, 0, 100, 1));
-        this.registerSetting(range = new Slider("Range: ", 3, 1, 6, 0.05));
-        this.registerSetting(eventType = new Slider("Value: ", 2, 1, 2, 1));
-        this.registerSetting(eventTypeDesc = new Description("Mode: POST"));
+        this.registerSetting(onlyPlayers = new BooleanSetting("Only combo players", true));
+        this.registerSetting(actionTicks = new RangeSetting("Action Time (MS)",  25, 55, 1, 500, 1));
+        this.registerSetting(onceEvery =  new RangeSetting("Once every ... hits", 1, 1, 1, 10, 1));
+        this.registerSetting(postDelay =  new RangeSetting("Post delay (MS)", 25, 55, 1, 500, 1));
+        this.registerSetting(chance =  new NumberSetting("Chance %", 100, 0, 100, 1));
+        this.registerSetting(range = new NumberSetting("Range: ", 3, 1, 6, 0.05));
+        this.registerSetting(eventType = new NumberSetting("Value: ", 2, 1, 2, 1));
+        this.registerSetting(eventTypeDesc = new DescriptionSetting("Mode: POST"));
     }
 
 

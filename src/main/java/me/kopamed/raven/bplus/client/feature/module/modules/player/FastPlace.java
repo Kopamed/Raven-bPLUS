@@ -6,9 +6,9 @@ import java.lang.reflect.Field;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,14 +16,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class FastPlace extends Module {
-   public static Slider a;
-   public static Tick b;
+   public static NumberSetting a;
+   public static BooleanSetting b;
    public static Field r = null;
 
    public FastPlace() {
       super("FastPlace", ModuleCategory.Player, 0);
-      this.registerSetting(a = new Slider("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
-      this.registerSetting(b = new Tick("Blocks only", true));
+      this.registerSetting(a = new NumberSetting("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
+      this.registerSetting(b = new BooleanSetting("Blocks only", true));
 
       try {
          r = mc.getClass().getDeclaredField("field_71467_ac");

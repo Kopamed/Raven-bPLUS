@@ -1,7 +1,7 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.raven.components;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.Component;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class ButtonMinMaxSlider extends Component {
-    private final RangeSlider doubleSlider;
+    private final RangeSetting doubleSlider;
     private final ButtonModule module;
     private double barWidth;
     private double blankWidth;
@@ -24,7 +24,7 @@ public class ButtonMinMaxSlider extends Component {
     private final int boxHeight = 4;
     private final int textSize = 11;
 
-    public ButtonMinMaxSlider(RangeSlider doubleSlider, ButtonModule module, int moduleStartY){
+    public ButtonMinMaxSlider(RangeSetting doubleSlider, ButtonModule module, int moduleStartY){
         this.doubleSlider = doubleSlider;
         this.module = module;
         this.sliderStartX = this.module.category.getX() + boxMargin;

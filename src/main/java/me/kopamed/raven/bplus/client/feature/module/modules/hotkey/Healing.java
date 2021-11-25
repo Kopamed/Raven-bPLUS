@@ -3,23 +3,23 @@ package me.kopamed.raven.bplus.client.feature.module.modules.hotkey;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import net.minecraft.item.*;
 
 public class Healing extends Module {
-    private final Tick preferSlot;
-    private final Slider hotbarSlotPreference;
-    private final Slider itemMode;
-    private final Description modeDesc;
+    private final BooleanSetting preferSlot;
+    private final NumberSetting hotbarSlotPreference;
+    private final NumberSetting itemMode;
+    private final DescriptionSetting modeDesc;
     public Healing() {
         super("Healing", ModuleCategory.Hotkeys, 0);
 
-        this.registerSetting(preferSlot = new Tick("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new Slider("Prefer wich slot", 8, 1, 9, 1));
-        this.registerSetting(itemMode = new Slider("Value:", 1, 1,4, 1));
-        this.registerSetting(modeDesc = new Description("Mode: SOUP"));
+        this.registerSetting(preferSlot = new BooleanSetting("Prefer a slot", false));
+        this.registerSetting(hotbarSlotPreference = new NumberSetting("Prefer wich slot", 8, 1, 9, 1));
+        this.registerSetting(itemMode = new NumberSetting("Value:", 1, 1,4, 1));
+        this.registerSetting(modeDesc = new DescriptionSetting("Mode: SOUP"));
     }
 
     public void guiUpdate() {

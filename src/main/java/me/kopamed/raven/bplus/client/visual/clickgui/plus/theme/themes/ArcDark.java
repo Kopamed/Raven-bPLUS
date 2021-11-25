@@ -76,7 +76,7 @@ public class ArcDark implements Theme {
     }
 
     @Override
-    public Color getTreeColour() {
+    public Color getHeadingColour() {
         return new Color(82, 224, 103);
     }
 

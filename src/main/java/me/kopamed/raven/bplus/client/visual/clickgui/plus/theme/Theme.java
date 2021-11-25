@@ -31,7 +31,7 @@ public interface Theme {
 
     public Color getNotificationColour();
 
-    public Color getTreeColour();
+    public Color getHeadingColour();
 
     public Color getHighlightColour();
 

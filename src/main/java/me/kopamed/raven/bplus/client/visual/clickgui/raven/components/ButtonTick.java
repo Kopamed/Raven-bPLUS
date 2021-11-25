@@ -6,7 +6,7 @@ import java.awt.Color;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -15,14 +15,14 @@ public class ButtonTick extends Component {
    private final int c = (new Color(20, 255, 0)).getRGB();
    private final int boxC = (new Color(169,169,169)).getRGB();
    private final Module mod;
-   private final Tick cl1ckbUtt0n;
+   private final BooleanSetting cl1ckbUtt0n;
    private final ButtonModule module;
    private int o;
    private int x;
    private int y;
    private int boxSize = 6;
 
-   public ButtonTick(Module mod, Tick op, ButtonModule b, int o) {
+   public ButtonTick(Module mod, BooleanSetting op, ButtonModule b, int o) {
       this.mod = mod;
       this.cl1ckbUtt0n = op;
       this.module = b;

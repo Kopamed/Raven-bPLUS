@@ -8,8 +8,8 @@ import java.util.Iterator;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -30,8 +30,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class BridgeInfo extends Module {
-   public static Description a;
-   public static Tick ep;
+   public static DescriptionSetting a;
+   public static BooleanSetting ep;
    private static final int rgb = (new Color(0, 200, 200)).getRGB();
    private static int hudX = 5;
    private static int hudY = 70;
@@ -45,15 +45,15 @@ public class BridgeInfo extends Module {
 
    public BridgeInfo() {
       super("Bridge Info", ModuleCategory.Misc, 0);
-      this.registerSetting(a = new Description("Only for solos."));
-      this.registerSetting(ep = new Tick("Edit position", false));
+      this.registerSetting(a = new DescriptionSetting("Only for solos."));
+      this.registerSetting(ep = new BooleanSetting("Edit position", false));
    }
 
    public void onDisable() {
       this.rv();
    }
 
-   public void guiButtonToggled(Tick b) {
+   public void guiButtonToggled(BooleanSetting b) {
       if (b == ep) {
          ep.disable();
          mc.displayGuiScreen(new BridgeInfo.eh());

@@ -4,7 +4,7 @@ package me.kopamed.raven.bplus.client.feature.module.modules.other;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -20,12 +20,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 public class WaterBucket extends Module {
-   public static Description a;
+   public static DescriptionSetting a;
    private boolean handling;
 
    public WaterBucket() {
       super("Water bucket", ModuleCategory.Misc, 0);
-      this.registerSetting(a = new Description("Credits: aycy"));
+      this.registerSetting(a = new DescriptionSetting("Credits: aycy"));
    }
 
    @SubscribeEvent

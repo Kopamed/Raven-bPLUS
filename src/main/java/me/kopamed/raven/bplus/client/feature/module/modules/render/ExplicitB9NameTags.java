@@ -5,8 +5,8 @@ package me.kopamed.raven.bplus.client.feature.module.modules.render;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.CombatUtils;
 import me.kopamed.raven.bplus.helper.utils.RenderUtils;
 import me.kopamed.raven.bplus.helper.utils.Utils;
@@ -43,23 +43,23 @@ public class ExplicitB9NameTags extends Module {
     private String mode;
     private ArrayList entities;
 
-    private final Slider modeSetting;
-    private final Slider scaleSetting;
-    private final Slider rangeSetting;
-    private final Tick armorSetting;
-    private final Tick durabilitySetting;
-    private final Tick distanceSetting;
+    private final NumberSetting modeSetting;
+    private final NumberSetting scaleSetting;
+    private final NumberSetting rangeSetting;
+    private final BooleanSetting armorSetting;
+    private final BooleanSetting durabilitySetting;
+    private final BooleanSetting distanceSetting;
 
     public ExplicitB9NameTags() {
         super("(ExplicitB9)NameTags", ModuleCategory.Render);
 
-        modeSetting = new Slider("Mode (Hearts/Percentage)", 1.0D, 1.0D, 2.0D, 1.0D);
+        modeSetting = new NumberSetting("Mode (Hearts/Percentage)", 1.0D, 1.0D, 2.0D, 1.0D);
         mode = "Percentage"; // default value
-        scaleSetting = new Slider("Scale", 5.0D, 0.1D, 10.0D, 0.1D);
-        rangeSetting = new Slider("Range", 0.0D, 0.0D, 512.0D, 1.0D);
-        armorSetting = new Tick("Armor", true);
-        durabilitySetting = new Tick("Durability", false);
-        distanceSetting = new Tick("Distance", false);
+        scaleSetting = new NumberSetting("Scale", 5.0D, 0.1D, 10.0D, 0.1D);
+        rangeSetting = new NumberSetting("Range", 0.0D, 0.0D, 512.0D, 1.0D);
+        armorSetting = new BooleanSetting("Armor", true);
+        durabilitySetting = new BooleanSetting("Durability", false);
+        distanceSetting = new BooleanSetting("Distance", false);
 
         registerSetting(modeSetting);
         registerSetting(scaleSetting);

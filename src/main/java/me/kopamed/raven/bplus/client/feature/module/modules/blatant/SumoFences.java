@@ -8,8 +8,8 @@ import java.util.TimerTask;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -21,10 +21,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class SumoFences extends Module {
-   public static Description a;
-   public static Description d;
-   public static Slider b;
-   public static Slider c;
+   public static DescriptionSetting a;
+   public static DescriptionSetting d;
+   public static NumberSetting b;
+   public static NumberSetting c;
    private java.util.Timer t;
    private final List<String> m = Arrays.asList("Sumo", "Space Mine", "White Crystal");
    private IBlockState f;
@@ -43,10 +43,10 @@ public class SumoFences extends Module {
       this.c3 = "Leaves";
       this.c4 = "Glass";
       this.c5 = "Barrier";
-      this.registerSetting(a = new Description("Fences for Hypixel sumo."));
-      this.registerSetting(b = new Slider("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
-      this.registerSetting(c = new Slider("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
-      this.registerSetting(d = new Description(Utils.md + this.c2));
+      this.registerSetting(a = new DescriptionSetting("Fences for Hypixel sumo."));
+      this.registerSetting(b = new NumberSetting("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
+      this.registerSetting(c = new NumberSetting("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
+      this.registerSetting(d = new DescriptionSetting(Utils.md + this.c2));
    }
 
    public void onEnable() {

@@ -5,8 +5,8 @@ package me.kopamed.raven.bplus.client.feature.module.modules.combat;
 import java.util.List;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSlider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
@@ -24,19 +24,19 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class Reach extends Module {
-   public static RangeSlider reach;
-   public static Tick weapon_only;
-   public static Tick moving_only;
-   public static Tick sprint_only;
-   public static Tick hit_through_blocks;
+   public static RangeSetting reach;
+   public static BooleanSetting weapon_only;
+   public static BooleanSetting moving_only;
+   public static BooleanSetting sprint_only;
+   public static BooleanSetting hit_through_blocks;
 
    public Reach() {
       super("Reach", ModuleCategory.Combat, 0);
-      this.registerSetting(reach = new RangeSlider("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
-      this.registerSetting(weapon_only = new Tick("Weapon only", false));
-      this.registerSetting(moving_only = new Tick("Moving only", false));
-      this.registerSetting(sprint_only = new Tick("Sprint only", false));
-      this.registerSetting(hit_through_blocks = new Tick("Hit through blocks", false));
+      this.registerSetting(reach = new RangeSetting("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
+      this.registerSetting(weapon_only = new BooleanSetting("Weapon only", false));
+      this.registerSetting(moving_only = new BooleanSetting("Moving only", false));
+      this.registerSetting(sprint_only = new BooleanSetting("Sprint only", false));
+      this.registerSetting(hit_through_blocks = new BooleanSetting("Hit through blocks", false));
    }
 
    @SubscribeEvent

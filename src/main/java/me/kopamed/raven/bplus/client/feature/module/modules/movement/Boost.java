@@ -4,23 +4,23 @@ package me.kopamed.raven.bplus.client.feature.module.modules.movement;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 
 public class Boost extends Module {
-   public static Description c;
-   public static Slider a;
-   public static Slider b;
+   public static DescriptionSetting c;
+   public static NumberSetting a;
+   public static NumberSetting b;
    private int i = 0;
    private boolean t = false;
 
    public Boost() {
       super("Boost", ModuleCategory.Movement, 0);
-      this.registerSetting(c = new Description("20 ticks are in 1 second"));
-      this.registerSetting(a = new Slider("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
-      this.registerSetting(b = new Slider("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
+      this.registerSetting(c = new DescriptionSetting("20 ticks are in 1 second"));
+      this.registerSetting(a = new NumberSetting("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
+      this.registerSetting(b = new NumberSetting("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
    }
 
    public void onEnable() {

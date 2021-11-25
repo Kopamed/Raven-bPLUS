@@ -3,9 +3,9 @@ package me.kopamed.raven.bplus.client.feature.module.modules.other;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Description;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.AimAssist;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
@@ -17,9 +17,9 @@ import org.lwjgl.input.Mouse;
 import java.lang.reflect.Method;
 
 public class MiddleClick extends Module {
-    public static Slider action;
-    public static Tick showHelp;
-    public static Description actionDesc;
+    public static NumberSetting action;
+    public static BooleanSetting showHelp;
+    public static DescriptionSetting actionDesc;
     int prevSlot;
     public static boolean a;
     private boolean hasClicked;
@@ -27,9 +27,9 @@ public class MiddleClick extends Module {
 
     public MiddleClick() {
         super("Middleclick", ModuleCategory.Misc, 0);
-        this.registerSetting(showHelp = new Tick("Show friend help in chat", true));
-        this.registerSetting(action = new Slider("Value:", 1,1, 3, 1));
-        this.registerSetting(actionDesc = new Description("Mode: PEARL_THROW"));
+        this.registerSetting(showHelp = new BooleanSetting("Show friend help in chat", true));
+        this.registerSetting(action = new NumberSetting("Value:", 1,1, 3, 1));
+        this.registerSetting(actionDesc = new DescriptionSetting("Mode: PEARL_THROW"));
     }
 
     public void guiUpdate() {

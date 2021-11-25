@@ -4,9 +4,9 @@ package me.kopamed.raven.bplus.client.feature.module.modules.render;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Slider;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import me.kopamed.raven.bplus.client.feature.setting.settings.Tick;
+import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,20 +18,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 public class Nametags extends Module {
-   public static Slider a;
-   public static Tick b;
-   public static Tick c;
-   public static Tick d;
-   public static Tick rm;
-   public static Tick e;
+   public static NumberSetting a;
+   public static BooleanSetting b;
+   public static BooleanSetting c;
+   public static BooleanSetting d;
+   public static BooleanSetting rm;
+   public static BooleanSetting e;
 
    public Nametags() {
       super("Nametags", ModuleCategory.Render, 0);
-      this.registerSetting(a = new Slider("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
-      this.registerSetting(b = new Tick("Rect", true));
-      this.registerSetting(c = new Tick("Show health", true));
-      this.registerSetting(d = new Tick("Show invis", true));
-      this.registerSetting(rm = new Tick("Remove tags", false));
+      this.registerSetting(a = new NumberSetting("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
+      this.registerSetting(b = new BooleanSetting("Rect", true));
+      this.registerSetting(c = new BooleanSetting("Show health", true));
+      this.registerSetting(d = new BooleanSetting("Show invis", true));
+      this.registerSetting(rm = new BooleanSetting("Remove tags", false));
    }
 
    @SubscribeEvent
