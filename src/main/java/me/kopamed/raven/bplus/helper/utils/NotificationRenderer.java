@@ -20,7 +20,7 @@ public class NotificationRenderer {
     public static void moduleStateChanged(Module m) {
         if (!Gui.toggleNotification.isToggled()) return;
         if (!m.getClass().equals(Gui.class)) {
-            String s = m.isEnabled() ? "enabled" : "disabled";
+            String s = m.isToggled() ? "enabled" : "disabled";
             NotificationManager.show(new Notification(NotificationType.INFO, "Module " + s, m.getName() + " has been " + s, 1));
         }
     }

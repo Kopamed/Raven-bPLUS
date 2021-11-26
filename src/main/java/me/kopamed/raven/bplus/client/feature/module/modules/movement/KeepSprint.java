@@ -24,7 +24,7 @@ public class KeepSprint extends Module {
 
    public static void sl(Entity en) {
       double dist;
-      if (c.isToggled() && ModuleManager.reach.isEnabled() && !mc.thePlayer.capabilities.isCreativeMode) {
+      if (c.isToggled() && ModuleManager.reach.isToggled() && !mc.thePlayer.capabilities.isCreativeMode) {
          dist = mc.objectMouseOver.hitVec.distanceTo(mc.getRenderViewEntity().getPositionEyes(1.0F));
          double val;
          if (dist > 3.0D) {

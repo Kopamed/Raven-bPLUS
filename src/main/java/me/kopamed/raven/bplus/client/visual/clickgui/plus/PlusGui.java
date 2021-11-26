@@ -1,7 +1,9 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus;
 
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.CategoryComponent;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.BindComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.ArcDark;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.MaterialDark;
@@ -10,6 +12,7 @@ import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.helper.manager.version.Version;
 import me.kopamed.raven.bplus.helper.utils.Timer;
 import me.kopamed.raven.bplus.helper.utils.Utils;
+import me.superblaubeere27.client.notifications.NotificationManager;
 import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
@@ -30,12 +33,14 @@ public class PlusGui extends GuiScreen {
     private ScaledResolution sr;
     private GuiButtonExt s;
     private GuiTextField c;
-    private Theme theme;
+    private final Theme theme;
+
+    private final NotificationManager notificationManager;
 
     private String tooltip;
     private Object setter;
 
-    private ArrayList<CategoryComponent> categories;
+    private final ArrayList<CategoryComponent> categories;
     private GlyphPageFontRenderer fontRenderer;
 
     private final double goldenRatio = 1.618033988749894;
@@ -44,9 +49,10 @@ public class PlusGui extends GuiScreen {
     public PlusGui() {
         this.categories = new ArrayList<>();
         this.tooltip = "";
+        this.notificationManager = new NotificationManager();
         Version clientVersion = Raven.client.getVersionManager().getClientVersion();
         this.defaultTooltip = "b" + clientVersion.getBranchCommit() + " of v" + clientVersion.getVersion() + " on branch " + clientVersion.getBranchName();
-        this.theme = new ArcDark();
+        this.theme = new Vape();
 
         for(ModuleCategory moduleCategory : ModuleCategory.values()){
             CategoryComponent categoryComponent = new CategoryComponent(moduleCategory);
@@ -152,11 +158,17 @@ public class PlusGui extends GuiScreen {
 
     public void keyTyped(char typedChar, int keyCode) throws IOException {
         System.out.println("KeyTyped: " + typedChar + " " + keyCode);
-        //todo search
-        try {
-            super.keyTyped(typedChar, keyCode);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if(!binding()){
+            try {
+                super.keyTyped(typedChar, keyCode);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for(CategoryComponent categoryComponent : categories){
+            categoryComponent.keyTyped(typedChar, keyCode);
         }
     }
 
@@ -191,5 +203,23 @@ public class PlusGui extends GuiScreen {
 
     public void clearTooltip(){
         this.tooltip = "";
+    }
+
+    public NotificationManager getNotificationManager() {
+        return notificationManager;
+    }
+
+    private boolean binding(){
+        for (CategoryComponent categoryComponent : categories){
+            for(Component module : categoryComponent.getComponents()){
+                for(Component setting : module.getComponents()){
+                    if(setting instanceof BindComponent){
+                        if(((BindComponent) setting).isListening())
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

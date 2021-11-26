@@ -34,7 +34,7 @@ public class DiscordRPCManager {
 
             Thread.sleep(100); // wait 0.1s
 
-            if (Module.getModule(DiscordRPCModule.class).isEnabled()) {
+            if (Module.getModule(DiscordRPCModule.class).isToggled()) {
                 this.updateRPC();
             }
         } catch (InterruptedException e) { e.printStackTrace(); }
@@ -92,7 +92,7 @@ public class DiscordRPCManager {
             if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null) {
                 int toggled_module = 0;
                 for (int i = 0; i < Raven.client.getModuleManager().getModules().size(); i++) {
-                    if (Raven.client.getModuleManager().getModules().get(i).isEnabled()) toggled_module++;
+                    if (Raven.client.getModuleManager().getModules().get(i).isToggled()) toggled_module++;
                 }
                 updateRavenRPC("In game", toggled_module + "/" + Raven.client.getModuleManager().getModules().size() + " Modules activated");
             } else {

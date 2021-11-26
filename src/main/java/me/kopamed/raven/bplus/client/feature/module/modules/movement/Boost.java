@@ -24,7 +24,7 @@ public class Boost extends Module {
    }
 
    public void onEnable() {
-      if (ModuleManager.timer.isEnabled()) {
+      if (ModuleManager.timer.isToggled()) {
          this.t = true;
          ModuleManager.timer.disable();
       }

@@ -203,7 +203,7 @@ public class ModuleManager {
    public static int getLongestActiveModule(FontRenderer fr) {
       int length = 0;
       for(Module mod : modsList) {
-         if(mod.isEnabled()){
+         if(mod.isToggled()){
             if(fr.getStringWidth(mod.getName()) > length){
                length = fr.getStringWidth(mod.getName());
             }
@@ -215,7 +215,7 @@ public class ModuleManager {
    public static int getBoxHeight(FontRenderer fr, int margin) {
       int length = 0;
       for(Module mod : modsList) {
-         if(mod.isEnabled()){
+         if(mod.isToggled()){
             length += fr.FONT_HEIGHT + margin;
          }
       }

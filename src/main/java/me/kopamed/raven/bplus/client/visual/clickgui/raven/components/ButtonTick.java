@@ -101,7 +101,7 @@ public class ButtonTick extends Component {
    public void mouseDown(int x, int y, int b) {
       if (this.i(x, y) && b == 0 && this.module.po) {
          this.cl1ckbUtt0n.toggle();
-         this.mod.guiButtonToggled(this.cl1ckbUtt0n);
+         //this.mod.guiButtonToggled(this.cl1ckbUtt0n);
       }
 
    }

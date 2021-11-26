@@ -384,7 +384,7 @@ public class AutoClicker extends Module {
 
       if(preferFastPlace.isToggled()) {
          Module fastplace = Raven.client.getModuleManager().getModuleByName("FastPlace");
-         if (fastplace.isEnabled())
+         if (fastplace.isToggled())
             return false;
       }
 

@@ -23,7 +23,7 @@ public class SlyPort extends Module {
     private final boolean s = false;
 
     public SlyPort() {
-        super("SlyPort", ModuleCategory.Blatant, 0);
+        super("SlyPort", ModuleCategory.Blatant);
         this.registerSetting(f = new DescriptionSetting("Teleport behind enemies."));
         this.registerSetting(r = new NumberSetting("Range", 6.0D, 2.0D, 15.0D, 1.0D));
         this.registerSetting(e = new BooleanSetting("Aim", true));

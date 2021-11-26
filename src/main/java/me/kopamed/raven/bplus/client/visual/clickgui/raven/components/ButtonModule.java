@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
-import me.kopamed.raven.bplus.client.feature.module.modules.AutoConfig;
 import me.kopamed.raven.bplus.client.feature.module.modules.client.Gui;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.*;
@@ -64,7 +63,6 @@ public class ButtonModule extends Component {
          }
       }
 
-      this.settings.add(new AutoConfig(this, y));
    }
 
    public void setModuleStartAt(int n) {
@@ -78,7 +76,7 @@ public class ButtonModule extends Component {
             co.setModuleStartAt(y);
             if (co instanceof ButtonSlider  || co instanceof ButtonMinMaxSlider) {
                y += 16;
-            } else if (co instanceof ButtonTick || co instanceof AutoConfig || co instanceof ButtonDesc || co instanceof ButtonMode) {
+            } else if (co instanceof ButtonTick  || co instanceof ButtonDesc || co instanceof ButtonMode) {
                y += 12;
             }
          }
@@ -145,10 +143,10 @@ public class ButtonModule extends Component {
    }
 
    public void draw() {
-      v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
+      v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isToggled() ? this.c2 : -12829381, this.mod.isToggled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
       // module text button
-      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isEnabled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
+      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isToggled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isToggled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
@@ -171,7 +169,7 @@ public class ButtonModule extends Component {
                Component c = (Component)var2.next();
                if (c instanceof ButtonSlider || c instanceof ButtonMinMaxSlider) {
                   h += 16;
-               } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc || c instanceof ButtonMode) {
+               } else if (c instanceof ButtonTick  || c instanceof ButtonDesc || c instanceof ButtonMode) {
                   h += 12;
                }
             }

@@ -54,9 +54,9 @@ public class HitBox extends Module {
    public void ef(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
-      if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
+      if(!ModuleManager.autoClicker.isToggled() || !AutoClicker.leftClick.isToggled()) return;
 
-      if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
+      if (ModuleManager.autoClicker.isToggled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
          if (mv != null) {
             mc.objectMouseOver = mv;
          }
@@ -76,7 +76,7 @@ public class HitBox extends Module {
    }
 
    public static double exp(Entity en) {
-      return ModuleManager.hitBox.isEnabled() && !AntiBot.bot(en) ? a.getInput() : 1.0D;
+      return ModuleManager.hitBox.isToggled() && !AntiBot.bot(en) ? a.getInput() : 1.0D;
    }
 
    public static void gmo(float partialTicks) {

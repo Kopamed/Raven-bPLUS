@@ -51,7 +51,7 @@ public class AntiBot extends Module {
       if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return false;
       if (Freecam.en != null && Freecam.en == en) {
          return true;
-      } else if (!ModuleManager.antiBot.isEnabled()) {
+      } else if (!ModuleManager.antiBot.isToggled()) {
          return false;
       } else if (!Utils.Client.isHyp()) {
          return false;

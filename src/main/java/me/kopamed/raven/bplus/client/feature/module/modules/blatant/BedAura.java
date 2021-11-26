@@ -21,7 +21,7 @@ public class BedAura extends Module {
    private final long per = 600L;
 
    public BedAura() {
-      super("BedAura", ModuleCategory.Blatant, 0);
+      super("BedAura", ModuleCategory.Blatant);
       this.registerSetting(r = new NumberSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
    }
 

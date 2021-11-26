@@ -25,15 +25,15 @@ public class ASMEventHandler {
     */
    public static String getUnformattedTextForChat(String s) {
       if (ModuleManager.initialized) {
-         if (ModuleManager.nameHider.isEnabled()) {
+         if (ModuleManager.nameHider.isToggled()) {
             s = NameHider.getUnformattedTextForChat(s);
          }
 
-         if (ModuleManager.antiShuffle.isEnabled()) {
+         if (ModuleManager.antiShuffle.isToggled()) {
             s = AntiShuffle.getUnformattedTextForChat(s);
          }
 
-         if (ModuleManager.stringEncrypt.isEnabled()) {
+         if (ModuleManager.stringEncrypt.isToggled()) {
             s = StringEncrypt.getUnformattedTextForChat(s);
          }
       }
@@ -47,7 +47,7 @@ public class ASMEventHandler {
     */
    public static boolean onEntityMove(Entity entity) {
       if (entity == mc.thePlayer && mc.thePlayer.onGround) {
-         if (ModuleManager.safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
+         if (ModuleManager.safeWalk.isToggled() && !SafeWalk.doShift.isToggled()) {
             if (SafeWalk.blocksOnly.isToggled()) {
                ItemStack i = mc.thePlayer.getHeldItem();
                if (i == null || !(i.getItem() instanceof ItemBlock)) {
@@ -73,7 +73,7 @@ public class ASMEventHandler {
     * called when a player is using an item (aka right-click)
     */
    public static void onLivingUpdate() {
-      if (ModuleManager.noSlow.isEnabled()) {
+      if (ModuleManager.noSlow.isToggled()) {
          NoSlow.sl();
       } else {
          mc.thePlayer.movementInput.moveStrafe *= 0.2F;
@@ -85,7 +85,7 @@ public class ASMEventHandler {
     * called when a player is moving and hits another one
     */
    public static void onAttackTargetEntityWithCurrentItem(Entity en) {
-      if (ModuleManager.keepSprint.isEnabled()) {
+      if (ModuleManager.keepSprint.isToggled()) {
          KeepSprint.sl(en);
       } else {
          mc.thePlayer.motionX *= 0.6D;
@@ -97,7 +97,7 @@ public class ASMEventHandler {
     * called every ticks
     */
    public static void onTick() {
-      if (!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
+      if (!ModuleManager.autoClicker.isToggled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
          mc.entityRenderer.getMouseOver(1.0F);
       }
    }

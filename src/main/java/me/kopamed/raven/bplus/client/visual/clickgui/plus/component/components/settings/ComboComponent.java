@@ -15,8 +15,4 @@ public class ComboComponent extends Component {
         this.moduleComponent = moduleComponent;
         this.module = moduleComponent.getModule();
     }
-
-    public boolean canShow(){
-        return comboSetting.canShow();
-    }
 }

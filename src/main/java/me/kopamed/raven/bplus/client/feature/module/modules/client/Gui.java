@@ -10,6 +10,9 @@ import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Gui extends Module {
    public static final int bind = 54;
    public static NumberSetting guiTheme, backgroundOpacity;
@@ -19,7 +22,7 @@ public class Gui extends Module {
    public static BooleanSetting rainbowNotification;
 
    public Gui() {
-      super("Gui", ModuleCategory.Misc, 54);
+      super("Gui", "The display you are currently looking out", ModuleCategory.Misc, new ArrayList<Integer>(Arrays.asList(54)));
       this.registerSetting(guiTheme = new NumberSetting("Theme", 3.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(guiThemeDesc = new DescriptionSetting(Utils.md + "b+"));
       this.registerSetting(backgroundOpacity = new NumberSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));

@@ -61,7 +61,7 @@ public class BridgeAssist extends Module {
             return;
         }
 
-        if (ModuleManager.safeWalk.isEnabled()) {
+        if (ModuleManager.safeWalk.isToggled()) {
             if (!workWithSafeWalk.isToggled()) {
                 return;
             }

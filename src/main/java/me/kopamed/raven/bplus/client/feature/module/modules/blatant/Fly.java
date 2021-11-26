@@ -18,7 +18,7 @@ public class Fly extends Module {
    private static final String c2 = "Glide";
 
    public Fly() {
-      super("Fly", ModuleCategory.Blatant, 0);
+      super("Fly", ModuleCategory.Blatant);
       this.registerSetting(a = new NumberSetting("Value", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(dc = new DescriptionSetting(Utils.md + c1));
       this.registerSetting(b = new NumberSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));

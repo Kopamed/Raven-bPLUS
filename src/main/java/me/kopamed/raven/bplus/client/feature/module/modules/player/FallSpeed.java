@@ -23,7 +23,7 @@ public class FallSpeed extends Module {
 
    public void update() {
       if ((double)mc.thePlayer.fallDistance >= 2.5D) {
-         if (ModuleManager.fly.isEnabled() || ModuleManager.noFall.isEnabled()) {
+         if (ModuleManager.fly.isToggled() || ModuleManager.noFall.isToggled()) {
             return;
          }
 

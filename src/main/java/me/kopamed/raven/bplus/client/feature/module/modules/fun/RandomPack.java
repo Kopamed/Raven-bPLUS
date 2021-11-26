@@ -26,7 +26,7 @@ public class RandomPack extends Module {
 
     @SubscribeEvent
     public void fuckme(TickEvent.RenderTickEvent er){
-        if(this.isEnabled()){
+        if(this.isToggled()){
             mc.getResourcePackRepository().setResourcePackInstance(dir.listFiles()[(int)(Math.random() * getPackAmount())]);
             this.disable();
         }

@@ -28,7 +28,7 @@ public class BurstClicker extends Module {
    private Method rightClickMouse = null;
 
    public BurstClicker() {
-      super("BurstClicker", ModuleCategory.Blatant, 0);
+      super("BurstClicker", ModuleCategory.Blatant);
       this.registerSetting(artificialDragClicking = new DescriptionSetting("Artificial dragclicking."));
       this.registerSetting(clicks = new NumberSetting("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
       this.registerSetting(delay = new NumberSetting("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));
@@ -60,7 +60,7 @@ public class BurstClicker extends Module {
                int cl = (int) clicks.getInput();
                int del = (int) delay.getInput();
 
-               for(int i = 0; i < cl * 2 && this.isEnabled() && Utils.Player.isPlayerInGame() && mc.currentScreen == null && mc.inGameHasFocus; ++i) {
+               for(int i = 0; i < cl * 2 && this.isToggled() && Utils.Player.isPlayerInGame() && mc.currentScreen == null && mc.inGameHasFocus; ++i) {
                   if (i % 2 == 0) {
                      this.l_c = true;
                      if (del != 0) {

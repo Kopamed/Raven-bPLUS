@@ -59,7 +59,7 @@ public class AutoPlace extends Module {
    }
 
    public void update() {
-      if (a.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && !ModuleManager.fastPlace.isEnabled()) {
+      if (a.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && !ModuleManager.fastPlace.isToggled()) {
          ItemStack i = mc.thePlayer.getHeldItem();
          if (i == null || !(i.getItem() instanceof ItemBlock)) {
             return;

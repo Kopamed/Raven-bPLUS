@@ -14,7 +14,7 @@ public class Timer extends Module {
    public static BooleanSetting b;
 
    public Timer() {
-      super("Timer", ModuleCategory.Blatant, 0);
+      super("Timer", ModuleCategory.Blatant);
       a = new NumberSetting("Speed", 1.0D, 0.5D, 2.5D, 0.01D);
       b = new BooleanSetting("Strafe only", false);
       this.registerSetting(a);

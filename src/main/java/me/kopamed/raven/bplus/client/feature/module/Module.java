@@ -5,6 +5,8 @@ package me.kopamed.raven.bplus.client.feature.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.feature.module.modules.player.FallSpeed;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
@@ -18,30 +20,50 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.lwjgl.input.Keyboard;
 
 public abstract class Module {
-   protected ArrayList<Setting> settings;
-   private final String moduleName;
-   private final ModuleCategory moduleCategory;
-   private boolean enabled;
-   private int keycode;
-   protected static Minecraft mc;
-   private boolean isToggled = false;
-   private BindMode bindMode = BindMode.TOGGLE;
+   private     final    String               moduleName;
+   private     final    String               tooltip;
+   private     final    ModuleCategory       moduleCategory;
+   private              ArrayList<Integer>   keycodes;
+   protected   static   Minecraft            mc;
+   private              boolean              registeredKeyPress   =  false;
+   private              BindMode             bindMode;
+   private              boolean              toggled;
+   protected            ArrayList<Setting>   settings;
+   private     final    int                  maxBinds             =  5;
 
-   public Module(String name, ModuleCategory moduleCategory) {
-      this.moduleName = name;
-      this.moduleCategory = moduleCategory;
-      this.keycode = -1;
-      this.enabled = false;
-      this.settings = new ArrayList<>();
+   public Module(String name, String tooltip, ModuleCategory moduleCategory) {
+      this(name, tooltip, moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE);
    }
 
-   public Module(String moduleName, ModuleCategory moduleCategory, int keycode) {
+   public Module(String name, ModuleCategory moduleCategory) {
+      this(name, "", moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE);
+   }
+
+   public Module(String name, ModuleCategory moduleCategory, int bruh) {
+      this(name, "", moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE);
+   }
+
+   public Module(String name, String tooltip, ModuleCategory moduleCategory, BindMode bindMode) {
+      this(name, tooltip, moduleCategory, false, new ArrayList<>(), bindMode);
+   }
+
+   public Module(String name, String tooltip, ModuleCategory moduleCategory, boolean toggled) {
+      this(name, tooltip, moduleCategory, toggled, new ArrayList<>(), BindMode.TOGGLE);
+   }
+
+   public Module(String moduleName, String tooltip, ModuleCategory moduleCategory, ArrayList<Integer> keycodes) {
+      this(moduleName, tooltip, moduleCategory, false, keycodes, BindMode.TOGGLE);
+   }
+
+   public Module(String moduleName, String tooltip, ModuleCategory moduleCategory, boolean toggled, ArrayList<Integer> keycodes, BindMode bindMode){
       this.moduleName = moduleName;
+      this.tooltip = tooltip;
       this.moduleCategory = moduleCategory;
-      this.keycode = keycode;
-      this.enabled = false;
-      mc = Minecraft.getMinecraft();
+      this.toggled = toggled;
+      this.keycodes = keycodes;
+      this.bindMode = bindMode;
       this.settings = new ArrayList<>();
+      mc = Raven.client.getMc();
    }
 
    public static Module getModule(Class<? extends Module> a) {
@@ -60,68 +82,68 @@ public abstract class Module {
    }
 
    public void keybind() {
-      if (this.keycode != -1) {
-         if(Keyboard.isKeyDown(this.keycode)){
-            if(!isToggled){
+      if (!keycodes.isEmpty()) { //todo
+         if(areBindsDown()){
+            if(!registeredKeyPress){
                if (bindMode == BindMode.HOLD){
                   enable();
                } else if( bindMode == BindMode.TOGGLE){
                   toggle();
                }
-               this.isToggled = true;
+               this.registeredKeyPress = true;
             }
          } else{
-            if(isToggled){
+            if(registeredKeyPress){
                if (bindMode == BindMode.HOLD){
                   disable();
                }
-               this.isToggled = false;
+               this.registeredKeyPress = false;
             }
          }
       }
    }
 
-   public void enable() {
-      boolean oldState = this.enabled;
-      this.setToggled(true);
-      if (oldState != this.enabled) {
-         NotificationRenderer.moduleStateChanged(this); //todo
+   private boolean areBindsDown() {
+      for(Integer i : keycodes){
+         if(!Keyboard.isKeyDown(i))
+            return false;
       }
-      ModuleManager.enModsList.add(this);
-      if (ModuleManager.hud.isEnabled()) {
-         ModuleManager.sort();
+      return true;
+   }
+
+   public String getBindAsString(){
+      if(keycodes.isEmpty())
+         return "None";
+
+      StringBuilder bobTheBuilder = new StringBuilder();
+      for(Integer i : keycodes){
+         bobTheBuilder.append(Keyboard.getKeyName(i)).append("+");
       }
 
+      bobTheBuilder.deleteCharAt(bobTheBuilder.lastIndexOf("+"));
+      return bobTheBuilder.toString();
+   }
+
+   public void enable() {
+      this.toggled = true;
       MinecraftForge.EVENT_BUS.register(this);
-      FMLCommonHandler.instance().bus().register(this);
+      //FMLCommonHandler.instance().bus().register(this);
       this.onEnable();
 
-      DiscordRPCModule discordRPCModule = (DiscordRPCModule) getModule(DiscordRPCModule.class);
-      if (discordRPCModule != null && discordRPCModule.isEnabled()) {
-         DiscordRPCModule.rpc.updateRavenRPC();
-      }
+      NotificationRenderer.moduleStateChanged(this); //todo
+      Raven.client.getDiscordRPCManager().updateRPC();
    }
 
    public void disable() {
-      boolean oldState = this.enabled;
-      this.setToggled(false);
-      if (oldState != this.enabled) {
-         NotificationRenderer.moduleStateChanged(this);
-      }
-      ModuleManager.enModsList.remove(this);
+      this.toggled = false;
       MinecraftForge.EVENT_BUS.unregister(this);
-      FMLCommonHandler.instance().bus().unregister(this);
+      //FMLCommonHandler.instance().bus().unregister(this);
       this.onDisable();
 
-      DiscordRPCModule discordRPCModule = (DiscordRPCModule) getModule(DiscordRPCModule.class);
-      if (discordRPCModule != null && discordRPCModule.isEnabled()) {
-         DiscordRPCModule.rpc.updateRavenRPC();
-      }
+      NotificationRenderer.moduleStateChanged(this);
+      Raven.client.getDiscordRPCManager().updateRPC();
    }
 
-   public void setToggled(boolean enabled) {
-      this.enabled = enabled;
-   }
 
    public String getName() {
       return this.moduleName;
@@ -147,8 +169,8 @@ public abstract class Module {
       return this.moduleCategory;
    }
 
-   public boolean isEnabled() {
-      return this.enabled;
+   public boolean isToggled() {
+      return this.toggled;
    }
 
    public void onEnable() {
@@ -158,7 +180,7 @@ public abstract class Module {
    }
 
    public void toggle() {
-      if (this.isEnabled()) {
+      if (toggled){
          this.disable();
       } else {
          this.enable();
@@ -171,15 +193,16 @@ public abstract class Module {
    public void guiUpdate() {
    }
 
-   public void guiButtonToggled(BooleanSetting b) {
+   public ArrayList<Integer> getKeycodes() {
+      return this.keycodes;
    }
 
-   public int getKeycode() {
-      return this.keycode;
+   public void setBinds(ArrayList<Integer> binds) {
+      this.keycodes = binds;
    }
 
-   public void setbind(int keybind) {
-      this.keycode = keybind;
+   public void clearBinds(){
+      keycodes.clear();
    }
 
    public BindMode getBindMode() {
@@ -191,10 +214,23 @@ public abstract class Module {
    }
 
    public boolean hasKeybind() {
-      return keycode != 1;
+      return keycodes.isEmpty();
    }
 
    public boolean canToggle(){
       return Utils.Player.isPlayerInGame() && !(mc.currentScreen instanceof PlusGui);
+   }
+
+   public String getTooltip() {
+      return tooltip;
+   }
+
+   public void addKeyCode(int keyCode) {
+      if(canAddMoreBinds() && !keycodes.contains(keyCode))
+         this.keycodes.add(keyCode);
+   }
+
+   public boolean canAddMoreBinds(){
+      return keycodes.size() < maxBinds;
    }
 }

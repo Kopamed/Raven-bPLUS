@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
+import me.kopamed.raven.bplus.helper.discordRPC.DiscordRPCManager;
 import me.kopamed.raven.bplus.helper.manager.*;
 import me.kopamed.raven.bplus.helper.manager.version.VersionManager;
 import me.kopamed.raven.bplus.helper.utils.*;
@@ -26,6 +27,7 @@ public class Raven {
    private final DebugManager debugManager;
    private final Tracker tracker = new Tracker();
    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+   private final DiscordRPCManager discordRPCManager;
 
    private final Minecraft mc;
 
@@ -34,6 +36,7 @@ public class Raven {
    public Raven() throws IOException, FontFormatException {
       client = this;
       this.mc = Minecraft.getMinecraft();
+      this.discordRPCManager = new DiscordRPCManager();
       this.moduleManager = new ModuleManager();
       this.configManager = new ConfigManager();
       this.versionManager = new VersionManager();
@@ -129,5 +132,9 @@ public class Raven {
 
    public boolean isDestroyed() {
       return destroyed;
+   }
+
+   public DiscordRPCManager getDiscordRPCManager() {
+      return discordRPCManager;
    }
 }

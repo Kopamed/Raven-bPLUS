@@ -176,5 +176,10 @@ public abstract class Component {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
+
+    public void keyTyped(char typedChar, int keyCode){
+        for(Component component : components)
+            component.keyTyped(typedChar,keyCode);
+    }
 }
 

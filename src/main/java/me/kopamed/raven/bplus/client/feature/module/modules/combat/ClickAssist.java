@@ -12,7 +12,7 @@ import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting
 import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
-import me.kopamed.raven.bplus.helper.utils.MouseManager;
+import me.kopamed.raven.bplus.helper.manager.MouseManager;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

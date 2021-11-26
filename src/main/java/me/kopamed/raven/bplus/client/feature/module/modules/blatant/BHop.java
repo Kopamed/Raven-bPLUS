@@ -14,12 +14,12 @@ public class BHop extends Module {
    private final double bspd = 0.0025D;
 
    public BHop() {
-      super("Bhop", ModuleCategory.Blatant, 0);
+      super("Bhop", "Allows you to BunnyHop around", ModuleCategory.Blatant);
       this.registerSetting(a = new NumberSetting("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 
    public void update() {
-      if (!ModuleManager.fly.isEnabled() && Utils.Player.isMoving() && !mc.thePlayer.isInWater()) {
+      if (!ModuleManager.fly.isToggled() && Utils.Player.isMoving() && !mc.thePlayer.isInWater()) {
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
          mc.thePlayer.noClip = true;
          if (mc.thePlayer.onGround) {

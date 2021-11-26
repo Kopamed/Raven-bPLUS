@@ -2,14 +2,12 @@ package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components;
 
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
-import me.kopamed.raven.bplus.client.feature.setting.settings.*;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.*;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
 import net.minecraft.client.gui.Gui;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class ModuleComponent extends Component {
@@ -23,6 +21,7 @@ public class ModuleComponent extends Component {
         for(Setting setting : module.getSettings()){
             this.add(setting.createComponent(this));
         }
+        this.add(new BindComponent(this));
     }
 
     @Override
@@ -39,12 +38,13 @@ public class ModuleComponent extends Component {
                 (int)this.getY(),
                 (int)(this.getX() + this.getWidth()),
                 (int)(this.getY() + this.getHeight()),
-                module.isEnabled() ? currentTheme.getAccentColour().getRGB() : currentTheme.getSecondBackgroundColour().getRGB()
+                module.isToggled() ? currentTheme.getAccentColour().getRGB() : currentTheme.getSecondBackgroundColour().getRGB()
         );
+
 
         GL11.glPushMatrix();
         GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
-        fr.drawString(module.getName(), (float)((this.getX() + textMargin) * coordFactor), (float)(textY * coordFactor), module.isEnabled() ? currentTheme.getSecondBackgroundColour().getRGB() : currentTheme.getTextColour().getRGB(), false);
+        fr.drawString(module.getName(), (float)((this.getX() + textMargin) * coordFactor), (float)(textY * coordFactor), module.isToggled() ? currentTheme.getSecondBackgroundColour().getRGB() : currentTheme.getTextColour().getRGB(), false);
         GL11.glPopMatrix();
         if(opened){
             for(Component component: this.getComponents()){

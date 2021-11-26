@@ -22,7 +22,7 @@ public class KeybindManager {
         for(int i = 0; i < moduleNumber; i++){
             Module module = moduleManager.getModules().get(i);
 
-            if(module.canToggle() && module.getName().equals("Gui"))
+            if(module.canToggle())
                 module.keybind();
 
 
