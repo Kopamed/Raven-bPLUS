@@ -10,8 +10,8 @@ import java.io.IOException;
 @Mod(modid = Main.MODID, version = Main.VERSION)
 public class Main
 {
-    public static final String MODID = "lunarkeystrokes";
-    public static final String VERSION = "b1";
+    public static final String MODID = "particles";
+    public static final String VERSION = "1";
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {

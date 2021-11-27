@@ -1,11 +1,11 @@
 [
 {
-  "modid": "lunarkeystrokesmod",
-  "name": "LunarKeystrokesMod",
-  "description": "Shows your keystrokes and CPS ingame. | Made with <3 by Kopamed",
-  "version": "b1",
-  "url": "https://github.com/Kopamed",
-  "updateUrl": "",
+  "modid": "particles",
+  "name": "Raven B+",
+  "description": "Raven B+ | Made with <3 by Kopamed",
+  "version": "",
+  "url": "https://github.com/Kopamed/Raven-bPLUS",
+  "updateUrl": "https://github.com/Kopamed/Raven-bPLUS",
   "authorList": ["Kopamed"],
   "credits": "My discord server for convincing me to do this",
   "logoFile": "",

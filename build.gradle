@@ -36,8 +36,8 @@ plugins {
 */
 
 version = "1"
-group= "me.kopamed.keystrokes"
-archivesBaseName = "[1.8.9]LunarKeystrokes B"
+group= "me.kopamed.raven.bplus"
+archivesBaseName = "RavenB+"
 
 minecraft {
     version = "1.8.9-11.15.1.1722"
@@ -56,7 +56,7 @@ jar {
 shadowJar {
     manifest {
         attributes(
-                "FMLCorePlugin": "FMLLoadingPlugin",
+                "FMLCorePlugin": "helper.tweaker.FMLLoadingPlugin",
                 "ForceLoadAsMod": true,
                 FMLCorePluginContainsFMLMod: true,
                 "ModSide": "CLIENT"
