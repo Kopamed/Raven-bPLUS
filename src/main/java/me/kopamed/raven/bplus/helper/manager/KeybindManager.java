@@ -24,16 +24,10 @@ public class KeybindManager {
 
             if(module.canToggle())
                 module.keybind();
-
-
-            //if(module.isEnabled())
-                //System.out.println(module.getName());
         }
         for (int i = 0; i < Keyboard.getKeyCount(); i++){
             if(Keyboard.isKeyDown(i))
                 System.out.println(i + " " + Keyboard.getKeyName(i));
         }
-
-        System.out.println("=============================");
     }
 }

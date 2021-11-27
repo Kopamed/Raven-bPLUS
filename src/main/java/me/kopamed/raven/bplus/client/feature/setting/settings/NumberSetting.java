@@ -1,6 +1,7 @@
 package me.kopamed.raven.bplus.client.feature.setting.settings;
 
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.RangeSliderComponent;
@@ -11,14 +12,13 @@ import java.math.RoundingMode;
 
 public class NumberSetting extends Setting {
    private final String name;
-   static String settingType = "slider";
    private double defaultVal;
    private final double max;
    private final double min;
    private final double interval;
 
    public NumberSetting(String settingName, double defaultValue, double min, double max, double intervals) {
-      super(settingName, settingType);
+      super(settingName, SettingType.NUMBER);
       this.name = settingName;
       this.defaultVal = defaultValue;
       this.min = min;

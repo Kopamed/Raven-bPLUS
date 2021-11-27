@@ -251,7 +251,7 @@ public class GhostBlocks extends Module {
     }
 
     private boolean isPlayerInBlock(BlockPos blockPos){
-        double bruh = mc.thePlayer.width/2;
+        double bruh = mc.thePlayer.width* 0.5;
         //System.out.println("X: LowerBound: " + Math.floor(mc.thePlayer.posX-bruh) + " x: " + blockPos.getX() + " UpperBound: " + mc.thePlayer.posX+bruh + " PosX: " + mc.thePlayer.posX);
         //System.out.println("Y: LowerBound: " + Math.floor(mc.thePlayer.posY) + " Y: " + blockPos.getY() + " UpperBound: " + mc.thePlayer.posY+mc.thePlayer.height + " PosY: " + mc.thePlayer.posY);
         //System.out.println("Z: LowerBound: " + Math.floor(mc.thePlayer.posZ-bruh) + " z: " + blockPos.getZ() + " UpperBound: " + mc.thePlayer.posZ+bruh + " PosZ: " + mc.thePlayer.posZ);

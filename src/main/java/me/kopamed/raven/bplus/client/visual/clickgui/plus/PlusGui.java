@@ -1,6 +1,9 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus;
 
+import me.kopamed.raven.bplus.client.feature.module.BindMode;
+import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
+import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.CategoryComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.BindComponent;
@@ -43,7 +46,7 @@ public class PlusGui extends GuiScreen {
     private final ArrayList<CategoryComponent> categories;
     private GlyphPageFontRenderer fontRenderer;
 
-    private final double goldenRatio = 1.618033988749894;
+    public static final double goldenRatio = 1.618033988749894;
 
 
     public PlusGui() {
@@ -118,7 +121,7 @@ public class PlusGui extends GuiScreen {
         //bg
         drawRect(0, 0, (int)width, (int)height, (int)this.aR.getValueFloat(0.0F, Utils.Java.setTransparent(theme.getBackdropColour(), 90).getRGB(), 2));
 
-        //GuiInventory.drawEntityOnScreen((int) (entityX - entitySize * 0.2), (int) (entityY + entitySize * 0.2), (int) entitySize, (float)(entityX + entitySize/2 - x), (float)(entityY + entitySize/2 - y), this.mc.thePlayer);
+        //GuiInventory.drawEntityOnScreen((int) (entityX - entitySize * 0.2), (int) (entityY + entitySize * 0.2), (int) entitySize, (float)(entityX + entitySize* 0.5 - x), (float)(entityY + entitySize* 0.5 - y), this.mc.thePlayer);
 
         //task bar
         Gui.drawRect(0, (int)(height - barHeight), (int)width, (int) height, theme.getBackgroundColour().getRGB());
@@ -177,6 +180,10 @@ public class PlusGui extends GuiScreen {
         if (this.sf != null) {
             this.sf.cancel(true);
             this.sf = null;
+        }
+
+        for(Module module : Raven.client.getModuleManager().getModules()){
+            module.onGuiClose();
         }
     }
 

@@ -37,7 +37,7 @@ public class ButtonMinMaxSlider extends Component {
         net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + boxMargin, this.module.category.getY() + this.moduleStartY + textSize, this.module.category.getX() - boxMargin + this.module.category.getWidth(), this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
         int startToDrawFrom = this.module.category.getX() + boxMargin + (int) this.blankWidth;
         int finishDrawingAt = startToDrawFrom + (int)this.barWidth;
-        int middleThing = (int) Utils.Java.round(this.barWidth/2, 0) + this.module.category.getX() + (int) this.blankWidth + boxMargin - 1;
+        int middleThing = (int) Utils.Java.round(this.barWidth* 0.5, 0) + this.module.category.getX() + (int) this.blankWidth + boxMargin - 1;
 
         //drwing the main colourded bar
         net.minecraft.client.gui.Gui.drawRect(startToDrawFrom, this.module.category.getY() + this.moduleStartY + textSize, finishDrawingAt, this.module.category.getY() + this.moduleStartY + textSize + boxHeight, Utils.Client.astolfoColorsDraw(14, 10));

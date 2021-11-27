@@ -7,7 +7,9 @@ import java.util.Iterator;
 
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.modules.player.FallSpeed;
+import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
 import me.kopamed.raven.bplus.client.feature.module.modules.other.DiscordRPCModule;
@@ -26,44 +28,58 @@ public abstract class Module {
    private              ArrayList<Integer>   keycodes;
    protected   static   Minecraft            mc;
    private              boolean              registeredKeyPress   =  false;
+   private              boolean              shownOnHud;
    private              BindMode             bindMode;
    private              boolean              toggled;
    protected            ArrayList<Setting>   settings;
    private     final    int                  maxBinds             =  5;
 
    public Module(String name, String tooltip, ModuleCategory moduleCategory) {
-      this(name, tooltip, moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE);
+      this(name, tooltip, moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE, true);
    }
 
    public Module(String name, ModuleCategory moduleCategory) {
-      this(name, "", moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE);
+      this(name, "", moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE, true);
    }
 
    public Module(String name, ModuleCategory moduleCategory, int bruh) {
-      this(name, "", moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE);
+      this(name, "", moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE, true);
    }
 
    public Module(String name, String tooltip, ModuleCategory moduleCategory, BindMode bindMode) {
-      this(name, tooltip, moduleCategory, false, new ArrayList<>(), bindMode);
+      this(name, tooltip, moduleCategory, false, new ArrayList<>(), bindMode, true);
    }
 
    public Module(String name, String tooltip, ModuleCategory moduleCategory, boolean toggled) {
-      this(name, tooltip, moduleCategory, toggled, new ArrayList<>(), BindMode.TOGGLE);
+      this(name, tooltip, moduleCategory, toggled, new ArrayList<>(), BindMode.TOGGLE, true);
    }
 
    public Module(String moduleName, String tooltip, ModuleCategory moduleCategory, ArrayList<Integer> keycodes) {
-      this(moduleName, tooltip, moduleCategory, false, keycodes, BindMode.TOGGLE);
+      this(moduleName, tooltip, moduleCategory, false, keycodes, BindMode.TOGGLE, true);
    }
 
-   public Module(String moduleName, String tooltip, ModuleCategory moduleCategory, boolean toggled, ArrayList<Integer> keycodes, BindMode bindMode){
+   public Module(String moduleName, String tooltip, ModuleCategory moduleCategory, boolean toggled, ArrayList<Integer> keycodes, BindMode bindMode, boolean shownOnHud){
       this.moduleName = moduleName;
       this.tooltip = tooltip;
       this.moduleCategory = moduleCategory;
       this.toggled = toggled;
       this.keycodes = keycodes;
       this.bindMode = bindMode;
+      this.shownOnHud = shownOnHud;
       this.settings = new ArrayList<>();
       mc = Raven.client.getMc();
+
+      BooleanSetting showOnHud = new BooleanSetting("Shown on HUD", true);
+      ComboSetting toggleType = new ComboSetting("Toggle Type", new String[] {"Toggle", "Hold"}, getBindMode() == BindMode.TOGGLE ? 0 : 1);
+      toggleType.addSelector(new SelectorRunnable() {
+         @Override
+         public boolean showOnlyIf() {
+            return hasKeybind();
+         }
+      });
+      this.settings.add(showOnHud);
+      this.settings.add(toggleType);
+
    }
 
    public static Module getModule(Class<? extends Module> a) {
@@ -83,6 +99,7 @@ public abstract class Module {
 
    public void keybind() {
       if (!keycodes.isEmpty()) { //todo
+         this.bindMode = ((ComboSetting)this.getSettingByName("Toggle Type")).getMode().equals("Toggle")  ? BindMode.TOGGLE : BindMode.HOLD;
          if(areBindsDown()){
             if(!registeredKeyPress){
                if (bindMode == BindMode.HOLD){
@@ -161,8 +178,8 @@ public abstract class Module {
       return null;
    }
 
-   public void registerSetting(Setting Setting) {
-      this.settings.add(Setting);
+   public void registerSetting(Setting setting) {
+      this.settings.add(settings.size() - 2, setting);
    }
 
    public ModuleCategory moduleCategory() {
@@ -232,5 +249,23 @@ public abstract class Module {
 
    public boolean canAddMoreBinds(){
       return keycodes.size() < maxBinds;
+   }
+
+   public void setToggled(boolean b){
+      this.toggled = b;
+   }
+
+   public boolean isShownOnHud() {
+      return shownOnHud;
+   }
+
+   public void setShownOnHud(boolean shownOnHud) {
+      this.shownOnHud = shownOnHud;
+   }
+
+   public void onGuiClose() {
+      this.bindMode = ((ComboSetting)this.getSettingByName("Toggle Type")).getMode().equals("Toggle") ? BindMode.TOGGLE : BindMode.HOLD;
+      if(bindMode == BindMode.HOLD)
+         this.disable();
    }
 }

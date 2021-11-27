@@ -4,6 +4,7 @@ package me.kopamed.raven.bplus.client.feature.module.modules.world;
 
 import java.util.HashMap;
 
+import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
@@ -21,7 +22,7 @@ public class AntiBot extends Module {
    public static BooleanSetting a;
 
    public AntiBot() {
-      super("AntiBot", ModuleCategory.World, 0);
+      super("AntiBot", "Stops modules from targeting bots", ModuleCategory.World, true);
       this.registerSetting(a = new BooleanSetting("Wait 80 ticks", false));
    }
 
@@ -51,7 +52,7 @@ public class AntiBot extends Module {
       if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return false;
       if (Freecam.en != null && Freecam.en == en) {
          return true;
-      } else if (!ModuleManager.antiBot.isToggled()) {
+      } else if (ModuleManager.antiBot.isToggled()) {
          return false;
       } else if (!Utils.Client.isHyp()) {
          return false;

@@ -56,7 +56,7 @@ public class AutoTool extends Module {
 
 
 
-        //make sure that we are allowed to breack blocks if ac is enabled
+        //make sure that we are allowed to Break blocks if ac is enabled
         if(AutoClicker.autoClickerEnabled) {
             if(!AutoClicker.breakBlocks.isToggled()) {
                 return;

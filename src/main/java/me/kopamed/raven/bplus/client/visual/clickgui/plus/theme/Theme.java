@@ -38,4 +38,6 @@ public interface Theme {
     public Color getBorderColour();
 
     public Color getBackdropColour();
+
+    public Color getArrayListColour(double currentY, double fullY, double speed);
 }

@@ -80,7 +80,7 @@ public class AutoClicker extends Module {
       this.registerSetting(inventoryFill = new BooleanSetting("Inventory fill", false));
       this.registerSetting(weaponOnly = new BooleanSetting("Weapon only", false));
       this.registerSetting(breakBlocks = new BooleanSetting("Break blocks", false));
-      this.registerSetting(breakBlocksDelay = new RangeSetting("Breack blocks delay (MS)", 20, 50, 0,1000, 1));
+      this.registerSetting(breakBlocksDelay = new RangeSetting("Break delay(ms)", 20, 50, 0,1000, 1));
 
       this.registerSetting(rightClick = new BooleanSetting("Right click", false));
       this.registerSetting(rightCPS = new RangeSetting("RightCPS", 12, 16, 1,60, 0.5));

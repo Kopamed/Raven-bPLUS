@@ -34,7 +34,7 @@ public class BindComponent extends Component {
         double desiredTextSize = this.getHeight() * 0.6;
         double scaleFactor = desiredTextSize/ fr.getFontHeight();
         double coordFactor = 1/scaleFactor;
-        double textY = this.getY() + (this.getHeight() - desiredTextSize) /2;
+        double textY = this.getY() + (this.getHeight() - desiredTextSize) * 0.5;
         String bindedTo = listening ? "Press ESC to stop" : moduleComponent.getModule().getBindAsString();
 
 

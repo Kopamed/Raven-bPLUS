@@ -1,7 +1,10 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components;
 
 import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.feature.module.BindMode;
+import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.*;
@@ -22,6 +25,7 @@ public class ModuleComponent extends Component {
             this.add(setting.createComponent(this));
         }
         this.add(new BindComponent(this));
+        // todo add TOGGLETYPE setting and HUDSHOW SETTING
     }
 
     @Override
@@ -31,7 +35,7 @@ public class ModuleComponent extends Component {
         double desiredTextSize = this.getHeight() * 0.6;
         double scaleFactor = desiredTextSize/ fr.getFontHeight();
         double coordFactor = 1/scaleFactor;
-        double textY = this.getY() + (this.getHeight() - desiredTextSize) /2;
+        double textY = this.getY() + (this.getHeight() - desiredTextSize) * 0.5;
 
         Gui.drawRect(
                 (int)this.getX(),
@@ -48,7 +52,8 @@ public class ModuleComponent extends Component {
         GL11.glPopMatrix();
         if(opened){
             for(Component component: this.getComponents()){
-                component.paint(fr);
+                if(component.isVisible())
+                    component.paint(fr);
             }
         }
     }
@@ -60,9 +65,11 @@ public class ModuleComponent extends Component {
 
         if(opened) {
             for (Component component : getComponents()) {
-                component.setLocation(startX, currentY);
-                component.update(x, y);
-                currentY += component.getHeight();
+                if(component.isVisible()){
+                    component.setLocation(startX, currentY);
+                    component.update(x, y);
+                    currentY += component.getHeight();
+                }
             }
         }
     }
@@ -72,13 +79,23 @@ public class ModuleComponent extends Component {
         Theme currentTheme = Raven.client.getClickGui().getTheme();
         this.setSize(categoryComponent.getWidth() - 2, categoryComponent.getHeight() * 0.8);
         for(Component component : this.getComponents()){
-            component.setSize(this.getWidth(), this.getHeight() * 0.85);
+            double multiplier = 0.85;
+            if(component instanceof SliderComponent || component instanceof RangeSliderComponent)
+                multiplier *= 1.8;
+            component.setSize(this.getWidth(), this.getHeight() * multiplier);
             component.setColor(currentTheme.getSelectionBackgroundColour()); //todo change this bruh
         }
     }
 
     @Override
     public void mouseDown(int x, int y, int mb) {
+        if(opened) {
+            for (Component component : this.getComponents()) {
+                if(component.isVisible())
+                    component.mouseDown(x, y, mb);
+            }
+        }
+
         if(mouseOver(x, y) && mb == 0){
             module.toggle();
         } else if(mouseOver(x, y) && mb == 1) {
@@ -86,13 +103,6 @@ public class ModuleComponent extends Component {
         }
 
         this.mouseDown = true;
-
-        if(opened) {
-            for (Component component : this.getComponents()) {
-                if(component.isVisible())
-                    component.mouseDown(x, y, mb);
-            }
-        }
     }
 
     public double getFullHeight() {

@@ -338,11 +338,11 @@ public class BedwarsOverlay extends Module {
         String noApiKey = "API key is not set!";
         String noPlayers = "No players in lobby!";
         if(Utils.URLS.hypixelApiKey.isEmpty()){
-            fr.drawString(noApiKey, (int)(overlayWidth + overlayX.getInput() - overlayWidth/2 - fr.getStringWidth(noApiKey)/2), (int)textY, errorColour);
+            fr.drawString(noApiKey, (int)(overlayWidth + overlayX.getInput() - overlayWidth* 0.5 - fr.getStringWidth(noApiKey)* 0.5), (int)textY, errorColour);
             textY += fr.FONT_HEIGHT + marginTextY.getInput();
             return true;
         } else if(!Utils.Client.othersExist()){
-            fr.drawString(noPlayers, (int)(overlayWidth + overlayX.getInput() - overlayWidth/2 - fr.getStringWidth(noPlayers)/2), (int)textY, errorColour);
+            fr.drawString(noPlayers, (int)(overlayWidth + overlayX.getInput() - overlayWidth* 0.5 - fr.getStringWidth(noPlayers)* 0.5), (int)textY, errorColour);
             textY += fr.FONT_HEIGHT + marginTextY.getInput();
             return true;
         }

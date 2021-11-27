@@ -76,13 +76,8 @@ public class CommandManager {
     }
 
     public void sort() {
-        if (HUD.alphabeticalSort.isToggled()) {
-            Collections.sort(this.sortedCommandList, Comparator.comparing(Command::getName));
-        } else {
-            Collections.sort(this.sortedCommandList, (o1, o2) -> {
-                return Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName());
-            });
-        }
-
+        Collections.sort(this.sortedCommandList, (o1, o2) -> {
+            return Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName());
+        });
     }
 }

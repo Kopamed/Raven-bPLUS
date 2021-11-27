@@ -1,6 +1,7 @@
 package me.kopamed.raven.bplus.client.feature.setting.settings;
 
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.ComboComponent;
@@ -13,10 +14,9 @@ public class ComboSetting extends Setting {
     private List<String> options;
     private int currentPos =0;
     private String currentMode;
-    static String settingType = "mode";
 
     public ComboSetting(String settingName, String[] modes, String defaultPos){
-        super(settingName, settingType);
+        super(settingName, SettingType.COMBO);
 
         this.options = Arrays.asList(modes);
         this.currentPos = this.options.indexOf(defaultPos);
@@ -26,7 +26,7 @@ public class ComboSetting extends Setting {
 
 
     public ComboSetting(String settingName, String[] modes, int defaultPos){
-        super(settingName, settingType);
+        super(settingName, SettingType.COMBO);
 
         this.options = Arrays.asList(modes);
         this.currentPos = defaultPos;

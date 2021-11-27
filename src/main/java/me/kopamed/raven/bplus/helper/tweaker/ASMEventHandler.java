@@ -2,6 +2,7 @@
 
 package me.kopamed.raven.bplus.helper.tweaker;
 
+import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.AutoClicker;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.Reach;
@@ -24,7 +25,6 @@ public class ASMEventHandler {
     * called when Minecraft format text
     */
    public static String getUnformattedTextForChat(String s) {
-      if (ModuleManager.initialized) {
          if (ModuleManager.nameHider.isToggled()) {
             s = NameHider.getUnformattedTextForChat(s);
          }
@@ -36,8 +36,6 @@ public class ASMEventHandler {
          if (ModuleManager.stringEncrypt.isToggled()) {
             s = StringEncrypt.getUnformattedTextForChat(s);
          }
-      }
-
       return s;
    }
 
