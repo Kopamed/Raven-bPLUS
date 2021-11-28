@@ -40,27 +40,13 @@ public class TransformerFMLCommonHandler implements Transformer {
     private InsnList getInsn() {
         InsnList insnList = new InsnList();
 
-        // add a method call to TransformerFMLCommonHandler.getModName();
-        insnList.add(new MethodInsnNode(INVOKESTATIC, "me/kopamed/raven/bplus/tweaker/transformers/TransformerFMLCommonHandler", "getModName", "()Ljava/lang/String;", false));
+        // add a method call to ASMEventHandler.getModName();
+        insnList.add(new MethodInsnNode(INVOKESTATIC, "me/kopamed/raven/bplus/helper/tweaker/ASMEventHandler", "getModName", "()Ljava/lang/String;", false));
 
         // return the result
         insnList.add(new InsnNode(ARETURN));
         return insnList;
     }
 
-    public static String getModName() {
-        ClientNameSpoof cns = (ClientNameSpoof) Raven.client.getModuleManager().getModuleByName("ClientNameSpoofer");
-        if(cns.isToggled()){
-            return cns.newName;
-        }
-        List<String> modNames = Lists.newArrayListWithExpectedSize(3);
-        modNames.add("fml");
-        modNames.add("forge");
 
-        if (Loader.instance().getFMLBrandingProperties().containsKey("snooperbranding"))
-        {
-            modNames.add(Loader.instance().getFMLBrandingProperties().get("snooperbranding"));
-        }
-        return Joiner.on(',').join(modNames);
-    }
 }

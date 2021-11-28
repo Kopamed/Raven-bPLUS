@@ -56,7 +56,7 @@ jar {
 shadowJar {
     manifest {
         attributes(
-                "FMLCorePlugin": "helper.tweaker.FMLLoadingPlugin",
+                "FMLCorePlugin": "me.kopamed.raven.bplus.helper.tweaker.FMLLoadingPlugin",
                 "ForceLoadAsMod": true,
                 FMLCorePluginContainsFMLMod: true,
                 "ModSide": "CLIENT"

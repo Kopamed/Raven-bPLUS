@@ -24,7 +24,7 @@ public class TransformerEntityPlayerSP implements Transformer {
                   to_remove.add(arr[i]);
                   i++;
                   if (arr[i].getOpcode() == GETFIELD
-                    && arr[i] instanceof FieldInsnNode
+                          && arr[i] instanceof FieldInsnNode
                   ) {
                      if (((FieldInsnNode) arr[i]).desc.equals("Lnet/minecraft/util/MovementInput;") || ((FieldInsnNode) arr[i]).desc.equals("Lbeu;" /* obf name */)) {
                         to_remove.add(arr[i]);
@@ -45,7 +45,7 @@ public class TransformerEntityPlayerSP implements Transformer {
                                        to_remove.add(arr[i]);
                                        if (!isASMEvntHandlerAdded) {
                                           isASMEvntHandlerAdded = true;
-                                          methodNode.instructions.insert(arr[i], getEventInsn());
+                                          methodNode.instructions.insert(methodNode.instructions.get(i), getEventInsn());
                                        }
                                        for (AbstractInsnNode abstractInsnNode : to_remove) {
                                           methodNode.instructions.remove(abstractInsnNode);

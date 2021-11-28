@@ -2,7 +2,10 @@
 
 package me.kopamed.raven.bplus.helper.tweaker;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.feature.module.modules.client.ClientNameSpoof;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.AutoClicker;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.Reach;
@@ -16,7 +19,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import org.lwjgl.input.Mouse;
+
+import java.util.List;
 
 public class ASMEventHandler {
    private static final Minecraft mc = Minecraft.getMinecraft();
@@ -24,7 +30,10 @@ public class ASMEventHandler {
    /**
     * called when Minecraft format text
     */
+   @SuppressWarnings("unused")
    public static String getUnformattedTextForChat(String s) {
+      // check if Modules have ben initialized
+      if (ModuleManager.modsList.size() > 0) {
          if (ModuleManager.nameHider.isToggled()) {
             s = NameHider.getUnformattedTextForChat(s);
          }
@@ -36,6 +45,7 @@ public class ASMEventHandler {
          if (ModuleManager.stringEncrypt.isToggled()) {
             s = StringEncrypt.getUnformattedTextForChat(s);
          }
+      }
       return s;
    }
 
@@ -43,6 +53,7 @@ public class ASMEventHandler {
    /**
     * called when an entity moves
     */
+   @SuppressWarnings("unused")
    public static boolean onEntityMove(Entity entity) {
       if (entity == mc.thePlayer && mc.thePlayer.onGround) {
          if (ModuleManager.safeWalk.isToggled() && !SafeWalk.doShift.isToggled()) {
@@ -62,14 +73,34 @@ public class ASMEventHandler {
       }
    }
 
+   /*
+    UNUSED @see : ClientNameSpoof.newName
+   @Deprecated
    public String getModName()
    {
       return "lunarclient:db2533c";
+   }*/
+   @SuppressWarnings("unused")
+   public static String getModName() {
+      ClientNameSpoof cns = (ClientNameSpoof) Raven.client.getModuleManager().getModuleByName("ClientNameSpoofer");
+      if(cns.isToggled()){
+         return ClientNameSpoof.newName;
+      }
+      List<String> modNames = Lists.newArrayListWithExpectedSize(3);
+      modNames.add("fml");
+      modNames.add("forge");
+
+      if (Loader.instance().getFMLBrandingProperties().containsKey("snooperbranding"))
+      {
+         modNames.add(Loader.instance().getFMLBrandingProperties().get("snooperbranding"));
+      }
+      return Joiner.on(',').join(modNames);
    }
 
    /**
     * called when a player is using an item (aka right-click)
     */
+   @SuppressWarnings("unused")
    public static void onLivingUpdate() {
       if (ModuleManager.noSlow.isToggled()) {
          NoSlow.sl();
@@ -80,8 +111,9 @@ public class ASMEventHandler {
    }
 
    /**
-    * called when a player is moving and hits another one
+    * called when a player is moving (sprinting) and hits another one
     */
+   @SuppressWarnings("unused")
    public static void onAttackTargetEntityWithCurrentItem(Entity en) {
       if (ModuleManager.keepSprint.isToggled()) {
          KeepSprint.sl(en);
@@ -94,6 +126,7 @@ public class ASMEventHandler {
    /**
     * called every ticks
     */
+   @SuppressWarnings("unused")
    public static void onTick() {
       if (!ModuleManager.autoClicker.isToggled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
          mc.entityRenderer.getMouseOver(1.0F);

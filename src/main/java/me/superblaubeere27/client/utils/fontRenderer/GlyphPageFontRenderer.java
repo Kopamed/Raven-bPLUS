@@ -340,9 +340,9 @@ public class GlyphPageFontRenderer {
         for (int i = 0; i < size; i++) {
             char character = text.charAt(i);
 
-            if (character == '§')
+            if (character == '§') {
                 on = true;
-            else if (on && character >= '0' && character <= 'r') {
+            } else if (on && character >= '0' && character <= 'r') {
                 int colorIndex = "0123456789abcdefklmnor".indexOf(character);
                 if (colorIndex < 16) {
                     boldStyle = false;

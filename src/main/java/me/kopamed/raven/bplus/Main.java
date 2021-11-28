@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import java.awt.*;
 import java.io.IOException;
 
-@Mod(modid = Main.MODID, version = Main.VERSION)
+@Mod(modid = Main.MODID, version = Main.VERSION, clientSideOnly = true)
 public class Main
 {
     public static final String MODID = "particles";
