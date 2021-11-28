@@ -1,5 +1,3 @@
-//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
-
 package me.kopamed.raven.bplus.helper.utils;
 
 import com.google.common.collect.Iterables;

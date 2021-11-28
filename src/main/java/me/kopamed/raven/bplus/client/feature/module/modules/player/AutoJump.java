@@ -1,5 +1,3 @@
-//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
-
 package me.kopamed.raven.bplus.client.feature.module.modules.player;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
