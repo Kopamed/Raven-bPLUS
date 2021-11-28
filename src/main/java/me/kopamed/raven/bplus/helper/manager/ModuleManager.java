@@ -1,5 +1,3 @@
-//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
-
 package me.kopamed.raven.bplus.helper.manager;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
@@ -29,6 +27,7 @@ import java.util.List;
 
 public class ModuleManager {
    public static ArrayList<Module> modsList = new ArrayList<>();
+   public static boolean isInitialized = false;
    public static Module nameHider;
    public static Module fastPlace;
    public static Module antiShuffle;
@@ -134,6 +133,8 @@ public class ModuleManager {
       this.initMod(new PingSpoof());
       this.initMod(new GhostBlocks());
       //this.addModule(new KillAura());
+
+      isInitialized = true;
    }
 
    public Module getModuleByName(String name) {

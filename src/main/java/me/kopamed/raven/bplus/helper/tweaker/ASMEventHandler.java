@@ -1,5 +1,3 @@
-//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
-
 package me.kopamed.raven.bplus.helper.tweaker;
 
 import com.google.common.base.Joiner;
@@ -33,7 +31,7 @@ public class ASMEventHandler {
    @SuppressWarnings("unused")
    public static String getUnformattedTextForChat(String s) {
       // check if Modules have ben initialized
-      if (ModuleManager.modsList.size() > 0) {
+      if (ModuleManager.isInitialized) {
          if (ModuleManager.nameHider.isToggled()) {
             s = NameHider.getUnformattedTextForChat(s);
          }

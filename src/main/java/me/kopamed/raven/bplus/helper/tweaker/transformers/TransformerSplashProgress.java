@@ -27,7 +27,7 @@ public class TransformerSplashProgress implements Transformer {
         insnList.add(new LabelNode(l1));
         insnList.add(new VarInsnNode(ALOAD, 2));
         insnList.add(new LdcInsnNode("fml:textures/gui/forge.gif"));
-        insnList.add(new LdcInsnNode("keystrokes:raven_loading.png"));
+        insnList.add(new LdcInsnNode("fml:textures/gui/raven_loading.png")); // custom loading texture
         insnList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/String", "replace", "(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;", false));
         insnList.add(new InsnNode(ARETURN));
         return insnList;
