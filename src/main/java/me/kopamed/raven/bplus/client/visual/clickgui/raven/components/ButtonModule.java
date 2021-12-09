@@ -109,18 +109,6 @@ public class ButtonModule extends Component {
       float r = 0.0F;
       float g = 0.0F;
       float b = 0.0F;
-      if (Gui.guiTheme.getInput() == 1.0D) {
-         a = (float)(h >> 14 & 255) / 255.0F;
-         r = (float)(h >> 5 & 255) / 255.0F;
-         g = (float)(h >> 5 & 255) / 2155.0F;
-         b = (float)(h & 255);
-      } else if (Gui.guiTheme.getInput() == 2.0D) {
-         a = (float)(h >> 14 & 255) / 255.0F;
-         r = (float)(h >> 5 & 255) / 2155.0F;
-         g = (float)(h >> 5 & 255) / 255.0F;
-         b = (float)(h & 255);
-      } else if (Gui.guiTheme.getInput() == 3.0D) {
-      }
 
       GL11.glColor4f(r, g, b, a);
    }
@@ -144,8 +132,8 @@ public class ButtonModule extends Component {
       v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isToggled() ? this.c2 : -12829381, this.mod.isToggled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
       // module text button
-      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isToggled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isToggled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
-      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
+      //int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isToggled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isToggled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
+      //Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
          for (Component c : this.settings) {

@@ -67,8 +67,8 @@ public class AutoClicker extends Module {
    private boolean leftDown;
    private boolean rightDown;
 
-   private String[] events = new String[]{"Render", "Tick"};
-   private String[] clickStyles = new String[]{"Jitter1", "Jitter2"};
+   private final String[] events = new String[]{"Render", "Tick"};
+   private final String[] clickStyles = new String[]{"Jitter1", "Jitter2"};
 
    public AutoClicker() {
       super("AutoClicker", ModuleCategory.Combat, 0);

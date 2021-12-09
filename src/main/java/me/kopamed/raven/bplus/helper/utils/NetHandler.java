@@ -23,7 +23,7 @@ import java.util.Base64;
 
 public class NetHandler extends NetHandlerPlayClient {
 
-    private NetHandlerPlayClient parent;
+    private final NetHandlerPlayClient parent;
     private static String[] normal;
 
     public NetHandler(NetHandlerPlayClient nethandlerplayclient) {
@@ -59,7 +59,7 @@ public class NetHandler extends NetHandlerPlayClient {
             f2 = 360.0F - f2;
         }
 
-        return (double) f2;
+        return f2;
     }
 
     private float a(double d0, double d1) {

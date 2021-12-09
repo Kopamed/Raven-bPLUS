@@ -1,7 +1,5 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus.component;
 
-import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.input.Keyboard;
@@ -80,7 +78,7 @@ public abstract class Component {
         this.background = background;
     }
 
-    public void paint(GlyphPageFontRenderer fr){
+    public void paint(FontRenderer fr){
         Gui.drawRect((int)this.getX(), (int)this.getY(), (int)(this.getX() + this.getWidth()), (int)(this.getY() + this.getHeight()), this.getColor().getRGB());
         for(Component component: this.getComponents()){
             component.paint(fr);

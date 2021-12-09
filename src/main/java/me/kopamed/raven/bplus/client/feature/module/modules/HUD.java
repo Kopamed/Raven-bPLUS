@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class HUD extends Module {
-   private me.kopamed.raven.bplus.client.visual.hud.HUD hud;
+   private final me.kopamed.raven.bplus.client.visual.hud.HUD hud;
 
    public HUD() {
       super("HUD", "Displays which modules are active", ModuleCategory.Render);

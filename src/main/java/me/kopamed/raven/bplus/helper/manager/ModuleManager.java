@@ -44,6 +44,7 @@ public class ModuleManager {
    public static Module playerESP;
    public static Module safeWalk;
    public static Module keepSprint;
+   public static Module gui;
 
    public ModuleManager() {
       this.initMod(autoClicker = new AutoClicker());
@@ -100,7 +101,7 @@ public class ModuleManager {
       this.initMod(new WaterBucket());
       //this.addModule(new AutoConfig());
       this.initMod(new CommandLine());
-      this.initMod(new Gui());
+      this.initMod(gui = new Gui());
       this.initMod(new SelfDestruct());
       this.initMod(new ChatLogger());
       this.initMod(new BridgeAssist());
@@ -155,7 +156,7 @@ public class ModuleManager {
    }
 
    public List<Module> getModules() {
-      return this.modsList;
+      return modsList;
    }
 
    public List<Module> getModulesInCategory(ModuleCategory categ) {

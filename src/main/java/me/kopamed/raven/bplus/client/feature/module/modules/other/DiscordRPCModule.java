@@ -4,7 +4,7 @@ import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
-import me.kopamed.raven.bplus.client.feature.module.Module;;
+import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.helper.discordRPC.DiscordRPCManager;
 import me.kopamed.raven.bplus.helper.discordRPC.RPCMode;
 import me.kopamed.raven.bplus.helper.utils.Tracker;

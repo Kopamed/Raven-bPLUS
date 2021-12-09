@@ -18,7 +18,7 @@ public class ButtonTick extends Component {
    private int o;
    private int x;
    private int y;
-   private int boxSize = 6;
+   private final int boxSize = 6;
 
    public ButtonTick(Module mod, BooleanSetting op, ButtonModule b, int o) {
       this.mod = mod;
@@ -70,19 +70,19 @@ public class ButtonTick extends Component {
 
    public void draw() {
       // drawing main bg rect
-      if (Gui.guiTheme.getInput() == 4) {
-         net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 4, this.module.category.getY() + this.o + 4, this.module.category.getX() + 4 + boxSize, this.module.category.getY() + this.o + 4 + boxSize, this.boxC);
-         if(this.cl1ckbUtt0n.isToggled()){
+      //if (Gui.guiTheme.getInput() == 4) {
+       //  net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 4, this.module.category.getY() + this.o + 4, this.module.category.getX() + 4 + boxSize, this.module.category.getY() + this.o + 4 + boxSize, this.boxC);
+      //   if(this.cl1ckbUtt0n.isToggled()){
             net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 5, this.module.category.getY() + this.o + 5, this.module.category.getX() + 5 + boxSize-2, this.module.category.getY() + this.o + 5 + boxSize-2, this.c);
-         }
-      }
+      //   }
+     // }
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
-      if(Gui.guiTheme.getInput() == 4){
-         Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "     " + this.cl1ckbUtt0n.getName() : "     " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
-      }else {
-         Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
-      }
+      //if(Gui.guiTheme.getInput() == 4){
+       //  Minecraft.getMinecraft().fontRendererObj.drawString("     " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+     // }else {
+     //    Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+     // }
 
       GL11.glPopMatrix();
    }

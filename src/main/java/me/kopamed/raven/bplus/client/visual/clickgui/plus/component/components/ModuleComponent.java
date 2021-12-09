@@ -9,7 +9,7 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.*;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 
@@ -29,11 +29,11 @@ public class ModuleComponent extends Component {
     }
 
     @Override
-    public void paint(GlyphPageFontRenderer fr) {
+    public void paint(FontRenderer fr) {
         Theme currentTheme = Raven.client.getClickGui().getTheme();
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = this.getHeight() * 0.6;
-        double scaleFactor = desiredTextSize/ fr.getFontHeight();
+        double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
         double textY = this.getY() + (this.getHeight() - desiredTextSize) * 0.5;
 
@@ -77,11 +77,11 @@ public class ModuleComponent extends Component {
     @Override
     public void onResize() {
         Theme currentTheme = Raven.client.getClickGui().getTheme();
-        this.setSize(categoryComponent.getWidth() - 2, categoryComponent.getHeight() * 0.8);
+        this.setSize(categoryComponent.getWidth() - 2, categoryComponent.getHeight() * 0.65);
         for(Component component : this.getComponents()){
-            double multiplier = 0.85;
+            double multiplier = 0.65;
             if(component instanceof SliderComponent || component instanceof RangeSliderComponent)
-                multiplier *= 1.8;
+                multiplier *= 1.65;
             component.setSize(this.getWidth(), this.getHeight() * multiplier);
             component.setColor(currentTheme.getSelectionBackgroundColour()); //todo change this bruh
         }

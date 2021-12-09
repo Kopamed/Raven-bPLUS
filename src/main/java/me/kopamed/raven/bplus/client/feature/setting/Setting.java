@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public abstract class Setting {
    private final SettingType settingType;
    private final String settingName;
-   private ArrayList<SelectorRunnable> selectors = new ArrayList<>();
+   private final ArrayList<SelectorRunnable> selectors = new ArrayList<>();
 
    public Setting(String name, SettingType settingType) {
       this.settingName = name;

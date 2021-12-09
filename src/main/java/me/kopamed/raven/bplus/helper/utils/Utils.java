@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import com.google.gson.JsonObject;
@@ -226,8 +227,7 @@ public class Utils {
       }
 
       public static boolean tryingToCombo() {
-         if(Mouse.isButtonDown(0) && Mouse.isButtonDown(1)) return true;
-         return false;
+         return Mouse.isButtonDown(0) && Mouse.isButtonDown(1);
       }
 
       public static float[] getTargetRotations(Entity q) {
@@ -367,7 +367,7 @@ public class Utils {
          ObfuscationReflectionHelper.setPrivateValue(MouseEvent.class, m, held, "buttonstate");
          MinecraftForge.EVENT_BUS.post(m);
 
-         ByteBuffer buttons = (ByteBuffer) ObfuscationReflectionHelper.getPrivateValue(Mouse.class, null, "buttons");
+         ByteBuffer buttons = ObfuscationReflectionHelper.getPrivateValue(Mouse.class, null, "buttons");
          buttons.put(mouseButton, (byte)(held ? 1 : 0));
          ObfuscationReflectionHelper.setPrivateValue(Mouse.class, null, buttons, "buttons");
 
@@ -735,13 +735,11 @@ public class Utils {
       }
 
       public static boolean isLink(String string){
-         if(string.startsWith("http") && string.contains(".") && string.contains("://")) return true;
-         return false;
+         return string.startsWith("http") && string.contains(".") && string.contains("://");
       }
 
       public static boolean isPasteeLink(String link){
-         if(isLink(link) && link.contains("paste.ee")) return true;
-         return false;
+         return isLink(link) && link.contains("paste.ee");
       }
 
       public static String makeRawPasteePaste(String arg) {
@@ -770,7 +768,7 @@ public class Utils {
             //System.out.println(payload);
             try {
                // sending data
-               outputStream.write(payload.getBytes("UTF-8"));
+               outputStream.write(payload.getBytes(StandardCharsets.UTF_8));
                outputStream.flush();
             } catch (Throwable microsoftMoment) {
                occuredErrors = microsoftMoment;

@@ -11,7 +11,7 @@ import java.io.File;
 
 public class RandomPack extends Module {
     public static DescriptionSetting packAmount;
-    private File dir;
+    private final File dir;
 
     public RandomPack(){
         super("RandomPack", ModuleCategory.Misc);

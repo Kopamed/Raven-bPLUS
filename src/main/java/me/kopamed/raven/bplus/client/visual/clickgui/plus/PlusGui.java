@@ -6,6 +6,7 @@ import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.CategoryComponent;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.Terminal;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.BindComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.ArcDark;
@@ -15,12 +16,11 @@ import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.helper.manager.version.Version;
 import me.kopamed.raven.bplus.helper.utils.Timer;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import me.superblaubeere27.client.notifications.NotificationManager;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
@@ -38,13 +38,14 @@ public class PlusGui extends GuiScreen {
     private GuiTextField c;
     private final Theme theme;
 
-    private final NotificationManager notificationManager;
+    //private final NotificationManager notificationManager;
 
     private String tooltip;
     private Object setter;
 
     private final ArrayList<CategoryComponent> categories;
-    private GlyphPageFontRenderer fontRenderer;
+    private final Terminal terminal;
+    private FontRenderer fontRenderer;
 
     public static final double goldenRatio = 1.618033988749894;
 
@@ -52,7 +53,10 @@ public class PlusGui extends GuiScreen {
     public PlusGui() {
         this.categories = new ArrayList<>();
         this.tooltip = "";
-        this.notificationManager = new NotificationManager();
+        this.terminal = new Terminal();
+        terminal.setColor(new Color(48, 48, 48));
+        terminal.setVisible(false);
+        //this.notificationManager = new NotificationManager();
         Version clientVersion = Raven.client.getVersionManager().getClientVersion();
         this.defaultTooltip = "b" + clientVersion.getBranchCommit() + " of v" + clientVersion.getVersion() + " on branch " + clientVersion.getBranchName();
         this.theme = new Vape();
@@ -92,6 +96,9 @@ public class PlusGui extends GuiScreen {
             categoryComponent.onResize();
             currentX += catWidth + marginX;
         }
+
+        terminal.onResize();
+        terminal.setLocation((sr.getScaledWidth() - terminal.getWidth()) * 0.5, (sr.getScaledHeight() - terminal.getHeight()) * 0.5);
     }
 
     public void drawScreen(int x, int y, float p) {
@@ -103,7 +110,7 @@ public class PlusGui extends GuiScreen {
         double marginY = height * 0.01;
 
         double desiredTextSize = height * 0.024;
-        double scaleFactor = desiredTextSize / fontRenderer.getFontHeight();
+        double scaleFactor = desiredTextSize / fontRenderer.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
 
         double barHeight = desiredTextSize * 1.6;
@@ -135,14 +142,21 @@ public class PlusGui extends GuiScreen {
         fontRenderer.drawString(tooltip.isEmpty() ? defaultTooltip : tooltip, (float) (tooltipX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
         GL11.glPopMatrix();
 
+
+        terminal.update(x, y);
+        terminal.paint(fontRenderer);
+
+
         for (CategoryComponent category : categories) {
             category.update(x, y);
-            category.paint(Raven.client.getFontRenderer());
+            category.paint(fontRenderer);
         }
     }
 
     public void mouseClicked(int x, int y, int mouseButton) throws IOException {
         int categoryNumber = categories.size();
+
+        terminal.mouseDown(x, y, mouseButton);
 
         for(int i = 0; i < categoryNumber; i++){
             CategoryComponent categoryComponent = categories.get(i);
@@ -153,6 +167,8 @@ public class PlusGui extends GuiScreen {
     public void mouseReleased(int x, int y, int s) {
         int categoryNumber = categories.size();
 
+        terminal.mouseReleased(x, y, s);
+
         for(int i = 0; i < categoryNumber; i++){
             CategoryComponent categoryComponent = categories.get(i);
             categoryComponent.mouseReleased(x, y, s);
@@ -161,6 +177,8 @@ public class PlusGui extends GuiScreen {
 
     public void keyTyped(char typedChar, int keyCode) throws IOException {
         System.out.println("KeyTyped: " + typedChar + " " + keyCode);
+
+        terminal.keyTyped(typedChar, keyCode);
 
         if(!binding()){
             try {
@@ -212,16 +230,16 @@ public class PlusGui extends GuiScreen {
         this.tooltip = "";
     }
 
-    public NotificationManager getNotificationManager() {
-        return notificationManager;
-    }
+    //public NotificationManager getNotificationManager() {
+        //return notificationManager;
+    //}
 
-    private boolean binding(){
-        for (CategoryComponent categoryComponent : categories){
-            for(Component module : categoryComponent.getComponents()){
-                for(Component setting : module.getComponents()){
-                    if(setting instanceof BindComponent){
-                        if(((BindComponent) setting).isListening())
+    private boolean binding() {
+        for (CategoryComponent categoryComponent : categories) {
+            for (Component module : categoryComponent.getComponents()) {
+                for (Component setting : module.getComponents()) {
+                    if (setting instanceof BindComponent) {
+                        if (((BindComponent) setting).isListening())
                             return true;
                     }
                 }

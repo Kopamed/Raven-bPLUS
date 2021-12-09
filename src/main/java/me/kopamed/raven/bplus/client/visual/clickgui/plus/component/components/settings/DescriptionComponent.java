@@ -6,14 +6,14 @@ import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 
 public class DescriptionComponent extends Component {
-    private DescriptionSetting descriptionSetting;
-    private ModuleComponent moduleComponent;
-    private Module module;
+    private final DescriptionSetting descriptionSetting;
+    private final ModuleComponent moduleComponent;
+    private final Module module;
 
     public DescriptionComponent(DescriptionSetting descriptionSetting, ModuleComponent moduleComponent){
         this.descriptionSetting = descriptionSetting;
@@ -27,7 +27,7 @@ public class DescriptionComponent extends Component {
     }
 
     @Override
-    public void paint(GlyphPageFontRenderer fr) {
+    public void paint(FontRenderer fr) {
         Theme theme = Raven.client.getClickGui().getTheme();
 
         Gui.drawRect(
@@ -40,7 +40,7 @@ public class DescriptionComponent extends Component {
 
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = this.getHeight() * 0.6;
-        double scaleFactor = desiredTextSize/ fr.getFontHeight();
+        double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
         double textY = this.getY() + (this.getHeight() - desiredTextSize) * 0.5;
 

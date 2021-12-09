@@ -6,7 +6,7 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component {
     public ModuleCategory category;
     private boolean opened = false;
-    private String name;
+    private final String name;
     private boolean dragging;
 
     public CategoryComponent(ModuleCategory category) {
@@ -47,7 +47,7 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
     }
 
     @Override
-    public void paint(GlyphPageFontRenderer fr) {
+    public void paint(FontRenderer fr) {
         Theme currentTheme = Raven.client.getClickGui().getTheme();
         Gui.drawRect((int)this.getX(),
                 (int)this.getY(),
@@ -57,7 +57,7 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
 
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = this.getHeight() * 0.6;
-        double scaleFactor = desiredTextSize/ fr.getFontHeight();
+        double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
         String status = this.opened ? "-" : "+";
 
@@ -79,7 +79,7 @@ public class CategoryComponent extends me.kopamed.raven.bplus.client.visual.clic
 
     @Override
     public void update(int x, int y) {
-        PlusGui clickGui = Raven.client.getClickGui();;
+        PlusGui clickGui = Raven.client.getClickGui();
         if(this.mouseOver(x, y)){
             clickGui.setTooltip("Left Click to see the modules, CTRL and drag to move", this);
         } else if(!this.mouseOver(x, y) && clickGui.getTooltipSetter() == this){

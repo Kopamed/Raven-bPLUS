@@ -50,14 +50,14 @@ public class MiddleClick extends Module {
                             prevSlot = mc.thePlayer.inventory.currentItem;
                             mc.thePlayer.inventory.currentItem = slot;
                             try {
-                                cpsCap = this.mc.getClass().getDeclaredMethod("func_147121_ag");
+                                cpsCap = mc.getClass().getDeclaredMethod("func_147121_ag");
                                 cpsCap.setAccessible(true);
-                                cpsCap.invoke(this.mc);
+                                cpsCap.invoke(mc);
                             } catch (Exception var3) {
                                 try {
-                                    cpsCap = this.mc.getClass().getDeclaredMethod("rightClickMouse");
+                                    cpsCap = mc.getClass().getDeclaredMethod("rightClickMouse");
                                     cpsCap.setAccessible(true);
-                                    cpsCap.invoke(this.mc);
+                                    cpsCap.invoke(mc);
                                 } catch (Exception var4) {
                                     //var3.printStackTrace();
                                 }

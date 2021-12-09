@@ -5,5 +5,5 @@ public enum SettingType {
     COMBO,
     DESCRIPTION,
     NUMBER,
-    RANGE;
+    RANGE
 }

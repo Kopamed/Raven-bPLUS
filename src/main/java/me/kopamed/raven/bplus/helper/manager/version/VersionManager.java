@@ -71,6 +71,7 @@ public class VersionManager {
         Scanner scanner;
 
         input = VersionManager.class.getResourceAsStream(versionFilePath);
+        assert input != null;
         scanner = new Scanner(input);
         version = scanner.nextLine();
 

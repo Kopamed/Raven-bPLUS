@@ -4,8 +4,8 @@ import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -23,16 +23,16 @@ public class HUD {
     private InputStream inputStream;
     private ResourceLocation ravenLogo;
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
     private double width;
     private double height;
     private double logoWidthRatio = 0.14;
     private double logoHeightRatio =  0.063;
-    private double marginYRatio = 0.003;
-    private double textSizeRatio = 0.03;
+    private final double marginYRatio = 0.003;
+    private final double textSizeRatio = 0.03;
 
-    private double speed = 1;
+    private final double speed = 1;
     private boolean dropShadow = false;
 
     public HUD(){
@@ -64,7 +64,7 @@ public class HUD {
             return;
 
         ScaledResolution sr = new ScaledResolution(Raven.client.getMc());
-        GlyphPageFontRenderer fr = Raven.client.getFontRenderer();
+        FontRenderer fr = Raven.client.getFontRenderer();
         Theme theme = Raven.client.getClickGui().getTheme();
 
         double currentY = y;
@@ -80,7 +80,7 @@ public class HUD {
         if(!modules.isEmpty()){
             modules.sort((o1, o2) -> fr.getStringWidth(o2.getName()) - fr.getStringWidth(o1.getName()));
             double desiredTextSize = sr.getScaledHeight() * textSizeRatio;
-            double scaleFactor = desiredTextSize/ fr.getFontHeight();
+            double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;
             double coordFactor = 1/scaleFactor;
 
             GL11.glPushMatrix();

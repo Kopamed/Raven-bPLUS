@@ -3,41 +3,41 @@ package me.kopamed.raven.bplus.client.visual.clickgui.plus.theme;
 import java.awt.*;
 
 public interface Theme {
-    public String getName();
+    String getName();
 
-    public Color getTextColour();
+    Color getTextColour();
 
-    public Color getBackgroundColour();
+    Color getBackgroundColour();
 
-    public Color getSecondBackgroundColour();
+    Color getSecondBackgroundColour();
 
-    public Color getForegroundColour();
+    Color getForegroundColour();
 
-    public Color getSelectionBackgroundColour();
+    Color getSelectionBackgroundColour();
 
-    public Color getSelectionForegroundColour();
+    Color getSelectionForegroundColour();
 
-    public Color getButtonColour();
+    Color getButtonColour();
 
-    public Color getDisabledColour();
+    Color getDisabledColour();
 
-    public Color getContrastColour();
+    Color getContrastColour();
 
-    public Color getAccentColour();
+    Color getAccentColour();
 
-    public Color getActiveColour();
+    Color getActiveColour();
 
-    public Color getExcludedColour();
+    Color getExcludedColour();
 
-    public Color getNotificationColour();
+    Color getNotificationColour();
 
-    public Color getHeadingColour();
+    Color getHeadingColour();
 
-    public Color getHighlightColour();
+    Color getHighlightColour();
 
-    public Color getBorderColour();
+    Color getBorderColour();
 
-    public Color getBackdropColour();
+    Color getBackdropColour();
 
-    public Color getArrayListColour(double currentY, double fullY, double speed);
+    Color getArrayListColour(double currentY, double fullY, double speed);
 }

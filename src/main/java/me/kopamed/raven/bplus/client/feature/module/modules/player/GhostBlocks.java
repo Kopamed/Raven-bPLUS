@@ -82,32 +82,32 @@ public class GhostBlocks extends Module {
             //mc.thePlayer.swingItem();
             EnumFacing were = mc.objectMouseOver.sideHit;
             if (were == EnumFacing.UP) {
-                y = (int) blockPos.getY() + 1;
+                y = blockPos.getY() + 1;
                 if (air) {
                     y += 3 - airRange.getInput();
                 }
             } else if (were == EnumFacing.DOWN) {
-                y = (int) blockPos.getY() - 1;
+                y = blockPos.getY() - 1;
                 if (air) {
                     y -= 4 + airRange.getInput();
                 }
             } else if (were == EnumFacing.EAST) {
-                x = (int) blockPos.getX() + 1;
+                x = blockPos.getX() + 1;
                 if (air) {
                     x += 3 - airRange.getInput();
                 }
             } else if (were == EnumFacing.WEST) {
-                x = (int) blockPos.getX() - 1;
+                x = blockPos.getX() - 1;
                 if (air) {
                     x -= 3 + airRange.getInput();
                 }
             } else if (were == EnumFacing.SOUTH) {
-                z = (int) blockPos.getZ() + 1;
+                z = blockPos.getZ() + 1;
                 if (air) {
                     z += 3 - airRange.getInput();
                 }
             } else if (were == EnumFacing.NORTH) {
-                z = (int) blockPos.getZ() - 1;
+                z = blockPos.getZ() - 1;
                 if (air) {
                     z -= 3 + airRange.getInput();
                 }
@@ -192,32 +192,32 @@ public class GhostBlocks extends Module {
             //mc.thePlayer.swingItem();
             EnumFacing were = mc.objectMouseOver.sideHit;
             if(were == EnumFacing.UP){
-                y = (int)blockPos.getY() + 1;
+                y = blockPos.getY() + 1;
                 if(air){
                     y+= 3 - airRange.getInput();
                 }
             } else if(were == EnumFacing.DOWN){
-                y = (int)blockPos.getY() - 1;
+                y = blockPos.getY() - 1;
                 if(air){
                     y-= 4 + airRange.getInput();
                 }
             } else if(were == EnumFacing.EAST){
-                x = (int)blockPos.getX() + 1;
+                x = blockPos.getX() + 1;
                 if(air){
                     x+= 3 - airRange.getInput();
                 }
             }else if(were == EnumFacing.WEST){
-                x = (int)blockPos.getX() - 1;
+                x = blockPos.getX() - 1;
                 if(air){
                     x-= 3 + airRange.getInput();
                 }
             }else if(were == EnumFacing.SOUTH){
-                z = (int)blockPos.getZ() + 1;
+                z = blockPos.getZ() + 1;
                 if(air){
                     z+= 3 - airRange.getInput();
                 }
             }else if(were == EnumFacing.NORTH){
-                z = (int)blockPos.getZ() - 1;
+                z = blockPos.getZ() - 1;
                 if(air){
                     z-= 3 + airRange.getInput();
                 }

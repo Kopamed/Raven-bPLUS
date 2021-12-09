@@ -41,11 +41,7 @@ public class Version {
         if (versionToCompare.getVersionNumbers().get(1) < this.getVersionNumbers().get(1)) {
             return true;
         }
-        if(versionToCompare.getVersionNumbers().get(2) < this.getVersionNumbers().get(2)){
-            return true;
-        }
-
-        return false;
+        return versionToCompare.getVersionNumbers().get(2) < this.getVersionNumbers().get(2);
     }
 
     public boolean equals(Version version){

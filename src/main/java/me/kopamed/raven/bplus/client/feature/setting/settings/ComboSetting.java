@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ComboSetting extends Setting {
-    private List<String> options;
+    private final List<String> options;
     private int currentPos =0;
     private String currentMode;
 

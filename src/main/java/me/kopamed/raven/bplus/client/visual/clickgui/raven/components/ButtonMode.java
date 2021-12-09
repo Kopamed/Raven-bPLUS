@@ -14,8 +14,8 @@ public class ButtonMode extends Component {
     private int x;
     private int y;
     private int o;
-    private boolean registeredClick = false;
-    private boolean md = false;
+    private final boolean registeredClick = false;
+    private final boolean md = false;
 
     public ButtonMode(ComboSetting desc, ButtonModule b, int o) {
         this.mode = desc;

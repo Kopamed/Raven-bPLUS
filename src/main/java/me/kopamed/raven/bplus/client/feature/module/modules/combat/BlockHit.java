@@ -26,7 +26,8 @@ public class BlockHit extends Module {
     public static RangeSetting waitMs, hitPer, postDelay, range;
     public static boolean executingAction, hitCoolDown, alreadyHit, safeGuard;
     public static int hitTimeout, hitsWaited;
-    private CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
+    private final CoolDown actionTimer = new CoolDown(0);
+    private final CoolDown postDelayTimer = new CoolDown(0);
     private boolean waitingForPostDelay;
 
     public BlockHit() {
@@ -142,7 +143,7 @@ public class BlockHit extends Module {
                     }
 
                     //////////System.out.println("Continued");
-                    if(!(chance.getInput() == 100 ? true : Math.random() <= chance.getInput()/100))
+                    if(!(chance.getInput() == 100 || Math.random() <= chance.getInput() / 100))
                         return;
 
                     if(!alreadyHit){

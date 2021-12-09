@@ -6,7 +6,7 @@ import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 
@@ -29,7 +29,7 @@ public class RangeSliderComponent extends Component {
     }
 
     @Override
-    public void paint(GlyphPageFontRenderer fr) {
+    public void paint(FontRenderer fr) {
         Theme theme = Raven.client.getClickGui().getTheme();
         Gui.drawRect(
                 (int)this.getX(),
@@ -38,10 +38,10 @@ public class RangeSliderComponent extends Component {
                 (int)(this.getY() + this.getHeight()),
                 theme.getSelectionBackgroundColour().getRGB()
         );
-        double ogSize = this.getHeight() / 1.8;
+        double ogSize = this.getHeight() / 1.65;
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = ogSize * 0.6;
-        double scaleFactor = desiredTextSize/ fr.getFontHeight();
+        double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
 
         double barSpace = this.getHeight() - ogSize;
@@ -188,6 +188,6 @@ public class RangeSliderComponent extends Component {
     public enum DragType {
         MIN,
         MAX,
-        NONE;
+        NONE
     }
 }

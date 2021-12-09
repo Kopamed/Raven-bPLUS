@@ -4,9 +4,8 @@ import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.superblaubeere27.client.utils.fontRenderer.GlyphPageFontRenderer;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class BindComponent extends Component {
@@ -19,7 +18,7 @@ public class BindComponent extends Component {
     }
 
     @Override
-    public void paint(GlyphPageFontRenderer fr) {
+    public void paint(FontRenderer fr) {
         Theme currentTheme = Raven.client.getClickGui().getTheme();
 
         Gui.drawRect(
@@ -32,7 +31,7 @@ public class BindComponent extends Component {
 
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = this.getHeight() * 0.6;
-        double scaleFactor = desiredTextSize/ fr.getFontHeight();
+        double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
         double textY = this.getY() + (this.getHeight() - desiredTextSize) * 0.5;
         String bindedTo = listening ? "Press ESC to stop" : moduleComponent.getModule().getBindAsString();
