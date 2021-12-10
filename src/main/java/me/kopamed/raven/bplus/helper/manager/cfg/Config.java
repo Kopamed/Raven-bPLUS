@@ -1,13 +1,23 @@
 package me.kopamed.raven.bplus.helper.manager.cfg;
 
 import com.google.gson.JsonObject;
+import me.kopamed.raven.bplus.helper.manager.version.Version;
 
 import java.io.File;
+import java.util.Date;
 
 public class Config {
-    private File file;
-    private String name;
-    private JsonObject jsonObject;
+    private File        file;
+    private String      configName;
+    private JsonObject  jsonObject;
+
+    private String      authorName;
+    private String      notes;
+    private Date        creationDate;
+    private Date        lastModifiedDate;
+    private long        usedFor;
+    private Version     intendedVersion;
+
 
     private boolean readOnly;
 
@@ -18,7 +28,7 @@ public class Config {
     public Config(File file, boolean readOnly){
         this.readOnly = readOnly;
         this.file = file;
-        this.name = file.getName();
+        this.configName = file.getName();
         getJson();
     }
 

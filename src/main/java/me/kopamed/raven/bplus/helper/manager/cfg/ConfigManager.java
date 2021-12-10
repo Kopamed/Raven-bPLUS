@@ -58,12 +58,14 @@ public class ConfigManager {
 
     public void findConfigs(){
         configs.clear();
-        File[] files = getResourceFolderFiles("assets/raven/cfg");
-        if(files.length > 0) {
-            for (File f : files) {
-                configs.add(new Config(f, true));
+        try {
+            File[] files = getResourceFolderFiles("assets/raven/cfg");
+            if (files.length > 0) {
+                for (File f : files) {
+                    configs.add(new Config(f, true));
+                }
             }
-        }
+        } catch (NullPointerException theJ){} //fix this bs
 
         for(File f : configDir.listFiles()){
             if(isConfig(f))
