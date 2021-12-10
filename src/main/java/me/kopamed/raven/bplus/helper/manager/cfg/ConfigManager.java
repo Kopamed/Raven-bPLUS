@@ -65,7 +65,7 @@ public class ConfigManager {
                     configs.add(new Config(f, true));
                 }
             }
-        } catch (NullPointerException theJ){} //fix this bs
+        } catch (Exception theJ){} //fix this bs
 
         for(File f : configDir.listFiles()){
             if(isConfig(f))
