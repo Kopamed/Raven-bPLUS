@@ -36,7 +36,8 @@ public class ConfigManager {
         findConfigs();
 
         // todo find config.raven file and set configs
-        this.currentConfig = configs.get(0);
+        if(!configs.isEmpty())
+            this.currentConfig = configs.get(0);
     }
 
     private boolean isConfig(File f) {
@@ -57,8 +58,11 @@ public class ConfigManager {
 
     public void findConfigs(){
         configs.clear();
-        for (File f : getResourceFolderFiles("assets/raven/cfg")) {
-            configs.add(new Config(f, true));
+        File[] files = getResourceFolderFiles("assets/raven/cfg");
+        if(files.length > 0) {
+            for (File f : files) {
+                configs.add(new Config(f, true));
+            }
         }
 
         for(File f : configDir.listFiles()){
