@@ -18,8 +18,8 @@ public class Velocity extends Module {
 
    public Velocity() {
       super("Velocity", ModuleCategory.Combat, 0);
-      this.registerSetting(a = new NumberSetting("Horizontal", 90.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(b = new NumberSetting("Vertical", 100.0D, 0.0D, 100.0D, 1.0D));
+      this.registerSetting(a = new NumberSetting("Horizontal", 90.0D, -100.0D, 100.0D, 1.0D));
+      this.registerSetting(b = new NumberSetting("Vertical", 100.0D, -100.0D, 100.0D, 1.0D));
       this.registerSetting(c = new NumberSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(d = new BooleanSetting("Only while targeting", false));
       this.registerSetting(e = new BooleanSetting("Disable while holding S", false));

@@ -118,7 +118,7 @@ public class SliderComponent extends Component {
         if(draggingThumb){
             double mousePosX = Math.min(this.getX() + this.getWidth() - textMargin, Math.max(this.getX() + textMargin, x)) - (this.getX() + textMargin);
             double percentage = mousePosX / barLength;
-            numberSetting.setValue(numberSetting.getMax() * percentage);
+            numberSetting.setValue(((numberSetting.getMax() - numberSetting.getMin() )* percentage) + numberSetting.getMin());
         }
         super.update(x, y);
     }
