@@ -1,5 +1,6 @@
 package me.kopamed.raven.bplus.client.feature.setting.settings;
 
+import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
@@ -76,5 +77,14 @@ public class RangeSetting extends Setting {
     @Override
     public Component createComponent(ModuleComponent moduleComponent) {
         return new RangeSliderComponent(this, moduleComponent);
+    }
+
+    @Override
+    public JsonObject getConfigAsJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", this.getSettingType().toString());
+        jsonObject.addProperty("valueMin", valMin);
+        jsonObject.addProperty("valueMax", valMax);
+        return jsonObject;
     }
 }

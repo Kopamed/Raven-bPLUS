@@ -8,23 +8,27 @@ import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
 public class Freecam extends Module {
-   public static NumberSetting a;
-   public static BooleanSetting b;
+   public static NumberSetting speed;
+   public static BooleanSetting disbleOnDamage;
+   public static BooleanSetting showPlayer;
    private final double toRad = 0.017453292519943295D;
    public static EntityOtherPlayerMP en = null;
    private int[] lcc = new int[]{Integer.MAX_VALUE, 0};
-   private final float[] sAng = new float[]{0.0F, 0.0F};
+   private final float[] startingAngles = new float[]{0.0F, 0.0F};
 
    public Freecam() {
       super("Freecam", ModuleCategory.Player, 0);
-      this.registerSetting(a = new NumberSetting("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
-      this.registerSetting(b = new BooleanSetting("Disable on damage", true));
+      this.registerSetting(speed = new NumberSetting("Speed", 0.2D, 0.05D, 1D, 0.05D));
+      this.registerSetting(disbleOnDamage = new BooleanSetting("Disable on damage", true));
+      this.registerSetting(showPlayer = new BooleanSetting("ShowPlayer", true));
    }
 
    @Override
@@ -33,14 +37,14 @@ public class Freecam extends Module {
          return;
       }
       if (!mc.thePlayer.onGround) {
-         this.disable();
+         //this.disable();
       } else {
          en = new EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.getGameProfile());
          en.copyLocationAndAnglesFrom(mc.thePlayer);
-         this.sAng[0] = en.rotationYawHead = mc.thePlayer.rotationYawHead;
-         this.sAng[1] = mc.thePlayer.rotationPitch;
+         this.startingAngles[0] = en.rotationYawHead = mc.thePlayer.rotationYawHead;
+         this.startingAngles[1] = mc.thePlayer.rotationPitch;
          en.setVelocity(0.0D, 0.0D, 0.0D);
-         en.setInvisible(true);
+         en.setInvisible(!showPlayer.isToggled());
          mc.theWorld.addEntityToWorld(-8008, en);
          mc.setRenderViewEntity(en);
       }
@@ -49,8 +53,8 @@ public class Freecam extends Module {
    public void onDisable() {
       if (en != null) {
          mc.setRenderViewEntity(mc.thePlayer);
-         mc.thePlayer.rotationYaw = mc.thePlayer.rotationYawHead = this.sAng[0];
-         mc.thePlayer.rotationPitch = this.sAng[1];
+         mc.thePlayer.rotationYaw = mc.thePlayer.rotationYawHead = this.startingAngles[0];
+         mc.thePlayer.rotationPitch = this.startingAngles[1];
          mc.theWorld.removeEntity(en);
          en = null;
       }
@@ -70,10 +74,11 @@ public class Freecam extends Module {
 
    }
 
-   public void update() {
+   @SubscribeEvent
+   public void update(TickEvent.RenderTickEvent w) {
       if(!Utils.Player.isPlayerInGame() || en == null)
          return;
-       if (b.isToggled() && mc.thePlayer.hurtTime != 0) {
+       if (disbleOnDamage.isToggled() && mc.thePlayer.hurtTime != 0) {
          this.disable();
       } else {
          mc.thePlayer.setSprinting(false);
@@ -81,7 +86,7 @@ public class Freecam extends Module {
          mc.thePlayer.moveStrafing = 0.0F;
          en.rotationYaw = en.rotationYawHead = mc.thePlayer.rotationYaw;
          en.rotationPitch = mc.thePlayer.rotationPitch;
-         double s = 0.215D * a.getInput();
+         double s = 0.215D * speed.getInput();
          EntityOtherPlayerMP var10000;
          double rad;
          double dx;
@@ -152,8 +157,8 @@ public class Freecam extends Module {
    public void re(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
          mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
-         Utils.HUD.ee(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
-         Utils.HUD.ee(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
+         Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), true);
+         Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), true);
       }
 
    }
@@ -161,7 +166,10 @@ public class Freecam extends Module {
    @SubscribeEvent
    public void m(MouseEvent e) {
       if (Utils.Player.isPlayerInGame() && e.button != -1) {
-         e.setCanceled(true);
+         //e.setCanceled(true);
+         if(mc.objectMouseOver.entityHit ==  mc.thePlayer){
+            e.setCanceled(true);
+         }
       }
 
    }

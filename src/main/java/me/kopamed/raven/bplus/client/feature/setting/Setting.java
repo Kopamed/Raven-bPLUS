@@ -1,5 +1,6 @@
 package me.kopamed.raven.bplus.client.feature.setting;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
@@ -46,4 +47,12 @@ public abstract class Setting {
       return new Component() {
       };
     }
+
+   public JsonObject getConfigAsJson() {
+      return null;
+   }
+
+   public SettingType getSettingType() {
+      return settingType;
+   }
 }

@@ -6,6 +6,7 @@ import me.kopamed.raven.bplus.client.feature.module.modules.blatant.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.client.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.combat.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.hotkey.*;
+import me.kopamed.raven.bplus.client.feature.module.modules.minigames.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.other.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.PingSpoof;
 import me.kopamed.raven.bplus.helper.utils.Utils;
@@ -13,10 +14,6 @@ import me.kopamed.raven.bplus.client.feature.module.modules.world.AntiBot;
 import me.kopamed.raven.bplus.client.feature.module.modules.world.ChatLogger;
 import me.kopamed.raven.bplus.client.feature.module.modules.HUD;
 import me.kopamed.raven.bplus.client.feature.module.modules.fun.*;
-import me.kopamed.raven.bplus.client.feature.module.modules.minigames.BedwarsOverlay;
-import me.kopamed.raven.bplus.client.feature.module.modules.minigames.BridgeInfo;
-import me.kopamed.raven.bplus.client.feature.module.modules.minigames.DuelsStats;
-import me.kopamed.raven.bplus.client.feature.module.modules.minigames.MurderMystery;
 import me.kopamed.raven.bplus.client.feature.module.modules.movement.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.player.*;
 import me.kopamed.raven.bplus.client.feature.module.modules.render.*;
@@ -45,6 +42,8 @@ public class ModuleManager {
    public static Module safeWalk;
    public static Module keepSprint;
    public static Module gui;
+   public static Module propHunt;
+   public static Module murderMystery;
 
    public ModuleManager() {
       this.initMod(autoClicker = new AutoClicker());
@@ -86,7 +85,7 @@ public class ModuleManager {
       this.initMod(new Xray());
       this.initMod(new BridgeInfo());
       this.initMod(new DuelsStats());
-      this.initMod(new MurderMystery());
+      this.initMod(murderMystery = new MurderMystery());
       this.initMod(new SumoFences());
       this.initMod(new ExtraBobbing());
       this.initMod(new Twerk());
@@ -133,6 +132,7 @@ public class ModuleManager {
       this.initMod(new SuperAutoClicker());
       this.initMod(new PingSpoof());
       this.initMod(new GhostBlocks());
+      this.initMod(propHunt = new PropHunt());
       //this.addModule(new KillAura());
 
       isInitialized = true;

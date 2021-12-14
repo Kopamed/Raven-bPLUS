@@ -8,7 +8,7 @@ public class KillAura extends Module {
         super("KillAura", ModuleCategory.Blatant);
     }
 
-    @Override
+
     public void update() {
         //Entity target = getTarget();
        // mc.thePlayer.sendQueue.addToSendQueue(new C);

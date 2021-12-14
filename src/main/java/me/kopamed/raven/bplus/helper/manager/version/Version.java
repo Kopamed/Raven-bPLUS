@@ -50,4 +50,9 @@ public class Version {
 
         return now.get(0).equals(nvw.get(0)) && now.get(1).equals(nvw.get(1)) && now.get(2).equals(nvw.get(2));
     }
+
+    @Override
+    public String toString() {
+        return version + " " + branchName + " " + branchCommit;
+    }
 }

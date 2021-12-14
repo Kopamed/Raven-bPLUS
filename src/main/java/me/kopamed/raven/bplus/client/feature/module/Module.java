@@ -3,27 +3,26 @@ package me.kopamed.raven.bplus.client.feature.module;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.Raven;
-import me.kopamed.raven.bplus.client.feature.module.modules.player.FallSpeed;
 import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
+import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
-import me.kopamed.raven.bplus.client.feature.module.modules.other.DiscordRPCModule;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.NotificationRenderer;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.lwjgl.input.Keyboard;
 
 public abstract class Module {
    private     final    String               moduleName;
    private     final    String               tooltip;
    private     final    ModuleCategory       moduleCategory;
-   private              ArrayList<Integer>   keycodes;
+   private              ArrayList<Integer>   keyCodes;
    protected   static   Minecraft            mc;
    private              boolean              registeredKeyPress   =  false;
    private              boolean              shownOnHud;
@@ -61,7 +60,7 @@ public abstract class Module {
       this.tooltip = tooltip;
       this.moduleCategory = moduleCategory;
       this.toggled = toggled;
-      this.keycodes = keycodes;
+      this.keyCodes = keycodes;
       this.bindMode = bindMode;
       this.shownOnHud = shownOnHud;
       this.settings = new ArrayList<>();
@@ -96,7 +95,7 @@ public abstract class Module {
    }
 
    public void keybind() {
-      if (!keycodes.isEmpty()) { //todo
+      if (!keyCodes.isEmpty()) { //todo
          this.bindMode = ((ComboSetting)this.getSettingByName("Toggle Type")).getMode().equals("Toggle")  ? BindMode.TOGGLE : BindMode.HOLD;
          if(areBindsDown()){
             if(!registeredKeyPress){
@@ -119,7 +118,7 @@ public abstract class Module {
    }
 
    private boolean areBindsDown() {
-      for(Integer i : keycodes){
+      for(Integer i : keyCodes){
          if(!Keyboard.isKeyDown(i))
             return false;
       }
@@ -127,11 +126,11 @@ public abstract class Module {
    }
 
    public String getBindAsString(){
-      if(keycodes.isEmpty())
+      if(keyCodes.isEmpty())
          return "None";
 
       StringBuilder bobTheBuilder = new StringBuilder();
-      for(Integer i : keycodes){
+      for(Integer i : keyCodes){
          bobTheBuilder.append(Keyboard.getKeyName(i)).append("+");
       }
 
@@ -202,22 +201,19 @@ public abstract class Module {
       }
    }
 
-   public void update() {
-   }
-
    public void guiUpdate() {
    }
 
-   public ArrayList<Integer> getKeycodes() {
-      return this.keycodes;
+   public ArrayList<Integer> getKeyCodes() {
+      return this.keyCodes;
    }
 
    public void setBinds(ArrayList<Integer> binds) {
-      this.keycodes = binds;
+      this.keyCodes = binds;
    }
 
    public void clearBinds(){
-      keycodes.clear();
+      keyCodes.clear();
    }
 
    public BindMode getBindMode() {
@@ -229,7 +225,7 @@ public abstract class Module {
    }
 
    public boolean hasKeybind() {
-      return keycodes.isEmpty();
+      return keyCodes.isEmpty();
    }
 
    public boolean canToggle(){
@@ -241,12 +237,12 @@ public abstract class Module {
    }
 
    public void addKeyCode(int keyCode) {
-      if(canAddMoreBinds() && !keycodes.contains(keyCode))
-         this.keycodes.add(keyCode);
+      if(canAddMoreBinds() && !keyCodes.contains(keyCode))
+         this.keyCodes.add(keyCode);
    }
 
    public boolean canAddMoreBinds(){
-      return keycodes.size() < maxBinds;
+      return keyCodes.size() < maxBinds;
    }
 
    public void setToggled(boolean b){
@@ -265,5 +261,24 @@ public abstract class Module {
       this.bindMode = ((ComboSetting)this.getSettingByName("Toggle Type")).getMode().equals("Toggle") ? BindMode.TOGGLE : BindMode.HOLD;
       if(bindMode == BindMode.HOLD)
          this.disable();
+   }
+
+   public JsonObject getConfigAsJson(){
+      JsonObject cfg = new JsonObject();
+      cfg.addProperty("toggled", toggled);
+      cfg.addProperty("keyCodes", keyCodes.toString());
+      cfg.addProperty("bindMode", bindMode.toString());
+      cfg.addProperty("showOnHud", shownOnHud);
+      for(Setting s : settings){
+         if(s.getSettingType() == SettingType.DESCRIPTION)
+            continue;
+         cfg.add(s.getName(), s.getConfigAsJson());
+      }
+      return cfg;
+   }
+
+   @Override
+   public String toString() {
+      return moduleName;
    }
 }

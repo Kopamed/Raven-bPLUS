@@ -1,5 +1,6 @@
 package me.kopamed.raven.bplus.client.feature.setting.settings;
 
+import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
@@ -56,5 +57,13 @@ public class ComboSetting extends Setting {
     @Override
     public Component createComponent(ModuleComponent moduleComponent) {
         return new ComboComponent(this, moduleComponent);
+    }
+
+    @Override
+    public JsonObject getConfigAsJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", this.getSettingType().toString());
+        jsonObject.addProperty("value", currentPos);
+        return jsonObject;
     }
 }

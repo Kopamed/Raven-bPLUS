@@ -113,11 +113,15 @@ public class PlusGui extends GuiScreen {
         double scaleFactor = desiredTextSize / fontRenderer.FONT_HEIGHT;
         double coordFactor = 1/scaleFactor;
 
+        double desiredTooltipSize = desiredTextSize * 0.5;
+        double tooltipScaleFactor = desiredTooltipSize / fontRenderer.FONT_HEIGHT;
+        double tooltipCoordFactor = 1/tooltipScaleFactor;
+
         double barHeight = desiredTextSize * 1.6;
         double barTextY = (height - barHeight + (barHeight - desiredTextSize) / 2);
         double dateX = (width - (fontRenderer.getStringWidth(Utils.Java.getDate()) * scaleFactor + marginX));
         double tooltipX = 0;
-        double tooltipSize = fontRenderer.getStringWidth(tooltip.isEmpty() ? defaultTooltip : tooltip) * scaleFactor;
+        double tooltipSize = fontRenderer.getStringWidth(tooltip.isEmpty() ? defaultTooltip : tooltip) * (tooltip.isEmpty() ? scaleFactor : tooltipScaleFactor);
         tooltipX = (width - tooltipSize) / 2;
 
 
@@ -139,8 +143,16 @@ public class PlusGui extends GuiScreen {
         GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
         fontRenderer.drawString("Made by Kopamed and Blowsy", (float)(marginX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
         fontRenderer.drawString(Utils.Java.getDate(), (float)(dateX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
-        fontRenderer.drawString(tooltip.isEmpty() ? defaultTooltip : tooltip, (float) (tooltipX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
+        if(tooltip.isEmpty())
+            fontRenderer.drawString(tooltip.isEmpty() ? defaultTooltip : tooltip, (float) (tooltipX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
         GL11.glPopMatrix();
+
+        if(!tooltip.isEmpty()) {
+            GL11.glPushMatrix();
+            GL11.glScaled(tooltipScaleFactor, tooltipScaleFactor, tooltipScaleFactor);
+            fontRenderer.drawString(tooltip, (float) (tooltipX * tooltipCoordFactor), (float) (barTextY * tooltipCoordFactor), theme.getTextColour().getRGB(), false);
+            GL11.glPopMatrix();
+        }
 
 
         terminal.update(x, y);
@@ -203,6 +215,8 @@ public class PlusGui extends GuiScreen {
         for(Module module : Raven.client.getModuleManager().getModules()){
             module.onGuiClose();
         }
+
+        Raven.client.getConfigManager().saveConfig();
     }
 
     public boolean doesGuiPauseGame() {

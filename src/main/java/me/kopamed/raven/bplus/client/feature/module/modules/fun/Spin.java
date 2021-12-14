@@ -4,6 +4,8 @@ import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class Spin extends Module {
     public static NumberSetting a;
@@ -24,7 +26,8 @@ public class Spin extends Module {
         this.yaw = 0.0F;
     }
 
-    public void update() {
+    @SubscribeEvent
+    public void update(TickEvent.ClientTickEvent e) {
         double left = (double)this.yaw + a.getInput() - (double)mc.thePlayer.rotationYaw;
         EntityPlayerSP var10000;
         if (left < b.getInput()) {

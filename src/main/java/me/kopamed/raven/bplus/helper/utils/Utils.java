@@ -672,6 +672,10 @@ public class Utils {
       public static int randomInt(double inputMin, double v) {
          return (int)(Math.random() * (v - inputMin) + inputMin);
       }
+
+       public static String randomChoice(String[] strings) {
+         return  strings[rand.nextInt(strings.length)];
+       }
    }
 
    public static class URLS {
@@ -976,13 +980,13 @@ public class Utils {
          }
       }
 
-      public static void ee(Entity e, int type, double expand, double shift, int color, boolean damage) {
-         if (e instanceof EntityLivingBase) {
-            double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
-            double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
-            double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+      public static void drawBoxAroundEntity(Entity entity, int type, double expand, double shift, int color, boolean damage) {
+         if (entity instanceof EntityLivingBase) {
+            double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
+            double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
+            double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
             float d = (float)expand / 40.0F;
-            if (e instanceof EntityPlayer && damage && ((EntityPlayer)e).hurtTime != 0) {
+            if (entity instanceof EntityPlayer && damage && ((EntityPlayer)entity).hurtTime != 0) {
                color = Color.RED.getRGB();
             }
 
@@ -1015,7 +1019,7 @@ public class Utils {
             } else {
                int i;
                if (type == 4) {
-                  EntityLivingBase en = (EntityLivingBase)e;
+                  EntityLivingBase en = (EntityLivingBase)entity;
                   double r = en.getHealth() / en.getMaxHealth();
                   int b = (int)(74.0D * r);
                   int hc = r < 0.3D ? Color.red.getRGB() : (r < 0.5D ? Color.orange.getRGB() : (r < 0.7D ? Color.yellow.getRGB() : Color.green.getRGB()));
@@ -1058,8 +1062,8 @@ public class Utils {
                      d2p(0.0D, 95.0D, 8, 3, color);
                      GlStateManager.enableDepth();
                   } else {
-                     AxisAlignedBB bbox = e.getEntityBoundingBox().expand(0.1D + expand, 0.1D + expand, 0.1D + expand);
-                     AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y, bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);
+                     AxisAlignedBB bbox = entity.getEntityBoundingBox().expand(0.1D + expand, 0.1D + expand, 0.1D + expand);
+                     AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - entity.posX + x, bbox.minY - entity.posY + y, bbox.minZ - entity.posZ + z, bbox.maxX - entity.posX + x, bbox.maxY - entity.posY + y, bbox.maxZ - entity.posZ + z);
                      GL11.glBlendFunc(770, 771);
                      GL11.glEnable(3042);
                      GL11.glDisable(3553);

@@ -37,9 +37,9 @@ public class Raven {
       this.mc = Minecraft.getMinecraft();
       this.discordRPCManager = new DiscordRPCManager();
       this.moduleManager = new ModuleManager();
-      this.configManager = new ConfigManager();
       this.versionManager = new VersionManager();
       this.clickGui = new PlusGui();
+      this.configManager = new ConfigManager();
       this.debugManager = new DebugManager();
       this.registerListeners();
       this.fontRenderer = mc.fontRendererObj;

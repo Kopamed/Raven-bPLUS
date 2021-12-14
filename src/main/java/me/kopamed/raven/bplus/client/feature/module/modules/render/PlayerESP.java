@@ -104,27 +104,27 @@ public class PlayerESP extends Module {
 
    private void r(Entity en, int rgb) {
       if (t1.isToggled()) {
-         Utils.HUD.ee(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t2.isToggled()) {
-         Utils.HUD.ee(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t3.isToggled()) {
-         Utils.HUD.ee(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t4.isToggled()) {
-         Utils.HUD.ee(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t5.isToggled()) {
-         Utils.HUD.ee(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t6.isToggled()) {
-         Utils.HUD.ee(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
    }
