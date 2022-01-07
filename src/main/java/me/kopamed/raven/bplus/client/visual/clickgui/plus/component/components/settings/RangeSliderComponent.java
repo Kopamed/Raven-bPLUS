@@ -25,7 +25,7 @@ public class RangeSliderComponent extends Component {
 
     @Override
     public boolean isVisible() {
-        return rangeSetting.canShow();
+        return rangeSetting.isVisible();
     }
 
     @Override
@@ -127,6 +127,7 @@ public class RangeSliderComponent extends Component {
 
     @Override
     public void update(int x, int y) {
+        super.update(x, y);
         float textMargin = (float)this.getWidth() * 0.0625f;
         int barLength = (int)(this.getWidth() - textMargin * 2);
 
@@ -167,7 +168,7 @@ public class RangeSliderComponent extends Component {
             }
         }
 
-        super.update(x, y);
+
     }
 
     @Override
@@ -190,4 +191,6 @@ public class RangeSliderComponent extends Component {
         MAX,
         NONE
     }
+
+
 }

@@ -57,11 +57,11 @@ public class AutoTool extends Module {
 
 
         //make sure that we are allowed to Break blocks if ac is enabled
-        if(AutoClicker.autoClickerEnabled) {
-            if(!AutoClicker.breakBlocks.isToggled()) {
-                return;
-            }
-        }
+        //if(AutoClicker.autoClickerEnabled) {
+         //   if(!AutoClicker.breakBlocks.isToggled()) {
+          //      return;
+           // }
+        //}
 
         BlockPos lookingAtBlock;
         try{

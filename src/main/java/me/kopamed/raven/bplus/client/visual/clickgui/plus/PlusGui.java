@@ -1,20 +1,16 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus;
 
-import me.kopamed.raven.bplus.client.feature.module.BindMode;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.CategoryComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.Terminal;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.BindComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
-import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.ArcDark;
-import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.MaterialDark;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.Vape;
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.helper.manager.version.Version;
-import me.kopamed.raven.bplus.helper.utils.Timer;
+import me.kopamed.raven.bplus.helper.utils.Transition;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
@@ -29,10 +25,10 @@ import java.util.concurrent.TimeUnit;
 public class PlusGui extends GuiScreen {
     private final String defaultTooltip;
     private ScheduledFuture sf;
-    private Timer aT;
-    private Timer aL;
-    private Timer aE;
-    private Timer aR;
+    private Transition aT;
+    private Transition aL;
+    private Transition aE;
+    private Transition aR;
     private ScaledResolution sr;
     private GuiButtonExt s;
     private GuiTextField c;
@@ -69,9 +65,9 @@ public class PlusGui extends GuiScreen {
     }
 
     public void initMain() {
-        (this.aT = this.aE = this.aR = new Timer(500.0F)).start();
+        (this.aT = this.aE = this.aR = new Transition(500.0F)).start();
         this.sf = Raven.client.getExecutor().schedule(() -> {
-            (this.aL = new Timer(650.0F)).start();
+            (this.aL = new Transition(650.0F)).start();
         }, 650L, TimeUnit.MILLISECONDS);
 
     }

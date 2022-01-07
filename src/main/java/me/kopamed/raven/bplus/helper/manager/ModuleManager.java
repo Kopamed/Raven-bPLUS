@@ -132,7 +132,8 @@ public class ModuleManager {
       this.initMod(new SuperAutoClicker());
       this.initMod(new PingSpoof());
       this.initMod(new GhostBlocks());
-      this.initMod(propHunt = new PropHunt());
+      //this.initMod(propHunt = new PropHunt());
+      //this.initMod(new TPAura());
       //this.addModule(new KillAura());
 
       isInitialized = true;
@@ -142,6 +143,14 @@ public class ModuleManager {
       for (Module module : modsList) {
          if (module.getName().equalsIgnoreCase(name))
             return module;
+      }
+      return null;
+   }
+
+   public <M extends Module> M getModuleByClass(M m){
+      for(Module module : modsList){
+         if(m == module)
+            return (M) module;
       }
       return null;
    }
@@ -170,16 +179,6 @@ public class ModuleManager {
 
       return categML;
    }
-
-   public Module getModuleByClass(Object module){
-      for(Module m : modsList){
-         if(m == module){
-            return m;
-         }
-      }
-      return null;
-   }
-
 
    public static void sort() {
       // todo

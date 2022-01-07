@@ -2,13 +2,13 @@ package me.kopamed.raven.bplus.client.feature.module.modules.client;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.helper.utils.Timer;
+import me.kopamed.raven.bplus.helper.utils.Transition;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 
 public class CommandLine extends Module {
    public static boolean a = false;
    public static boolean b = false;
-   public static Timer an;
+   public static Transition an;
    public static BooleanSetting animate;
 
    public CommandLine() {
@@ -20,7 +20,7 @@ public class CommandLine extends Module {
       me.kopamed.raven.bplus.client.visual.clickgui.raven.CommandLine.setccs();
       a = true;
       b = false;
-      (an = new Timer(500.0F)).start();
+      (an = new Transition(500.0F)).start();
    }
 
    public void onDisable() {

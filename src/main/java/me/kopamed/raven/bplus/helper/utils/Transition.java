@@ -1,11 +1,11 @@
 package me.kopamed.raven.bplus.helper.utils;
 
-public class Timer {
+public class Transition {
    private final float updates;
    private long last;
    private float cached;
 
-   public Timer(float updates) {
+   public Transition(float updates) {
       this.updates = updates;
    }
 

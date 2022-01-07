@@ -13,9 +13,9 @@ import java.math.RoundingMode;
 public class RangeSetting extends Setting {
     private final String name;
     private double valMax, valMin;
-    private final double max;
-    private final double min;
-    private final double interval;
+    private double max;
+    private double min;
+    private double interval;
 
     public RangeSetting(String settingName, double defaultValueMin, double defaultValueMax, double min, double max, double intervals) {
         super(settingName, SettingType.RANGE);
@@ -86,5 +86,17 @@ public class RangeSetting extends Setting {
         jsonObject.addProperty("valueMin", valMin);
         jsonObject.addProperty("valueMax", valMax);
         return jsonObject;
+    }
+
+    public void setInterval(double interval){
+        this.interval = interval;
+    }
+
+    public void setMax(double max){
+        this.max = max;
+    }
+
+    public void setMin(double min){
+        this.min = min;
     }
 }

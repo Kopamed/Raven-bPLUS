@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.visual.clickgui.raven.components.ButtonCategory;
 import me.kopamed.raven.bplus.client.Raven;
-import me.kopamed.raven.bplus.helper.utils.Timer;
+import me.kopamed.raven.bplus.helper.utils.Transition;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -18,10 +18,10 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class ClickGui extends GuiScreen {
    private ScheduledFuture sf;
-   private Timer aT;
-   private Timer aL;
-   private Timer aE;
-   private Timer aR;
+   private Transition aT;
+   private Transition aL;
+   private Transition aE;
+   private Transition aR;
    private ScaledResolution sr;
    private GuiButtonExt s;
    private GuiTextField c;
@@ -47,9 +47,9 @@ public class ClickGui extends GuiScreen {
    }
 
    public void initMain() {
-      (this.aT = this.aE = this.aR = new Timer(500.0F)).start();
+      (this.aT = this.aE = this.aR = new Transition(500.0F)).start();
       this.sf = Raven.client.getExecutor().schedule(() -> {
-         (this.aL = new Timer(650.0F)).start();
+         (this.aL = new Transition(650.0F)).start();
       }, 650L, TimeUnit.MILLISECONDS);
 
    }

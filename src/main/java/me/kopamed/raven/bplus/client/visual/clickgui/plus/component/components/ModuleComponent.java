@@ -65,8 +65,8 @@ public class ModuleComponent extends Component {
 
         if(opened) {
             for (Component component : getComponents()) {
+                component.setLocation(startX, currentY);
                 if(component.isVisible()){
-                    component.setLocation(startX, currentY);
                     component.update(x, y);
                     currentY += component.getHeight();
                 }

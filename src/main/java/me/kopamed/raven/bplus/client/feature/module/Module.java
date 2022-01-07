@@ -73,6 +73,11 @@ public abstract class Module {
          public boolean showOnlyIf() {
             return hasKeybind();
          }
+
+         @Override
+         public void onChange() {
+
+         }
       });
       this.settings.add(showOnHud);
       this.settings.add(toggleType);

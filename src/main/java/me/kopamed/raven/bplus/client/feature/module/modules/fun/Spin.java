@@ -30,12 +30,11 @@ public class Spin extends Module {
     public void update(TickEvent.ClientTickEvent e) {
         double left = (double)this.yaw + a.getInput() - (double)mc.thePlayer.rotationYaw;
         EntityPlayerSP var10000;
+        var10000 = mc.thePlayer;
         if (left < b.getInput()) {
-            var10000 = mc.thePlayer;
             var10000.rotationYaw = (float)((double)var10000.rotationYaw + left);
             this.disable();
         } else {
-            var10000 = mc.thePlayer;
             var10000.rotationYaw = (float)((double)var10000.rotationYaw + b.getInput());
             if ((double)mc.thePlayer.rotationYaw >= (double)this.yaw + a.getInput()) {
                 this.disable();

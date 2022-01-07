@@ -2,11 +2,14 @@ package me.kopamed.raven.bplus.client.feature.setting.settings;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
 import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.TickComponent;
+
+import java.util.ArrayList;
 
 public class BooleanSetting extends Setting {
    private final String name;
@@ -28,18 +31,22 @@ public class BooleanSetting extends Setting {
 
    public void toggle() {
       this.isEnabled = !this.isEnabled;
+      this.changed();
    }
 
    public void enable() {
       this.isEnabled = true;
+      this.changed();
    }
 
    public void disable() {
       this.isEnabled = false;
+      this.changed();
    }
 
    public void setEnabled(boolean b) {
       this.isEnabled = b;
+      this.changed();
    }
 
    @Override
