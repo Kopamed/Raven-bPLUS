@@ -46,6 +46,9 @@ https://imgur.com/a/X3G5R6W
 ## Improved Modules
 Too much to list. But I am also very good at creating bugs... *cough cough* I mean features
 
+## Todo
+[Here](https://github.com/Kopamed/Raven-bPLUS/projects/1)
+
 #### Readme last updated on 16/01/2022. Bug and update info and other stuff may be out of date. 
 
 [![Stargazers over time](https://starchart.cc/Kopamed/Raven-bPLUS.svg)](https://starchart.cc/Kopamed/Raven-bPLUS)
