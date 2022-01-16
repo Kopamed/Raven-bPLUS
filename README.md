@@ -24,10 +24,9 @@ Backup: <br>
 
 # Installation
 ## User
-1. Get and install [forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html 'forge'). 
-2. Get the latest client version by clicking Download on our website! https://ravenclient.cf/
-3. Put the file into your minecraft mods folder. If you do not have this folder, just make one in the minecraft directory (or search up how to install forge mods on youtube).
-4. Run minecraft forge.
+[Latest Stable](https://github.com/Kopamed/Raven-bPLUS/raw/main/build/libs/%5B1.8.9%5D%20BetterKeystrokes%20V-1.1.0.jar) <br>
+[Latest Experimental](https://github.com/Kopamed/Raven-bPLUS/raw/lunarkeystrokes/build/libs/%5B1.8.9%5DLunarKeystrokes%20B-1.jar) (basically stable but with some more stuff)<br>
+[Latest Beta](https://github.com/Kopamed/Raven-bPLUS/raw/new-base/build/libs/RavenB%2B-1.jar) probably won't even work or will crash frequently. Or have a lot of bugs
 
 ## Build
 1. [Get](https://gradle.org/next-steps/?version=2.7&format=bin) and [install](https://docs.gradle.org/current/userguide/installation.html) gradle.
@@ -42,16 +41,11 @@ https://imgur.com/a/X3G5R6W
 
 ## Known bugs
  - Discord RPC don't work on DARWIN (Mac OS)
+ - Basically 100 other bugs which are minor but are also getting fixed.
 
 ## Improved Modules
- - Autoclicker: Seperate righclick min and max cps sliders, allow eat, allow bow, different click modes (Legit and Raven), no sword rightclick, blocks only.
- - Bridge Assist: Helps you aim and click during godbridging, moonwalking, ninja bridging and breezily.
- - SafeWalk: Sneak while jumping and on hold settings.
- - ChatLogger: Logs chat.
- - Config Manager.
- - Much More!
+Too much to list. But I am also very good at creating bugs... *cough cough* I mean features
 
-
-#### Readme last updated on 01/08/2021. Bug and update info and other stuff may be out of date. 
+#### Readme last updated on 16/01/2022. Bug and update info and other stuff may be out of date. 
 
 [![Stargazers over time](https://starchart.cc/Kopamed/Raven-bPLUS.svg)](https://starchart.cc/Kopamed/Raven-bPLUS)
