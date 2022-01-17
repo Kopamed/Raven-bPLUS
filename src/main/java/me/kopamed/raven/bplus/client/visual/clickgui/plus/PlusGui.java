@@ -34,6 +34,8 @@ public class PlusGui extends GuiScreen {
     private GuiTextField c;
     private final Theme theme;
 
+    private boolean taskBarVisible = false;
+
     //private final NotificationManager notificationManager;
 
     private String tooltip;
@@ -131,17 +133,21 @@ public class PlusGui extends GuiScreen {
         //GuiInventory.drawEntityOnScreen((int) (entityX - entitySize * 0.2), (int) (entityY + entitySize * 0.2), (int) entitySize, (float)(entityX + entitySize* 0.5 - x), (float)(entityY + entitySize* 0.5 - y), this.mc.thePlayer);
 
         //task bar
-        Gui.drawRect(0, (int)(height - barHeight), (int)width, (int) height, theme.getBackgroundColour().getRGB());
-        Gui.drawRect(0, (int)(height - barHeight - 1),(int)width, (int) (height - barHeight), theme.getAccentColour().getRGB());
+        if(taskBarVisible) {
+            Gui.drawRect(0, (int) (height - barHeight), (int) width, (int) height, theme.getBackgroundColour().getRGB());
+            Gui.drawRect(0, (int) (height - barHeight - 1), (int) width, (int) (height - barHeight), theme.getAccentColour().getRGB());
 
-        //drawing all the text
-        GL11.glPushMatrix();
-        GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
-        fontRenderer.drawString("Made by Kopamed and Blowsy", (float)(marginX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
-        fontRenderer.drawString(Utils.Java.getDate(), (float)(dateX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
-        if(tooltip.isEmpty())
-            fontRenderer.drawString(tooltip.isEmpty() ? defaultTooltip : tooltip, (float) (tooltipX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
-        GL11.glPopMatrix();
+            //drawing all the text
+            GL11.glPushMatrix();
+            GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
+            fontRenderer.drawString("Made by Kopamed and Blowsy", (float)(marginX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
+            fontRenderer.drawString(Utils.Java.getDate(), (float)(dateX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
+            if(tooltip.isEmpty())
+                fontRenderer.drawString(tooltip.isEmpty() ? defaultTooltip : tooltip, (float) (tooltipX * coordFactor), (float)(barTextY * coordFactor), theme.getTextColour().getRGB(), false);
+            GL11.glPopMatrix();
+        }
+
+
 
         if(!tooltip.isEmpty()) {
             GL11.glPushMatrix();
