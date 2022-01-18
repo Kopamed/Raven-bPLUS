@@ -49,6 +49,9 @@ Too much to list. But I am also very good at creating bugs... *cough cough* I me
 ## Todo
 [Here](https://github.com/Kopamed/Raven-bPLUS/projects/1)
 
+## Contributing
+You should follow [this](https://gist.github.com/MarcDiethelm/7303312#file-contributing-md) guide to contribute code to the repo. Ideally, try to work on the [new-base](https://github.com/Kopamed/Raven-bPLUS/tree/new-base) branch as it will soon get merged into main. Find things to do in the todo above
+
 #### Readme last updated on 16/01/2022. Bug and update info and other stuff may be out of date. 
 
 [![Stargazers over time](https://starchart.cc/Kopamed/Raven-bPLUS.svg)](https://starchart.cc/Kopamed/Raven-bPLUS)
