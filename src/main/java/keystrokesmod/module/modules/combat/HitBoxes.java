@@ -26,13 +26,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-public class HitBox extends Module {
+public class HitBoxes extends Module {
    public static ModuleSettingSlider a;
    public static ModuleSettingTick b;
    private static MovingObjectPosition mv;
 
-   public HitBox() {
-      super("HitBox", Module.category.combat, 0);
+   public HitBoxes() {
+      super("HitBoxes", Module.category.combat, 0);
       this.registerSetting(a = new ModuleSettingSlider("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
       this.registerSetting(b = new ModuleSettingTick("Show new hitbox", false));
    }
