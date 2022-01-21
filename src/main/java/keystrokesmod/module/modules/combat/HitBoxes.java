@@ -75,7 +75,7 @@ public class HitBoxes extends Module {
    }
 
    public static double exp(Entity en) {
-      return ModuleManager.hitBox.isEnabled() && !AntiBot.bot(en) ? a.getInput() : 1.0D;
+      return ModuleManager.hitBoxes.isEnabled() && !AntiBot.bot(en) ? a.getInput() : 1.0D;
    }
 
    public static void gmo(float partialTicks) {
