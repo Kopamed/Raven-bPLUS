@@ -39,6 +39,14 @@ public class TickComponent extends Component {
                 theme.getSelectionBackgroundColour().getRGB()
         );
 
+        Gui.drawRect(
+                (int)this.getX(),
+                (int)this.getY(),
+                (int)(this.getX() + PlusGui.barWidth),
+                (int)(this.getY() + this.getHeight()),
+                theme.getAccentColour().getRGB()
+        );
+
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = this.getHeight() * 0.6;
         double scaleFactor = desiredTextSize/ fr.FONT_HEIGHT;

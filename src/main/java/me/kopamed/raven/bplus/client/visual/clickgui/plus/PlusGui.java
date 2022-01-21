@@ -34,6 +34,8 @@ public class PlusGui extends GuiScreen {
     private GuiTextField c;
     private final Theme theme;
 
+    public static final int barWidth = 1;
+
     private boolean taskBarVisible = false;
 
     //private final NotificationManager notificationManager;

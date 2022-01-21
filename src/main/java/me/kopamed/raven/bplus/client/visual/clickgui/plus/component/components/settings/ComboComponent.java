@@ -3,6 +3,7 @@ package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
@@ -31,6 +32,14 @@ public class ComboComponent extends Component {
                 (int)(this.getX() + this.getWidth()),
                 (int)(this.getY() + this.getHeight()),
                 theme.getSelectionBackgroundColour().getRGB()
+        );
+
+        Gui.drawRect(
+                (int)this.getX(),
+                (int)this.getY(),
+                (int)(this.getX() + PlusGui.barWidth),
+                (int)(this.getY() + this.getHeight()),
+                theme.getAccentColour().getRGB()
         );
 
         float textMargin = (float)this.getWidth() * 0.0625f;

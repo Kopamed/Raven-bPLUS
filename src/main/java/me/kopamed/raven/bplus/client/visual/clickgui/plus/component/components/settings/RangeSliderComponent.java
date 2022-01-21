@@ -3,6 +3,7 @@ package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
@@ -31,6 +32,7 @@ public class RangeSliderComponent extends Component {
     @Override
     public void paint(FontRenderer fr) {
         Theme theme = Raven.client.getClickGui().getTheme();
+
         Gui.drawRect(
                 (int)this.getX(),
                 (int)this.getY(),
@@ -38,6 +40,15 @@ public class RangeSliderComponent extends Component {
                 (int)(this.getY() + this.getHeight()),
                 theme.getSelectionBackgroundColour().getRGB()
         );
+
+        Gui.drawRect(
+                (int)this.getX(),
+                (int)this.getY(),
+                (int)(this.getX() + PlusGui.barWidth),
+                (int)(this.getY() + this.getHeight()),
+                theme.getAccentColour().getRGB()
+        );
+
         double ogSize = this.getHeight() / 1.65;
         float textMargin = (float)this.getWidth() * 0.0625f;
         double desiredTextSize = ogSize * 0.6;

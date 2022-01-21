@@ -1,6 +1,7 @@
 package me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings;
 
 import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
@@ -27,6 +28,14 @@ public class BindComponent extends Component {
                 (int)(this.getX() + this.getWidth()),
                 (int)(this.getY() + this.getHeight()),
                 currentTheme.getSelectionBackgroundColour().getRGB()
+        );
+
+        Gui.drawRect(
+                (int)this.getX(),
+                (int)this.getY(),
+                (int)(this.getX() + PlusGui.barWidth),
+                (int)(this.getY() + this.getHeight()),
+                currentTheme.getAccentColour().getRGB()
         );
 
         float textMargin = (float)this.getWidth() * 0.0625f;
