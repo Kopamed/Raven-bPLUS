@@ -18,23 +18,23 @@ public class CommandManager {
     public CommandManager() {
         this.commandList = new ArrayList<Command>();
         this.sortedCommandList = new ArrayList<Command>();
-        this.addCommand(new Update());
-        this.addCommand(new Help());
-        this.addCommand(new SetKey());
-        this.addCommand(new Discord());
-        this.addCommand(new Config());
-        this.addCommand(new Clear());
+		this.addCommand(new Clear());
         this.addCommand(new Cname());
-        this.addCommand(new Debug());
-        this.addCommand(new Duels());
-        this.addCommand(new Fakechat());
-        this.addCommand(new Nick());
-        this.addCommand(new Ping());
-        this.addCommand(new Shoutout());
-        this.addCommand(new Uwu());
-        this.addCommand(new Friends());
-        this.addCommand(new Version());
-        this.addCommand(new F3Name());
+		this.addCommand(new Config());
+		this.addCommand(new Debug());
+		this.addCommand(new Discord());
+		this.addCommand(new Duels());
+		this.addCommand(new F3Name());
+		this.addCommand(new Fakechat());
+		this.addCommand(new Friends());
+		this.addCommand(new Help());
+		this.addCommand(new Nick());
+		this.addCommand(new Ping());
+		this.addCommand(new SetKey());
+		this.addCommand(new Shoutout());
+		this.addCommand(new Update());
+		this.addCommand(new Uwu());
+		this.addCommand(new Version());
 
     }
 
