@@ -33,7 +33,7 @@ public class ModuleManager {
    public static Module antiBot;
    public static Module noSlow;
    public static Module autoClicker;
-   public static Module hitBox;
+   public static Module hitBoxes;
    public static Module reach;
    public static Module hud;
    public static Module timer;
@@ -53,7 +53,7 @@ public class ModuleManager {
       this.addModule(new BurstClicker());
       this.addModule(new ClickAssist());
       this.addModule(new DelayRemover());
-      this.addModule(hitBox = new HitBox());
+      this.addModule(hitBoxes = new HitBoxes());
       this.addModule(reach = new Reach());
       this.addModule(new RodAimbot());
       this.addModule(new Velocity());
