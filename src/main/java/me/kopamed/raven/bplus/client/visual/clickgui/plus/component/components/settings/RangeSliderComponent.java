@@ -26,7 +26,7 @@ public class RangeSliderComponent extends Component {
 
     @Override
     public boolean isVisible() {
-        return rangeSetting.isVisible();
+        return rangeSetting.canShow();
     }
 
     @Override

@@ -16,7 +16,11 @@ public class BooleanSetting extends Setting {
    private boolean isEnabled;
 
    public BooleanSetting(String name, boolean isEnabled) {
-      super(name, SettingType.BOOLEAN);
+      this(name, "", isEnabled);
+   }
+
+   public BooleanSetting(String name, String description, boolean isEnabled) {
+      super(name, description, SettingType.BOOLEAN);
       this.name = name;
       this.isEnabled = isEnabled;
    }
@@ -31,22 +35,20 @@ public class BooleanSetting extends Setting {
 
    public void toggle() {
       this.isEnabled = !this.isEnabled;
-      this.changed();
    }
 
    public void enable() {
       this.isEnabled = true;
-      this.changed();
    }
 
    public void disable() {
       this.isEnabled = false;
-      this.changed();
+      
    }
 
    public void setEnabled(boolean b) {
       this.isEnabled = b;
-      this.changed();
+      
    }
 
    @Override

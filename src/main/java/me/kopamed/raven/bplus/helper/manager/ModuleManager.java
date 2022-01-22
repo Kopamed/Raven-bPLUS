@@ -132,6 +132,7 @@ public class ModuleManager {
       this.initMod(new SuperAutoClicker());
       this.initMod(new PingSpoof());
       this.initMod(new GhostBlocks());
+      this.initMod(new LeftClicker());
       //this.initMod(propHunt = new PropHunt());
       //this.initMod(new TPAura());
       //this.addModule(new KillAura());

@@ -13,11 +13,16 @@ public abstract class Setting {
    private boolean visible = true;
    private final SettingType settingType;
    private final String settingName;
+   private final String description;
    private final ArrayList<SelectorRunnable> selectors = new ArrayList<>();
-   private ArrayList<SelectorRunnable> onChanges = new ArrayList<>();
 
    public Setting(String name, SettingType settingType) {
+      this(name, "", settingType);
+   }
+
+   public Setting(String name, String description, SettingType settingType) {
       this.settingName = name;
+      this.description = description;
       this.settingType = settingType;
    }
 
@@ -30,12 +35,7 @@ public abstract class Setting {
          return true;
 
       for(SelectorRunnable selectorRunnable : selectors){
-         if(selectorRunnable.showOnlyIf())
-            return false;
-      }
-
-      for(SelectorRunnable selectorRunnable : onChanges){
-         if(selectorRunnable.showOnlyIf())
+         if(!selectorRunnable.showOnlyIf())
             return false;
       }
       return true;
@@ -63,21 +63,15 @@ public abstract class Setting {
       return settingType;
    }
 
-   public void changed(){
-      for(SelectorRunnable selectorRunnable : onChanges){
-         selectorRunnable.onChange();
-      }
-   }
-
-   public void addOnChange(SelectorRunnable e){
-      this.onChanges.add(e);
-   }
-
    public boolean isVisible() {
       return visible;
    }
 
    public void setVisible(boolean visible) {
       this.visible = visible;
+   }
+
+   public String getDescription() {
+      return description;
    }
 }
