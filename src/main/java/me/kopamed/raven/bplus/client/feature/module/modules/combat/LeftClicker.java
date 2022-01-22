@@ -60,7 +60,7 @@ public class LeftClicker extends Module {
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.RenderTickEvent event) {
+    public void onTick(TickEvent event) {
         if ((event.phase == TickEvent.Phase.START && !firstHit.isToggled()) ||
                 (event.phase == TickEvent.Phase.END && firstHit.isToggled()) ||
                 (!Utils.Player.isPlayerInGame()) ||
