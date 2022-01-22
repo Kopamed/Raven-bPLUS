@@ -126,7 +126,7 @@ public class ASMEventHandler {
     */
    @SuppressWarnings("unused")
    public static void onTick() {
-      if (!ModuleManager.autoClicker.isToggled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
+      if (!ModuleManager.leftClicker.isToggled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
          mc.entityRenderer.getMouseOver(1.0F);
       }
    }

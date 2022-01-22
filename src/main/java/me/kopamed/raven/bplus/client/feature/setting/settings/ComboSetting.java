@@ -6,51 +6,40 @@ import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.ComboComponent;
-import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.RangeSliderComponent;
 
-import java.util.Arrays;
-import java.util.List;
+public class ComboSetting<T extends Enum<?>> extends Setting {
+    private T[] options;
+    private T currentOption;
 
-public class ComboSetting extends Setting {
-    private final List<String> options;
-    private int currentPos =0;
-    private String currentMode;
-
-    public ComboSetting(String settingName, String[] modes, String defaultPos){
+    public ComboSetting(String settingName, T defaultOption){
         super(settingName, SettingType.COMBO);
 
-        this.options = Arrays.asList(modes);
-        this.currentPos = this.options.indexOf(defaultPos);
-
-        this.currentMode = this.options.get(currentPos);
+        this.currentOption = defaultOption;
+        try {
+            this.options = (T[]) defaultOption.getClass().getMethod("values").invoke(null);
+            //System.out.println("SUCCESSFULL ACCESS OFF" + defaultOption.getClass()  + "  fdsf hdsof sdf ush fhsuidfh");
+        } catch (Exception e) {
+            System.out.println("FUCKED UP " + defaultOption.getClass());
+        }
     }
 
-
-    public ComboSetting(String settingName, String[] modes, int defaultPos){
-        super(settingName, SettingType.COMBO);
-
-        this.options = Arrays.asList(modes);
-        this.currentPos = defaultPos;
-
-        this.currentMode = this.options.get(currentPos);
+    public T getMode(){
+        return this.currentOption;
     }
 
-    public String getMode(){
-        return this.currentMode;
-    }
-
-    public void setMode(String val){
-        this.currentMode = val;
-        this.currentPos = this.options.indexOf(val);
+    public void setMode(T value){
+        this.currentOption = value;
     }
 
     public void nextMode(){
-        if(currentPos < this.options.size() - 1){
-            this.currentPos++;
-            this.currentMode = this.options.get(currentPos);
-        }else {
-            this.currentPos = 0;
-            this.currentMode = this.options.get(currentPos);
+        for(int i = 0; i < options.length; i++){
+            if(options[i] == currentOption) {
+                System.out.println(i);
+                System.out.println(options.length);
+                System.out.println((i + 1) % (options.length));
+                currentOption = options[(i + 1) % (options.length)];
+                return;
+            }
         }
     }
 
@@ -63,7 +52,7 @@ public class ComboSetting extends Setting {
     public JsonObject getConfigAsJson() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", this.getSettingType().toString());
-        jsonObject.addProperty("value", currentPos);
+        jsonObject.addProperty("value", currentOption + "");
         return jsonObject;
     }
 }

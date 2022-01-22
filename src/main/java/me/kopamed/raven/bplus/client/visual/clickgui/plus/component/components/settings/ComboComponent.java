@@ -48,7 +48,7 @@ public class ComboComponent extends Component {
         double coordFactor = 1/scaleFactor;
         double textY = this.getY() + (this.getHeight() - desiredTextSize) * 0.5;
         String parent = comboSetting.getName() + ":";
-        String value = comboSetting.getMode();
+        String value = comboSetting.getMode() + "";
 
 
         GL11.glPushMatrix();

@@ -36,15 +36,15 @@ public class GhostBlocks extends Module {
     public GhostBlocks(){
         super("GhostBlocks", ModuleCategory.Player);
         this.registerSetting(help = new DescriptionSetting("RMB w/ fist to place blocks"));
-        this.registerSetting(withItem = new ComboSetting("When holding", new String[]{"Nothing", "Sword", "Tool", "Block"}, 0));
+        this.registerSetting(withItem = new ComboSetting("When holding", HoldItem.Nothing));
         this.registerSetting(airRange = new NumberSetting("Range when looking at air", 3, 0, 50, 1));
         this.registerSetting(placeIfOccupied = new BooleanSetting("Place if area is occupied" , false));
 
         this.registerSetting(left = new BooleanSetting("Place on left click", false));
-        this.registerSetting(usedItemLeft = new ComboSetting("With block", new String[]{"Diamond", "Wool", "Logs", "Barrier", "Air"}, 4));
+        this.registerSetting(usedItemLeft = new ComboSetting("With block", BlockSelection.Air));
 
         this.registerSetting(right = new BooleanSetting("Place on right click", true));
-        this.registerSetting(usedItemRight = new ComboSetting("With block", new String[]{"Diamond", "Wool", "Logs", "Barrier", "Air"}, 0));
+        this.registerSetting(usedItemRight = new ComboSetting("With block", BlockSelection.Diamond));
     }
 
     @SubscribeEvent(
@@ -116,17 +116,17 @@ public class GhostBlocks extends Module {
 
         IBlockState theYes = Blocks.diamond_block.getDefaultState();
 
-        switch (usedItemLeft.getMode()) {
-            case "Wool":
+        switch ((BlockSelection) usedItemLeft.getMode()) {
+            case Wool:
                 theYes = Blocks.wool.getDefaultState();
                 break;
-            case "Logs":
+            case Logs:
                 theYes = Blocks.log.getDefaultState();
                 break;
-            case "Barrier":
+            case Barrier:
                 theYes = Blocks.barrier.getDefaultState();
                 break;
-            case "Air":
+            case Air:
                 theYes = Blocks.air.getDefaultState();
                 break;
         }
@@ -143,14 +143,14 @@ public class GhostBlocks extends Module {
     private boolean holdingYes() {
         ItemStack itemStack = mc.thePlayer.inventory.getCurrentItem();
         try{
-            switch (withItem.getMode()){
-                case "Nothing":
+            switch ((HoldItem) withItem.getMode()){
+                case Nothing:
                     return itemStack == null;
-                case "Sword":
+                case Sword:
                     return itemStack.getItem() instanceof ItemSword;
-                case "Tool":
+                case Tool:
                     return itemStack.getItem() instanceof ItemTool;
-                case "Block":
+                case Block:
                     return itemStack.getItem()instanceof ItemBlock;
             }
         } catch (NullPointerException e){}
@@ -225,17 +225,17 @@ public class GhostBlocks extends Module {
 
             IBlockState theYes = Blocks.diamond_block.getDefaultState();
 
-            switch (usedItemRight.getMode()){
-                case "Wool":
+            switch ((BlockSelection) usedItemLeft.getMode()) {
+                case Wool:
                     theYes = Blocks.wool.getDefaultState();
                     break;
-                case "Logs":
+                case Logs:
                     theYes = Blocks.log.getDefaultState();
                     break;
-                case "Barrier":
+                case Barrier:
                     theYes = Blocks.barrier.getDefaultState();
                     break;
-                case "Air":
+                case Air:
                     theYes = Blocks.air.getDefaultState();
                     break;
             }
@@ -257,5 +257,20 @@ public class GhostBlocks extends Module {
         //System.out.println("Z: LowerBound: " + Math.floor(mc.thePlayer.posZ-bruh) + " z: " + blockPos.getZ() + " UpperBound: " + mc.thePlayer.posZ+bruh + " PosZ: " + mc.thePlayer.posZ);
 
         return blockPos.getX() >= Math.floor(mc.thePlayer.posX-bruh) && blockPos.getX() <= mc.thePlayer.posX+bruh && blockPos.getZ() >= Math.floor(mc.thePlayer.posZ-bruh) && blockPos.getZ() <= mc.thePlayer.posZ+bruh && blockPos.getY() >= Math.floor(mc.thePlayer.posY) && blockPos.getY() <= mc.thePlayer.posY + mc.thePlayer.height;
+    }
+
+    public enum HoldItem{
+        Nothing,
+        Sword,
+        Tool,
+        Block;
+    }
+
+    public enum BlockSelection {
+        Diamond,
+        Wool,
+        Logs,
+        Barrier,
+        Air;
     }
 }

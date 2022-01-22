@@ -18,7 +18,7 @@ public class Gui extends Module {
 
    public Gui() {
       super("Gui", "The display you are currently looking out", ModuleCategory.Misc, new ArrayList<Integer>(Arrays.asList(54)));
-      this.registerSetting(onHover = new ComboSetting("On hover", new String[]{"darken", "brighten", "nothing"}, 0));
+      this.registerSetting(onHover = new ComboSetting("On hover", OnHover.Brighten));
    }
 
    public void onEnable() {
@@ -31,14 +31,20 @@ public class Gui extends Module {
    }
 
    public Color modifyColor(Color colour){
-      switch (onHover.getMode()){
-         case "nothing":
+      switch ((OnHover)onHover.getMode()){
+         case Nothing:
             return colour;
-         case "darken":
+         case Darker:
             return colour.darker();
-         case "brighten":
+         case Brighten:
             return colour.brighter();
       }
       return colour;
+   }
+
+   public enum OnHover{
+      Nothing,
+      Darker,
+      Brighten;
    }
 }

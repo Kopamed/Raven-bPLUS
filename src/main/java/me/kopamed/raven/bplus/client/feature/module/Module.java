@@ -30,6 +30,7 @@ public abstract class Module {
    private              boolean              toggled;
    protected            ArrayList<Setting>   settings;
    private     final    int                  maxBinds             =  5;
+   ComboSetting toggleType;
 
    public Module(String name, String tooltip, ModuleCategory moduleCategory) {
       this(name, tooltip, moduleCategory, false, new ArrayList<>(), BindMode.TOGGLE, true);
@@ -67,7 +68,7 @@ public abstract class Module {
       mc = Raven.client.getMc();
 
       BooleanSetting showOnHud = new BooleanSetting("Shown on HUD", true);
-      ComboSetting toggleType = new ComboSetting("Toggle Type", new String[] {"Toggle", "Hold"}, getBindMode() == BindMode.TOGGLE ? 0 : 1);
+      toggleType = new ComboSetting("Toggle Type", getBindMode());
       toggleType.addSelector(new SelectorRunnable() {
          @Override
          public boolean showOnlyIf() {
@@ -76,7 +77,6 @@ public abstract class Module {
       });
       this.settings.add(showOnHud);
       this.settings.add(toggleType);
-
    }
 
    public static Module getModule(Class<? extends Module> a) {
@@ -96,7 +96,7 @@ public abstract class Module {
 
    public void keybind() {
       if (!keyCodes.isEmpty()) { //todo
-         this.bindMode = ((ComboSetting)this.getSettingByName("Toggle Type")).getMode().equals("Toggle")  ? BindMode.TOGGLE : BindMode.HOLD;
+         this.bindMode = (toggleType.getMode() == BindMode.TOGGLE ? BindMode.TOGGLE : BindMode.HOLD);
          if(areBindsDown()){
             if(!registeredKeyPress){
                if (bindMode == BindMode.HOLD){
@@ -258,11 +258,9 @@ public abstract class Module {
    }
 
    public void onGuiClose() {
-      this.bindMode = ((ComboSetting)this.getSettingByName("Toggle Type")).getMode().equals("Toggle") ? BindMode.TOGGLE : BindMode.HOLD;
-      if(bindMode == BindMode.HOLD)
+      if(toggleType.getMode() == BindMode.HOLD)
          this.disable();
    }
-
    public JsonObject getConfigAsJson(){
       JsonObject cfg = new JsonObject();
       cfg.addProperty("toggled", toggled);

@@ -412,7 +412,7 @@ public class Utils {
       }
 
       public static boolean autoClickerClicking() {
-         if (ModuleManager.autoClicker.isToggled()) {
+         if (ModuleManager.leftClicker.isToggled()) {
             return AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0);
          } //else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
          return false;

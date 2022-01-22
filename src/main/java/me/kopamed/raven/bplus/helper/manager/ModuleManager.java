@@ -30,7 +30,7 @@ public class ModuleManager {
    public static Module antiShuffle;
    public static Module antiBot;
    public static Module noSlow;
-   public static Module autoClicker;
+   public static Module leftClicker;
    public static Module hitBox;
    public static Module reach;
    public static Module hud;
@@ -46,7 +46,7 @@ public class ModuleManager {
    public static Module murderMystery;
 
    public ModuleManager() {
-      this.initMod(autoClicker = new AutoClicker());
+      this.initMod(leftClicker = new LeftClicker());
       this.initMod(new AimAssist());
       this.initMod(new BurstClicker());
       this.initMod(new ClickAssist());
@@ -132,7 +132,7 @@ public class ModuleManager {
       this.initMod(new SuperAutoClicker());
       this.initMod(new PingSpoof());
       this.initMod(new GhostBlocks());
-      this.initMod(new LeftClicker());
+
       //this.initMod(propHunt = new PropHunt());
       //this.initMod(new TPAura());
       //this.addModule(new KillAura());

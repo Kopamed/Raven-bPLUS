@@ -80,7 +80,7 @@ public class AimAssist extends Module {
          if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
             //what if player clicking but mouse not down ????
-            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && !ModuleManager.autoClicker.isToggled()) || !clickAim.isToggled()) {
+            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && !ModuleManager.leftClicker.isToggled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();
                if (en != null) {
                   if (Raven.client.getDebugManager().isDebugging()) {

@@ -43,7 +43,7 @@ public class ClickAssist extends Module {
 
       // registering settings
       this.registerSetting(desc = new DescriptionSetting("Boost your CPS."));
-      this.registerSetting(mode = new ComboSetting("Assist__ click", new String[] {"After", "Before"}, 0));
+      this.registerSetting(mode = new ComboSetting("Assist__ click", ClickTiming.After));
       this.registerSetting(linux = new DescriptionSetting("Use AFTER on linux"));
 
       this.registerSetting(left = new BooleanSetting("Left click", true));
@@ -156,5 +156,10 @@ public class ClickAssist extends Module {
          this.bot.mouseRelease(4);
       }
 
+   }
+
+   public enum ClickTiming{
+      Before,
+      After;
    }
 }

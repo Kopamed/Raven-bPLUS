@@ -4,6 +4,7 @@ import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
@@ -17,7 +18,10 @@ public class LeftClicker extends Module {
     private static final RangeSetting blatantCps = new RangeSetting("CPS range", 20D, 30D, 1D, 100D, 1D);
     private static final RangeSetting cps = new RangeSetting("CPS range", 9D, 15D, 1D, 20D, 0.5D);
 
-    public static final BooleanSetting firstHit = new BooleanSetting("First hit", "Nearly always get the first hit. Downside: other players can tell that you are autoclicking", false);
+    public static final ComboSetting eventType = new ComboSetting("On", Listeners.TICK);
+
+    public static final BooleanSetting breakBlocks = new BooleanSetting("Break blocks", true);
+    public static final RangeSetting breakBlocksDelay = new RangeSetting("Breaking delay (MS)", 50D, 90D, 0D, 1000D, 5D);
 
     private boolean startedClicking = false;
     private boolean pressed = false;
@@ -41,10 +45,19 @@ public class LeftClicker extends Module {
             }
         });
 
+        breakBlocksDelay.addSelector(new SelectorRunnable() {
+            @Override
+            public boolean showOnlyIf() {
+                return breakBlocks.isToggled();
+            }
+        });
+
         this.registerSetting(blatantMode);
         this.registerSetting(blatantCps);
         this.registerSetting(cps);
-        this.registerSetting(firstHit);
+        this.registerSetting(eventType);
+        this.registerSetting(breakBlocks);
+        this.registerSetting(breakBlocksDelay);
     }
 
     @Override
@@ -61,15 +74,26 @@ public class LeftClicker extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
-        if ((event.phase == TickEvent.Phase.START && !firstHit.isToggled()) ||
-                (event.phase == TickEvent.Phase.END && firstHit.isToggled()) ||
-                (!Utils.Player.isPlayerInGame()) ||
-                mc.currentScreen != null
-        )
+        if ((!Utils.Player.isPlayerInGame()) || mc.currentScreen != null || eventType.getMode() != Listeners.TICK)
             return;
 
+        click();
+    }
+
+    @SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent event) {
+        if ((!Utils.Player.isPlayerInGame()) || mc.currentScreen != null || eventType.getMode() != Listeners.RENDER)
+            return;
+
+        click();
+    }
+
+    private void click(){
         Mouse.poll();
         if (Mouse.isButtonDown(0)) {
+            // do checks
+
+
             if(!startedClicking){
                 startedClicking = true;
                 pressed = true;
@@ -110,5 +134,10 @@ public class LeftClicker extends Module {
         int key = mc.gameSettings.keyBindAttack.getKeyCode();
         KeyBinding.setKeyBindState(key, b);
         KeyBinding.onTick(key);
+    }
+
+    public enum Listeners {
+        RENDER,
+        TICK;
     }
 }
