@@ -69,6 +69,12 @@ public abstract class Module {
 
       BooleanSetting showOnHud = new BooleanSetting("Shown on HUD", true);
       toggleType = new ComboSetting("Toggle Type", getBindMode());
+      showOnHud.addSelector(new SelectorRunnable() {
+         @Override
+         public boolean showOnlyIf() {
+            return ModuleManager.hud.isToggled();
+         }
+      });
       toggleType.addSelector(new SelectorRunnable() {
          @Override
          public boolean showOnlyIf() {
@@ -225,7 +231,7 @@ public abstract class Module {
    }
 
    public boolean hasKeybind() {
-      return keyCodes.isEmpty();
+      return !keyCodes.isEmpty();
    }
 
    public boolean canToggle(){

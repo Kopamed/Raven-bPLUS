@@ -47,6 +47,7 @@ public class ModuleManager {
 
    public ModuleManager() {
       this.initMod(leftClicker = new LeftClicker());
+      this.initMod(new RightClicker());
       this.initMod(new AimAssist());
       this.initMod(new BurstClicker());
       this.initMod(new ClickAssist());
