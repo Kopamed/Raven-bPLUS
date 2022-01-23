@@ -5,9 +5,9 @@ import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.setting.SelectorRunnable;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
+import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.RangeSetting;
 import me.kopamed.raven.bplus.helper.utils.Utils;
-import net.minecraft.block.Block;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -23,10 +23,14 @@ public class RightClicker extends Module {
 
     public static final BooleanSetting onlyBlocks = new BooleanSetting("Only with blocks", true);
 
+    public static final NumberSetting clickAfter = new NumberSetting("Click after (MS)", 65D, 0D, 200D, 5D);
+
     private boolean startedClicking = false;
     private boolean pressed = false;
     private double releaseTime;
     private double pressTime;
+    private boolean generatedDelay = false;
+    private double startClickTime;
 
     public RightClicker() {
         super("Right Clicker", "Automatically right clicks for you", ModuleCategory.Combat);
@@ -51,6 +55,7 @@ public class RightClicker extends Module {
         this.registerSetting(cps);
         this.registerSetting(eventType);
         this.registerSetting(onlyBlocks);
+        this.registerSetting(clickAfter);
     }
 
     @Override
@@ -59,6 +64,7 @@ public class RightClicker extends Module {
         genTimings();
         pressed = false;
         super.onEnable();
+        generatedDelay = false;
     }
 
     public static RangeSetting getCPSSetting() {
@@ -88,7 +94,18 @@ public class RightClicker extends Module {
         Mouse.poll();
         if (Mouse.isButtonDown(1)) {
             // do checks
+            if(!generatedDelay){
+                startClickTime = clickAfter.getInput() > 0 ? System.currentTimeMillis() + clickAfter.getInput() : 0;
+                generatedDelay = true;
+            }
 
+            if(System.currentTimeMillis() < startClickTime) {
+                if((startClickTime - System.currentTimeMillis()) % 10 == 0)
+                    Utils.Player.sendMessageToSelf("Till start " + (startClickTime - System.currentTimeMillis()));
+                return;
+            }
+
+            Utils.Player.sendMessageToSelf("Clickng");
 
             if (!startedClicking) {
                 startedClicking = true;
@@ -110,7 +127,10 @@ public class RightClicker extends Module {
         } else if (startedClicking && !Mouse.isButtonDown(1)) {
             startedClicking = false;
             pressed = false;
+            generatedDelay = false;
             setPressed(false);
+        }  else if(generatedDelay){
+            generatedDelay = false;
         }
     }
 
