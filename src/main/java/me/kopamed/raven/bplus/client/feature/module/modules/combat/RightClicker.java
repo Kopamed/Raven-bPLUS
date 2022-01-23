@@ -100,7 +100,6 @@ public class RightClicker extends Module {
             }
 
             if(System.currentTimeMillis() < startClickTime) {
-                if((startClickTime - System.currentTimeMillis()) % 10 == 0)
                 return;
             }
 
