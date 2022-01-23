@@ -41,7 +41,7 @@ public class Reach extends Module {
    public void onMouse(MouseEvent ev) {
       // legit event
       if(!Utils.Player.isPlayerInGame()) return;
-      if (ModuleManager.leftClicker.isToggled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
+      if (ModuleManager.leftClicker.isToggled() && Mouse.isButtonDown(0)) return;
       if (ev.button >= 0 && ev.buttonstate) {
          call();
       }
@@ -52,9 +52,9 @@ public class Reach extends Module {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
 
-      if(!ModuleManager.leftClicker.isToggled() || !AutoClicker.leftClick.isToggled()) return;
+      if(!ModuleManager.leftClicker.isToggled()) return;
 
-      if (ModuleManager.leftClicker.isToggled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
+      if (ModuleManager.leftClicker.isToggled()  && Mouse.isButtonDown(0)){
          call();
       }
    }

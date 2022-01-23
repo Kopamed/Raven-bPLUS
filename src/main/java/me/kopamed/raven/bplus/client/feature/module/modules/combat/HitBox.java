@@ -52,9 +52,9 @@ public class HitBox extends Module {
    public void ef(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
-      if(!ModuleManager.leftClicker.isToggled() || !AutoClicker.leftClick.isToggled()) return;
+      if(!ModuleManager.leftClicker.isToggled()) return;
 
-      if (ModuleManager.leftClicker.isToggled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
+      if (ModuleManager.leftClicker.isToggled()  && Mouse.isButtonDown(0)){
          if (mv != null) {
             mc.objectMouseOver = mv;
          }
