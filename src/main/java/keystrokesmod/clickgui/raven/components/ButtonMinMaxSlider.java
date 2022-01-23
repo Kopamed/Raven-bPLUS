@@ -132,8 +132,8 @@ public class ButtonMinMaxSlider extends Component {
             this.mouseDown = true;
         }
 
-        System.out.println("Clicked");
-
+        // Put breakpoints instead of doing that:
+        //System.out.println("Clicked");
     }
 
     public void mouseReleased(int x, int y, int m) {

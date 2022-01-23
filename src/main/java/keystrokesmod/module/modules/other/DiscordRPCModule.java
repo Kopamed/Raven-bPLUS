@@ -16,15 +16,22 @@ public class DiscordRPCModule extends Module {
     public static final DiscordRPCManager rpc = new DiscordRPCManager();
     public static ModuleSettingSlider rpcMode;
     public static ModuleDesc rpcModeDesc, unsupportedOS;
-
+    public static boolean isOsSupported;
 
     public DiscordRPCModule() {
         super("DiscordRPC", category.other);
-        if (Ravenbplus.osArch.contains("arm") || Ravenbplus.osArch.contains("aarch64") || Ravenbplus.osName.toLowerCase().contains("mac")) {
+        isOsSupported = !(Ravenbplus.osArch.contains("arm") || Ravenbplus.osArch.contains("aarch64") || Ravenbplus.osName.toLowerCase().contains("mac"));
+
+        if (!isOsSupported) {
             this.registerSetting(unsupportedOS = new ModuleDesc("Unsupported OS!"));
         }
         this.registerSetting(rpcMode = new ModuleSettingSlider("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
         this.registerSetting(rpcModeDesc = new ModuleDesc("Raven b+"));
+    }
+
+    @Override
+    public boolean canBeEnabled() {
+        return isOsSupported;
     }
 
     public void onEnable() {

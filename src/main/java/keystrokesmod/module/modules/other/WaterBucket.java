@@ -2,6 +2,7 @@ package keystrokesmod.module.modules.other;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
+import keystrokesmod.utils.DimensionHelper;
 import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -17,17 +18,25 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 public class WaterBucket extends Module {
-   public static ModuleDesc a;
+   public static ModuleDesc moduleDesc;
    private boolean handling;
 
    public WaterBucket() {
       super("Water bucket", Module.category.other, 0);
-      this.registerSetting(a = new ModuleDesc("Credits: aycy"));
+      this.registerSetting(moduleDesc = new ModuleDesc("Credits: aycy"));
+      this.registerSetting(moduleDesc = new ModuleDesc("Disabled in the Nether"));
+   }
+
+   @Override
+   public boolean canBeEnabled() {
+      return !DimensionHelper.isPlayerInNether();
    }
 
    @SubscribeEvent
    public void onTick(ClientTickEvent ev) {
       if (ev.phase != Phase.END && Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
+         if (DimensionHelper.isPlayerInNether()) this.disable();
+
          if (this.inPosition() && this.holdWaterBucket()) {
             this.handling = true;
          }

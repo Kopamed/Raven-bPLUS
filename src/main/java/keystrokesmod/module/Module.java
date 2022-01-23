@@ -54,7 +54,7 @@ public class Module {
    }
 
    public void keybind() {
-      if (this.keycode != 0) {
+      if (this.keycode != 0 && this.canBeEnabled()) {
          if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
             this.toggle();
             this.isToggled = true;

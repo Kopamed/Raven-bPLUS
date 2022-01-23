@@ -140,7 +140,34 @@ public class ButtonModule extends Component {
       v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
       GL11.glPushMatrix();
       // module text button
-      int button_rgb = Gui.guiTheme.getInput() == 3.0D ? (this.mod.isEnabled() ? this.c1 : Color.lightGray.getRGB()) : (Gui.guiTheme.getInput() == 4.0D? (this.mod.isEnabled() ? this.c3 : Color.lightGray.getRGB()) : Color.lightGray.getRGB());
+      int button_rgb;
+      switch ((int) Gui.guiTheme.getInput()) {
+         case 4:
+            if (this.mod.isEnabled()) {
+               button_rgb = this.c3;
+            } else if (this.mod.canBeEnabled()) {
+               button_rgb = Color.lightGray.getRGB();
+            } else {
+               button_rgb = new Color(102, 102, 102).getRGB();
+            }
+            break;
+         case 3:
+            if (this.mod.isEnabled()) {
+               button_rgb = this.c1;
+            } else if (this.mod.canBeEnabled()) {
+               button_rgb = Color.lightGray.getRGB();
+            } else {
+               button_rgb = new Color(102, 102, 102).getRGB();
+            }
+            break;
+         default:
+            if (this.mod.canBeEnabled()) {
+               button_rgb = Color.lightGray.getRGB();
+            } else {
+               button_rgb = new Color(102, 102, 102).getRGB();
+            }
+            break;
+      }
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
@@ -183,9 +210,10 @@ public class ButtonModule extends Component {
    }
 
    public void mouseDown(int x, int y, int b) {
-
-      if (this.ii(x, y) && b == 0) {
-         this.mod.toggle();
+      if (mod.canBeEnabled()) {
+         if (this.ii(x, y) && b == 0) {
+            this.mod.toggle();
+         }
       }
 
       if (this.ii(x, y) && b == 1) {
