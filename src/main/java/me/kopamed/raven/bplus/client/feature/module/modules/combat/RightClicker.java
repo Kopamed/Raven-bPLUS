@@ -101,11 +101,8 @@ public class RightClicker extends Module {
 
             if(System.currentTimeMillis() < startClickTime) {
                 if((startClickTime - System.currentTimeMillis()) % 10 == 0)
-                    Utils.Player.sendMessageToSelf("Till start " + (startClickTime - System.currentTimeMillis()));
                 return;
             }
-
-            Utils.Player.sendMessageToSelf("Clickng");
 
             if (!startedClicking) {
                 startedClicking = true;
