@@ -1,5 +1,3 @@
-//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
-
 package keystrokesmod.module;
 
 import java.util.ArrayList;
@@ -63,8 +61,11 @@ public class Module {
          } else if (!Keyboard.isKeyDown(this.keycode)) {
             this.isToggled = false;
          }
-
       }
+   }
+
+   public boolean canBeEnabled() {
+      return true;
    }
 
    public void enable() {
