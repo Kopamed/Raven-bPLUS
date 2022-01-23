@@ -21,6 +21,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class AimAssist extends Module {
@@ -59,7 +61,8 @@ public class AimAssist extends Module {
       this.registerSetting(lock = new BooleanSetting("Lock", true));
    }
 
-   public void update() {
+   @SubscribeEvent
+   public void update(TickEvent.ClientTickEvent e) {
 
       if(!Utils.Client.currentScreenMinecraft()){
          return;
