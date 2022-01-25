@@ -81,8 +81,14 @@ public class RightClicker extends Module {
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent event) {
-        if ((!Utils.Player.isPlayerInGame()) || mc.currentScreen != null || eventType.getMode() != Listeners.RENDER)
+        if ((!Utils.Player.isPlayerInGame()) || mc.currentScreen != null || eventType.getMode() != Listeners.RENDER){
+            if(startedClicking){
+                startedClicking = false;
+                pressed = false;
+                setPressed(false);
+            }
             return;
+        }
 
         click();
     }

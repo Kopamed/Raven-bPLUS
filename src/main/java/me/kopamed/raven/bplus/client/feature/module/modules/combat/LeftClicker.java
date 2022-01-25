@@ -79,8 +79,14 @@ public class LeftClicker extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
-        if ((!Utils.Player.isPlayerInGame()) || mc.currentScreen != null || eventType.getMode() != Listeners.TICK)
+        if ((!Utils.Player.isPlayerInGame()) || mc.currentScreen != null || eventType.getMode() != Listeners.TICK) {
+            if(startedClicking){
+                startedClicking = false;
+                pressed = false;
+                setPressed(false);
+            }
             return;
+        }
 
         click();
     }
