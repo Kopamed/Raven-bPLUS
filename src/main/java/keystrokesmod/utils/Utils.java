@@ -650,10 +650,15 @@ public class Utils {
          return howTohackNasaWorking2021NoScamDotCom;
       }
 
+      public static int randomInt(double inputMin, double v) {
+         return (int)(Math.random() * (v - inputMin) + inputMin);
+      }
+      
       public static JsonObject getStringAsJson(String text) {
          return new JsonParser().parse(text).getAsJsonObject();
       }
    }
+
 
    public static class URLS {
 
@@ -1348,7 +1353,6 @@ public class Utils {
          DOWNRIGHT
       }
    }
-
 
    public static class Modes {
       public enum ClickEvents {
