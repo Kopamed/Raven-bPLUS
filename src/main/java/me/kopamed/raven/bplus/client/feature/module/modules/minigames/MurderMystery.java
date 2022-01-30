@@ -41,10 +41,6 @@ public class MurderMystery extends Module {
             ModuleManager.playerESP.disable();
          }
 
-         if (ModuleManager.propHunt.isToggled()) {
-            ModuleManager.propHunt.disable();
-         }
-
          if (!this.inMMGame()) {
             this.c();
          } else {

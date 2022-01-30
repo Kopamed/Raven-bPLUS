@@ -42,7 +42,6 @@ public class ModuleManager {
    public static Module safeWalk;
    public static Module keepSprint;
    public static Module gui;
-   public static Module propHunt;
    public static Module murderMystery;
 
    public ModuleManager() {

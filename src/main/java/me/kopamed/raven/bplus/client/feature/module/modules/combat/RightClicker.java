@@ -19,7 +19,7 @@ public class RightClicker extends Module {
     private static final RangeSetting blatantCps = new RangeSetting("CPS range", 20D, 30D, 1D, 100D, 1D);
     private static final RangeSetting cps = new RangeSetting("CPS range", 9D, 15D, 1D, 20D, 0.5D);
 
-    public static final ComboSetting eventType = new ComboSetting("On", Listeners.TICK);
+    public static final ComboSetting eventType = new ComboSetting("On", Listeners.RENDER);
 
     public static final BooleanSetting onlyBlocks = new BooleanSetting("Only with blocks", true);
 
