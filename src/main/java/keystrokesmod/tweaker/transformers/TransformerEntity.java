@@ -1,5 +1,6 @@
 package keystrokesmod.tweaker.transformers;
 
+import keystrokesmod.tweaker.ASMTransformerClass;
 import org.objectweb.asm.tree.*;
 
 public class TransformerEntity implements Transformer {
