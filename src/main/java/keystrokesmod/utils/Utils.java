@@ -45,6 +45,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -349,7 +350,7 @@ public class Utils {
          ObfuscationReflectionHelper.setPrivateValue(MouseEvent.class, m, held, "buttonstate");
          MinecraftForge.EVENT_BUS.post(m);
 
-         ByteBuffer buttons = (ByteBuffer) ObfuscationReflectionHelper.getPrivateValue(Mouse.class, null, "buttons");
+         ByteBuffer buttons = ObfuscationReflectionHelper.getPrivateValue(Mouse.class, null, "buttons");
          buttons.put(mouseButton, (byte)(held ? 1 : 0));
          ObfuscationReflectionHelper.setPrivateValue(Mouse.class, null, buttons, "buttons");
 
@@ -736,7 +737,7 @@ public class Utils {
             //System.out.println(payload);
             try {
                // sending data
-               outputStream.write(payload.getBytes("UTF-8"));
+               outputStream.write(payload.getBytes(StandardCharsets.UTF_8));
                outputStream.flush();
             } catch (Throwable microsoftMoment) {
                occuredErrors = microsoftMoment;

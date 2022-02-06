@@ -18,6 +18,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -94,14 +95,19 @@ public class AutoClicker extends Module {
       this.registerSetting(modeDesc = new ModuleDesc("Mode: LEGIT"));
 
       try {
-         this.playerMouseInput = GuiScreen.class.getDeclaredMethod("func_73864_a", Integer.TYPE, Integer.TYPE, Integer.TYPE);
-      } catch (Exception var4) {
-         try {
-            this.playerMouseInput = GuiScreen.class.getDeclaredMethod("mouseClicked", Integer.TYPE, Integer.TYPE, Integer.TYPE);
-         } catch (Exception var3) {
-         }
-
-
+         this.playerMouseInput = ReflectionHelper.findMethod(
+                 GuiScreen.class,
+                 null,
+                 new String[]{
+                         "func_73864_a",
+                         "mouseClicked"
+                 },
+                 Integer.TYPE,
+                 Integer.TYPE,
+                 Integer.TYPE
+         );
+      } catch (Exception ex) {
+         ex.printStackTrace();
       }
 
       if (this.playerMouseInput != null) {

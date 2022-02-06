@@ -100,29 +100,28 @@ public class Reach extends Module {
          List<Entity> zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(entity1, entity1.getEntityBoundingBox().addCoord(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
          double zz9 = zzD;
 
-         for (Object o : zz8) {
-            Entity zz11 = (Entity) o;
-            if (zz11.canBeCollidedWith()) {
-               float ex = (float) ((double) zz11.getCollisionBorderSize() * HitBox.exp(zz11));
-               AxisAlignedBB zz13 = zz11.getEntityBoundingBox().expand(ex, ex, ex);
+         for (Entity o : zz8) {
+            if (o.canBeCollidedWith()) {
+               float ex = (float) ((double) o.getCollisionBorderSize() * HitBox.exp(o));
+               AxisAlignedBB zz13 = o.getEntityBoundingBox().expand(ex, ex, ex);
                zz13 = zz13.expand(zzE, zzE, zzE);
                MovingObjectPosition zz14 = zz13.calculateIntercept(eyes_positions, new_eyes_pos);
                if (zz13.isVecInside(eyes_positions)) {
                   if (0.0D < zz9 || zz9 == 0.0D) {
-                     entity = zz11;
+                     entity = o;
                      zz6 = zz14 == null ? eyes_positions : zz14.hitVec;
                      zz9 = 0.0D;
                   }
                } else if (zz14 != null) {
                   double zz15 = eyes_positions.distanceTo(zz14.hitVec);
                   if (zz15 < zz9 || zz9 == 0.0D) {
-                     if (zz11 == entity1.ridingEntity) {
+                     if (o == entity1.ridingEntity) {
                         if (zz9 == 0.0D) {
-                           entity = zz11;
+                           entity = o;
                            zz6 = zz14.hitVec;
                         }
                      } else {
-                        entity = zz11;
+                        entity = o;
                         zz6 = zz14.hitVec;
                         zz9 = zz15;
                      }

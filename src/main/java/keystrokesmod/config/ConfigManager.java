@@ -312,7 +312,7 @@ public class ConfigManager {
             }
         }
 
-        try (PrintWriter writer = new PrintWriter(this.currentConfig);) {
+        try (PrintWriter writer = new PrintWriter(this.currentConfig)) {
             for (String line : newConfig) {
                 ////System.out.println(line);
                 writer.println(line);
@@ -346,7 +346,7 @@ public class ConfigManager {
     public List<String> parseConfigFile(String cfg) {
         List<String> configFileContents = new ArrayList<>();
 
-        try (Scanner reader = new Scanner(new File(this.configDirecotry, cfg + this.getExtension()));) {
+        try (Scanner reader = new Scanner(new File(this.configDirecotry, cfg + this.getExtension()))) {
             while (reader.hasNextLine())
                 configFileContents.add(reader.nextLine());
         } catch (FileNotFoundException e) {
@@ -401,7 +401,7 @@ public class ConfigManager {
         }
 
 
-        try (PrintWriter writer = new PrintWriter(newConfigFile);){
+        try (PrintWriter writer = new PrintWriter(newConfigFile)){
             for (String line : configToSave) {
                 writer.println(line);
             }
@@ -454,7 +454,7 @@ public class ConfigManager {
     public void saveNewConfig(List<String> config, String configName){
         File newFile = new File(this.configDirecotry, configName + this.getExtension());
 
-        try (PrintWriter writer = new PrintWriter(newFile);){
+        try (PrintWriter writer = new PrintWriter(newFile)){
             for (String line : config) {
                 ////System.out.println(line);
                 writer.println(line);

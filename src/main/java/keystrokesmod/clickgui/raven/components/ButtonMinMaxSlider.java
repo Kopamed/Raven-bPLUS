@@ -151,6 +151,6 @@ public class ButtonMinMaxSlider extends Component {
     public enum Helping {
         MIN,
         MAX,
-        NONE;
+        NONE
     }
 }

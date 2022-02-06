@@ -239,7 +239,7 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     {
         if (unicodePageLocations[page] == null)
         {
-            unicodePageLocations[page] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", new Object[] {Integer.valueOf(page)}));
+            unicodePageLocations[page] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", page));
         }
 
         return unicodePageLocations[page];
@@ -499,10 +499,10 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
                     GlStateManager.disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION);
-                    worldrenderer.pos((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), 0.0D).endVertex();
-                    worldrenderer.pos((double)(this.posX + f), (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), 0.0D).endVertex();
-                    worldrenderer.pos((double)(this.posX + f), (double)(this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F), 0.0D).endVertex();
-                    worldrenderer.pos((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F), 0.0D).endVertex();
+                    worldrenderer.pos(this.posX, this.posY + (float)(this.FONT_HEIGHT / 2), 0.0D).endVertex();
+                    worldrenderer.pos(this.posX + f, this.posY + (float)(this.FONT_HEIGHT / 2), 0.0D).endVertex();
+                    worldrenderer.pos(this.posX + f, this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F, 0.0D).endVertex();
+                    worldrenderer.pos(this.posX, this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F, 0.0D).endVertex();
                     tessellator.draw();
                     GlStateManager.enableTexture2D();
                 }
@@ -514,10 +514,10 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
                     GlStateManager.disableTexture2D();
                     worldrenderer1.begin(7, DefaultVertexFormats.POSITION);
                     int l = this.underlineStyle ? -1 : 0;
-                    worldrenderer1.pos((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT), 0.0D).endVertex();
-                    worldrenderer1.pos((double)(this.posX + f), (double)(this.posY + (float)this.FONT_HEIGHT), 0.0D).endVertex();
-                    worldrenderer1.pos((double)(this.posX + f), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), 0.0D).endVertex();
-                    worldrenderer1.pos((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), 0.0D).endVertex();
+                    worldrenderer1.pos(this.posX + (float)l, this.posY + (float)this.FONT_HEIGHT, 0.0D).endVertex();
+                    worldrenderer1.pos(this.posX + f, this.posY + (float)this.FONT_HEIGHT, 0.0D).endVertex();
+                    worldrenderer1.pos(this.posX + f, this.posY + (float)this.FONT_HEIGHT - 1.0F, 0.0D).endVertex();
+                    worldrenderer1.pos(this.posX + (float)l, this.posY + (float)this.FONT_HEIGHT - 1.0F, 0.0D).endVertex();
                     tessellator1.draw();
                     GlStateManager.enableTexture2D();
                 }
@@ -729,7 +729,7 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
 
             if (reverse)
             {
-                stringbuilder.insert(0, (char)c0);
+                stringbuilder.insert(0, c0);
             }
             else
             {

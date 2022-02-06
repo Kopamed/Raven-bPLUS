@@ -186,8 +186,8 @@ public class SafeWalk extends Module {
       KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), sh);
    }
 
-   public static enum BlockAmountInfo {
+   public enum BlockAmountInfo {
       BLOCKS_IN_TOTAL,
-      BLOCKS_IN_CURRENT_STACK;
+      BLOCKS_IN_CURRENT_STACK
    }
 }

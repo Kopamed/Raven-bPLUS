@@ -108,7 +108,7 @@ public class Version {
         }
 
         try (
-            InputStream input = Version.class.getResourceAsStream(branchFileName);
+            InputStream input = Version.class.getResourceAsStream(branchFileName)
         ){
             if (input == null) throw new NullPointerException("input == null !");
 

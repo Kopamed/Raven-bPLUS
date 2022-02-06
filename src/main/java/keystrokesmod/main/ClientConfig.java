@@ -196,7 +196,7 @@ public class ClientConfig {
          posConfig.append(cat.isOpened());
          posConfig.append("/");
       }
-      return posConfig.toString().substring(0, posConfig.toString().length() - 2);
+      return posConfig.substring(0, posConfig.toString().length() - 2);
 
    }
 }

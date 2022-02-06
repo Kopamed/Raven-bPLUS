@@ -44,7 +44,7 @@ public class ButtonCategory {
       this.marginY = 4.5;
 
       for(Iterator<Module> var3 = Ravenbplus.moduleManager.inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
-         Module mod = (Module) var3.next();
+         Module mod = var3.next();
          ButtonModule b = new ButtonModule(mod, this, tY);
          this.modulesInCategory.add(b);
       }

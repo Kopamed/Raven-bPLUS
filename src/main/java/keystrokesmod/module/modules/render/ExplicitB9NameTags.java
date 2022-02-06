@@ -254,7 +254,7 @@ public class ExplicitB9NameTags extends Module {
     }
 
     private float getSize(EntityPlayer player) {
-        return Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player) / 4.0F <= 2.0F ? 2.0F : Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player) / 4.0F;
+        return Math.max(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(player) / 4.0F, 2.0F);
     }
 
     private void renderItemStack(ItemStack is, int xPos, int yPos) {
