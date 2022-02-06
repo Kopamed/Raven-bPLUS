@@ -1,30 +1,28 @@
 package keystrokesmod.module.modules.client;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import keystrokesmod.utils.Version;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class UpdateCheck extends Module {
     public static ModuleDesc howToUse;
     public static ModuleSettingTick copyToClipboard;
     public static ModuleSettingTick openLink;
-    public UpdateCheck() {
-        super("Update", category.client, 0);
-        this.registerSetting(howToUse = new ModuleDesc(Utils.Java.uf("command") + ": update"));
-        this.registerSetting(copyToClipboard = new ModuleSettingTick("Copy to clipboard", true));
-        this.registerSetting(openLink = new ModuleSettingTick("Open dl in browser", true));
-    }
 
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+    private Future<?> f;
+    private final ExecutorService executor;
+    private final Runnable task = () -> {
         if (Version.outdated()) {
             Ravenbplus.outdated = true;
             Utils.Player.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
@@ -44,7 +42,7 @@ public class UpdateCheck extends Module {
                 Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
 
-        if(openLink.isToggled()) {
+        if (openLink.isToggled()) {
             try {
                 URL url = new URL(Ravenbplus.sourceLocation);
                 Utils.Client.openWebpage(url);
@@ -53,6 +51,28 @@ public class UpdateCheck extends Module {
                 Utils.Player.sendMessageToSelf("&cFailed to open page! Please report this bug in Raven b+'s discord");
             }
         }
+
         this.disable();
+    };
+
+    public UpdateCheck() {
+        super("Update", category.client, 0);
+
+        this.registerSetting(howToUse = new ModuleDesc(Utils.Java.uf("command") + ": update"));
+        this.registerSetting(copyToClipboard = new ModuleSettingTick("Copy to clipboard", true));
+        this.registerSetting(openLink = new ModuleSettingTick("Open dl in browser", true));
+
+        executor = Executors.newFixedThreadPool(1);
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+        if (f == null) {
+            f = executor.submit(task);
+            Utils.Player.sendMessageToSelf("Update check started !");
+        } else if (f.isDone()) {
+            f = executor.submit(task);
+            Utils.Player.sendMessageToSelf("Update check started !");
+        }
     }
 }
