@@ -79,7 +79,7 @@ public class Module {
       }
 
       MinecraftForge.EVENT_BUS.register(this);
-      FMLCommonHandler.instance().bus().register(this);
+
       this.onEnable();
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
@@ -99,7 +99,6 @@ public class Module {
       }
       ModuleManager.enModsList.remove(this);
       MinecraftForge.EVENT_BUS.unregister(this);
-      FMLCommonHandler.instance().bus().unregister(this);
       this.onDisable();
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
