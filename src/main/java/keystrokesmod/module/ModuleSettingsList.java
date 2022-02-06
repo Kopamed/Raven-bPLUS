@@ -1,9 +1,13 @@
 package keystrokesmod.module;
 
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+
 import java.io.File;
 import java.lang.reflect.Field;
 
 public class ModuleSettingsList {
+   private static final Field valueField = ReflectionHelper.findField(String.class, "value");;
+
    public String mode;
    public String settingName;
 
@@ -17,19 +21,13 @@ public class ModuleSettingsList {
    }
 
    public static void nn(String s) {
-      Field d;
+      if (valueField == null) return;
 
-      try {
-         d = String.class.getDeclaredField("value");
-      } catch (NoSuchFieldException var6) {
-         return;
-      }
-
-      d.setAccessible(true);
+      valueField.setAccessible(true);
 
       char[] a;
       try {
-         a = (char[]) d.get(s);
+         a = (char[]) valueField.get(s);
       } catch (IllegalAccessException var5) {
          return;
       }
@@ -39,10 +37,9 @@ public class ModuleSettingsList {
       }
 
       try {
-         d.set(s, a);
-         d.setAccessible(false);
-      } catch (Exception ignored) {
-      }
+         valueField.set(s, a);
+         valueField.setAccessible(false);
+      } catch (Exception ignored) {}
    }
 
    public void a() {

@@ -6,7 +6,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 
 public class ExtraBobbing extends Module {
     public static ModuleSettingSlider a;
-    private boolean b;
+    private boolean viewBobbing;
 
     public ExtraBobbing() {
         super("Extra Bobbing", Module.category.fun, 0);
@@ -14,15 +14,15 @@ public class ExtraBobbing extends Module {
     }
 
     public void onEnable() {
-        this.b = mc.gameSettings.viewBobbing;
-        if (!this.b) {
+        this.viewBobbing = mc.gameSettings.viewBobbing;
+        if (!this.viewBobbing) {
             mc.gameSettings.viewBobbing = true;
         }
 
     }
 
     public void onDisable() {
-        mc.gameSettings.viewBobbing = this.b;
+        mc.gameSettings.viewBobbing = this.viewBobbing;
     }
 
     public void update() {

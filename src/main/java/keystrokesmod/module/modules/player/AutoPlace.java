@@ -107,11 +107,10 @@ public class AutoPlace extends Module {
 
    private void rd(int i) {
       try {
-         if (FastPlace.r != null) {
-            FastPlace.r.set(mc, i);
+         if (FastPlace.rightClickDelayTimerField != null) {
+            FastPlace.rightClickDelayTimerField.set(mc, i);
          }
-      } catch (IllegalAccessException | IndexOutOfBoundsException var3) {
-      }
+      } catch (IllegalAccessException | IndexOutOfBoundsException ignored) {}
    }
 
    private void rv() {

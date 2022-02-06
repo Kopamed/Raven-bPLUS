@@ -6,46 +6,40 @@ import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Field;
 
 public class DelayRemover extends Module {
-   public static ModuleDesc a;
-   private Field l = null;
+   public static ModuleDesc desc;
+
+   private final Field leftClickCounterField;
 
    public DelayRemover() {
       super("Delay Remover", Module.category.combat, 0);
-      this.registerSetting(a = new ModuleDesc("Gives you 1.7 hitreg."));
+      this.registerSetting(desc = new ModuleDesc("Gives you 1.7 hitreg."));
+
+      this.leftClickCounterField = ReflectionHelper.findField(Minecraft.class, "field_71429_W", "leftClickCounter");
+      if (this.leftClickCounterField != null) this.leftClickCounterField.setAccessible(true);
    }
 
-   public void onEnable() {
-      try {
-         this.l = Minecraft.class.getDeclaredField("field_71429_W");
-      } catch (Exception var4) {
-         try {
-            this.l = Minecraft.class.getDeclaredField("leftClickCounter");
-         } catch (Exception var3) {
-         }
-      }
-
-      if (this.l != null) {
-         this.l.setAccessible(true);
-      } else {
-         this.disable();
-      }
-
+   @Override
+   public boolean canBeEnabled() {
+      return this.leftClickCounterField == null;
    }
 
    @SubscribeEvent
-   public void a(PlayerTickEvent b) {
-      if (Utils.Player.isPlayerInGame() && this.l != null) {
+   public void playerTickEvent(PlayerTickEvent event) {
+      if (Utils.Player.isPlayerInGame() && this.leftClickCounterField != null) {
          if (!mc.inGameHasFocus || mc.thePlayer.capabilities.isCreativeMode) {
             return;
          }
 
          try {
-            this.l.set(mc, 0);
-         } catch (IllegalAccessException | IndexOutOfBoundsException var3) {
+            this.leftClickCounterField.set(mc, 0);
+         } catch (IllegalAccessException | IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+            this.disable();
          }
       }
 
