@@ -1,9 +1,9 @@
 package keystrokesmod.module.modules.debug;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.utils.Utils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;

@@ -1,14 +1,12 @@
 package keystrokesmod.module.modules.world;
 
 import keystrokesmod.module.Module;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.JsonException;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.*;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ChatLogger extends Module {
     private final File dir;

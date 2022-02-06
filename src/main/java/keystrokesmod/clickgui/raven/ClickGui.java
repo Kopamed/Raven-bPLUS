@@ -1,13 +1,6 @@
 
 package keystrokesmod.clickgui.raven;
 
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
 import keystrokesmod.clickgui.raven.components.ButtonCategory;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
@@ -17,6 +10,13 @@ import keystrokesmod.utils.Version;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
+
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class ClickGui extends GuiScreen {
    private ScheduledFuture sf;

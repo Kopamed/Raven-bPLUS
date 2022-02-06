@@ -1,12 +1,12 @@
 
 package keystrokesmod.clickgui.raven.components;
 
-import java.awt.Color;
-
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.ModuleDesc;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 public class ButtonDesc extends Component {
    private final int c = (new Color(226, 83, 47)).getRGB();

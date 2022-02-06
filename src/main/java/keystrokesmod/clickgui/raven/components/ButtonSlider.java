@@ -1,14 +1,14 @@
 
 package keystrokesmod.clickgui.raven.components;
 
-import java.awt.Color;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.ModuleSettingSlider;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ButtonSlider extends Component {
    private final ModuleSettingSlider v;

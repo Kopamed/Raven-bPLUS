@@ -1,6 +1,5 @@
 package keystrokesmod.keystroke;
 
-import keystrokesmod.main.Ravenbplus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

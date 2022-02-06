@@ -1,16 +1,16 @@
 
 package keystrokesmod.clickgui.raven.components;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ButtonCategory {
    public ArrayList<Component> modulesInCategory = new ArrayList();

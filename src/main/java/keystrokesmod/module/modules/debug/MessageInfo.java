@@ -1,8 +1,8 @@
 package keystrokesmod.module.modules.debug;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.client.SelfDestruct;
+import keystrokesmod.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

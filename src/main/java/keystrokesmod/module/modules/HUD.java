@@ -1,11 +1,5 @@
 package keystrokesmod.module.modules;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.utils.Utils;
@@ -16,6 +10,12 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static keystrokesmod.main.Ravenbplus.mResourceLocation;
 

@@ -1,13 +1,13 @@
 
 package keystrokesmod.keystroke;
 
-import java.awt.Color;
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class KeySrokeRenderer {
    private static final int[] a = new int[]{16777215, 16711680, 65280, 255, 16776960, 11141290};

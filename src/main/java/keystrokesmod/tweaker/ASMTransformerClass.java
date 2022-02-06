@@ -2,14 +2,13 @@ package keystrokesmod.tweaker;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import java.util.Collection;
-
 import keystrokesmod.tweaker.transformers.*;
-import keystrokesmod.tweaker.transformers.Transformer;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
+
+import java.util.Collection;
 
 public class ASMTransformerClass implements IClassTransformer {
    public static String eventHandlerClassName = ASMEventHandler.class.getName().replace(".", "/"); //added replace or it won't launch

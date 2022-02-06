@@ -1,16 +1,16 @@
 package keystrokesmod.module.modules.player;
 
-import java.awt.Color;
-
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
+
+import java.awt.*;
 
 public class Freecam extends Module {
    public static ModuleSettingSlider a;

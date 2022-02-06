@@ -1,9 +1,9 @@
 package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.*;
+import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.utils.CoolDown;
 import keystrokesmod.utils.Utils;
-import keystrokesmod.module.modules.world.AntiBot;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

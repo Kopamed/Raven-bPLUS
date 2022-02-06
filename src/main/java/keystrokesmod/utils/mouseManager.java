@@ -1,15 +1,14 @@
 package keystrokesmod.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.world.AntiBot;
-import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class mouseManager {
    private static final List<Long> leftClicks = new ArrayList();

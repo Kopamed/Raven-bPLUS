@@ -1,13 +1,10 @@
 package keystrokesmod.module.modules.render;
 
-import java.awt.Color;
-import java.util.Iterator;
-
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -15,6 +12,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.awt.*;
+import java.util.Iterator;
 
 public class PlayerESP extends Module {
    public static ModuleDesc g;

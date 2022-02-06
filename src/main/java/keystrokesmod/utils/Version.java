@@ -1,7 +1,9 @@
 package keystrokesmod.utils;
 
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -180,11 +182,11 @@ public class Version {
         return -1;
     }
 
-    public static String getFullVersion(){
+    public static String getFullVersion() {
         return getCurrentVersion().replace("-", ".") + "." + getReadBranch().replace("-", ".");
     }
 
-    public static String getReadBranch(){
+    public static String getReadBranch() {
         if (readBranch != null) return readBranch;
 
         InputStream input = Version.class.getResourceAsStream(branchFileName);

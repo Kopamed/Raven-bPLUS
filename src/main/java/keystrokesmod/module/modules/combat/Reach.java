@@ -1,8 +1,9 @@
 package keystrokesmod.module.modules.combat;
 
-import java.util.List;
-
-import keystrokesmod.module.*;
+import keystrokesmod.module.Module;
+import keystrokesmod.module.ModuleManager;
+import keystrokesmod.module.ModuleSettingDoubleSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +17,8 @@ import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
+
+import java.util.List;
 
 public class Reach extends Module {
    public static ModuleSettingDoubleSlider reach;

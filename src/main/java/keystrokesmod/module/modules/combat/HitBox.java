@@ -1,12 +1,9 @@
 package keystrokesmod.module.modules.combat;
 
-import java.awt.Color;
-import java.util.List;
-
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -23,6 +20,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.List;
 
 public class HitBox extends Module {
    public static ModuleSettingSlider a;

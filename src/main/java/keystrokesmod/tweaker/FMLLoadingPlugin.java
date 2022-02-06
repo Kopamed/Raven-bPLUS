@@ -1,8 +1,8 @@
 package keystrokesmod.tweaker;
 
-import java.util.Map;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
+
+import java.util.Map;
 
 //@SortingIndex(1000)
 @MCVersion("1.8.9")

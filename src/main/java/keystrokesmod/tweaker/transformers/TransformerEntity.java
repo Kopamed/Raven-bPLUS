@@ -1,12 +1,6 @@
 package keystrokesmod.tweaker.transformers;
 
-import keystrokesmod.tweaker.ASMTransformerClass;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.tree.VarInsnNode;
+import org.objectweb.asm.tree.*;
 
 public class TransformerEntity implements Transformer {
    public String[] getClassName() {

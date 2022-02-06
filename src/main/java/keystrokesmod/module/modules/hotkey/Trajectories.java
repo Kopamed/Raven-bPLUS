@@ -1,10 +1,13 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
-import net.minecraft.item.*;
+import keystrokesmod.utils.Utils;
+import net.minecraft.item.ItemEgg;
+import net.minecraft.item.ItemFishingRod;
+import net.minecraft.item.ItemSnowball;
+import net.minecraft.item.ItemStack;
 
 public class Trajectories extends Module {
     private final ModuleSettingTick preferSlot;

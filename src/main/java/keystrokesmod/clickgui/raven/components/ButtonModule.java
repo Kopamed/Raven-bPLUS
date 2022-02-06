@@ -1,17 +1,16 @@
 
 package keystrokesmod.clickgui.raven.components;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.*;
-import keystrokesmod.module.Module;
 import keystrokesmod.module.modules.AutoConfig;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ButtonModule extends Component {
    private final int c1 = (new Color(0, 85, 255)).getRGB();

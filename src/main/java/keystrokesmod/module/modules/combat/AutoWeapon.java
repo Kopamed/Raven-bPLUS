@@ -1,8 +1,8 @@
 package keystrokesmod.module.modules.combat;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;

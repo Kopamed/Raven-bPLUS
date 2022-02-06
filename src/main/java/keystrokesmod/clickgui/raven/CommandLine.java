@@ -1,17 +1,17 @@
 
 package keystrokesmod.clickgui.raven;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import keystrokesmod.utils.ChatHelper;
 import keystrokesmod.main.Ravenbplus;
+import keystrokesmod.utils.ChatHelper;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandLine {
    private static final Minecraft mc = Minecraft.getMinecraft();

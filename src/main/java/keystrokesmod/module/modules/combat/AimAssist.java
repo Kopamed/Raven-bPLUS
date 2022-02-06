@@ -1,14 +1,10 @@
 package keystrokesmod.module.modules.combat;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.ThreadLocalRandom;
-
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
@@ -20,6 +16,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Mouse;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AimAssist extends Module {
    public static ModuleSettingSlider speed, compliment;

@@ -1,22 +1,10 @@
 package keystrokesmod.clickgui.kopagui;
 
-import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.Module;
 import keystrokesmod.utils.Timer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ScheduledFuture;
-
-import static keystrokesmod.main.Ravenbplus.mResourceLocation;
 
 public class TabGui extends GuiScreen {
     private ScheduledFuture sf;

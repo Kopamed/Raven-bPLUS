@@ -1,11 +1,11 @@
 package keystrokesmod.module.modules.movement;
 
 import io.netty.util.internal.ThreadLocalRandom;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;

@@ -1,14 +1,14 @@
 
 package keystrokesmod.keystroke;
 
-import java.io.IOException;
-
-import keystrokesmod.module.modules.client.Gui;
-import keystrokesmod.utils.mouseManager;
 import keystrokesmod.main.ClientConfig;
 import keystrokesmod.main.Ravenbplus;
+import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.utils.mouseManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+
+import java.io.IOException;
 
 public class KeyStrokeConfigGui extends GuiScreen {
    private static KeySrokeRenderer keySrokeRenderer;

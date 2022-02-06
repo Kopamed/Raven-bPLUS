@@ -1,13 +1,12 @@
 package keystrokesmod.module;
 
+import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.client.*;
-import keystrokesmod.module.modules.fun.*;
-import keystrokesmod.utils.Utils;
-import keystrokesmod.module.modules.*;
 import keystrokesmod.module.modules.combat.*;
 import keystrokesmod.module.modules.debug.Click;
 import keystrokesmod.module.modules.debug.MessageInfo;
 import keystrokesmod.module.modules.debug.MouseClick;
+import keystrokesmod.module.modules.fun.*;
 import keystrokesmod.module.modules.hotkey.*;
 import keystrokesmod.module.modules.minigames.*;
 import keystrokesmod.module.modules.movement.*;
@@ -16,6 +15,7 @@ import keystrokesmod.module.modules.player.*;
 import keystrokesmod.module.modules.render.*;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.module.modules.world.ChatLogger;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
 import java.util.ArrayList;

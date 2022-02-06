@@ -2,19 +2,6 @@ package keystrokesmod.utils;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.net.*;
-import java.nio.ByteBuffer;
-import java.util.*;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import keystrokesmod.module.ModuleManager;
@@ -49,10 +36,19 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import java.time.format.DateTimeFormatter;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.*;
+import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Timer;
+import java.util.*;
 
 public class Utils {
    private static final Random rand = new Random();

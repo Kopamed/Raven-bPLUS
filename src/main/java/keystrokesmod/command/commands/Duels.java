@@ -1,10 +1,10 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.clickgui.raven.CommandLine;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.minigames.DuelsStats;
+import keystrokesmod.utils.Utils;
 
 public class Duels extends Command {
     public Duels()  {

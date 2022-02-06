@@ -1,18 +1,18 @@
 package keystrokesmod.module.modules.combat;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class BurstClicker extends Module {
    public static ModuleDesc artificialDragClicking;

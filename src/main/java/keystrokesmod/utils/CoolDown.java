@@ -1,7 +1,5 @@
 package keystrokesmod.utils;
 
-import org.lwjgl.Sys;
-
 public class CoolDown {
     private long start;
     private long lasts;

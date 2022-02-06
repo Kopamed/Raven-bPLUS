@@ -2,11 +2,12 @@ package keystrokesmod.module.modules.player;
 
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.modules.client.SelfDestruct;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;

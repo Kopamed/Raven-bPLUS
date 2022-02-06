@@ -1,7 +1,6 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.*;
-import keystrokesmod.module.Module;
 import net.minecraft.entity.Entity;
 
 public class KeepSprint extends Module {

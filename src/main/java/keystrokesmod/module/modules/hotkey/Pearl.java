@@ -1,11 +1,11 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 

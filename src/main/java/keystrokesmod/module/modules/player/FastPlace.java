@@ -1,16 +1,16 @@
 package keystrokesmod.module.modules.player;
 
-import java.lang.reflect.Field;
-
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+
+import java.lang.reflect.Field;
 
 public class FastPlace extends Module {
    public static ModuleSettingSlider a;

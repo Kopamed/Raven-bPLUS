@@ -1,9 +1,5 @@
 package keystrokesmod.module.modules.minigames;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.TimerTask;
-
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -16,6 +12,10 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.TimerTask;
 
 public class SumoFences extends Module {
    public static ModuleDesc a;

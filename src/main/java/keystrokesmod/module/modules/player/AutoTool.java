@@ -1,16 +1,17 @@
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.module.ModuleSettingDoubleSlider;
-import keystrokesmod.utils.CoolDown;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingDoubleSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.combat.AutoClicker;
+import keystrokesmod.utils.CoolDown;
+import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemShears;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;

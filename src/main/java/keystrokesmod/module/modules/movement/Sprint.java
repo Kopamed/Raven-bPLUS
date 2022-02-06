@@ -1,8 +1,8 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

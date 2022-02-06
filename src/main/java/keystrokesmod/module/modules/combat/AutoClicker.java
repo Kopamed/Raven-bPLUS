@@ -1,10 +1,5 @@
 package keystrokesmod.module.modules.combat;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.debug.Click;
@@ -25,6 +20,11 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoClicker extends Module {
    public static ModuleDesc bestWithDelayRemover, modeDesc, timingsDesc;

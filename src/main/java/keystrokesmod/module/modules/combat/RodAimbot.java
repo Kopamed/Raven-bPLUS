@@ -1,17 +1,17 @@
 package keystrokesmod.module.modules.combat;
 
-import java.util.Iterator;
-
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.Iterator;
 
 public class RodAimbot extends Module {
    public static ModuleSettingSlider a;

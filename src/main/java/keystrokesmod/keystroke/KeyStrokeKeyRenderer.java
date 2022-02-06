@@ -1,10 +1,11 @@
 
 package keystrokesmod.keystroke;
 
-import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
+
+import java.awt.*;
 
 public class KeyStrokeKeyRenderer {
    private final Minecraft a = Minecraft.getMinecraft();

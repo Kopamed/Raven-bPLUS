@@ -9,11 +9,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
-import java.net.CookieHandler;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoBlock extends Module {
     public static ModuleSettingDoubleSlider duration, distance;

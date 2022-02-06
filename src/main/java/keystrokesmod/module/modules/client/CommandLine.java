@@ -1,8 +1,8 @@
 package keystrokesmod.module.modules.client;
 
 import keystrokesmod.module.Module;
-import keystrokesmod.utils.Timer;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Timer;
 
 public class CommandLine extends Module {
    public static boolean a = false;

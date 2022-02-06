@@ -1,9 +1,9 @@
 package keystrokesmod.command.commands;
 
 import keystrokesmod.clickgui.raven.CommandLine;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.command.Command;
 import keystrokesmod.module.modules.other.FakeChat;
+import keystrokesmod.utils.Utils;
 
 public class Fakechat extends Command {
     public Fakechat() {

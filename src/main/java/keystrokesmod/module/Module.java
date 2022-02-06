@@ -1,16 +1,15 @@
 package keystrokesmod.module;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import keystrokesmod.NotificationRenderer;
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.module.modules.other.DiscordRPCModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.lwjgl.input.Keyboard;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Module {
    protected ArrayList<ModuleSettingsList> settings;

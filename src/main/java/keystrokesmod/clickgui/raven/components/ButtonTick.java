@@ -1,14 +1,14 @@
 
 package keystrokesmod.clickgui.raven.components;
 
-import java.awt.Color;
-
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.client.Gui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 public class ButtonTick extends Component {
    private final int c = (new Color(20, 255, 0)).getRGB();

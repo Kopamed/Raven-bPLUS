@@ -1,9 +1,5 @@
 package keystrokesmod.module.modules.minigames;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.util.Iterator;
-
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingTick;
@@ -25,6 +21,10 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+import java.awt.*;
+import java.io.IOException;
+import java.util.Iterator;
 
 public class BridgeInfo extends Module {
    public static ModuleDesc a;

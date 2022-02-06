@@ -3,14 +3,12 @@ package keystrokesmod.module.modules.other;
 import keystrokesmod.discordRPC.DiscordRPCManager;
 import keystrokesmod.discordRPC.RPCMode;
 import keystrokesmod.main.Ravenbplus;
+import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.module.Module;
 import keystrokesmod.utils.Utils;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.minecraftforge.common.MinecraftForge;
-
-import java.util.Locale;
 
 public class DiscordRPCModule extends Module {
     public static final DiscordRPCManager rpc = new DiscordRPCManager();

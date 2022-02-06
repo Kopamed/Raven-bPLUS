@@ -1,8 +1,8 @@
 package keystrokesmod.module.modules.hotkey;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 

@@ -1,10 +1,8 @@
 package keystrokesmod.module.modules.fun;
 
-import keystrokesmod.module.ModuleSettingDoubleSlider;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingDoubleSlider;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 

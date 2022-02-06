@@ -1,11 +1,8 @@
 package keystrokesmod.module.modules.render;
 
-import java.awt.Color;
-import java.util.Iterator;
-
 import keystrokesmod.module.Module;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.utils.Utils;
 import net.minecraft.tileentity.TileEntity;
@@ -13,6 +10,9 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.awt.*;
+import java.util.Iterator;
 
 public class ChestESP extends Module {
    public static ModuleSettingSlider a;

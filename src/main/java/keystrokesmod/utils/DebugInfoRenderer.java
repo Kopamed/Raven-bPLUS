@@ -1,17 +1,16 @@
 
 package keystrokesmod.utils;
 
-import java.awt.Color;
-
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.modules.player.Freecam;
 import keystrokesmod.module.modules.client.SelfDestruct;
-import keystrokesmod.utils.Utils;
+import keystrokesmod.module.modules.player.Freecam;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+import java.awt.*;
 
 public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
    private static final Minecraft mc = Minecraft.getMinecraft();

@@ -1,11 +1,11 @@
 package keystrokesmod.module.modules.other;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.combat.AimAssist;
+import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;

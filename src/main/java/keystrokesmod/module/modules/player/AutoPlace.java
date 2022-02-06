@@ -1,7 +1,6 @@
 package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.*;
-import keystrokesmod.module.Module;
 import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;

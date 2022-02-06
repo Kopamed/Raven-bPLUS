@@ -2,9 +2,9 @@ package keystrokesmod.module.modules.render;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.modules.world.AntiBot;
+import keystrokesmod.utils.Utils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;

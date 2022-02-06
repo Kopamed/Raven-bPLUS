@@ -2,8 +2,8 @@ package keystrokesmod.module.modules.combat;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.utils.Utils;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;

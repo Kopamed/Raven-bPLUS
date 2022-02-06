@@ -2,8 +2,8 @@ package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
-import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.module.ModuleSettingSlider;
+import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.utils.Utils;
 import org.lwjgl.input.Keyboard;
 

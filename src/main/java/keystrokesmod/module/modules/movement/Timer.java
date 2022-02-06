@@ -1,10 +1,10 @@
 package keystrokesmod.module.modules.movement;
 
+import keystrokesmod.clickgui.raven.ClickGui;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.clickgui.raven.ClickGui;
+import keystrokesmod.utils.Utils;
 
 public class Timer extends Module {
    public static ModuleSettingSlider a;

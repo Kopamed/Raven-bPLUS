@@ -1,7 +1,7 @@
 package keystrokesmod.module.modules.player;
 
-import keystrokesmod.utils.Utils;
 import keystrokesmod.module.*;
+import keystrokesmod.utils.Utils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 

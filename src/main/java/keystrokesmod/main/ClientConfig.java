@@ -1,16 +1,16 @@
 package keystrokesmod.main;
 
+import keystrokesmod.clickgui.raven.ClickGui;
+import keystrokesmod.clickgui.raven.components.ButtonCategory;
+import keystrokesmod.keystroke.KeyStroke;
+import keystrokesmod.module.modules.HUD;
+import keystrokesmod.utils.Utils;
+import net.minecraft.client.Minecraft;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import keystrokesmod.clickgui.raven.ClickGui;
-import keystrokesmod.clickgui.raven.components.ButtonCategory;
-import keystrokesmod.module.modules.HUD;
-import keystrokesmod.utils.Utils;
-import keystrokesmod.keystroke.KeyStroke;
-import net.minecraft.client.Minecraft;
 
 public class ClientConfig {
    private static final Minecraft mc = Minecraft.getMinecraft();

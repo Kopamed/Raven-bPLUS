@@ -1,7 +1,5 @@
 package keystrokesmod.module.modules.player;
 
-import java.util.TimerTask;
-
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.utils.Utils;
@@ -10,6 +8,8 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+
+import java.util.TimerTask;
 
 public class BedAura extends Module {
    public static ModuleSettingSlider r;
