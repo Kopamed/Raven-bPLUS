@@ -22,8 +22,8 @@ public class MurderMystery extends Module {
    public static ModuleSettingTick a;
    public static ModuleSettingTick b;
    public static ModuleSettingTick c;
-   private static final List<EntityPlayer> mur = new ArrayList();
-   private static final List<EntityPlayer> det = new ArrayList();
+   private static final List<EntityPlayer> mur = new ArrayList<>();
+   private static final List<EntityPlayer> det = new ArrayList<>();
 
    public MurderMystery() {
       super("Murder Mystery", Module.category.minigames, 0);
@@ -114,10 +114,7 @@ public class MurderMystery extends Module {
             return false;
          }
 
-         Iterator var2 = Utils.Client.getPlayersFromScoreboard().iterator();
-
-         while(var2.hasNext()) {
-            String l = (String)var2.next();
+         for (String l : Utils.Client.getPlayersFromScoreboard()) {
             String s = Utils.Java.str(l);
             String c3 = "Role:";
             if (s.contains(c3)) {

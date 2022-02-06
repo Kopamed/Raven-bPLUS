@@ -101,7 +101,7 @@ public class ClientConfig {
 
 
    public void saveConfig() {
-      List<String> config = new ArrayList<String>();
+      List<String> config = new ArrayList<>();
       config.add(hypixelApiKeyPrefix + Utils.URLS.hypixelApiKey);
       config.add(pasteApiKeyPrefix + Utils.URLS.pasteApiKey);
       config.add(clickGuiPosPrefix + getClickGuiPos());
@@ -155,7 +155,7 @@ public class ClientConfig {
    }
 
    private List<String> parseConfigFile() {
-      List<String> configFileContents = new ArrayList<String>();
+      List<String> configFileContents = new ArrayList<>();
       Scanner reader = null;
       try {
          reader = new Scanner(this.configFile);

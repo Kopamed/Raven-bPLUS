@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,7 +104,7 @@ public class HUD extends Module {
                ModuleManager.sortLongShort();
             }
          }
-         List<Module> en = new ArrayList(Ravenbplus.moduleManager.listofmods());
+         List<Module> en = new ArrayList<>(Ravenbplus.moduleManager.listofmods());
          if(en.isEmpty()) return;
 
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
@@ -132,12 +133,9 @@ public class HUD extends Module {
             hudY = mc.displayHeight/2 - textBoxHeight;
          }
 
-         Iterator var5 = en.iterator();
-
-         while(var5.hasNext()) {
-            Module m = (Module)var5.next();
+         for (Module m : en) {
             if (m.isEnabled() && m != this) {
-               if(HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT){
+               if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
@@ -252,7 +250,7 @@ public class HUD extends Module {
             var5.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2) - Utils.mc.fontRendererObj.getStringWidth(o1));
          }
          else if(HUD.positionMode == Utils.HUD.PositionMode.DOWNLEFT || HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
-            var5.sort((o2, o1) -> Utils.mc.fontRendererObj.getStringWidth(o2) - Utils.mc.fontRendererObj.getStringWidth(o1));
+            var5.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2)));
          }
 
          if(HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT){

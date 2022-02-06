@@ -5,7 +5,6 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.other.DiscordRPCModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;

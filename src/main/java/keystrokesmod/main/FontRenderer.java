@@ -83,7 +83,7 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
             int j = (i >> 3 & 1) * 85;
             int k = (i >> 2 & 1) * 170 + j;
             int l = (i >> 1 & 1) * 170 + j;
-            int i1 = (i >> 0 & 1) * 170 + j;
+            int i1 = (i & 1) * 170 + j;
 
             if (i == 6)
             {
@@ -158,13 +158,13 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
                 int j2 = k1 * l + i2;
                 boolean flag = true;
 
-                for (int k2 = 0; k2 < k && flag; ++k2)
+                for (int k2 = 0; k2 < k; ++k2)
                 {
                     int l2 = (l1 * l + k2) * i;
 
-                    if ((aint[j2 + l2] >> 24 & 255) != 0)
-                    {
+                    if ((aint[j2 + l2] >> 24 & 255) != 0) {
                         flag = false;
+                        break;
                     }
                 }
 
@@ -925,7 +925,7 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
      */
     public static String getFormatFromString(String text)
     {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         int i = -1;
         int j = text.length();
 
@@ -937,16 +937,16 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
 
                 if (isFormatColor(c0))
                 {
-                    s = "\u00a7" + c0;
+                    s = new StringBuilder("\u00a7" + c0);
                 }
                 else if (isFormatSpecial(c0))
                 {
-                    s = s + "\u00a7" + c0;
+                    s.append("\u00a7").append(c0);
                 }
             }
         }
 
-        return s;
+        return s.toString();
     }
 
     /**

@@ -6,6 +6,8 @@ import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Config extends Command {
@@ -108,15 +110,15 @@ public class Config extends Command {
                             CommandLine.print("&cWith 'setkey paste <key>'", 0);
                             return;
                         }
-                        if(inConfigs(info.get(1).replace("\"", ""))){
+                        if (inConfigs(info.get(1).replace("\"", ""))){
                             CommandLine.print("&cA config with this name exists!", 0);
                             CommandLine.print("&cto overwrite the existing config, run", 0);
                             CommandLine.print("&e'cfg save link " + info.get(1).replace("\"", "") + "'", 0);
-                        } else{
+                        } else {
                             List<String> config = new ArrayList<>();
-                            for(String line : info.get(2).replace("\"", "").split("/")){
-                                config.add(line);
-                            }
+
+                            Collections.addAll(config, info.get(2).replace("\"", "").split("/"));
+
                             Ravenbplus.configManager.saveNewConfig(config, info.get(1).replace("\"", ""));
                             CommandLine.print("&aSaved config!", 0);
                             CommandLine.print("&aTo transition to config " + info.get(1).replace("\"", "") + " run", 0);
@@ -214,17 +216,11 @@ public class Config extends Command {
                             return;
                         }
 
-
-
-                            List<String> config = new ArrayList<>();
-                            for(String line : info.get(2).replace("\"", "").split("/")){
-                                config.add(line);
-                            }
-                            Ravenbplus.configManager.saveNewConfig(config, args[3]);
-                            CommandLine.print("&aSaved config!", 0);
-                            CommandLine.print("&aTo transition to config " + args[3] + " run", 0);
-                            CommandLine.print("§3'cfg load " + args[3]+ "'", 0);
-
+                        List<String> config = new ArrayList<>(Arrays.asList(info.get(2).replace("\"", "").split("/")));
+                        Ravenbplus.configManager.saveNewConfig(config, args[3]);
+                        CommandLine.print("&aSaved config!", 0);
+                        CommandLine.print("&aTo transition to config " + args[3] + " run", 0);
+                        CommandLine.print("§3'cfg load " + args[3]+ "'", 0);
                     } else {
                         CommandLine.print("&cOnly pastebin links are supported!", 1);
                     }

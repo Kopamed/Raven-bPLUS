@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ButtonCategory {
-   public ArrayList<Component> modulesInCategory = new ArrayList();
+   public ArrayList<Component> modulesInCategory = new ArrayList<>();
    public Module.category categoryName;
    private boolean categoryOpened;
    private int width;

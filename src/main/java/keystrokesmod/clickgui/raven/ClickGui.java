@@ -30,7 +30,7 @@ public class ClickGui extends GuiScreen {
    public static ArrayList<ButtonCategory> categoryList;
 
    public ClickGui() {
-      categoryList = new ArrayList();
+      categoryList = new ArrayList<>();
       int topOffset = 5;
       Module.category[] values;
       int categoryAmount = (values = Module.category.values()).length;
@@ -46,9 +46,9 @@ public class ClickGui extends GuiScreen {
 
    public void initMain() {
       (this.aT = this.aE = this.aR = new Timer(500.0F)).start();
-      this.sf = Ravenbplus.getExecutor().schedule(() -> {
-         (this.aL = new Timer(650.0F)).start();
-      }, 650L, TimeUnit.MILLISECONDS);
+      this.sf = Ravenbplus.getExecutor().schedule(() -> (
+              this.aL = new Timer(650.0F)
+      ).start(), 650L, TimeUnit.MILLISECONDS);
 
    }
 

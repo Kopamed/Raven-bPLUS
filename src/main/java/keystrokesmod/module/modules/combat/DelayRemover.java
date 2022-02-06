@@ -42,6 +42,5 @@ public class DelayRemover extends Module {
             this.disable();
          }
       }
-
    }
 }

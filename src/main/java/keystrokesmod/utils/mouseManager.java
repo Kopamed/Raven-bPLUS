@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class mouseManager {
-   private static final List<Long> leftClicks = new ArrayList();
-   private static final List<Long> rightClicks = new ArrayList();
+   private static final List<Long> leftClicks = new ArrayList<>();
+   private static final List<Long> rightClicks = new ArrayList<>();
    public static long leftClickTimer = 0L;
    public static long rightClickTimer = 0L;
 

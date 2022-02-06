@@ -105,7 +105,7 @@ public class WTap extends Module {
 
                     //////////System.out.println("Continued");
 
-                    if(!(chance.getInput() == 100 ? true : Math.random() <= chance.getInput()/100))
+                    if(!(chance.getInput() == 100 || Math.random() <= chance.getInput() / 100))
                         return;
 
                     if(!alreadyHit){

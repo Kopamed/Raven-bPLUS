@@ -15,7 +15,7 @@ public class KeyStrokeMouse {
    private final int c;
    private final int d;
    private final int e;
-   private final List<Long> f = new ArrayList();
+   private final List<Long> f = new ArrayList<>();
    private boolean g = true;
    private long h = 0L;
 

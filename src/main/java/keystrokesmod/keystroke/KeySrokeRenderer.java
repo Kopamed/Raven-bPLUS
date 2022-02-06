@@ -77,24 +77,14 @@ public class KeySrokeRenderer {
    }
 
    private void drawMovementKeys(int x, int y, int textColor) {
-      KeyStrokeKeyRenderer[] var4 = this.b;
-      int var5 = var4.length;
-
-      for(int var6 = 0; var6 < var5; ++var6) {
-         KeyStrokeKeyRenderer key = var4[var6];
+      for (KeyStrokeKeyRenderer key : this.b) {
          key.renderKey(x, y, textColor);
       }
-
    }
 
    private void drawMouseButtons(int x, int y, int textColor) {
-      KeyStrokeMouse[] var4 = this.c;
-      int var5 = var4.length;
-
-      for(int var6 = 0; var6 < var5; ++var6) {
-         KeyStrokeMouse button = var4[var6];
+      for (KeyStrokeMouse button : this.c) {
          button.n(x, y, textColor);
       }
-
    }
 }

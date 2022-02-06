@@ -44,7 +44,7 @@ public class Xray extends Module {
    }
 
    public void onEnable() {
-      this.ren = new ArrayList();
+      this.ren = new ArrayList<>();
       (this.t = new java.util.Timer()).scheduleAtFixedRate(this.t(), 0L, 200L);
    }
 
@@ -58,7 +58,7 @@ public class Xray extends Module {
    }
 
    private TimerTask t() {
-      TimerTask t = new TimerTask() {
+      return new TimerTask() {
          public void run() {
             Xray.this.ren.clear();
             int ra = (int)Xray.r.getInput();
@@ -79,17 +79,14 @@ public class Xray extends Module {
 
          }
       };
-      return t;
    }
 
    @SubscribeEvent
    public void orl(RenderWorldLastEvent ev) {
       if (Utils.Player.isPlayerInGame() && !this.ren.isEmpty()) {
-         List<BlockPos> tRen = new ArrayList(this.ren);
-         Iterator var3 = tRen.iterator();
+         List<BlockPos> tRen = new ArrayList<>(this.ren);
 
-         while(var3.hasNext()) {
-            BlockPos p = (BlockPos)var3.next();
+         for (BlockPos p : tRen) {
             this.dr(p);
          }
       }

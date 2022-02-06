@@ -36,7 +36,7 @@ plugins {
 */
 
 version = "1.1.0"
-group= "club.sk1er.keystrokes"
+group = "club.sk1er.keystrokes"
 archivesBaseName = "[1.8.9] BetterKeystrokes V"
 
 minecraft {

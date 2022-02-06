@@ -61,13 +61,11 @@ public class BridgeInfo extends Module {
    public void update() {
       if (!this.en.isEmpty() && this.ibd()) {
          EntityPlayer enem = null;
-         Iterator var2 = mc.theWorld.loadedEntityList.iterator();
 
-         while(var2.hasNext()) {
-            Entity e = (Entity)var2.next();
+         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
                if (e.getName().equals(this.en)) {
-                  enem = (EntityPlayer)e;
+                  enem = (EntityPlayer) e;
                }
             } else if (e instanceof EntityArmorStand) {
                String g2t = "Jump in to score!";
@@ -156,10 +154,7 @@ public class BridgeInfo extends Module {
 
    private boolean ibd() {
       if (Utils.Client.isHyp()) {
-         Iterator var1 = Utils.Client.getPlayersFromScoreboard().iterator();
-
-         while(var1.hasNext()) {
-            String s = (String)var1.next();
+         for (String s : Utils.Client.getPlayersFromScoreboard()) {
             String s2 = s.toLowerCase();
             String bd = "the brid";
             if (s2.contains("mode") && s2.contains(bd)) {
@@ -235,9 +230,8 @@ public class BridgeInfo extends Module {
          String[] var5 = t.split("-");
          int var6 = var5.length;
 
-         for(int var7 = 0; var7 < var6; ++var7) {
-            String s = var5[var7];
-            fr.drawString(s, (float)x, (float)y, BridgeInfo.rgb, true);
+         for (String s : var5) {
+            fr.drawString(s, (float) x, (float) y, BridgeInfo.rgb, true);
             y += fr.FONT_HEIGHT + 2;
          }
 

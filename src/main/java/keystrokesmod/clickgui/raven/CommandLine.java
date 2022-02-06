@@ -21,7 +21,7 @@ public class CommandLine {
    private static final List<Integer> cs = Arrays.asList((new Color(170, 107, 148, 50)).getRGB(), (new Color(122, 158, 134, 50)).getRGB(), (new Color(16, 16, 16, 50)).getRGB(), (new Color(64, 114, 148, 50)).getRGB());
    private static int ccs = 0;
    private static int lccs = -1;
-   public static List<String> commandLineHistory = new ArrayList();
+   public static List<String> commandLineHistory = new ArrayList<>();
 
    public static void rCMD(String c) {
       if (!c.isEmpty()) {

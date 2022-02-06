@@ -26,7 +26,7 @@ public class DuelsStats extends Module {
    private String ign = "";
    private String en = "";
    private static final String[] thr_lvl;
-   private final List<String> q = new ArrayList();
+   private final List<String> q = new ArrayList<>();
 
    public DuelsStats() {
       super("Duels Stats", Module.category.minigames, 0);

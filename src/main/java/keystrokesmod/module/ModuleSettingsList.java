@@ -1,13 +1,6 @@
 package keystrokesmod.module;
 
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
-import java.io.File;
-import java.lang.reflect.Field;
-
 public class ModuleSettingsList {
-   private static final Field valueField = ReflectionHelper.findField(String.class, "value");;
-
    public String mode;
    public String settingName;
 
@@ -21,6 +14,8 @@ public class ModuleSettingsList {
    }
 
 /*
+   private static final java.lang.reflect.Field valueField = net.minecraftforge.fml.relauncher.ReflectionHelper.findField(String.class, "value");;
+
    // IDK what is this
    public static void nn(String s) {
       if (valueField == null) return;

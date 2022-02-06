@@ -38,7 +38,7 @@ public class AutoBlock extends Module {
             return;
         }
 
-        if(Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin()&& mc.objectMouseOver.entityHit instanceof Entity && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax() && (chance.getInput() == 100 ? true : Math.random() <= chance.getInput()/100)){
+        if (Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin()&& mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax() && (chance.getInput() == 100 || Math.random() <= chance.getInput() / 100)){
             engaged = true;
             engagedTime.setCooldown((long)duration.getInputMax());
             engagedTime.start();

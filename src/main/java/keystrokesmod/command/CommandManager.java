@@ -16,8 +16,8 @@ public class CommandManager {
     public List<Command> sortedCommandList;
 
     public CommandManager() {
-        this.commandList = new ArrayList<Command>();
-        this.sortedCommandList = new ArrayList<Command>();
+        this.commandList = new ArrayList<>();
+        this.sortedCommandList = new ArrayList<>();
         this.addCommand(new Update());
         this.addCommand(new Help());
         this.addCommand(new SetKey());
@@ -77,11 +77,9 @@ public class CommandManager {
 
     public void sort() {
         if (HUD.alphabeticalSort.isToggled()) {
-            Collections.sort(this.sortedCommandList, Comparator.comparing(Command::getName));
+            this.sortedCommandList.sort(Comparator.comparing(Command::getName));
         } else {
-            Collections.sort(this.sortedCommandList, (o1, o2) -> {
-                return Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName());
-            });
+            this.sortedCommandList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
         }
 
     }

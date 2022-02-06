@@ -38,9 +38,7 @@ public class AntiBot extends Module {
    public void update() {
       if (a.isToggled() && !newEnt.isEmpty()) {
          long now = System.currentTimeMillis();
-         newEnt.values().removeIf((e) -> {
-            return e < now - 4000L;
-         });
+         newEnt.values().removeIf((e) -> e < now - 4000L);
       }
 
    }

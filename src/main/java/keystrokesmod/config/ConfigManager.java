@@ -56,7 +56,7 @@ public class ConfigManager {
     }
 
     private List<String> getCurrentLoadedConfig() {
-        List<String> finalString = new ArrayList<String>();
+        List<String> finalString = new ArrayList<>();
 
         for(Module clientModule : Ravenbplus.moduleManager.listofmods()){
 
@@ -104,7 +104,7 @@ public class ConfigManager {
 
     public void save() {
         //////System.out.println("i save ");
-        ArrayList<String> finalString = new ArrayList<String>();
+        ArrayList<String> finalString = new ArrayList<>();
 
         for(Module clientModule : Ravenbplus.moduleManager.listofmods()){
 
@@ -208,8 +208,7 @@ public class ConfigManager {
                     //System.out.println("it is " + toggled);
                     int keyBind = Integer.parseInt(currentModule[3]);
                     if (module.getName().equalsIgnoreCase("hud") && toggled){
-                        Module hud = module;
-                        hud.enable();
+                        module.enable();
                     }
 
                     if (module.getName().equalsIgnoreCase("Command line") && toggled){
@@ -297,7 +296,7 @@ public class ConfigManager {
 
     public void updateConfig(boolean reboot) {
         List<String> config = this.parseConfigFile();
-        List<String> newConfig = new ArrayList<String>();
+        List<String> newConfig = new ArrayList<>();
         String newSep = "~";
 
         for(String line : config){
@@ -332,7 +331,7 @@ public class ConfigManager {
     }
 
     public List<String> parseConfigFile() {
-        List<String> configFileContents = new ArrayList<String>();
+        List<String> configFileContents = new ArrayList<>();
 
         try (Scanner reader = new Scanner(this.currentConfig)){
             while (reader.hasNextLine())
@@ -345,7 +344,7 @@ public class ConfigManager {
     }
 
     public List<String> parseConfigFile(String cfg) {
-        List<String> configFileContents = new ArrayList<String>();
+        List<String> configFileContents = new ArrayList<>();
 
         try (Scanner reader = new Scanner(new File(this.configDirecotry, cfg + this.getExtension()));) {
             while (reader.hasNextLine())
@@ -430,7 +429,7 @@ public class ConfigManager {
     }
 
     public ArrayList<String> listConfigs() {
-        ArrayList<String> proBlockGameCheater = new ArrayList<String>();
+        ArrayList<String> proBlockGameCheater = new ArrayList<>();
         for (File config : this.configDirecotry.listFiles()) {
             if (config.getName().endsWith(this.extension)) {
                 proBlockGameCheater.add(config.getName().replace(this.getExtension(), ""));

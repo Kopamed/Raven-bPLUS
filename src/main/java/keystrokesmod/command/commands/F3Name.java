@@ -14,13 +14,13 @@ public class F3Name extends Command {
             this.incorrectArgs();
             return;
         }
-        String wut = args[1];
+        StringBuilder wut = new StringBuilder(args[1]);
         if(args.length > 2){
             for(int i = 2; i < args.length; i++){
-                wut += " " + args[i];
+                wut.append(" ").append(args[i]);
             }
         }
-        ClientNameSpoof.newName = wut;
+        ClientNameSpoof.newName = wut.toString();
         CommandLine.print("§aSet client name to " + wut, 1);
     }
 }

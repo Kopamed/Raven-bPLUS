@@ -184,7 +184,7 @@ public class ModuleManager {
    }
 
    public static void sortLongShort() {
-      modsList.sort((o2, o1) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+      modsList.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())));
    }
 
    public static void sortShortLong() {

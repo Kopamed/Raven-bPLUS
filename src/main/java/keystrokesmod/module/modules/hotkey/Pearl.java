@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Pearl extends Module {
     private final ModuleSettingTick preferSlot;
     private final ModuleSettingSlider hotbarSlotPreference;
-    public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<KeyBinding>();
+    public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<>();
     public Pearl() {
         super("Pearl", category.hotkey, 0);
 

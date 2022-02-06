@@ -30,8 +30,8 @@ public class Version {
         if (latestVersion.isEmpty())
             return false;
 
-        ArrayList<Integer> currentVersionSplited = new ArrayList<Integer>();
-        ArrayList<Integer> latestVersionSplited = new ArrayList<Integer>();
+        ArrayList<Integer> currentVersionSplited = new ArrayList<>();
+        ArrayList<Integer> latestVersionSplited = new ArrayList<>();
 
         for (String whatHelp : currentVersion.split("-")) {
             currentVersionSplited.add(Integer.parseInt(whatHelp));

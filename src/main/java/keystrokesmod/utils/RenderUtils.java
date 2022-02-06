@@ -1,10 +1,12 @@
 package keystrokesmod.utils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -29,21 +31,20 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         try {
-            Class oclass = Minecraft.getMinecraft().entityRenderer.getClass();
-            Method method = oclass.getDeclaredMethod("setupCameraTransform", float.class, int.class);
+            Method m = ReflectionHelper.findMethod(
+                    EntityRenderer.class,
+                    Minecraft.getMinecraft().entityRenderer,
+                    new String[]{
+                            "func_78479_a",
+                            "setupCameraTransform"
+                    },
+                    float.class, int.class
+            );
 
-            method.setAccessible(true);
-            method.invoke(Minecraft.getMinecraft().entityRenderer, Utils.Client.getTimer().renderPartialTicks, 0);
-        } catch (Exception exception) {
-            try {
-                Class oclass1 = Minecraft.getMinecraft().entityRenderer.getClass();
-                Method method1 = oclass1.getDeclaredMethod("func_78479_a", float.class, int.class);
-
-                method1.setAccessible(true);
-                method1.invoke(Minecraft.getMinecraft().entityRenderer, Utils.Client.getTimer().renderPartialTicks, 0);
-            } catch (Exception exception1) {
-                ;
-            }
+            m.setAccessible(true);
+            m.invoke(Minecraft.getMinecraft().entityRenderer, Utils.Client.getTimer().renderPartialTicks, 0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -55,9 +56,8 @@ public class RenderUtils {
 
         color.getColorComponents(afloat);
         color1.getColorComponents(afloat1);
-        Color color2 = new Color(afloat[0] * f + afloat1[0] * f1, afloat[1] * f + afloat1[1] * f1, afloat[2] * f + afloat1[2] * f1);
 
-        return color2;
+        return new Color(afloat[0] * f + afloat1[0] * f1, afloat[1] * f + afloat1[1] * f1, afloat[2] * f + afloat1[2] * f1);
     }
 
     public static void drawRect(double d0, double d1, double d2, double d3, int i) {

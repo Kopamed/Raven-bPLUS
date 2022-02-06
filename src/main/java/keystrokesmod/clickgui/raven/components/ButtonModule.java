@@ -26,7 +26,7 @@ public class ButtonModule extends Component {
       this.mod = mod;
       this.category = p;
       this.o = o;
-      this.settings = new ArrayList();
+      this.settings = new ArrayList<>();
       this.po = false;
       int y = o + 12;
       if (!mod.getSettings().isEmpty()) {
@@ -61,20 +61,14 @@ public class ButtonModule extends Component {
    public void setModuleStartAt(int n) {
       this.o = n;
       int y = this.o + 16;
-      Iterator var3 = this.settings.iterator();
 
-      while(true) {
-         while(var3.hasNext()) {
-            Component co = (Component)var3.next();
-            co.setModuleStartAt(y);
-            if (co instanceof ButtonSlider  || co instanceof ButtonMinMaxSlider) {
-               y += 16;
-            } else if (co instanceof ButtonTick || co instanceof AutoConfig || co instanceof ButtonDesc) {
-               y += 12;
-            }
+      for (Component co : this.settings) {
+         co.setModuleStartAt(y);
+         if (co instanceof ButtonSlider || co instanceof ButtonMinMaxSlider) {
+            y += 16;
+         } else if (co instanceof ButtonTick || co instanceof AutoConfig || co instanceof ButtonDesc) {
+            y += 12;
          }
-
-         return;
       }
    }
 
@@ -182,20 +176,17 @@ public class ButtonModule extends Component {
          return 16;
       } else {
          int h = 16;
-         Iterator var2 = this.settings.iterator();
 
-         while(true) {
-            while(var2.hasNext()) {
-               Component c = (Component)var2.next();
-               if (c instanceof ButtonSlider || c instanceof ButtonMinMaxSlider) {
-                  h += 16;
-               } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc) {
-                  h += 12;
-               }
+         for (Component c : this.settings) {
+            if (c instanceof ButtonSlider || c instanceof ButtonMinMaxSlider) {
+               h += 16;
+            } else if (c instanceof ButtonTick || c instanceof AutoConfig || c instanceof ButtonDesc) {
+               h += 12;
             }
-
-            return h;
          }
+
+         return h;
+
       }
    }
 

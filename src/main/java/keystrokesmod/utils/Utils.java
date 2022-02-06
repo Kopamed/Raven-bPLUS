@@ -179,7 +179,7 @@ public class Utils {
       }
 
       public static ArrayList<Integer> playerWearingArmor() {
-         ArrayList<Integer> wearingArmor = new ArrayList<Integer>();
+         ArrayList<Integer> wearingArmor = new ArrayList<>();
          for(int armorPiece = 0; armorPiece < 4; armorPiece++){
             if(mc.thePlayer.getCurrentArmor(armorPiece) != null){
                if (armorPiece == 0) {
@@ -211,8 +211,7 @@ public class Utils {
       }
 
       public static boolean tryingToCombo() {
-         if(Mouse.isButtonDown(0) && Mouse.isButtonDown(1)) return true;
-         return false;
+         return Mouse.isButtonDown(0) && Mouse.isButtonDown(1);
       }
 
       public static float[] getTargetRotations(Entity q) {
@@ -322,9 +321,7 @@ public class Utils {
          List<NetworkPlayerInfo> yes = new ArrayList<>();
          List<NetworkPlayerInfo> mmmm = new ArrayList<>();
          try{
-            for(NetworkPlayerInfo e : mc.getNetHandler().getPlayerInfoMap()){
-               yes.add(e);
-            }
+            yes.addAll(mc.getNetHandler().getPlayerInfoMap());
          }catch (NullPointerException r){
             return yes;
          }
@@ -512,18 +509,16 @@ public class Utils {
       }
 
       public static List<String> getPlayersFromScoreboard() {
-         List<String> lines = new ArrayList();
+         List<String> lines = new ArrayList<>();
          if (mc.theWorld == null) {
             return lines;
          } else {
             Scoreboard scoreboard = mc.theWorld.getScoreboard();
-            if (scoreboard == null) {
-               return lines;
-            } else {
+            if (scoreboard != null) {
                ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
                if (objective != null) {
                   Collection<Score> scores = scoreboard.getSortedScores(objective);
-                  List<Score> list = new ArrayList();
+                  List<Score> list = new ArrayList<>();
                   Iterator<Score> var5 = scores.iterator();
 
                   Score score;
@@ -549,8 +544,8 @@ public class Utils {
                   }
 
                }
-               return lines;
             }
+            return lines;
          }
       }
 
@@ -633,16 +628,12 @@ public class Utils {
       }
 
       public static ArrayList<String> toArrayList(String[] fakeList){
-         ArrayList<String> e = new ArrayList<String>(Arrays.asList(fakeList));
-
-         return e;
+         return new ArrayList<>(Arrays.asList(fakeList));
       }
 
       public static List<String> StringListToList(String[] whytho){
-         List<String> howTohackNasaWorking2021NoScamDotCom = new ArrayList<String>();
-         for(String istlldontunderstandwhy : whytho){
-            howTohackNasaWorking2021NoScamDotCom.add(istlldontunderstandwhy);
-         }
+         List<String> howTohackNasaWorking2021NoScamDotCom = new ArrayList<>();
+         Collections.addAll(howTohackNasaWorking2021NoScamDotCom, whytho);
          return howTohackNasaWorking2021NoScamDotCom;
       }
 
@@ -712,13 +703,11 @@ public class Utils {
       }
 
       public static boolean isLink(String string){
-         if(string.startsWith("http") && string.contains(".") && string.contains("://")) return true;
-         return false;
+         return string.startsWith("http") && string.contains(".") && string.contains("://");
       }
 
       public static boolean isPasteeLink(String link){
-         if(isLink(link) && link.contains("paste.ee")) return true;
-         return false;
+         return isLink(link) && link.contains("paste.ee");
       }
 
       public static String makeRawPasteePaste(String arg) {
@@ -1233,7 +1222,7 @@ public class Utils {
 
       public static PositionMode getPostitionMode(int marginX, int marginY, double height, double width) {
          int halfHeight = (int)(height / 4);
-         int halfWidth = (int)(width / 1);
+         int halfWidth = (int) width;
          PositionMode positionMode = null;
          // up left
 

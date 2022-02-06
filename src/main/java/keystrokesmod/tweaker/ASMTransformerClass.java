@@ -46,11 +46,10 @@ public class ASMTransformerClass implements IClassTransformer {
       ClassReader classReader = new ClassReader(basicClass);
       ClassNode classNode = new ClassNode();
       classReader.accept(classNode, 8);
-      tr.forEach((transformer) -> {
-         transformer.transform(classNode, transformedName);
-      });
-      ClassWriter classWriter = new ClassWriter(3);
 
+      tr.forEach((transformer) -> transformer.transform(classNode, transformedName));
+
+      ClassWriter classWriter = new ClassWriter(3);
       try {
          classNode.accept(classWriter);
       } catch (Throwable ignored) {}
