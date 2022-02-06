@@ -50,8 +50,8 @@ public class TransformerFMLCommonHandler implements Transformer {
 
     public static String getModName() {
         ClientNameSpoof cns = (ClientNameSpoof) Ravenbplus.moduleManager.getModuleByName("ClientNameSpoofer");
-        if(cns.isEnabled()){
-            return cns.newName;
+        if (cns.isEnabled()){
+            return ClientNameSpoof.newName;
         }
         List<String> modNames = Lists.newArrayListWithExpectedSize(3);
         modNames.add("fml");

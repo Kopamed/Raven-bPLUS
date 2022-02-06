@@ -19,7 +19,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ClickGui extends GuiScreen {
-   private ScheduledFuture sf;
+   private ScheduledFuture<?> sf;
    private Timer aT;
    private Timer aL;
    private Timer aE;
@@ -188,13 +188,13 @@ public class ClickGui extends GuiScreen {
    }
 
    public void mouseClicked(int x, int y, int mouseButton) throws IOException {
-      Iterator var4 = categoryList.iterator();
+      Iterator<ButtonCategory> btnCat = categoryList.iterator();
 
       while(true) {
          ButtonCategory category;
          do {
             do {
-               if (!var4.hasNext()) {
+               if (!btnCat.hasNext()) {
                   if (keystrokesmod.module.modules.client.CommandLine.a) {
                      this.c.mouseClicked(x, y, mouseButton);
                      super.mouseClicked(x, y, mouseButton);
@@ -203,7 +203,7 @@ public class ClickGui extends GuiScreen {
                   return;
                }
 
-               category = (ButtonCategory)var4.next();
+               category = btnCat.next();
                if (category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y) && mouseButton == 0) {
                   category.mousePressed(true);
                   category.xx = x - category.getX();
@@ -228,24 +228,24 @@ public class ClickGui extends GuiScreen {
 
    public void mouseReleased(int x, int y, int s) {
       if (s == 0) {
-         Iterator var4 = categoryList.iterator();
+         Iterator<ButtonCategory> btnCat = categoryList.iterator();
 
          ButtonCategory c4t;
-         while(var4.hasNext()) {
-            c4t = (ButtonCategory)var4.next();
+         while(btnCat.hasNext()) {
+            c4t = btnCat.next();
             c4t.mousePressed(false);
          }
 
-         var4 = categoryList.iterator();
+         btnCat = categoryList.iterator();
 
          while(true) {
             do {
                do {
-                  if (!var4.hasNext()) {
+                  if (!btnCat.hasNext()) {
                      return;
                   }
 
-                  c4t = (ButtonCategory)var4.next();
+                  c4t = btnCat.next();
                } while(!c4t.isOpened());
             } while(c4t.getModules().isEmpty());
 
@@ -263,13 +263,13 @@ public class ClickGui extends GuiScreen {
       if (k == 1) {
          this.mc.displayGuiScreen(null);
       } else {
-         Iterator var3 = categoryList.iterator();
+         Iterator<ButtonCategory> btnCat = categoryList.iterator();
 
          while(true) {
-            ButtonCategory c4t;
+            ButtonCategory cat;
             do {
                do {
-                  if (!var3.hasNext()) {
+                  if (!btnCat.hasNext()) {
                      if (keystrokesmod.module.modules.client.CommandLine.a) {
                         String cm = this.c.getText();
                         if (k == 28 && !cm.isEmpty()) {
@@ -284,11 +284,11 @@ public class ClickGui extends GuiScreen {
                      return;
                   }
 
-                  c4t = (ButtonCategory)var3.next();
-               } while(!c4t.isOpened());
-            } while(c4t.getModules().isEmpty());
+                  cat = btnCat.next();
+               } while(!cat.isOpened());
+            } while(cat.getModules().isEmpty());
 
-            for (Component c : c4t.getModules()) {
+            for (Component c : cat.getModules()) {
                c.ky(t, k);
             }
          }
@@ -300,7 +300,6 @@ public class ClickGui extends GuiScreen {
          CommandLine.rCMD(this.c.getText());
          this.c.setText("");
       }
-
    }
 
    public void onGuiClosed() {
@@ -309,9 +308,6 @@ public class ClickGui extends GuiScreen {
          this.sf.cancel(true);
          this.sf = null;
       }
-
-
-
    }
 
    public boolean doesGuiPauseGame() {

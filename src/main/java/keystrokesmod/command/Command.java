@@ -2,7 +2,7 @@ package keystrokesmod.command;
 
 import keystrokesmod.clickgui.raven.CommandLine;
 
-public class Command {
+public abstract class Command {
     private final String name;
     private final String help;
     private final int minArgs;

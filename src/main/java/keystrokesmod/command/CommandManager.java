@@ -7,7 +7,6 @@ import keystrokesmod.module.modules.HUD;
 import keystrokesmod.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -81,6 +80,5 @@ public class CommandManager {
         } else {
             this.sortedCommandList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
         }
-
     }
 }

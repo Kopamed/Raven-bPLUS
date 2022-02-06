@@ -17,10 +17,9 @@ public class ConfigManager {
     private File currentConfig;
     private String fileName;
     private final String extension;
-    private final String defaultConfigLocation;
     public boolean loading;
     public static String seperator ="~";
-    private boolean firstRun = false;
+
     public List<String> defaultConfig;
 
     public ConfigManager() {
@@ -34,7 +33,6 @@ public class ConfigManager {
         }
         this.fileName = "default";
         this.extension = "bplus";
-        this.defaultConfigLocation = "/assets/keystrokes/default.bplus";
 
         currentConfig = new File(configDirecotry, fileName + "." + extension);
         if (!currentConfig.exists()) {

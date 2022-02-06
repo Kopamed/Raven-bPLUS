@@ -17,17 +17,20 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.Base64;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -72,10 +75,11 @@ public class Ravenbplus {
    public static String version = Version.getFullVersion();
 
    static {
-      moduleManager = new ModuleManager();
-
       osName = System.getProperty("os.name").toLowerCase();
       osArch = System.getProperty("os.arch").toLowerCase();
+
+      moduleManager = new ModuleManager();
+      moduleManager.r3g1st3r();
    }
 
    public Ravenbplus() {
@@ -95,8 +99,6 @@ public class Ravenbplus {
 
    @EventHandler
    public void init(FMLInitializationEvent e) {
-      moduleManager.r3g1st3r();
-
       MinecraftForge.EVENT_BUS.register(this);
 
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
