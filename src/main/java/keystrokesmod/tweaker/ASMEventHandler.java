@@ -20,6 +20,7 @@ public class ASMEventHandler {
 
    /**
     * called when Minecraft format text
+    * ASM Modules : NameHider, AntiShuffle, StringEncrypt
     */
    public static String getUnformattedTextForChat(String s) {
       if (ModuleManager.initialized) {
@@ -42,6 +43,7 @@ public class ASMEventHandler {
 
    /**
     * called when an entity moves
+    * ASM Modules : SafeWalk
     */
    public static boolean onEntityMove(Entity entity) {
       if (entity == mc.thePlayer && mc.thePlayer.onGround) {
@@ -62,13 +64,14 @@ public class ASMEventHandler {
       }
    }
 
-   public String getModName()
+   /*public String getModName()
    {
       return "lunarclient:db2533c";
-   }
+   }*/
 
    /**
     * called when a player is using an item (aka right-click)
+    * ASM Modules : NoSlow
     */
    public static void onLivingUpdate() {
       if (ModuleManager.noSlow.isEnabled()) {
@@ -81,6 +84,7 @@ public class ASMEventHandler {
 
    /**
     * called when a player is moving and hits another one
+    * ASM Modules : KeepSprint
     */
    public static void onAttackTargetEntityWithCurrentItem(Entity en) {
       if (ModuleManager.keepSprint.isEnabled()) {
@@ -92,7 +96,8 @@ public class ASMEventHandler {
    }
 
    /**
-    * called every ticks
+    * called every tick
+    * ASM Modules : AutoClicker, Reach
     */
    public static void onTick() {
       if (!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
