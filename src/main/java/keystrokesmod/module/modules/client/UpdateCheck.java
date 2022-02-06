@@ -30,22 +30,23 @@ public class UpdateCheck extends Module {
             Utils.Player.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
             Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
         }
+
         if (Version.isBeta()) {
             Ravenbplus.beta = true;
             Utils.Player.sendMessageToSelf("Man is on beta and asking for stable. You mad bruv?");
             Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
-        }
-        else {
+        } else {
             Utils.Player.sendMessageToSelf("You are on the latest public version!");
         }
+
         if (copyToClipboard.isToggled()) {
             if (Utils.Client.copyToClipboard(Ravenbplus.sourceLocation))
                 Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
         }
+
         if(openLink.isToggled()) {
-            URL url = null;
             try {
-                url = new URL(Ravenbplus.sourceLocation);
+                URL url = new URL(Ravenbplus.sourceLocation);
                 Utils.Client.openWebpage(url);
             } catch (MalformedURLException bruh) {
                 bruh.printStackTrace();

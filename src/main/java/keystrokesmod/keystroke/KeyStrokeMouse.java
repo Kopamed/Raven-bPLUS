@@ -51,7 +51,7 @@ public class KeyStrokeMouse {
       int v = color & 255;
       int c = (new Color(t, u, v)).getRGB();
       net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e, o + this.d + 34, p + this.e + 22, 2013265920 + (i << 16) + (i << 8) + i);
-      if (KeyStroke.f) {
+      if (KeyStroke.outline) {
          net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e, o + this.d + 34, p + this.e + 1, c);
          net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e + 21, o + this.d + 34, p + this.e + 22, c);
          net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e, o + this.d + 1, p + this.e + 22, c);

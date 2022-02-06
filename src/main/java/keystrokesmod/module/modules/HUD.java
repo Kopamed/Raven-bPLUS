@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -103,7 +103,7 @@ public class HUD extends Module {
                ModuleManager.sortLongShort();
             }
          }
-         List<Module> en = new ArrayList(NotAName.moduleManager.listofmods());
+         List<Module> en = new ArrayList(Ravenbplus.moduleManager.listofmods());
          if(en.isEmpty()) return;
 
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);

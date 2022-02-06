@@ -14,14 +14,14 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import java.awt.Color;
 
 public class Notification {
-    private NotificationType type;
-    private String title;
-    private String messsage;
+    private final NotificationType type;
+    private final String title;
+    private final String messsage;
     private long start;
 
-    private long fadedIn;
-    private long fadeOut;
-    private long end;
+    private final long fadedIn;
+    private final long fadeOut;
+    private final long end;
 
 
     public Notification(NotificationType type, String title, String messsage, int length) {
@@ -29,8 +29,8 @@ public class Notification {
         this.title = title;
         this.messsage = messsage;
 
-        fadedIn = 200 * length;
-        fadeOut = fadedIn + 500 * length;
+        fadedIn = 200L * length;
+        fadeOut = fadedIn + 500L * length;
         end = fadeOut + fadedIn;
     }
 

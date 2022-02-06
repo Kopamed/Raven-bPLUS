@@ -1,6 +1,5 @@
 package me.superblaubeere27.client.notifications;
 
-import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class NotificationManager {

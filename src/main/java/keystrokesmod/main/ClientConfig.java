@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import keystrokesmod.clickgui.raven.ClickGui;
 import keystrokesmod.clickgui.raven.components.ButtonCategory;
 import keystrokesmod.module.modules.HUD;
 import keystrokesmod.utils.Utils;
@@ -49,7 +50,7 @@ public class ClientConfig {
          }
 
          FileWriter writer = new FileWriter(file, false);
-         writer.write(KeyStroke.x + "\n" + KeyStroke.y + "\n" + KeyStroke.currentColorNumber + "\n" + KeyStroke.d + "\n" + KeyStroke.e + "\n" + KeyStroke.f);
+         writer.write(KeyStroke.x + "\n" + KeyStroke.y + "\n" + KeyStroke.currentColorNumber + "\n" + KeyStroke.showMouseBtn + "\n" + KeyStroke.mode + "\n" + KeyStroke.outline);
          writer.close();
       } catch (Throwable var2) {
          var2.printStackTrace();
@@ -81,13 +82,13 @@ public class ClientConfig {
                KeyStroke.currentColorNumber = Integer.parseInt(line);
                break;
             case 4:
-               KeyStroke.d = Boolean.parseBoolean(line);
+               KeyStroke.showMouseBtn = Boolean.parseBoolean(line);
                break;
             case 5:
-               KeyStroke.e = Boolean.parseBoolean(line);
+               KeyStroke.mode = Boolean.parseBoolean(line);
                break;
             case 6:
-               KeyStroke.f = Boolean.parseBoolean(line);
+               KeyStroke.outline = Boolean.parseBoolean(line);
             }
          }
 
@@ -172,7 +173,7 @@ public class ClientConfig {
       // categoryname:x:y:opened
       ////System.out.println(decryptedString);
       for (String what : decryptedString.split("/")){
-         for (ButtonCategory cat : NotAName.clickGui.categoryList) {
+         for (ButtonCategory cat : ClickGui.categoryList) {
             if(what.startsWith(cat.categoryName.name())){
                List<String> cfg = Utils.Java.StringListToList(what.split("~"));
                cat.setX(Integer.parseInt(cfg.get(1)));
@@ -185,7 +186,7 @@ public class ClientConfig {
 
    public String getClickGuiPos() {
       StringBuilder posConfig = new StringBuilder();
-      for (ButtonCategory cat : NotAName.clickGui.categoryList) {
+      for (ButtonCategory cat : ClickGui.categoryList) {
          posConfig.append(cat.categoryName.name());
          posConfig.append("~");
          posConfig.append(cat.getX());

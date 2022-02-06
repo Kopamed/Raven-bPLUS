@@ -1,8 +1,7 @@
 package keystrokesmod.module.modules.client;
 
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
-import keystrokesmod.main.NotAName;
-import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 
 public class SelfDestruct extends Module {
@@ -18,7 +17,7 @@ public class SelfDestruct extends Module {
       mc.displayGuiScreen(null);
       destructed = true;
 
-      for (Module module : NotAName.moduleManager.listofmods()) {
+      for (Module module : Ravenbplus.moduleManager.listofmods()) {
          if (module != this) {
             module.disable();
          }

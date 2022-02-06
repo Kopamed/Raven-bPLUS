@@ -1,6 +1,7 @@
 package keystrokesmod.keystroke;
 
 import keystrokesmod.main.Ravenbplus;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
@@ -10,7 +11,7 @@ public class keystrokeCommand extends CommandBase {
    }
 
    public void processCommand(ICommandSender sender, String[] args) {
-      Ravenbplus.toggleKeyStrokeConfigGui();
+      Minecraft.getMinecraft().displayGuiScreen(new KeyStrokeConfigGui());
    }
 
    public String getCommandUsage(ICommandSender sender) {

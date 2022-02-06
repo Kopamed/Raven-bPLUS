@@ -2,7 +2,6 @@ package keystrokesmod.tweaker.transformers;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import keystrokesmod.main.NotAName;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.modules.client.ClientNameSpoof;
 import net.minecraftforge.fml.common.Loader;
@@ -50,7 +49,7 @@ public class TransformerFMLCommonHandler implements Transformer {
     }
 
     public static String getModName() {
-        ClientNameSpoof cns = (ClientNameSpoof) NotAName.moduleManager.getModuleByName("ClientNameSpoofer");
+        ClientNameSpoof cns = (ClientNameSpoof) Ravenbplus.moduleManager.getModuleByName("ClientNameSpoofer");
         if(cns.isEnabled()){
             return cns.newName;
         }

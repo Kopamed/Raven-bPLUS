@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.debug.Click;
 import keystrokesmod.utils.Utils;
@@ -374,7 +374,7 @@ public class AutoClicker extends Module {
       }
 
       if(preferFastPlace.isToggled()) {
-         Module fastplace = NotAName.moduleManager.getModuleByName("FastPlace");
+         Module fastplace = Ravenbplus.moduleManager.getModuleByName("FastPlace");
          if (fastplace.isEnabled())
             return false;
       }

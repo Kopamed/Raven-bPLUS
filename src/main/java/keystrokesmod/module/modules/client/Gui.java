@@ -1,7 +1,6 @@
 package keystrokesmod.module.modules.client;
 
-import keystrokesmod.NotificationRenderer;
-import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
@@ -27,9 +26,9 @@ public class Gui extends Module {
    }
 
    public void onEnable() {
-      if (Utils.Player.isPlayerInGame() && mc.currentScreen != NotAName.clickGui) {
-         mc.displayGuiScreen(NotAName.clickGui);
-            NotAName.clickGui.initMain();
+      if (Utils.Player.isPlayerInGame() && mc.currentScreen != Ravenbplus.clickGui) {
+         mc.displayGuiScreen(Ravenbplus.clickGui);
+            Ravenbplus.clickGui.initMain();
       }
 
       this.disable();

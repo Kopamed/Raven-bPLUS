@@ -4,7 +4,6 @@ package keystrokesmod.keystroke;
 import java.awt.Color;
 import java.io.IOException;
 
-import keystrokesmod.main.Ravenbplus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -41,12 +40,11 @@ public class KeySrokeRenderer {
    }
 
    public void renderKeystrokes() {
-      KeyStroke f = Ravenbplus.getKeyStroke();
-      if (KeyStroke.e) {
+      if (KeyStroke.mode) {
          int x = KeyStroke.x;
          int y = KeyStroke.y;
          int g = this.getColor(KeyStroke.currentColorNumber);
-         boolean h = KeyStroke.d;
+         boolean h = KeyStroke.showMouseBtn;
          ScaledResolution res = new ScaledResolution(this.mc);
          int width = 74;
          int height = h ? 74 : 50;

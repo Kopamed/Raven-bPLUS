@@ -1,6 +1,6 @@
 package keystrokesmod.config;
 
-import keystrokesmod.main.NotAName;
+import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import net.minecraft.client.Minecraft;
 
@@ -21,7 +21,7 @@ public class ConfigManager {
     public List<String> defaultConfig;
 
     public ConfigManager() {
-        while (NotAName.moduleManager.arrayLength < 1){
+        while (Ravenbplus.moduleManager.arrayLength < 1){
             //System.out.println("waiting");
         }
         this.loading = false;
@@ -55,7 +55,7 @@ public class ConfigManager {
     private List<String> getCurrentLoadedConfig() {
         List<String> finalString = new ArrayList<String>();
 
-        for(Module clientModule : NotAName.moduleManager.listofmods()){
+        for(Module clientModule : Ravenbplus.moduleManager.listofmods()){
 
             String moduleAttributes = "module" + seperator +
                     clientModule.getName() + seperator +
@@ -103,7 +103,7 @@ public class ConfigManager {
         //////System.out.println("i save ");
         ArrayList<String> finalString = new ArrayList<String>();
 
-        for(Module clientModule : NotAName.moduleManager.listofmods()){
+        for(Module clientModule : Ravenbplus.moduleManager.listofmods()){
 
             String moduleAttributes = "module" + seperator +
                     clientModule.getName() + seperator +
@@ -193,7 +193,7 @@ public class ConfigManager {
                 }
 
                 String[] currentModule = current.split(seperator);
-                Module module = NotAName.moduleManager.getModuleByName(currentModule[1]);
+                Module module = Ravenbplus.moduleManager.getModuleByName(currentModule[1]);
 
                 if (module == null)
                     continue;
@@ -245,7 +245,7 @@ public class ConfigManager {
                 }
 
                 String[] currentSetting = current.split(seperator);
-                Module module = NotAName.moduleManager.getModuleByName(currentSetting[1]);
+                Module module = Ravenbplus.moduleManager.getModuleByName(currentSetting[1]);
 
                 if (module == null)
                     continue;

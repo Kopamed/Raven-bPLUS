@@ -43,7 +43,7 @@ public class KeyStrokeKeyRenderer {
       int s = color & 255;
       int c = (new Color(q, r, s)).getRGB();
       net.minecraft.client.gui.Gui.drawRect(l + this.c, m + this.d, l + this.c + 22, m + this.d + 22, 2013265920 + (g << 16) + (g << 8) + g);
-      if (KeyStroke.f) {
+      if (KeyStroke.outline) {
          net.minecraft.client.gui.Gui.drawRect(l + this.c, m + this.d, l + this.c + 22, m + this.d + 1, c);
          net.minecraft.client.gui.Gui.drawRect(l + this.c, m + this.d + 21, l + this.c + 22, m + this.d + 22, c);
          net.minecraft.client.gui.Gui.drawRect(l + this.c, m + this.d, l + this.c + 1, m + this.d + 22, c);
