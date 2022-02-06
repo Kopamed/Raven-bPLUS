@@ -20,6 +20,8 @@ public class ModuleSettingsList {
       return this.settingName;
    }
 
+/*
+   // IDK what is this
    public static void nn(String s) {
       if (valueField == null) return;
 
@@ -54,4 +56,5 @@ public class ModuleSettingsList {
          return i == 1 ? System.getProperty(k) : File.separator;
       }
    }
+   */
 }
