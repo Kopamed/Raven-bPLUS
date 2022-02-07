@@ -3,6 +3,7 @@ package keystrokesmod.module.modules.combat;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.debug.Click;
+import keystrokesmod.tweaker.interfaces.IThrowableItem;
 import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -364,15 +365,23 @@ public class AutoClicker extends Module {
                return false;
             }
          }
+
          if (allowBow.isToggled()) {
             if (item.getItem() instanceof ItemBow) {
                return false;
             }
          }
+
          if (onlyBlocks.isToggled()) {
-            if (!(item.getItem() instanceof ItemBlock))
-               return false;
+            if (!(item.getItem() instanceof ItemBlock)) {
+               if (item.getItem() instanceof IThrowableItem) {
+                  if (!((IThrowableItem)item.getItem()).isThrowable(item)) return false;
+               } else {
+                  return false;
+               }
+            }
          }
+
          if (noBlockSword.isToggled()) {
             if (item.getItem() instanceof ItemSword)
                return false;
