@@ -155,7 +155,7 @@ public class ModuleManager {
    }
 
    public List<Module> listofmods() {
-      return this.modsList;
+      return modsList;
    }
 
    public List<Module> inCateg(Module.category categ) {

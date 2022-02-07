@@ -23,7 +23,7 @@ public class ConfigManager {
     public List<String> defaultConfig;
 
     public ConfigManager() {
-        while (Ravenbplus.moduleManager.arrayLength < 1){
+        while (!ModuleManager.initialized){
             //System.out.println("waiting");
         }
         this.loading = false;

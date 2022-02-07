@@ -63,11 +63,11 @@ public class BedwarsOverlay extends Module {
         if (!active) {
             return;
         }
-        if (this.mc.currentScreen != null) {
+        if (mc.currentScreen != null) {
             return;
 
         }
-        if (!this.mc.inGameHasFocus || this.mc.gameSettings.showDebugInfo) {
+        if (!mc.inGameHasFocus || mc.gameSettings.showDebugInfo) {
             return;
         }
 

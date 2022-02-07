@@ -68,8 +68,7 @@ public class Fly extends Module {
    class GliFly {
       boolean opf = false;
 
-      public void onEnable() {
-      }
+      public void onEnable() {}
 
       public void onDisable() {
          this.opf = false;
@@ -101,8 +100,7 @@ public class Fly extends Module {
    static class VanFly {
       private final float dfs = 0.05F;
 
-      public void onEnable() {
-      }
+      public void onEnable() {}
 
       public void onDisable() {
          if (Module.mc.thePlayer.capabilities.isFlying) {
