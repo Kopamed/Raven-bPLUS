@@ -39,7 +39,7 @@ public class AutoClicker extends Module {
    public static ModuleSettingTick leftClick;
    public static ModuleSettingTick rightClick;
    public static ModuleSettingTick inventoryFill;
-   public static ModuleSettingTick allowEat, allowBow;
+   public static ModuleSettingTick allowEat, allowBow, noPotion;
    public static ModuleSettingSlider rightClickDelay;
    public static ModuleSettingSlider clickEvent, clickTimings;
    public static ModuleSettingDoubleSlider leftCPS, rightCPS, breakBlocksDelay;
@@ -83,9 +83,10 @@ public class AutoClicker extends Module {
       this.registerSetting(jitterRight = new ModuleSettingSlider("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(rightClickDelay = new ModuleSettingSlider("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
       this.registerSetting(noBlockSword = new ModuleSettingTick("Don't rightclick sword", true));
-      this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks", false));
+      this.registerSetting(onlyBlocks = new ModuleSettingTick("Only rightclick with blocks and throwables", false));
       this.registerSetting(preferFastPlace = new ModuleSettingTick("Prefer fast place", false));
       this.registerSetting(allowEat = new ModuleSettingTick("Allow eat", true));
+      this.registerSetting(noPotion = new ModuleSettingTick("Allow drink", true));
       this.registerSetting(allowBow = new ModuleSettingTick("Allow bow", true));
 
 
@@ -370,11 +371,18 @@ public class AutoClicker extends Module {
             }
          }
          if (onlyBlocks.isToggled()) {
-            if (!(item.getItem() instanceof ItemBlock))
+            if ((item.getItem() instanceof ItemBlock) || (item.getItem() instanceof ItemEgg) || (item.getItem() instanceof ItemSnowball) || (item.getItem() instanceof ItemExpBottle)) {
+               return true;
+            } else {
                return false;
+            }
          }
          if (noBlockSword.isToggled()) {
             if (item.getItem() instanceof ItemSword)
+               return false;
+         }
+         if (noPotion.isToggled()) {
+            if ((item.getItem() instanceof ItemPotion) || (item.getItem() instanceof ItemBucketMilk))
                return false;
          }
       }
