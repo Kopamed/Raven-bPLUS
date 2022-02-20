@@ -1,6 +1,7 @@
 package keystrokesmod.module.modules.player;
 
 import keystrokesmod.module.*;
+import keystrokesmod.module.modules.movement.Fly;
 
 public class FallSpeed extends Module {
    public static ModuleDesc dc;
@@ -16,7 +17,13 @@ public class FallSpeed extends Module {
 
    public void update() {
       if ((double)mc.thePlayer.fallDistance >= 2.5D) {
-         if (ModuleManager.fly.isEnabled() || ModuleManager.noFall.isEnabled()) {
+         Module fly = ModuleManager.getModuleByClazz(Fly.class);
+         Module noFall = ModuleManager.getModuleByClazz(NoFall.class);
+
+         if (
+              (fly != null && fly.isEnabled()) ||
+              (noFall != null && noFall.isEnabled())
+         ) {
             return;
          }
 

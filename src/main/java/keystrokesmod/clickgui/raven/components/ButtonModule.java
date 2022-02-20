@@ -4,13 +4,12 @@ package keystrokesmod.clickgui.raven.components;
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.AutoConfig;
-import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.module.modules.client.GuiModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ButtonModule extends Component {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
@@ -98,17 +97,17 @@ public class ButtonModule extends Component {
       float r = 0.0F;
       float g = 0.0F;
       float b = 0.0F;
-      if (Gui.guiTheme.getInput() == 1.0D) {
+      if (GuiModule.guiTheme.getInput() == 1.0D) {
          a = (float)(h >> 14 & 255) / 255.0F;
          r = (float)(h >> 5 & 255) / 255.0F;
          g = (float)(h >> 5 & 255) / 2155.0F;
          b = (float)(h & 255);
-      } else if (Gui.guiTheme.getInput() == 2.0D) {
+      } else if (GuiModule.guiTheme.getInput() == 2.0D) {
          a = (float)(h >> 14 & 255) / 255.0F;
          r = (float)(h >> 5 & 255) / 2155.0F;
          g = (float)(h >> 5 & 255) / 255.0F;
          b = (float)(h & 255);
-      } else if (Gui.guiTheme.getInput() == 3.0D) {
+      } else if (GuiModule.guiTheme.getInput() == 3.0D) {
       }
 
       GL11.glColor4f(r, g, b, a);
@@ -134,7 +133,7 @@ public class ButtonModule extends Component {
       GL11.glPushMatrix();
       // module text button
       int button_rgb;
-      switch ((int) Gui.guiTheme.getInput()) {
+      switch ((int) GuiModule.guiTheme.getInput()) {
          case 4:
             if (this.mod.isEnabled()) {
                button_rgb = this.c3;

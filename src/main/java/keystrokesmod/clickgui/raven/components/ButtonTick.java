@@ -4,7 +4,7 @@ package keystrokesmod.clickgui.raven.components;
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleSettingTick;
-import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.module.modules.client.GuiModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -71,7 +71,7 @@ public class ButtonTick extends Component {
 
    public void draw() {
       // drawing main bg rect
-      if (Gui.guiTheme.getInput() == 4) {
+      if (GuiModule.guiTheme.getInput() == 4) {
          net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 4, this.module.category.getY() + this.o + 4, this.module.category.getX() + 4 + boxSize, this.module.category.getY() + this.o + 4 + boxSize, this.boxC);
          if(this.cl1ckbUtt0n.isToggled()){
             net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + 5, this.module.category.getY() + this.o + 5, this.module.category.getX() + 5 + boxSize-2, this.module.category.getY() + this.o + 5 + boxSize-2, this.c);
@@ -79,7 +79,7 @@ public class ButtonTick extends Component {
       }
       GL11.glPushMatrix();
       GL11.glScaled(0.5D, 0.5D, 0.5D);
-      if(Gui.guiTheme.getInput() == 4){
+      if(GuiModule.guiTheme.getInput() == 4){
          Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "     " + this.cl1ckbUtt0n.getName() : "     " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
       }else {
          Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float)((this.module.category.getX() + 4) * 2), (float)((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);

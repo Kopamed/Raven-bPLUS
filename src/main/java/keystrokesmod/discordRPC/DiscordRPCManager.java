@@ -2,6 +2,7 @@ package keystrokesmod.discordRPC;
 
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
+import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.modules.other.DiscordRPCModule;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
@@ -34,7 +35,7 @@ public class DiscordRPCManager {
 
             Thread.sleep(100); // wait 0.1s
 
-            if (Module.getModule(DiscordRPCModule.class).isEnabled()) {
+            if (ModuleManager.getModuleByClazz(DiscordRPCModule.class).isEnabled()) {
                 this.updateRPC();
             }
         } catch (InterruptedException e) { e.printStackTrace(); }

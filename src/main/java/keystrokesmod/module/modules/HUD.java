@@ -63,7 +63,6 @@ public class HUD extends Module {
       } else if (b == alphabeticalSort) {
          ModuleManager.sort();
       }
-
    }
 
    @SubscribeEvent

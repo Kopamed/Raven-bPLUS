@@ -1,7 +1,9 @@
 package keystrokesmod.module.modules.movement;
 
 import keystrokesmod.module.*;
+import keystrokesmod.module.modules.combat.Reach;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.common.Mod;
 
 public class KeepSprint extends Module {
    public static ModuleDesc a;
@@ -17,7 +19,8 @@ public class KeepSprint extends Module {
 
    public static void sl(Entity en) {
       double dist;
-      if (c.isToggled() && ModuleManager.reach.isEnabled() && !mc.thePlayer.capabilities.isCreativeMode) {
+      Module reach = ModuleManager.getModuleByClazz(Reach.class);
+      if (c.isToggled() && reach != null && reach.isEnabled() && !mc.thePlayer.capabilities.isCreativeMode) {
          dist = mc.objectMouseOver.hitVec.distanceTo(mc.getRenderViewEntity().getPositionEyes(1.0F));
          double val;
          if (dist > 3.0D) {

@@ -1,14 +1,14 @@
 package keystrokesmod.module;
 
+import fr.jmraich.event.EventManager;
 import keystrokesmod.NotificationRenderer;
 import keystrokesmod.main.Ravenbplus;
+import keystrokesmod.module.modules.HUD;
 import keystrokesmod.module.modules.other.DiscordRPCModule;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Module {
    protected ArrayList<ModuleSettingsList> settings;
@@ -36,21 +36,6 @@ public class Module {
       this.settings = new ArrayList<>();
    }
 
-   public static Module getModule(Class<? extends Module> a) {
-      Iterator var1 = ModuleManager.modsList.iterator();
-
-      Module module;
-      do {
-         if (!var1.hasNext()) {
-            return null;
-         }
-
-         module = (Module)var1.next();
-      } while(module.getClass() != a);
-
-      return module;
-   }
-
    public void keybind() {
       if (this.keycode != 0 && this.canBeEnabled()) {
          if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
@@ -73,18 +58,21 @@ public class Module {
          NotificationRenderer.moduleStateChanged(this);
       }
       ModuleManager.enModsList.add(this);
-      if (ModuleManager.hud.isEnabled()) {
+
+      Module hud = ModuleManager.getModuleByClazz(HUD.class);
+
+      if (hud != null && hud.isEnabled()) {
          ModuleManager.sort();
       }
 
-      MinecraftForge.EVENT_BUS.register(this);
+      EventManager.register(this);
 
       this.onEnable();
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
       }
 
-      DiscordRPCModule discordRPCModule = (DiscordRPCModule) getModule(DiscordRPCModule.class);
+      Module discordRPCModule = ModuleManager.getModuleByClazz(DiscordRPCModule.class);
       if (discordRPCModule != null && discordRPCModule.isEnabled()) {
          DiscordRPCModule.rpc.updateRavenRPC();
       }
@@ -97,13 +85,13 @@ public class Module {
          NotificationRenderer.moduleStateChanged(this);
       }
       ModuleManager.enModsList.remove(this);
-      MinecraftForge.EVENT_BUS.unregister(this);
+      EventManager.unregister(this);
       this.onDisable();
       if(Ravenbplus.configManager != null){
          Ravenbplus.configManager.save();
       }
 
-      DiscordRPCModule discordRPCModule = (DiscordRPCModule) getModule(DiscordRPCModule.class);
+      Module discordRPCModule = ModuleManager.getModuleByClazz(DiscordRPCModule.class);
       if (discordRPCModule != null && discordRPCModule.isEnabled()) {
          DiscordRPCModule.rpc.updateRavenRPC();
       }

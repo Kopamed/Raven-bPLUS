@@ -1,5 +1,6 @@
 package keystrokesmod.tweaker;
 
+import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.modules.combat.AutoClicker;
 import keystrokesmod.module.modules.combat.Reach;
@@ -23,18 +24,19 @@ public class ASMEventHandler {
     * ASM Modules : NameHider, AntiShuffle, StringEncrypt
     */
    public static String getUnformattedTextForChat(String s) {
-      if (ModuleManager.initialized) {
-         if (ModuleManager.nameHider.isEnabled()) {
-            s = NameHider.getUnformattedTextForChat(s);
-         }
+      Module nameHider = ModuleManager.getModuleByClazz(NameHider.class);
+      if (nameHider != null && nameHider.isEnabled()) {
+         s = NameHider.getUnformattedTextForChat(s);
+      }
 
-         if (ModuleManager.antiShuffle.isEnabled()) {
-            s = AntiShuffle.getUnformattedTextForChat(s);
-         }
+      Module antiShuffle = ModuleManager.getModuleByClazz(StringEncrypt.class);
+      if (antiShuffle != null && antiShuffle.isEnabled()) {
+         s = AntiShuffle.getUnformattedTextForChat(s);
+      }
 
-         if (ModuleManager.stringEncrypt.isEnabled()) {
-            s = StringEncrypt.getUnformattedTextForChat(s);
-         }
+      Module stringEncrypt = ModuleManager.getModuleByClazz(StringEncrypt.class);
+      if (stringEncrypt != null && stringEncrypt.isEnabled()) {
+         s = StringEncrypt.getUnformattedTextForChat(s);
       }
 
       return s;
@@ -47,7 +49,9 @@ public class ASMEventHandler {
     */
    public static boolean onEntityMove(Entity entity) {
       if (entity == mc.thePlayer && mc.thePlayer.onGround) {
-         if (ModuleManager.safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
+         Module safeWalk = ModuleManager.getModuleByClazz(SafeWalk.class);
+
+         if (safeWalk != null && safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
             if (SafeWalk.blocksOnly.isToggled()) {
                ItemStack i = mc.thePlayer.getHeldItem();
                if (i == null || !(i.getItem() instanceof ItemBlock)) {
@@ -74,7 +78,8 @@ public class ASMEventHandler {
     * ASM Modules : NoSlow
     */
    public static void onLivingUpdate() {
-      if (ModuleManager.noSlow.isEnabled()) {
+      Module noSlow = ModuleManager.getModuleByClazz(NoSlow.class);
+      if (noSlow != null && noSlow.isEnabled()) {
          NoSlow.sl();
       } else {
          mc.thePlayer.movementInput.moveStrafe *= 0.2F;
@@ -87,7 +92,8 @@ public class ASMEventHandler {
     * ASM Modules : KeepSprint
     */
    public static void onAttackTargetEntityWithCurrentItem(Entity en) {
-      if (ModuleManager.keepSprint.isEnabled()) {
+      Module keepSprint = ModuleManager.getModuleByClazz(KeepSprint.class);
+      if (keepSprint != null && keepSprint.isEnabled()) {
          KeepSprint.sl(en);
       } else {
          mc.thePlayer.motionX *= 0.6D;
@@ -100,7 +106,8 @@ public class ASMEventHandler {
     * ASM Modules : AutoClicker, Reach
     */
    public static void onTick() {
-      if (!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
+      Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+      if (autoClicker == null || !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
          mc.entityRenderer.getMouseOver(1.0F);
       }
    }

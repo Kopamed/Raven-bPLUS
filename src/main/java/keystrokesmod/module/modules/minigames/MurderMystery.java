@@ -3,6 +3,7 @@ package keystrokesmod.module.modules.minigames;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.ModuleSettingTick;
+import keystrokesmod.module.modules.render.PlayerESP;
 import keystrokesmod.module.modules.world.AntiBot;
 import keystrokesmod.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,10 +34,11 @@ public class MurderMystery extends Module {
    }
 
    @SubscribeEvent
-   public void o(RenderWorldLastEvent e) {
+   public void onRenderWorldLast(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
-         if (ModuleManager.playerESP.isEnabled()) {
-            ModuleManager.playerESP.disable();
+         Module playerESP = ModuleManager.getModuleByClazz(PlayerESP.class);
+         if (playerESP != null && playerESP.isEnabled()) {
+            playerESP.disable();
          }
 
          if (!this.imm()) {

@@ -1,7 +1,6 @@
 package keystrokesmod.utils;
 
 import keystrokesmod.clickgui.raven.CommandLine;
-import keystrokesmod.module.modules.client.SelfDestruct;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -10,8 +9,8 @@ public class ChatHelper {
    private static long s = 0L;
 
    @SubscribeEvent
-   public void onChatMessageRecieved(ClientChatReceivedEvent event) {
-      if (e && Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
+   public void onChatMessageReceived(ClientChatReceivedEvent event) {
+      if (e && Utils.Player.isPlayerInGame()) {
          if (Utils.Java.str(event.message.getUnformattedText()).startsWith("Unknown")) {
             event.setCanceled(true);
             e = false;

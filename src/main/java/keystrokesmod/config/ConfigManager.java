@@ -194,7 +194,7 @@ public class ConfigManager {
                 }
 
                 String[] currentModule = current.split(seperator);
-                Module module = Ravenbplus.moduleManager.getModuleByName(currentModule[1]);
+                Module module = ModuleManager.getModuleByName(currentModule[1]);
 
                 if (module == null)
                     continue;

@@ -1,5 +1,6 @@
 package keystrokesmod.module.modules.other;
 
+import fr.jmraich.event.EventManager;
 import keystrokesmod.discordRPC.DiscordRPCManager;
 import keystrokesmod.discordRPC.RPCMode;
 import keystrokesmod.main.Ravenbplus;
@@ -8,7 +9,6 @@ import keystrokesmod.module.ModuleDesc;
 import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.utils.Utils;
 import net.arikia.dev.drpc.DiscordRPC;
-import net.minecraftforge.common.MinecraftForge;
 
 public class DiscordRPCModule extends Module {
     public static final DiscordRPCManager rpc = new DiscordRPCManager();
@@ -55,11 +55,11 @@ public class DiscordRPCModule extends Module {
                 break;
         }
         rpc.updateRPC();
-        MinecraftForge.EVENT_BUS.register(rpc);
+        EventManager.register(rpc);
     }
 
     public void onDisable() {
-        MinecraftForge.EVENT_BUS.unregister(rpc);
+        EventManager.unregister(rpc);
         if (Ravenbplus.osArch.contains("arm") || Ravenbplus.osArch.contains("aarch64") || Ravenbplus.osName.toLowerCase().contains("mac")) return;
         if (rpc.rpc_thread != null)
             rpc.rpc_thread.interrupt();

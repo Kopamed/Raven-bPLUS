@@ -4,7 +4,7 @@ package keystrokesmod.clickgui.raven.components;
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.Module;
-import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.module.modules.client.GuiModule;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
@@ -43,7 +43,7 @@ public class ButtonCategory {
       this.marginX = 80;
       this.marginY = 4.5;
 
-      for(Iterator<Module> var3 = Ravenbplus.moduleManager.inCateg(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+      for(Iterator<Module> var3 = Ravenbplus.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
          Module mod = var3.next();
          ButtonModule b = new ButtonModule(mod, this, tY);
          this.modulesInCategory.add(b);
@@ -116,10 +116,10 @@ public class ButtonCategory {
          }
 
          //drawing the background for every module in the category
-         net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, (new Color(0, 0, 0, (int)(keystrokesmod.module.modules.client.Gui.backgroundOpacity.getInput()/100 * 255))).getRGB());
+         net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, (new Color(0, 0, 0, (int)(GuiModule.backgroundOpacity.getInput()/100 * 255))).getRGB());
       }
 
-      if(Gui.categoryBackground.isToggled())
+      if(GuiModule.categoryBackground.isToggled())
          ButtonTick.renderMain((float)(this.x - 2), (float)this.y, (float)(this.x + this.width + 2), (float)(this.y + this.bh + 3), -1);
       renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
       //renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), ay.astolfoColorsDraw(10, 14), false);

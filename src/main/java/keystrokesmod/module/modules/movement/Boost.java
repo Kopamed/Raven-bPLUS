@@ -21,9 +21,10 @@ public class Boost extends Module {
    }
 
    public void onEnable() {
-      if (ModuleManager.timer.isEnabled()) {
+      Module timer = ModuleManager.getModuleByClazz(Timer.class);
+      if (timer != null && timer.isEnabled()) {
          this.t = true;
-         ModuleManager.timer.disable();
+         timer.disable();
       }
 
    }
@@ -35,7 +36,8 @@ public class Boost extends Module {
       }
 
       if (this.t) {
-         ModuleManager.timer.enable();
+         Module timer = ModuleManager.getModuleByClazz(Timer.class);
+         if (timer != null) timer.enable();
       }
 
       this.t = false;

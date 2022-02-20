@@ -25,124 +25,112 @@ import java.util.List;
 public class ModuleManager {
    public static List<Module> modsList = new ArrayList<>();
    public static List<Module> enModsList = new ArrayList<>();
-   public static Module nameHider;
-   public static Module fastPlace;
-   public static Module antiShuffle;
-   public static Module antiBot;
-   public static Module noSlow;
-   public static Module autoClicker;
-   public static Module hitBox;
-   public static Module reach;
-   public static Module hud;
-   public static Module timer;
-   public static Module fly;
-   public static Module noFall;
-   public static Module stringEncrypt;
-   public static Module playerESP;
-   public static Module safeWalk;
-   public static Module keepSprint;
-   public static int arrayLength = 0;
 
    public static boolean initialized = false;
 
-   public void r3g1st3r() {
-      this.addModule(autoClicker = new AutoClicker());
-      this.addModule(new AimAssist());
-      this.addModule(new BurstClicker());
-      this.addModule(new ClickAssist());
-      this.addModule(new DelayRemover());
-      this.addModule(hitBox = new HitBox());
-      this.addModule(reach = new Reach());
-      this.addModule(new RodAimbot());
-      this.addModule(new Velocity());
-      this.addModule(new BHop());
-      this.addModule(new Boost());
-      this.addModule(fly = new Fly());
-      this.addModule(new InvMove());
-      this.addModule(keepSprint = new KeepSprint());
-      this.addModule(noSlow = new NoSlow());
-      this.addModule(new Speed());
-      this.addModule(new Sprint());
-      this.addModule(new StopMotion());
-      this.addModule(timer = new Timer());
-      this.addModule(new VClip());
-      this.addModule(new AutoJump());
-      this.addModule(new AutoPlace());
-      this.addModule(new BedAura());
-      this.addModule(new FallSpeed());
-      this.addModule(fastPlace = new FastPlace());
-      this.addModule(new Freecam());
-      this.addModule(noFall = new NoFall());
-      this.addModule(safeWalk = new SafeWalk());
-      this.addModule(antiBot = new AntiBot());
-      this.addModule(antiShuffle = new AntiShuffle());
-      this.addModule(new Chams());
-      this.addModule(new ChestESP());
-      this.addModule(new Nametags());
-      this.addModule(playerESP = new PlayerESP());
-      this.addModule(new Tracers());
-      this.addModule(hud = new HUD());
-      this.addModule(new Xray());
-      this.addModule(new BridgeInfo());
-      this.addModule(new DuelsStats());
-      this.addModule(new MurderMystery());
-      this.addModule(new SumoFences());
-      this.addModule(new ExtraBobbing());
-      this.addModule(new Twerk());
-      this.addModule(new ParticleTrail());
-      this.addModule(new SlyPort());
-      this.addModule(new Spin());
-      this.addModule(new FovLSD());
-      this.addModule(new ClientNameSpoof());
-      this.addModule(new FakeChat());
-      this.addModule(nameHider = new NameHider());
-      this.addModule(stringEncrypt = new StringEncrypt());
-      this.addModule(new WaterBucket());
-      //this.addModule(new AutoConfig());
-      this.addModule(new CommandLine());
-      this.addModule(new Gui());
-      this.addModule(new SelfDestruct());
-      this.addModule(new ChatLogger());
-      this.addModule(new BridgeAssist());
-      this.addModule(new Fullbright());
-      this.addModule(new UpdateCheck());
-      this.addModule(new AutoHeader());
-      this.addModule(new Click());
-      this.addModule(new MiddleClick());
-      this.addModule(new MouseClick());
-      this.addModule(new AutoTool());
-      this.addModule(new Blocks());
-      this.addModule(new Ladders());
-      this.addModule(new Weapon());
-      this.addModule(new Pearl());
-      this.addModule(new Armour());
-      this.addModule(new Healing());
-      this.addModule(new Trajectories());
-      this.addModule(new WTap());
-      this.addModule(new BlockHit());
-      this.addModule(new STap());
-      this.addModule(new MessageInfo());
-      //this.addModule(new TargetHUD());
-      this.addModule(new AutoWeapon());
-      this.addModule(new BedwarsOverlay());
-      arrayLength = this.listofmods().size();
-      this.addModule(new DiscordRPCModule());
-      this.addModule(new ShiftTap());
-      this.addModule(new FPSSpoofer());
-      this.addModule(new CustomFOV());
+   public synchronized void r3g1st3r() {
+      if (initialized) return;
 
-      this.addModule(new ExplicitB9NameTags());
-      this.addModule(new AutoBlock());
-      this.defEn();
+      addModule(new AutoClicker());
+      addModule(new AimAssist());
+      addModule(new BurstClicker());
+      addModule(new ClickAssist());
+      addModule(new DelayRemover());
+      addModule(new HitBox());
+      addModule(new Reach());
+      addModule(new RodAimbot());
+      addModule(new Velocity());
+      addModule(new BHop());
+      addModule(new Boost());
+      addModule(new Fly());
+      addModule(new InvMove());
+      addModule(new KeepSprint());
+      addModule(new NoSlow());
+      addModule(new Speed());
+      addModule(new Sprint());
+      addModule(new StopMotion());
+      addModule(new Timer());
+      addModule(new VClip());
+      addModule(new AutoJump());
+      addModule(new AutoPlace());
+      addModule(new BedAura());
+      addModule(new FallSpeed());
+      addModule(new FastPlace());
+      addModule(new Freecam());
+      addModule(new NoFall());
+      addModule(new SafeWalk());
+      addModule(new AntiBot());
+      addModule(new AntiShuffle());
+      addModule(new Chams());
+      addModule(new ChestESP());
+      addModule(new Nametags());
+      addModule(new PlayerESP());
+      addModule(new Tracers());
+      addModule(new HUD());
+      addModule(new Xray());
+      addModule(new BridgeInfo());
+      addModule(new DuelsStats());
+      addModule(new MurderMystery());
+      addModule(new SumoFences());
+      addModule(new ExtraBobbing());
+      addModule(new Twerk());
+      addModule(new ParticleTrail());
+      addModule(new SlyPort());
+      addModule(new Spin());
+      addModule(new FovLSD());
+      addModule(new ClientNameSpoof());
+      addModule(new FakeChat());
+      addModule(new NameHider());
+      addModule(new StringEncrypt());
+      addModule(new WaterBucket());
+      //addModule(new AutoConfig());
+      addModule(new CommandLine());
+      addModule(new GuiModule());
+      addModule(new SelfDestruct());
+      addModule(new ChatLogger());
+      addModule(new BridgeAssist());
+      addModule(new Fullbright());
+      addModule(new UpdateCheck());
+      addModule(new AutoHeader());
+      addModule(new Click());
+      addModule(new MiddleClick());
+      addModule(new MouseClick());
+      addModule(new AutoTool());
+      addModule(new Blocks());
+      addModule(new Ladders());
+      addModule(new Weapon());
+      addModule(new Pearl());
+      addModule(new Armour());
+      addModule(new Healing());
+      addModule(new Trajectories());
+      addModule(new WTap());
+      addModule(new BlockHit());
+      addModule(new STap());
+      addModule(new MessageInfo());
+      //addModule(new TargetHUD());
+      addModule(new AutoWeapon());
+      addModule(new BedwarsOverlay());
+
+      addModule(new DiscordRPCModule());
+      addModule(new ShiftTap());
+      addModule(new FPSSpoofer());
+      addModule(new CustomFOV());
+
+      addModule(new ExplicitB9NameTags());
+      addModule(new AutoBlock());
+
+      // why ?
+      getModuleByClazz(AntiBot.class).enable();
 
       initialized = true;
    }
+   
+   private static void addModule(Module m) {
+      modsList.add(m);
+   } 
 
-   private void defEn() {
-      antiBot.enable();
-   }
-
-   public Module getModuleByName(String name) {
+   // prefer using getModuleByClazz();
+   public static Module getModuleByName(String name) {
       for (Module module : modsList) {
          if (module.getName().equalsIgnoreCase(name))
             return module;
@@ -150,24 +138,29 @@ public class ModuleManager {
       return null;
    }
 
-   private void addModule(Module m) {
-      modsList.add(m);
+   public static Module getModuleByClazz(Class<? extends Module> c) {
+      for (Module module : modsList) {
+         if (module.getClass().equals(c))
+            return module;
+      }
+      return null;
    }
 
-   public List<Module> listofmods() {
+
+   public static List<Module> listofmods() {
       return modsList;
    }
 
-   public List<Module> inCateg(Module.category categ) {
-      ArrayList<Module> categML = new ArrayList<>();
+   public static List<Module> getModulesInCategory(Module.category categ) {
+      ArrayList<Module> modulesOfCat = new ArrayList<>();
 
-      for (Module mod : this.listofmods()) {
+      for (Module mod : listofmods()) {
          if (mod.moduleCategory().equals(categ)) {
-            categML.add(mod);
+            modulesOfCat.add(mod);
          }
       }
 
-      return categML;
+      return modulesOfCat;
    }
 
    public static void sort() {

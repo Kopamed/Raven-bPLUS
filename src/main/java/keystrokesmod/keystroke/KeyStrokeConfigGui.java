@@ -3,7 +3,8 @@ package keystrokesmod.keystroke;
 
 import keystrokesmod.main.ClientConfig;
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.module.ModuleManager;
+import keystrokesmod.module.modules.client.GuiModule;
 import keystrokesmod.utils.mouseManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -32,8 +33,8 @@ public class KeyStrokeConfigGui extends GuiScreen {
       this.buttonList.add(this.textColorBtn = new GuiButton(1, this.width / 2 - 70, this.height / 2 - 6, 140, 20, "Text color: " + colors[KeyStroke.currentColorNumber]));
       this.buttonList.add(this.showMouseBtn = new GuiButton(2, this.width / 2 - 70, this.height / 2 + 16, 140, 20, "Show mouse buttons: " + (KeyStroke.showMouseBtn ? "On" : "Off")));
       this.buttonList.add(this.outlineBtn = new GuiButton(3, this.width / 2 - 70, this.height / 2 + 38, 140, 20, "Outline: " + (KeyStroke.outline ? "On" : "Off")));
-      Gui gui = (Gui) Ravenbplus.moduleManager.getModuleByName("Gui");
-      if(gui.getKeycode() != 54){
+      GuiModule gui = (GuiModule) ModuleManager.getModuleByClazz(GuiModule.class);
+      if (gui != null && gui.getKeycode() != 54) {
          this.buttonList.add(this.clickGui = new GuiButton(3, this.width / 2 - 70, this.height / 2 + 60, 140, 20, "ClickGui"));
       }
    }

@@ -1,7 +1,7 @@
 package me.superblaubeere27.client.notifications;
 
 import keystrokesmod.clickgui.raven.ClickGui;
-import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.module.modules.client.GuiModule;
 import keystrokesmod.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -63,7 +63,7 @@ public class Notification {
         Color color = new Color(0, 0, 0, 220);
         Color color1;
 
-        if (Gui.rainbowNotification.isToggled()) {
+        if (GuiModule.rainbowNotification.isToggled()) {
             color1 = new Color(Utils.Client.rainbowDraw(2L, 1200L));
         } else if (type == NotificationType.INFO)
             color1 = new Color(0, 26, 169);
@@ -92,7 +92,7 @@ public class Notification {
             int yBegin = scaledResolution.getScaledHeight() - 39;
             int xEnd = xBegin + titleWidth;
             int yEnd = yBegin + 1;
-            drawRect(xBegin, yBegin, xEnd, yEnd, (Gui.rainbowNotification.isToggled() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
+            drawRect(xBegin, yBegin, xEnd, yEnd, (GuiModule.rainbowNotification.isToggled() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
             fontRenderer.drawString(messsage, (int) (scaledResolution.getScaledWidth() - offset + 8), scaledResolution.getScaledHeight() - 33, -1);
         } else {
             drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 5 - height, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight() - 5, color.getRGB());
@@ -103,7 +103,7 @@ public class Notification {
             int yBegin = scaledResolution.getScaledHeight() - 22;
             int xEnd = xBegin + titleWidth;
             int yEnd = yBegin + 1;
-            drawRect(xBegin, yBegin, xEnd, yEnd, (Gui.rainbowNotification.isToggled() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
+            drawRect(xBegin, yBegin, xEnd, yEnd, (GuiModule.rainbowNotification.isToggled() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
             fontRenderer.drawString(messsage, (int) (scaledResolution.getScaledWidth() - offset + 8), scaledResolution.getScaledHeight() - 15, -1);
         }
     }

@@ -135,9 +135,9 @@ public class SafeWalk extends Module {
    }
 
    @SubscribeEvent
-   public void r(TickEvent.RenderTickEvent e) {
+   public void onRenderTick(TickEvent.RenderTickEvent e) {
       if(!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame()) return;
-      if (e.phase == TickEvent.Phase.END && !SelfDestruct.destructed) {
+      if (e.phase == TickEvent.Phase.END) {
          if (mc.currentScreen == null) {
             if(shouldBridge) {
                ScaledResolution res = new ScaledResolution(mc);

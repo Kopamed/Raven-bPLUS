@@ -8,6 +8,7 @@ import keystrokesmod.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.HashMap;
@@ -47,49 +48,52 @@ public class AntiBot extends Module {
       if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return false;
       if (Freecam.en != null && Freecam.en == en) {
          return true;
-      } else if (!ModuleManager.antiBot.isEnabled()) {
-         return false;
-      } else if (!Utils.Client.isHyp()) {
-         return false;
-      } else if (a.isToggled() && !newEnt.isEmpty() && newEnt.containsKey(en)) {
-         return true;
-      } else if (en.getName().startsWith("§c")) {
-         return true;
       } else {
-         String n = en.getDisplayName().getUnformattedText();
-         if (n.contains("§")) {
-            return n.contains("[NPC] ");
+         Module antiBot = ModuleManager.getModuleByClazz(AntiBot.class);
+         if (antiBot != null && !antiBot.isEnabled()) {
+            return false;
+         } else if (!Utils.Client.isHyp()) {
+            return false;
+         } else if (a.isToggled() && !newEnt.isEmpty() && newEnt.containsKey(en)) {
+            return true;
+         } else if (en.getName().startsWith("§c")) {
+            return true;
          } else {
-            if (n.isEmpty() && en.getName().isEmpty()) {
-               return true;
-            }
-
-            if (n.length() == 10) {
-               int num = 0;
-               int let = 0;
-               char[] var4 = n.toCharArray();
-
-               for (char c : var4) {
-                  if (Character.isLetter(c)) {
-                     if (Character.isUpperCase(c)) {
-                        return false;
-                     }
-
-                     ++let;
-                  } else {
-                     if (!Character.isDigit(c)) {
-                        return false;
-                     }
-
-                     ++num;
-                  }
+            String n = en.getDisplayName().getUnformattedText();
+            if (n.contains("§")) {
+               return n.contains("[NPC] ");
+            } else {
+               if (n.isEmpty() && en.getName().isEmpty()) {
+                  return true;
                }
 
-               return num >= 2 && let >= 2;
-            }
-         }
+               if (n.length() == 10) {
+                  int num = 0;
+                  int let = 0;
+                  char[] var4 = n.toCharArray();
 
-         return false;
+                  for (char c : var4) {
+                     if (Character.isLetter(c)) {
+                        if (Character.isUpperCase(c)) {
+                           return false;
+                        }
+
+                        ++let;
+                     } else {
+                        if (!Character.isDigit(c)) {
+                           return false;
+                        }
+
+                        ++num;
+                     }
+                  }
+
+                  return num >= 2 && let >= 2;
+               }
+            }
+
+            return false;
+         }
       }
    }
 }

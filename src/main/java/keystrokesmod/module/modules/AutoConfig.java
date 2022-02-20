@@ -3,7 +3,7 @@ package keystrokesmod.module.modules;
 import keystrokesmod.clickgui.raven.Component;
 import keystrokesmod.clickgui.raven.components.ButtonBind;
 import keystrokesmod.clickgui.raven.components.ButtonModule;
-import keystrokesmod.module.modules.client.Gui;
+import keystrokesmod.module.modules.client.GuiModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -57,7 +57,7 @@ public class AutoConfig extends Component {
       if (!this.p.mod.getName().equalsIgnoreCase("AutoConfig")) {
          if (this.isBinding) {
             if (keybind == 11) {
-               if (this.p.mod instanceof Gui) {
+               if (this.p.mod instanceof GuiModule) {
                   this.p.mod.setbind(54);
                } else {
                   this.p.mod.setbind(0);

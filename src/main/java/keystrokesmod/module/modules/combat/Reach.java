@@ -40,7 +40,8 @@ public class Reach extends Module {
    public void onMouse(MouseEvent ev) {
       // legit event
       if(!Utils.Player.isPlayerInGame()) return;
-      if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
+      Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+      if (autoClicker != null && autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
       if (ev.button >= 0 && ev.buttonstate) {
          call();
       }
@@ -50,10 +51,10 @@ public class Reach extends Module {
    public void onRenderTick(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
+      Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+      if (autoClicker == null || !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
 
-      if(!ModuleManager.autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
-
-      if (ModuleManager.autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
+      if (autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
          call();
       }
    }
@@ -83,7 +84,8 @@ public class Reach extends Module {
    }
 
    private static Object[] zz(double zzD, double zzE) {
-      if (!ModuleManager.reach.isEnabled()) {
+      Module reach = ModuleManager.getModuleByClazz(Reach.class);
+      if (reach != null && !reach.isEnabled()) {
          zzD = mc.playerController.extendedReach() ? 6.0D : 3.0D;
       }
 

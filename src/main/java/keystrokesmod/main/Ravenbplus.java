@@ -1,5 +1,7 @@
 package keystrokesmod.main;
 
+import fr.jmraich.event.EventManager;
+import fr.jmraich.event.EventTransmitter;
 import keystrokesmod.NotificationRenderer;
 import keystrokesmod.clickgui.raven.ClickGui;
 import keystrokesmod.command.CommandManager;
@@ -9,7 +11,6 @@ import keystrokesmod.keystroke.keystrokeCommand;
 import keystrokesmod.module.Module;
 import keystrokesmod.module.ModuleManager;
 import keystrokesmod.module.modules.HUD;
-import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.utils.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -17,20 +18,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.Base64;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -66,13 +64,14 @@ public class Ravenbplus {
 
    private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
 
-   public static InputStream ravenLogoInputStream;
    public static ResourceLocation mResourceLocation;
 
    public static final String osName, osArch;
 
    public static String clientName = "Raven B+";
    public static String version = Version.getFullVersion();
+
+   public static final EventTransmitter eventTransmitter = new EventTransmitter();
 
    static {
       osName = System.getProperty("os.name").toLowerCase();
@@ -99,19 +98,24 @@ public class Ravenbplus {
 
    @EventHandler
    public void init(FMLInitializationEvent e) {
-      MinecraftForge.EVENT_BUS.register(this);
+      MinecraftForge.EVENT_BUS.register(eventTransmitter);
+
+      EventManager.register(new Ravenbplus());
+
+      EventManager.register(new DebugInfoRenderer());
+      EventManager.register(new mouseManager());
+      EventManager.register(new KeySrokeRenderer());
+      EventManager.register(new ChatHelper());
+
+      EventManager.register(new NotificationRenderer());
 
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
 
       ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
 
-      MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
-      MinecraftForge.EVENT_BUS.register(new mouseManager());
-      MinecraftForge.EVENT_BUS.register(new KeySrokeRenderer());
-      MinecraftForge.EVENT_BUS.register(new ChatHelper());
 
       //lodaing assest
-      ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
+      InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
       BufferedImage bf;
       try {
          bf = ImageIO.read(ravenLogoInputStream);
@@ -124,16 +128,17 @@ public class Ravenbplus {
       ClientConfig.applyKeyStrokeSettingsFromConfigFile();
       commandManager = new CommandManager();
 
-      MinecraftForge.EVENT_BUS.register(ModuleManager.reach);
-      MinecraftForge.EVENT_BUS.register(ModuleManager.nameHider);
-      MinecraftForge.EVENT_BUS.register(NotificationRenderer.notificationRenderer);
+      /* // USELESS
+         MinecraftForge.EVENT_BUS.register(ModuleManager.reach);
+         MinecraftForge.EVENT_BUS.register(ModuleManager.nameHider);
+       */
 
       clickGui = new ClickGui();
       configManager = new ConfigManager();
       clientConfig = new ClientConfig();
       clientConfig.applyConfig();
 
-      ex.execute(() -> Utils.URLS.getTextFromURL(numberOfUseTracker));
+      //ex.execute(() -> Utils.URLS.getTextFromURL(numberOfUseTracker));
 
       if (Version.outdated())  Ravenbplus.outdated = true;
       if (Version.isBeta()) Ravenbplus.beta = true;
@@ -142,7 +147,7 @@ public class Ravenbplus {
    @SubscribeEvent
    public void onTick(ClientTickEvent event) {
       if (event.phase == Phase.END) {
-         if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
+         if (Utils.Player.isPlayerInGame()) {
             for (int i = 0; i < ModuleManager.modListSize(); i++) {
                Module module = ModuleManager.modsList.get(i);
                if (Minecraft.getMinecraft().currentScreen == null) {
@@ -158,10 +163,12 @@ public class Ravenbplus {
    }
 
    @SubscribeEvent
-   public void onChatMessageRecieved(ClientChatReceivedEvent event) {
-      if (Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
-         if(event.message.getUnformattedText().startsWith("Your new API key is")){
-            Utils.URLS.hypixelApiKey = event.message.getUnformattedText().replace("Your new API key is ", "");
+   public void onChatMessageReceived(ClientChatReceivedEvent event) {
+      if (Utils.Player.isPlayerInGame()) {
+         String msg = event.message.getUnformattedText();
+
+         if (msg.startsWith("Your new API key is")) {
+            Utils.URLS.hypixelApiKey = msg.replace("Your new API key is ", "");
             Utils.Player.sendMessageToSelf("&aSet api key to " + Utils.URLS.hypixelApiKey + "!");
             clientConfig.saveConfig();
          }

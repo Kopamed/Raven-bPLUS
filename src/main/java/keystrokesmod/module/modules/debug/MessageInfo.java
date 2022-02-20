@@ -13,8 +13,6 @@ public class MessageInfo extends Module {
 
     @SubscribeEvent
     public void onChatMessageRecieved(ClientChatReceivedEvent event){
-        if(!SelfDestruct.destructed){
-            Utils.Player.sendMessageToSelf("&eUnformatted: " + event.message.getUnformattedText().replace("§", "%"));
-        }
+        Utils.Player.sendMessageToSelf("&eUnformatted: " + event.message.getUnformattedText().replace("§", "%"));
     }
 }

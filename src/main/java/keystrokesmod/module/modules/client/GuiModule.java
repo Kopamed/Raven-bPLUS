@@ -7,7 +7,7 @@ import keystrokesmod.module.ModuleSettingSlider;
 import keystrokesmod.module.ModuleSettingTick;
 import keystrokesmod.utils.Utils;
 
-public class Gui extends Module {
+public class GuiModule extends Module {
    public static final int bind = 54;
    public static ModuleSettingSlider guiTheme, backgroundOpacity;
    public static ModuleDesc guiThemeDesc;
@@ -15,7 +15,7 @@ public class Gui extends Module {
    public static ModuleSettingTick toggleNotification;
    public static ModuleSettingTick rainbowNotification;
 
-   public Gui() {
+   public GuiModule() {
       super("Gui", Module.category.client, 54);
       this.registerSetting(guiTheme = new ModuleSettingSlider("Theme", 3.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(guiThemeDesc = new ModuleDesc(Utils.md + "b+"));

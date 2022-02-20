@@ -2,7 +2,6 @@
 package keystrokesmod.utils;
 
 import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.modules.client.SelfDestruct;
 import keystrokesmod.module.modules.player.Freecam;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -17,7 +16,7 @@ public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
 
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
-      if (Ravenbplus.debugger && ev.phase == Phase.END && Utils.Player.isPlayerInGame() && !SelfDestruct.destructed) {
+      if (Ravenbplus.debugger && ev.phase == Phase.END && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null) {
             ScaledResolution res = new ScaledResolution(mc);
             double bps = Utils.Player.getPlayerBPS(Freecam.en == null ? mc.thePlayer : Freecam.en, 2);
@@ -39,7 +38,6 @@ public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
             int y = res.getScaledHeight() / 2 + 15;
             mc.fontRendererObj.drawString(t, (float)x, (float)y, rgb, false);
          }
-
       }
    }
 }

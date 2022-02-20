@@ -154,6 +154,7 @@ public class ClickGui extends GuiScreen {
       }
 
 
+      // PLAYER
       GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 19 - this.fontRendererObj.FONT_HEIGHT, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
 
       if (keystrokesmod.module.modules.client.CommandLine.a) {

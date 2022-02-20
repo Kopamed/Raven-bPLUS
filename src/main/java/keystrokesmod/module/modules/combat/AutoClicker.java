@@ -3,6 +3,7 @@ package keystrokesmod.module.modules.combat;
 import keystrokesmod.main.Ravenbplus;
 import keystrokesmod.module.*;
 import keystrokesmod.module.modules.debug.Click;
+import keystrokesmod.module.modules.player.FastPlace;
 import keystrokesmod.tweaker.interfaces.IThrowableItem;
 import keystrokesmod.utils.Utils;
 import net.minecraft.block.Block;
@@ -389,8 +390,8 @@ public class AutoClicker extends Module {
       }
 
       if(preferFastPlace.isToggled()) {
-         Module fastplace = Ravenbplus.moduleManager.getModuleByName("FastPlace");
-         if (fastplace.isEnabled())
+         Module fastplace = ModuleManager.getModuleByClazz(FastPlace.class);
+         if (fastplace != null && fastplace.isEnabled())
             return false;
       }
 

@@ -11,6 +11,7 @@ public class keystrokeCommand extends CommandBase {
 
    public void processCommand(ICommandSender sender, String[] args) {
       Minecraft.getMinecraft().displayGuiScreen(new KeyStrokeConfigGui());
+      System.out.println(Minecraft.getMinecraft().currentScreen.getClass());
    }
 
    public String getCommandUsage(ICommandSender sender) {
