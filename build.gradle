@@ -44,10 +44,10 @@ minecraft {
     runDir = "run"
 
     mappings = "stable_20"
-    //clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin"
+    //clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin"
 }
 
-/* -Dfml.coreMods.load=keystrokesmod.tweaker.FMLLoadingPlugin*/
+/* -Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin*/
 jar {
     enabled = false
     dependsOn(shadowJar { classifier = null })
@@ -56,7 +56,7 @@ jar {
 shadowJar {
     manifest {
         attributes(
-                "FMLCorePlugin": "keystrokesmod.tweaker.FMLLoadingPlugin",
+                "FMLCorePlugin": "keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin",
                 "ForceLoadAsMod": true,
                 FMLCorePluginContainsFMLMod: true,
                 "ModSide": "CLIENT"

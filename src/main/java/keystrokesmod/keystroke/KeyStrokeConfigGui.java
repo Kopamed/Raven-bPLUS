@@ -1,11 +1,11 @@
 
 package keystrokesmod.keystroke;
 
-import keystrokesmod.main.ClientConfig;
-import keystrokesmod.main.Ravenbplus;
-import keystrokesmod.module.ModuleManager;
-import keystrokesmod.module.modules.client.GuiModule;
-import keystrokesmod.utils.mouseManager;
+import keystrokesmod.sToNkS.main.ClientConfig;
+import keystrokesmod.sToNkS.main.Ravenbplus;
+import keystrokesmod.sToNkS.module.ModuleManager;
+import keystrokesmod.sToNkS.module.modules.client.GuiModule;
+import keystrokesmod.sToNkS.utils.mouseManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
