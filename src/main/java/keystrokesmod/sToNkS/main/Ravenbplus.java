@@ -3,7 +3,6 @@ package keystrokesmod.sToNkS.main;
 import keystrokesmod.sToNkS.lib.fr.jmraich.rax.event.EventManager;
 import keystrokesmod.sToNkS.lib.fr.jmraich.rax.event.EventTransmitter;
 import keystrokesmod.sToNkS.lib.fr.jmraich.rax.event.FMLEvent;
-import keystrokesmod.sToNkS.lib.fr.jmraich.rax.utils.FMLEventHelper;
 import keystrokesmod.keystroke.KeySrokeRenderer;
 import keystrokesmod.sToNkS.NotificationRenderer;
 import keystrokesmod.sToNkS.clickgui.raven.ClickGui;
@@ -85,18 +84,10 @@ public class Ravenbplus {
       //System.out.println("https://pastebin.com/raw/" + paste_code);
    }
 
-   /**
-    * @see keystrokesmod.sToNkS.tweaker.transformers.TransformerFMLConfigGuiFactory
-    */
    public static void init() {
-      try {
-         FMLEventHelper.fmlRegister(MinecraftForge.EVENT_BUS, eventTransmitter);
-      } catch (ReflectiveOperationException exc) {
-         exc.printStackTrace();
-      }
+      MinecraftForge.EVENT_BUS.register(eventTransmitter);
 
       EventManager.register(new Ravenbplus());
-
       EventManager.register(new DebugInfoRenderer());
       EventManager.register(new mouseManager());
       EventManager.register(new KeySrokeRenderer());

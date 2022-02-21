@@ -1,7 +1,6 @@
 package keystrokesmod.sToNkS.lib.fr.jmraich.rax.event;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -12,9 +11,7 @@ public class EventTransmitter {
      * Transmit all events to the event sub-system
      * @param e any forge event
      */
-    @SubscribeEvent(
-            priority = EventPriority.NORMAL
-    )
+    @SubscribeEvent
     public void onEvent(Event e) {
         EventManager.callEvent(e);
     }

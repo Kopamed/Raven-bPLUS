@@ -119,10 +119,10 @@ public class ModuleManager {
       addModule(new ExplicitB9NameTags());
       addModule(new AutoBlock());
 
+      initialized = true;
+
       // why ?
       getModuleByClazz(AntiBot.class).enable();
-
-      initialized = true;
    }
    
    private static void addModule(Module m) {
@@ -131,6 +131,8 @@ public class ModuleManager {
 
    // prefer using getModuleByClazz();
    public static Module getModuleByName(String name) {
+      if (!initialized) return null;
+
       for (Module module : modsList) {
          if (module.getName().equalsIgnoreCase(name))
             return module;
@@ -139,6 +141,8 @@ public class ModuleManager {
    }
 
    public static Module getModuleByClazz(Class<? extends Module> c) {
+      if (!initialized) return null;
+
       for (Module module : modsList) {
          if (module.getClass().equals(c))
             return module;

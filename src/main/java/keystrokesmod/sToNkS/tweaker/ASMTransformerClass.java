@@ -28,8 +28,6 @@ public class ASMTransformerClass implements IClassTransformer {
       this.addTransformer(new TransformerFMLCommonHandler());
 
       this.addTransformer(new TransformerThrowableItem());
-
-      this.addTransformer(new TransformerFMLConfigGuiFactory());
    }
 
    private void addTransformer(Transformer transformer) {
