@@ -2,8 +2,8 @@ package me.kopamed.raven.bplus.client.feature.module.modules.client;
 
 import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
-import me.kopamed.raven.bplus.helper.utils.Transition;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
+import me.kopamed.raven.bplus.helper.utils.Transition;
 
 public class CommandLine extends Module {
    public static boolean a = false;

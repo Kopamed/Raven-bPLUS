@@ -9,6 +9,7 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.s
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Map;
 
 public class RangeSetting extends Setting {
     private final String name;
@@ -86,6 +87,12 @@ public class RangeSetting extends Setting {
         jsonObject.addProperty("valueMin", valMin);
         jsonObject.addProperty("valueMax", valMax);
         return jsonObject;
+    }
+
+    @Override
+    public void setConfigFromJson(Map<String, Object> setting) {
+        this.valMin = (double) setting.get("valueMin");
+        this.valMax = (double) setting.get("valueMax");
     }
 
     public void setInterval(double interval){

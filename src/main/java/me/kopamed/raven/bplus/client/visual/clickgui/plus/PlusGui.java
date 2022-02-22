@@ -9,6 +9,7 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.s
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.Theme;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.theme.themes.Vape;
 import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.visual.clickgui.raven.CommandLine;
 import me.kopamed.raven.bplus.helper.manager.version.Version;
 import me.kopamed.raven.bplus.helper.utils.Transition;
 import me.kopamed.raven.bplus.helper.utils.Utils;
@@ -78,6 +79,7 @@ public class PlusGui extends GuiScreen {
 
     public void initGui() {
         super.initGui();
+
         this.sr = new ScaledResolution(this.mc);
         this.fontRenderer = Raven.client.getFontRenderer();
 
@@ -167,6 +169,8 @@ public class PlusGui extends GuiScreen {
             category.update(x, y);
             category.paint(fontRenderer);
         }
+
+
     }
 
     public void mouseClicked(int x, int y, int mouseButton) throws IOException {

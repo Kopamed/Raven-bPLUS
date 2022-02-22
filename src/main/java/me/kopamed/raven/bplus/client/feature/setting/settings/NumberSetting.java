@@ -5,11 +5,11 @@ import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
-import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.RangeSliderComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.SliderComponent;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Map;
 
 public class NumberSetting extends Setting {
    private final String name;
@@ -76,5 +76,10 @@ public class NumberSetting extends Setting {
       jsonObject.addProperty("type", this.getSettingType().toString());
       jsonObject.addProperty("value", defaultVal);
       return jsonObject;
+   }
+
+   @Override
+   public void setConfigFromJson(Map<String, Object> settings) {
+      this.defaultVal = (double) settings.get("value");
    }
 }

@@ -4,10 +4,12 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicReference;
 
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.discordRPC.DiscordRPCManager;
 import me.kopamed.raven.bplus.helper.manager.*;
+import me.kopamed.raven.bplus.helper.manager.cfg.Config;
 import me.kopamed.raven.bplus.helper.manager.cfg.ConfigManager;
 import me.kopamed.raven.bplus.helper.manager.version.VersionManager;
 import me.kopamed.raven.bplus.helper.utils.*;
@@ -40,11 +42,19 @@ public class Raven {
       this.versionManager = new VersionManager();
       this.clickGui = new PlusGui();
       this.configManager = new ConfigManager();
+      this.anarchyConfigLoad();
+
+
       this.debugManager = new DebugManager();
       this.registerListeners();
       this.fontRenderer = mc.fontRendererObj;
       tracker.registerLaunch();
    }
+
+   private void anarchyConfigLoad() {
+      this.configManager.applyConfig(configManager.findConfigs().get("user").get(0));
+   }
+
 
    private void registerListeners() {
       // todo

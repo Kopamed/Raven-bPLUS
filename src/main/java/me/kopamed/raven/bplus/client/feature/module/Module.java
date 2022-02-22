@@ -2,6 +2,9 @@ package me.kopamed.raven.bplus.client.feature.module;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.Raven;
@@ -13,6 +16,7 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
 import me.kopamed.raven.bplus.helper.discordRPC.DiscordCompatibility;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
+import me.kopamed.raven.bplus.helper.manager.cfg.Config;
 import me.kopamed.raven.bplus.helper.utils.NotificationRenderer;
 import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -274,6 +278,7 @@ public abstract class Module {
       if(toggleType.getMode() == BindMode.HOLD)
          this.disable();
    }
+
    public JsonObject getConfigAsJson(){
       JsonObject cfg = new JsonObject();
       cfg.addProperty("toggled", toggled);
@@ -286,6 +291,28 @@ public abstract class Module {
          cfg.add(s.getName(), s.getConfigAsJson());
       }
       return cfg;
+   }
+
+
+   public void setConfigFromJson(Map<String, Object> cfg){
+      this.toggled = (boolean) cfg.get("toggled");
+
+      this.keyCodes.clear();
+      Pattern p = Pattern.compile("\\d+");
+      Matcher m = p.matcher((String)cfg.get("keyCodes"));
+      while (m.find()) {
+         keyCodes.add(Integer.valueOf(m.group()));
+      }
+
+      this.bindMode = BindMode.getOrDefault((String) cfg.get("bindMode"), BindMode.TOGGLE);
+
+      this.shownOnHud = (boolean) cfg.get("showOnHud");
+
+      for(Setting s : settings){
+         if(s.getSettingType() == SettingType.DESCRIPTION)
+            continue;
+         s.setConfigFromJson((Map<String, Object>) cfg.get(s.getName()));
+      }
    }
 
    @Override

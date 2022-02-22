@@ -1,13 +1,11 @@
 package me.kopamed.raven.bplus.client.feature.setting;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 
-import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Map;
 
 public abstract class Setting {
    private boolean visible = true;
@@ -45,19 +43,19 @@ public abstract class Setting {
       this.selectors.add(selectorRunnable);
    }
 
-   public JsonObject getSettingsAsJson(){
-      //todo
+   /*public JsonObject getSettingsAsJson(){
+      //todo see getConfigAsJson()
       return new JsonObject();
-   }
+   }*/
 
     public Component createComponent(ModuleComponent moduleComponent) {
       return new Component() {
       };
     }
 
-   public JsonObject getConfigAsJson() {
-      return null;
-   }
+   abstract public JsonObject getConfigAsJson();
+   abstract public void setConfigFromJson(Map<String, Object> settings);
+
 
    public SettingType getSettingType() {
       return settingType;

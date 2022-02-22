@@ -7,6 +7,8 @@ import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.Component;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.ModuleComponent;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.component.components.settings.ComboComponent;
 
+import java.util.Map;
+
 public class ComboSetting<T extends Enum<?>> extends Setting {
     private T[] options;
     private T currentOption;
@@ -54,5 +56,15 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
         jsonObject.addProperty("type", this.getSettingType().toString());
         jsonObject.addProperty("value", currentOption + "");
         return jsonObject;
+    }
+
+    @Override
+    public void setConfigFromJson(Map<String, Object> settings) {
+        for (T option : this.options) {
+            if (option.name() == settings.get("value")) {
+                this.currentOption =  option;
+                break;
+            }
+        }
     }
 }

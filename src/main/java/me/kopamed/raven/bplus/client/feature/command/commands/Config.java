@@ -67,16 +67,16 @@ public class Config extends Command {
                     CommandLine.print("§3'config save link'", 0);
                 } else{
                     boolean found = false;
-                    /*for (String config : Ravenbplus.configManager.listConfigs()) {
-                        if (config.equalsIgnoreCase(args[2])) {
+                    for (me.kopamed.raven.bplus.helper.manager.cfg.Config config : Raven.client.getConfigManager().getConfigs()) {
+                        if (config.getFile().getName().equalsIgnoreCase(args[2])) {
                             found = true;
                             CommandLine.print("&aFound config with the name", 1);
                             CommandLine.print("&a" + args[2], 0);
                             // FUCKING LOAD args[2]
-                            Ravenbplus.configManager.loadConfig(config);
+                            Raven.client.getConfigManager().applyConfig(config);
                             CommandLine.print("&aLoaded config!", 0);
                         }
-                    }*/
+                    }
                     if (!found) {
                         CommandLine.print("&cUnable to find a config with the name", 1);
                         CommandLine.print("&c" + args[2], 0);

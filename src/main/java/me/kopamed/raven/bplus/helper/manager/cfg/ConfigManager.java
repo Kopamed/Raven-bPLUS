@@ -6,9 +6,7 @@ import com.google.gson.JsonObject;
 import me.kopamed.raven.bplus.client.Raven;
 import me.kopamed.raven.bplus.client.feature.module.Module;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +26,6 @@ public class ConfigManager {
 
     // Runtime config settings
     private Config currentConfig;
-    private ArrayList<Config> configs = new ArrayList<>();
 
 
     /*
@@ -51,19 +48,17 @@ public class ConfigManager {
         if(!configDir.exists())
             configDir.mkdir();
 
-
-
-        findConfigs();
+        Map<String, ArrayList<Config>> configs = findConfigs();
 
         // todo find config.raven file and set configs
-        if(configs.isEmpty()){
+        if (configs.get("user").isEmpty()){
             createDefaultConfig();
         } else {
-            for(Config c : configs){
-                if(!c.isReadOnly())
+            for(Config c : configs.get("user")){
+                if (!c.isReadOnly())
                     this.currentConfig = c;
             }
-            if(currentConfig == null)
+            if (currentConfig == null)
                 createDefaultConfig();
         }
     }
@@ -72,13 +67,12 @@ public class ConfigManager {
         Config newConfig = new Config(new File(configDir.getPath() + File.separator + "default" + "." + configFileType));
         System.out.println("WAS EMPYT IOHR FOPUEWHHO");
         this.currentConfig = newConfig;
-        configs.add(newConfig);
     }
 
     private boolean isConfig(File f) {
         if(!f.isFile())
             return false;
-        String[] bobTheBuilder = f.getName().split(".");
+        String[] bobTheBuilder = f.getName().split("\\.");
         if(bobTheBuilder.length == 0)
             return false;
         System.out.println(Arrays.asList(bobTheBuilder));
@@ -94,29 +88,72 @@ public class ConfigManager {
         return new File(path).listFiles();
     }
 
-    public void findConfigs(){
-        configs.clear();
+
+    public Map<String, ArrayList<Config>> findConfigs() {
+        Map<String, ArrayList<Config>> map = new HashMap<>();
+        map.put("user", findUserConfigs());
+        map.put("default", findDefaultConfigs());
+        return map;
+    }
+
+    public ArrayList<Config> findUserConfigs(){
+        ArrayList<Config> cfgs = new ArrayList<>();
+        for(File f : configDir.listFiles()){
+            if(isConfig(f))
+                cfgs.add(new Config(f));
+        }
+
+        return cfgs;
+    }
+
+    public ArrayList<Config> findDefaultConfigs(){
+        ArrayList<Config> cfgs = new ArrayList<>();
+
         try {
             File[] files = getResourceFolderFiles("assets/raven/cfg");
             if (files.length > 0) {
                 for (File f : files) {
-                    configs.add(new Config(f, true));
+                    cfgs.add(new Config(f, true));
                 }
             }
         } catch (Exception theJ){} //fix this bs
 
-        for(File f : configDir.listFiles()){
-            if(isConfig(f))
-                configs.add(new Config(f));
-        }
+        return cfgs;
     }
 
     public ArrayList<Config> getConfigs(){
+        Map<String, ArrayList<Config>> _configs = findConfigs();
+        ArrayList<Config> configs = new ArrayList<>();
+
+        configs.addAll(_configs.get("user"));
+        configs.addAll(_configs.get("default"));
+
         return configs;
     }
 
-    public void applyConfig(Config config){
+    public void applyConfig(Config config) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(config.getFile()));
+            Gson gson = new Gson();
 
+
+            Map<?, ?> map = gson.fromJson(bufferedReader, Map.class);
+
+            Map<String, Map<String, Object>> configs = ((Map<String, Map<String, Object>>)map.get("config"));
+
+            configs.forEach((moduleName, settings) -> {
+                Module m = Raven.client.getModuleManager().getModuleByName(moduleName);
+                if (m != null) {
+                    m.setConfigFromJson(settings);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Config load exception, loading default...");
+            createDefaultConfig();
+            saveConfig();
+            applyConfig(findConfigs().get("default").get(0));
+        }
     }
 
     public void saveConfig() {

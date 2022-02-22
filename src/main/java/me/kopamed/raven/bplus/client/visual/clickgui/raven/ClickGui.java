@@ -62,6 +62,8 @@ public class ClickGui extends GuiScreen {
       this.s.visible = me.kopamed.raven.bplus.client.feature.module.modules.client.CommandLine.a;
    }
 
+
+
    public void drawScreen(int x, int y, float p) {
       drawRect(0, 0, this.width, this.height, (int)(this.aR.getValueFloat(0.0F, 0.7F, 2) * 255.0F) << 24);
       int quarterScreenHeight = this.height / 4;

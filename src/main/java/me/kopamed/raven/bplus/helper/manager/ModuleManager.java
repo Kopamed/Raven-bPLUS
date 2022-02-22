@@ -148,9 +148,9 @@ public class ModuleManager {
       return null;
    }
 
-   public <M extends Module> M getModuleByClass(M m){
+   public <M extends Module> M getModuleByClass(Class<? extends Module> m){
       for(Module module : modsList){
-         if(m == module)
+         if(m == module.getClass())
             return (M) module;
       }
       return null;
