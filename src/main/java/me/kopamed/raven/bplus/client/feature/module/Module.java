@@ -10,6 +10,7 @@ import me.kopamed.raven.bplus.client.feature.setting.Setting;
 import me.kopamed.raven.bplus.client.feature.setting.SettingType;
 import me.kopamed.raven.bplus.client.feature.setting.settings.ComboSetting;
 import me.kopamed.raven.bplus.client.visual.clickgui.plus.PlusGui;
+import me.kopamed.raven.bplus.helper.discordRPC.DiscordCompatibility;
 import me.kopamed.raven.bplus.helper.manager.ModuleManager;
 import me.kopamed.raven.bplus.client.feature.setting.settings.BooleanSetting;
 import me.kopamed.raven.bplus.helper.utils.NotificationRenderer;
@@ -151,7 +152,10 @@ public abstract class Module {
       this.onEnable();
 
       NotificationRenderer.moduleStateChanged(this); //todo
-      Raven.client.getDiscordRPCManager().updateRPC();
+
+      if (DiscordCompatibility.isCompatible()) {
+         Raven.client.getDiscordRPCManager().updateRPC();
+      }
    }
 
    public void disable() {
@@ -161,7 +165,10 @@ public abstract class Module {
       this.onDisable();
 
       NotificationRenderer.moduleStateChanged(this);
-      Raven.client.getDiscordRPCManager().updateRPC();
+
+      if (DiscordCompatibility.isCompatible()) {
+         Raven.client.getDiscordRPCManager().updateRPC();
+      }
    }
 
 

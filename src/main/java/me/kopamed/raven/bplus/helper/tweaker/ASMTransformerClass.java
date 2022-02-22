@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import java.util.Collection;
 
+import me.kopamed.raven.bplus.helper.discordRPC.DiscordRPC_CINIT;
 import me.kopamed.raven.bplus.helper.tweaker.transformers.Transformer;
 import me.kopamed.raven.bplus.helper.tweaker.transformers.*;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -27,6 +28,8 @@ public class ASMTransformerClass implements IClassTransformer {
 
       this.addTransformer(new TransformerSplashProgress());
       this.addTransformer(new TransformerFMLCommonHandler());
+
+      this.addTransformer(new DiscordRPC_CINIT());
    }
 
    private void addTransformer(Transformer transformer) {

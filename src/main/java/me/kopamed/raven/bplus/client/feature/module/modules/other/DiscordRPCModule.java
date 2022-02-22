@@ -1,14 +1,12 @@
 package me.kopamed.raven.bplus.client.feature.module.modules.other;
 
-import me.kopamed.raven.bplus.client.Raven;
+import me.kopamed.raven.bplus.client.feature.module.Module;
 import me.kopamed.raven.bplus.client.feature.module.ModuleCategory;
 import me.kopamed.raven.bplus.client.feature.setting.settings.DescriptionSetting;
 import me.kopamed.raven.bplus.client.feature.setting.settings.NumberSetting;
-import me.kopamed.raven.bplus.client.feature.module.Module;
+import me.kopamed.raven.bplus.helper.discordRPC.DiscordCompatibility;
 import me.kopamed.raven.bplus.helper.discordRPC.DiscordRPCManager;
 import me.kopamed.raven.bplus.helper.discordRPC.RPCMode;
-import me.kopamed.raven.bplus.helper.utils.Tracker;
-import me.kopamed.raven.bplus.helper.utils.Utils;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -21,11 +19,7 @@ public class DiscordRPCModule extends Module {
     public DiscordRPCModule() {
         super("DiscordRPC", ModuleCategory.Misc);
 
-        Tracker tracker = Raven.client.getTracker();
-        String osArch = tracker.getOsArch();
-        String osName = tracker.getOsName();
-
-        if (osArch.contains("arm") || osArch.contains("aarch64") || osName.toLowerCase().contains("mac")) {
+        if (!DiscordCompatibility.isCompatible()) {
             this.registerSetting(unsupportedOS = new DescriptionSetting("Unsupported OS!"));
         }
         this.registerSetting(rpcMode = new NumberSetting("Mode", 4.0D, 1.0D, 4.0D, 1.0D));
@@ -33,15 +27,8 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onEnable() {
-        Tracker tracker = Raven.client.getTracker();
-        String osArch = tracker.getOsArch();
-        String osName = tracker.getOsName();
+        if (!DiscordCompatibility.isCompatible()) return;
 
-        if(osArch.contains("arm") || osArch.contains("aarch64") || osName.toLowerCase().contains("mac")) {
-            Utils.Player.sendMessageToSelf("&cYour computer OS/architecture is not supported yet!");
-            this.disable();
-            return;
-        }
         switch ((int) rpcMode.getInput()) {
             case 1: // BADLION
                 rpc.init_rpc(RPCMode.BADLION);
@@ -63,12 +50,9 @@ public class DiscordRPCModule extends Module {
     }
 
     public void onDisable() {
-        Tracker tracker = Raven.client.getTracker();
-        String osArch = tracker.getOsArch();
-        String osName = tracker.getOsName();
+        if (!DiscordCompatibility.isCompatible()) return;
 
         MinecraftForge.EVENT_BUS.unregister(rpc);
-        if (osArch.contains("arm") || osArch.contains("aarch64") || osName.toLowerCase().contains("mac")) return;
         if (rpc.rpc_thread != null)
             rpc.rpc_thread.interrupt();
         DiscordRPC.discordShutdown();
@@ -76,11 +60,8 @@ public class DiscordRPCModule extends Module {
 
     private int lastRPC;
     public void guiUpdate() {
-        Tracker tracker = Raven.client.getTracker();
-        String osArch = tracker.getOsArch();
-        String osName = tracker.getOsName();
+        if (!DiscordCompatibility.isCompatible()) return;
 
-        if (osArch.contains("arm") || osArch.contains("aarch64") || osName.toLowerCase().contains("mac")) return;
         if (lastRPC != (int) rpcMode.getInput()) { // prevent lags
             lastRPC = (int) rpcMode.getInput();
 
