@@ -8,7 +8,7 @@ public class DiscordRPC_CINIT implements Transformer {
     public String[] getClassName() {
         return new String[]{
                 "net.arikia.dev.drpc.DiscordRPC",
-                "net.arikia.dev.drpc.DiscordRPC.DLL"
+                "net.arikia.dev.drpc.DiscordRPC.DLL" // DLL is a subclass so in bytecode it's :  DiscordRPC$DLL
         };
     }
 
