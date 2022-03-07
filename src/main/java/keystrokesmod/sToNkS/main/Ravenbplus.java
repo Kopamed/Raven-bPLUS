@@ -45,6 +45,8 @@ public class Ravenbplus {
    public static ConfigManager configManager;
    public static ClientConfig clientConfig;
 
+   private static boolean isKeyStrokeConfigGuiToggled;
+   
    public static final ModuleManager moduleManager;
 
    public static ClickGui clickGui;
@@ -143,6 +145,11 @@ public class Ravenbplus {
                if (module.isEnabled()) module.update();
             }
          }
+         
+         if (isKeyStrokeConfigGuiToggled) {
+            isKeyStrokeConfigGuiToggled = false;
+            Minecraft.getMinecraft().displayGuiScreen(new KeyStrokeConfigGui());
+         }
       }
    }
 
@@ -161,6 +168,10 @@ public class Ravenbplus {
 
    public static ScheduledExecutorService getExecutor() {
       return ex;
+   }
+   
+   public static void toggleKeyStrokeConfigGui() {
+      isKeyStrokeConfigGuiToggled = true;
    }
 }
 
