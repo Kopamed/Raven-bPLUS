@@ -18,7 +18,7 @@
 
 Raven b+ is built on top of Raven b3, adding quality of life improvements, bug fixes, and much more.<br>
 Discord:<br>
-<a href="https://discord.gg/QFRXe8BbGM"><img src="https://invidget.switchblade.xyz/QFRXe8BbGM" alt="https://discord.gg/QFRXe8BbGM"/></a><br>
+<a href="https://discord.gg/QQMQfCRyNP"><img src="https://invidget.switchblade.xyz/QQMQfCRyNP" alt="https://discord.gg/QQMQfCRyNP"/></a><br>
 Backup: <br>
 <a href="https://discord.gg/XhVt9NMtBE"><img src="https://invidget.switchblade.xyz/XhVt9NMtBE" alt="https://discord.gg/XhVt9NMtBE"/></a><br>
 
