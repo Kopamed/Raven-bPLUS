@@ -23,7 +23,7 @@ public class FastPlace extends Module {
    static {
       rightClickDelayTimerField = ReflectionHelper.findField(Minecraft.class, "field_71467_ac", "rightClickDelayTimer");
 
-      if (rightClickDelayTimerField != null) {
+      if (rightClickDelayTimerField != null && !rightClickDelayTimerField.isAccessible()) {
          rightClickDelayTimerField.setAccessible(true);
       }
    }
@@ -51,20 +51,22 @@ public class FastPlace extends Module {
             }
 
             try {
-               int c = (int) delaySlider.getInput();
-               if (c == 0) {
+               int setting = (int) delaySlider.getInput();
+               if (setting == 0) {
                   rightClickDelayTimerField.set(mc, 0);
                } else {
-                  if (c == 4) {
+                  if (setting == 4) {
                      return;
                   }
 
-                  int d = rightClickDelayTimerField.getInt(mc);
-                  if (d == 4) {
-                     rightClickDelayTimerField.set(mc, c);
+                  int delay = rightClickDelayTimerField.getInt(mc);
+                  if (delay == 4) {
+                     rightClickDelayTimerField.set(mc, setting);
                   }
                }
-            } catch (IllegalAccessException | IndexOutOfBoundsException ignored) {}
+            } catch (IllegalAccessException | IndexOutOfBoundsException ignored) {
+
+            }
          }
       }
    }
