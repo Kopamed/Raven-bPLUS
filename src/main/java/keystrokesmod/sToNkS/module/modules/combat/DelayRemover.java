@@ -25,7 +25,7 @@ public class DelayRemover extends Module {
 
    @Override
    public boolean canBeEnabled() {
-      return this.leftClickCounterField == null;
+      return this.leftClickCounterField != null;
    }
 
    @FMLEvent

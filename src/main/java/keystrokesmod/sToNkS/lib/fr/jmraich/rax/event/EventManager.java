@@ -2,16 +2,10 @@ package keystrokesmod.sToNkS.lib.fr.jmraich.rax.event;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventManager {
-    private static final List<FMLEventHandler> fmlEventHandlers;
-
-    static {
-        fmlEventHandlers = Collections.synchronizedList(new ArrayList<>());
-    }
+    private static final CopyOnWriteArrayList<FMLEventHandler> fmlEventHandlers = new CopyOnWriteArrayList<>();
 
     /**
      * Register an object into the event sub-system
