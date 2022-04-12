@@ -7,44 +7,41 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+        maven {
+            name = 'JitPack'
+            url = 'https://jitpack.io'
+        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+        classpath 'com.github.asbyth:ForgeGradle:ddb1eb0'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
     }
 }
 
 apply plugin: 'java'
-compileJava {
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
-}
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'net.minecraftforge.gradle.forge'
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = "UTF-8"
+}
 
 dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     compile fileTree(dir: "lib", include: "discord-rpc.jar")
 }
 
-
-/*
-// for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
-plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-}
-*/
-
 version = "1.1.0"
 group = "club.sk1er.keystrokes"
 archivesBaseName = "[1.8.9] BetterKeystrokes V"
 
 minecraft {
-    version = "1.8.9-11.15.1.1722"
+    version = "1.8.9-11.15.1.2318-1.8.9"
     runDir = "run"
-
-    mappings = "stable_20"
-    //clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin"
+    mappings = "stable_22"
+    clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin"
 }
 
 /* -Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin*/
