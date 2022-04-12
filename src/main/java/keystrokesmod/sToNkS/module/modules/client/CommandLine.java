@@ -11,7 +11,7 @@ public class CommandLine extends Module {
    public static ModuleSettingTick animate;
 
    public CommandLine() {
-      super("Command line", Module.category.client, 0);
+      super("Command Line", Module.category.client, 0);
       this.registerSetting(animate = new ModuleSettingTick("Animate", true));
    }
 
