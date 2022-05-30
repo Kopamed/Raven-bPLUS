@@ -16,6 +16,9 @@ import java.net.HttpURLConnection;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -41,7 +44,17 @@ public class LaunchTracker {
 
 // Request parameters and other properties.
         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-        params.add(new BasicNameValuePair("hashedMacAddr", getMac()));
+        String mac = getMac();
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        byte[] encodedhash = digest.digest(
+                mac.getBytes(StandardCharsets.UTF_8));
+        mac = bytesToHex(encodedhash);
+        params.add(new BasicNameValuePair("hashedMacAddr", mac));
         params.add(new BasicNameValuePair("clientVersion", Raven.versionManager.getClientVersion().toString()));
         params.add(new BasicNameValuePair("latestVersion", Raven.versionManager.getLatestVersion().toString()));
         params.add(new BasicNameValuePair("config", Raven.configManager.getConfig().getData().toString()));
@@ -105,5 +118,17 @@ public class LaunchTracker {
         }
 
         return "";
+    }
+
+    private static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }
