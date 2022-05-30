@@ -1,6 +1,6 @@
 package keystrokesmod.keystroke;
 
-import keystrokesmod.sToNkS.utils.mouseManager;
+import keystrokesmod.client.utils.mouseManager;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;

@@ -1,0 +1,78 @@
+package keystrokesmod.client.module.modules.client;
+
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.DescriptionSetting;
+import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import keystrokesmod.client.utils.version.Version;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class UpdateCheck extends Module {
+    public static DescriptionSetting howToUse;
+    public static TickSetting copyToClipboard;
+    public static TickSetting openLink;
+
+    private Future<?> f;
+    private final ExecutorService executor;
+    private final Runnable task;
+
+    public UpdateCheck() {
+        super("Update", category.client, 0);
+
+        this.registerSetting(howToUse = new DescriptionSetting(Utils.Java.uf("command") + ": update"));
+        this.registerSetting(copyToClipboard = new TickSetting("Copy to clipboard", true));
+        this.registerSetting(openLink = new TickSetting("Open dl in browser", true));
+
+        executor = Executors.newFixedThreadPool(1);
+        task = () -> {
+            Version latest = Raven.versionManager.getLatestVersion();
+            Version current = Raven.versionManager.getClientVersion();
+            if (latest.isNewerThan(current)) {
+                Utils.Player.sendMessageToSelf("The current version or Raven B+ is outdated. Visit https://github.com/Kopamed/Raven-bPLUS to download the latest version.");
+                Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
+            }
+
+            if (current.isNewerThan(latest)) {
+                Utils.Player.sendMessageToSelf("You are on a beta build of raven");
+                Utils.Player.sendMessageToSelf("https://github.com/Kopamed/Raven-bPLUS");
+            } else {
+                Utils.Player.sendMessageToSelf("You are on the latest public version!");
+            }
+
+            if (copyToClipboard.isToggled())
+                if (Utils.Client.copyToClipboard(Raven.sourceLocation))
+                    Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
+
+            if (openLink.isToggled()) {
+                try {
+                    URL url = new URL(Raven.sourceLocation);
+                    Utils.Client.openWebpage(url);
+                } catch (MalformedURLException bruh) {
+                    bruh.printStackTrace();
+                    Utils.Player.sendMessageToSelf("&cFailed to open page! Please report this bug in Raven b+'s discord");
+                }
+            }
+
+            this.disable();
+        };
+    }
+
+    @FMLEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+        if (f == null) {
+            f = executor.submit(task);
+            Utils.Player.sendMessageToSelf("Update check started !");
+        } else if (f.isDone()) {
+            f = executor.submit(task);
+            Utils.Player.sendMessageToSelf("Update check started !");
+        }
+    }
+}

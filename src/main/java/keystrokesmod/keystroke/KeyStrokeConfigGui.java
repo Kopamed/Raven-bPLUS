@@ -1,18 +1,18 @@
 
 package keystrokesmod.keystroke;
 
-import keystrokesmod.sToNkS.main.ClientConfig;
-import keystrokesmod.sToNkS.main.Ravenbplus;
-import keystrokesmod.sToNkS.module.ModuleManager;
-import keystrokesmod.sToNkS.module.modules.client.GuiModule;
-import keystrokesmod.sToNkS.utils.mouseManager;
+import keystrokesmod.client.main.ClientConfig;
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.ModuleManager;
+import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.utils.mouseManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
 
 public class KeyStrokeConfigGui extends GuiScreen {
-   private static KeySrokeRenderer keySrokeRenderer;
+   private static KeyStrokeRenderer keySrokeRenderer;
 
    private static final String[] colors = new String[]{"White", "Red", "Green", "Blue", "Yellow", "Purple", "Rainbow"};
    private GuiButton modeBtn;
@@ -25,7 +25,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
    private int ly;
 
    public KeyStrokeConfigGui() {
-      KeyStrokeConfigGui.keySrokeRenderer = new KeySrokeRenderer();
+      KeyStrokeConfigGui.keySrokeRenderer = new KeyStrokeRenderer();
    }
 
    public void initGui() {
@@ -59,8 +59,8 @@ public class KeyStrokeConfigGui extends GuiScreen {
          this.outlineBtn.displayString = "Outline: " + (KeyStroke.outline ? "On" : "Off");
       } else if(button == this.clickGui){
          mc.currentScreen = null;
-         mc.displayGuiScreen(Ravenbplus.clickGui);
-         Ravenbplus.clickGui.initMain();
+         mc.displayGuiScreen(Raven.clickGui);
+         Raven.clickGui.initMain();
       }
 
 
@@ -108,7 +108,7 @@ public class KeyStrokeConfigGui extends GuiScreen {
    }
 
    public void onGuiClosed() {
-      Ravenbplus.clientConfig.saveConfig();
+      Raven.clientConfig.saveConfig();
       ClientConfig.saveKeyStrokeSettingsToConfigFile();
    }
 }

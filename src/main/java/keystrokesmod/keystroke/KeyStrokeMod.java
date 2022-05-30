@@ -1,8 +1,7 @@
 package keystrokesmod.keystroke;
 
-import keystrokesmod.sToNkS.main.Ravenbplus;
+import keystrokesmod.client.main.Raven;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -16,8 +15,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 public class KeyStrokeMod {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        ClientCommandHandler.instance.registerCommand(new keystrokeCommand());
+        ClientCommandHandler.instance.registerCommand(new KeystrokeCommand());
 
-        Ravenbplus.init();
+        Raven.init();
     }
 }

@@ -1,0 +1,205 @@
+package keystrokesmod.client.module;
+
+import keystrokesmod.client.module.modules.HUD;
+import keystrokesmod.client.module.modules.client.*;
+import keystrokesmod.client.module.modules.combat.*;
+import keystrokesmod.client.module.modules.fun.*;
+import keystrokesmod.client.module.modules.hotkey.*;
+import keystrokesmod.client.module.modules.minigames.*;
+import keystrokesmod.client.module.modules.movement.*;
+import keystrokesmod.client.module.modules.other.*;
+import keystrokesmod.client.module.modules.player.*;
+import keystrokesmod.client.module.modules.render.*;
+import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.modules.world.ChatLogger;
+import keystrokesmod.client.utils.Utils;
+import net.minecraft.client.gui.FontRenderer;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public class ModuleManager {
+   public static List<Module> modsList = new ArrayList<>();
+   public static List<Module> enModsList = new ArrayList<>();
+
+   public static boolean initialized = false;
+
+   public synchronized void init() {
+      if (initialized) return;
+
+      addModule(new AutoClicker());
+      addModule(new AimAssist());
+      addModule(new BurstClicker());
+      addModule(new ClickAssist());
+      addModule(new DelayRemover());
+      addModule(new HitBox());
+      addModule(new Reach());
+      addModule(new RodAimbot());
+      addModule(new Velocity());
+      addModule(new BHop());
+      addModule(new Boost());
+      addModule(new Fly());
+      addModule(new InvMove());
+      addModule(new KeepSprint());
+      addModule(new NoSlow());
+      addModule(new Speed());
+      addModule(new Sprint());
+      addModule(new StopMotion());
+      addModule(new Timer());
+      addModule(new VClip());
+      addModule(new AutoJump());
+      addModule(new AutoPlace());
+      addModule(new BedAura());
+      addModule(new FallSpeed());
+      addModule(new FastPlace());
+      addModule(new Freecam());
+      addModule(new NoFall());
+      addModule(new SafeWalk());
+      addModule(new AntiBot());
+      addModule(new AntiShuffle());
+      addModule(new Chams());
+      addModule(new ChestESP());
+      addModule(new Nametags());
+      addModule(new PlayerESP());
+      addModule(new Tracers());
+      addModule(new HUD());
+      addModule(new Xray());
+      addModule(new BridgeInfo());
+      addModule(new DuelsStats());
+      addModule(new MurderMystery());
+      addModule(new SumoFences());
+      addModule(new ExtraBobbing());
+      addModule(new Twerk());
+      addModule(new ParticleTrail());
+      addModule(new SlyPort());
+      addModule(new Spin());
+      addModule(new FovLSD());
+      addModule(new ClientNameSpoof());
+      addModule(new FakeChat());
+      addModule(new NameHider());
+      addModule(new StringEncrypt());
+      addModule(new WaterBucket());
+      //addModule(new AutoConfig());
+      addModule(new CommandLine());
+      addModule(new GuiModule());
+      addModule(new SelfDestruct());
+      addModule(new ChatLogger());
+      addModule(new BridgeAssist());
+      addModule(new Fullbright());
+      addModule(new UpdateCheck());
+      addModule(new AutoHeader());
+      addModule(new MiddleClick());
+      addModule(new AutoTool());
+      addModule(new Blocks());
+      addModule(new Ladders());
+      addModule(new Weapon());
+      addModule(new Pearl());
+      addModule(new Armour());
+      addModule(new Healing());
+      addModule(new Trajectories());
+      addModule(new WTap());
+      addModule(new BlockHit());
+      addModule(new STap());
+      addModule(new AutoWeapon());
+      addModule(new BedwarsOverlay());
+
+      addModule(new ShiftTap());
+      addModule(new FPSSpoofer());
+
+      addModule(new ExplicitB9NameTags());
+      addModule(new AutoBlock());
+
+      initialized = true;
+
+      // why ?
+      // idk dude. you tell me why. I am pretty sure this was blowsy's work.
+      getModuleByClazz(AntiBot.class).enable();
+   }
+   
+   private static void addModule(Module m) {
+      modsList.add(m);
+   } 
+
+   // prefer using getModuleByClazz();
+   // ok might add in 1.0.18
+   public static Module getModuleByName(String name) {
+      if (!initialized) return null;
+
+      for (Module module : modsList) {
+         if (module.getName().equalsIgnoreCase(name))
+            return module;
+      }
+      return null;
+   }
+
+   public static Module getModuleByClazz(Class<? extends Module> c) {
+      if (!initialized) return null;
+
+      for (Module module : modsList) {
+         if (module.getClass().equals(c))
+            return module;
+      }
+      return null;
+   }
+
+
+   public static List<Module> getModules() {
+      return modsList;
+   }
+
+   public static List<Module> getModulesInCategory(Module.category categ) {
+      ArrayList<Module> modulesOfCat = new ArrayList<>();
+
+      for (Module mod : getModules()) {
+         if (mod.moduleCategory().equals(categ)) {
+            modulesOfCat.add(mod);
+         }
+      }
+
+      return modulesOfCat;
+   }
+
+   public static void sort() {
+      if (HUD.alphabeticalSort.isToggled()) {
+         modsList.sort(Comparator.comparing(Module::getName));
+      } else {
+         modsList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+      }
+
+   }
+
+   public static int modListSize() {
+      return modsList.size();
+   }
+
+   public static void sortLongShort() {
+      modsList.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())));
+   }
+
+   public static void sortShortLong() {
+      modsList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+   }
+
+   public static int getLongestActiveModule(FontRenderer fr) {
+      int length = 0;
+      for(Module mod : modsList) {
+         if(mod.isEnabled()){
+            if(fr.getStringWidth(mod.getName()) > length){
+               length = fr.getStringWidth(mod.getName());
+            }
+         }
+      }
+      return length;
+   }
+
+   public static int getBoxHeight(FontRenderer fr, int margin) {
+      int length = 0;
+      for(Module mod : modsList) {
+         if(mod.isEnabled()){
+            length += fr.FONT_HEIGHT + margin;
+         }
+      }
+      return length;
+   }
+}
