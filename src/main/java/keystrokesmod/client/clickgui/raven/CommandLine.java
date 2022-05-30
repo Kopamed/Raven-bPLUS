@@ -65,6 +65,9 @@ public class CommandLine {
          f = false;
          print("Welcome,", 0);
          print("Use \"help\" for help.", 0);
+         print("&cExisting configs will", 0);
+         print("&cno longer work due to", 0);
+         print("&cthe new config system.", 0);
       }
 
       if (!rs.isEmpty()) {

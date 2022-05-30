@@ -14,19 +14,15 @@ out
 .idea
 
 # gradle
-build/*
-!build/libs
-build/libs/galacticc-1.0-*.jar
+build
 .gradle
 
 # other
 eclipse
 run
 
-#include
-!build/libs/
 
-config/
+
 keystrokes/
 logs/
 saves/
