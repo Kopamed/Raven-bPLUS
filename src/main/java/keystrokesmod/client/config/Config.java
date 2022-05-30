@@ -2,6 +2,7 @@ package keystrokesmod.client.config;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
 
@@ -41,11 +42,7 @@ public class Config {
             Object obj = jsonParser.parse(reader);
             JsonObject data = (JsonObject) obj;
             return data;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
+        } catch (JsonSyntaxException | ClassCastException | IOException e) {
             e.printStackTrace();
         }
         return null;
