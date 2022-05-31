@@ -2,6 +2,9 @@ package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.combat.Reach;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.entity.Entity;
 
 public class KeepSprint extends Module {
@@ -10,7 +13,7 @@ public class KeepSprint extends Module {
    public static TickSetting c;
 
    public KeepSprint() {
-      super("KeepSprint", Module.category.movement, 0);
+      super("KeepSprint", ModuleCategory.movement, 0);
       this.registerSetting(a = new DescriptionSetting("Default is 40% motion reduction."));
       this.registerSetting(b = new SliderSetting("Slow %", 40.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(c = new TickSetting("Only reduce reach hits", false));

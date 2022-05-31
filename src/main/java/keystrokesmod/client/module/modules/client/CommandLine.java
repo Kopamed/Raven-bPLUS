@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.client;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Timer;
 
 public class CommandLine extends Module {
@@ -11,7 +11,7 @@ public class CommandLine extends Module {
    public static TickSetting animate;
 
    public CommandLine() {
-      super("Command line", Module.category.client, 0);
+      super("Command line", ModuleCategory.client, 0);
       this.registerSetting(animate = new TickSetting("Animate", true));
    }
 

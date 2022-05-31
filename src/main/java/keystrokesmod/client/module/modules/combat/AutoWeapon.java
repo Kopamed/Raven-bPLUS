@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
@@ -15,7 +15,7 @@ public class AutoWeapon extends Module {
     private int prevSlot;
 
     public AutoWeapon(){
-        super("AutoWeapon", category.combat, 0);
+        super("AutoWeapon", ModuleCategory.combat, 0);
         this.registerSetting(onlyWhenHoldingDown = new TickSetting("Only when holding lmb", true));
         this.registerSetting(goBackToPrevSlot = new TickSetting("Revert to old slot", true));
     }

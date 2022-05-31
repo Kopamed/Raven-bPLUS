@@ -2,7 +2,7 @@ package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 
@@ -11,7 +11,7 @@ public class BHop extends Module {
    private final double bspd = 0.0025D;
 
    public BHop() {
-      super("Bhop", Module.category.movement, 0);
+      super("Bhop", ModuleCategory.movement, 0);
       this.registerSetting(a = new SliderSetting("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 

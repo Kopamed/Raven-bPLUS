@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -19,7 +19,7 @@ public class RodAimbot extends Module {
    public static TickSetting c;
 
    public RodAimbot() {
-      super("RodAimbot", Module.category.combat, 0);
+      super("RodAimbot", ModuleCategory.combat, 0);
       this.registerSetting(a = new SliderSetting("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
       this.registerSetting(b = new SliderSetting("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
       this.registerSetting(c = new TickSetting("Aim invis", false));

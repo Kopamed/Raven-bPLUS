@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 
 public class Fly extends Module {
@@ -15,7 +15,7 @@ public class Fly extends Module {
    private static final String c2 = "Glide";
 
    public Fly() {
-      super("Fly", Module.category.movement, 0);
+      super("Fly", ModuleCategory.movement, 0);
       this.registerSetting(a = new SliderSetting("Value", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(dc = new DescriptionSetting(Utils.md + c1));
       this.registerSetting(b = new SliderSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));

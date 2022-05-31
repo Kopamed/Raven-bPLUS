@@ -1,12 +1,11 @@
 package keystrokesmod.client.module;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.EventManager;
 import keystrokesmod.client.NotificationRenderer;
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
+import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 public class Module {
    protected ArrayList<Setting> settings;
    private final String moduleName;
-   private final Module.category moduleCategory;
+   private final ModuleCategory moduleCategory;
    private boolean enabled;
    private int keycode;
    protected static Minecraft mc;
@@ -23,7 +22,7 @@ public class Module {
 
    private final int defualtKeyCode;
 
-   public Module(String name, Module.category moduleCategory) {
+   public Module(String name, ModuleCategory moduleCategory) {
       this.moduleName = name;
       this.moduleCategory = moduleCategory;
       this.keycode = 0;
@@ -32,7 +31,7 @@ public class Module {
       this.defualtKeyCode = 0;
    }
 
-   public Module(String moduleName, Module.category moduleCategory, int keycode) {
+   public Module(String moduleName, ModuleCategory moduleCategory, int keycode) {
       this.moduleName = moduleName;
       this.moduleCategory = moduleCategory;
       this.keycode = keycode;
@@ -42,34 +41,14 @@ public class Module {
       this.settings = new ArrayList<>();
    }
 
+   
+
    public JsonObject getConfigAsJson(){
       JsonObject settings = new JsonObject();
+
       for(Setting setting : this.settings){
-         JsonObject settingSettings = new JsonObject();
-
-         settingSettings.addProperty("type", setting.settingType);
-
-         switch(setting.settingType){
-            case DescriptionSetting.settingType:
-               DescriptionSetting descSetting = (DescriptionSetting) setting;
-               settingSettings.addProperty("value", descSetting.getDesc());
-               break;
-            case DoubleSliderSetting.settingType:
-               DoubleSliderSetting doubleSliderSetting = (DoubleSliderSetting) setting;
-               settingSettings.addProperty("valueMin", doubleSliderSetting.getInputMin());
-               settingSettings.addProperty("valueMax", doubleSliderSetting.getInputMax());
-               break;
-            case SliderSetting.settingType:
-               SliderSetting sliderSetting = (SliderSetting) setting;
-               settingSettings.addProperty("value", sliderSetting.getInput());
-               break;
-            case TickSetting.settingType:
-               TickSetting tickSetting = (TickSetting) setting;
-               settingSettings.addProperty("value", tickSetting.isToggled());
-               break;
-         }
-
-         settings.add(setting.settingName, settingSettings);
+         JsonObject settingData = setting.getConfigAsJson();
+         settings.add(setting.settingName, settingData);
       }
 
       JsonObject data = new JsonObject();
@@ -78,6 +57,20 @@ public class Module {
       data.add("settings", settings);
 
       return data;
+   }
+
+   public void applyConfigFromJson(JsonObject data){
+      this.keycode = data.get("keycode").getAsInt();
+      setToggled(data.get("enabled").getAsBoolean());
+
+      JsonObject settingsData = data.get("settings").getAsJsonObject();
+      for(Setting setting : getSettings()){
+         if(settingsData.has(setting.getName())){
+            setting.applyConfigFromJson(
+                    settingsData.get(setting.getName()).getAsJsonObject()
+            );
+         }
+      }
    }
 
 
@@ -98,7 +91,7 @@ public class Module {
 
    public void enable() {
       boolean oldState = this.enabled;
-      this.setToggled(true);
+      this.enabled = true;
       if (oldState != this.enabled) {
          NotificationRenderer.moduleStateChanged(this);
       }
@@ -117,7 +110,7 @@ public class Module {
 
    public void disable() {
       boolean oldState = this.enabled;
-      this.setToggled(false);
+      this.enabled = false;
       if (oldState != this.enabled) {
          NotificationRenderer.moduleStateChanged(this);
       }
@@ -128,7 +121,12 @@ public class Module {
    }
 
    public void setToggled(boolean enabled) {
-      this.enabled = enabled;
+      if(enabled == this.enabled)
+         return;
+      if(enabled)
+         enable();
+      else
+         disable();
    }
 
    public String getName() {
@@ -151,7 +149,7 @@ public class Module {
       this.settings.add(Setting);
    }
 
-   public Module.category moduleCategory() {
+   public ModuleCategory moduleCategory() {
       return this.moduleCategory;
    }
 
@@ -198,17 +196,27 @@ public class Module {
       }
    }
 
-   public enum category {
+   public void onGuiClose() {
+
+   }
+
+   public String getBindAsString(){
+      return keycode == 0 ? "None" : Keyboard.getKeyName(keycode);
+   }
+
+   public void clearBinds() {
+      this.keycode = 0;
+   }
+
+   public enum ModuleCategory {
       combat,
       movement,
       player,
       world,
       render,
       minigames,
-      fun,
       other,
       client,
-      hotkey,
-      debug
+      hotkey
    }
 }

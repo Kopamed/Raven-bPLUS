@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class Weapon extends Module {
     public Weapon() {
-        super("Weapon", category.hotkey, 0);
+        super("Weapon", ModuleCategory.hotkey, 0);
     }
 
     @Override

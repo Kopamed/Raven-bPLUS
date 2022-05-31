@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,7 +23,7 @@ public class Nametags extends Module {
    public static TickSetting e;
 
    public Nametags() {
-      super("Nametags", Module.category.render, 0);
+      super("Nametags", ModuleCategory.render, 0);
       this.registerSetting(a = new SliderSetting("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
       this.registerSetting(b = new TickSetting("Rect", true));
       this.registerSetting(c = new TickSetting("Show health", true));

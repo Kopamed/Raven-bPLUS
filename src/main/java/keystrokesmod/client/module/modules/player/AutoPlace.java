@@ -1,6 +1,9 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -28,7 +31,7 @@ public class AutoPlace extends Module {
    private BlockPos lp = null;
 
    public AutoPlace() {
-      super("AutoPlace", Module.category.player, 0);
+      super("AutoPlace", ModuleCategory.player, 0);
       this.registerSetting(ds = new DescriptionSetting("FD: FPS/80"));
       this.registerSetting(c = new SliderSetting("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
       this.registerSetting(a = new TickSetting("Hold right", true));

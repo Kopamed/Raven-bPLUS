@@ -2,6 +2,10 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
@@ -24,7 +28,7 @@ public class ShiftTap extends Module {
     public static CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
 
     public ShiftTap(){
-        super("ShiftTap", category.combat, 0);
+        super("ShiftTap", ModuleCategory.combat, 0);
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(actionTicks = new DoubleSliderSetting("Action Time (MS)",  25, 55, 1, 500, 1));
         this.registerSetting(onceEvery =  new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1));

@@ -15,7 +15,7 @@ public class ChatLogger extends Module {
     public String extension;
 
     public ChatLogger() {
-        super("Chat Logger", category.world, 0);
+        super("Chat Logger", ModuleCategory.world, 0);
 
         extension = "txt";
         dir = new File(mc.mcDataDir, "keystrokes" + File.separator + "logs");

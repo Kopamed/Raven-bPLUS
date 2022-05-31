@@ -2,8 +2,8 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.DoubleSliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,7 +28,7 @@ public class Reach extends Module {
    public static TickSetting hit_through_blocks;
 
    public Reach() {
-      super("Reach", Module.category.combat, 0);
+      super("Reach", ModuleCategory.combat, 0);
       this.registerSetting(reach = new DoubleSliderSetting("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
       this.registerSetting(weapon_only = new TickSetting("Weapon only", false));
       this.registerSetting(moving_only = new TickSetting("Moving only", false));

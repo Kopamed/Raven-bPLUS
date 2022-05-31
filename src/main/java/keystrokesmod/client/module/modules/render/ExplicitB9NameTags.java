@@ -4,8 +4,8 @@ package keystrokesmod.client.module.modules.render;
 
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CombatUtils;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
@@ -50,7 +50,7 @@ public class ExplicitB9NameTags extends Module {
     private final TickSetting distanceSetting;
 
     public ExplicitB9NameTags() {
-        super("(ExplicitB9)NameTags", category.render);
+        super("(ExplicitB9)NameTags", ModuleCategory.render);
 
         modeSetting = new SliderSetting("Mode (Hearts/Percentage)", 1.0D, 1.0D, 2.0D, 1.0D);
         mode = "Percentage"; // default value

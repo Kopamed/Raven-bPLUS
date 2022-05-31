@@ -1,11 +1,16 @@
-package keystrokesmod.client.module;
+package keystrokesmod.client.module.setting.impl;
+
+import com.google.gson.JsonObject;
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.settings.SliderComponent;
+import keystrokesmod.client.module.setting.Setting;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class SliderSetting extends Setting {
    private final String name;
-   public static final String settingType = "slider";
    private double value;
    private final double max;
    private final double min;
@@ -13,7 +18,7 @@ public class SliderSetting extends Setting {
    private final double defaultVal;
 
    public SliderSetting(String settingName, double defaultValue, double min, double max, double intervals) {
-      super(settingName, settingType);
+      super(settingName);
       this.name = settingName;
       this.value = defaultValue;
       this.min = min;
@@ -29,6 +34,32 @@ public class SliderSetting extends Setting {
    @Override
    public void resetToDefaults() {
       this.value = defaultVal;
+   }
+
+   @Override
+   public JsonObject getConfigAsJson() {
+      JsonObject data = new JsonObject();
+      data.addProperty("type", getSettingType());
+      data.addProperty("value", getInput());
+      return data;
+   }
+
+   @Override
+   public String getSettingType() {
+      return "slider";
+   }
+
+   @Override
+   public void applyConfigFromJson(JsonObject data) {
+      if(!data.get("type").getAsString().equals(getSettingType()))
+         return;
+
+      setValue(data.get("value").getAsDouble());
+   }
+
+   @Override
+   public Component createComponent(ModuleComponent moduleComponent) {
+      return new SliderComponent(this, moduleComponent);
    }
 
    public double getInput() {

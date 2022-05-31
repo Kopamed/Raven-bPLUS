@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.minigames;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -40,7 +40,7 @@ public class BridgeInfo extends Module {
    private int blc = 0;
 
    public BridgeInfo() {
-      super("Bridge Info", Module.category.minigames, 0);
+      super("Bridge Info", ModuleCategory.minigames, 0);
       this.registerSetting(a = new DescriptionSetting("Only for solos."));
       this.registerSetting(ep = new TickSetting("Edit position", false));
    }

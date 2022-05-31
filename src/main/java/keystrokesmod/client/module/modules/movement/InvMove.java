@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 
 public class InvMove extends Module {
    public InvMove() {
-      super("InvMove", Module.category.movement, 0);
+      super("InvMove", ModuleCategory.movement, 0);
    }
 
    public void update() {

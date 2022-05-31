@@ -3,8 +3,8 @@ package keystrokesmod.client.module.modules.combat;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -34,7 +34,7 @@ public class AimAssist extends Module {
    public static ArrayList<Entity> friends = new ArrayList<>();
 
    public AimAssist() {
-      super("AimAssist", Module.category.combat, 0);
+      super("AimAssist", ModuleCategory.combat, 0);
       this.registerSetting(speed = new SliderSetting("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));
       this.registerSetting(compliment = new SliderSetting("Speed 2", 15.0D, 2D, 97.0D, 1.0D));
       this.registerSetting(fov = new SliderSetting("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
@@ -140,7 +140,7 @@ public class AimAssist extends Module {
                            en = (EntityPlayer) var2.next();
                         } while (ignoreFriends.isToggled() && isAFriend(en));
                      } while(en == mc.thePlayer);
-                  } while(en.deathTime != 0);
+                  } while(en.isDead);
                } while(!aimInvis.isToggled() && en.isInvisible());
             } while((double)mc.thePlayer.getDistanceToEntity(en) > distance.getInput());
          } while(AntiBot.bot(en));

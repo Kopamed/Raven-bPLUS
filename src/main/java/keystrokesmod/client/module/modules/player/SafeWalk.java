@@ -2,6 +2,10 @@ package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
@@ -28,7 +32,7 @@ public class SafeWalk extends Module {
    private static boolean isShifting = false;
 
    public SafeWalk() {
-      super("SafeWalk", Module.category.player, 0);
+      super("SafeWalk", ModuleCategory.player, 0);
       this.registerSetting(doShift = new TickSetting("Shift", false));
       this.registerSetting(shiftOnJump = new TickSetting("Shift during jumps", false));
       this.registerSetting(onHold = new TickSetting("On shift hold", false));

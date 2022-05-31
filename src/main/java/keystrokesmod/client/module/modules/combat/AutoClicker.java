@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.player.FastPlace;
+import keystrokesmod.client.module.setting.impl.*;
 import keystrokesmod.client.tweaker.interfaces.IThrowableItem;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -43,6 +44,7 @@ public class AutoClicker extends Module {
    public static SliderSetting rightClickDelay;
    public static SliderSetting clickEvent, clickTimings;
    public static DoubleSliderSetting leftCPS, rightCPS, breakBlocksDelay;
+   public static ComboSetting clickStyle;
 
    private Random rand = null;
    private Method playerMouseInput;
@@ -66,8 +68,9 @@ public class AutoClicker extends Module {
    private boolean leftDown;
    private boolean rightDown;
 
+
    public AutoClicker() {
-      super("AutoClicker", Module.category.combat, 0);
+      super("AutoClicker", ModuleCategory.combat, 0);
       this.registerSetting(bestWithDelayRemover = new DescriptionSetting("Best with delay remover."));
 
       this.registerSetting(leftClick = new TickSetting("Left click", true));
@@ -88,7 +91,7 @@ public class AutoClicker extends Module {
       this.registerSetting(allowEat = new TickSetting("Allow eat", true));
       this.registerSetting(allowBow = new TickSetting("Allow bow", true));
 
-
+      this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
       this.registerSetting(clickTimings = new SliderSetting("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
       this.registerSetting(timingsDesc = new DescriptionSetting("Mode: RAVEN"));
       this.registerSetting(clickEvent = new SliderSetting("Event", 2.0D, 1.0D, 2.0D, 1.0D));
@@ -617,5 +620,10 @@ public class AutoClicker extends Module {
          }
       }
       return false;
+   }
+
+   public enum ClickStyle {
+      Raven,
+      SKid
    }
 }

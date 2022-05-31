@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
@@ -12,7 +12,7 @@ public class Sprint extends Module {
    public static TickSetting a;
 
    public Sprint() {
-      super("Sprint", Module.category.movement, 0);
+      super("Sprint", ModuleCategory.movement, 0);
       a = new TickSetting("OmniSprint", false);
       this.registerSetting(a);
    }

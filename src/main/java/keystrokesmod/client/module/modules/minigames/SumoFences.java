@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.minigames;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -33,7 +33,7 @@ public class SumoFences extends Module {
    private final String c5;
 
    public SumoFences() {
-      super("Sumo Fences", Module.category.minigames, 0);
+      super("Sumo Fences", ModuleCategory.minigames, 0);
       this.f = Blocks.oak_fence.getDefaultState();
       this.c1 = "Mode: Sumo Duel";
       this.c2 = "Oak fence";

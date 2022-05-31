@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
@@ -16,7 +16,7 @@ public class Velocity extends Module {
    public static TickSetting e;
 
    public Velocity() {
-      super("Velocity", Module.category.combat, 0);
+      super("Velocity", ModuleCategory.combat, 0);
       this.registerSetting(a = new SliderSetting("Horizontal", 90.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(b = new SliderSetting("Vertical", 100.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(c = new SliderSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));

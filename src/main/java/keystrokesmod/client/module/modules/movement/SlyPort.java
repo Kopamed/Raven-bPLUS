@@ -1,9 +1,9 @@
-package keystrokesmod.client.module.modules.fun;
+package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ public class SlyPort extends Module {
     private final boolean s = false;
 
     public SlyPort() {
-        super("SlyPort", Module.category.fun, 0);
+        super("SlyPort", ModuleCategory.movement, 0);
         this.registerSetting(f = new DescriptionSetting("Teleport behind enemies."));
         this.registerSetting(r = new SliderSetting("Range", 6.0D, 2.0D, 15.0D, 1.0D));
         this.registerSetting(e = new TickSetting("Aim", true));

@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 
 public class StopMotion extends Module {
    public static TickSetting a;
@@ -9,7 +9,7 @@ public class StopMotion extends Module {
    public static TickSetting c;
 
    public StopMotion() {
-      super("Stop Motion", Module.category.movement, 0);
+      super("Stop Motion", ModuleCategory.movement, 0);
       this.registerSetting(a = new TickSetting("Stop X", true));
       this.registerSetting(b = new TickSetting("Stop Y", true));
       this.registerSetting(c = new TickSetting("Stop Z", true));

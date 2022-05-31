@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -20,7 +20,7 @@ public class ChestESP extends Module {
    public static TickSetting d;
 
    public ChestESP() {
-      super("ChestESP", Module.category.render, 0);
+      super("ChestESP", ModuleCategory.render, 0);
       a = new SliderSetting("Red", 0.0D, 0.0D, 255.0D, 1.0D);
       b = new SliderSetting("Green", 0.0D, 0.0D, 255.0D, 1.0D);
       c = new SliderSetting("Blue", 255.0D, 0.0D, 255.0D, 1.0D);

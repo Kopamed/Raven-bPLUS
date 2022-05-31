@@ -2,9 +2,9 @@ package keystrokesmod.client.module.modules.other;
 
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 
 public class StringEncrypt extends Module {
@@ -20,7 +20,7 @@ public class StringEncrypt extends Module {
    public static DescriptionSetting moduleDesc;
 
    public StringEncrypt() {
-      super("String Encrypt", Module.category.other, 0);
+      super("String Encrypt", ModuleCategory.other, 0);
       this.registerSetting(ignoreDebug = new TickSetting("Ignore debug", false));
       this.registerSetting(ignoreAllGui = new TickSetting("Ignore all GUI", false));
       this.registerSetting(value = new SliderSetting("Value", 1.0D, 1.0D, 4.0D, 1.0D));

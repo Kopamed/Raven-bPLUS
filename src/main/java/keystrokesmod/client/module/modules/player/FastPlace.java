@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
@@ -29,7 +29,7 @@ public class FastPlace extends Module {
    }
 
    public FastPlace() {
-      super("FastPlace", Module.category.player, 0);
+      super("FastPlace", ModuleCategory.player, 0);
       this.registerSetting(delaySlider = new SliderSetting("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
       this.registerSetting(blockOnly = new TickSetting("Blocks only", true));
    }

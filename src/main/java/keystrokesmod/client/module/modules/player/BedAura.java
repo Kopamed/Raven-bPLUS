@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
@@ -18,7 +18,7 @@ public class BedAura extends Module {
    private final long per = 600L;
 
    public BedAura() {
-      super("BedAura", Module.category.player, 0);
+      super("BedAura", ModuleCategory.player, 0);
       this.registerSetting(r = new SliderSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
    }
 

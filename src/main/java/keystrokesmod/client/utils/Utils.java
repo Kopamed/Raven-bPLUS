@@ -6,8 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.DoubleSliderSetting;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.modules.combat.AutoClicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -643,6 +643,10 @@ public class Utils {
       public static JsonObject getStringAsJson(String text) {
          return new JsonParser().parse(text).getAsJsonObject();
       }
+
+      public static String randomChoice(String[] strings) {
+         return  strings[rand.nextInt(strings.length)];
+      }
    }
 
    public static class URLS {
@@ -947,7 +951,7 @@ public class Utils {
          }
       }
 
-      public static void ee(Entity e, int type, double expand, double shift, int color, boolean damage) {
+      public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color, boolean damage) {
          if (e instanceof EntityLivingBase) {
             double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
             double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;

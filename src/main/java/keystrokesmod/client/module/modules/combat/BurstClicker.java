@@ -2,9 +2,9 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
@@ -25,7 +25,7 @@ public class BurstClicker extends Module {
    private Method rightClickMouse = null;
 
    public BurstClicker() {
-      super("BurstClicker", Module.category.combat, 0);
+      super("BurstClicker", ModuleCategory.combat, 0);
       this.registerSetting(artificialDragClicking = new DescriptionSetting("Artificial dragclicking."));
       this.registerSetting(clicks = new SliderSetting("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
       this.registerSetting(delay = new SliderSetting("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));

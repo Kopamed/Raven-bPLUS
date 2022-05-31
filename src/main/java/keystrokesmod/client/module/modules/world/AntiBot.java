@@ -2,7 +2,7 @@ package keystrokesmod.client.module.modules.world;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.player.Freecam;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -18,7 +18,7 @@ public class AntiBot extends Module {
    public static TickSetting a;
 
    public AntiBot() {
-      super("AntiBot", Module.category.world, 0);
+      super("AntiBot", ModuleCategory.world, 0);
       this.registerSetting(a = new TickSetting("Wait 80 ticks", false));
    }
 

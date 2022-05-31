@@ -1,14 +1,16 @@
-package keystrokesmod.client.module;
+package keystrokesmod.client.module.setting.impl;
 
-import keystrokesmod.client.main.Raven;
-import org.lwjgl.Sys;
+import com.google.gson.JsonObject;
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.settings.RangeSliderComponent;
+import keystrokesmod.client.module.setting.Setting;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class DoubleSliderSetting extends Setting {
     private final String name;
-    public static final String settingType = "doubleslider";
     private double valMax, valMin;
     private final double max;
     private final double min;
@@ -17,7 +19,7 @@ public class DoubleSliderSetting extends Setting {
     private final double defaultValMin, defaultValMax;
 
     public DoubleSliderSetting(String settingName, double defaultValueMin, double defaultValueMax, double min, double max, double intervals) {
-        super(settingName, settingType);
+        super(settingName);
         this.name = settingName;
         this.valMin = defaultValueMin;
         this.valMax = defaultValueMax;
@@ -36,6 +38,34 @@ public class DoubleSliderSetting extends Setting {
     public void resetToDefaults() {
         this.setValueMin(defaultValMin);
         this.setValueMax(defaultValMax);
+    }
+
+    @Override
+    public JsonObject getConfigAsJson() {
+        JsonObject data = new JsonObject();
+        data.addProperty("type", getSettingType());
+        data.addProperty("valueMin", getInputMin());
+        data.addProperty("valueMax", getInputMax());
+        return data;
+    }
+
+    @Override
+    public String getSettingType() {
+        return "doubleslider";
+    }
+
+    @Override
+    public void applyConfigFromJson(JsonObject data) {
+        if(!data.get("type").getAsString().equals(getSettingType()))
+            return;
+
+        setValueMax(data.get("valueMax").getAsDouble());
+        setValueMin(data.get("valueMin").getAsDouble());
+    }
+
+    @Override
+    public Component createComponent(ModuleComponent moduleComponent) {
+        return new RangeSliderComponent(this, moduleComponent);
     }
 
     public double getInputMin() {

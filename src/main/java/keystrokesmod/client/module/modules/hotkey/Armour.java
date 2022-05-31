@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.hotkey;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class Armour extends Module {
     public static TickSetting ignoreIfAlreadyEquipped;
     public Armour() {
-        super("Armour", category.hotkey, 0);
+        super("Armour", ModuleCategory.hotkey, 0);
 
         this.registerSetting(ignoreIfAlreadyEquipped = new TickSetting("Ignore if already equipped", true));
     }

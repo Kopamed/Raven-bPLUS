@@ -10,6 +10,7 @@ public class Config {
     public final File file;
     public final long creationDate;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public Config(File pathToFile){
         long creationDate1;
         this.file = pathToFile;
@@ -25,7 +26,7 @@ public class Config {
             try {
                 creationDate1 = getData().get("creationTime").getAsLong();
             } catch (NullPointerException e){
-                creationDate1 = 0l;
+                creationDate1 = 0L;
             }
         }
         this.creationDate = creationDate1;
@@ -40,8 +41,7 @@ public class Config {
         try (FileReader reader = new FileReader(file))
         {
             Object obj = jsonParser.parse(reader);
-            JsonObject data = (JsonObject) obj;
-            return data;
+            return (JsonObject) obj;
         } catch (JsonSyntaxException | ClassCastException | IOException e) {
             e.printStackTrace();
         }

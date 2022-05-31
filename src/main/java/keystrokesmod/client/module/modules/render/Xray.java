@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -30,7 +30,7 @@ public class Xray extends Module {
    private final long per = 200L;
 
    public Xray() {
-      super("Xray", Module.category.render, 0);
+      super("Xray", ModuleCategory.render, 0);
       this.registerSetting(r = new SliderSetting("Range", 20.0D, 5.0D, 50.0D, 1.0D));
       this.registerSetting(a = new TickSetting("Iron", true));
       this.registerSetting(b = new TickSetting("Gold", true));

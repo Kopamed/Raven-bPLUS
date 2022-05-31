@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
@@ -21,7 +21,7 @@ public class Freecam extends Module {
    private final float[] sAng = new float[]{0.0F, 0.0F};
 
    public Freecam() {
-      super("Freecam", Module.category.player, 0);
+      super("Freecam", ModuleCategory.player, 0);
       this.registerSetting(a = new SliderSetting("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
       this.registerSetting(b = new TickSetting("Disable on damage", true));
    }
@@ -151,8 +151,8 @@ public class Freecam extends Module {
    public void re(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
          mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
-         Utils.HUD.ee(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
-         Utils.HUD.ee(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
+         Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
+         Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
       }
 
    }

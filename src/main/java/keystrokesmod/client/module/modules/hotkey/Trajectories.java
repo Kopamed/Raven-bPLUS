@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.hotkey;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemFishingRod;
@@ -13,7 +13,7 @@ public class Trajectories extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
     public Trajectories() {
-        super("Trajectories", category.hotkey, 0);
+        super("Trajectories", ModuleCategory.hotkey, 0);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 5, 1, 9, 1));

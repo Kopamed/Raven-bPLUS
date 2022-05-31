@@ -2,9 +2,9 @@ package keystrokesmod.client.module.modules.minigames;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -29,7 +29,7 @@ public class DuelsStats extends Module {
    private final List<String> q = new ArrayList<>();
 
    public DuelsStats() {
-      super("Duels Stats", Module.category.minigames, 0);
+      super("Duels Stats", ModuleCategory.minigames, 0);
       this.registerSetting(value = new SliderSetting("Value", 1.0D, 1.0D, 7.0D, 1.0D));
       this.registerSetting(moduleDesc = new DescriptionSetting("Mode: OVERALL"));
       this.registerSetting(a = new TickSetting("Send ign on join", false));

@@ -1,6 +1,5 @@
 package keystrokesmod.client.config;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -9,20 +8,20 @@ import keystrokesmod.client.module.*;
 import net.minecraft.client.Minecraft;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Objects;
 
 /**
  * Class responsible for choosing which config is currently being used
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ConfigManager {
     private final File configDirectory = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs");
 
     private Config config;
-    private ArrayList<Config> configs = new ArrayList<>();
+    private final ArrayList<Config> configs = new ArrayList<>();
 
     public ConfigManager() {
         if(!configDirectory.isDirectory()){
@@ -42,9 +41,10 @@ public class ConfigManager {
     /**
      * Function that checks if the config in a given file can be loaded
      * Check is done by simply trying to parse the file as if it contains json data
-     * @param file
-     * @return
+     * @param file File you want to check for being outdated
+     * @return boolean whether the file is outdated
      */
+    @SuppressWarnings("unused")
     public static boolean isOutdated(File file) {
         JsonParser jsonParser = new JsonParser();
         try (FileReader reader = new FileReader(file))
@@ -63,10 +63,10 @@ public class ConfigManager {
      */
     public void discoverConfigs(){
         configs.clear();
-        if(configDirectory.listFiles() == null || !(configDirectory.listFiles().length > 0))
+        if(configDirectory.listFiles() == null || !(Objects.requireNonNull(configDirectory.listFiles()).length > 0))
             return;  // nothing to discover if there are no files in the directory
 
-        for(File file : configDirectory.listFiles()){
+        for(File file : Objects.requireNonNull(configDirectory.listFiles())){
             if(file.getName().endsWith(".bplus")){
                 if(!isOutdated(file)){
                     configs.add(new Config(
@@ -101,68 +101,23 @@ public class ConfigManager {
     }
 
     public void setConfig(Config config){
+        this.config = config;
         JsonObject data = config.getData().get("modules").getAsJsonObject();
-        for(Map.Entry moduleEntry : data.entrySet()){
-            Module module = ModuleManager.getModuleByName((String) moduleEntry.getKey());
-            if(module == null) {
-                continue;
-            }
-
-            JsonObject moduleData = ((JsonElement) moduleEntry.getValue()).getAsJsonObject();
-            boolean enabled = moduleData.get("enabled").getAsBoolean();
-            int keycode = moduleData.get("keycode").getAsInt();
-            module.setToggled(enabled);
-            module.setbind(keycode);
-
-            for(Map.Entry SettingEntry : moduleData.get("settings").getAsJsonObject().entrySet()){
-                JsonObject settingData = (JsonObject) SettingEntry.getValue();
-
-                String settingName = (String) SettingEntry.getKey();
-                String settingType = settingData.get("type").getAsString();
-                Setting moduleSetting = module.getSettingByName(settingName);
-
-                switch (settingType) {
-                    case DescriptionSetting.settingType:
-                        System.out.println("1");
-                        DescriptionSetting descriptionSetting = (DescriptionSetting) moduleSetting;
-                        descriptionSetting.setDesc(settingData.get("value").getAsString());
-                        break;
-                    case DoubleSliderSetting.settingType:
-                        System.out.println("2");
-                        DoubleSliderSetting doubleSliderSetting = (DoubleSliderSetting) moduleSetting;
-                        doubleSliderSetting.setValueMax(settingData.get("valueMax").getAsDouble());
-                        doubleSliderSetting.setValueMin(settingData.get("valueMin").getAsDouble());
-                        doubleSliderSetting.setValueMin(settingData.get("valueMin").getAsDouble());
-                        System.out.println("set " + settingData.get("valueMin").getAsDouble() + " " + doubleSliderSetting.getInputMin());
-
-                        break;
-                    case SliderSetting.settingType:
-                        System.out.println("3");
-                        SliderSetting sliderSetting = (SliderSetting) moduleSetting;
-                        sliderSetting.setValue(settingData.get("value").getAsDouble());
-                        break;
-                    case TickSetting.settingType:
-                        System.out.println("4");
-                        TickSetting tickSetting = (TickSetting) moduleSetting;
-                        tickSetting.setEnabled(settingData.get("value").getAsBoolean());
-                        break;
-                    default:
-                        System.out.println("5");
-                        break;
-                }
+        for(Module module : ModuleManager.getModules()){
+            if(data.has(module.getName())){
+                module.applyConfigFromJson(
+                        data.get(module.getName()).getAsJsonObject()
+                );
             }
         }
     }
 
-    public boolean loadConfigByName(String replace) {
+    public void loadConfigByName(String replace) {
         discoverConfigs(); // re-parsing the config folder to make sure we know which configs exist
         for(Config config: configs) {
             if(config.getName().equals(replace))
                 setConfig(config);
-            return true;
         }
-
-        return false;
     }
 
     public ArrayList<Config> getConfigs() {
@@ -179,6 +134,7 @@ public class ConfigManager {
     public void resetConfig() {
         for(Module module : ModuleManager.getModules())
             module.resetToDefaults();
+        save();
     }
 
     public void deleteConfig(Config config) {

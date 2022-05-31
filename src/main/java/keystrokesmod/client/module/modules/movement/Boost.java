@@ -1,9 +1,9 @@
 package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 
 public class Boost extends Module {
@@ -14,7 +14,7 @@ public class Boost extends Module {
    private boolean t = false;
 
    public Boost() {
-      super("Boost", Module.category.movement, 0);
+      super("Boost", ModuleCategory.movement, 0);
       this.registerSetting(c = new DescriptionSetting("20 ticks are in 1 second"));
       this.registerSetting(a = new SliderSetting("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
       this.registerSetting(b = new SliderSetting("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));

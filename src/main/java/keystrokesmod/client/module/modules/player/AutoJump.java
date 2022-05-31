@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
@@ -12,7 +12,7 @@ public class AutoJump extends Module {
    private boolean c = false;
 
    public AutoJump() {
-      super("AutoJump", Module.category.player, 0);
+      super("AutoJump", ModuleCategory.player, 0);
       this.registerSetting(b = new TickSetting("Cancel when shifting", true));
    }
 

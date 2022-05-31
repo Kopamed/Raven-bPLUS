@@ -2,8 +2,8 @@ package keystrokesmod.client.module.modules.client;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
 import keystrokesmod.client.utils.version.Version;
@@ -25,7 +25,7 @@ public class UpdateCheck extends Module {
     private final Runnable task;
 
     public UpdateCheck() {
-        super("Update", category.client, 0);
+        super("Update", ModuleCategory.client, 0);
 
         this.registerSetting(howToUse = new DescriptionSetting(Utils.Java.uf("command") + ": update"));
         this.registerSetting(copyToClipboard = new TickSetting("Copy to clipboard", true));

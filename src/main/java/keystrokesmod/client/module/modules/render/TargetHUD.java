@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -16,7 +16,7 @@ public class TargetHUD extends Module {
     public static FontRenderer fr;
     ScaledResolution sr;
     public TargetHUD() {
-        super("Target HUD", category.render, 0);
+        super("Target HUD", ModuleCategory.render, 0);
         sr = new ScaledResolution(Minecraft.getMinecraft());
         height = sr.getScaledHeight();
         width = sr.getScaledWidth();

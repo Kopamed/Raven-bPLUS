@@ -12,7 +12,7 @@
   <a href="https://github.com/kopamed/Raven-bPLUS/graphs/contributors/"><img src="https://img.shields.io/github/contributors/kopamed/Raven-bPLUS.svg" alt="GitHub contributors"/></a>
   <img src="https://img.shields.io/github/languages/code-size/kopamed/Raven-bPLUS.svg" alt="Code size"/>
   <img src="https://img.shields.io/github/repo-size/kopamed/Raven-bPLUS.svg" alt="GitHub repo size"/>
-  <img src="https://tokei.rs/b1/github/kopamed/Raven-bPLUS?category=code" alt="Lines of Code"/>
+  <img src="https://tokei.rs/b1/github/kopamed/Raven-bPLUS?moduleCategory=code" alt="Lines of Code"/>
   <img src="https://img.shields.io/github/languages/top/Kopamed/Raven-bPLUS" alt="Java"/>
 </p>
 

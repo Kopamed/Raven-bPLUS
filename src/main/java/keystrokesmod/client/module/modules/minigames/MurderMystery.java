@@ -2,7 +2,7 @@ package keystrokesmod.client.module.modules.minigames;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
@@ -12,7 +12,7 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,90 +20,93 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MurderMystery extends Module {
-   public static TickSetting a;
-   public static TickSetting b;
-   public static TickSetting c;
-   private static final List<EntityPlayer> mur = new ArrayList<>();
-   private static final List<EntityPlayer> det = new ArrayList<>();
+   public static TickSetting alertMurderers;
+   public static TickSetting searchDetectives;
+   public static TickSetting announceMurder;
+   private static final List<EntityPlayer> mur = new ArrayList();
+   private static final List<EntityPlayer> det = new ArrayList();
 
    public MurderMystery() {
-      super("Murder Mystery", Module.category.minigames, 0);
-      this.registerSetting(a = new TickSetting("Alert", true));
-      this.registerSetting(b = new TickSetting("Search detectives", true));
-      this.registerSetting(c = new TickSetting("Announce murderer", false));
+      super("Murder Mystery", ModuleCategory.minigames);
+      this.registerSetting(alertMurderers = new TickSetting("Alert", true));
+      this.registerSetting(searchDetectives = new TickSetting("Search detectives", true));
+      this.registerSetting(announceMurder = new TickSetting("Announce murderer", false));
    }
 
-   @FMLEvent
-   public void onRenderWorldLast(RenderWorldLastEvent e) {
+   @SubscribeEvent
+   public void o(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
-         Module playerESP = ModuleManager.getModuleByClazz(PlayerESP.class);
-         if (playerESP != null && playerESP.isEnabled()) {
+         PlayerESP playerESP = (PlayerESP) ModuleManager.getModuleByName("PlayerESP");
+         assert playerESP != null;
+         if (playerESP.isEnabled()) {
             playerESP.disable();
          }
 
-         if (!this.imm()) {
+         if (!this.inMMGame()) {
             this.c();
          } else {
-            Iterator var2 = mc.theWorld.playerEntities.iterator();
+            Iterator<EntityPlayer> entityPlayerIterator = mc.theWorld.playerEntities.iterator();
 
             while(true) {
-               EntityPlayer en;
+               EntityPlayer entity;
                do {
                   do {
                      do {
-                        if (!var2.hasNext()) {
+                        if (!entityPlayerIterator.hasNext()) {
                            return;
                         }
 
-                        en = (EntityPlayer)var2.next();
-                     } while(en == mc.thePlayer);
-                  } while(en.isInvisible());
-               } while(AntiBot.bot(en));
+                        entity = (EntityPlayer)entityPlayerIterator.next();
+                     } while(entity == mc.thePlayer);
+                  } while(entity.isInvisible());
+               } while(AntiBot.bot(entity));
+               String c4 = "&7[&cALERT&7]";
+               if (entity.getHeldItem() != null && entity.getHeldItem().hasDisplayName()) {
+                  Item i = entity.getHeldItem().getItem();
+                  if (i instanceof ItemSword || i instanceof ItemAxe || entity.getHeldItem().getDisplayName().contains("aKnife")) {
 
-               if (en.getHeldItem() != null && en.getHeldItem().hasDisplayName()) {
-                  Item i = en.getHeldItem().getItem();
-                  if (i instanceof ItemSword || i instanceof ItemAxe || en.getHeldItem().getDisplayName().contains("aKnife")) {
-                     String c4 = "&7[&cALERT&7]";
-                     if (!mur.contains(en)) {
-                        mur.add(en);
+                     if (!mur.contains(entity)) {
+                        mur.add(entity);
                         String c6 = "is a murderer!";
-                        if (a.isToggled()) {
+                        if (alertMurderers.isToggled()) {
                            String c5 = "note.pling";
                            mc.thePlayer.playSound(c5, 1.0F, 1.0F);
-                           Utils.Player.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c6);
+                           Utils.Player.sendMessageToSelf(c4 + " &e" + entity.getName() + " &3" + c6);
                         }
 
-                        if (c.isToggled()) {
-                           mc.thePlayer.sendChatMessage(en.getName() + " " + c6);
-                        }
-                     } else if (i instanceof ItemBow && b.isToggled() && !det.contains(en)) {
-                        det.add(en);
-                        String c7 = "has a bow!";
-                        if (a.isToggled()) {
-                           Utils.Player.sendMessageToSelf(c4 + " &e" + en.getName() + " &3" + c7);
-                        }
-
-                        if (c.isToggled()) {
-                           mc.thePlayer.sendChatMessage(en.getName() + " " + c7);
+                        if (announceMurder.isToggled()) {
+                           String msg = Utils.Java.randomChoice(new String[] {entity.getName() + " " + c6, entity.getName()});
+                           mc.thePlayer.sendChatMessage(msg);
                         }
                      }
+                  } else if (i instanceof ItemBow && searchDetectives.isToggled() && !det.contains(entity)) {
+                     det.add(entity);
+                     String c7 = "has a bow!";
+                     if (alertMurderers.isToggled()) {
+                        Utils.Player.sendMessageToSelf(c4 + " &e" + entity.getName() + " &3" + c7);
+                     }
+
+                     if (announceMurder.isToggled()) {
+                        mc.thePlayer.sendChatMessage(entity.getName() + " " + c7);
+                     }
+
                   }
                }
 
-               int rgb = Color.green.getRGB();
-               if (mur.contains(en)) {
+               int rgb = Color.cyan.getRGB();
+               if (mur.contains(entity)) {
                   rgb = Color.red.getRGB();
-               } else if (det.contains(en)) {
-                  rgb = Color.orange.getRGB();
+               } else if (det.contains(entity)) {
+                  rgb = Color.green.getRGB();
                }
 
-               Utils.HUD.ee(en, 2, 0.0D, 0.0D, rgb, false);
+               Utils.HUD.drawBoxAroundEntity(entity, 2, 0.0D, 0.0D, rgb, false);
             }
          }
       }
    }
 
-   private boolean imm() {
+   private boolean inMMGame() {
       if (Utils.Client.isHyp()) {
          if (mc.thePlayer.getWorldScoreboard() == null || mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1) == null) {
             return false;
@@ -116,7 +119,10 @@ public class MurderMystery extends Module {
             return false;
          }
 
-         for (String l : Utils.Client.getPlayersFromScoreboard()) {
+         Iterator var2 = Utils.Client.getPlayersFromScoreboard().iterator();
+
+         while(var2.hasNext()) {
+            String l = (String)var2.next();
             String s = Utils.Java.str(l);
             String c3 = "Role:";
             if (s.contains(c3)) {

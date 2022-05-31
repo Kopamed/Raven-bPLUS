@@ -2,6 +2,9 @@ package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.movement.Fly;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 
 public class FallSpeed extends Module {
    public static DescriptionSetting dc;
@@ -9,7 +12,7 @@ public class FallSpeed extends Module {
    public static TickSetting b;
 
    public FallSpeed() {
-      super("FallSpeed", Module.category.player, 0);
+      super("FallSpeed", ModuleCategory.player, 0);
       this.registerSetting(dc = new DescriptionSetting("Vanilla max: 3.92"));
       this.registerSetting(a = new SliderSetting("Motion", 5.0D, 0.0D, 8.0D, 0.1D));
       this.registerSetting(b = new TickSetting("Disable XZ motion", true));

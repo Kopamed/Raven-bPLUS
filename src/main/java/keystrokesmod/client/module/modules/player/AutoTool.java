@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DoubleSliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.combat.AutoClicker;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
@@ -30,7 +30,7 @@ public class AutoTool extends Module {
     //public static List<Block> pickaxe = Arrays.asList(ItemBlock.class, BlockIce.class);
 
     public AutoTool() {
-        super("Auto Tool", category.player, 0);
+        super("Auto Tool", ModuleCategory.player, 0);
 
         this.registerSetting(hotkeyBack = new TickSetting("Hotkey back", true));
         this.registerSetting(mineDelay = new DoubleSliderSetting("Max delay", 10, 50, 0, 2000, 1));

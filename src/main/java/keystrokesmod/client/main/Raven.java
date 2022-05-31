@@ -36,8 +36,6 @@ public class Raven {
    public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
    public static final String discord = "https://discord.gg/QQMQfCRyNP";
    public static String[] updateText = {"Your version of Raven B+ (" + versionManager.getClientVersion().toString() + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + versionManager.getLatestVersion().toString()};
-   public static String[] helloYourComputerHasVirus = {"You are using an unstable version of an outdated version", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + versionManager.getLatestVersion().toString()};
-
    public static ConfigManager configManager;
    public static ClientConfig clientConfig;
 
@@ -94,6 +92,7 @@ public class Raven {
       System.out.println("Creating config manager");
       configManager = new ConfigManager();
       clientConfig = new ClientConfig();
+      clickGui.firstRun();
       clientConfig.applyConfig();
 
       ex.execute(() -> {
@@ -124,6 +123,7 @@ public class Raven {
    }
 
    @FMLEvent
+   @SuppressWarnings("unused")
    public void onChatMessageReceived(ClientChatReceivedEvent event) {
       if (Utils.Player.isPlayerInGame()) {
          String msg = event.message.getUnformattedText();

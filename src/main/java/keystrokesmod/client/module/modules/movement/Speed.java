@@ -1,9 +1,9 @@
 package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import org.lwjgl.input.Keyboard;
 
@@ -13,7 +13,7 @@ public class Speed extends Module {
    public static TickSetting b;
 
    public Speed() {
-      super("Speed", Module.category.movement, 0);
+      super("Speed", ModuleCategory.movement, 0);
       this.registerSetting(dc = new DescriptionSetting("Hypixel max: 1.13"));
       this.registerSetting(a = new SliderSetting("Speed", 1.2D, 1.0D, 1.5D, 0.01D));
       this.registerSetting(b = new TickSetting("Strafe only", false));

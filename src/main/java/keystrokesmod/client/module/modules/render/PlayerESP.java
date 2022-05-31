@@ -2,9 +2,9 @@ package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -35,7 +35,7 @@ public class PlayerESP extends Module {
    private int rgb_c = 0;
 
    public PlayerESP() {
-      super("PlayerESP", Module.category.render, 0);
+      super("PlayerESP", ModuleCategory.render, 0);
       this.registerSetting(a = new SliderSetting("Red", 0.0D, 0.0D, 255.0D, 1.0D));
       this.registerSetting(b = new SliderSetting("Green", 255.0D, 0.0D, 255.0D, 1.0D));
       this.registerSetting(c = new SliderSetting("Blue", 0.0D, 0.0D, 255.0D, 1.0D));
@@ -103,27 +103,27 @@ public class PlayerESP extends Module {
 
    private void r(Entity en, int rgb) {
       if (t1.isToggled()) {
-         Utils.HUD.ee(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t2.isToggled()) {
-         Utils.HUD.ee(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 2, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t3.isToggled()) {
-         Utils.HUD.ee(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 3, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t4.isToggled()) {
-         Utils.HUD.ee(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 4, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t5.isToggled()) {
-         Utils.HUD.ee(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 5, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
       if (t6.isToggled()) {
-         Utils.HUD.ee(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
+         Utils.HUD.drawBoxAroundEntity(en, 6, i.getInput(), j.getInput(), rgb, h.isToggled());
       }
 
    }

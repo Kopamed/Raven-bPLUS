@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DoubleSliderSetting;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
@@ -17,7 +17,7 @@ public class AutoBlock extends Module {
     private CoolDown engagedTime = new CoolDown(0);
 
     public AutoBlock(){
-        super("AutoBlock", category.combat, 0);
+        super("AutoBlock", ModuleCategory.combat, 0);
 
         this.registerSetting(duration = new DoubleSliderSetting("Block duration (MS)", 20, 100, 1, 500, 1));
         this.registerSetting(distance = new DoubleSliderSetting("Distance to player (blocks)", 0, 3, 0, 6, 0.01));

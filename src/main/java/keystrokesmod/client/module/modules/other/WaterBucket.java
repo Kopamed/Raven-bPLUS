@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.other;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.DimensionHelper;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -22,7 +22,7 @@ public class WaterBucket extends Module {
    private boolean handling;
 
    public WaterBucket() {
-      super("Water bucket", Module.category.other, 0);
+      super("Water bucket", ModuleCategory.other, 0);
       this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy"));
       this.registerSetting(moduleDesc = new DescriptionSetting("Disabled in the Nether"));
    }

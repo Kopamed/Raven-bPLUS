@@ -1,8 +1,8 @@
-package keystrokesmod.client.module.modules.fun;
+package keystrokesmod.client.module.modules.client;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import net.minecraft.client.Minecraft;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -20,7 +20,7 @@ public class FPSSpoofer extends Module {
     private final Field fpsField;
 
     public FPSSpoofer() {
-        super("FPSSpoof", category.fun, 0);
+        super("FPSSpoof", ModuleCategory.other, 0);
         this.registerSetting(desc = new DescriptionSetting("Spoofs your fps"));
         this.registerSetting(fps = new DoubleSliderSetting("FPS", 99860, 100000, 0, 100000, 100));
 

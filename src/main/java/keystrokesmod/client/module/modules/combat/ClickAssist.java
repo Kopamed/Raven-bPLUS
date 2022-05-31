@@ -1,9 +1,9 @@
 package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.mouseManager;
 import net.minecraft.item.ItemBlock;
@@ -28,7 +28,7 @@ public class ClickAssist extends Module {
    private boolean engagedRight = false;
 
    public ClickAssist() {
-      super("ClickAssist", Module.category.combat, 0);
+      super("ClickAssist", ModuleCategory.combat, 0);
       this.registerSetting(desc = new DescriptionSetting("Boost your CPS."));
       this.registerSetting(chance = new SliderSetting("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(L = new TickSetting("Left click", true));

@@ -2,6 +2,10 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
@@ -25,7 +29,7 @@ public class BlockHit extends Module {
     private boolean waitingForPostDelay;
 
     public BlockHit() {
-        super("BlockHit", category.combat, 0);
+        super("BlockHit", ModuleCategory.combat, 0);
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onRightMBHold = new TickSetting("When holding down rmb", true));
         this.registerSetting(waitMs = new DoubleSliderSetting("Action Time (MS)", 110, 150, 1, 500, 1));

@@ -7,7 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 public class SelfDestruct extends Module {
    public SelfDestruct() {
-      super("Self Destruct", Module.category.client, Keyboard.KEY_BACK);
+      super("Self Destruct", ModuleCategory.client, Keyboard.KEY_BACK);
    }
 
    public void onEnable() {

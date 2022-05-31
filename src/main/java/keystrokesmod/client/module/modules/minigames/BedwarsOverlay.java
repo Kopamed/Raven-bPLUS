@@ -3,8 +3,8 @@ package keystrokesmod.client.module.modules.minigames;
 import com.google.gson.JsonObject;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -30,7 +30,7 @@ public class BedwarsOverlay extends Module {
 
     public BedwarsOverlay() {
 
-        super("Bedwars Overlay", Module.category.minigames, 0);
+        super("Bedwars Overlay", ModuleCategory.minigames, 0);
         this.registerSetting(bombiesMomento = new DescriptionSetting("B0MBIES moment"));
         overlayHeight = 170;
         overlayWidth = 300;

@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -11,7 +11,7 @@ public class Fullbright extends Module {
     private final float clientGamma;
 
     public Fullbright() {
-        super("Fullbright", category.render, 0);
+        super("Fullbright", ModuleCategory.render, 0);
 
         DescriptionSetting description;
         this.registerSetting(description = new DescriptionSetting("No more darkness!"));

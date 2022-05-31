@@ -3,7 +3,6 @@ package keystrokesmod.client.module;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.modules.client.*;
 import keystrokesmod.client.module.modules.combat.*;
-import keystrokesmod.client.module.modules.fun.*;
 import keystrokesmod.client.module.modules.hotkey.*;
 import keystrokesmod.client.module.modules.minigames.*;
 import keystrokesmod.client.module.modules.movement.*;
@@ -69,12 +68,7 @@ public class ModuleManager {
       addModule(new DuelsStats());
       addModule(new MurderMystery());
       addModule(new SumoFences());
-      addModule(new ExtraBobbing());
-      addModule(new Twerk());
-      addModule(new ParticleTrail());
       addModule(new SlyPort());
-      addModule(new Spin());
-      addModule(new FovLSD());
       addModule(new ClientNameSpoof());
       addModule(new FakeChat());
       addModule(new NameHider());
@@ -89,7 +83,6 @@ public class ModuleManager {
       addModule(new Fullbright());
       addModule(new UpdateCheck());
       addModule(new AutoHeader());
-      addModule(new MiddleClick());
       addModule(new AutoTool());
       addModule(new Blocks());
       addModule(new Ladders());
@@ -148,7 +141,7 @@ public class ModuleManager {
       return modsList;
    }
 
-   public static List<Module> getModulesInCategory(Module.category categ) {
+   public static List<Module> getModulesInCategory(Module.ModuleCategory categ) {
       ArrayList<Module> modulesOfCat = new ArrayList<>();
 
       for (Module mod : getModules()) {

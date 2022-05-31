@@ -2,6 +2,9 @@ package keystrokesmod.client.module.modules;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -36,7 +39,7 @@ public class HUD extends Module {
 
 
    public HUD() {
-      super("HUD", Module.category.render, 0);
+      super("HUD", ModuleCategory.render, 0);
       this.registerSetting(editPosition = new TickSetting("Edit position", false));
       this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
       this.registerSetting(logo = new TickSetting("Logo", false));

@@ -1,6 +1,9 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -26,7 +29,7 @@ public class BridgeAssist extends Module {
 
 
     public BridgeAssist() {
-        super("Bridge Assist", category.player, 0);
+        super("Bridge Assist", ModuleCategory.player, 0);
         DescriptionSetting goodAdvice;
         this.registerSetting(goodAdvice = new DescriptionSetting("Best with fastplace, not autoplace"));
         this.registerSetting(waitFor = new SliderSetting("Wait time (ms)", 500, 0, 5000, 25));

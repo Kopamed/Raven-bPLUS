@@ -2,9 +2,9 @@ package keystrokesmod.client.module.modules.movement;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.DescriptionSetting;
-import keystrokesmod.client.module.SliderSetting;
-import keystrokesmod.client.module.TickSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -17,7 +17,7 @@ public class AutoHeader extends Module {
     private double startWait;
 
     public AutoHeader() {
-        super("AutoHeadHitter", category.movement, 0);
+        super("AutoHeadHitter", ModuleCategory.movement, 0);
         this.registerSetting(desc = new DescriptionSetting("Spams spacebar when under blocks"));
         this.registerSetting(cancelDuringShift = new TickSetting("Cancel if snkeaing", true));
         this.registerSetting(onlyWhenHoldingSpacebar = new TickSetting("Only when holding jump", true));
