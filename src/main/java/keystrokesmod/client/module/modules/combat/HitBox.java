@@ -16,7 +16,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -39,7 +39,7 @@ public class HitBox extends Module {
       gmo(1.0F);
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void m(MouseEvent e) {
       if(!Utils.Player.isPlayerInGame()) return;
       if (e.button == 0 && e.buttonstate && mv != null) {
@@ -47,7 +47,7 @@ public class HitBox extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void ef(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
@@ -62,7 +62,7 @@ public class HitBox extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void r1(RenderWorldLastEvent e) {
       if (b.isToggled() && Utils.Player.isPlayerInGame()) {
          for (Entity en : mc.theWorld.loadedEntityList) {

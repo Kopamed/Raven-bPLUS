@@ -3,7 +3,7 @@ package keystrokesmod.client.module.modules.render;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class Fullbright extends Module {
@@ -30,7 +30,7 @@ public class Fullbright extends Module {
         mc.gameSettings.gammaSetting = this.defaultGamma;
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
         if (!Utils.Player.isPlayerInGame()) {
             onDisable();

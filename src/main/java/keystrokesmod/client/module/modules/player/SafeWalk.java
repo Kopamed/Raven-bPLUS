@@ -7,7 +7,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import org.lwjgl.input.Keyboard;
@@ -53,7 +53,7 @@ public class SafeWalk extends Module {
       blockShowModeDesc.setDesc(Utils.md + BlockAmountInfo.values()[(int)blockShowMode.getInput() - 1]);
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void p(PlayerTickEvent e) {
       if(!Utils.Client.currentScreenMinecraft())
          return;
@@ -133,7 +133,7 @@ public class SafeWalk extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onRenderTick(TickEvent.RenderTickEvent e) {
       if(!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame()) return;
       if (e.phase == TickEvent.Phase.END) {

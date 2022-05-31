@@ -1,8 +1,6 @@
 package keystrokesmod.client.main;
 
-import keystrokesmod.client.lib.fr.jmraich.rax.event.EventManager;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.EventTransmitter;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.utils.version.VersionManager;
 import keystrokesmod.keystroke.KeyStrokeRenderer;
 import keystrokesmod.client.NotificationRenderer;
@@ -18,6 +16,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -52,7 +51,6 @@ public class Raven {
 
    public static final String osName, osArch;
 
-   public static final EventTransmitter eventTransmitter = new EventTransmitter();
 
    static {
       osName = System.getProperty("os.name").toLowerCase();
@@ -63,15 +61,12 @@ public class Raven {
    }
 
    public static void init() {
-      MinecraftForge.EVENT_BUS.register(eventTransmitter);
 
-      EventManager.register(new Raven());
-      EventManager.register(new DebugInfoRenderer());
-      EventManager.register(new mouseManager());
-      EventManager.register(new KeyStrokeRenderer());
-      EventManager.register(new ChatHelper());
-
-      EventManager.register(new NotificationRenderer());
+      MinecraftForge.EVENT_BUS.register(new Raven());
+      MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
+      MinecraftForge.EVENT_BUS.register(new mouseManager());
+      MinecraftForge.EVENT_BUS.register(new KeyStrokeRenderer());
+      MinecraftForge.EVENT_BUS.register(new ChatHelper());
 
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
 
@@ -105,7 +100,7 @@ public class Raven {
       });
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onTick(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          if (Utils.Player.isPlayerInGame()) {
@@ -123,7 +118,7 @@ public class Raven {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onChatMessageReceived(ClientChatReceivedEvent event) {
       if (Utils.Player.isPlayerInGame()) {
          String msg = event.message.getUnformattedText();

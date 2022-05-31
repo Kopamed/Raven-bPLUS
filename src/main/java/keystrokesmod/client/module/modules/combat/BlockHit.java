@@ -7,7 +7,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -42,7 +42,7 @@ public class BlockHit extends Module {
     }
 
 
-    @FMLEvent
+    @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
         if(!Utils.Player.isPlayerInGame())
             return;

@@ -13,7 +13,7 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.BlockPos;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
@@ -37,7 +37,7 @@ public class AutoTool extends Module {
         delay = new CoolDown(0);
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent e) {
         if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;

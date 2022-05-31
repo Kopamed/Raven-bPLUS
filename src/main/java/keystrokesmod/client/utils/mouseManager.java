@@ -5,7 +5,7 @@ import keystrokesmod.client.module.modules.world.AntiBot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.MouseEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class mouseManager {
    public static long leftClickTimer = 0L;
    public static long rightClickTimer = 0L;
 
-   @FMLEvent
+   @SubscribeEvent
    public void onMouseUpdate(MouseEvent mouse) {
       if (mouse.buttonstate) {
          if (mouse.button == 0) {

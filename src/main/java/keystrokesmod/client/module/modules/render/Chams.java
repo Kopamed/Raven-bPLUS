@@ -3,7 +3,7 @@ package keystrokesmod.client.module.modules.render;
 import keystrokesmod.client.module.Module;
 import net.minecraftforge.client.event.RenderPlayerEvent.Post;
 import net.minecraftforge.client.event.RenderPlayerEvent.Pre;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 public class Chams extends Module {
@@ -11,7 +11,7 @@ public class Chams extends Module {
       super("Chams", Module.category.render, 0);
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void r1(Pre e) {
       if (e.entity != mc.thePlayer) {
          GL11.glEnable(32823);
@@ -19,7 +19,7 @@ public class Chams extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void r2(Post e) {
       if (e.entity != mc.thePlayer) {
          GL11.glDisable(32823);

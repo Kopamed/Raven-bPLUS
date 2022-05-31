@@ -1,13 +1,10 @@
 package keystrokesmod.client.module;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.EventManager;
 import keystrokesmod.client.NotificationRenderer;
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -98,7 +95,7 @@ public class Module {
 
    public void enable() {
       boolean oldState = this.enabled;
-      this.setToggled(true);
+      this.enabled = true;
       if (oldState != this.enabled) {
          NotificationRenderer.moduleStateChanged(this);
       }
@@ -110,25 +107,29 @@ public class Module {
          ModuleManager.sort();
       }
 
-      EventManager.register(this);
-
       this.onEnable();
+      MinecraftForge.EVENT_BUS.register(this);
    }
 
    public void disable() {
       boolean oldState = this.enabled;
-      this.setToggled(false);
+      this.enabled = false;
       if (oldState != this.enabled) {
          NotificationRenderer.moduleStateChanged(this);
       }
       ModuleManager.enModsList.remove(this);
-      EventManager.unregister(this);
       this.onDisable();
-
+      MinecraftForge.EVENT_BUS.unregister(this);
    }
 
    public void setToggled(boolean enabled) {
-      this.enabled = enabled;
+      if(enabled == this.enabled)
+         return;
+      if(enabled){
+         enable();
+      } else{
+         disable();
+      }
    }
 
    public String getName() {
@@ -166,7 +167,7 @@ public class Module {
    }
 
    public void toggle() {
-      if (this.isEnabled()) {
+      if (this.enabled) {
          this.disable();
       } else {
          this.enable();

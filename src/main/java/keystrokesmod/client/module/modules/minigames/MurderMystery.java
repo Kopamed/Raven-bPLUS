@@ -12,7 +12,7 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class MurderMystery extends Module {
       this.registerSetting(c = new TickSetting("Announce murderer", false));
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onRenderWorldLast(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
          Module playerESP = ModuleManager.getModuleByClazz(PlayerESP.class);

@@ -5,7 +5,7 @@ import keystrokesmod.client.module.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class Sprint extends Module {
@@ -17,7 +17,7 @@ public class Sprint extends Module {
       this.registerSetting(a);
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void p(PlayerTickEvent e) {
       if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus) {
          EntityPlayerSP p = mc.thePlayer;

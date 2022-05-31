@@ -36,9 +36,13 @@ public class Version {
     public boolean isNewerThan(Version versionToCompare) {
         if (versionToCompare.getVersionNumbers().get(0) < this.getVersionNumbers().get(0)) {
             return true;
+        } else if(versionToCompare.getVersionNumbers().get(0) > this.getVersionNumbers().get(0)){
+            return false;
         }
         if (versionToCompare.getVersionNumbers().get(1) < this.getVersionNumbers().get(1)) {
             return true;
+        } else if(versionToCompare.getVersionNumbers().get(1) > this.getVersionNumbers().get(1)){
+            return false;
         }
         return versionToCompare.getVersionNumbers().get(2) < this.getVersionNumbers().get(2);
     }

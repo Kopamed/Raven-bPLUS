@@ -12,7 +12,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class BedwarsOverlay extends Module {
         //marginTextX = 21;
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onChatMessageRecieved(ClientChatReceivedEvent event) {
         if (Utils.Player.isPlayerInGame()) {
             if (Utils.Java.str(event.message.getUnformattedText()).startsWith("Sending you to")) {
@@ -58,7 +58,7 @@ public class BedwarsOverlay extends Module {
         }
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onRender(TickEvent.RenderTickEvent e) {
         if (!active) {
             return;

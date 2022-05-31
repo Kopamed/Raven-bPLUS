@@ -9,7 +9,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
@@ -47,7 +47,7 @@ public class MiddleClick extends Module {
         pearlEvent = 4;
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent e) {
         if(!Utils.Player.isPlayerInGame()) return;
 

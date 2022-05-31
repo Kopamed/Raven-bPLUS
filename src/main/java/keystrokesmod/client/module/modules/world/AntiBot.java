@@ -8,7 +8,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ public class AntiBot extends Module {
       newEnt.clear();
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
       if(!Utils.Player.isPlayerInGame()) return;
       if (a.isToggled() && event.entity instanceof EntityPlayer && event.entity != mc.thePlayer) {

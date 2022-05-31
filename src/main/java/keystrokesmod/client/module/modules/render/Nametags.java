@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderLivingEvent.Specials.Pre;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 public class Nametags extends Module {
@@ -31,7 +31,7 @@ public class Nametags extends Module {
       this.registerSetting(rm = new TickSetting("Remove tags", false));
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void r(Pre e) {
       if (rm.isToggled()) {
          e.setCanceled(true);

@@ -5,7 +5,7 @@ import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.player.Freecam;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
@@ -14,7 +14,7 @@ import java.awt.*;
 public class DebugInfoRenderer extends net.minecraft.client.gui.Gui {
    private static final Minecraft mc = Minecraft.getMinecraft();
 
-   @FMLEvent
+   @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
       if (Raven.debugger && ev.phase == Phase.END && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null) {

@@ -8,7 +8,7 @@ import keystrokesmod.client.module.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 import java.lang.reflect.InvocationTargetException;
@@ -91,7 +91,7 @@ public class BurstClicker extends Module {
       this.l_r = false;
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void r(RenderTickEvent ev) {
       if (Utils.Player.isPlayerInGame()) {
          if (this.l_c) {

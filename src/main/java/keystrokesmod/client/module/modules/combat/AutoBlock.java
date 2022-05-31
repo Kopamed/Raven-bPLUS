@@ -6,7 +6,7 @@ import keystrokesmod.client.module.SliderSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
@@ -24,7 +24,7 @@ public class AutoBlock extends Module {
         this.registerSetting(chance = new SliderSetting("Chance %", 100, 0, 100, 1));
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void yes(TickEvent.RenderTickEvent e){
         if(!Utils.Player.isPlayerInGame())
             return;

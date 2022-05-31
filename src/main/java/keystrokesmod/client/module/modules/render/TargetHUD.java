@@ -8,7 +8,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TargetHUD extends Module {
     public static TickSetting editPosition;
@@ -23,7 +23,7 @@ public class TargetHUD extends Module {
         fr = mc.fontRendererObj;
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void r(RenderGameOverlayEvent ev) {
         if (ev.type != RenderGameOverlayEvent.ElementType.CROSSHAIRS || !Utils.Player.isPlayerInGame()) return;
         ////System.out.println("render");

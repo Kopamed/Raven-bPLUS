@@ -14,7 +14,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.MouseEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
@@ -36,7 +36,7 @@ public class Reach extends Module {
       this.registerSetting(hit_through_blocks = new TickSetting("Hit through blocks", false));
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onMouse(MouseEvent ev) {
       // legit event
       if(!Utils.Player.isPlayerInGame()) return;
@@ -47,7 +47,7 @@ public class Reach extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onRenderTick(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;

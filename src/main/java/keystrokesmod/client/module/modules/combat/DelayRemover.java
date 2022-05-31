@@ -4,7 +4,7 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -28,7 +28,7 @@ public class DelayRemover extends Module {
       return this.leftClickCounterField != null;
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void playerTickEvent(PlayerTickEvent event) {
       if (Utils.Player.isPlayerInGame() && this.leftClickCounterField != null) {
          if (!mc.inGameHasFocus || mc.thePlayer.capabilities.isCreativeMode) {

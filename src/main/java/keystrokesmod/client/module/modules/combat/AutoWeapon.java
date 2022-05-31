@@ -4,7 +4,7 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
@@ -20,7 +20,7 @@ public class AutoWeapon extends Module {
         this.registerSetting(goBackToPrevSlot = new TickSetting("Revert to old slot", true));
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void datsDaSoundOfDaPolis(TickEvent.RenderTickEvent ev){
         if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return;
 
