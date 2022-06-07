@@ -2,6 +2,7 @@ package keystrokesmod.client.tweaker.transformers;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.modules.client.ClientNameSpoof;
@@ -50,7 +51,7 @@ public class TransformerFMLCommonHandler implements Transformer {
     }
 
     public static String getModName() {
-        Module cns = ModuleManager.getModuleByClazz(ClientNameSpoof.class);
+        Module cns = Raven.moduleManager.getModuleByClazz(ClientNameSpoof.class);
         if (cns != null && cns.isEnabled()){
             return ClientNameSpoof.newName;
         }

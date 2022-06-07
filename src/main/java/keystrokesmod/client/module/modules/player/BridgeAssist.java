@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.player;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -29,7 +30,7 @@ public class BridgeAssist extends Module {
 
 
     public BridgeAssist() {
-        super("Bridge Assist", ModuleCategory.player, 0);
+        super("Bridge Assist", ModuleCategory.player);
         DescriptionSetting goodAdvice;
         this.registerSetting(goodAdvice = new DescriptionSetting("Best with fastplace, not autoplace"));
         this.registerSetting(waitFor = new SliderSetting("Wait time (ms)", 500, 0, 5000, 25));
@@ -59,7 +60,7 @@ public class BridgeAssist extends Module {
             return;
         }
 
-        Module safeWalk = ModuleManager.getModuleByClazz(SafeWalk.class);
+        Module safeWalk = Raven.moduleManager.getModuleByClazz(SafeWalk.class);
         if (safeWalk != null && safeWalk.isEnabled()) {
             if (!workWithSafeWalk.isToggled()) {
                 return;
@@ -67,13 +68,11 @@ public class BridgeAssist extends Module {
         }
 
         if (!(Utils.Player.playerOverAir() && mc.thePlayer.onGround)) {
-            //////////System.out.println("Return bc not on air ");
             return;
         }
 
         if (onSneak.isToggled()) {
             if (!mc.thePlayer.isSneaking()) {
-                //////////System.out.println("Nibba aint shiftin");
                 return;
             }
         }
@@ -122,33 +121,24 @@ public class BridgeAssist extends Module {
                 gliding = false;
                 this.waitingForAim = false;
             }
-            //////////System.out.println("gliding to " + this.waitingForPitch + " " + this.waitingForYaw);
             return;
         }
 
-        //////////System.out.println("Checking if waiting for aim");
         if (!waitingForAim) {
             waitingForAim = true;
             startWaitTime = System.currentTimeMillis();
-            ////////////System.out.println("Timer start");
-            //////////System.out.println("Started waiting for aim");
             return;
         }
 
         if (System.currentTimeMillis() - startWaitTime < waitFor.getInput())
             return;
 
-        //////////System.out.println("Yes starting");
         float fuckedYaw = mc.thePlayer.rotationYaw;
         float fuckedPitch = mc.thePlayer.rotationPitch;
 
         float yaw = fuckedYaw - ((int)fuckedYaw/360) * 360;
         float pitch = fuckedPitch - ((int)fuckedPitch/360) * 360;
 
-        //45, 75 west
-        //135, 75 north
-        //-135 south
-        //-45 east
         float range = (float) assistRange.getInput();
 
         switch (Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)]) {
@@ -161,7 +151,6 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    //////////System.out.println(pitch + " " + yaw);
                 }
 
 
@@ -174,7 +163,6 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    //////////System.out.println(pitch + " " + yaw);
                 }
 
             case BREEZILY:
@@ -186,7 +174,6 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    //////////System.out.println(pitch + " " + yaw);
                 }
 
             case NORMAL:
@@ -198,7 +185,6 @@ public class BridgeAssist extends Module {
                             return;
                         }
                     }
-                    //////////System.out.println(pitch + " " + yaw);
                 }
         }
         this.waitingForAim = false;

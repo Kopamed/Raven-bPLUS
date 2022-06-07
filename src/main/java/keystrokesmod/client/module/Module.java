@@ -1,7 +1,7 @@
 package keystrokesmod.client.module;
 
 import com.google.gson.JsonObject;
-import keystrokesmod.client.NotificationRenderer;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -15,33 +15,41 @@ public class Module {
    protected ArrayList<Setting> settings;
    private final String moduleName;
    private final ModuleCategory moduleCategory;
-   private boolean enabled;
-   private int keycode;
+   protected boolean enabled = false;
+   protected boolean defaultEnabled = enabled;
+   protected int keycode = 0;
+   protected int defualtKeyCode = keycode;
+
    protected static Minecraft mc;
    private boolean isToggled = false;
 
-   private final int defualtKeyCode;
+   private String description = "";
+
+
 
    public Module(String name, ModuleCategory moduleCategory) {
       this.moduleName = name;
       this.moduleCategory = moduleCategory;
-      this.keycode = 0;
-      this.enabled = false;
       this.settings = new ArrayList<>();
-      this.defualtKeyCode = 0;
-   }
-
-   public Module(String moduleName, ModuleCategory moduleCategory, int keycode) {
-      this.moduleName = moduleName;
-      this.moduleCategory = moduleCategory;
-      this.keycode = keycode;
-      this.defualtKeyCode = keycode;
-      this.enabled = false;
       mc = Minecraft.getMinecraft();
-      this.settings = new ArrayList<>();
    }
 
-   
+   protected <E extends Module> E withKeycode(int i){
+      this.keycode = i;
+      this.defualtKeyCode = i;
+      return (E) this;
+   }
+
+   protected  <E extends Module> E withEnabled(boolean i){
+      this.enabled = i;
+      this.defaultEnabled = i;
+      return (E) this;
+   }
+
+   public <E extends Module> E withDescription(String i){
+      this.description = i;
+      return (E) this;
+   }
 
    public JsonObject getConfigAsJson(){
       JsonObject settings = new JsonObject();
@@ -95,16 +103,6 @@ public class Module {
    public void enable() {
       boolean oldState = this.enabled;
       this.enabled = true;
-      if (oldState != this.enabled) {
-         NotificationRenderer.moduleStateChanged(this);
-      }
-      ModuleManager.enModsList.add(this);
-
-      Module hud = ModuleManager.getModuleByClazz(HUD.class);
-
-      if (hud != null && hud.isEnabled()) {
-         ModuleManager.sort();
-      }
 
       this.onEnable();
       MinecraftForge.EVENT_BUS.register(this);
@@ -113,21 +111,11 @@ public class Module {
    public void disable() {
       boolean oldState = this.enabled;
       this.enabled = false;
-      if (oldState != this.enabled) {
-         NotificationRenderer.moduleStateChanged(this);
-      }
-      ModuleManager.enModsList.remove(this);
       this.onDisable();
       MinecraftForge.EVENT_BUS.unregister(this);
    }
 
    public void setToggled(boolean enabled) {
-      if(enabled == this.enabled)
-         return;
-      if(enabled)
-         enable();
-      else
-         disable();
       if(enabled){
          enable();
       } else{
@@ -195,8 +183,9 @@ public class Module {
    }
 
    public void resetToDefaults() {
-      this.keycode = this.defualtKeyCode;
-      this.setToggled(false);
+      this.keycode = defualtKeyCode;
+      this.setToggled(defaultEnabled);
+
       for(Setting setting : this.settings){
          setting.resetToDefaults();
       }

@@ -12,17 +12,15 @@ public class GuiModule extends Module {
    public static SliderSetting guiTheme, backgroundOpacity;
    public static DescriptionSetting guiThemeDesc;
    public static TickSetting categoryBackground;
-   public static TickSetting toggleNotification;
-   public static TickSetting rainbowNotification;
 
    public GuiModule() {
-      super("Gui", ModuleCategory.client, 54);
+      super("Gui", ModuleCategory.client);
+      withKeycode(54);
+
       this.registerSetting(guiTheme = new SliderSetting("Theme", 3.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(guiThemeDesc = new DescriptionSetting(Utils.md + "b+"));
       this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
-      this.registerSetting(toggleNotification = new TickSetting("Toggle Notifications", true));
-      this.registerSetting(rainbowNotification = new TickSetting("Rainbow Notifications", true));
    }
 
    public void onEnable() {

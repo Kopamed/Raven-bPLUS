@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.combat;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.player.FastPlace;
 import keystrokesmod.client.module.setting.impl.*;
@@ -69,7 +70,8 @@ public class AutoClicker extends Module {
 
 
    public AutoClicker() {
-      super("AutoClicker", ModuleCategory.combat, 0);
+      super("AutoClicker", ModuleCategory.combat);
+
       this.registerSetting(bestWithDelayRemover = new DescriptionSetting("Best with delay remover."));
 
       this.registerSetting(leftClick = new TickSetting("Left click", true));
@@ -126,7 +128,6 @@ public class AutoClicker extends Module {
 
       this.rightClickWaiting = false;
       this.allowedClick = false;
-      //////System.out.println("Reset allowedClick");
       this.rand = new Random();
       autoClickerEnabled = true;
    }
@@ -282,7 +283,6 @@ public class AutoClicker extends Module {
          } else if (!Mouse.isButtonDown(1)){
             this.rightClickWaiting = false;
             this.allowedClick = false;
-            //////System.out.println("Reset allowedClick");
          }
       }else if (inventoryFill.isToggled() && (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChest)) {
          if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
@@ -323,7 +323,6 @@ public class AutoClicker extends Module {
          } else if (!Mouse.isButtonDown(1)){
             this.rightClickWaiting = false;
             this.allowedClick = false;
-            //////System.out.println("Reset allowedClick");
             this.righti = 0L;
             this.rightj = 0L;
             this.leftDownTime = 0L;
@@ -377,7 +376,7 @@ public class AutoClicker extends Module {
       }
 
       if(preferFastPlace.isToggled()) {
-         Module fastplace = ModuleManager.getModuleByClazz(FastPlace.class);
+         Module fastplace = Raven.moduleManager.getModuleByClazz(FastPlace.class);
          if (fastplace != null && fastplace.isEnabled())
             return false;
       }
@@ -386,22 +385,17 @@ public class AutoClicker extends Module {
          if(!rightClickWaiting && !allowedClick) {
             this.rightClickWaitStartTime = System.currentTimeMillis();
             this.rightClickWaiting = true;
-            //////System.out.println("Started waiting");
             return  false;
          } else if(this.rightClickWaiting && !allowedClick) {
             double passedTime = System.currentTimeMillis() - this.rightClickWaitStartTime;
-            //////System.out.println("Waiting but not allowed");
             if (passedTime >= rightClickDelay.getInput()) {
                this.allowedClick = true;
                this.rightClickWaiting = false;
-               //////System.out.println("allowed");
                return true;
             } else {
-               //////System.out.println("Waiting");
                return false;
             }
          }
-            //////System.out.println("Something else " + this.rightClickWaiting + " " + allowedClick);
       }
 
 
@@ -445,7 +439,6 @@ public class AutoClicker extends Module {
             Utils.Client.setMouseButtonState(0, false);
          }
       } else {
-         //////System.out.println("gen");
          this.genLeftTimings();
       }
 
@@ -484,7 +477,7 @@ public class AutoClicker extends Module {
             this.genRightTimings();
          } else if (System.currentTimeMillis() > this.righti) {
             KeyBinding.setKeyBindState(key, false);
-            //ay.setMouseButtonState(1, false);
+            //Utils.Client.setMouseButtonState(1, false);
          }
       } else {
          this.genRightTimings();

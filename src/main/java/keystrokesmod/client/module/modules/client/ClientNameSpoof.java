@@ -9,7 +9,7 @@ public class ClientNameSpoof extends Module {
     public static String newName = "";
 
     public ClientNameSpoof(){
-        super("ClientNameSpoofer", ModuleCategory.client, 0);
+        super("ClientNameSpoofer", ModuleCategory.client);
         this.registerSetting(desc = new DescriptionSetting(Utils.Java.uf("command") + ": f3name [name]"));
     }
 }

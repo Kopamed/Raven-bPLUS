@@ -25,28 +25,24 @@ import static keystrokesmod.client.main.Raven.mResourceLocation;
 public class HUD extends Module {
    public static TickSetting editPosition;
    public static TickSetting dropShadow;
-   public static TickSetting logo;
    public static TickSetting alphabeticalSort;
    public static SliderSetting colourMode;
    public static DescriptionSetting colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
    public static Utils.HUD.PositionMode positionMode;
-   public static int logoSize;
    public static boolean showedError;
    public static final String HUDX_prefix = "HUDX~ ";
    public static final String HUDY_prefix = "HUDY~ ";
 
 
    public HUD() {
-      super("HUD", ModuleCategory.render, 0);
+      super("HUD", ModuleCategory.render);
       this.registerSetting(editPosition = new TickSetting("Edit position", false));
       this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
-      this.registerSetting(logo = new TickSetting("Logo", false));
       this.registerSetting(alphabeticalSort = new TickSetting("Alphabetical sort", false));
       this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 5, 1));
       this.registerSetting(colourModeDesc = new DescriptionSetting("Mode: RAVEN"));
-      logoSize = 64;
       showedError = false;
    }
 
@@ -55,7 +51,7 @@ public class HUD extends Module {
    }
 
    public void onEnable() {
-      ModuleManager.sort();
+      Raven.moduleManager.sort();
    }
 
    public void guiButtonToggled(TickSetting b) {
@@ -63,7 +59,7 @@ public class HUD extends Module {
          editPosition.disable();
          mc.displayGuiScreen(new EditHudPositionScreen());
       } else if (b == alphabeticalSort) {
-         ModuleManager.sort();
+         Raven.moduleManager.sort();
       }
    }
 
@@ -78,43 +74,27 @@ public class HUD extends Module {
          int y = hudY;
          int del = 0;
 
-         if(mResourceLocation == null && !showedError) {
-            ////System.out.println("Showed error");
-            Utils.Player.sendMessageToSelf("Error! Failed to load the raven B+ logo. Please report this in our discord!");
-            showedError = true;
-         }
-
-         if (mResourceLocation != null && logo.isToggled()) {
-            Minecraft.getMinecraft().getTextureManager().bindTexture(mResourceLocation);
-            Gui.drawModalRectWithCustomSizedTexture(hudX - 13, hudY, 0, 0, logoSize, logoSize, logoSize, logoSize);
-         }
          if (!alphabeticalSort.isToggled()){
             if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
-               ModuleManager.sortShortLong();
+               Raven.moduleManager.sortShortLong();
             }
             else if(positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
-               ModuleManager.sortLongShort();
+               Raven.moduleManager.sortLongShort();
             }
          }
 
 
-         List<Module> en = new ArrayList<>(ModuleManager.getModules());
+         List<Module> en = new ArrayList<>(Raven.moduleManager.getModules());
          if(en.isEmpty()) return;
 
-         int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
-         int textBoxHeight = ModuleManager.getBoxHeight(mc.fontRendererObj, margin);
-         //////System.out.println(mc.displayWidth + " " + mc.displayHeight + " || " + hudX + " " + hudY);
-         if(logo.isToggled() && mResourceLocation != null) {
-            y += (logoSize * 0.8);
-         }
+         int textBoxWidth = Raven.moduleManager.getLongestActiveModule(mc.fontRendererObj);
+         int textBoxHeight = Raven.moduleManager.getBoxHeight(mc.fontRendererObj, margin);
 
          if(hudX < 0) {
             hudX = margin;
          }
          if(hudY < 0) {
-            if(logo.isToggled() && mResourceLocation != null) {
-               hudY = logoSize - (int)(logoSize * 0.2);
-            } else {
+            {
                hudY = margin;
             }
          }
@@ -129,7 +109,6 @@ public class HUD extends Module {
 
          for (Module m : en) {
             if (m.isEnabled() && m != this) {
-               System.out.println(m.getName());
                if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());

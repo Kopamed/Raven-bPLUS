@@ -13,7 +13,7 @@ public class Healing extends Module {
     private final SliderSetting itemMode;
     private final DescriptionSetting modeDesc;
     public Healing() {
-        super("Healing", ModuleCategory.hotkey, 0);
+        super("Healing", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 8, 1, 9, 1));

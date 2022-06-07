@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
 
 public class SelfDestruct extends Module {
    public SelfDestruct() {
-      super("Self Destruct", ModuleCategory.client, Keyboard.KEY_BACK);
+      super("Self Destruct", ModuleCategory.client);
    }
 
    public void onEnable() {
@@ -30,6 +30,8 @@ public class SelfDestruct extends Module {
          so we don't need to care anymore about the state of the mod... if it has been self-destructed events won't be called
          including if they're still registered
        */
+
+      // dude your event system doesnt even work bruh
       MinecraftForge.EVENT_BUS.unregister(new Raven());
       MinecraftForge.EVENT_BUS.unregister(new DebugInfoRenderer());
       MinecraftForge.EVENT_BUS.unregister(new mouseManager());

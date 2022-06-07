@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.world;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -18,7 +19,9 @@ public class AntiBot extends Module {
    public static TickSetting a;
 
    public AntiBot() {
-      super("AntiBot", ModuleCategory.world, 0);
+      super("AntiBot", ModuleCategory.world);
+      withEnabled(true);
+
       this.registerSetting(a = new TickSetting("Wait 80 ticks", false));
    }
 
@@ -48,7 +51,7 @@ public class AntiBot extends Module {
       if (Freecam.en != null && Freecam.en == en) {
          return true;
       } else {
-         Module antiBot = ModuleManager.getModuleByClazz(AntiBot.class);
+         Module antiBot = Raven.moduleManager.getModuleByClazz(AntiBot.class);
          if (antiBot != null && !antiBot.isEnabled()) {
             return false;
          } else if (!Utils.Client.isHyp()) {

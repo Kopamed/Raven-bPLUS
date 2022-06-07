@@ -22,7 +22,7 @@ public class WaterBucket extends Module {
    private boolean handling;
 
    public WaterBucket() {
-      super("Water bucket", ModuleCategory.other, 0);
+      super("Water bucket", ModuleCategory.other);
       this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy"));
       this.registerSetting(moduleDesc = new DescriptionSetting("Disabled in the Nether"));
    }

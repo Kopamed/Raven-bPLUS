@@ -20,7 +20,7 @@ public class FPSSpoofer extends Module {
     private final Field fpsField;
 
     public FPSSpoofer() {
-        super("FPSSpoof", ModuleCategory.other, 0);
+        super("FPSSpoof", ModuleCategory.other);
         this.registerSetting(desc = new DescriptionSetting("Spoofs your fps"));
         this.registerSetting(fps = new DoubleSliderSetting("FPS", 99860, 100000, 0, 100000, 100));
 

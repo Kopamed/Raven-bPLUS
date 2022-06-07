@@ -1,5 +1,6 @@
 package keystrokesmod.client.tweaker;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.modules.combat.AutoClicker;
@@ -24,17 +25,17 @@ public class ASMEventHandler {
     * ASM Modules : NameHider, AntiShuffle, StringEncrypt
     */
    public static String getUnformattedTextForChat(String s) {
-      Module nameHider = ModuleManager.getModuleByClazz(NameHider.class);
+      Module nameHider = Raven.moduleManager.getModuleByClazz(NameHider.class);
       if (nameHider != null && nameHider.isEnabled()) {
          s = NameHider.getUnformattedTextForChat(s);
       }
 
-      Module antiShuffle = ModuleManager.getModuleByClazz(StringEncrypt.class);
+      Module antiShuffle = Raven.moduleManager.getModuleByClazz(StringEncrypt.class);
       if (antiShuffle != null && antiShuffle.isEnabled()) {
          s = AntiShuffle.getUnformattedTextForChat(s);
       }
 
-      Module stringEncrypt = ModuleManager.getModuleByClazz(StringEncrypt.class);
+      Module stringEncrypt = Raven.moduleManager.getModuleByClazz(StringEncrypt.class);
       if (stringEncrypt != null && stringEncrypt.isEnabled()) {
          s = StringEncrypt.getUnformattedTextForChat(s);
       }
@@ -49,7 +50,7 @@ public class ASMEventHandler {
     */
    public static boolean onEntityMove(Entity entity) {
       if (entity == mc.thePlayer && mc.thePlayer.onGround) {
-         Module safeWalk = ModuleManager.getModuleByClazz(SafeWalk.class);
+         Module safeWalk = Raven.moduleManager.getModuleByClazz(SafeWalk.class);
 
          if (safeWalk != null && safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
             if (SafeWalk.blocksOnly.isToggled()) {
@@ -78,7 +79,7 @@ public class ASMEventHandler {
     * ASM Modules : NoSlow
     */
    public static void onLivingUpdate() {
-      Module noSlow = ModuleManager.getModuleByClazz(NoSlow.class);
+      Module noSlow = Raven.moduleManager.getModuleByClazz(NoSlow.class);
       if (noSlow != null && noSlow.isEnabled()) {
          NoSlow.sl();
       } else {
@@ -92,7 +93,7 @@ public class ASMEventHandler {
     * ASM Modules : KeepSprint
     */
    public static void onAttackTargetEntityWithCurrentItem(Entity en) {
-      Module keepSprint = ModuleManager.getModuleByClazz(KeepSprint.class);
+      Module keepSprint = Raven.moduleManager.getModuleByClazz(KeepSprint.class);
       if (keepSprint != null && keepSprint.isEnabled()) {
          KeepSprint.sl(en);
       } else {
@@ -106,7 +107,7 @@ public class ASMEventHandler {
     * ASM Modules : AutoClicker, Reach
     */
    public static void onTick() {
-      Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
       if (autoClicker == null || !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
          mc.entityRenderer.getMouseOver(1.0F);
       }

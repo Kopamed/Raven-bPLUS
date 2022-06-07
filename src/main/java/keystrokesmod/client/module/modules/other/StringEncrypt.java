@@ -20,7 +20,7 @@ public class StringEncrypt extends Module {
    public static DescriptionSetting moduleDesc;
 
    public StringEncrypt() {
-      super("String Encrypt", ModuleCategory.other, 0);
+      super("String Encrypt", ModuleCategory.other);
       this.registerSetting(ignoreDebug = new TickSetting("Ignore debug", false));
       this.registerSetting(ignoreAllGui = new TickSetting("Ignore all GUI", false));
       this.registerSetting(value = new SliderSetting("Value", 1.0D, 1.0D, 4.0D, 1.0D));

@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.movement;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.ModuleManager;
@@ -14,14 +15,14 @@ public class Boost extends Module {
    private boolean t = false;
 
    public Boost() {
-      super("Boost", ModuleCategory.movement, 0);
+      super("Boost", ModuleCategory.movement);
       this.registerSetting(c = new DescriptionSetting("20 ticks are in 1 second"));
       this.registerSetting(a = new SliderSetting("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
       this.registerSetting(b = new SliderSetting("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
    }
 
    public void onEnable() {
-      Module timer = ModuleManager.getModuleByClazz(Timer.class);
+      Module timer = Raven.moduleManager.getModuleByClazz(Timer.class);
       if (timer != null && timer.isEnabled()) {
          this.t = true;
          timer.disable();
@@ -36,7 +37,7 @@ public class Boost extends Module {
       }
 
       if (this.t) {
-         Module timer = ModuleManager.getModuleByClazz(Timer.class);
+         Module timer = Raven.moduleManager.getModuleByClazz(Timer.class);
          if (timer != null) timer.enable();
       }
 

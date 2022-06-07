@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.movement;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -11,12 +12,12 @@ public class BHop extends Module {
    private final double bspd = 0.0025D;
 
    public BHop() {
-      super("Bhop", ModuleCategory.movement, 0);
+      super("Bhop", ModuleCategory.movement);
       this.registerSetting(a = new SliderSetting("Speed", 2.0D, 1.0D, 15.0D, 0.2D));
    }
 
    public void update() {
-      Module fly = ModuleManager.getModuleByClazz(Fly.class);
+      Module fly = Raven.moduleManager.getModuleByClazz(Fly.class);
       if (fly != null && !fly.isEnabled() && Utils.Player.isMoving() && !mc.thePlayer.isInWater()) {
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
          mc.thePlayer.noClip = true;

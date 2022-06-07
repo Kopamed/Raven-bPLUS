@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.combat;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
@@ -28,7 +29,7 @@ public class Reach extends Module {
    public static TickSetting hit_through_blocks;
 
    public Reach() {
-      super("Reach", ModuleCategory.combat, 0);
+      super("Reach", ModuleCategory.combat);
       this.registerSetting(reach = new DoubleSliderSetting("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
       this.registerSetting(weapon_only = new TickSetting("Weapon only", false));
       this.registerSetting(moving_only = new TickSetting("Moving only", false));
@@ -40,7 +41,7 @@ public class Reach extends Module {
    public void onMouse(MouseEvent ev) {
       // legit event
       if(!Utils.Player.isPlayerInGame()) return;
-      Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
       if (autoClicker != null && autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
       if (ev.button >= 0 && ev.buttonstate) {
          call();
@@ -51,7 +52,7 @@ public class Reach extends Module {
    public void onRenderTick(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
-      Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
       if (autoClicker == null || !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
 
       if (autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
@@ -84,7 +85,7 @@ public class Reach extends Module {
    }
 
    private static Object[] zz(double zzD, double zzE) {
-      Module reach = ModuleManager.getModuleByClazz(Reach.class);
+      Module reach = Raven.moduleManager.getModuleByClazz(Reach.class);
       if (reach != null && !reach.isEnabled()) {
          zzD = mc.playerController.extendedReach() ? 6.0D : 3.0D;
       }

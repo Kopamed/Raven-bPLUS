@@ -25,7 +25,8 @@ public class BurstClicker extends Module {
    private Method rightClickMouse = null;
 
    public BurstClicker() {
-      super("BurstClicker", ModuleCategory.combat, 0);
+      super("BurstClicker", ModuleCategory.combat);
+
       this.registerSetting(artificialDragClicking = new DescriptionSetting("Artificial dragclicking."));
       this.registerSetting(clicks = new SliderSetting("Clicks", 0.0D, 0.0D, 50.0D, 1.0D));
       this.registerSetting(delay = new SliderSetting("Delay (ms)", 5.0D, 1.0D, 40.0D, 1.0D));

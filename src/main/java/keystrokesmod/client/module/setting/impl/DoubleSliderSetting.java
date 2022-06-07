@@ -83,13 +83,9 @@ public class DoubleSliderSetting extends Setting {
     }
 
     public void setValueMin(double n) {
-        System.out.println(this.name + " " + n);
         n = correct(n, this.min, this.valMax);
-        System.out.println(n);
         n = (double)Math.round(n * (1.0D / this.interval)) / (1.0D / this.interval);
-        System.out.println(n);
         this.valMin = n;
-        System.out.println(this.valMin + " " + this.getInputMin() + " " + n);
     }
 
     public void setValueMax(double n) {

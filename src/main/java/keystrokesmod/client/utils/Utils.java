@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
@@ -396,7 +397,7 @@ public class Utils {
       }
 
       public static boolean autoClickerClicking() {
-         Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+         Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
          if (autoClicker != null && autoClicker.isEnabled()) {
             return AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0);
          } //else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
@@ -740,7 +741,7 @@ public class Utils {
             OutputStream outputStream = request.getOutputStream();
             Throwable occuredErrors = null;
             String payload = base_paste.replace("TitleGoesHere", name).replace("BodyGoesHere", content).replace("\\", "");
-            //System.out.println(payload);
+
             try {
                // sending data
                outputStream.write(payload.getBytes(StandardCharsets.UTF_8));
@@ -767,45 +768,34 @@ public class Utils {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
             JsonParser parser = new JsonParser();
             JsonObject json = (JsonObject) parser.parse(bufferedReader.readLine());
-            //System.out.println(json);
-            //System.out.println(json.get("link"));
-            //System.out.println(pasteApiKey);
             return json.get("link").toString().replace("\"", "");
          } catch (Exception var51) {
-            //System.out.println(pasteApiKey);
          }
          return "";
       }
 
       public static List<String> getConfigFromPastee(String link) {
          try {
-            //System.out.println(link);
             HttpURLConnection request = (HttpURLConnection)(new URL(link)).openConnection();
             request.setRequestProperty("X-Auth-Token", pasteApiKey);
             request.setRequestMethod("GET");
             request.setDoOutput(true);
-            //System.out.println(request.getResponseMessage());
             request.connect();
 
-            //System.out.println(request.getResponseMessage());
-            //System.out.println(request.getResponseCode());
             List<String> finall = new ArrayList<>();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
             JsonParser parser = new JsonParser();
             JsonObject json = (JsonObject) parser.parse(bufferedReader.readLine());
-            //System.out.println(json);
+
             JsonObject json2 = json.getAsJsonObject("paste");
             finall.add(true + "");
             JsonObject json3 = (JsonObject)  json2.getAsJsonArray("sections").get(0);
             finall.add(json3.get("name") + "");
             finall.add(json3.get("contents") + "");
 
-            //System.out.println(json2.getAsJsonArray("sections"));
-            //System.out.println(pasteApiKey);
             request.disconnect();
             return finall;
          } catch (Exception var51) {
-            //System.out.println(pasteApiKey + "FUUUUUUU");
             var51.printStackTrace();
          }
          List<String> welp = new ArrayList<>();
@@ -1250,9 +1240,6 @@ public class Utils {
                positionMode = PositionMode.DOWNRIGHT;
             }
          }
-
-
-         //////System.out.println(height + " " + halfHeight + " || " + width + " " + halfWidth + " || " + marginX + " " + marginY + " || " + positionMode);
 
          return positionMode;
       }

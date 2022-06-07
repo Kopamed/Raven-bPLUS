@@ -29,7 +29,8 @@ public class BlockHit extends Module {
     private boolean waitingForPostDelay;
 
     public BlockHit() {
-        super("BlockHit", ModuleCategory.combat, 0);
+        super("BlockHit", ModuleCategory.combat);
+
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onRightMBHold = new TickSetting("When holding down rmb", true));
         this.registerSetting(waitMs = new DoubleSliderSetting("Action Time (MS)", 110, 150, 1, 500, 1));
@@ -62,7 +63,6 @@ public class BlockHit extends Module {
             if(postDelayTimer.hasTimeElapsed()){
                 executingAction = true;
                 startCombo();
-                //////////System.out.println("Combo started");
                 waitingForPostDelay = false;
                 if(safeGuard) safeGuard = false;
                 actionTimer.start();
@@ -101,7 +101,6 @@ public class BlockHit extends Module {
 
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
-            //////////System.out.println(target.hurtResistantTime);
             if(target.isDead) {
                 if(onRightMBHold.isToggled() && Mouse.isButtonDown(1) && Mouse.isButtonDown(0)) {
                     if(!safeGuard  || Utils.Player.isPlayerHoldingWeapon() && Mouse.isButtonDown(0)) {
@@ -127,25 +126,20 @@ public class BlockHit extends Module {
 
 
                     if (hitCoolDown && !alreadyHit) {
-                        //////////System.out.println("coolDownCheck");
                         hitsWaited++;
                         if(hitsWaited >= hitTimeout){
-                            //////////System.out.println("hiit cool down reached");
                             hitCoolDown = false;
                             hitsWaited = 0;
                         } else {
-                            //////////System.out.println("still waiting for cooldown");
                             alreadyHit = true;
                             return;
                         }
                     }
 
-                    //////////System.out.println("Continued");
                     if(!(chance.getInput() == 100 || Math.random() <= chance.getInput() / 100))
                         return;
 
                     if(!alreadyHit){
-                        //////////System.out.println("Startring combo code");
                         guiUpdate();
                         if(hitPer.getInputMin() == hitPer.getInputMax()) {
                             hitTimeout =  (int) hitPer.getInputMin();
@@ -165,7 +159,6 @@ public class BlockHit extends Module {
                             executingAction = true;
                             startCombo();
                             actionTimer.start();
-                            //////////System.out.println("Combo started");
                             alreadyHit = true;
                             if(safeGuard) safeGuard = false;
                         }
@@ -176,7 +169,6 @@ public class BlockHit extends Module {
                         alreadyHit = false;
                     }
 
-                    //////////System.out.println("REEEEEEE");
                     if(safeGuard) safeGuard = false;
                 }
             }

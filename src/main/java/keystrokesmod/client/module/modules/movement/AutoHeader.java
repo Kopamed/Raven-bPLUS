@@ -17,7 +17,7 @@ public class AutoHeader extends Module {
     private double startWait;
 
     public AutoHeader() {
-        super("AutoHeadHitter", ModuleCategory.movement, 0);
+        super("AutoHeadHitter", ModuleCategory.movement);
         this.registerSetting(desc = new DescriptionSetting("Spams spacebar when under blocks"));
         this.registerSetting(cancelDuringShift = new TickSetting("Cancel if snkeaing", true));
         this.registerSetting(onlyWhenHoldingSpacebar = new TickSetting("Only when holding jump", true));

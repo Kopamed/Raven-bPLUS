@@ -15,7 +15,8 @@ public class AutoWeapon extends Module {
     private int prevSlot;
 
     public AutoWeapon(){
-        super("AutoWeapon", ModuleCategory.combat, 0);
+        super("AutoWeapon", ModuleCategory.combat);
+
         this.registerSetting(onlyWhenHoldingDown = new TickSetting("Only when holding lmb", true));
         this.registerSetting(goBackToPrevSlot = new TickSetting("Revert to old slot", true));
     }

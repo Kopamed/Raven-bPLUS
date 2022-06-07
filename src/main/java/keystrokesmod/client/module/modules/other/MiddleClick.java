@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.other;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.AimAssist;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -16,10 +17,11 @@ import org.lwjgl.input.Mouse;
 import java.awt.*;
 import java.awt.event.InputEvent;
 
+import static keystrokesmod.client.module.modules.other.MiddleClick.Action.*;
+
 public class MiddleClick extends Module {
-    public static SliderSetting action;
+    public static ComboSetting actionSetting;
     public static TickSetting showHelp;
-    public static DescriptionSetting actionDesc;
     int prevSlot;
     public static boolean a;
     private Robot bot;
@@ -27,14 +29,9 @@ public class MiddleClick extends Module {
     private int pearlEvent;
 
     public MiddleClick() {
-        super("Middleclick", ModuleCategory.other, 0);
+        super("Middleclick", ModuleCategory.other);
         this.registerSetting(showHelp = new TickSetting("Show friend help in chat", true));
-        this.registerSetting(action = new SliderSetting("Value:", 1,1, 3, 1));
-        this.registerSetting(actionDesc = new DescriptionSetting("Mode: PEARL_THROW"));
-    }
-
-    public void guiUpdate() {
-        actionDesc.setDesc(Utils.md + actions.values()[(int)(action.getInput() -1)]);
+        this.registerSetting(actionSetting = new ComboSetting("On click", ThrowPearl));
     }
 
     public void onEnable() {
@@ -57,32 +54,25 @@ public class MiddleClick extends Module {
         }
 
         if(Mouse.isButtonDown(2) && !hasClicked) {
-            switch (actions.values()[(int)(action.getInput() -1)]){
-                case PEARL_THROW:
-                    for (int slot = 0; slot <= 8; slot++) {
-                        ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-                        if(itemInSlot != null && itemInSlot.getItem() instanceof ItemEnderPearl) {
-                            prevSlot = mc.thePlayer.inventory.currentItem;
-                            mc.thePlayer.inventory.currentItem = slot;
-                            this.bot.mousePress(InputEvent.BUTTON3_MASK);
-                            this.bot.mouseRelease(InputEvent.BUTTON3_MASK);
-                            pearlEvent = 0;
-                            hasClicked = true;
-                            return;
-                        }
+            if (ThrowPearl.equals(actionSetting.getMode())) {
+                for (int slot = 0; slot <= 8; slot++) {
+                    ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+                    if (itemInSlot != null && itemInSlot.getItem() instanceof ItemEnderPearl) {
+                        prevSlot = mc.thePlayer.inventory.currentItem;
+                        mc.thePlayer.inventory.currentItem = slot;
+                        this.bot.mousePress(InputEvent.BUTTON3_MASK);
+                        this.bot.mouseRelease(InputEvent.BUTTON3_MASK);
+                        pearlEvent = 0;
+                        hasClicked = true;
+                        return;
                     }
-                    break;
-
-                case ADD_FRIEND:
-                    addFriend();
-                    if(showHelp.isToggled()) showHelpMessage();
-                    break;
-
-                case REMOVE_FRIEND:
-                    removeFriend();
-                    if(showHelp.isToggled()) showHelpMessage();
-                    break;
-
+                }
+            } else if (AddFriend.equals(actionSetting.getMode())) {
+                addFriend();
+                if (showHelp.isToggled()) showHelpMessage();
+            } else if (RemoveFriend.equals(actionSetting.getMode())) {
+                removeFriend();
+                if (showHelp.isToggled()) showHelpMessage();
             }
             hasClicked = true;
         } else if(!Mouse.isButtonDown(2) && hasClicked) {
@@ -120,9 +110,9 @@ public class MiddleClick extends Module {
         }
     }
 
-    public enum actions {
-        PEARL_THROW,
-        ADD_FRIEND,
-        REMOVE_FRIEND
+    public enum Action {
+        ThrowPearl,
+        AddFriend,
+        RemoveFriend
     }
 }

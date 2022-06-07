@@ -12,7 +12,7 @@ public class Sprint extends Module {
    public static TickSetting a;
 
    public Sprint() {
-      super("Sprint", ModuleCategory.movement, 0);
+      super("Sprint", ModuleCategory.movement);
       a = new TickSetting("OmniSprint", false);
       this.registerSetting(a);
    }

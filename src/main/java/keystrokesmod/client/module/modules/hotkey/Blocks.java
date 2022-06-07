@@ -11,7 +11,7 @@ public class Blocks extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
     public Blocks() {
-        super("Blocks", ModuleCategory.hotkey, 0);
+        super("Blocks", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 9, 1, 9, 1));

@@ -30,7 +30,7 @@ public class BedwarsOverlay extends Module {
 
     public BedwarsOverlay() {
 
-        super("Bedwars Overlay", ModuleCategory.minigames, 0);
+        super("Bedwars Overlay", ModuleCategory.minigames);
         this.registerSetting(bombiesMomento = new DescriptionSetting("B0MBIES moment"));
         overlayHeight = 170;
         overlayWidth = 300;
@@ -305,7 +305,6 @@ public class BedwarsOverlay extends Module {
             profile = Utils.Java.getStringAsJson(connection).getAsJsonObject("player");
             bw = profile.getAsJsonObject("stats").getAsJsonObject("Bedwars");
             ach = profile.getAsJsonObject("achievements");
-            //System.out.println(profile.toString());
         } catch (NullPointerException er) {
             // never played bedwars or joined lobby
             playerStats.put(uuid, stats);

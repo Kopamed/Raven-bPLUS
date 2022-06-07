@@ -17,7 +17,7 @@ public class AutoBlock extends Module {
     private CoolDown engagedTime = new CoolDown(0);
 
     public AutoBlock(){
-        super("AutoBlock", ModuleCategory.combat, 0);
+        super("AutoBlock", ModuleCategory.combat);
 
         this.registerSetting(duration = new DoubleSliderSetting("Block duration (MS)", 20, 100, 1, 500, 1));
         this.registerSetting(distance = new DoubleSliderSetting("Distance to player (blocks)", 0, 3, 0, 6, 0.01));

@@ -28,7 +28,7 @@ public class WTap extends Module {
     public static CoolDown actionTimer = new CoolDown(0), postDelayTimer = new CoolDown(0);
 
     public WTap(){
-        super("WTap", ModuleCategory.combat, 0);
+        super("WTap", ModuleCategory.combat);
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(actionTicks = new DoubleSliderSetting("Action Time (MS)",  25, 55, 1, 500, 1));
         this.registerSetting(onceEvery =  new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1));
@@ -74,7 +74,6 @@ public class WTap extends Module {
 
         if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit instanceof Entity && Mouse.isButtonDown(0)) {
             Entity target = mc.objectMouseOver.entityHit;
-            //////////System.out.println(target.hurtResistantTime);
             if(target.isDead) {
                 return;
             }
@@ -94,26 +93,20 @@ public class WTap extends Module {
 
 
                     if (hitCoolDown && !alreadyHit) {
-                        //////////System.out.println("coolDownCheck");
                         hitsWaited++;
                         if(hitsWaited >= hitTimeout){
-                            //////////System.out.println("hiit cool down reached");
                             hitCoolDown = false;
                             hitsWaited = 0;
                         } else {
-                            //////////System.out.println("still waiting for cooldown");
                             alreadyHit = true;
                             return;
                         }
                     }
 
-                    //////////System.out.println("Continued");
-
                     if(!(chance.getInput() == 100 || Math.random() <= chance.getInput() / 100))
                         return;
 
                     if(!alreadyHit){
-                        //////////System.out.println("Startring combo code");
                         guiUpdate();
                         if(onceEvery.getInputMin() == onceEvery.getInputMax()) {
                             hitTimeout =  (int)onceEvery.getInputMin();
@@ -134,19 +127,15 @@ public class WTap extends Module {
                             comboing = true;
                             startCombo();
                             actionTimer.start();
-                            //////////System.out.println("Combo started");
                             alreadyHit = true;
                         }
 
-                        //////////System.out.println("Combo started");
                         alreadyHit = true;
                     }
                 } else {
                     if(alreadyHit){
-                        //////////System.out.println("UnHit");
                     }
                     alreadyHit = false;
-                    //////////System.out.println("REEEEEEE");
                 }
             }
         }

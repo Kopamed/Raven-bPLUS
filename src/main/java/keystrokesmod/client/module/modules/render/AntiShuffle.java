@@ -9,7 +9,7 @@ public class AntiShuffle extends Module {
    private static final String c = "§k";
 
    public AntiShuffle() {
-      super("AntiShuffle", ModuleCategory.render, 0);
+      super("AntiShuffle", ModuleCategory.render);
       this.registerSetting(a = new DescriptionSetting(Utils.Java.uf("remove") + " &k"));
    }
 

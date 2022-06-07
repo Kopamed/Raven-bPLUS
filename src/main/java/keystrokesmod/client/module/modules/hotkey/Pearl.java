@@ -14,7 +14,7 @@ public class Pearl extends Module {
     private final SliderSetting hotbarSlotPreference;
     public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<>();
     public Pearl() {
-        super("Pearl", ModuleCategory.hotkey, 0);
+        super("Pearl", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 6, 1, 9, 1));

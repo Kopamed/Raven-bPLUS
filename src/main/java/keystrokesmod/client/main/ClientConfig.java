@@ -129,9 +129,7 @@ public class ClientConfig {
             Raven.getExecutor().execute(() -> {
                if (!Utils.URLS.isHypixelKeyValid(Utils.URLS.hypixelApiKey)) {
                   Utils.URLS.hypixelApiKey = "";
-                  ////System.out.println("Invalid key!");
                } else{
-                  ////System.out.println("Valid key!");
                }
 
             });
@@ -168,9 +166,6 @@ public class ClientConfig {
    }
 
    private void loadClickGuiCoords(String decryptedString) {
-      //clickgui config
-      // categoryname:x:y:opened
-      ////System.out.println(decryptedString);
       for (String what : decryptedString.split("/")){
          for (CategoryComponent cat : Raven.clickGui.getCategoryList()) {
             if(what.startsWith(cat.categoryName.name())){

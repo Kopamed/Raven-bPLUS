@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -82,7 +83,6 @@ public class ConfigManager {
     }
 
     public void save(){
-        System.out.println("Saving");
         JsonObject data = new JsonObject();
         data.addProperty("version", Raven.versionManager.getClientVersion().getVersion());
         data.addProperty("author", "Unknown");
@@ -92,7 +92,7 @@ public class ConfigManager {
         data.addProperty("lastEditTime", System.currentTimeMillis());
 
         JsonObject modules = new JsonObject();
-        for(Module module : ModuleManager.getModules()){
+        for(Module module : Raven.moduleManager.getModules()){
             modules.add(module.getName(), module.getConfigAsJson());
         }
         data.add("modules", modules);
@@ -103,7 +103,8 @@ public class ConfigManager {
     public void setConfig(Config config){
         this.config = config;
         JsonObject data = config.getData().get("modules").getAsJsonObject();
-        for(Module module : ModuleManager.getModules()){
+        List<Module> knownModules = new ArrayList<>(Raven.moduleManager.getModules());
+        for(Module module : knownModules){
             if(data.has(module.getName())){
                 module.applyConfigFromJson(
                         data.get(module.getName()).getAsJsonObject()
@@ -132,7 +133,7 @@ public class ConfigManager {
     }
 
     public void resetConfig() {
-        for(Module module : ModuleManager.getModules())
+        for(Module module : Raven.moduleManager.getModules())
             module.resetToDefaults();
         save();
     }

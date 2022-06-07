@@ -1,6 +1,8 @@
 package keystrokesmod.client.module.modules.client;
 
+import com.google.gson.JsonObject;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Timer;
 
@@ -11,7 +13,7 @@ public class CommandLine extends Module {
    public static TickSetting animate;
 
    public CommandLine() {
-      super("Command line", ModuleCategory.client, 0);
+      super("Command line", ModuleCategory.client);
       this.registerSetting(animate = new TickSetting("Animate", true));
    }
 
@@ -29,5 +31,32 @@ public class CommandLine extends Module {
       }
 
       keystrokesmod.client.clickgui.raven.CommandLine.od();
+   }
+
+   @Override
+   public void applyConfigFromJson(JsonObject data){
+      try {
+         this.keycode = data.get("keycode").getAsInt();
+         // no need to set this to disabled
+         JsonObject settingsData = data.get("settings").getAsJsonObject();
+         for (Setting setting : getSettings()) {
+            if (settingsData.has(setting.getName())) {
+               setting.applyConfigFromJson(
+                       settingsData.get(setting.getName()).getAsJsonObject()
+               );
+            }
+         }
+      } catch (NullPointerException ignored){
+
+      }
+   }
+
+   @Override
+   public void resetToDefaults() {
+      this.keycode = defualtKeyCode;
+
+      for(Setting setting : this.settings){
+         setting.resetToDefaults();
+      }
    }
 }

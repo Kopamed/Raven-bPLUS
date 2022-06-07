@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.player;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.modules.movement.Fly;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -12,7 +13,7 @@ public class FallSpeed extends Module {
    public static TickSetting b;
 
    public FallSpeed() {
-      super("FallSpeed", ModuleCategory.player, 0);
+      super("FallSpeed", ModuleCategory.player);
       this.registerSetting(dc = new DescriptionSetting("Vanilla max: 3.92"));
       this.registerSetting(a = new SliderSetting("Motion", 5.0D, 0.0D, 8.0D, 0.1D));
       this.registerSetting(b = new TickSetting("Disable XZ motion", true));
@@ -20,8 +21,8 @@ public class FallSpeed extends Module {
 
    public void update() {
       if ((double)mc.thePlayer.fallDistance >= 2.5D) {
-         Module fly = ModuleManager.getModuleByClazz(Fly.class);
-         Module noFall = ModuleManager.getModuleByClazz(NoFall.class);
+         Module fly = Raven.moduleManager.getModuleByClazz(Fly.class);
+         Module noFall = Raven.moduleManager.getModuleByClazz(NoFall.class);
 
          if (
               (fly != null && fly.isEnabled()) ||

@@ -33,7 +33,7 @@ public class SumoFences extends Module {
    private final String c5;
 
    public SumoFences() {
-      super("Sumo Fences", ModuleCategory.minigames, 0);
+      super("Sumo Fences", ModuleCategory.minigames);
       this.f = Blocks.oak_fence.getDefaultState();
       this.c1 = "Mode: Sumo Duel";
       this.c2 = "Oak fence";

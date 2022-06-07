@@ -32,7 +32,7 @@ public class SafeWalk extends Module {
    private static boolean isShifting = false;
 
    public SafeWalk() {
-      super("SafeWalk", ModuleCategory.player, 0);
+      super("SafeWalk", ModuleCategory.player);
       this.registerSetting(doShift = new TickSetting("Shift", false));
       this.registerSetting(shiftOnJump = new TickSetting("Shift during jumps", false));
       this.registerSetting(onHold = new TickSetting("On shift hold", false));

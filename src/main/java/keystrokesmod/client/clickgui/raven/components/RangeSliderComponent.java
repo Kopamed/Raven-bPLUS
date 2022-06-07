@@ -132,8 +132,6 @@ public class RangeSliderComponent extends Component {
             this.mouseDown = true;
         }
 
-        // Put breakpoints instead of doing that:
-        //System.out.println("Clicked");
     }
 
     public void mouseReleased(int x, int y, int m) {

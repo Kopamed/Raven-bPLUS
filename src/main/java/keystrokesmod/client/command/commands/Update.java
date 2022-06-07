@@ -25,6 +25,7 @@ public class Update extends Command {
             try {
                 url = new URL(Raven.sourceLocation);
                 Utils.Client.openWebpage(url);
+                Utils.Client.openWebpage(new URL(Raven.downloadLocation));
                 CommandLine.print("&aOpened page successfully!", 0);
             } catch (MalformedURLException e) {
                 e.printStackTrace();

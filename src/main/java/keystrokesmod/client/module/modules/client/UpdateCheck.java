@@ -25,7 +25,7 @@ public class UpdateCheck extends Module {
     private final Runnable task;
 
     public UpdateCheck() {
-        super("Update", ModuleCategory.client, 0);
+        super("Update", ModuleCategory.client);
 
         this.registerSetting(howToUse = new DescriptionSetting(Utils.Java.uf("command") + ": update"));
         this.registerSetting(copyToClipboard = new TickSetting("Copy to clipboard", true));
@@ -48,13 +48,15 @@ public class UpdateCheck extends Module {
             }
 
             if (copyToClipboard.isToggled())
-                if (Utils.Client.copyToClipboard(Raven.sourceLocation))
+                if (Utils.Client.copyToClipboard(Raven.downloadLocation))
                     Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
+                    Utils.Player.sendMessageToSelf(Raven.sourceLocation);
 
             if (openLink.isToggled()) {
                 try {
                     URL url = new URL(Raven.sourceLocation);
                     Utils.Client.openWebpage(url);
+                    Utils.Client.openWebpage(new URL(Raven.downloadLocation));
                 } catch (MalformedURLException bruh) {
                     bruh.printStackTrace();
                     Utils.Player.sendMessageToSelf("&cFailed to open page! Please report this bug in Raven b+'s discord");

@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.player;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -31,7 +32,7 @@ public class AutoPlace extends Module {
    private BlockPos lp = null;
 
    public AutoPlace() {
-      super("AutoPlace", ModuleCategory.player, 0);
+      super("AutoPlace", ModuleCategory.player);
       this.registerSetting(ds = new DescriptionSetting("FD: FPS/80"));
       this.registerSetting(c = new SliderSetting("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
       this.registerSetting(a = new TickSetting("Hold right", true));
@@ -54,7 +55,7 @@ public class AutoPlace extends Module {
    }
 
    public void update() {
-      Module fastPlace = ModuleManager.getModuleByClazz(FastPlace.class);
+      Module fastPlace = Raven.moduleManager.getModuleByClazz(FastPlace.class);
       if (a.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && fastPlace != null && !fastPlace.isEnabled()) {
          ItemStack i = mc.thePlayer.getHeldItem();
          if (i == null || !(i.getItem() instanceof ItemBlock)) {

@@ -19,12 +19,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ModuleManager {
-   public static List<Module> modsList = new ArrayList<>();
-   public static List<Module> enModsList = new ArrayList<>();
+   private List<Module> modules = new ArrayList<>();
 
    public static boolean initialized = false;
 
-   public synchronized void init() {
+   public ModuleManager() {
       if (initialized) return;
 
       addModule(new AutoClicker());
@@ -34,7 +33,6 @@ public class ModuleManager {
       addModule(new DelayRemover());
       addModule(new HitBox());
       addModule(new Reach());
-      addModule(new RodAimbot());
       addModule(new Velocity());
       addModule(new BHop());
       addModule(new Boost());
@@ -102,34 +100,34 @@ public class ModuleManager {
 
       addModule(new ExplicitB9NameTags());
       addModule(new AutoBlock());
-
-      initialized = true;
+      addModule(new MiddleClick());
 
       // why ?
       // idk dude. you tell me why. I am pretty sure this was blowsy's work.
-      getModuleByClazz(AntiBot.class).enable();
+
+      initialized = true;
    }
    
-   private static void addModule(Module m) {
-      modsList.add(m);
+   private void addModule(Module m) {
+      modules.add(m);
    } 
 
    // prefer using getModuleByClazz();
    // ok might add in 1.0.18
-   public static Module getModuleByName(String name) {
+   public Module getModuleByName(String name) {
       if (!initialized) return null;
 
-      for (Module module : modsList) {
+      for (Module module : modules) {
          if (module.getName().equalsIgnoreCase(name))
             return module;
       }
       return null;
    }
 
-   public static Module getModuleByClazz(Class<? extends Module> c) {
+   public Module getModuleByClazz(Class<? extends Module> c) {
       if (!initialized) return null;
 
-      for (Module module : modsList) {
+      for (Module module : modules) {
          if (module.getClass().equals(c))
             return module;
       }
@@ -137,14 +135,14 @@ public class ModuleManager {
    }
 
 
-   public static List<Module> getModules() {
-      return modsList;
+   public List<Module> getModules() {
+      return modules;
    }
 
-   public static List<Module> getModulesInCategory(Module.ModuleCategory categ) {
+   public List<Module> getModulesInCategory(Module.ModuleCategory categ) {
       ArrayList<Module> modulesOfCat = new ArrayList<>();
 
-      for (Module mod : getModules()) {
+      for (Module mod : modules) {
          if (mod.moduleCategory().equals(categ)) {
             modulesOfCat.add(mod);
          }
@@ -153,30 +151,30 @@ public class ModuleManager {
       return modulesOfCat;
    }
 
-   public static void sort() {
+   public void sort() {
       if (HUD.alphabeticalSort.isToggled()) {
-         modsList.sort(Comparator.comparing(Module::getName));
+         modules.sort(Comparator.comparing(Module::getName));
       } else {
-         modsList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+         modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
       }
 
    }
 
-   public static int modListSize() {
-      return modsList.size();
+   public int numberOfModules() {
+      return modules.size();
    }
 
-   public static void sortLongShort() {
-      modsList.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())));
+   public void sortLongShort() {
+      modules.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())));
    }
 
-   public static void sortShortLong() {
-      modsList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+   public void sortShortLong() {
+      modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
    }
 
-   public static int getLongestActiveModule(FontRenderer fr) {
+   public int getLongestActiveModule(FontRenderer fr) {
       int length = 0;
-      for(Module mod : modsList) {
+      for(Module mod : modules) {
          if(mod.isEnabled()){
             if(fr.getStringWidth(mod.getName()) > length){
                length = fr.getStringWidth(mod.getName());
@@ -186,9 +184,9 @@ public class ModuleManager {
       return length;
    }
 
-   public static int getBoxHeight(FontRenderer fr, int margin) {
+   public int getBoxHeight(FontRenderer fr, int margin) {
       int length = 0;
-      for(Module mod : modsList) {
+      for(Module mod : modules) {
          if(mod.isEnabled()){
             length += fr.FONT_HEIGHT + margin;
          }

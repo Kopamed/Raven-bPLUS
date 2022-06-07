@@ -34,7 +34,8 @@ public class AimAssist extends Module {
    public static ArrayList<Entity> friends = new ArrayList<>();
 
    public AimAssist() {
-      super("AimAssist", ModuleCategory.combat, 0);
+      super("AimAssist", ModuleCategory.combat);
+
       this.registerSetting(speed = new SliderSetting("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));
       this.registerSetting(compliment = new SliderSetting("Speed 2", 15.0D, 2D, 97.0D, 1.0D));
       this.registerSetting(fov = new SliderSetting("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
@@ -67,7 +68,7 @@ public class AimAssist extends Module {
 
          if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
-            Module autoClicker = ModuleManager.getModuleByClazz(AutoClicker.class);
+            Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
             //what if player clicking but mouse not down ????
             if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();

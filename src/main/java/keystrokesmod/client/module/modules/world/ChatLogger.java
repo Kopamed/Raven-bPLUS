@@ -15,7 +15,7 @@ public class ChatLogger extends Module {
     public String extension;
 
     public ChatLogger() {
-        super("Chat Logger", ModuleCategory.world, 0);
+        super("Chat Logger", ModuleCategory.world);
 
         extension = "txt";
         dir = new File(mc.mcDataDir, "keystrokes" + File.separator + "logs");
@@ -30,7 +30,6 @@ public class ChatLogger extends Module {
         LocalDateTime now = LocalDateTime.now();
         fileName = dtf.format(now) + "." + extension;
         this.chatLog = new File(dir, fileName);
-        //////////////System.out.println("Creating file " + fileName + " in " + dir);
         if (!chatLog.exists()) {
             try {
                 chatLog.createNewFile();

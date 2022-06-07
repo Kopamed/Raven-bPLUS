@@ -46,7 +46,6 @@ public class ModeComponent extends Component {
 
 
     public void mouseDown(int x, int y, int b) {
-        System.out.println(i(x,y) + " " + this.x + " " + this.y + " " + x + " " + y);
         if(i(x, y))
             this.mode.nextMode();
     }

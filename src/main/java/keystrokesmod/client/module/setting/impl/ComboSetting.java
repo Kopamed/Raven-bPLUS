@@ -68,9 +68,6 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
     public void nextMode(){
         for(int i = 0; i < options.length; i++){
             if(options[i] == currentOption) {
-                System.out.println(i);
-                System.out.println(options.length);
-                System.out.println((i + 1) % (options.length));
                 currentOption = options[(i + 1) % (options.length)];
                 return;
             }

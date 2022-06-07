@@ -26,7 +26,7 @@ public class Tracers extends Module {
    private int rgb_c = 0;
 
    public Tracers() {
-      super("Tracers", ModuleCategory.render, 0);
+      super("Tracers", ModuleCategory.render);
       this.registerSetting(a = new TickSetting("Show invis", true));
       this.registerSetting(f = new SliderSetting("Line Width", 1.0D, 1.0D, 5.0D, 1.0D));
       this.registerSetting(b = new SliderSetting("Red", 0.0D, 0.0D, 255.0D, 1.0D));

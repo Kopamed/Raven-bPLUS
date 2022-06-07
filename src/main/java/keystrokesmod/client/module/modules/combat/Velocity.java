@@ -16,7 +16,7 @@ public class Velocity extends Module {
    public static TickSetting e;
 
    public Velocity() {
-      super("Velocity", ModuleCategory.combat, 0);
+      super("Velocity", ModuleCategory.combat);
       this.registerSetting(a = new SliderSetting("Horizontal", 90.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(b = new SliderSetting("Vertical", 100.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(c = new SliderSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
@@ -28,8 +28,6 @@ public class Velocity extends Module {
    public void c(LivingUpdateEvent ev) {
       if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime)
       {
-         //System.out.println(ev.entity.getName());
-         //System.out.println(mc.objectMouseOver.hitInfo);
          if (d.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
             return;
          }

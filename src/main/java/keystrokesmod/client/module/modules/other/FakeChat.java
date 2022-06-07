@@ -12,7 +12,7 @@ public class FakeChat extends Module {
    public static final String c4 = "&cInvalid message.";
 
    public FakeChat() {
-      super("Fake Chat", ModuleCategory.other, 0);
+      super("Fake Chat", ModuleCategory.other);
       this.registerSetting(a = new DescriptionSetting(Utils.Java.uf("command") + ": " + command + " [msg]"));
    }
 
