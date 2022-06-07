@@ -4,7 +4,7 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import net.minecraft.client.Minecraft;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -37,7 +37,7 @@ public class FPSSpoofer extends Module {
         ticksPassed = 0;
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event){
         if(event.phase == TickEvent.Phase.START){
             //if(ticksPassed % 20 == 0) {

@@ -7,7 +7,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -147,7 +147,7 @@ public class Freecam extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void re(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
          mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
@@ -157,7 +157,7 @@ public class Freecam extends Module {
 
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void m(MouseEvent e) {
       if (Utils.Player.isPlayerInGame() && e.button != -1) {
          e.setCanceled(true);

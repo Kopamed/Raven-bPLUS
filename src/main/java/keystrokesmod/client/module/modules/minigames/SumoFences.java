@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.MouseEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
@@ -68,7 +68,7 @@ public class SumoFences extends Module {
 
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void m(MouseEvent e) {
       if (e.buttonstate && (e.button == 0 || e.button == 1) && Utils.Player.isPlayerInGame() && this.is()) {
          MovingObjectPosition mop = mc.objectMouseOver;

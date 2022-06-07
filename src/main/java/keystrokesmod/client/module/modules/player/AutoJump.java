@@ -4,7 +4,7 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class AutoJump extends Module {
@@ -20,7 +20,7 @@ public class AutoJump extends Module {
       this.ju(this.c = false);
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void p(PlayerTickEvent e) {
       if (Utils.Player.isPlayerInGame()) {
          if (mc.thePlayer.onGround && (!b.isToggled() || !mc.thePlayer.isSneaking())) {

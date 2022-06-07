@@ -9,7 +9,7 @@ import keystrokesmod.client.utils.mouseManager;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 import java.awt.*;
@@ -54,7 +54,7 @@ public class ClickAssist extends Module {
       this.bot = null;
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onMouseUpdate(MouseEvent ev) {
       if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {

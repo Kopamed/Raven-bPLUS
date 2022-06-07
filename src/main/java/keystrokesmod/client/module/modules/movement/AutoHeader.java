@@ -6,7 +6,7 @@ import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
@@ -32,7 +32,7 @@ public class AutoHeader extends Module {
         super.onEnable();
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent e) {
         if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;

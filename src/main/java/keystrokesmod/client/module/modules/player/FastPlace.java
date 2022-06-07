@@ -7,7 +7,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -39,7 +39,7 @@ public class FastPlace extends Module {
       return rightClickDelayTimerField != null;
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onPlayerTick(PlayerTickEvent event) {
       if (event.phase == Phase.END) {
          if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus && rightClickDelayTimerField != null) {

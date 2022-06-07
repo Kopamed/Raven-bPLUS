@@ -34,7 +34,7 @@ public class MurderMystery extends Module {
    }
 
    @SubscribeEvent
-   public void o(RenderWorldLastEvent e) {
+   public void onRenderWorldLast(RenderWorldLastEvent e) {
       if (Utils.Player.isPlayerInGame()) {
          PlayerESP playerESP = (PlayerESP) ModuleManager.getModuleByName("PlayerESP");
          assert playerESP != null;

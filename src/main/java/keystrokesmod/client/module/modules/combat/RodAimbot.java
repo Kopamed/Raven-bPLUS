@@ -9,7 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraftforge.client.event.MouseEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Iterator;
 
@@ -25,7 +25,7 @@ public class RodAimbot extends Module {
       this.registerSetting(c = new TickSetting("Aim invis", false));
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void x(MouseEvent ev) {
       if (ev.button == 1 && ev.buttonstate && Utils.Player.isPlayerInGame() && mc.currentScreen == null) {
          if (mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemFishingRod && mc.thePlayer.fishEntity == null) {

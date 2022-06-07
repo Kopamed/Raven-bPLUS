@@ -1,6 +1,6 @@
 package keystrokesmod.client;
 
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.lib.me.superblaubeere27.client.notifications.Notification;
@@ -9,7 +9,7 @@ import keystrokesmod.client.lib.me.superblaubeere27.client.notifications.Notific
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class NotificationRenderer {
-    @FMLEvent
+    @SubscribeEvent
     public void onRender(TickEvent.RenderTickEvent event) {
         if (GuiModule.toggleNotification.isToggled()) NotificationManager.render();
     }

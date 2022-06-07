@@ -1,6 +1,6 @@
 package keystrokesmod.client.main;
 
-import keystrokesmod.client.clickgui.raven.CategoryComponent;
+import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.keystroke.KeyStroke;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.utils.Utils;
@@ -168,11 +168,15 @@ public class ClientConfig {
    }
 
    private void loadClickGuiCoords(String decryptedString) {
+      //clickgui config
+      // categoryname:x:y:opened
+      ////System.out.println(decryptedString);
       for (String what : decryptedString.split("/")){
          for (CategoryComponent cat : Raven.clickGui.getCategoryList()) {
-            if(what.startsWith(cat.getName())){
+            if(what.startsWith(cat.categoryName.name())){
                List<String> cfg = Utils.Java.StringListToList(what.split("~"));
-               cat.setLocation(Integer.parseInt(cfg.get(1)), Integer.parseInt(cfg.get(2)));
+               cat.setX(Integer.parseInt(cfg.get(1)));
+               cat.setY(Integer.parseInt(cfg.get(2)));
                cat.setOpened(Boolean.parseBoolean(cfg.get(3)));
             }
          }
@@ -182,7 +186,7 @@ public class ClientConfig {
    public String getClickGuiPos() {
       StringBuilder posConfig = new StringBuilder();
       for (CategoryComponent cat : Raven.clickGui.getCategoryList()) {
-         posConfig.append(cat.getName());
+         posConfig.append(cat.categoryName.name());
          posConfig.append("~");
          posConfig.append(cat.getX());
          posConfig.append("~");

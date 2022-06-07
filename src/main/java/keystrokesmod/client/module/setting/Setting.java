@@ -2,7 +2,7 @@ package keystrokesmod.client.module.setting;
 
 import com.google.gson.JsonObject;
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.clickgui.raven.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 
 public abstract class Setting {
    public String settingName;

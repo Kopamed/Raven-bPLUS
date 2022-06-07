@@ -5,7 +5,7 @@ import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class BridgeAssist extends Module {
@@ -53,7 +53,7 @@ public class BridgeAssist extends Module {
         super.onEnable();
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent e) {
         if (!Utils.Player.isPlayerInGame()) {
             return;

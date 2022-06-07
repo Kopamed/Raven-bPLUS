@@ -4,6 +4,7 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
+import net.minecraft.client.Minecraft;
 
 public class Fly extends Module {
    private final Fly.VanFly vanFly = new VanFly();
@@ -103,11 +104,14 @@ public class Fly extends Module {
       public void onEnable() {}
 
       public void onDisable() {
-         if (Module.mc.thePlayer.capabilities.isFlying) {
-            Module.mc.thePlayer.capabilities.isFlying = false;
+         if(Minecraft.getMinecraft().thePlayer== null)
+            return;
+
+         if (Minecraft.getMinecraft().thePlayer.capabilities.isFlying) {
+            Minecraft.getMinecraft().thePlayer.capabilities.isFlying = false;
          }
 
-         Module.mc.thePlayer.capabilities.setFlySpeed(0.05F);
+         Minecraft.getMinecraft().thePlayer.capabilities.setFlySpeed(0.05F);
       }
 
       public void update() {

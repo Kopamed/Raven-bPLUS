@@ -2,8 +2,7 @@ package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.clickgui.raven.ModuleComponent;
-import keystrokesmod.client.clickgui.raven.settings.ComboComponent;
+import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class ComboSetting<T extends Enum<?>> extends Setting {
@@ -55,7 +54,7 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
 
     @Override
     public Component createComponent(ModuleComponent moduleComponent) {
-        return new ComboComponent(this, moduleComponent);
+        return null;
     }
 
     public T getMode(){

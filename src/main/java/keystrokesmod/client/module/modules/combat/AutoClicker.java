@@ -16,7 +16,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.util.BlockPos;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -147,7 +147,7 @@ public class AutoClicker extends Module {
       timingsDesc.setDesc(Utils.md + Utils.Modes.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
       if(!Utils.Client.currentScreenMinecraft() &&
               !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
@@ -167,7 +167,7 @@ public class AutoClicker extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onTick(TickEvent.PlayerTickEvent ev) {
       if(!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
               && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests

@@ -5,7 +5,7 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.utils.version.Version;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -65,7 +65,7 @@ public class UpdateCheck extends Module {
         };
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
         if (f == null) {
             f = executor.submit(task);

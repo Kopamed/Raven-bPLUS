@@ -13,7 +13,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -32,7 +32,7 @@ public class WaterBucket extends Module {
       return !DimensionHelper.isPlayerInNether();
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onTick(ClientTickEvent ev) {
       if (ev.phase != Phase.END && Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
          if (DimensionHelper.isPlayerInNether()) this.disable();

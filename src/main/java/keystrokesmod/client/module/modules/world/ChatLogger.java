@@ -2,7 +2,7 @@ package keystrokesmod.client.module.modules.world;
 
 import keystrokesmod.client.module.Module;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -42,7 +42,7 @@ public class ChatLogger extends Module {
         super.onEnable();
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void onMessageRecieved(ClientChatReceivedEvent c) {
         try(FileWriter fw = new FileWriter(this.chatLog.getPath(), true);
             BufferedWriter bw = new BufferedWriter(fw);

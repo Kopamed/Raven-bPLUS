@@ -2,13 +2,13 @@ package keystrokesmod.client.utils;
 
 import keystrokesmod.client.clickgui.raven.CommandLine;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChatHelper {
    private static boolean e = false;
    private static long s = 0L;
 
-   @FMLEvent
+   @SubscribeEvent
    public void onChatMessageReceived(ClientChatReceivedEvent event) {
       if (e && Utils.Player.isPlayerInGame()) {
          if (Utils.Java.str(event.message.getUnformattedText()).startsWith("Unknown")) {

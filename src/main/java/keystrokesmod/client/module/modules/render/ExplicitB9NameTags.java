@@ -20,7 +20,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraftforge.client.event.RenderLivingEvent.Specials.Pre;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -76,7 +76,7 @@ public class ExplicitB9NameTags extends Module {
         mode = modeSetting.getInput() == 1.0D ? "Hearts" : "Percentage";
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void nameTag(Pre<? extends EntityLivingBase> player) {
         boolean _0 = player.entity.getDisplayName().getFormattedText() != null;
         boolean _1 = !player.entity.getDisplayName().getFormattedText().equals("");
@@ -87,7 +87,7 @@ public class ExplicitB9NameTags extends Module {
         }
     }
 
-    @FMLEvent
+    @SubscribeEvent
     public void render3d(RenderWorldLastEvent renderWorldLastEvent) {
         ArrayList<EntityLivingBase> playersArr = new ArrayList<>();
 

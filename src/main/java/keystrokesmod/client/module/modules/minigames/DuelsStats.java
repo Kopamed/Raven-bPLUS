@@ -9,7 +9,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class DuelsStats extends Module {
 
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onMessageRecieved(ClientChatReceivedEvent c) {
       if (Utils.Player.isPlayerInGame() && this.id()) {
          String s = Utils.Java.str(c.message.getUnformattedText());
@@ -100,7 +100,7 @@ public class DuelsStats extends Module {
       }
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void onEntityJoin(EntityJoinWorldEvent j) {
       if (j.entity == mc.thePlayer) {
          this.en = "";

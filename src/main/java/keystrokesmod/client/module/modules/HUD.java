@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
@@ -67,17 +67,8 @@ public class HUD extends Module {
       }
    }
 
-   @FMLEvent
-   public void L(RenderGameOverlayEvent e){
-      if(e.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
-
-      }
-   }
-
-   @FMLEvent
+   @SubscribeEvent
    public void a(RenderTickEvent ev) {
-      // IK THIS METHOD IS INNEFECTIVE I WILL OPTIMISE IT LATER DONT BULLY ME
-
       if (ev.phase == Phase.END && Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
@@ -105,7 +96,9 @@ public class HUD extends Module {
                ModuleManager.sortLongShort();
             }
          }
-         List<Module> en = new ArrayList<>(Raven.moduleManager.getModules());
+
+
+         List<Module> en = new ArrayList<>(ModuleManager.getModules());
          if(en.isEmpty()) return;
 
          int textBoxWidth = ModuleManager.getLongestActiveModule(mc.fontRendererObj);
@@ -136,6 +129,7 @@ public class HUD extends Module {
 
          for (Module m : en) {
             if (m.isEnabled() && m != this) {
+               System.out.println(m.getName());
                if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());

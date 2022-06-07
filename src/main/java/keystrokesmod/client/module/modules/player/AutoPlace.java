@@ -15,7 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoPlace extends Module {
@@ -66,7 +66,7 @@ public class AutoPlace extends Module {
 
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void bh(DrawBlockHighlightEvent ev) {
       if (Utils.Player.isPlayerInGame()) {
          if (mc.currentScreen == null && !mc.thePlayer.capabilities.isFlying) {

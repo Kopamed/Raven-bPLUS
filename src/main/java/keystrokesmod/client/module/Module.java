@@ -1,12 +1,12 @@
 package keystrokesmod.client.module;
 
 import com.google.gson.JsonObject;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.EventManager;
 import keystrokesmod.client.NotificationRenderer;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -60,16 +60,19 @@ public class Module {
    }
 
    public void applyConfigFromJson(JsonObject data){
-      this.keycode = data.get("keycode").getAsInt();
-      setToggled(data.get("enabled").getAsBoolean());
-
-      JsonObject settingsData = data.get("settings").getAsJsonObject();
-      for(Setting setting : getSettings()){
-         if(settingsData.has(setting.getName())){
-            setting.applyConfigFromJson(
-                    settingsData.get(setting.getName()).getAsJsonObject()
-            );
+      try {
+         this.keycode = data.get("keycode").getAsInt();
+         setToggled(data.get("enabled").getAsBoolean());
+         JsonObject settingsData = data.get("settings").getAsJsonObject();
+         for (Setting setting : getSettings()) {
+            if (settingsData.has(setting.getName())) {
+               setting.applyConfigFromJson(
+                       settingsData.get(setting.getName()).getAsJsonObject()
+               );
+            }
          }
+      } catch (NullPointerException ignored){
+
       }
    }
 
@@ -103,9 +106,8 @@ public class Module {
          ModuleManager.sort();
       }
 
-      EventManager.register(this);
-
       this.onEnable();
+      MinecraftForge.EVENT_BUS.register(this);
    }
 
    public void disable() {
@@ -115,9 +117,8 @@ public class Module {
          NotificationRenderer.moduleStateChanged(this);
       }
       ModuleManager.enModsList.remove(this);
-      EventManager.unregister(this);
       this.onDisable();
-
+      MinecraftForge.EVENT_BUS.unregister(this);
    }
 
    public void setToggled(boolean enabled) {
@@ -127,6 +128,11 @@ public class Module {
          enable();
       else
          disable();
+      if(enabled){
+         enable();
+      } else{
+         disable();
+      }
    }
 
    public String getName() {
@@ -164,7 +170,7 @@ public class Module {
    }
 
    public void toggle() {
-      if (this.isEnabled()) {
+      if (this.enabled) {
          this.disable();
       } else {
          this.enable();

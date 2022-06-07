@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.Utils;
 
 public class StopMotion extends Module {
    public static TickSetting a;
@@ -16,7 +17,19 @@ public class StopMotion extends Module {
    }
 
    public void onEnable() {
-       //System.out.println("No fuck you");
+      if(!Utils.Player.isPlayerInGame()){
+         this.disable();
+         return;
+      }
+
+      if(a.isToggled())
+         mc.thePlayer.motionX = 0;
+
+      if(b.isToggled())
+         mc.thePlayer.motionY = 0;
+
+      if(c.isToggled())
+         mc.thePlayer.motionZ = 0;
 
       this.disable();
    }

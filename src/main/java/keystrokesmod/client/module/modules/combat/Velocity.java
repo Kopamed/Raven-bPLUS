@@ -5,7 +5,7 @@ import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import keystrokesmod.client.lib.fr.jmraich.rax.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 public class Velocity extends Module {
@@ -24,7 +24,7 @@ public class Velocity extends Module {
       this.registerSetting(e = new TickSetting("Disable while holding S", false));
    }
 
-   @FMLEvent
+   @SubscribeEvent
    public void c(LivingUpdateEvent ev) {
       if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime)
       {

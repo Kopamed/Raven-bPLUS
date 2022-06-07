@@ -2,8 +2,7 @@ package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.clickgui.raven.ModuleComponent;
-import keystrokesmod.client.clickgui.raven.settings.SliderComponent;
+import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 import java.math.BigDecimal;
@@ -59,7 +58,7 @@ public class SliderSetting extends Setting {
 
    @Override
    public Component createComponent(ModuleComponent moduleComponent) {
-      return new SliderComponent(this, moduleComponent);
+      return null;
    }
 
    public double getInput() {
