@@ -2,7 +2,6 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -41,8 +40,8 @@ public class Reach extends Module {
    public void onMouse(MouseEvent ev) {
       // legit event
       if(!Utils.Player.isPlayerInGame()) return;
-      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
-      if (autoClicker != null && autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)) return;
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+      if (autoClicker != null && autoClicker.isEnabled() && Mouse.isButtonDown(0)) return;
       if (ev.button >= 0 && ev.buttonstate) {
          call();
       }
@@ -52,10 +51,10 @@ public class Reach extends Module {
    public void onRenderTick(TickEvent.RenderTickEvent ev) {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
-      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
-      if (autoClicker == null || !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+      if (autoClicker == null || !autoClicker.isEnabled()) return;
 
-      if (autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
+      if (autoClicker.isEnabled()  && Mouse.isButtonDown(0)){
          call();
       }
    }

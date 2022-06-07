@@ -2,7 +2,6 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -53,10 +52,10 @@ public class HitBox extends Module {
       // autoclick event
       if(!Utils.Player.isPlayerInGame()) return;
 
-      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
-      if(autoClicker != null && !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled()) return;
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+      if(autoClicker != null && !autoClicker.isEnabled()) return;
 
-      if (autoClicker != null && autoClicker.isEnabled() && AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0)){
+      if (autoClicker != null && autoClicker.isEnabled() && Mouse.isButtonDown(0)){
          if (mv != null) {
             mc.objectMouseOver = mv;
          }

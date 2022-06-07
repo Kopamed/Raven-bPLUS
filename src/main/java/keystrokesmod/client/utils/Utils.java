@@ -6,10 +6,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.ModuleManager;
+import keystrokesmod.client.module.modules.combat.LeftClicker;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
-import keystrokesmod.client.module.modules.combat.AutoClicker;
+import keystrokesmod.client.module.modules.combat.RightClicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -397,9 +397,9 @@ public class Utils {
       }
 
       public static boolean autoClickerClicking() {
-         Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
+         Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
          if (autoClicker != null && autoClicker.isEnabled()) {
-            return AutoClicker.leftClick.isToggled() && Mouse.isButtonDown(0);
+            return autoClicker.isEnabled() && Mouse.isButtonDown(0);
          } //else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
          return false;
       }

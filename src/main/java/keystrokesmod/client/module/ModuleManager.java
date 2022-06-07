@@ -26,7 +26,8 @@ public class ModuleManager {
    public ModuleManager() {
       if (initialized) return;
 
-      addModule(new AutoClicker());
+      addModule(new LeftClicker());
+      addModule(new RightClicker());
       addModule(new AimAssist());
       addModule(new BurstClicker());
       addModule(new ClickAssist());

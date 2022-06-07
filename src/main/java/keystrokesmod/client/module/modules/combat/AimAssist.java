@@ -2,7 +2,6 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -68,7 +67,7 @@ public class AimAssist extends Module {
 
          if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
-            Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
+            Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class);
             //what if player clicking but mouse not down ????
             if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();

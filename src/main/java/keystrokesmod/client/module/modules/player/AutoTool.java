@@ -1,9 +1,11 @@
 package keystrokesmod.client.module.modules.player;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.combat.LeftClicker;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.module.modules.combat.AutoClicker;
+import keystrokesmod.client.module.modules.combat.RightClicker;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -54,8 +56,9 @@ public class AutoTool extends Module {
 
 
         //make sure that we are allowed to breack blocks if ac is enabled
-        if(AutoClicker.autoClickerEnabled) {
-            if(!AutoClicker.breakBlocks.isToggled()) {
+        LeftClicker autoClicker = (LeftClicker) Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+        if(autoClicker.isEnabled()) {
+            if(!LeftClicker.breakBlocks.isToggled()) {
                 return;
             }
         }

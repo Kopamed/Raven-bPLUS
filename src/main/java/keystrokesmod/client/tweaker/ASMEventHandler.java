@@ -2,8 +2,8 @@ package keystrokesmod.client.tweaker;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.modules.combat.AutoClicker;
+import keystrokesmod.client.module.modules.combat.LeftClicker;
+import keystrokesmod.client.module.modules.combat.RightClicker;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.movement.KeepSprint;
 import keystrokesmod.client.module.modules.movement.NoSlow;
@@ -107,8 +107,8 @@ public class ASMEventHandler {
     * ASM Modules : AutoClicker, Reach
     */
    public static void onTick() {
-      Module autoClicker = Raven.moduleManager.getModuleByClazz(AutoClicker.class);
-      if (autoClicker == null || !autoClicker.isEnabled() || !AutoClicker.leftClick.isToggled() || !Mouse.isButtonDown(0) || !Reach.call()) {
+      Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+      if (autoClicker == null || !autoClicker.isEnabled() || !Mouse.isButtonDown(0) || !Reach.call()) {
          mc.entityRenderer.getMouseOver(1.0F);
       }
    }

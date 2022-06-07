@@ -109,6 +109,8 @@ public class ConfigManager {
                 module.applyConfigFromJson(
                         data.get(module.getName()).getAsJsonObject()
                 );
+            } else {
+                module.resetToDefaults();
             }
         }
     }
