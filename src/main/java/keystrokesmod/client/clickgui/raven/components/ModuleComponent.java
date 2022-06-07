@@ -3,6 +3,7 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.modules.AutoConfig;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.*;
@@ -59,6 +60,8 @@ public class ModuleComponent extends Component {
             }
          }
       }
+
+      this.settings.add(new AutoConfig(this, y));
    }
 
    public void setModuleStartAt(int n) {
@@ -69,7 +72,7 @@ public class ModuleComponent extends Component {
          c.setModuleStartAt(y);
          if (c instanceof SliderComponent || c instanceof RangeSliderComponent) {
             y += 16;
-         } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent) {
+         } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof AutoConfig) {
             y += 12;
          }
       }
@@ -172,6 +175,7 @@ public class ModuleComponent extends Component {
          }
       }
 
+
    }
 
    public int getHeight() {
@@ -183,7 +187,7 @@ public class ModuleComponent extends Component {
          for (Component c : this.settings) {
             if (c instanceof SliderComponent || c instanceof RangeSliderComponent) {
                h += 16;
-            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent) {
+            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof AutoConfig) {
                h += 12;
             }
          }

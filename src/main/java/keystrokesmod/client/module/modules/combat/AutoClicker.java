@@ -42,9 +42,8 @@ public class AutoClicker extends Module {
    public static TickSetting inventoryFill;
    public static TickSetting allowEat, allowBow;
    public static SliderSetting rightClickDelay;
-   public static SliderSetting clickEvent, clickTimings;
    public static DoubleSliderSetting leftCPS, rightCPS, breakBlocksDelay;
-   public static ComboSetting clickStyle;
+   public static ComboSetting clickStyle, clickTimings;
 
    private Random rand = null;
    private Method playerMouseInput;
@@ -91,11 +90,8 @@ public class AutoClicker extends Module {
       this.registerSetting(allowEat = new TickSetting("Allow eat", true));
       this.registerSetting(allowBow = new TickSetting("Allow bow", true));
 
+      this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
       this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
-      this.registerSetting(clickTimings = new SliderSetting("ClickStyle", 1.0D, 1.0D, 2.0D, 1.0D));
-      this.registerSetting(timingsDesc = new DescriptionSetting("Mode: RAVEN"));
-      this.registerSetting(clickEvent = new SliderSetting("Event", 2.0D, 1.0D, 2.0D, 1.0D));
-      this.registerSetting(modeDesc = new DescriptionSetting("Mode: LEGIT"));
 
       try {
          this.playerMouseInput = ReflectionHelper.findMethod(
@@ -142,11 +138,6 @@ public class AutoClicker extends Module {
       autoClickerEnabled = false;
    }
 
-   public void guiUpdate() {
-      modeDesc.setDesc(Utils.md + Utils.Modes.ClickEvents.values()[(int)(clickEvent.getInput() - 1.0D)].name());
-      timingsDesc.setDesc(Utils.md + Utils.Modes.ClickTimings.values()[(int)(clickTimings.getInput() - 1.0D)].name());
-   }
-
    @SubscribeEvent
    public void onRenderTick(RenderTickEvent ev) {
       if(!Utils.Client.currentScreenMinecraft() &&
@@ -155,14 +146,13 @@ public class AutoClicker extends Module {
       )
          return;
 
-      if(Utils.Modes.ClickEvents.values()[(int)clickEvent.getInput() - 1] != Utils.Modes.ClickEvents.RENDER)
+      if(clickTimings.getMode() != ClickEvent.Render)
          return;
 
-      if(Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.RAVEN){
+      if(clickStyle.getMode() == ClickStyle.Raven){
          ravenClick();
       }
-      else if (Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.SKID){
-         //////System.out.println("skidlcick");
+      else if (clickStyle.getMode() == ClickStyle.SKid){
          skidClick(ev, null);
       }
    }
@@ -174,15 +164,13 @@ public class AutoClicker extends Module {
       )
          return;
 
-      if(Utils.Modes.ClickEvents.values()[(int)clickEvent.getInput() - 1] != Utils.Modes.ClickEvents.TICK)
+      if(clickTimings.getMode() != ClickEvent.Tick)
          return;
 
-      if(Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.RAVEN){
-         //////System.out.println("ravern");
+      if(clickStyle.getMode() == ClickStyle.Raven){
          ravenClick();
       }
-      else if (Utils.Modes.ClickTimings.values()[(int)clickTimings.getInput() - 1] == Utils.Modes.ClickTimings.SKID){
-         //////System.out.println("skidlcick");
+      else if (clickStyle.getMode() == ClickStyle.SKid){
          skidClick(null, ev);
       }
    }
@@ -625,5 +613,10 @@ public class AutoClicker extends Module {
    public enum ClickStyle {
       Raven,
       SKid
+   }
+
+   public enum ClickEvent {
+      Tick,
+      Render
    }
 }
