@@ -2,7 +2,7 @@ package keystrokesmod.client.command.commands;
 
 import keystrokesmod.client.command.Command;
 
-import static keystrokesmod.client.clickgui.raven.CommandLine.print;
+import static keystrokesmod.client.clickgui.raven.Terminal.print;
 
 public class Shoutout extends Command {
     public Shoutout() {
@@ -11,13 +11,13 @@ public class Shoutout extends Command {
 
     @Override
     public void onCall(String[] args){
-        print("&eEveryone who made B+ possible:", 1);
-        print("- kopamed (client dev)", 0);
-        print("- hevex (weeaboo)", 0);
-        print("- blowsy (raven owner)", 0);
-        print("- jmraichdev (client dev)", 0);
-        print("- nighttab (website dev)", 0);
-        print("- mood (java help)", 0);
-        print("- jc (b3 b2 betta tester)", 0);
+        print("Everyone who made b+ possible:");
+        print("- kopamed (client dev)");
+        print("- hevex/blowsy (weeaboo, b3 dev) (disapproves to b+ as he earned less money because less ppl clicked on his adfly link)");
+        print("- blowsy (hevex's alt)");
+        print("- jmraichdev (client dev)");
+        print("- nighttab (website dev)");
+        print("- mood (java help)");
+        print("- jc (b3 b2 betta tester, very good moaner (moans very loudly in discord vcs, giving everyone emotional motivation))");
     }
 }

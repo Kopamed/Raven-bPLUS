@@ -1,6 +1,6 @@
 package keystrokesmod.client.command;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+import keystrokesmod.client.clickgui.raven.Terminal;
 
 public abstract class Command {
     private final String name;
@@ -52,8 +52,7 @@ public abstract class Command {
     }
 
     public void incorrectArgs() {
-        CommandLine.print("&cIncorrect arguments! Run", 1);
-        CommandLine.print("&c`help " + this.getName() + "` for usage info", 0);
+        Terminal.print("Incorrect arguments! Run help " + this.getName() + " for usage info");
     }
 
     public String[] getAliases() {

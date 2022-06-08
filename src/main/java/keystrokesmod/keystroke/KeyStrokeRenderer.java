@@ -1,13 +1,12 @@
-
 package keystrokesmod.keystroke;
+
+import java.awt.Color;
+import java.io.IOException;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class KeyStrokeRenderer {
    private static final int[] a = new int[]{16777215, 16711680, 65280, 255, 16776960, 11141290};
@@ -40,11 +39,12 @@ public class KeyStrokeRenderer {
    }
 
    public void renderKeystrokes() {
-      if (KeyStroke.mode) {
+      KeyStroke f = KeyStrokeMod.getKeyStroke();
+      if (KeyStroke.enabled) {
          int x = KeyStroke.x;
          int y = KeyStroke.y;
          int g = this.getColor(KeyStroke.currentColorNumber);
-         boolean h = KeyStroke.showMouseBtn;
+         boolean h = KeyStroke.showMouseButtons;
          ScaledResolution res = new ScaledResolution(this.mc);
          int width = 74;
          int height = h ? 74 : 50;
@@ -77,14 +77,24 @@ public class KeyStrokeRenderer {
    }
 
    private void drawMovementKeys(int x, int y, int textColor) {
-      for (KeyStrokeKeyRenderer key : this.b) {
+      KeyStrokeKeyRenderer[] var4 = this.b;
+      int var5 = var4.length;
+
+      for(int var6 = 0; var6 < var5; ++var6) {
+         KeyStrokeKeyRenderer key = var4[var6];
          key.renderKey(x, y, textColor);
       }
+
    }
 
    private void drawMouseButtons(int x, int y, int textColor) {
-      for (KeyStrokeMouse button : this.c) {
+      KeyStrokeMouse[] var4 = this.c;
+      int var5 = var4.length;
+
+      for(int var6 = 0; var6 < var5; ++var6) {
+         KeyStrokeMouse button = var4[var6];
          button.n(x, y, textColor);
       }
+
    }
 }

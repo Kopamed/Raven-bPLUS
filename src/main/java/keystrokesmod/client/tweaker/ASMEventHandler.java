@@ -3,7 +3,6 @@ package keystrokesmod.client.tweaker;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
-import keystrokesmod.client.module.modules.combat.RightClicker;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.movement.KeepSprint;
 import keystrokesmod.client.module.modules.movement.NoSlow;

@@ -1,6 +1,7 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.module.modules.minigames.DuelsStats;
 
@@ -11,13 +12,12 @@ public class Nick extends Command {
 
     @Override
     public void onCall(String[] args){
-        if (args == null) {
+        if (args.length == 0) {
             this.incorrectArgs();
             return;
         }
 
-        DuelsStats.nk = args[1];
-        CommandLine.print("&aNick has been set to:", 1);
-        CommandLine.print("\"" + DuelsStats.nk + "\"", 0);
+        DuelsStats.nk = args[0];
+        Terminal.print("&aNick has been set to: " + DuelsStats.nk);
     }
 }

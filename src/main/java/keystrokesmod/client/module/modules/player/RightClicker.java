@@ -1,4 +1,4 @@
-package keystrokesmod.client.module.modules.combat;
+package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
@@ -34,6 +34,7 @@ public class RightClicker extends Module {
    public static TickSetting onlyBlocks;
    public static TickSetting preferFastPlace;
    public static TickSetting noBlockSword;
+   public static TickSetting ignoreRods;
    public static TickSetting allowEat, allowBow;
    public static SliderSetting rightClickDelay;
    public static DoubleSliderSetting rightCPS;
@@ -47,29 +48,25 @@ public class RightClicker extends Module {
    private long rightl;
    private double rightm;
    private boolean rightn;
-
-   private boolean watingForBreakTimeout;
-   private double breakBlockFinishWaitTime;
    private long lastClick;
-   private long leftHold, rightHold;
+   private long rightHold;
    private boolean rightClickWaiting;
    private double rightClickWaitStartTime;
    private boolean allowedClick;
-   public static boolean breakTimeDone;
-   private boolean leftDown;
    private boolean rightDown;
 
 
    public RightClicker() {
-      super("Right Clicker", ModuleCategory.combat);
+      super("Right Clicker", ModuleCategory.player);
 
       this.registerSetting(rightCPS = new DoubleSliderSetting("RightCPS", 12, 16, 1,60, 0.5));
       this.registerSetting(jitterRight = new SliderSetting("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
       this.registerSetting(rightClickDelay = new SliderSetting("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));
       this.registerSetting(noBlockSword = new TickSetting("Don't rightclick sword", true));
+      this.registerSetting(ignoreRods = new TickSetting("Ignore rods", true));
       this.registerSetting(onlyBlocks = new TickSetting("Only rightclick with blocks", false));
       this.registerSetting(preferFastPlace = new TickSetting("Prefer fast place", false));
-      this.registerSetting(allowEat = new TickSetting("Allow eat", true));
+      this.registerSetting(allowEat = new TickSetting("Allow eat & drink", true));
       this.registerSetting(allowBow = new TickSetting("Allow bow", true));
 
       this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
@@ -235,7 +232,13 @@ public class RightClicker extends Module {
       ItemStack item = mc.thePlayer.getHeldItem();
       if (item != null) {
          if (allowEat.isToggled()) {
-            if ((item.getItem() instanceof ItemFood)) {
+            if ((item.getItem() instanceof ItemFood) || item.getItem() instanceof ItemPotion || item.getItem() instanceof ItemBucketMilk) {
+               return false;
+            }
+         }
+
+         if(ignoreRods.isToggled()){
+            if(item.getItem() instanceof ItemFishingRod){
                return false;
             }
          }
@@ -248,11 +251,7 @@ public class RightClicker extends Module {
 
          if (onlyBlocks.isToggled()) {
             if (!(item.getItem() instanceof ItemBlock)) {
-               if (item.getItem() instanceof IThrowableItem) {
-                  if (!((IThrowableItem)item.getItem()).isThrowable(item)) return false;
-               } else {
-                  return false;
-               }
+               return false;
             }
          }
 

@@ -1,6 +1,7 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.module.modules.other.FakeChat;
 import keystrokesmod.client.utils.Utils;
@@ -12,7 +13,7 @@ public class Fakechat extends Command {
 
     @Override
     public void onCall(String[] args) {
-        if (args == null) {
+        if (args.length == 0) {
             this.incorrectArgs();
             return;
         }
@@ -21,11 +22,11 @@ public class Fakechat extends Command {
         String c = Utils.Java.joinStringList(args, " ");
         n = c.replaceFirst(FakeChat.command, "").substring(1);
         if (n.isEmpty() || n.equals("\\n")) {
-            CommandLine.print(FakeChat.c4, 1);
+            Terminal.print(FakeChat.c4);
             return;
         }
 
         FakeChat.msg = n;
-        CommandLine.print("&aMessage set!", 1);
+        Terminal.print("Message set!");
     }
 }

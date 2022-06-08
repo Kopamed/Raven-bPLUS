@@ -27,7 +27,7 @@ public class UpdateCheck extends Module {
     public UpdateCheck() {
         super("Update", ModuleCategory.client);
 
-        this.registerSetting(howToUse = new DescriptionSetting(Utils.Java.uf("command") + ": update"));
+        this.registerSetting(howToUse = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": update"));
         this.registerSetting(copyToClipboard = new TickSetting("Copy to clipboard", true));
         this.registerSetting(openLink = new TickSetting("Open dl in browser", true));
 

@@ -3,7 +3,6 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.*;
-import keystrokesmod.client.module.modules.AutoConfig;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.*;
@@ -13,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ModuleComponent extends Component {
+public class ModuleComponent implements Component {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
    private final int c3 = (new Color(175, 143, 233) ).getRGB();
@@ -36,7 +35,7 @@ public class ModuleComponent extends Component {
                SliderSetting n = (SliderSetting) v;
                SliderComponent s = new SliderComponent(n, this, y);
                this.settings.add(s);
-               y += 12;
+               y += 16;
             } else if (v instanceof TickSetting) {
                TickSetting b = (TickSetting) v;
                TickComponent c = new TickComponent(mod, b, this, y);
@@ -51,7 +50,7 @@ public class ModuleComponent extends Component {
                DoubleSliderSetting n = (DoubleSliderSetting) v;
                RangeSliderComponent s = new RangeSliderComponent(n, this, y);
                this.settings.add(s);
-               y += 12;
+               y += 16;
             }else if (v instanceof ComboSetting) {
                ComboSetting n = (ComboSetting) v;
                ModeComponent s = new ModeComponent(n, this, y);
@@ -61,18 +60,18 @@ public class ModuleComponent extends Component {
          }
       }
 
-      this.settings.add(new AutoConfig(this, y));
+      this.settings.add(new BindComponent(this, y));
    }
 
-   public void setModuleStartAt(int n) {
+   public void setComponentStartAt(int n) {
       this.o = n;
       int y = this.o + 16;
 
       for (Component c : this.settings) {
-         c.setModuleStartAt(y);
+         c.setComponentStartAt(y);
          if (c instanceof SliderComponent || c instanceof RangeSliderComponent) {
             y += 16;
-         } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof AutoConfig) {
+         } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof BindComponent) {
             y += 12;
          }
       }
@@ -187,7 +186,7 @@ public class ModuleComponent extends Component {
          for (Component c : this.settings) {
             if (c instanceof SliderComponent || c instanceof RangeSliderComponent) {
                h += 16;
-            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof AutoConfig) {
+            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof BindComponent) {
                h += 12;
             }
          }
@@ -197,10 +196,10 @@ public class ModuleComponent extends Component {
       }
    }
 
-   public void compute(int mousePosX, int mousePosY) {
+   public void update(int mousePosX, int mousePosY) {
       if (!this.settings.isEmpty()) {
          for (Component c : this.settings) {
-            c.compute(mousePosX, mousePosY);
+            c.update(mousePosX, mousePosY);
          }
       }
 
@@ -231,9 +230,9 @@ public class ModuleComponent extends Component {
 
    }
 
-   public void ky(char t, int k) {
+   public void keyTyped(char t, int k) {
       for (Component c : this.settings) {
-         c.ky(t, k);
+         c.keyTyped(t, k);
       }
 
    }

@@ -1,6 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.player.RightClicker;
 import keystrokesmod.client.module.setting.impl.*;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -29,7 +30,7 @@ public class LeftClicker extends Module {
     public static SliderSetting jitterLeft;
     public static TickSetting weaponOnly;
     public static TickSetting breakBlocks;
-    public static DoubleSliderSetting leftCPS;
+    public static DoubleSliderSetting leftCPS, breakBlocksDelay;;
     public static TickSetting inventoryFill;
 
     public static ComboSetting clickStyle, clickTimings;
@@ -38,7 +39,9 @@ public class LeftClicker extends Module {
     private long lastClick;
     private long leftHold;
     private boolean allowedClick;
-    public static boolean autoClickerEnabled;
+    public static boolean autoClickerEnabled, breakTimeDone;
+    private double breakBlockFinishWaitTime;
+    private boolean watingForBreakTimeout;
     private boolean leftDown;
     private long leftDownTime;
     private long leftUpTime;
@@ -314,19 +317,17 @@ public class LeftClicker extends Module {
     public boolean breakBlock() {
         if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
             BlockPos p = mc.objectMouseOver.getBlockPos();
+
             if (p != null) {
                 Block bl = mc.theWorld.getBlockState(p).getBlock();
                 if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
-
-                    if(!breakHeld) {
+                    if (!breakHeld) {
                         int e = mc.gameSettings.keyBindAttack.getKeyCode();
                         KeyBinding.setKeyBindState(e, true);
                         KeyBinding.onTick(e);
                         breakHeld = true;
                     }
                     return true;
-
-
                 }
                 if(breakHeld) {
                     breakHeld = false;

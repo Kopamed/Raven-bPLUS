@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class ModeComponent extends Component {
+public class ModeComponent implements Component {
     private final int c = (new Color(30, 144, 255)).getRGB();
     private final ComboSetting mode;
     private final ModuleComponent module;
@@ -34,20 +34,34 @@ public class ModeComponent extends Component {
         GL11.glPopMatrix();
     }
 
-    public void compute(int mousePosX, int mousePosY) {
+    public void update(int mousePosX, int mousePosY) {
         this.y = this.module.category.getY() + this.o;
         this.x = this.module.category.getX();
     }
 
-    public void setModuleStartAt(int n) {
+    public void setComponentStartAt(int n) {
         this.o = n;
     }
 
+    @Override
+    public int getHeight() {
+        return 0;
+    }
 
 
     public void mouseDown(int x, int y, int b) {
         if(i(x, y))
             this.mode.nextMode();
+    }
+
+    @Override
+    public void mouseReleased(int x, int y, int m) {
+
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+
     }
 
     private boolean i(int x, int y) {

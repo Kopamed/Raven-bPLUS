@@ -5,7 +5,6 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.module.modules.combat.RightClicker;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -77,7 +76,7 @@ public class AutoTool extends Module {
                             delay.setCooldown((long)ThreadLocalRandom.current().nextDouble(mineDelay.getInputMin(), mineDelay.getInputMax() + 0.01));
                             delay.start();
                         } else {
-                            if(isWaiting && delay.hasTimeElapsed()) {
+                            if(isWaiting && delay.hasFinished()) {
                                 isWaiting = false;
                                 previousSlot = Utils.Player.getCurrentPlayerSlot();
                                 mining = true;

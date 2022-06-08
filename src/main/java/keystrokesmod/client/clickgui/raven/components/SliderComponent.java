@@ -10,7 +10,7 @@ import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class SliderComponent extends Component {
+public class SliderComponent implements Component {
    private final SliderSetting v;
    private final ModuleComponent p;
    private int o;
@@ -43,11 +43,16 @@ public class SliderComponent extends Component {
       GL11.glPopMatrix();
    }
 
-   public void setModuleStartAt(int n) {
+   public void setComponentStartAt(int n) {
       this.o = n;
    }
 
-   public void compute(int mousePosX, int mousePosY) {
+   @Override
+   public int getHeight() {
+      return 0;
+   }
+
+   public void update(int mousePosX, int mousePosY) {
       this.y = this.p.category.getY() + this.o;
       this.x = this.p.category.getX();
       double d = Math.min(this.p.category.getWidth() - 8, Math.max(0, mousePosX - this.x));
@@ -86,6 +91,11 @@ public class SliderComponent extends Component {
 
    public void mouseReleased(int x, int y, int m) {
       this.d = false;
+   }
+
+   @Override
+   public void keyTyped(char t, int k) {
+
    }
 
    public boolean u(int x, int y) {

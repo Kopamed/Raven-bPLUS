@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class DescriptionComponent extends Component {
+public class DescriptionComponent implements Component {
    private final int c = (new Color(226, 83, 47)).getRGB();
    private final DescriptionSetting desc;
    private final ModuleComponent p;
@@ -29,7 +29,32 @@ public class DescriptionComponent extends Component {
       GL11.glPopMatrix();
    }
 
-   public void setModuleStartAt(int n) {
+   @Override
+   public void update(int mousePosX, int mousePosY) {
+
+   }
+
+   @Override
+   public void mouseDown(int x, int y, int b) {
+
+   }
+
+   @Override
+   public void mouseReleased(int x, int y, int m) {
+
+   }
+
+   @Override
+   public void keyTyped(char t, int k) {
+
+   }
+
+   public void setComponentStartAt(int n) {
       this.o = n;
+   }
+
+   @Override
+   public int getHeight() {
+      return 0;
    }
 }

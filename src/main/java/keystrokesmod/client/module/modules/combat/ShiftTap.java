@@ -51,7 +51,7 @@ public class ShiftTap extends Module {
             return;
 
         if(waitingForPostDelay){
-            if(postDelayTimer.hasTimeElapsed()){
+            if(postDelayTimer.hasFinished()){
                 waitingForPostDelay = false;
                 comboing = true;
                 startCombo();
@@ -61,7 +61,7 @@ public class ShiftTap extends Module {
         }
 
         if(comboing) {
-            if(actionTimer.hasTimeElapsed()){
+            if(actionTimer.hasFinished()){
                 comboing = false;
                 finishCombo();
                 return;

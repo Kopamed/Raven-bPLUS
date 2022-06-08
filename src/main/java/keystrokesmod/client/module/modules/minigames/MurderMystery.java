@@ -7,10 +7,7 @@ import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -63,7 +60,7 @@ public class MurderMystery extends Module {
                String c4 = "&7[&cALERT&7]";
                if (entity.getHeldItem() != null && entity.getHeldItem().hasDisplayName()) {
                   Item i = entity.getHeldItem().getItem();
-                  if (i instanceof ItemSword || i instanceof ItemAxe || entity.getHeldItem().getDisplayName().contains("aKnife")) {
+                  if (i instanceof ItemSword || i instanceof ItemAxe || entity.getHeldItem().getDisplayName().contains("Knife")) {
 
                      if (!mur.contains(entity)) {
                         mur.add(entity);

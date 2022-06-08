@@ -11,7 +11,7 @@ public class NameHider extends Module {
 
    public NameHider() {
       super("Name Hider", ModuleCategory.other);
-      this.registerSetting(a = new DescriptionSetting(Utils.Java.uf("command") + ": cname [name]"));
+      this.registerSetting(a = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": cname [name]"));
    }
 
    public static String getUnformattedTextForChat(String s) {

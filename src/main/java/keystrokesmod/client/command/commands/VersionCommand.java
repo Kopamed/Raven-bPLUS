@@ -4,7 +4,7 @@ import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.utils.version.Version;
 
-import static keystrokesmod.client.clickgui.raven.CommandLine.print;
+import static keystrokesmod.client.clickgui.raven.Terminal.print;
 
 public class VersionCommand extends Command {
     public VersionCommand() {
@@ -16,8 +16,8 @@ public class VersionCommand extends Command {
         Version clientVersion = Raven.versionManager.getClientVersion();
         Version latestVersion = Raven.versionManager.getLatestVersion();
 
-        print("&eYour build: " + clientVersion, 1);
-        print("&aLatest version: " + latestVersion, 0);
+        print("&eYour build: " + clientVersion);
+        print("&aLatest version: " + latestVersion);
 
     }
 }

@@ -2,7 +2,6 @@ package keystrokesmod.client.main;
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.utils.version.VersionManager;
-import keystrokesmod.keystroke.KeyStrokeRenderer;
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.command.CommandManager;
 import keystrokesmod.client.config.ConfigManager;
@@ -24,6 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+
+
+//Todo fix wtap
 
 public class Raven {
 
@@ -58,8 +60,7 @@ public class Raven {
 
       MinecraftForge.EVENT_BUS.register(new Raven());
       MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
-      MinecraftForge.EVENT_BUS.register(new mouseManager());
-      MinecraftForge.EVENT_BUS.register(new KeyStrokeRenderer());
+      MinecraftForge.EVENT_BUS.register(new MouseManager());
       MinecraftForge.EVENT_BUS.register(new ChatHelper());
 
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
@@ -75,7 +76,6 @@ public class Raven {
          mResourceLocation = null;
       }
 
-      ClientConfig.applyKeyStrokeSettingsFromConfigFile();
       commandManager = new CommandManager();
       clickGui = new ClickGui();
       configManager = new ConfigManager();

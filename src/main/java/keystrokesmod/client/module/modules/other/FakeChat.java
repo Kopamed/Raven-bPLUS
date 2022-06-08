@@ -13,7 +13,7 @@ public class FakeChat extends Module {
 
    public FakeChat() {
       super("Fake Chat", ModuleCategory.other);
-      this.registerSetting(a = new DescriptionSetting(Utils.Java.uf("command") + ": " + command + " [msg]"));
+      this.registerSetting(a = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": " + command + " [msg]"));
    }
 
    public void onEnable() {

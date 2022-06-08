@@ -74,7 +74,7 @@ public class ModuleManager {
       addModule(new StringEncrypt());
       addModule(new WaterBucket());
       //addModule(new AutoConfig());
-      addModule(new CommandLine());
+      addModule(new Terminal());
       addModule(new GuiModule());
       addModule(new SelfDestruct());
       addModule(new ChatLogger());

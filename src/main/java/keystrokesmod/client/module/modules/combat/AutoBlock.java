@@ -30,7 +30,7 @@ public class AutoBlock extends Module {
             return;
 
         if(engaged){
-            if((engagedTime.hasTimeElapsed() || !Mouse.isButtonDown(0)) && duration.getInputMin() <= engagedTime.getElapsedTime()){
+            if((engagedTime.hasFinished() || !Mouse.isButtonDown(0)) && duration.getInputMin() <= engagedTime.getElapsedTime()){
                 engaged = false;
                 release();
             }

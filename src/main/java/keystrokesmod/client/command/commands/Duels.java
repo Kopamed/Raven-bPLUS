@@ -1,6 +1,7 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.minigames.DuelsStats;
@@ -14,33 +15,32 @@ public class Duels extends Command {
     @Override
     public void onCall(String[] args) {
         if (Utils.URLS.hypixelApiKey.isEmpty()) {
-            CommandLine.print("&cAPI Key is empty!", 1);
-            CommandLine.print("Use \"setkey [api_key]\".", 0);
+            Terminal.print("API Key is empty! Run \"setkey api_key\".");
             return;
         }
-        if(args == null) {
+        if(args.length == 0) {
             this.incorrectArgs();
             return;
         }
         String n;
-        n = args[1];
-        CommandLine.print("Retrieving data...", 1);
+        n = args[0];
+        Terminal.print("Retrieving data...");
         Raven.getExecutor().execute(() -> {
             int[] s = Utils.Profiles.getHypixelStats(n, Utils.Profiles.DM.OVERALL);
             if (s != null) {
                 if (s[0] == -1) {
-                    CommandLine.print("&c" + (n.length() > 16 ? n.substring(0, 16) + "..." : n) + " does not exist!", 0);
+                    Terminal.print((n.length() > 16 ? n.substring(0, 16) + "..." : n) + " does not exist!");
                 } else {
                     double wlr = s[1] != 0 ? Utils.Java.round((double)s[0] / (double)s[1], 2) : (double)s[0];
-                    CommandLine.print("&e" + n + " stats:", 1);
-                    CommandLine.print("Wins: " + s[0], 0);
-                    CommandLine.print("Losses: " + s[1], 0);
-                    CommandLine.print("WLR: " + wlr, 0);
-                    CommandLine.print("Winstreak: " + s[2], 0);
-                    CommandLine.print("Threat: " + DuelsStats.gtl(s[0], s[1], wlr, s[2]).substring(2), 0);
+                    Terminal.print(n + " stats:");
+                    Terminal.print("Wins: " + s[0]);
+                    Terminal.print("Losses: " + s[1]);
+                    Terminal.print("WLR: " + wlr);
+                    Terminal.print("Winstreak: " + s[2]);
+                    Terminal.print("Threat: " + DuelsStats.gtl(s[0], s[1], wlr, s[2]).substring(2));
                 }
             } else {
-                CommandLine.print("&cThere was an error.", 0);
+                Terminal.print("There was an error.");
             }
 
         });

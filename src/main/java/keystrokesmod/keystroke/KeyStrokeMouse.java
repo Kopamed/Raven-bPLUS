@@ -1,13 +1,13 @@
 package keystrokesmod.keystroke;
 
-import keystrokesmod.client.utils.mouseManager;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+import keystrokesmod.client.utils.MouseManager;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class KeyStrokeMouse {
    private static final String[] a = new String[]{"LMB", "RMB"};
@@ -15,7 +15,7 @@ public class KeyStrokeMouse {
    private final int c;
    private final int d;
    private final int e;
-   private final List<Long> f = new ArrayList<>();
+   private final List<Long> f = new ArrayList();
    private boolean g = true;
    private long h = 0L;
 
@@ -59,8 +59,8 @@ public class KeyStrokeMouse {
       }
 
       this.b.fontRendererObj.drawString(s, o + this.d + 8, p + this.e + 4, -16777216 + ((int)((double)t * j) << 16) + ((int)((double)u * j) << 8) + (int)((double)v * j));
-      String w = mouseManager.getLeftClickCounter() + " CPS";
-      String x = mouseManager.getRightClickCounter() + " CPS";
+      String w = MouseManager.getLeftClickCounter() + " CPS";
+      String x = MouseManager.getRightClickCounter() + " CPS";
       int y = this.b.fontRendererObj.getStringWidth(w);
       int z = this.b.fontRendererObj.getStringWidth(x);
       boolean a2 = this.c == 0;

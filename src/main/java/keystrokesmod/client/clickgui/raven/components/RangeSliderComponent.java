@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class RangeSliderComponent extends Component {
+public class RangeSliderComponent implements Component {
     private final DoubleSliderSetting doubleSlider;
     private final ModuleComponent module;
     private double barWidth;
@@ -49,11 +49,16 @@ public class RangeSliderComponent extends Component {
         GL11.glPopMatrix();
     }
 
-    public void setModuleStartAt(int posY) {
+    public void setComponentStartAt(int posY) {
         this.moduleStartY = posY;
     }
 
-    public void compute(int mousePosX, int mousePosY){
+    @Override
+    public int getHeight() {
+        return 0;
+    }
+
+    public void update(int mousePosX, int mousePosY){
         this.sliderStartY = this.module.category.getY() + this.moduleStartY;
         this.sliderStartX = this.module.category.getX() + boxMargin;
 
@@ -136,6 +141,11 @@ public class RangeSliderComponent extends Component {
 
     public void mouseReleased(int x, int y, int m) {
         this.mouseDown = false;
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+
     }
 
     public boolean u(int x, int y) {

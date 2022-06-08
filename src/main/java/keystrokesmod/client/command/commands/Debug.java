@@ -1,6 +1,7 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
 
@@ -12,6 +13,6 @@ public class Debug extends Command {
     @Override
     public void onCall(String[] args) {
         Raven.debugger = !Raven.debugger;
-        CommandLine.print("Debug " + (Raven.debugger ? "enabled" : "disabled") + ".", 1);
+        Terminal.print((Raven.debugger ? "Enabled" : "Disabled") + " debugging.");
     }
 }

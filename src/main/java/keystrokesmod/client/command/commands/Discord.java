@@ -1,6 +1,7 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.utils.Utils;
@@ -16,9 +17,8 @@ public class Discord extends Command {
         boolean copied = false;
         boolean showed = false;
         int argCurrent = 0;
-        if(args == null) {
-            CommandLine.print("§3Opening Discord...", 1);
-            CommandLine.print("§a" + Raven.discord, 0);
+        if(args.length == 0) {
+            Terminal.print("§3Opening " + Raven.discord);
             Utils.Client.openWebpage(Raven.discord);
             opened = true;
             return;
@@ -29,19 +29,19 @@ public class Discord extends Command {
                 if (!copied) {
                     Utils.Client.copyToClipboard(Raven.discord);
                     copied = true;
-                    CommandLine.print("§aCopied to clipboard!", 1);
+                    Terminal.print("Copied " + Raven.discord + " to clipboard!");
                 }
             }
             else if(argument.equalsIgnoreCase("open")){
                 if (!opened) {
                     Utils.Client.openWebpage(Raven.discord);
                     opened = true;
-                    CommandLine.print("§aOpened invite link!", 1);
+                    Terminal.print("Opened invite link!");
                 }
             }
             else if(argument.equalsIgnoreCase("print")){
                 if (!showed){
-                    CommandLine.print("§a" + Raven.discord, 1);
+                    Terminal.print(Raven.discord);
                     showed = true;
                 }
             } else {

@@ -133,7 +133,7 @@ public class CategoryComponent {
       Component c;
       for(Iterator var2 = this.modulesInCategory.iterator(); var2.hasNext(); o += c.getHeight()) {
          c = (Component)var2.next();
-         c.setModuleStartAt(o);
+         c.setComponentStartAt(o);
       }
 
    }

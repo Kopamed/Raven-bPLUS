@@ -10,6 +10,6 @@ public class ClientNameSpoof extends Module {
 
     public ClientNameSpoof(){
         super("ClientNameSpoofer", ModuleCategory.client);
-        this.registerSetting(desc = new DescriptionSetting(Utils.Java.uf("command") + ": f3name [name]"));
+        this.registerSetting(desc = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": f3name [name]"));
     }
 }

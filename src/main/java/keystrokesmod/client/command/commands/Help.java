@@ -1,68 +1,58 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
 
 public class Help extends Command {
     public Help() {
-        super("help", "Shows you different<br>command usages", 0, 1, new String[] {"name of module"}, new String[] {"?", "wtf", "what"});
+        super("help", "Shows you different command usages", 0, 1, new String[] {"name of module"}, new String[] {"?", "wtf", "what"});
     }
 
     @Override
     public void onCall(String[] args) {
-        if (args == null) {
+        if (args.length == 0) {
             Raven.commandManager.sort();
 
-            CommandLine.print("Available commands:", 1);
+            Terminal.print("Available commands:");
             int index = 1;
             for (Command command : Raven.commandManager.getCommandList()) {
                 if(command.getName().equalsIgnoreCase("help"))
                     continue;
 
-                CommandLine.print(index + ". " + command.getName(), 0);
+                Terminal.print(index + ") " + command.getName());
                 index++;
             }
 
-            CommandLine.print("&aRun 'help commandname' for more", 1);
-            CommandLine.print("&ainformation about the command", 0);
-        } else if (args.length == 2) {
-            Command command = Raven.commandManager.getCommandByName(args[1]);
+            Terminal.print("Run \"help commandname\" for more information about the command");
+        } else if (args.length == 1) {
+            Command command = Raven.commandManager.getCommandByName(args[0]);
             if (command == null) {
-                CommandLine.print("&cUnable to find a command with the", 1);
-                CommandLine.print("&cname or alias with '" + args[1] + "'", 0);
+                Terminal.print("Unable to find a command with the cname or alias with " + args[0]);
                 return;
             }
 
-            CommandLine.print("&a" + command.getName() + "'s info:", 1);
+            Terminal.print(command.getName() + "'s info:");
             if(command.getAliases() != null || command.getAliases().length != 0) {
-                CommandLine.print(command.getName() + "'s aliases:", 0);
+                Terminal.print(command.getName() + "'s aliases:");
                 for (String alias : command.getAliases()) {
-                    CommandLine.print("§3" + alias, 0);
+                    Terminal.print(alias);
                 }
             }
 
             if(!command.getHelp().isEmpty()) {
-                CommandLine.print(command.getName() + "'s description:", 1);
-                for (String helpText : command.getHelp().split("<br>"))
-                    CommandLine.print("§3" + helpText, 0);
+                Terminal.print(command.getName() + "'s description:");
+                Terminal.print(command.getHelp());
             }
 
             if(command.getArgs() != null) {
-                CommandLine.print(command.getName() + "'s argument description:", 1);
-                CommandLine.print("§3Min args: " + command.getMinArgs() + ", max args: " + command.getMaxArgs(), 0);
+                Terminal.print(command.getName() + "'s argument description:");
+                Terminal.print("Min args: " + command.getMinArgs() + ", max args: " + command.getMaxArgs());
                 int argIndex = 1;
                 int printLine;
                 for (String argText : command.getArgs()){
-                    printLine = 0;
-                    for(String line : argText.split("<br>")){
-                        if(printLine == 1) {
-                            CommandLine.print("§3Argument " + argIndex + ": " + line, 0);
-                        }else{
-                            CommandLine.print("§" + argIndex + ": " + line, 0);
-                        }
-                        printLine++;
-                    }
+                    Terminal.print("Argument " + argIndex + ": " + argText);
                     argIndex++;
                 }
             }

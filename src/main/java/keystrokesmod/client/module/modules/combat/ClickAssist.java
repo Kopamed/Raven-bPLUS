@@ -5,7 +5,7 @@ import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.utils.mouseManager;
+import keystrokesmod.client.utils.MouseManager;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
@@ -96,7 +96,7 @@ public class ClickAssist extends Module {
                      }
                   }
 
-                  if (above5.isToggled() && mouseManager.getRightClickCounter() <= 5) {
+                  if (above5.isToggled() && MouseManager.getRightClickCounter() <= 5) {
                      this.fix(1);
                      return;
                   }

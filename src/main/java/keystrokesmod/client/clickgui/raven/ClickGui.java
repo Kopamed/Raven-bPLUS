@@ -24,12 +24,11 @@ public class ClickGui extends GuiScreen {
    private Timer aL;
    private Timer aE;
    private Timer aR;
-   private ScaledResolution sr;
-   private GuiButtonExt s;
-   private GuiTextField c;
    private final  ArrayList<CategoryComponent> categoryList;
+   public final Terminal terminal;
 
    public ClickGui() {
+      this.terminal = new Terminal();
       this.categoryList = new ArrayList<>();
       int topOffset = 5;
       Module.ModuleCategory[] values;
@@ -42,6 +41,8 @@ public class ClickGui extends GuiScreen {
          categoryList.add(currentModuleCategory);
          topOffset += 20;
       }
+      terminal.setLocation(5, topOffset);
+      terminal.setSize((int) (92 * 1.5), (int) ((92 * 1.5) * 0.75));
    }
 
    public void initMain() {
@@ -54,10 +55,6 @@ public class ClickGui extends GuiScreen {
 
    public void initGui() {
       super.initGui();
-      this.sr = new ScaledResolution(this.mc);
-      (this.c = new GuiTextField(1, this.mc.fontRendererObj, 22, this.height - 100, 150, 20)).setMaxStringLength(256);
-      this.buttonList.add(this.s = new GuiButtonExt(2, 22, this.height - 70, 150, 20, "Send"));
-      this.s.visible = keystrokesmod.client.module.modules.client.CommandLine.a;
    }
 
    public void drawScreen(int x, int y, float p) {
@@ -87,16 +84,16 @@ public class ClickGui extends GuiScreen {
             margin += 2;
          }
       }else {
-         mc.fontRendererObj.drawString("Raven B+ v" + clientVersion, 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
+         mc.fontRendererObj.drawString("Raven B+ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
       }
 
       this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
       this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
-      int r;
+      int animationProggress;
       if (this.aL != null) {
-         r = this.aL.getValueInt(0, 20, 2);
-         this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + r, quarterScreenHeight - 29, -1);
-         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - r, quarterScreenHeight + 42, -1);
+         animationProggress = this.aL.getValueInt(0, 20, 2);
+         this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + animationProggress, quarterScreenHeight - 29, -1);
+         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress, quarterScreenHeight + 42, -1);
       }
 
       for (CategoryComponent category : categoryList) {
@@ -104,7 +101,7 @@ public class ClickGui extends GuiScreen {
          category.up(x, y);
 
          for (Component module : category.getModules()) {
-            module.compute(x, y);
+            module.update(x, y);
          }
       }
 
@@ -112,50 +109,21 @@ public class ClickGui extends GuiScreen {
       // PLAYER
       GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2), this.height - 19 - this.fontRendererObj.FONT_HEIGHT, 40, (float)(this.width - 25 - x), (float)(this.height - 50 - y), this.mc.thePlayer);
 
-      if (keystrokesmod.client.module.modules.client.CommandLine.a) {
-         if (!this.s.visible) {
-            this.s.visible = true;
-         }
-
-         r = keystrokesmod.client.module.modules.client.CommandLine.animate.isToggled() ? keystrokesmod.client.module.modules.client.CommandLine.an.getValueInt(0, 200, 2) : 200;
-         if (keystrokesmod.client.module.modules.client.CommandLine.b) {
-            r = 200 - r;
-            if (r == 0) {
-               keystrokesmod.client.module.modules.client.CommandLine.b = false;
-               keystrokesmod.client.module.modules.client.CommandLine.a = false;
-               this.s.visible = false;
-            }
-         }
-
-         drawRect(0, 0, r, this.height, -1089466352);
-         this.drawHorizontalLine(0, r - 1, 0, -1);
-         this.drawHorizontalLine(0, r - 1, this.height - 115, -1);
-         drawRect(r - 1, 0, r, this.height, -1);
-         CommandLine.rc(this.fontRendererObj, this.height, r, this.sr.getScaleFactor());
-         int x2 = r - 178;
-         this.c.xPosition = x2;
-         this.s.xPosition = x2;
-         this.c.drawTextBox();
-         super.drawScreen(x, y, p);
-      } else if (keystrokesmod.client.module.modules.client.CommandLine.b) {
-         keystrokesmod.client.module.modules.client.CommandLine.b = false;
-      }
-
+      terminal.update(x, y);
+      terminal.draw();
    }
 
    public void mouseClicked(int x, int y, int mouseButton) throws IOException {
       Iterator<CategoryComponent> btnCat = categoryList.iterator();
+
+      terminal.mouseDown(x, y, mouseButton);
+      if(terminal.overPosition(x, y)) return;
 
       while(true) {
          CategoryComponent category;
          do {
             do {
                if (!btnCat.hasNext()) {
-                  if (keystrokesmod.client.module.modules.client.CommandLine.a) {
-                     this.c.mouseClicked(x, y, mouseButton);
-                     super.mouseClicked(x, y, mouseButton);
-                  }
-
                   return;
                }
 
@@ -183,6 +151,9 @@ public class ClickGui extends GuiScreen {
    }
 
    public void mouseReleased(int x, int y, int s) {
+      terminal.mouseReleased(x, y, s);
+      if(terminal.overPosition(x, y)) return;
+
       if (s == 0) {
          Iterator<CategoryComponent> btnCat = categoryList.iterator();
 
@@ -216,6 +187,7 @@ public class ClickGui extends GuiScreen {
    }
 
    public void keyTyped(char t, int k) {
+      terminal.keyTyped(t, k);
       if (k == 1) {
          this.mc.displayGuiScreen(null);
       } else {
@@ -226,17 +198,6 @@ public class ClickGui extends GuiScreen {
             do {
                do {
                   if (!btnCat.hasNext()) {
-                     if (keystrokesmod.client.module.modules.client.CommandLine.a) {
-                        String cm = this.c.getText();
-                        if (k == 28 && !cm.isEmpty()) {
-                           CommandLine.rCMD(this.c.getText());
-                           this.c.setText("");
-                           return;
-                        }
-
-                        this.c.textboxKeyTyped(t, k);
-                     }
-
                      return;
                   }
 
@@ -245,16 +206,9 @@ public class ClickGui extends GuiScreen {
             } while(cat.getModules().isEmpty());
 
             for (Component c : cat.getModules()) {
-               c.ky(t, k);
+               c.keyTyped(t, k);
             }
          }
-      }
-   }
-
-   public void actionPerformed(GuiButton b) {
-      if (b == this.s) {
-         CommandLine.rCMD(this.c.getText());
-         this.c.setText("");
       }
    }
 
@@ -265,6 +219,7 @@ public class ClickGui extends GuiScreen {
          this.sf = null;
       }
       Raven.configManager.save();
+      Raven.clientConfig.saveConfig();
    }
 
    public boolean doesGuiPauseGame() {

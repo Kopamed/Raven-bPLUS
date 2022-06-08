@@ -1,6 +1,6 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.module.modules.other.NameHider;
 import keystrokesmod.client.utils.Utils;
@@ -12,13 +12,12 @@ public class Cname extends Command {
 
     @Override
     public void onCall(String[] args) {
-        if (args == null) {
+        if (args.length == 0) {
             this.incorrectArgs();
             return;
         }
 
-        NameHider.n = args[1];
-        CommandLine.print("&a" + Utils.Java.uf("name") + "Nick has been set to:".substring(4), 1);
-        CommandLine.print("\"" + NameHider.n + "\"", 0);
+        NameHider.n = args[0];
+        Terminal.print("Nick has been set to: " +  NameHider.n);
     }
 }

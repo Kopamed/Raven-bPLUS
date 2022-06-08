@@ -60,7 +60,7 @@ public class BlockHit extends Module {
             return;
         }
         if(waitingForPostDelay){
-            if(postDelayTimer.hasTimeElapsed()){
+            if(postDelayTimer.hasFinished()){
                 executingAction = true;
                 startCombo();
                 waitingForPostDelay = false;
@@ -71,7 +71,7 @@ public class BlockHit extends Module {
         }
 
         if(executingAction) {
-            if(actionTimer.hasTimeElapsed()){
+            if(actionTimer.hasFinished()){
                 executingAction = false;
                 finishCombo();
                 return;

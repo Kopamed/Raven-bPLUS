@@ -9,7 +9,6 @@ import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
-import keystrokesmod.client.module.modules.combat.RightClicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -606,7 +605,7 @@ public class Utils {
          return v.toString();
       }
 
-      public static String uf(String s) {
+      public static String capitalizeWord(String s) {
          return s.substring(0, 1).toUpperCase() + s.substring(1);
       }
 
@@ -647,6 +646,10 @@ public class Utils {
 
       public static String randomChoice(String[] strings) {
          return  strings[rand.nextInt(strings.length)];
+      }
+
+      public static int randomInt(double inputMin, double v) {
+         return (int)(Math.random() * (v - inputMin) + inputMin);
       }
    }
 

@@ -1,6 +1,6 @@
 package keystrokesmod.client.command;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.commands.*;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
@@ -58,9 +58,7 @@ public class CommandManager {
     }
 
     public void noSuchCommand(String name) {
-        CommandLine.print("&cCommand '" + name + "' not found!", 1);
-        CommandLine.print("&cReport this on the discord", 0);
-        CommandLine.print("&cif this is an error!", 0);
+        Terminal.print("Command '" + name + "' not found! Report this on the discord if this is an error!");
     }
 
     public void executeCommand(String commandName, String[] args) {

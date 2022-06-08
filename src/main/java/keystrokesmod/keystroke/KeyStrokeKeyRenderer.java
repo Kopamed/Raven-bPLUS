@@ -1,11 +1,11 @@
+//Deobfuscated with https://github.com/PetoPetko/Minecraft-Deobfuscator3000 using mappings "1.8.9"!
 
 package keystrokesmod.keystroke;
 
+import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
-
-import java.awt.*;
 
 public class KeyStrokeKeyRenderer {
    private final Minecraft a = Minecraft.getMinecraft();

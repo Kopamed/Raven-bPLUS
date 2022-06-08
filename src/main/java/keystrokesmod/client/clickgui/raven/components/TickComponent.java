@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class TickComponent extends Component {
+public class TickComponent implements Component {
    private final int c = (new Color(20, 255, 0)).getRGB();
    private final int boxC = (new Color(169,169,169)).getRGB();
    private final Module mod;
@@ -88,11 +88,16 @@ public class TickComponent extends Component {
       GL11.glPopMatrix();
    }
 
-   public void setModuleStartAt(int n) {
+   public void setComponentStartAt(int n) {
       this.o = n;
    }
 
-   public void compute(int mousePosX, int mousePosY) {
+   @Override
+   public int getHeight() {
+      return 0;
+   }
+
+   public void update(int mousePosX, int mousePosY) {
       this.y = this.module.category.getY() + this.o;
       this.x = this.module.category.getX();
    }
@@ -102,6 +107,16 @@ public class TickComponent extends Component {
          this.cl1ckbUtt0n.toggle();
          this.mod.guiButtonToggled(this.cl1ckbUtt0n);
       }
+
+   }
+
+   @Override
+   public void mouseReleased(int x, int y, int m) {
+
+   }
+
+   @Override
+   public void keyTyped(char t, int k) {
 
    }
 

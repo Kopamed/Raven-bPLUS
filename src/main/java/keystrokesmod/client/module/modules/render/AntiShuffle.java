@@ -10,7 +10,7 @@ public class AntiShuffle extends Module {
 
    public AntiShuffle() {
       super("AntiShuffle", ModuleCategory.render);
-      this.registerSetting(a = new DescriptionSetting(Utils.Java.uf("remove") + " &k"));
+      this.registerSetting(a = new DescriptionSetting(Utils.Java.capitalizeWord("remove") + " &k"));
    }
 
    public static String getUnformattedTextForChat(String s) {

@@ -1,6 +1,7 @@
 package keystrokesmod.client.command.commands;
 
-import keystrokesmod.client.clickgui.raven.CommandLine;
+
+import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.module.modules.client.ClientNameSpoof;
 
@@ -10,17 +11,17 @@ public class F3Name extends Command {
     }
 
     public void onCall(String[] args){
-        if(args == null){
+        if(args.length == 0){
             this.incorrectArgs();
             return;
         }
-        StringBuilder wut = new StringBuilder(args[1]);
-        if(args.length > 2){
+        StringBuilder wut = new StringBuilder(args[0]);
+        if(args.length > 1){
             for(int i = 2; i < args.length; i++){
                 wut.append(" ").append(args[i]);
             }
         }
         ClientNameSpoof.newName = wut.toString();
-        CommandLine.print("§aSet client name to " + wut, 1);
+        Terminal.print("Set client name to " + wut);
     }
 }

@@ -13,7 +13,7 @@ public class CoolDown {
         //Utils.Player.sendMessageToSelf("Time started " + lasts/1000);
     }
 
-    public boolean hasTimeElapsed(){
+    public boolean hasFinished(){
         if(System.currentTimeMillis() >= start + lasts) {
             //Utils.Player.sendMessageToSelf("Time finished");
             return true;
