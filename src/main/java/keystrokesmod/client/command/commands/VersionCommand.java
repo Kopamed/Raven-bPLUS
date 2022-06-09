@@ -16,8 +16,8 @@ public class VersionCommand extends Command {
         Version clientVersion = Raven.versionManager.getClientVersion();
         Version latestVersion = Raven.versionManager.getLatestVersion();
 
-        print("&eYour build: " + clientVersion);
-        print("&aLatest version: " + latestVersion);
+        print("Your build: " + clientVersion);
+        print("Latest version: " + latestVersion);
 
     }
 }

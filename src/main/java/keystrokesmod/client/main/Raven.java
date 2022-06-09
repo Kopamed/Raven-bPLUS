@@ -26,6 +26,27 @@ import java.util.concurrent.ScheduledExecutorService;
 
 
 //Todo fix wtap
+/* todo dump
+ghost blocks add ability to place air and or other block by ID possibly
+
+add blink
+
+fix autotool crashing game
+
+make it so that when you open the mod menu, your game's gui is set to normal/small to make organization and viewing modules easier
+
+add a way to input a hex code for the values of header backgrounds, text colors, etc
+
+menu blur in the background of the gui
+
+make autoplace have checks for bridging only like bridge assist does
+
+remove explicit b9 name tags or the default name tags, there isn't much point in both. you could also just make them into one module
+
+Fix aim assist
+
+tooltips, fix murder mystery detective, fix autotool
+ */
 
 public class Raven {
 

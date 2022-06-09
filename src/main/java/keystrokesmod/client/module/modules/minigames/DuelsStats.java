@@ -2,10 +2,11 @@ package keystrokesmod.client.module.modules.minigames;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
-import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.profile.PlayerProfile;
+import keystrokesmod.client.utils.profile.UUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -15,33 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DuelsStats extends Module {
-   public static SliderSetting value;
-   public static DescriptionSetting bruh;
-   public static SliderSetting threatLeaveMode;
-   public static DescriptionSetting moduleDesc;
-   public static TickSetting a;
-   public static TickSetting queueDodge;
-   public static TickSetting threatLevel;
-   public static String nk = "";
+   public static ComboSetting selectedGameMode;
+   public static TickSetting sendIgnOnJoin;
+   public static String playerNick = "";
    private String ign = "";
-   private String en = "";
-   private static final String[] thr_lvl;
-   private final List<String> q = new ArrayList<>();
+   private String opponentName = "";
+   private final List<String> queue = new ArrayList<>();
 
    public DuelsStats() {
       super("Duels Stats", ModuleCategory.minigames);
-      this.registerSetting(value = new SliderSetting("Value", 1.0D, 1.0D, 7.0D, 1.0D));
-      this.registerSetting(moduleDesc = new DescriptionSetting("Mode: OVERALL"));
-      this.registerSetting(a = new TickSetting("Send ign on join", false));
-      this.registerSetting(threatLevel = new TickSetting("Threat Level", true));
-      this.registerSetting(queueDodge = new TickSetting("Queue dodge", false));
-      this.registerSetting(threatLeaveMode = new SliderSetting("Value:", 4, 1, 4, 1));
-      this.registerSetting(bruh = new DescriptionSetting("Dodge threat level: HIGH"));
+
+      this.registerSetting(selectedGameMode = new ComboSetting("Stats for mode:", Utils.Profiles.DuelsStatsMode.OVERALL));
+      this.registerSetting(sendIgnOnJoin = new TickSetting("Send ign on join", false));
    }
 
    public void onEnable() {
       if (mc.thePlayer != null) {
-         this.ign = mc.thePlayer.getName();
+         this.ign = mc.thePlayer.getUniqueID().toString();
       } else {
          this.disable();
       }
@@ -49,24 +40,19 @@ public class DuelsStats extends Module {
    }
 
    public void onDisable() {
-      this.en = "";
-      this.q.clear();
-   }
-
-   public void guiUpdate() {
-      moduleDesc.setDesc(Utils.md + Utils.Profiles.DM.values()[(int)(value.getInput() - 1.0D)].name());
-      bruh.setDesc("Dodge levels: " + thr_lvl[(int)threatLeaveMode.getInput() - 1].substring(2, thr_lvl[(int)threatLeaveMode.getInput() - 1].length() -1));
+      this.opponentName = "";
+      this.queue.clear();
    }
 
    public void update() {
-      if (this.id() && this.en.isEmpty()) {
+      if (this.isDuel() && this.opponentName.isEmpty()) {
          List<EntityPlayer> pl = mc.theWorld.playerEntities;
          pl.remove(mc.thePlayer);
 
-         for (EntityPlayer p : pl) {
-            String n = p.getName();
-            if (!n.equals(this.ign) && !n.equals(nk) && !this.q.contains(n) && p.getDisplayName().getUnformattedText().contains("§k")) {
-               this.ef(n);
+         for (EntityPlayer player : pl) {
+            String playerUUID = player.getUniqueID().toString();
+            if (!playerUUID.equals(this.ign) && !playerUUID.equals(playerNick) && !this.queue.contains(playerUUID) && player.getDisplayName().getUnformattedText().contains("§k")) {
+               this.getAndDisplayStatsForPlayer(playerUUID);
                break;
             }
          }
@@ -74,26 +60,26 @@ public class DuelsStats extends Module {
 
    }
 
-   @SubscribeEvent
-   public void onMessageRecieved(ClientChatReceivedEvent c) {
-      if (Utils.Player.isPlayerInGame() && this.id()) {
+   //@SubscribeEvent
+   public void onMessageReceived(ClientChatReceivedEvent c) {
+      if (Utils.Player.isPlayerInGame() && this.isDuel()) {
          String s = Utils.Java.str(c.message.getUnformattedText());
          if (s.contains(" ")) {
             String[] sp = s.split(" ");
             String n;
             if (sp.length == 4 && sp[1].equals("has") && sp[2].equals("joined") && sp[3].equals("(2/2)!")) {
                n = sp[0];
-               if (!n.equals(this.ign) && !n.equals(nk) && this.en.isEmpty()) {
-                  this.q.remove(n);
-                  this.ef(n);
+               if (!n.equals(this.ign) && !n.equals(playerNick) && this.opponentName.isEmpty()) {
+                  this.queue.remove(n);
+                  this.getAndDisplayStatsForPlayer("onmessage");
                }
             } else if (sp.length == 3 && sp[1].equals("has") && sp[2].equals("quit!")) {
                n = sp[0];
-               if (this.en.equals(n)) {
-                  this.en = "";
+               if (this.opponentName.equals(n)) {
+                  this.opponentName = "";
                }
 
-               this.q.add(n);
+               this.queue.add(n);
             }
          }
 
@@ -103,65 +89,52 @@ public class DuelsStats extends Module {
    @SubscribeEvent
    public void onEntityJoin(EntityJoinWorldEvent j) {
       if (j.entity == mc.thePlayer) {
-         this.en = "";
-         this.q.clear();
+         this.opponentName = "";
+         this.queue.clear();
       }
 
    }
 
-   private void ef(String n) {
-      this.en = n;
-      if (a.isToggled()) {
-         Utils.Player.sendMessageToSelf("&eOpponent found: " + "&3" + n);
-      }
+   private void getAndDisplayStatsForPlayer(String uuid) {
+      this.opponentName = uuid;
 
       if (Utils.URLS.hypixelApiKey.isEmpty()) {
          Utils.Player.sendMessageToSelf("&cAPI Key is empty!");
       } else {
-         Utils.Profiles.DM dm = Utils.Profiles.DM.values()[(int)(value.getInput() - 1.0D)];
+         Utils.Profiles.DuelsStatsMode dm = (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode();
          Raven.getExecutor().execute(() -> {
-            int[] s = Utils.Profiles.getHypixelStats(n, dm);
-            if (s != null) {
-               if (s[0] == -1) {
-                  Utils.Player.sendMessageToSelf("&3" + n + " " + "&eis nicked!");
-                  return;
-               }
+            PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
+            playerProfile.populateStats();
 
-               double wlr = s[1] != 0 ? Utils.Java.round((double)s[0] / (double)s[1], 2) : (double)s[0];
-               Utils.Player.sendMessageToSelf("&7&m-------------------------");
-               if (dm != Utils.Profiles.DM.OVERALL) {
-                  Utils.Player.sendMessageToSelf("&e" + Utils.md + "&3" + dm.name());
-               }
-
-               Utils.Player.sendMessageToSelf("&eOpponent: &3" + n);
-               Utils.Player.sendMessageToSelf("&eWins: &3" + s[0]);
-               Utils.Player.sendMessageToSelf("&eLosses: &3" + s[1]);
-               Utils.Player.sendMessageToSelf("&eWLR: &3" + wlr);
-               Utils.Player.sendMessageToSelf("&eWS: &3" + s[2]);
-               if (threatLevel.isToggled()) {
-                  Utils.Player.sendMessageToSelf("&eThreat: &3" + gtl(s[0], s[1], wlr, s[2]));
-               }
-               if(queueDodge.isToggled()) {
-                  if(Utils.Java.indexOf(thr_lvl[(int)threatLeaveMode.getInput() - 1], thr_lvl) <= (int)threatLeaveMode.getInput() - 1) {
-                     Utils.Player.sendMessageToSelf("&cLeaving because the player was too dangerous!");
-                     mc.thePlayer.sendChatMessage("/l");
-                  }else{
-                     Utils.Player.sendMessageToSelf("&2Player meets queue expectations!");
-                  }
-               }
-
-               Utils.Player.sendMessageToSelf("&7&m-------------------------");
-
-
-            } else {
-               Utils.Player.sendMessageToSelf("&cThere was an error.");
+            if (playerProfile.nicked) {
+               //Utils.Player.sendMessageToSelf("&3" + playerProfile.uuid + " " + "&eis nicked!");
+               Utils.Player.sendMessageToSelf("&3Hypixel patched this. This will be fixed in future versions");
+               return;
             }
+
+            if (sendIgnOnJoin.isToggled()) {
+               Utils.Player.sendMessageToSelf("&eOpponent found: " + "&3" + playerProfile.inGameName);
+            }
+
+            double wlr = playerProfile.losses != 0 ? Utils.Java.round((double)playerProfile.wins / (double)playerProfile.losses, 2) : (double)playerProfile.wins;
+            Utils.Player.sendMessageToSelf("&7&m-------------------------");
+            if (dm != Utils.Profiles.DuelsStatsMode.OVERALL) {
+               Utils.Player.sendMessageToSelf("&e" + Utils.md + "&3" + dm.name());
+            }
+
+            Utils.Player.sendMessageToSelf("&eOpponent: &3" + uuid);
+            Utils.Player.sendMessageToSelf("&eWins: &3" + playerProfile.wins);
+            Utils.Player.sendMessageToSelf("&eLosses: &3" + playerProfile.losses);
+            Utils.Player.sendMessageToSelf("&eWLR: &3" + wlr);
+            Utils.Player.sendMessageToSelf("&eWS: &3" + playerProfile.winStreak);
+
+            Utils.Player.sendMessageToSelf("&7&m-------------------------");
 
          });
       }
    }
 
-   private boolean id() {
+   private boolean isDuel() {
       if (Utils.Client.isHyp()) {
          int l = 0;
 
@@ -177,76 +150,5 @@ public class DuelsStats extends Module {
       } else {
          return false;
       }
-   }
-
-   public static String gtl(int wins, int loses, double wlr, int ws) {
-      int t = 0;
-      int m = wins + loses;
-      if (m <= 13) {
-         t += 2;
-      }
-
-      if (ws >= 30) {
-         t += 9;
-      } else if (ws >= 15) {
-         t += 7;
-      } else if (ws >= 8) {
-         t += 5;
-      } else if (ws >= 4) {
-         t += 3;
-      } else if (ws >= 1) {
-         ++t;
-      }
-
-      if (wlr >= 20.0D) {
-         t += 8;
-      } else if (wlr >= 10.0D) {
-         t += 5;
-      } else if (wlr >= 5.0D) {
-         t += 4;
-      } else if (wlr >= 3.0D) {
-         t += 2;
-      } else if (wlr >= 0.8D) {
-         ++t;
-      }
-
-      if (wins >= 20000) {
-         t += 4;
-      } else if (wins >= 10000) {
-         t += 3;
-      } else if (wins >= 5000) {
-         t += 2;
-      } else if (wins >= 1000) {
-         ++t;
-      }
-
-      if (loses == 0) {
-         if (wins == 0) {
-            t += 3;
-         } else {
-            t += 4;
-         }
-      } else if (loses <= 10 && wlr >= 4.0D) {
-         t += 2;
-      }
-
-      String thr;
-      if (t == 0) {
-         thr = thr_lvl[4];
-      } else if (t <= 3) {
-         thr = thr_lvl[3];
-      } else if (t <= 6) {
-         thr = thr_lvl[2];
-      } else if (t <= 10) {
-         thr = thr_lvl[1];
-      } else {
-         thr = thr_lvl[0];
-      }
-
-      return thr;
-   }
-
-   static {
-      thr_lvl = new String[]{"&4VERY HIGH", "&cHIGH", "&6MODERATE", "&aLOW", "&2VERY LOW"};
    }
 }

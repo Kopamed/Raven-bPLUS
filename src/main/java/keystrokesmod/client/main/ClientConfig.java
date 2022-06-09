@@ -83,13 +83,13 @@ public class ClientConfig {
                KeyStroke.y = Integer.parseInt(line);
                break;
             case 3:
-               KeyStroke.currentColorNumber = Integer.parseInt(line);
+               KeyStroke.enabled = Boolean.parseBoolean(line);
                break;
             case 4:
-               KeyStroke.showMouseButtons = Boolean.parseBoolean(line);
+               KeyStroke.currentColorNumber = Integer.parseInt(line);
                break;
             case 5:
-               KeyStroke.enabled = Boolean.parseBoolean(line);
+               KeyStroke.showMouseButtons = Boolean.parseBoolean(line);
                break;
             case 6:
                KeyStroke.outline = Boolean.parseBoolean(line);

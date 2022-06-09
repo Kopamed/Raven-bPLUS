@@ -17,7 +17,7 @@ public class Nick extends Command {
             return;
         }
 
-        DuelsStats.nk = args[0];
-        Terminal.print("&aNick has been set to: " + DuelsStats.nk);
+        DuelsStats.playerNick = args[0];
+        Terminal.print("&aNick has been set to: " + DuelsStats.playerNick);
     }
 }

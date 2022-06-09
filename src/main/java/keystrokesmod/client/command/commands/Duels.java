@@ -26,7 +26,7 @@ public class Duels extends Command {
         n = args[0];
         Terminal.print("Retrieving data...");
         Raven.getExecutor().execute(() -> {
-            int[] s = Utils.Profiles.getHypixelStats(n, Utils.Profiles.DM.OVERALL);
+            int[] s = Utils.Profiles.getHypixelStats(n, Utils.Profiles.DuelsStatsMode.OVERALL);
             if (s != null) {
                 if (s[0] == -1) {
                     Terminal.print((n.length() > 16 ? n.substring(0, 16) + "..." : n) + " does not exist!");
@@ -37,7 +37,6 @@ public class Duels extends Command {
                     Terminal.print("Losses: " + s[1]);
                     Terminal.print("WLR: " + wlr);
                     Terminal.print("Winstreak: " + s[2]);
-                    Terminal.print("Threat: " + DuelsStats.gtl(s[0], s[1], wlr, s[2]).substring(2));
                 }
             } else {
                 Terminal.print("There was an error.");

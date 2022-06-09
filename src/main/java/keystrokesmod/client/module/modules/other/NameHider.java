@@ -16,7 +16,7 @@ public class NameHider extends Module {
 
    public static String getUnformattedTextForChat(String s) {
       if (mc.thePlayer != null) {
-         s = DuelsStats.nk.isEmpty() ? s.replace(mc.thePlayer.getName(), n) : s.replace(DuelsStats.nk, n);
+         s = DuelsStats.playerNick.isEmpty() ? s.replace(mc.thePlayer.getName(), n) : s.replace(DuelsStats.playerNick, n);
       }
 
       return s;

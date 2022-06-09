@@ -23,13 +23,13 @@ public class Uwu extends Command {
 
             for(int i = 0; i < 4; ++i) {
                 if (i == 0) {
-                    print("&e" + "nya");
+                    print("nya");
                 } else if (i == 1) {
-                    print("&a" + "ichi ni san");
+                    print("ichi ni san");
                 } else if (i == 2) {
-                    print("&e" + "nya");
+                    print("nya");
                 } else {
-                    print("&a" + "arigatou!");
+                    print("arigatou!");
                 }
 
                 try {

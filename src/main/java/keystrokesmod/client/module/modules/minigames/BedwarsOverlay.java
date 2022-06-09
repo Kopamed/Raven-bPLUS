@@ -153,8 +153,6 @@ public class BedwarsOverlay extends Module {
             fr.drawString(wlr + "", statStart.get(StatType.WLR), (int)textY, getWLRColour(wlr));
             fr.drawString(stats[6] + "", statStart.get(StatType.FINALS), (int)textY, getFinalColour(stats[6]));
             fr.drawString(stats[7] + "", statStart.get(StatType.WINS), (int)textY, getFinalColour(stats[7]));
-            String bad = DuelsStats.gtl(stats[7], stats[8], (double)(stats[5])/100, stats[2]).substring(2);
-            fr.drawString(bad, statStart.get(StatType.OVERALLTHREAT), (int)textY, getTreatColour(bad));
 
             textY += marginTextY.getInput() + fr.FONT_HEIGHT;
             linesDrawn++;

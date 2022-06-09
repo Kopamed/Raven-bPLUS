@@ -24,10 +24,6 @@ public class BindComponent implements Component {
         this.o = o;
     }
 
-    public void setModuleStartAt(int n) {
-        this.o = n;
-    }
-
     public void draw() {
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
@@ -81,7 +77,7 @@ public class BindComponent implements Component {
 
     @Override
     public void setComponentStartAt(int n) {
-
+        this.o = n;
     }
 
     public boolean i(int x, int y) {
