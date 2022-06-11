@@ -43,6 +43,9 @@ public class Module {
    protected  <E extends Module> E withEnabled(boolean i){
       this.enabled = i;
       this.defaultEnabled = i;
+      try{
+         setToggled(i);
+      } catch (Exception e){}
       return (E) this;
    }
 

@@ -7,6 +7,7 @@ import static keystrokesmod.client.utils.Utils.Profiles.getValueAsInt;
 import static keystrokesmod.client.utils.Utils.Profiles.parseJson;
 
 public class PlayerProfile {
+    public boolean isPlayer = true;
     public boolean nicked = false;
     public int wins = 0;
     public int losses = 0;
@@ -28,6 +29,10 @@ public class PlayerProfile {
     public void populateStats(){
         if(uuid == null){
             this.uuid = Utils.Profiles.getUUIDFromName(inGameName);
+            if(uuid.isEmpty()){
+                this.isPlayer = false;
+                return;
+            }
         }
 
         String textFromURL = Utils.URLS.getTextFromURL("https://api.hypixel.net/player?key=" + Utils.URLS.hypixelApiKey + "&uuid=" + uuid);

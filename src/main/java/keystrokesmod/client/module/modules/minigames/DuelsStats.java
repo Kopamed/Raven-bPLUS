@@ -1,17 +1,26 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.profile.PlayerProfile;
-import keystrokesmod.client.utils.profile.UUID;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +28,6 @@ public class DuelsStats extends Module {
    public static ComboSetting selectedGameMode;
    public static TickSetting sendIgnOnJoin;
    public static String playerNick = "";
-   private String ign = "";
-   private String opponentName = "";
    private final List<String> queue = new ArrayList<>();
 
    public DuelsStats() {
@@ -32,7 +39,6 @@ public class DuelsStats extends Module {
 
    public void onEnable() {
       if (mc.thePlayer != null) {
-         this.ign = mc.thePlayer.getUniqueID().toString();
       } else {
          this.disable();
       }
@@ -40,75 +46,45 @@ public class DuelsStats extends Module {
    }
 
    public void onDisable() {
-      this.opponentName = "";
       this.queue.clear();
    }
 
    public void update() {
-      if (this.isDuel() && this.opponentName.isEmpty()) {
-         List<EntityPlayer> pl = mc.theWorld.playerEntities;
-         pl.remove(mc.thePlayer);
+      if (!this.isDuel()) return;
 
-         for (EntityPlayer player : pl) {
-            String playerUUID = player.getUniqueID().toString();
-            if (!playerUUID.equals(this.ign) && !playerUUID.equals(playerNick) && !this.queue.contains(playerUUID) && player.getDisplayName().getUnformattedText().contains("§k")) {
-               this.getAndDisplayStatsForPlayer(playerUUID);
-               break;
+      // Thanks to https://github.com/Scherso for the code from https://github.com/Scherso/Seraph
+
+      for (ScorePlayerTeam team : Minecraft.getMinecraft().theWorld.getScoreboard().getTeams()) {
+         for (String playerName : team.getMembershipCollection()) {
+            if (!queue.contains(playerName) && team.getColorPrefix().equals("§7§k") && !playerName.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getDisplayNameString())) {
+               this.queue.add(playerName);
+               Raven.getExecutor().execute(() -> {
+                  if(isValidPlayer(playerName)){
+                     if(sendIgnOnJoin.isToggled())
+                        Utils.Player.sendMessageToSelf("&eOpponent found: " + "&3" + playerName);
+                     getAndDisplayStatsForPlayer(playerName);
+                  }
+               });
+
             }
          }
       }
-
    }
 
-   //@SubscribeEvent
-   public void onMessageReceived(ClientChatReceivedEvent c) {
-      if (Utils.Player.isPlayerInGame() && this.isDuel()) {
-         String s = Utils.Java.str(c.message.getUnformattedText());
-         if (s.contains(" ")) {
-            String[] sp = s.split(" ");
-            String n;
-            if (sp.length == 4 && sp[1].equals("has") && sp[2].equals("joined") && sp[3].equals("(2/2)!")) {
-               n = sp[0];
-               if (!n.equals(this.ign) && !n.equals(playerNick) && this.opponentName.isEmpty()) {
-                  this.queue.remove(n);
-                  this.getAndDisplayStatsForPlayer("onmessage");
-               }
-            } else if (sp.length == 3 && sp[1].equals("has") && sp[2].equals("quit!")) {
-               n = sp[0];
-               if (this.opponentName.equals(n)) {
-                  this.opponentName = "";
-               }
-
-               this.queue.add(n);
-            }
-         }
-
-      }
-   }
-
-   @SubscribeEvent
-   public void onEntityJoin(EntityJoinWorldEvent j) {
-      if (j.entity == mc.thePlayer) {
-         this.opponentName = "";
-         this.queue.clear();
-      }
-
-   }
-
-   private void getAndDisplayStatsForPlayer(String uuid) {
-      this.opponentName = uuid;
+   private void getAndDisplayStatsForPlayer(String playerName) {
 
       if (Utils.URLS.hypixelApiKey.isEmpty()) {
          Utils.Player.sendMessageToSelf("&cAPI Key is empty!");
       } else {
          Utils.Profiles.DuelsStatsMode dm = (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode();
          Raven.getExecutor().execute(() -> {
-            PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
+            PlayerProfile playerProfile = new PlayerProfile(playerName, (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
             playerProfile.populateStats();
 
+            if(!playerProfile.isPlayer)return;
+
             if (playerProfile.nicked) {
-               //Utils.Player.sendMessageToSelf("&3" + playerProfile.uuid + " " + "&eis nicked!");
-               Utils.Player.sendMessageToSelf("&3Hypixel patched this. This will be fixed in future versions");
+               Utils.Player.sendMessageToSelf("&3" + playerProfile.uuid + " " + "&eis nicked!");
                return;
             }
 
@@ -122,7 +98,7 @@ public class DuelsStats extends Module {
                Utils.Player.sendMessageToSelf("&e" + Utils.md + "&3" + dm.name());
             }
 
-            Utils.Player.sendMessageToSelf("&eOpponent: &3" + uuid);
+            Utils.Player.sendMessageToSelf("&eOpponent: &3" + playerName);
             Utils.Player.sendMessageToSelf("&eWins: &3" + playerProfile.wins);
             Utils.Player.sendMessageToSelf("&eLosses: &3" + playerProfile.losses);
             Utils.Player.sendMessageToSelf("&eWLR: &3" + wlr);
@@ -150,5 +126,23 @@ public class DuelsStats extends Module {
       } else {
          return false;
       }
+   }
+
+   private boolean isValidPlayer(String username) {
+      boolean isValidPlayer = false;
+      try (CloseableHttpClient client = HttpClients.createDefault()) {
+         HttpGet request = new HttpGet(String.format("https://api.mojang.com/users/profiles/minecraft/%s", username));
+         try (InputStream is = client.execute(request).getEntity().getContent()) {
+            JsonParser parser = new JsonParser();
+            JsonObject object = parser.parse(new InputStreamReader(is, StandardCharsets.UTF_8)).getAsJsonObject();
+            isValidPlayer = object.has("name");
+         } catch (NullPointerException ex) {
+            System.out.println("Null or invalid player provided by the server.");
+         }
+      } catch (IOException ex) {
+         ex.printStackTrace();
+      }
+
+      return isValidPlayer;
    }
 }

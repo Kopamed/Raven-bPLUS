@@ -54,7 +54,14 @@ public class ClientConfig {
          }
 
          FileWriter writer = new FileWriter(file, false);
-         writer.write(KeyStroke.x + "\n" + KeyStroke.y + "\n" + KeyStroke.enabled + "\n" + KeyStroke.showMouseButtons + "\n" + KeyStroke.currentColorNumber + "\n" + KeyStroke.outline);
+         writer.write(
+                 KeyStroke.x + "\n" +
+                 KeyStroke.y + "\n" +
+                 KeyStroke.enabled + "\n" +
+                 KeyStroke.showMouseButtons + "\n" +
+                 KeyStroke.currentColorNumber + "\n" +
+                 KeyStroke.outline
+         );
          writer.close();
       } catch (Throwable var2) {
          var2.printStackTrace();
@@ -74,26 +81,26 @@ public class ClientConfig {
 
          String line;
          while((line = reader.readLine()) != null) {
-            ++i;
             switch(i) {
-            case 1:
+            case 0:
                KeyStroke.x = Integer.parseInt(line);
                break;
-            case 2:
+            case 1:
                KeyStroke.y = Integer.parseInt(line);
                break;
-            case 3:
+            case 2:
                KeyStroke.enabled = Boolean.parseBoolean(line);
+               break;
+            case 3:
+               KeyStroke.showMouseButtons = Boolean.parseBoolean(line);
                break;
             case 4:
                KeyStroke.currentColorNumber = Integer.parseInt(line);
                break;
             case 5:
-               KeyStroke.showMouseButtons = Boolean.parseBoolean(line);
-               break;
-            case 6:
                KeyStroke.outline = Boolean.parseBoolean(line);
             }
+            ++i;
          }
 
          reader.close();
