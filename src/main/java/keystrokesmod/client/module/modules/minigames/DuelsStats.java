@@ -8,11 +8,9 @@ import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.profile.PlayerProfile;
+import keystrokesmod.client.utils.profile.UUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -59,10 +57,11 @@ public class DuelsStats extends Module {
             if (!queue.contains(playerName) && team.getColorPrefix().equals("§7§k") && !playerName.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getDisplayNameString())) {
                this.queue.add(playerName);
                Raven.getExecutor().execute(() -> {
-                  if(isValidPlayer(playerName)){
+                  String id = getPlayerUUID(playerName);
+                  if(!id.isEmpty()){
                      if(sendIgnOnJoin.isToggled())
                         Utils.Player.sendMessageToSelf("&eOpponent found: " + "&3" + playerName);
-                     getAndDisplayStatsForPlayer(playerName);
+                     getAndDisplayStatsForPlayer(id, playerName);
                   }
                });
 
@@ -71,20 +70,20 @@ public class DuelsStats extends Module {
       }
    }
 
-   private void getAndDisplayStatsForPlayer(String playerName) {
+   private void getAndDisplayStatsForPlayer(String uuid, String playerName) {
 
       if (Utils.URLS.hypixelApiKey.isEmpty()) {
          Utils.Player.sendMessageToSelf("&cAPI Key is empty!");
       } else {
          Utils.Profiles.DuelsStatsMode dm = (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode();
          Raven.getExecutor().execute(() -> {
-            PlayerProfile playerProfile = new PlayerProfile(playerName, (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
+            PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
             playerProfile.populateStats();
 
             if(!playerProfile.isPlayer)return;
 
             if (playerProfile.nicked) {
-               Utils.Player.sendMessageToSelf("&3" + playerProfile.uuid + " " + "&eis nicked!");
+               Utils.Player.sendMessageToSelf("&3" + playerName + " " + "&eis nicked!");
                return;
             }
 
@@ -128,14 +127,15 @@ public class DuelsStats extends Module {
       }
    }
 
-   private boolean isValidPlayer(String username) {
-      boolean isValidPlayer = false;
+   private String getPlayerUUID(String username) {
+      String playerUUID = "";
       try (CloseableHttpClient client = HttpClients.createDefault()) {
          HttpGet request = new HttpGet(String.format("https://api.mojang.com/users/profiles/minecraft/%s", username));
          try (InputStream is = client.execute(request).getEntity().getContent()) {
             JsonParser parser = new JsonParser();
             JsonObject object = parser.parse(new InputStreamReader(is, StandardCharsets.UTF_8)).getAsJsonObject();
-            isValidPlayer = object.has("name");
+            playerUUID = object.get("id").getAsString();
+
          } catch (NullPointerException ex) {
             System.out.println("Null or invalid player provided by the server.");
          }
@@ -143,6 +143,6 @@ public class DuelsStats extends Module {
          ex.printStackTrace();
       }
 
-      return isValidPlayer;
+      return playerUUID;
    }
 }
