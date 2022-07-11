@@ -51,7 +51,7 @@ public class STap extends Module {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent e) {
     	if (p && Utils.Player.isPlayerInGame()) {
-	         if (Utils.Java.str(e.message.getUnformattedText()).startsWith("Unknown")) {
+	         if (Utils.Java.str(e.message.getUnformattedText()).contains("Unknown")) {
 	            e.setCanceled(true);
 	            p = false;
 	            int ping = (int) ((System.currentTimeMillis() - s) - 20);

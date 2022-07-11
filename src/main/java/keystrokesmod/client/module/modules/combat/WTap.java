@@ -3,6 +3,8 @@ package keystrokesmod.client.module.modules.combat;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.lwjgl.input.Keyboard;
+
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
@@ -35,7 +37,7 @@ public class WTap extends Module {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent e) {
     	if (p && Utils.Player.isPlayerInGame()) {
-	         if (Utils.Java.str(e.message.getUnformattedText()).startsWith("Unknown")) {
+	         if (Utils.Java.str(e.message.getUnformattedText()).contains("Unknown")) {
 	            e.setCanceled(true);
 	            p = false;
 	            int ping = (int) ((System.currentTimeMillis() - s) - 20);
@@ -73,8 +75,10 @@ public class WTap extends Module {
 
 
     public void finishCombo() {
+    	if(Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode())) {
+    		KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
+    	}
     	state = WtapState.NONE;
-    	KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
     	hits = 0;
 		int easports = (int) (hitPer.getInputMax() - hitPer.getInputMin() + 1);
 		rhit = ThreadLocalRandom.current().nextInt((easports));

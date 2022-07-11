@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class AutoBlock extends Module {
-	public static TickSetting holdingRMB, dev;
 	public static SliderSetting blockRange;
     public static DoubleSliderSetting unblockTime, attackDelay;
     public boolean attacked;
@@ -51,16 +50,19 @@ public class AutoBlock extends Module {
         		} else if(!mc.gameSettings.keyBindAttack.isKeyDown() && state == BlockState.P3) {
         			attacked = false;
         		}
-    		}
-    	}
+    			
+    		} 
+    	} else if (state == BlockState.P3 && !Utils.Player.isPlayerHoldingSword()) {
+			state = BlockState.p4;
+			KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+		}
     }
     
     public enum BlockState {
     	P1,
     	P2,
     	P3,
-    	p4,
-    	p5,
+    	p4
     }
 
 
