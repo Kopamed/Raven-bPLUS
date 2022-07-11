@@ -22,7 +22,7 @@ public class BlockHit extends Module {
     public static SliderSetting range, chance;
     public static DescriptionSetting eventTypeDesc;
     public static TickSetting onlyPlayers, onlyForward;
-    public static DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
+    public static DoubleSliderSetting waitMs,actionMs, hitPer, postDelay, closeMulti;
     public static boolean executingAction, hitCoolDown, alreadyHit, safeGuard;
     public static int hits, rhit;
     public static boolean call, trystartcombo;
@@ -34,11 +34,10 @@ public class BlockHit extends Module {
         super("BlockHit", ModuleCategory.combat);
 
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
-        this.registerSetting(onlyForward = new TickSetting("Only blockhit when walking forward", true));
-        this.registerSetting(waitMs = new DoubleSliderSetting("Action Time (MS)", 110, 150, 1, 500, 1));
-        this.registerSetting(actionMs = new DoubleSliderSetting("Block after ... ms", 20, 30, 1, 500, 1));
-        this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1));
-        
+        this.registerSetting(onlyForward = new TickSetting("Only blockhit when walking forward", false));
+        this.registerSetting(waitMs = new DoubleSliderSetting("Action Time (MS)", 30, 40, 1, 300, 1));
+        this.registerSetting(actionMs = new DoubleSliderSetting("Block after ... ms", 20, 30, 1, 300, 1));
+        this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1)); 
         this.registerSetting(chance =  new SliderSetting("Chance %", 100, 0, 100, 1));
         this.registerSetting(range = new SliderSetting("Range: ", 3, 1, 6, 0.05));
 
@@ -76,14 +75,12 @@ public class BlockHit extends Module {
     		rhit = ThreadLocalRandom.current().nextInt((easports));
     		rhit += (int) hitPer.getInputMin();
     	}
-    	System.out.println(hits + " " + rhit);
     	if(!(e.target instanceof EntityPlayer) && onlyPlayers.isToggled() 
     			|| !(Math.random() <= chance.getInput() / 100)
     			|| !Utils.Player.isPlayerHoldingSword()
     			|| mc.thePlayer.getDistanceToEntity(e.target) > range.getInput()
     			|| !(rhit == hits))
     		return;
-    	System.out.println("a");
     	trystartCombo();
     }
     private void finishCombo() {

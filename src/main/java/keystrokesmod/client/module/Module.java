@@ -1,15 +1,15 @@
 package keystrokesmod.client.module;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
+
 import com.google.gson.JsonObject;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.modules.HUD;
+
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import org.lwjgl.input.Keyboard;
-
-import java.util.ArrayList;
 
 public class Module {
    protected ArrayList<Setting> settings;
@@ -99,6 +99,7 @@ public class Module {
       }
    }
 
+   
    public boolean canBeEnabled() {
       return true;
    }
@@ -145,6 +146,10 @@ public class Module {
    public void registerSetting(Setting Setting) {
       this.settings.add(Setting);
    }
+   
+   public void unregisterSetting(Setting Setting) {
+	  this.settings.remove(Setting);
+   }
 
    public ModuleCategory moduleCategory() {
       return this.moduleCategory;
@@ -179,6 +184,9 @@ public class Module {
 
    public int getKeycode() {
       return this.keycode;
+   }
+   
+   public void tickToggled(String name) {
    }
 
    public void setbind(int keybind) {

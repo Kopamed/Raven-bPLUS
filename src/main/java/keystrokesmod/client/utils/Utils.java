@@ -1,12 +1,44 @@
 package keystrokesmod.client.utils;
 
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+import org.lwjgl.Sys;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
+import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import net.minecraft.client.Minecraft;
@@ -22,35 +54,25 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
 import net.minecraft.potion.Potion;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.*;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.*;
 
 public class Utils {
    private static final Random rand = new Random();
@@ -58,6 +80,28 @@ public class Utils {
    public static final String md = "Mode: ";
 
    public static class Player {
+	   
+	   public static EntityPlayer getClosestPlayer(double dis) {
+		   if(mc.theWorld == null)
+	    		  return null;
+		   Iterator entities;
+			entities = mc.theWorld.loadedEntityList.iterator();
+			EntityPlayer cplayer = null;
+			
+			while(entities.hasNext()) {
+				Entity en = (Entity)entities.next();
+				if (en instanceof EntityPlayer && en != mc.thePlayer) {
+					EntityPlayer pl = (EntityPlayer) en;
+					if(mc.thePlayer.getDistanceToEntity(pl) < dis && !AntiBot.bot(pl)) {
+						dis = mc.thePlayer.getDistanceToEntity(pl);
+						cplayer = pl;
+					}
+		        }
+			}
+			
+			return cplayer;
+	   }
+	   
       public static void hotkeyToSlot(int slot) {
          if(!isPlayerInGame())
             return;
@@ -142,6 +186,8 @@ public class Utils {
       }
       
       public static boolean isPlayerHoldingSword() {
+    	  if(mc.thePlayer == null)
+    		  return false;
     	  if (mc.thePlayer.getCurrentEquippedItem() == null) {
               return false;
            } else {
@@ -150,6 +196,8 @@ public class Utils {
            }
       }
       public static boolean isPlayerHoldingAxe() {
+    	  if(mc.thePlayer == null)
+    		  return false;
     	  if (mc.thePlayer.getCurrentEquippedItem() == null) {
               return false;
            } else {

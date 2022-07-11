@@ -1,20 +1,24 @@
 package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.Setting;
 
 public class TickSetting extends Setting {
    private final String name;
-   private boolean isEnabled;
+   private boolean isEnabled, isVisable;
    private final boolean defaultValue;
+   private Module mod;
 
    public TickSetting(String name, boolean isEnabled) {
       super(name);
       this.name = name;
       this.isEnabled = isEnabled;
       this.defaultValue = isEnabled;
+      this.isVisable = true;
    }
 
    public String getName() {
@@ -58,6 +62,7 @@ public class TickSetting extends Setting {
 
    public void toggle() {
       this.isEnabled = !this.isEnabled;
+      if(mod != null) {mod.tickToggled(name);}
    }
 
    public void enable() {
@@ -70,5 +75,13 @@ public class TickSetting extends Setting {
 
    public void setEnabled(boolean b) {
       this.isEnabled = b;
+   }
+   
+   public boolean isVisable() {
+	   return this.isVisable;
+   }
+   
+   public void setVisable(boolean visable) {
+	   this.isVisable = visable;
    }
 }
