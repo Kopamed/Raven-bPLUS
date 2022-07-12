@@ -28,12 +28,13 @@ public class Projectiles extends Module {
    @SubscribeEvent
 	public void onRender(RenderWorldLastEvent partialTicks)
 	{
+	   
+	    if(!Utils.Player.isPlayerInGame()) 
+	    	return;
 		EntityPlayerSP player = mc.thePlayer;
 		
-		// check if player is holding item
-		if(!player.isUsingItem() || !mc.thePlayer.isEntityAlive())
+		if(mc.thePlayer.getCurrentEquippedItem() == null)
 			return;
-		
 		Item stack = mc.thePlayer.getCurrentEquippedItem().getItem();
 		if(stack == null)
 			return;
