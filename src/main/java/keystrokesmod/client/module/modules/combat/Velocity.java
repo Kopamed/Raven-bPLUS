@@ -38,6 +38,7 @@ public class Velocity extends Module {
 	  this.registerSetting(bp = new SliderSetting("Vertical", 100.0D, -100.0D, 100.0D, 1.0D));
 	  this.registerSetting(cp = new SliderSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
 	  this.registerSetting(dt = new SliderSetting("Distance", 3D, 0.0D, 20D, 0.1D));
+	  guiButtonToggled(f);
    }
 
    @SubscribeEvent
@@ -102,6 +103,16 @@ public class Velocity extends Module {
         if (bp.getInput() != 100.0D) {
            mc.thePlayer.motionY *= bp.getInput() / 100.0D;
         }
+   }
+   
+   public void guiButtonToggled(TickSetting b) {
+	   if(b == f) {
+		   g.setVisable(b.isToggled());
+		   ap.setVisable(b.isToggled());
+		   bp.setVisable(b.isToggled());
+		   cp.setVisable(b.isToggled());
+		   dt.setVisable(b.isToggled());
+	   }
    }
    
    

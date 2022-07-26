@@ -4,7 +4,9 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.combat.WTap.EventType;
 import keystrokesmod.client.module.modules.combat.WTap.WtapState;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -15,18 +17,20 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class STap extends Module {
-    public static SliderSetting range, chance, tapMultiplier;
-    public static DescriptionSetting eventTypeDesc;
-    public static TickSetting onlyPlayers, onlySword, autoCfg, dynamic;
-    public static DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
-    public static int hits, rhit;
-    public static boolean call, p;
-    public static long s;
+	public ComboSetting eventType;
+    public SliderSetting range, chance, tapMultiplier;
+    public DescriptionSetting eventTypeDesc;
+    public TickSetting onlyPlayers, onlySword, autoCfg, dynamic;
+    public DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
+    public int hits, rhit;
+    public boolean call, p;
+    public long s;
     private StapState state = StapState.NONE;
     private CoolDown timer = new CoolDown(0);
     private Entity target;
@@ -36,39 +40,55 @@ public class STap extends Module {
     public STap(){
         super("STap", ModuleCategory.combat);
         
-        this.registerSetting(autoCfg = new TickSetting("Auto config stap delay", true));
+        this.registerSetting(eventType = new ComboSetting("Event:", WTap.EventType.Attack));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
-        this.registerSetting(dynamic = new TickSetting("Dynamic Tapping (BETA)", false));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Press s for ... ms", 30, 40, 1, 300, 1));
         this.registerSetting(actionMs = new DoubleSliderSetting("STap after ... ms", 20, 30, 1, 300, 1));
         this.registerSetting(chance =  new SliderSetting("Chance %", 100, 0, 100, 1));
         this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1)); 
         this.registerSetting(range = new SliderSetting("Range: ", 3, 1, 6, 0.05));
-        this.registerSetting(tapMultiplier = new SliderSetting("dynamic tapping", 1F, 0F, 5F, 0.1F));
+        this.registerSetting(dynamic = new TickSetting("Dynamic wait time", false));
+        this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
+    }
+
+    @SubscribeEvent
+    public void wTapUpdate(TickEvent.RenderTickEvent e) {
+    	if(state == StapState.NONE)
+    		return;
+    	if(state == StapState.WAITINGTOTAP && timer.hasFinished()) {
+    		startCombo();
+    	} else if (state == StapState.TAPPING && timer.hasFinished()) {
+    		finishCombo();
+    	}
     }
     
     @SubscribeEvent
-    public void onChat(ClientChatReceivedEvent e) {
-    	if (p && Utils.Player.isPlayerInGame()) {
-	         if (Utils.Java.str(e.message.getUnformattedText()).contains("Unknown")) {
-	            e.setCanceled(true);
-	            p = false;
-	            int ping = (int) ((System.currentTimeMillis() - s) - 20);
-	            actionMs.setValueMin(ping - 5);
-	            actionMs.setValueMax(ping + 5);
-	         }
-	      }
+    public void event(AttackEntityEvent e) {
+    	target = e.target;
+    	if(isSecondCall() && eventType.getMode() == EventType.Attack) 
+    		sTap();
     }
     
-    public void onEnable() {
-    	if(autoCfg.isToggled()) {
-    		  Utils.mc.thePlayer.sendChatMessage("/...");
-    		  p = true;
-    		  s = System.currentTimeMillis();
-    	}
+    @SubscribeEvent
+    public void event(LivingUpdateEvent e) {
+    	if(e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target && eventType.getMode() == EventType.Hurt)
+    		sTap();
     }
-
+    
+    public void sTap() {
+    	if(state != StapState.NONE)
+    		return;
+    	if(!(Math.random() <= chance.getInput() / 100)) {
+    		hits++;
+    	}
+    	if(mc.thePlayer.getDistanceToEntity(target) > range.getInput()
+    			|| (onlyPlayers.isToggled() && !(target instanceof EntityPlayer))
+    			|| (onlySword.isToggled() && !Utils.Player.isPlayerHoldingSword())
+    			|| !(rhit >= hits))
+    		return;
+    	trystartCombo();
+    }
 
 
     public void finishCombo() {
@@ -98,39 +118,16 @@ public class STap extends Module {
     	timer.setCooldown((long)ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(),  actionMs.getInputMax()+0.01));
     	timer.start();
     }
+   
     
-    @SubscribeEvent
-    public void sTap(AttackEntityEvent e) {
-    	if(isSecondCall())
-    		return;
-    	//Utils.Player.sendMessageToSelf(state.toString());
-    	if(state != StapState.NONE)
-    		return;
-    	target = e.target;
-    	if(!(Math.random() <= chance.getInput() / 100)) {
-    		hits++;
+    
+    
+    public void guiButtonToggled(TickSetting b) {
+    	if(b == dynamic) {
+    		tapMultiplier.setVisable(b.isToggled());
     	}
-    	if(mc.thePlayer.getDistanceToEntity(target) > range.getInput()
-    			|| (onlyPlayers.isToggled() && !(target instanceof EntityPlayer))
-    			|| (onlySword.isToggled() && !Utils.Player.isPlayerHoldingSword())
-    			|| !(rhit >= hits))
-    		return;
-    	trystartCombo();
-    	//Utils.Player.sendMessageToSelf(state.toString());
-    }
-    
-    @SubscribeEvent
-    public void wTapUpdate(TickEvent.RenderTickEvent e) {
-    	//Utils.Player.sendMessageToSelf(state.toString());
-    	if(state == StapState.NONE)
-    		return;
-    	if(state == StapState.WAITINGTOTAP && timer.hasFinished()) {
-    		startCombo();
-    	} else if (state == StapState.TAPPING && timer.hasFinished()) {
-    		finishCombo();
-    	}
-    }
-    
+    } 
+
     private boolean isSecondCall() {
     	if(call) {
     		call = false;

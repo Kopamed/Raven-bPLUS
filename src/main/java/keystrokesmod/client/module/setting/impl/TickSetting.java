@@ -9,7 +9,7 @@ import keystrokesmod.client.module.setting.Setting;
 
 public class TickSetting extends Setting {
    private final String name;
-   private boolean isEnabled, isVisable;
+   private boolean isEnabled;
    private final boolean defaultValue;
    private Module mod;
 
@@ -62,7 +62,6 @@ public class TickSetting extends Setting {
 
    public void toggle() {
       this.isEnabled = !this.isEnabled;
-      if(mod != null) {mod.tickToggled(name);}
    }
 
    public void enable() {

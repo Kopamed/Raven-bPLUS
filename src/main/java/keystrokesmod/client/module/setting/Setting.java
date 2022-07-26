@@ -6,6 +6,7 @@ import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 
 public abstract class Setting {
    public String settingName;
+   public boolean isVisable;
 
    public Setting(String name) {
       this.settingName = name;

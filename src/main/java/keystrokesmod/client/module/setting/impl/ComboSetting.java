@@ -20,6 +20,7 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.isVisable = true;
     }
 
     @Override
@@ -72,5 +73,13 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
                 return;
             }
         }
+    }
+    
+    public boolean isVisable() {
+ 	   return this.isVisable;
+    }
+    
+    public void setVisable(boolean visable) {
+ 	   this.isVisable = visable;
     }
 }

@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.combat.WTap.EventType;
+import keystrokesmod.client.module.modules.combat.WTap.WtapState;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -13,17 +16,19 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ShiftTap extends Module {
-    public static SliderSetting range, chance, tapMultiplier;
-    public static DescriptionSetting eventTypeDesc;
-    public static TickSetting onlyPlayers, onlySword, autoCfg, dynamic;
-    public static DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
-    public static int hits, rhit;
-    public static boolean call;
+    public SliderSetting range, chance, tapMultiplier;
+    public DescriptionSetting eventTypeDesc;
+    public TickSetting onlyPlayers, onlySword, autoCfg, dynamic;
+    public DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
+    public ComboSetting eventType; 
+    public int hits, rhit;
+    public boolean call;
     private WtapState state = WtapState.NONE;
     private CoolDown timer = new CoolDown(0);
     private Entity target;
@@ -33,18 +38,57 @@ public class ShiftTap extends Module {
     public ShiftTap(){
         super("ShiftTap", ModuleCategory.combat);
         
+        this.registerSetting(eventType = new ComboSetting("Event:", WTap.EventType.Attack));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
-        this.registerSetting(dynamic = new TickSetting("Dynamic Tapping (BETA)", false));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Release w for ... ms", 30, 40, 1, 300, 1));
         this.registerSetting(actionMs = new DoubleSliderSetting("WTap after ... ms", 20, 30, 1, 300, 1));
         this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1)); 
         this.registerSetting(chance =  new SliderSetting("Chance %", 100, 0, 100, 1));
         this.registerSetting(range = new SliderSetting("Range: ", 3, 1, 6, 0.05));
-        this.registerSetting(tapMultiplier = new SliderSetting("closer = more tap", 1F, 0F, 5F, 0.1F));
+        this.registerSetting(dynamic = new TickSetting("Dynamic wait time", false));
+        this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
     }
 
-
+    @SubscribeEvent
+    public void wTapUpdate(TickEvent.RenderTickEvent e) {
+    	if(state == WtapState.NONE)
+    		return;
+    	if(state == WtapState.WAITINGTOTAP && timer.hasFinished()) {
+    		startCombo();
+    	} else if (state == WtapState.TAPPING && timer.hasFinished()) {
+    		finishCombo();
+    	}
+    }
+    
+    @SubscribeEvent
+    public void event(AttackEntityEvent e) {
+    	target = e.target;
+    	if(isSecondCall() && eventType.getMode() == EventType.Attack) 
+    		wTap();
+    }
+    
+    @SubscribeEvent
+    public void event(LivingUpdateEvent e) {
+    	if(e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target && eventType.getMode() == EventType.Hurt)
+    		wTap();
+    }
+    
+    public void wTap() {
+    	if(state != WtapState.NONE)
+    		return;
+    	if(!(Math.random() <= chance.getInput() / 100)) {
+    		hits++;
+    	}
+    	if(mc.thePlayer.getDistanceToEntity(target) > range.getInput()
+    			|| (onlyPlayers.isToggled() && !(target instanceof EntityPlayer))
+    			|| (onlySword.isToggled() && !Utils.Player.isPlayerHoldingSword())
+    			|| !(rhit >= hits))
+    		return;
+    	trystartCombo();
+    }
+    
+    
 
     public void finishCombo() {
     	state = WtapState.NONE;
@@ -74,38 +118,6 @@ public class ShiftTap extends Module {
     	timer.start();
     }
     
-    @SubscribeEvent
-    public void wTap(AttackEntityEvent e) {
-    	if(isSecondCall()) 
-    		return;
-    	//Utils.Player.sendMessageToSelf(state.toString());
-    	if(state != WtapState.NONE)
-    		return;
-    	target = e.target;
-    	if(!(Math.random() <= chance.getInput() / 100)) {
-    		hits++;
-    	}
-    	if(mc.thePlayer.getDistanceToEntity(target) > range.getInput()
-    			|| (onlyPlayers.isToggled() && !(target instanceof EntityPlayer))
-    			|| (onlySword.isToggled() && !Utils.Player.isPlayerHoldingSword())
-    			|| !(rhit >= hits))
-    		return;
-    	trystartCombo();
-    	//Utils.Player.sendMessageToSelf(state.toString());
-    }
-    
-    @SubscribeEvent
-    public void wTapUpdate(TickEvent.RenderTickEvent e) {
-    	//Utils.Player.sendMessageToSelf(state.toString());
-    	if(state == WtapState.NONE)
-    		return;
-    	if(state == WtapState.WAITINGTOTAP && timer.hasFinished()) {
-    		startCombo();
-    	} else if (state == WtapState.TAPPING && timer.hasFinished()) {
-    		finishCombo();
-    	}
-    }
-    
     private boolean isSecondCall() {
     	if(call) {
     		call = false;
@@ -115,6 +127,12 @@ public class ShiftTap extends Module {
     		return false;
     	}
     }
+    
+    public void guiButtonToggled(TickSetting b) {
+    	if(b == dynamic) {
+    		tapMultiplier.setVisable(b.isToggled());
+    	}
+    } 
     
     public enum WtapState {
     	NONE,

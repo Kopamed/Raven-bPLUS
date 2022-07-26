@@ -1,35 +1,49 @@
 package keystrokesmod.client.module.modules;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import static keystrokesmod.client.main.Raven.mResourceLocation;
-
 public class HUD extends Module {
-   public static TickSetting editPosition;
-   public static TickSetting dropShadow;
-   public static TickSetting alphabeticalSort;
-   public static SliderSetting colourMode;
+   public static TickSetting editPosition, dropShadow, logo;
+   public static SliderSetting colourMode, logoScale;
    public static DescriptionSetting colourModeDesc;
    private static int hudX = 5;
    private static int hudY = 70;
+   private double logoHeight = 0;
+   
+   private double logoWidthRatio = 0.14;
+   private double logoHeightRatio =  0.063;
+   private InputStream inputStream;
+   private ResourceLocation ravenLogo;
+   
    public static Utils.HUD.PositionMode positionMode;
    public static boolean showedError;
    public static final String HUDX_prefix = "HUDX~ ";
@@ -40,11 +54,52 @@ public class HUD extends Module {
       super("HUD", ModuleCategory.render);
       this.registerSetting(editPosition = new TickSetting("Edit position", false));
       this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
-      this.registerSetting(alphabeticalSort = new TickSetting("Alphabetical sort", false));
+      this.registerSetting(logo = new TickSetting("Logo", true));
+      this.registerSetting(logoScale = new SliderSetting("Logo Scale: ", 0.7, 0, 3, 0.01));
       this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 5, 1));
       this.registerSetting(colourModeDesc = new DescriptionSetting("Mode: RAVEN"));
       showedError = false;
+      setUpLogo();
    }
+   
+   private void setUpLogo() {
+       inputStream = HUD.class.getResourceAsStream("/assets/keystrokes/hudraven.png");
+       BufferedImage bf = null;
+       try {
+           bf = ImageIO.read(inputStream);
+           ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
+       } catch (IOException noway) {
+           noway.printStackTrace();
+           ravenLogo = null;
+       } catch (IllegalArgumentException nowayV2) {
+           nowayV2.printStackTrace();
+           ravenLogo = null;
+       } catch (NullPointerException nowayV3) {
+           nowayV3.printStackTrace();
+           ravenLogo = null;
+       }
+   }
+   
+   public boolean logoLoaded(){
+       return ravenLogo != null && logo.isToggled();
+   }
+
+   public double getLogoWidthRatio() {
+       return logoWidthRatio;
+   }
+
+   public void setLogoWidthRatio(double logoWidthRatio) {
+       this.logoWidthRatio = logoWidthRatio;
+   }
+
+   public double getLogoHeightRatio() {
+       return logoHeightRatio;
+   }
+
+   public void setLogoHeightRatio(double logoHeightRatio) {
+       this.logoHeightRatio = logoHeightRatio;
+   }
+
 
    public void guiUpdate(){
       colourModeDesc.setDesc(Utils.md + ColourModes.values()[(int) colourMode.getInput()-1]);
@@ -55,12 +110,12 @@ public class HUD extends Module {
    }
 
    public void guiButtonToggled(TickSetting b) {
-      if (b == editPosition) {
+	   if (b == editPosition) {
          editPosition.disable();
          mc.displayGuiScreen(new EditHudPositionScreen());
-      } else if (b == alphabeticalSort) {
-         Raven.moduleManager.sort();
-      }
+      } else if(b == logo) {
+ 		  logoScale.setVisable(b.isToggled());	
+ 	  } 
    }
 
    @SubscribeEvent
@@ -69,21 +124,19 @@ public class HUD extends Module {
          if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
          }
-
+        
          int margin = 2;
          int y = hudY;
          int del = 0;
 
-         if (!alphabeticalSort.isToggled()){
-            if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
-               Raven.moduleManager.sortShortLong();
-            }
-            else if(positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
-               Raven.moduleManager.sortLongShort();
-            }
+         if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
+        	 Raven.moduleManager.sortShortLong();
+         }
+         else if(positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
+        	 Raven.moduleManager.sortLongShort();
          }
 
-
+         
          List<Module> en = new ArrayList<>(Raven.moduleManager.getModules());
          if(en.isEmpty()) return;
 
@@ -107,6 +160,8 @@ public class HUD extends Module {
             hudY = mc.displayHeight/2 - textBoxHeight;
          }
 
+         drawLogo();
+         y+=logoHeight;
          for (Module m : en) {
             if (m.isEnabled() && m != this) {
                if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
@@ -158,6 +213,27 @@ public class HUD extends Module {
          }
       }
 
+   }
+   
+   private void drawLogo() {
+	   
+	   ScaledResolution sr = new ScaledResolution(mc);
+       logoHeight = sr.getScaledHeight() * logoHeightRatio * logoScale.getInput();
+       if(logoLoaded()){
+    	   if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
+               double logoWidth = sr.getScaledWidth() * logoWidthRatio * logoScale.getInput();
+               Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
+               GL11.glColor4f(1, 1, 1, 1);
+               Gui.drawModalRectWithCustomSizedTexture((int) (hudX - logoWidth/2), (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+    	   } else {
+               double logoWidth = sr.getScaledWidth() * logoWidthRatio * logoScale.getInput();
+               Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
+               GL11.glColor4f(1, 1, 1, 1);
+               Gui.drawModalRectWithCustomSizedTexture((int) hudX, (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+    	   }
+       } else {
+    	   logoHeight = 0;
+       }
    }
 
    static class EditHudPositionScreen extends GuiScreen {

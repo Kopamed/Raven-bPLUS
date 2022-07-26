@@ -73,10 +73,6 @@ public class CommandManager {
     }
 
     public void sort() {
-        if (HUD.alphabeticalSort.isToggled()) {
-            this.sortedCommandList.sort(Comparator.comparing(Command::getName));
-        } else {
-            this.sortedCommandList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
-        }
+    	this.sortedCommandList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
     }
 }

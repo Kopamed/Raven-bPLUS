@@ -6,8 +6,11 @@ import org.lwjgl.input.Keyboard;
 
 import com.google.gson.JsonObject;
 
+import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -58,8 +61,10 @@ public class Module {
       JsonObject settings = new JsonObject();
 
       for(Setting setting : this.settings){
-         JsonObject settingData = setting.getConfigAsJson();
-         settings.add(setting.settingName, settingData);
+    	  if(setting != null) {
+    		  JsonObject settingData = setting.getConfigAsJson();
+              settings.add(setting.settingName, settingData);
+    	  }
       }
 
       JsonObject data = new JsonObject();
@@ -107,7 +112,6 @@ public class Module {
    public void enable() {
       boolean oldState = this.enabled;
       this.enabled = true;
-
       this.onEnable();
       MinecraftForge.EVENT_BUS.register(this);
    }
@@ -181,13 +185,18 @@ public class Module {
 
    public void guiButtonToggled(TickSetting b) {
    }
+   
+   public void guiButtonToggled(ComboSetting b) {
+   }
+   
+   public void guiButtonToggled(TickSetting b, Component c) {
+	   
+   }
 
    public int getKeycode() {
       return this.keycode;
    }
-   
-   public void tickToggled(String name) {
-   }
+ 
 
    public void setbind(int keybind) {
       this.keycode = keybind;

@@ -103,6 +103,7 @@ public class ModuleManager {
       addModule(new AutoBlock());
       addModule(new MiddleClick());
       addModule(new Projectiles());
+      //addModule(new AutoPot());
       // why ?
       // idk dude. you tell me why. I am pretty sure this was blowsy's work.
 
@@ -152,12 +153,7 @@ public class ModuleManager {
    }
 
    public void sort() {
-      if (HUD.alphabeticalSort.isToggled()) {
-         modules.sort(Comparator.comparing(Module::getName));
-      } else {
          modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
-      }
-
    }
 
    public int numberOfModules() {
