@@ -38,7 +38,6 @@ public class Velocity extends Module {
 	  this.registerSetting(bp = new SliderSetting("Vertical", 100.0D, -100.0D, 100.0D, 1.0D));
 	  this.registerSetting(cp = new SliderSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
 	  this.registerSetting(dt = new SliderSetting("Distance", 3D, 0.0D, 20D, 0.1D));
-	  guiButtonToggled(f);
    }
 
    @SubscribeEvent
@@ -105,6 +104,14 @@ public class Velocity extends Module {
         }
    }
    
+   public void preClickGuiLoad() {
+	   g.setVisable(f.isToggled());
+	   ap.setVisable(f.isToggled());
+	   bp.setVisable(f.isToggled());
+	   cp.setVisable(f.isToggled());
+	   dt.setVisable(f.isToggled());
+   }
+   
    public void guiButtonToggled(TickSetting b) {
 	   if(b == f) {
 		   g.setVisable(b.isToggled());
@@ -112,6 +119,7 @@ public class Velocity extends Module {
 		   bp.setVisable(b.isToggled());
 		   cp.setVisable(b.isToggled());
 		   dt.setVisable(b.isToggled());
+		   component.updateSettings();
 	   }
    }
    

@@ -128,9 +128,14 @@ public class ShiftTap extends Module {
     	}
     }
     
+    public void preClickGuiLoad() {
+    	tapMultiplier.setVisable(dynamic.isToggled());
+    }
+    
     public void guiButtonToggled(TickSetting b) {
     	if(b == dynamic) {
     		tapMultiplier.setVisable(b.isToggled());
+    		component.updateSettings();
     	}
     } 
     

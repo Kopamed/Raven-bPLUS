@@ -62,6 +62,10 @@ public class HUD extends Module {
       setUpLogo();
    }
    
+   public void preClickGuiLoad() {
+	   logoScale.setVisable(logo.isToggled());	
+   }
+   
    private void setUpLogo() {
        inputStream = HUD.class.getResourceAsStream("/assets/keystrokes/hudraven.png");
        BufferedImage bf = null;

@@ -26,7 +26,6 @@ public class ModuleComponent implements Component {
    public CategoryComponent category;
    public int o;
    private ArrayList<Component> settings;
-   private boolean e = true;
    public boolean po;
 
    public ModuleComponent(Module mod, CategoryComponent p, int o) {
@@ -36,6 +35,8 @@ public class ModuleComponent implements Component {
       this.settings = new ArrayList<>();
       this.po = false;
       int y = o + 12;
+      mod.setModuleComponent(this);
+      mod.preClickGuiLoad();
       if (!mod.getSettings().isEmpty()) {
          for (Setting v : mod.getSettings()) {
         	if(v.isVisable) {
@@ -261,19 +262,6 @@ public class ModuleComponent implements Component {
          for (Component c : this.settings) {
             c.update(mousePosX, mousePosY);
          }
-      }
-      if(e) {
-    	  for(Setting s : mod.getSettings()) {
-    		  if(s instanceof TickSetting) {
-    			  mod.guiButtonToggled((TickSetting) s);
-    		  } else if (s instanceof ComboSetting) {
-    			  mod.guiButtonToggled((ComboSetting) s);
-    		  }
-    	  }
-    	  updateSettings();
-    	  e = false;
-          Minecraft.getMinecraft().displayGuiScreen(Raven.clickGui);
-    	  //ill fix this later
       }
    }
 

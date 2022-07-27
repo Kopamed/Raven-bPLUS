@@ -48,7 +48,7 @@ public class STap extends Module {
         this.registerSetting(chance =  new SliderSetting("Chance %", 100, 0, 100, 1));
         this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1)); 
         this.registerSetting(range = new SliderSetting("Range: ", 3, 1, 6, 0.05));
-        this.registerSetting(dynamic = new TickSetting("Dynamic wait time", false));
+        this.registerSetting(dynamic = new TickSetting("Dynamic tap time", false));
         this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
     }
 
@@ -119,12 +119,14 @@ public class STap extends Module {
     	timer.start();
     }
    
-    
-    
+    public void preClickGuiLoad() {
+    	tapMultiplier.setVisable(dynamic.isToggled());
+    }
     
     public void guiButtonToggled(TickSetting b) {
     	if(b == dynamic) {
     		tapMultiplier.setVisable(b.isToggled());
+    		component.updateSettings();
     	}
     } 
 

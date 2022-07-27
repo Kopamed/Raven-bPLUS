@@ -7,10 +7,10 @@ import org.lwjgl.input.Keyboard;
 import com.google.gson.JsonObject;
 
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -22,7 +22,9 @@ public class Module {
    protected boolean defaultEnabled = enabled;
    protected int keycode = 0;
    protected int defualtKeyCode = keycode;
-
+   
+   protected ModuleComponent component;
+   
    protected static Minecraft mc;
    private boolean isToggled = false;
 
@@ -55,6 +57,12 @@ public class Module {
    public <E extends Module> E withDescription(String i){
       this.description = i;
       return (E) this;
+   }
+   
+   public void configLoad() { //notworking atm
+   }
+   
+   public void preClickGuiLoad() {
    }
 
    public JsonObject getConfigAsJson(){
@@ -209,6 +217,10 @@ public class Module {
       for(Setting setting : this.settings){
          setting.resetToDefaults();
       }
+   }
+   
+   public void setModuleComponent(ModuleComponent component) {
+	   this.component = component;
    }
 
    public void onGuiClose() {
