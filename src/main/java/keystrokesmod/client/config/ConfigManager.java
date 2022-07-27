@@ -112,6 +112,7 @@ public class ConfigManager {
             } else {
                 module.resetToDefaults();
             }
+            module.configLoad();
         }
     }
 

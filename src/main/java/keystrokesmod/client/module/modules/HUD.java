@@ -38,6 +38,7 @@ public class HUD extends Module {
    private static int hudX = 5;
    private static int hudY = 70;
    private double logoHeight = 0;
+   private boolean e = false;
    
    private double logoWidthRatio = 0.14;
    private double logoHeightRatio =  0.063;
@@ -128,7 +129,11 @@ public class HUD extends Module {
          if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
          }
-        
+         if(!e) {
+      	   ScaledResolution sr = new ScaledResolution(mc);
+    	   HUD.positionMode = Utils.HUD.getPostitionMode(hudX, hudY,sr.getScaledWidth(), sr.getScaledHeight());
+    	   e = true;
+         }
          int margin = 2;
          int y = hudY;
          int del = 0;
@@ -164,7 +169,7 @@ public class HUD extends Module {
             hudY = mc.displayHeight/2 - textBoxHeight;
          }
 
-         drawLogo();
+         drawLogo(textBoxWidth);
          y+=logoHeight;
          for (Module m : en) {
             if (m.isEnabled() && m != this) {
@@ -219,7 +224,7 @@ public class HUD extends Module {
 
    }
    
-   private void drawLogo() {
+   private void drawLogo(int e) {
 	   
 	   ScaledResolution sr = new ScaledResolution(mc);
        logoHeight = sr.getScaledHeight() * logoHeightRatio * logoScale.getInput();
@@ -228,7 +233,7 @@ public class HUD extends Module {
                double logoWidth = sr.getScaledWidth() * logoWidthRatio * logoScale.getInput();
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
-               Gui.drawModalRectWithCustomSizedTexture((int) (hudX - logoWidth/2), (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+               Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
     	   } else {
                double logoWidth = sr.getScaledWidth() * logoWidthRatio * logoScale.getInput();
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
