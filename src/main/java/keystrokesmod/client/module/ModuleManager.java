@@ -7,6 +7,7 @@ import java.util.List;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.modules.client.ClientNameSpoof;
 import keystrokesmod.client.module.modules.client.FPSSpoofer;
+import keystrokesmod.client.module.modules.client.FakeHud;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.modules.client.SelfDestruct;
 import keystrokesmod.client.module.modules.client.Terminal;
@@ -60,6 +61,7 @@ import keystrokesmod.client.module.modules.player.AutoPlace;
 import keystrokesmod.client.module.modules.player.AutoTool;
 import keystrokesmod.client.module.modules.player.BedAura;
 import keystrokesmod.client.module.modules.player.BridgeAssist;
+import keystrokesmod.client.module.modules.player.ChestStealer;
 import keystrokesmod.client.module.modules.player.FallSpeed;
 import keystrokesmod.client.module.modules.player.FastPlace;
 import keystrokesmod.client.module.modules.player.Freecam;
@@ -166,6 +168,8 @@ public class ModuleManager {
       addModule(new AutoBlock());
       addModule(new MiddleClick());
       addModule(new Projectiles());
+      addModule(new ChestStealer());
+      addModule(new FakeHud());
       //addModule(new AutoPot());
       // why ?
       // idk dude. you tell me why. I am pretty sure this was blowsy's work.

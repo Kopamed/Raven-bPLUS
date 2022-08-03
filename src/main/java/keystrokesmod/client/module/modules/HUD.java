@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.client.FakeHud;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -38,7 +39,7 @@ public class HUD extends Module {
    private static int hudX = 5;
    private static int hudY = 70;
    private double logoHeight = 0;
-   private boolean e = false;
+   public static boolean e = false;
    
    private double logoWidthRatio = 0.14;
    private double logoHeightRatio =  0.063;
@@ -129,24 +130,33 @@ public class HUD extends Module {
          if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
             return;
          }
+         boolean fhe = Raven.moduleManager.getModuleByName("Fake Hud").isEnabled();
          if(!e) {
       	   ScaledResolution sr = new ScaledResolution(mc);
     	   HUD.positionMode = Utils.HUD.getPostitionMode(hudX, hudY,sr.getScaledWidth(), sr.getScaledHeight());
+           if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
+          	 if(!fhe) {       	 
+          		 Raven.moduleManager.sortShortLong();
+          	 } else {
+          		 FakeHud.sortShortLong();
+          	 }
+           }
+           else if(positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
+          	 if(!fhe) {       	 
+          		 Raven.moduleManager.sortLongShort();
+          	 } else {
+          		 FakeHud.sortLongShort();
+          	 }
+           }
     	   e = true;
          }
          int margin = 2;
          int y = hudY;
          int del = 0;
 
-         if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
-        	 Raven.moduleManager.sortShortLong();
-         }
-         else if(positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
-        	 Raven.moduleManager.sortLongShort();
-         }
 
          
-         List<Module> en = new ArrayList<>(Raven.moduleManager.getModules());
+         List<Module> en = fhe ? FakeHud.getModules() : new ArrayList<>(Raven.moduleManager.getModules());
          if(en.isEmpty()) return;
 
          int textBoxWidth = Raven.moduleManager.getLongestActiveModule(mc.fontRendererObj);
@@ -268,6 +278,7 @@ public class HUD extends Module {
          this.marginY = HUD.hudY;
          sr = new ScaledResolution(mc);
          HUD.positionMode = Utils.HUD.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
+         e = false;
       }
 
       public void drawScreen(int mX, int mY, float pt) {

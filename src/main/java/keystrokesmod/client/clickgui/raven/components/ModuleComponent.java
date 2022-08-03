@@ -3,11 +3,12 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
@@ -16,12 +17,14 @@ import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 public class ModuleComponent implements Component {
    private final int c1 = (new Color(0, 85, 255)).getRGB();
    private final int c2 = (new Color(154, 2, 255)).getRGB();
    private final int c3 = (new Color(175, 143, 233) ).getRGB();
+   private final int c5 = (new Color(254, 153, 51) ).getRGB(); 
    public Module mod;
    public CategoryComponent category;
    public int o;
@@ -37,46 +40,14 @@ public class ModuleComponent implements Component {
       int y = o + 12;
       mod.setModuleComponent(this);
       mod.preClickGuiLoad();
-      if (!mod.getSettings().isEmpty()) {
-         for (Setting v : mod.getSettings()) {
-        	if(v.isVisable) {
-        		if (v instanceof SliderSetting) {
-                    SliderSetting n = (SliderSetting) v;
-                    SliderComponent s = new SliderComponent(n, this, y);
-                    this.settings.add(s);
-                    y += 16;
-                 } else if (v instanceof TickSetting) {
-                    TickSetting b = (TickSetting) v;
-                    TickComponent c = new TickComponent(mod, b, this, y);
-                    this.settings.add(c);
-                    y += 12;
-                 } else if (v instanceof DescriptionSetting) {
-                    DescriptionSetting d = (DescriptionSetting) v;
-                    DescriptionComponent m = new DescriptionComponent(d, this, y);
-                    this.settings.add(m);
-                    y += 12;
-                 } else if (v instanceof DoubleSliderSetting) {
-                    DoubleSliderSetting n = (DoubleSliderSetting) v;
-                    RangeSliderComponent s = new RangeSliderComponent(n, this, y);
-                    this.settings.add(s);
-                    y += 16;
-                 } else if (v instanceof ComboSetting) {
-                    ComboSetting n = (ComboSetting) v;
-                    ModeComponent s = new ModeComponent(n, this, y, mod);
-                    this.settings.add(s);
-                    y += 12;
-                 }
-        	}
-         }
-      }
-
-      this.settings.add(new BindComponent(this, y));
+      updateSettings();
    }
    
    public void updateSettings() {
 	   //ill fix this later but cannot be fked rn
 	   ArrayList<Component> newSettings = new ArrayList<Component>();
 	   int i = 1;
+	   int y = o + 12;
 	   if (!mod.getSettings().isEmpty()) {
 		   for (Setting v : mod.getSettings()) {
 			   if(v.isVisable) {
@@ -84,43 +55,42 @@ public class ModuleComponent implements Component {
 			   }
 		   }
 		   if(i != settings.size()) {
-			   int y = o + 12;
 			   for (Setting v : mod.getSettings()) {
-		        	if(v.isVisable) {
-		        		if (v instanceof SliderSetting) {
-		                    SliderSetting n = (SliderSetting) v;
-		                    SliderComponent s = new SliderComponent(n, this, y);
-		                    newSettings.add(s);
-		                    y += 16;
-		                 } else if (v instanceof TickSetting) {
-		                    TickSetting b = (TickSetting) v;
-		                    TickComponent c = new TickComponent(mod, b, this, y);
-		                    newSettings.add(c);
-		                    y += 12;
-		                 } else if (v instanceof DescriptionSetting) {
-		                    DescriptionSetting d = (DescriptionSetting) v;
-		                    DescriptionComponent m = new DescriptionComponent(d, this, y);
-		                    newSettings.add(m);
-		                    y += 12;
-		                 } else if (v instanceof DoubleSliderSetting) {
-		                    DoubleSliderSetting n = (DoubleSliderSetting) v;
-		                    RangeSliderComponent s = new RangeSliderComponent(n, this, y);
-		                    newSettings.add(s);
-		                    y += 16;
-		                 } else if (v instanceof ComboSetting) {
-		                    ComboSetting n = (ComboSetting) v;
-		                    ModeComponent s = new ModeComponent(n, this, y, mod);
-		                    newSettings.add(s);
-		                    y += 12;
-		                 }
-		        	}
-		         }
-			   newSettings.add(new BindComponent(this, y));
-			   settings = newSettings;
-			   if(po) {
-				   this.category.r3nd3r();
+				   if(v.isVisable) {
+					   if (v instanceof SliderSetting) {
+						   SliderSetting n = (SliderSetting) v;
+						   SliderComponent s = new SliderComponent(n, this, y);
+						   newSettings.add(s);
+						   y += 16;
+					   } else if (v instanceof TickSetting) {
+						   TickSetting b = (TickSetting) v;
+						   TickComponent c = new TickComponent(mod, b, this, y);
+						   newSettings.add(c);
+						   y += 12;
+					   } else if (v instanceof DescriptionSetting) {
+						   DescriptionSetting d = (DescriptionSetting) v;
+						   DescriptionComponent m = new DescriptionComponent(d, this, y);
+						   newSettings.add(m);
+						   y += 12;
+					   } else if (v instanceof DoubleSliderSetting) {
+						   DoubleSliderSetting n = (DoubleSliderSetting) v;
+						   RangeSliderComponent s = new RangeSliderComponent(n, this, y);
+						   newSettings.add(s);
+						   y += 16;
+					   } else if (v instanceof ComboSetting) {
+						   ComboSetting n = (ComboSetting) v;
+						   ModeComponent s = new ModeComponent(n, this, y, mod);
+						   newSettings.add(s);
+						   y += 12;
+					   }
+				   }
 			   }
 		   }
+	   } 
+	   newSettings.add(new BindComponent(this, y));
+	   settings = newSettings;
+	   if(po) {
+		   this.category.r3nd3r();
 	   }
    }
 
@@ -175,7 +145,7 @@ public class ModuleComponent implements Component {
          g = (float)(h >> 5 & 255) / 255.0F;
          b = (float)(h & 255);
       } else if (GuiModule.guiTheme.getInput() == 3.0D) {
-      }
+      } 
 
       GL11.glColor4f(r, g, b, a);
    }
@@ -201,6 +171,15 @@ public class ModuleComponent implements Component {
       // module text button
       int button_rgb;
       switch ((int) GuiModule.guiTheme.getInput()) {
+      	 case 5: 
+      		if (this.mod.isEnabled()) {
+                button_rgb = this.c5;
+             } else if (this.mod.canBeEnabled()) {
+                button_rgb = Color.lightGray.getRGB();
+             } else {
+                button_rgb = new Color(102, 102, 102).getRGB();
+             }
+             break;
          case 4:
             if (this.mod.isEnabled()) {
                button_rgb = this.c3;
@@ -237,6 +216,7 @@ public class ModuleComponent implements Component {
 
 
    }
+   
 
    public int getHeight() {
       if (!this.po) {
@@ -273,7 +253,13 @@ public class ModuleComponent implements Component {
       }
 
       if (this.ii(x, y) && b == 1) {
-         this.po = !this.po;
+         if(!po) {
+        	 this.category.loadSpecificModule(mod);
+        	 po = true;
+         } else if (po) {
+        	 po = false;
+        	 this.category.moduleOpened = false;
+         }
          this.category.r3nd3r();
       }
 
@@ -286,7 +272,7 @@ public class ModuleComponent implements Component {
    public void mouseReleased(int x, int y, int m) {
       for (Component c : this.settings) {
          c.mouseReleased(x, y, m);
-         updateSettings();
+         //updateSettings();
       }
 
    }

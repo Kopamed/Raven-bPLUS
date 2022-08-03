@@ -59,11 +59,6 @@ public class Module {
       return (E) this;
    }
    
-   public void configLoad() { //notworking atm
-   }
-   
-   public void preClickGuiLoad() {
-   }
 
    public JsonObject getConfigAsJson(){
       JsonObject settings = new JsonObject();
@@ -198,7 +193,9 @@ public class Module {
    }
    
    public void guiButtonToggled(TickSetting b, Component c) {
-	   
+   }
+   
+   public void preClickGuiLoad() {
    }
 
    public int getKeycode() {

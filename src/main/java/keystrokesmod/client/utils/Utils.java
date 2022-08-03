@@ -53,6 +53,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
@@ -83,23 +84,44 @@ public class Utils {
 	   
 	   public static EntityPlayer getClosestPlayer(double dis) {
 		   if(mc.theWorld == null)
-	    		  return null;
+			   return null;
 		   Iterator entities;
-			entities = mc.theWorld.loadedEntityList.iterator();
-			EntityPlayer cplayer = null;
-			
-			while(entities.hasNext()) {
-				Entity en = (Entity)entities.next();
-				if (en instanceof EntityPlayer && en != mc.thePlayer) {
-					EntityPlayer pl = (EntityPlayer) en;
-					if(mc.thePlayer.getDistanceToEntity(pl) < dis && !AntiBot.bot(pl)) {
-						dis = mc.thePlayer.getDistanceToEntity(pl);
-						cplayer = pl;
-					}
-		        }
-			}
-			
-			return cplayer;
+		   entities = mc.theWorld.loadedEntityList.iterator();
+		   EntityPlayer cplayer = null;
+
+		   while(entities.hasNext()) {
+			   Entity en = (Entity)entities.next();
+			   if (en instanceof EntityPlayer && en != mc.thePlayer) {
+				   EntityPlayer pl = (EntityPlayer) en;
+				   if(mc.thePlayer.getDistanceToEntity(pl) < dis && !AntiBot.bot(pl)) {
+					   dis = mc.thePlayer.getDistanceToEntity(pl);
+					   cplayer = pl;
+				   }
+			   }
+		   }
+
+		   return cplayer;
+	   }
+
+	   public static EntityMob getClosestEntity(double dis) {
+		   if(mc.theWorld == null)
+			   return null;
+		   Iterator entities;
+		   entities = mc.theWorld.loadedEntityList.iterator();
+		   EntityMob cplayer = null;
+
+		   while(entities.hasNext()) {
+			   Entity en = (Entity)entities.next();
+			   if (en instanceof EntityMob && en != mc.thePlayer) {
+				   EntityMob pl = (EntityMob) en;
+				   if(mc.thePlayer.getDistanceToEntity(pl) < dis && !AntiBot.bot(pl)) {
+					   dis = mc.thePlayer.getDistanceToEntity(pl);
+					   cplayer = pl;
+				   }
+			   }
+		   }
+
+		   return cplayer;
 	   }
 	   
       public static void hotkeyToSlot(int slot) {

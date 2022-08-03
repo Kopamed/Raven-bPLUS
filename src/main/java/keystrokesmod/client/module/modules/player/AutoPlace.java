@@ -1,7 +1,10 @@
 package keystrokesmod.client.module.modules.player;
 
+import org.lwjgl.input.Mouse;
+
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -17,7 +20,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Mouse;
 
 public class AutoPlace extends Module {
    public static DescriptionSetting ds;

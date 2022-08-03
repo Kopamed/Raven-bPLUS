@@ -1,18 +1,19 @@
 package keystrokesmod.client.config;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
-import net.minecraft.client.Minecraft;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module;
+import net.minecraft.client.Minecraft;
 
 /**
  * Class responsible for choosing which config is currently being used
@@ -112,7 +113,6 @@ public class ConfigManager {
             } else {
                 module.resetToDefaults();
             }
-            module.configLoad();
         }
     }
 
