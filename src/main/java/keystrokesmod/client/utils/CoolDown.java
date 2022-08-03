@@ -3,6 +3,7 @@ package keystrokesmod.client.utils;
 public class CoolDown {
     private long start;
     private long lasts;
+    private boolean checkedFinish;
 
     public CoolDown(long lasts){
         this.lasts = lasts;
@@ -10,12 +11,21 @@ public class CoolDown {
 
     public void start(){
         this.start = System.currentTimeMillis();
+        checkedFinish = false;
         //Utils.Player.sendMessageToSelf("Time started " + lasts/1000);
     }
 
     public boolean hasFinished(){
         if(System.currentTimeMillis() >= start + lasts) {
             //Utils.Player.sendMessageToSelf("Time finished");
+            return true;
+        }
+        return false;
+    }
+    public boolean firstFinish(){
+        if(System.currentTimeMillis() >= start + lasts && !checkedFinish) {
+            //Utils.Player.sendMessageToSelf("Time finished");
+        	checkedFinish = true;
             return true;
         }
         return false;

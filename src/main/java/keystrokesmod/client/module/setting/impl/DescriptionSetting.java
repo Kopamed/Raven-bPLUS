@@ -13,6 +13,7 @@ public class DescriptionSetting extends Setting {
       super(t);
       this.desc = t;
       this.defaultDesc = t;
+      this.isVisable = true;
    }
 
    public String getDesc() {
@@ -52,5 +53,13 @@ public class DescriptionSetting extends Setting {
    @Override
    public Component createComponent(ModuleComponent moduleComponent) {
       return null;
+   }
+   
+   public boolean isVisable() {
+	   return this.isVisable;
+   }
+   
+   public void setVisable(boolean visable) {
+	   this.isVisable = visable;
    }
 }

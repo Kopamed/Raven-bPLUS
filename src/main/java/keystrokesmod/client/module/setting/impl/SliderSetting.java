@@ -24,6 +24,7 @@ public class SliderSetting extends Setting {
       this.max = max;
       this.interval = intervals;
       this.defaultVal = defaultValue;
+      this.isVisable = true;
    }
 
    public String getName() {
@@ -93,5 +94,13 @@ public class SliderSetting extends Setting {
          bd = bd.setScale(p, RoundingMode.HALF_UP);
          return bd.doubleValue();
       }
+   }
+   
+   public boolean isVisable() {
+	   return this.isVisable;
+   }
+   
+   public void setVisable(boolean visable) {
+	   this.isVisable = visable;
    }
 }

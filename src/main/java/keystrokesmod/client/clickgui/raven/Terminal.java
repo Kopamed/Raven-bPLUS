@@ -1,20 +1,16 @@
 package keystrokesmod.client.clickgui.raven;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.utils.CoolDown;
-import keystrokesmod.client.utils.Timer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.opengl.GL11;
-import scala.Int;
-import scala.actors.threadpool.Arrays;
-
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.stream.Stream;
 
 public class Terminal implements Component {
     private int x, y, width, height, barHeight, border;

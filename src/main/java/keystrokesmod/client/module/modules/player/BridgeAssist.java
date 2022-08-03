@@ -1,7 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;

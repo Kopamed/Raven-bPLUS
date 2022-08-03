@@ -147,6 +147,7 @@ public class ClickGui extends GuiScreen {
          for (Component c : category.getModules()) {
             c.mouseDown(x, y, mouseButton);
          }
+         
       }
    }
 

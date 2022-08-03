@@ -1,28 +1,32 @@
 package keystrokesmod.client.main;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import keystrokesmod.client.utils.version.VersionManager;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import javax.imageio.ImageIO;
+
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.command.CommandManager;
 import keystrokesmod.client.config.ConfigManager;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.modules.HUD;
-import keystrokesmod.client.utils.*;
+import keystrokesmod.client.utils.ChatHelper;
+import keystrokesmod.client.utils.DebugInfoRenderer;
+import keystrokesmod.client.utils.MouseManager;
+import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.version.VersionManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 
 //Todo fix wtap
@@ -98,11 +102,10 @@ public class Raven {
       }
 
       commandManager = new CommandManager();
-      clickGui = new ClickGui();
       configManager = new ConfigManager();
+      clickGui = new ClickGui();
       clientConfig = new ClientConfig();
       clientConfig.applyConfig();
-
       ex.execute(() -> {
          try {
             LaunchTracker.registerLaunch();

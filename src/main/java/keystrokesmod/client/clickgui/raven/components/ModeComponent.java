@@ -1,6 +1,7 @@
 package keystrokesmod.client.clickgui.raven.components;
 
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -9,6 +10,7 @@ import java.awt.*;
 
 public class ModeComponent implements Component {
     private final int c = (new Color(30, 144, 255)).getRGB();
+    private final Module mod;
     private final ComboSetting mode;
     private final ModuleComponent module;
     private int x;
@@ -17,12 +19,13 @@ public class ModeComponent implements Component {
     private boolean registeredClick = false;
     private boolean md = false;
 
-    public ModeComponent(ComboSetting desc, ModuleComponent b, int o) {
+    public ModeComponent(ComboSetting desc, ModuleComponent b, int o, Module mod) {
         this.mode = desc;
         this.module = b;
         this.x = b.category.getX() + b.category.getWidth();
         this.y = b.category.getY() + b.o;
         this.o = o;
+        this.mod = mod;
     }
 
     public void draw() {
@@ -50,8 +53,10 @@ public class ModeComponent implements Component {
 
 
     public void mouseDown(int x, int y, int b) {
-        if(i(x, y))
-            this.mode.nextMode();
+        if(i(x, y)) {
+        	this.mode.nextMode();
+        	this.mod.guiButtonToggled(mode);
+        }
     }
 
     @Override

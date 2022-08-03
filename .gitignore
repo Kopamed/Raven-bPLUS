@@ -27,3 +27,4 @@ keystrokes/
 logs/
 saves/
 mc/
+src/main/java/keystrokesmod/client/module/modules/combat/AutoPot.java

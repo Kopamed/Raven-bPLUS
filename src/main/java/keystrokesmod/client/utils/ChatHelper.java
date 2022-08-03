@@ -11,7 +11,7 @@ public class ChatHelper {
    @SubscribeEvent
    public void onChatMessageReceived(ClientChatReceivedEvent event) {
       if (e && Utils.Player.isPlayerInGame()) {
-         if (Utils.Java.str(event.message.getUnformattedText()).startsWith("Unknown")) {
+         if (Utils.Java.str(event.message.getUnformattedText()).contains("Unknown")) {
             event.setCanceled(true);
             e = false;
             this.getPing();
