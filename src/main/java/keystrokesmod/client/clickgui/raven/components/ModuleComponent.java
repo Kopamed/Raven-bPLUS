@@ -46,43 +46,35 @@ public class ModuleComponent implements Component {
    public void updateSettings() {
 	   //ill fix this later but cannot be fked rn
 	   ArrayList<Component> newSettings = new ArrayList<Component>();
-	   int i = 1;
 	   int y = o + 12;
 	   if (!mod.getSettings().isEmpty()) {
 		   for (Setting v : mod.getSettings()) {
 			   if(v.isVisable) {
-				   i++;
-			   }
-		   }
-		   if(i != settings.size()) {
-			   for (Setting v : mod.getSettings()) {
-				   if(v.isVisable) {
-					   if (v instanceof SliderSetting) {
-						   SliderSetting n = (SliderSetting) v;
-						   SliderComponent s = new SliderComponent(n, this, y);
-						   newSettings.add(s);
-						   y += 16;
-					   } else if (v instanceof TickSetting) {
-						   TickSetting b = (TickSetting) v;
-						   TickComponent c = new TickComponent(mod, b, this, y);
-						   newSettings.add(c);
-						   y += 12;
-					   } else if (v instanceof DescriptionSetting) {
-						   DescriptionSetting d = (DescriptionSetting) v;
-						   DescriptionComponent m = new DescriptionComponent(d, this, y);
-						   newSettings.add(m);
-						   y += 12;
-					   } else if (v instanceof DoubleSliderSetting) {
-						   DoubleSliderSetting n = (DoubleSliderSetting) v;
-						   RangeSliderComponent s = new RangeSliderComponent(n, this, y);
-						   newSettings.add(s);
-						   y += 16;
-					   } else if (v instanceof ComboSetting) {
-						   ComboSetting n = (ComboSetting) v;
-						   ModeComponent s = new ModeComponent(n, this, y, mod);
-						   newSettings.add(s);
-						   y += 12;
-					   }
+				   if (v instanceof SliderSetting) {
+					   SliderSetting n = (SliderSetting) v;
+					   SliderComponent s = new SliderComponent(n, this, y);
+					   newSettings.add(s);
+					   y += 16;
+				   } else if (v instanceof TickSetting) {
+					   TickSetting b = (TickSetting) v;
+					   TickComponent c = new TickComponent(mod, b, this, y);
+					   newSettings.add(c);
+					   y += 12;
+				   } else if (v instanceof DescriptionSetting) {
+					   DescriptionSetting d = (DescriptionSetting) v;
+					   DescriptionComponent m = new DescriptionComponent(d, this, y);
+					   newSettings.add(m);
+					   y += 12;
+				   } else if (v instanceof DoubleSliderSetting) {
+					   DoubleSliderSetting n = (DoubleSliderSetting) v;
+					   RangeSliderComponent s = new RangeSliderComponent(n, this, y);
+					   newSettings.add(s);
+					   y += 16;
+				   } else if (v instanceof ComboSetting) {
+					   ComboSetting n = (ComboSetting) v;
+					   ModeComponent s = new ModeComponent(n, this, y, mod);
+					   newSettings.add(s);
+					   y += 12;
 				   }
 			   }
 		   }

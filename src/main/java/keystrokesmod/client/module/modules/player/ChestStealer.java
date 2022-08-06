@@ -79,11 +79,11 @@ public class ChestStealer extends Module {
 						}
 					}
 				}
+			}  else {
+				isEmpty = false;
+				inChest = false;
 			}
-		}  else {
-			isEmpty = false;
-			inChest = false;
-		}
+		} 
 	}
 
 	public void generatePath(ContainerChest chest) {

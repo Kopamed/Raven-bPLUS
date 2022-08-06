@@ -91,6 +91,7 @@ public class ModuleManager {
    public ModuleManager() {
       if (initialized) return;
 
+      addModule(new ChestStealer());
       addModule(new LeftClicker());
       addModule(new RightClicker());
       addModule(new AimAssist());
@@ -168,7 +169,6 @@ public class ModuleManager {
       addModule(new AutoBlock());
       addModule(new MiddleClick());
       addModule(new Projectiles());
-      addModule(new ChestStealer());
       addModule(new FakeHud());
       //addModule(new AutoPot());
       // why ?
