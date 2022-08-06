@@ -81,7 +81,6 @@ public class ChestStealer extends Module {
 				}
 			}
 		} else {
-			Utils.Player.sendMessageToSelf("YOOOO");
 			isEmpty = false;
 			inChest = false;
 		}
