@@ -79,11 +79,12 @@ public class ChestStealer extends Module {
 						}
 					}
 				}
-			}  else {
-				isEmpty = false;
-				inChest = false;
 			}
-		} 
+		} else {
+			Utils.Player.sendMessageToSelf("YOOOO");
+			isEmpty = false;
+			inChest = false;
+		}
 	}
 
 	public void generatePath(ContainerChest chest) {
