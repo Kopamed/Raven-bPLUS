@@ -33,7 +33,7 @@ public class Velocity extends Module {
       this.registerSetting(d = new TickSetting("Only while targeting", false));
       this.registerSetting(e = new TickSetting("Disable while holding S", false));
       this.registerSetting(f = new TickSetting("Different velo for projectiles", false));
-      this.registerSetting(g = new ComboSetting("Mode", mode));
+      this.registerSetting(g = new ComboSetting("Projectiles Mode", mode));
 	  this.registerSetting(ap = new SliderSetting("Horizontal projectiles", 90.0D, -100.0D, 100.0D, 1.0D));
 	  this.registerSetting(bp = new SliderSetting("Vertical projectiles", 100.0D, -100.0D, 100.0D, 1.0D));
 	  this.registerSetting(cp = new SliderSetting("Chance projectiles", 100.0D, 0.0D, 100.0D, 1.0D));
