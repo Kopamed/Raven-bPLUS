@@ -140,6 +140,22 @@ public class Utils {
       public static int getCurrentPlayerSlot() {
          return mc.thePlayer.inventory.currentItem;
       }
+      
+  	public static boolean isPlayerHoldingSword() {
+  		if (mc.thePlayer.getCurrentEquippedItem() == null) {
+  			return false;
+  		} else {
+  			return mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
+  		}
+	}
+  	
+  	public static boolean isPlayerHoldingAxe() {
+  		if (mc.thePlayer.getCurrentEquippedItem() == null) {
+  			return false;
+  		} else {
+  			return mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
+  		}
+	}
 
       public static boolean isPlayerHoldingWeapon() {
          if (mc.thePlayer.getCurrentEquippedItem() == null) {

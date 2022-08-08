@@ -1,15 +1,18 @@
 package keystrokesmod.client.module;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
+
 import com.google.gson.JsonObject;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.modules.HUD;
+
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import org.lwjgl.input.Keyboard;
-
-import java.util.ArrayList;
 
 public class Module {
    protected ArrayList<Setting> settings;
@@ -19,7 +22,9 @@ public class Module {
    protected boolean defaultEnabled = enabled;
    protected int keycode = 0;
    protected int defualtKeyCode = keycode;
-
+   
+   protected ModuleComponent component;
+   
    protected static Minecraft mc;
    private boolean isToggled = false;
 
@@ -53,13 +58,16 @@ public class Module {
       this.description = i;
       return (E) this;
    }
+   
 
    public JsonObject getConfigAsJson(){
       JsonObject settings = new JsonObject();
 
       for(Setting setting : this.settings){
-         JsonObject settingData = setting.getConfigAsJson();
-         settings.add(setting.settingName, settingData);
+    	  if(setting != null) {
+    		  JsonObject settingData = setting.getConfigAsJson();
+              settings.add(setting.settingName, settingData);
+    	  }
       }
 
       JsonObject data = new JsonObject();
@@ -99,6 +107,7 @@ public class Module {
       }
    }
 
+   
    public boolean canBeEnabled() {
       return true;
    }
@@ -106,7 +115,6 @@ public class Module {
    public void enable() {
       boolean oldState = this.enabled;
       this.enabled = true;
-
       this.onEnable();
       MinecraftForge.EVENT_BUS.register(this);
    }
@@ -145,6 +153,10 @@ public class Module {
    public void registerSetting(Setting Setting) {
       this.settings.add(Setting);
    }
+   
+   public void unregisterSetting(Setting Setting) {
+	  this.settings.remove(Setting);
+   }
 
    public ModuleCategory moduleCategory() {
       return this.moduleCategory;
@@ -176,10 +188,20 @@ public class Module {
 
    public void guiButtonToggled(TickSetting b) {
    }
+   
+   public void guiButtonToggled(ComboSetting b) {
+   }
+   
+   public void guiButtonToggled(TickSetting b, Component c) {
+   }
+   
+   public void preClickGuiLoad() {
+   }
 
    public int getKeycode() {
       return this.keycode;
    }
+ 
 
    public void setbind(int keybind) {
       this.keycode = keybind;
@@ -192,6 +214,10 @@ public class Module {
       for(Setting setting : this.settings){
          setting.resetToDefaults();
       }
+   }
+   
+   public void setModuleComponent(ModuleComponent component) {
+	   this.component = component;
    }
 
    public void onGuiClose() {

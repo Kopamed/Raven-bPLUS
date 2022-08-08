@@ -1,7 +1,10 @@
 package keystrokesmod.client.module.modules.player;
 
+import org.lwjgl.input.Mouse;
+
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -17,12 +20,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Mouse;
 
 public class AutoPlace extends Module {
    public static DescriptionSetting ds;
-   public static TickSetting a;
-   public static TickSetting b;
+   public static TickSetting a, b, top;
    public static SliderSetting c;
    private double lfd = 0.0D;
    private final int d = 25;
@@ -36,6 +37,7 @@ public class AutoPlace extends Module {
       this.registerSetting(ds = new DescriptionSetting("FD: FPS/80"));
       this.registerSetting(c = new SliderSetting("Frame delay", 8.0D, 0.0D, 30.0D, 1.0D));
       this.registerSetting(a = new TickSetting("Hold right", true));
+      this.registerSetting(top = new TickSetting("Place on top & bottom", false));
    }
 
    public void guiUpdate() {
@@ -74,7 +76,7 @@ public class AutoPlace extends Module {
             ItemStack i = mc.thePlayer.getHeldItem();
             if (i != null && i.getItem() instanceof ItemBlock) {
                MovingObjectPosition m = mc.objectMouseOver;
-               if (m != null && m.typeOfHit == MovingObjectType.BLOCK && m.sideHit != EnumFacing.UP && m.sideHit != EnumFacing.DOWN) {
+               if (m != null && m.typeOfHit == MovingObjectType.BLOCK && ((m.sideHit != EnumFacing.UP && m.sideHit != EnumFacing.DOWN) || top.isToggled())) {
                   if (this.lm != null && (double)this.f < c.getInput()) {
                      ++this.f;
                   } else {
