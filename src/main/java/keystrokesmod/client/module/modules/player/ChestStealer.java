@@ -11,6 +11,7 @@ import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -19,7 +20,7 @@ public class ChestStealer extends Module {
 
 	private DoubleSliderSetting firstDelay, delay, closeDelay;
 	private TickSetting autoClose;
-	private boolean inChest, isEmpty;
+	private boolean inChest;
 	private CoolDown delayTimer = new CoolDown(0), closeTimer = new CoolDown(0);
 	private ArrayList<Slot> sortedSlots;
 	private ContainerChest chest;
@@ -46,31 +47,24 @@ public class ChestStealer extends Module {
 					inChest = true;
 				}
 				if(inChest && !sortedSlots.isEmpty()) {
-						if(delayTimer.hasFinished()) {
-							if(sortedSlots.get(0).s != -1) {
-								mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1, mc.thePlayer);
-								delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(), delay.getInputMax()+0.01));
-								delayTimer.start();
-								sortedSlots.remove(0);
-								//System.out.println(sortedSlots);
-							} else {
-								isEmpty = true;
-							}
+					if(delayTimer.hasFinished()) {
+						mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1, mc.thePlayer);
+						delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(), delay.getInputMax()+0.01));
+						delayTimer.start();
+						sortedSlots.remove(0);
 					} 
-					if(isEmpty && autoClose.isToggled() && delayTimer.hasFinished()) {
-						if(closeTimer.firstFinish()) {
-							mc.thePlayer.closeScreen();
-							isEmpty = false;
-							inChest = false;
-						} else {
-							closeTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(closeDelay.getInputMin(), closeDelay.getInputMax()+0.01));
-							closeTimer.start();
-						}
+				} 
+				if(sortedSlots.isEmpty() && autoClose.isToggled()) {
+					if(closeTimer.firstFinish()) {
+						mc.thePlayer.closeScreen();
+						inChest = false;
+					} else {
+						closeTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(closeDelay.getInputMin(), closeDelay.getInputMax()+0.01));
+						closeTimer.start();
 					}
 				}
 			}
 		} else {
-			isEmpty = false;
 			inChest = false;
 		}
 	}
@@ -86,27 +80,27 @@ public class ChestStealer extends Module {
 		Collections.addAll(newSlots, ss);
 		this.sortedSlots = newSlots;
 	}
-	
+
 	public static Slot[] sort(Slot[] in) {
-        if (in == null || in.length == 0) {
-            return in;
-        }
-        Slot[] out = new Slot[in.length];
-        Slot current = in[ThreadLocalRandom.current().nextInt(0, in.length)];
-        for (int i = 0; i < in.length; i++) {
-            if (i == in.length -1) {
-                out[in.length -1] = Arrays.stream(in).filter(p -> !p.visited).findAny().orElseGet(null);
-                break;
-            }
-            final Slot finalCurrent = current;     
-            out[i] = finalCurrent;
-            finalCurrent.visit();
-            Slot next = Arrays.stream(in).filter(p -> !p.visited).min(Comparator.comparingDouble(p -> p.getDistance(finalCurrent))).get();
-            current = next;
-        }
-        return out;
-    }
-	
+		if (in == null || in.length == 0) {
+			return in;
+		}
+		Slot[] out = new Slot[in.length];
+		Slot current = in[ThreadLocalRandom.current().nextInt(0, in.length)];
+		for (int i = 0; i < in.length; i++) {
+			if (i == in.length -1) {
+				out[in.length -1] = Arrays.stream(in).filter(p -> !p.visited).findAny().orElseGet(null);
+				break;
+			}
+			final Slot finalCurrent = current;     
+			out[i] = finalCurrent;
+			finalCurrent.visit();
+			Slot next = Arrays.stream(in).filter(p -> !p.visited).min(Comparator.comparingDouble(p -> p.getDistance(finalCurrent))).get();
+			current = next;
+		}
+		return out;
+	}
+
 	public Slot getClosestSlot(Slot slot, ArrayList<Slot> slots) {
 		slots.remove(slot);
 		if(!slots.isEmpty()) {
@@ -118,31 +112,31 @@ public class ChestStealer extends Module {
 					closestSlot = slot;
 				}
 			}
-			
+
 			return closestSlot;
 		}
-		
+
 		return new Slot(-1);
 	}
-	
+
 	public class Slot {
 		final int x;
 		final int y;
 		final int s;
 		boolean visited;
-		
+
 		public Slot(int s) {
 			this.x = (s + 1) % 10;
 			this.y = s / 9;
 			this.s = s;
 		}
-		
-	    public double getDistance(Slot s) {
-	        return Math.abs(this.x-s.x) + Math.abs(this.y - s.y);
-	    }
-	    
-	    public void visit() {
-	        visited = true;
-	    }
+
+		public double getDistance(Slot s) {
+			return Math.abs(this.x-s.x) + Math.abs(this.y - s.y);
+		}
+
+		public void visit() {
+			visited = true;
+		}
 	}
 }
