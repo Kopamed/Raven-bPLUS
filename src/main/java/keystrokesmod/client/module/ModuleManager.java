@@ -56,6 +56,7 @@ import keystrokesmod.client.module.modules.other.MiddleClick;
 import keystrokesmod.client.module.modules.other.NameHider;
 import keystrokesmod.client.module.modules.other.StringEncrypt;
 import keystrokesmod.client.module.modules.other.WaterBucket;
+import keystrokesmod.client.module.modules.player.AutoArmour;
 import keystrokesmod.client.module.modules.player.AutoJump;
 import keystrokesmod.client.module.modules.player.AutoPlace;
 import keystrokesmod.client.module.modules.player.AutoTool;
@@ -92,6 +93,7 @@ public class ModuleManager {
       if (initialized) return;
 
       addModule(new ChestStealer());
+      addModule(new AutoArmour());
       addModule(new LeftClicker());
       addModule(new RightClicker());
       addModule(new AimAssist());

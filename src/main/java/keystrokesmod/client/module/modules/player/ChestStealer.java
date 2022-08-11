@@ -101,24 +101,6 @@ public class ChestStealer extends Module {
 		return out;
 	}
 
-	public Slot getClosestSlot(Slot slot, ArrayList<Slot> slots) {
-		slots.remove(slot);
-		if(!slots.isEmpty()) {
-			Slot closestSlot = null;
-			for(Slot s : slots) {
-				if(closestSlot == null) {
-					closestSlot = s;
-				} if((Math.abs(slot.x - s.x) + Math.abs(slot.y - s.y) < Math.abs(slot.x - closestSlot.x) + Math.abs(slot.y - closestSlot.y)) && (Math.abs(s.x - slot.x) + Math.abs(s.y - slot.y) != 0)){
-					closestSlot = slot;
-				}
-			}
-
-			return closestSlot;
-		}
-
-		return new Slot(-1);
-	}
-
 	public class Slot {
 		final int x;
 		final int y;
