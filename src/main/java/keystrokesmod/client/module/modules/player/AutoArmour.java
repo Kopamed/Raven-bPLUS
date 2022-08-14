@@ -71,6 +71,9 @@ public class AutoArmour extends Module {
 					slots.add(bestArmour[i]);
 				}
 			} catch(NullPointerException e) {
+				slots.add(bestArmour[i]); 
+			} catch(ClassCastException e ) {
+				slots.add(new Slot(i + 5));
 				slots.add(bestArmour[i]);
 			}
 		}
