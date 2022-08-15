@@ -64,8 +64,8 @@ public class LeftClicker extends Module {
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
 
-        this.registerSetting(clickTimings = new ComboSetting("Click event", RightClicker.ClickEvent.Render));
-        this.registerSetting(clickStyle = new ComboSetting("Click Style", RightClicker.ClickStyle.Raven));
+        this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
+        this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
 
         try {
             this.playerMouseInput = ReflectionHelper.findMethod(
@@ -117,13 +117,13 @@ public class LeftClicker extends Module {
         )
             return;
 
-        if(clickTimings.getMode() != RightClicker.ClickEvent.Render)
+        if(clickTimings.getMode() != ClickEvent.Render)
             return;
 
-        if(clickStyle.getMode() == RightClicker.ClickStyle.Raven){
+        if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();
         }
-        else if (clickStyle.getMode() == RightClicker.ClickStyle.SKid){
+        else if (clickStyle.getMode() == ClickStyle.SKid){
             skidClick(ev, null);
         }
     }
@@ -135,13 +135,13 @@ public class LeftClicker extends Module {
         )
             return;
 
-        if(clickTimings.getMode() != RightClicker.ClickEvent.Tick)
+        if(clickTimings.getMode() != ClickEvent.Tick)
             return;
 
-        if(clickStyle.getMode() == RightClicker.ClickStyle.Raven){
+        if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();
         }
-        else if (clickStyle.getMode() == RightClicker.ClickStyle.SKid){
+        else if (clickStyle.getMode() == ClickStyle.SKid){
             skidClick(null, ev);
         }
     }
