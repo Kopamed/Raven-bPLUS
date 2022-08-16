@@ -1,6 +1,5 @@
 package keystrokesmod.keystroke;
 
-import keystrokesmod.client.main.ClientConfig;
 import keystrokesmod.client.main.Raven;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -26,9 +25,9 @@ public class KeyStrokeMod {
     public void init(FMLInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new KeyStrokeCommand());
         MinecraftForge.EVENT_BUS.register(new KeyStrokeRenderer());
-        MinecraftForge.EVENT_BUS.register(this);
-        ClientConfig.applyKeyStrokeSettingsFromConfigFile();
+        MinecraftForge.EVENT_BUS.register(this);       
         Raven.init();
+        Raven.clientConfig.applyKeyStrokeSettingsFromConfigFile();
     }
 
     public static KeyStroke getKeyStroke() {

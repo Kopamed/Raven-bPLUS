@@ -18,10 +18,13 @@ public class Module {
    protected ArrayList<Setting> settings;
    private final String moduleName;
    private final ModuleCategory moduleCategory;
+   private boolean hasBind = true;
+   private boolean clientConfig = false;
    protected boolean enabled = false;
    protected boolean defaultEnabled = enabled;
    protected int keycode = 0;
    protected int defualtKeyCode = keycode;
+   
    
    protected ModuleComponent component;
    
@@ -113,14 +116,12 @@ public class Module {
    }
 
    public void enable() {
-      boolean oldState = this.enabled;
       this.enabled = true;
       this.onEnable();
       MinecraftForge.EVENT_BUS.register(this);
    }
 
    public void disable() {
-      boolean oldState = this.enabled;
       this.enabled = false;
       this.onDisable();
       MinecraftForge.EVENT_BUS.unregister(this);
@@ -154,9 +155,6 @@ public class Module {
       this.settings.add(Setting);
    }
    
-   public void unregisterSetting(Setting Setting) {
-	  this.settings.remove(Setting);
-   }
 
    public ModuleCategory moduleCategory() {
       return this.moduleCategory;

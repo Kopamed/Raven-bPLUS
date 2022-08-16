@@ -65,11 +65,11 @@ public class HUD extends Module {
    }
    
    private void setUpLogo() {
-       inputStream = HUD.class.getResourceAsStream("/assets/keystrokes/hudraven.png");
+       /*inputStream = HUD.class.getResourceAsStream("/assets/keystrokes/hudraven.png");
        BufferedImage bf = null;
        try {
-           bf = ImageIO.read(inputStream);
-           ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
+           //bf = ImageIO.read(inputStream); i forgor to upload image
+           //ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
        } catch (IOException noway) {
            noway.printStackTrace();
            ravenLogo = null;
@@ -79,7 +79,7 @@ public class HUD extends Module {
        } catch (NullPointerException nowayV3) {
            nowayV3.printStackTrace();
            ravenLogo = null;
-       }
+       } */
    }
    
    public boolean logoLoaded(){
