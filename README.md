@@ -16,6 +16,8 @@
   <img src="https://img.shields.io/github/languages/top/Kopamed/Raven-bPLUS" alt="Java"/>
 </p>
 
+##### Discontinued due to lack of time, motivation, and because I no longer play.
+
 Raven b+ is built on top of Raven b3, adding quality of life improvements, bug fixes, and much more.<br>
 Discord:<br>
 <a href="https://discord.gg/QQMQfCRyNP"><img src="https://invidget.switchblade.xyz/QQMQfCRyNP" alt="https://discord.gg/QQMQfCRyNP"/></a><br>
@@ -55,3 +57,4 @@ You should follow [this](https://gist.github.com/MarcDiethelm/7303312#file-contr
 #### Readme last updated on 16/01/2022. Bug and update info and other stuff may be out of date. 
 
 [![Stargazers over time](https://starchart.cc/Kopamed/Raven-bPLUS.svg)](https://starchart.cc/Kopamed/Raven-bPLUS)
+<br> Started on the 27th of July 2021. Archived on the 19th August 2022.
