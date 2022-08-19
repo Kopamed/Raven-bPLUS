@@ -2,6 +2,8 @@ package keystrokesmod.client.module.modules;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.FakeHud;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -34,15 +37,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class HUD extends Module {
    public static TickSetting editPosition, dropShadow, logo;
-   public static SliderSetting colourMode, logoScale;
-   public static DescriptionSetting colourModeDesc;
+   public static ComboSetting logoMode;
+   public static SliderSetting colourMode, logoScaleh, logoScalew;
+   public static DescriptionSetting colourModeDesc, logoDesc1, logoDesc2;
    private static int hudX = 5;
    private static int hudY = 70;
    private double logoHeight = 0;
    public static boolean e = false;
-   
-   private double logoWidthRatio = 0.14;
-   private double logoHeightRatio =  0.063;
+  
    private InputStream inputStream;
    private ResourceLocation ravenLogo;
    
@@ -50,6 +52,7 @@ public class HUD extends Module {
    public static boolean showedError;
    public static final String HUDX_prefix = "HUDX~ ";
    public static final String HUDY_prefix = "HUDY~ ";
+   public enum lmv {l1,l2,l3,l4,l5, CD}
 
 
    public HUD() {
@@ -57,50 +60,40 @@ public class HUD extends Module {
       this.registerSetting(editPosition = new TickSetting("Edit position", false));
       this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
       this.registerSetting(logo = new TickSetting("Logo", true));
-      this.registerSetting(logoScale = new SliderSetting("Logo Scale: ", 0.7, 0, 3, 0.01));
+      this.registerSetting(logoScaleh = new SliderSetting("Logo Scale height ", 1, 0, 10, 0.01));
+      this.registerSetting(logoScalew = new SliderSetting("Logo Scale width ", 2, 0, 10, 0.01));
+      this.registerSetting(logoMode = new ComboSetting("Logo Mode:", lmv.l1));
+      this.registerSetting(logoDesc1 = new DescriptionSetting("cd logomode put an image logo.png"));
+      this.registerSetting(logoDesc1 = new DescriptionSetting("in the keystrokes folder"));
       this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 5, 1));
       this.registerSetting(colourModeDesc = new DescriptionSetting("Mode: RAVEN"));
       showedError = false;
       showInHud = false;
-      setUpLogo();
    }
    
-   private void setUpLogo() { // i forgor to upload image
-       /*inputStream = HUD.class.getResourceAsStream("/assets/keystrokes/hudraven.png");
-       BufferedImage bf = null;
+   private void setUpLogo() { 
        try {
+           inputStream = logoMode.getMode() != lmv.CD ? HUD.class.getResourceAsStream("/assets/keystrokes/logohud/" + logoMode.getMode().toString() + ".png") : new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "logo.png"));
+           BufferedImage bf = null;
+           System.out.println(logoMode.getMode().toString());
            bf = ImageIO.read(inputStream);
            ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
-       } catch (IOException noway) {
-           noway.printStackTrace();
-           ravenLogo = null;
-       } catch (IllegalArgumentException nowayV2) {
-           nowayV2.printStackTrace();
-           ravenLogo = null;
-       } catch (NullPointerException nowayV3) {
-           nowayV3.printStackTrace();
-           ravenLogo = null;
-       } */
+       } catch (Exception e) {
+    	   e.printStackTrace();
+       }
+           
+   }
+   
+   public void postApplyConfig() {
+	   setUpLogo();
+   }
+   
+   public void guiButtonToggled(ComboSetting b) {
+	   if(b == logoMode) setUpLogo();
    }
    
    public boolean logoLoaded(){
        return ravenLogo != null && logo.isToggled();
-   }
-
-   public double getLogoWidthRatio() {
-       return logoWidthRatio;
-   }
-
-   public void setLogoWidthRatio(double logoWidthRatio) {
-       this.logoWidthRatio = logoWidthRatio;
-   }
-
-   public double getLogoHeightRatio() {
-       return logoHeightRatio;
-   }
-
-   public void setLogoHeightRatio(double logoHeightRatio) {
-       this.logoHeightRatio = logoHeightRatio;
    }
 
 
@@ -232,15 +225,15 @@ public class HUD extends Module {
    private void drawLogo(int e) {
 	   
 	   ScaledResolution sr = new ScaledResolution(mc);
-       logoHeight = sr.getScaledHeight() * logoHeightRatio * logoScale.getInput();
+       logoHeight = sr.getScaledHeight() * logoScaleh.getInput() /10;
        if(logoLoaded()){
     	   if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
-               double logoWidth = sr.getScaledWidth() * logoWidthRatio * logoScale.getInput();
+               double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /10 * 1.2;
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
                Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
     	   } else {
-               double logoWidth = sr.getScaledWidth() * logoWidthRatio * logoScale.getInput();
+               double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /10;
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
                Gui.drawModalRectWithCustomSizedTexture((int) hudX, (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);

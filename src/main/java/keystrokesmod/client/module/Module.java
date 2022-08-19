@@ -94,6 +94,11 @@ public class Module {
       } catch (NullPointerException ignored){
 
       }
+      postApplyConfig();
+   }
+   
+   public void postApplyConfig() {
+
    }
 
 

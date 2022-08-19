@@ -50,8 +50,10 @@ public class ModeComponent implements Component {
 
 
     public void mouseDown(int x, int y, int b) {
-        if(i(x, y))
+        if(i(x, y)) {
             this.mode.nextMode();
+            module.mod.guiButtonToggled(mode);
+        }
     }
 
     @Override
