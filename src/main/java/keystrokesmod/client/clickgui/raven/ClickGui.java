@@ -1,22 +1,25 @@
 
 package keystrokesmod.client.clickgui.raven;
 
-import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.Module;
-import keystrokesmod.client.utils.Timer;
-import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.utils.version.Version;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.concurrent.ConcurrentException;
+
+import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
+import keystrokesmod.client.utils.Timer;
+import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.version.Version;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiInventory;
 
 public class ClickGui extends GuiScreen {
    private ScheduledFuture<?> sf;
@@ -143,10 +146,11 @@ public class ClickGui extends GuiScreen {
                }
             } while(!category.isOpened());
          } while(category.getModules().isEmpty());
-
-         for (Component c : category.getModules()) {
-            c.mouseDown(x, y, mouseButton);
-         }
+         try {
+        	 for (Component c : category.getModules()) {
+        		 c.mouseDown(x, y, mouseButton);
+        	 }
+         }  catch(ConcurrentModificationException e) {}
       }
    }
 
@@ -228,5 +232,12 @@ public class ClickGui extends GuiScreen {
 
    public ArrayList<CategoryComponent> getCategoryList() {
       return categoryList;
+   }
+   
+   public CategoryComponent getCategoryComponent(ModuleCategory mCat) {
+	   for(CategoryComponent cc : categoryList) {
+		   if(cc.categoryName == mCat) return cc;
+	   }
+	   return null;
    }
 }

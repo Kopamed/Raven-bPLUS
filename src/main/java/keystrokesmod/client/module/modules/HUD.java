@@ -61,15 +61,16 @@ public class HUD extends Module {
       this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 5, 1));
       this.registerSetting(colourModeDesc = new DescriptionSetting("Mode: RAVEN"));
       showedError = false;
+      showInHud = false;
       setUpLogo();
    }
    
-   private void setUpLogo() {
+   private void setUpLogo() { // i forgor to upload image
        /*inputStream = HUD.class.getResourceAsStream("/assets/keystrokes/hudraven.png");
        BufferedImage bf = null;
        try {
-           //bf = ImageIO.read(inputStream); i forgor to upload image
-           //ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
+           bf = ImageIO.read(inputStream);
+           ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
        } catch (IOException noway) {
            noway.printStackTrace();
            ravenLogo = null;
@@ -176,7 +177,7 @@ public class HUD extends Module {
          drawLogo(textBoxWidth);
          y+=logoHeight;
          for (Module m : en) {
-            if (m.isEnabled() && m != this) {
+            if (m.isEnabled() && m.showInHud()) {
                if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());

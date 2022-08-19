@@ -5,12 +5,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
+import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.keystroke.KeyStroke;
@@ -92,6 +95,14 @@ public class ClientConfig {
 	   return data;
    }
    
+   private JsonObject getModulesAsJson() {
+	   JsonObject data = new JsonObject();
+	   for(Module m : Raven.moduleManager.getClientConfigModules()) {
+		   data.add(m.getName(), m.getConfigAsJson());
+	   }
+	   return data;
+   }
+   
    public JsonObject getConfigAsJson() {
 	   JsonObject data = new JsonObject();
 	  
@@ -101,6 +112,7 @@ public class ClientConfig {
        data.add("keystrokes", getKeystrokeAsJson());
        data.add("hud", getHudAsJson());
        data.add("clickgui", getClickGuiAsJson());
+       data.add("modules", getModulesAsJson());
 
        return data;
    }
@@ -144,15 +156,17 @@ public class ClientConfig {
 		   Raven.configManager.loadConfigByName(config.get("currentconfig").getAsString());
 		   loadHudCoords(config.get("hud").getAsJsonObject());
 		   loadTerminalCoords(config.get("clickgui").getAsJsonObject());
+		   loadModules(config.get("modules").getAsJsonObject());
 	   } catch (Exception e) {
 		   e.printStackTrace();
 	   }
 	   applying = false;
    }
 
+
    private void loadHudCoords(JsonObject data) {
-	  HUD.setHudX(data.get("hudX").getAsInt());
-	  HUD.setHudY(data.get("hudY").getAsInt());
+	   HUD.setHudX(data.get("hudX").getAsInt());
+	   HUD.setHudY(data.get("hudY").getAsInt());
    }
 
    private void loadClickGuiCoords(JsonObject data) {
@@ -163,11 +177,23 @@ public class ClientConfig {
 		   cat.setOpened(catData.get("opened").getAsBoolean());
 	   }
    } 
-   
+
    private void loadTerminalCoords(JsonObject data) {
 	   Raven.clickGui.terminal.setLocation(data.get("terminalX").getAsInt(), data.get("terminalY").getAsInt());
 	   Raven.clickGui.terminal.setSize(data.get("width").getAsInt(), data.get("height").getAsInt());
 	   Raven.clickGui.terminal.opened = data.get("opened").getAsBoolean();
 	   Raven.clickGui.terminal.hidden = data.get("hidden").getAsBoolean();
+   }
+   
+   private void loadModules(JsonObject data) {
+	   List<Module> knownModules = new ArrayList<>(Raven.moduleManager.getClientConfigModules());
+	   for(Module module : knownModules){
+		   if(data.has(module.getName())){
+			   module.applyConfigFromJson(data.get(module.getName()).getAsJsonObject());
+			   System.out.println(module.getName());
+		   } else {
+			   module.resetToDefaults();
+		   }
+	   }
    }
 }

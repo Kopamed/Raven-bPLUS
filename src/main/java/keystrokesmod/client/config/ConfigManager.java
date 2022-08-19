@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.modules.config.ConfigModuleManager;
 import net.minecraft.client.Minecraft;
 
 import java.io.File;
@@ -19,8 +20,9 @@ import java.util.Objects;
  */
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class ConfigManager {
+	
+	public final ConfigModuleManager configModuleManager;
     private final File configDirectory = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs");
-
     private Config config;
     private final ArrayList<Config> configs = new ArrayList<>();
 
@@ -28,15 +30,13 @@ public class ConfigManager {
         if(!configDirectory.isDirectory()){
             configDirectory.mkdirs();
         }
-
-        discoverConfigs();
         File defaultFile = new File(configDirectory, "default.bplus");
         this.config = new Config(defaultFile);
-
+        discoverConfigs();
+        configModuleManager = new ConfigModuleManager();
         if(!defaultFile.exists()) {
             save();
         }
-
     }
 
     /**
@@ -76,6 +76,7 @@ public class ConfigManager {
                 }
             }
         }
+        if(configModuleManager != null) configModuleManager.updater(configs);
     }
 
     public Config getConfig(){
@@ -92,8 +93,8 @@ public class ConfigManager {
         data.addProperty("lastEditTime", System.currentTimeMillis());
 
         JsonObject modules = new JsonObject();
-        for(Module module : Raven.moduleManager.getModules()){
-            modules.add(module.getName(), module.getConfigAsJson());
+        for(Module module : Raven.moduleManager.getConfigModules()){
+           modules.add(module.getName(), module.getConfigAsJson());
         }
         data.add("modules", modules);
 
@@ -103,14 +104,16 @@ public class ConfigManager {
     public void setConfig(Config config){
         this.config = config;
         JsonObject data = config.getData().get("modules").getAsJsonObject();
-        List<Module> knownModules = new ArrayList<>(Raven.moduleManager.getModules());
+        List<Module> knownModules = new ArrayList<>(Raven.moduleManager.getConfigModules());
         for(Module module : knownModules){
-            if(data.has(module.getName())){
-                module.applyConfigFromJson(
-                        data.get(module.getName()).getAsJsonObject()
-                );
-            } else {
-                module.resetToDefaults();
+            if(!module.isClientConfig()) {
+            	if(data.has(module.getName())){
+                    module.applyConfigFromJson(
+                            data.get(module.getName()).getAsJsonObject()
+                    );
+                } else {
+                    module.resetToDefaults();
+                }
             }
         }
     }
@@ -135,8 +138,8 @@ public class ConfigManager {
     }
 
     public void resetConfig() {
-        for(Module module : Raven.moduleManager.getModules())
-            module.resetToDefaults();
+        for(Module module : Raven.moduleManager.getConfigModules())
+        	if(!module.isClientConfig()) module.resetToDefaults();
         save();
     }
 

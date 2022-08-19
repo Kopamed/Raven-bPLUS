@@ -129,13 +129,22 @@ public class CategoryComponent {
 
    public void r3nd3r() {
       int o = this.bh + 3;
-
+      
       Component c;
       for(Iterator var2 = this.modulesInCategory.iterator(); var2.hasNext(); o += c.getHeight()) {
          c = (Component)var2.next();
          c.setComponentStartAt(o);
       }
-
+   }
+   
+   public void updateModules() {
+	   int tY = this.bh + 3;
+	   this.modulesInCategory.clear();
+	   for(Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+		   Module mod = var3.next();
+		   ModuleComponent b = new ModuleComponent(mod, this, tY);
+		   this.modulesInCategory.add(b);
+	   }
    }
 
    public int getX() {

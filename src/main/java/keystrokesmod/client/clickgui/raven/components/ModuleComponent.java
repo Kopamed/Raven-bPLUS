@@ -1,16 +1,22 @@
 
 package keystrokesmod.client.clickgui.raven.components;
 
-import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.module.*;
-import keystrokesmod.client.module.modules.client.GuiModule;
-import keystrokesmod.client.module.setting.Setting;
-import keystrokesmod.client.module.setting.impl.*;
-import net.minecraft.client.Minecraft;
+import java.awt.Color;
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.util.ArrayList;
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.config.ConfigModule;
+import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
+import net.minecraft.client.Minecraft;
 
 public class ModuleComponent implements Component {
    private final int c1 = (new Color(0, 85, 255)).getRGB();

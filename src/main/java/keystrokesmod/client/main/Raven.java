@@ -116,14 +116,12 @@ public class Raven {
    public void onTick(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          if (Utils.Player.isPlayerInGame()) {
-            for (int i = 0; i < moduleManager.numberOfModules(); i++) {
-               Module module = moduleManager.getModules().get(i);
+            for (Module module : moduleManager.getModules()) {
                if (Minecraft.getMinecraft().currentScreen == null) {
                   module.keybind();
                } else if (Minecraft.getMinecraft().currentScreen instanceof ClickGui) {
                   module.guiUpdate();
                }
-
                if (module.isEnabled()) module.update();
             }
          }

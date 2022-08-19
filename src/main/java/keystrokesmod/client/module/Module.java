@@ -18,9 +18,7 @@ public class Module {
    protected ArrayList<Setting> settings;
    private final String moduleName;
    private final ModuleCategory moduleCategory;
-   private boolean hasBind = true;
-   private boolean clientConfig = false;
-   protected boolean enabled = false;
+   protected boolean hasBind = true, showInHud = true, clientConfig = false, enabled = false;
    protected boolean defaultEnabled = enabled;
    protected int keycode = 0;
    protected int defualtKeyCode = keycode;
@@ -114,7 +112,12 @@ public class Module {
    public boolean canBeEnabled() {
       return true;
    }
+   
+   public boolean showInHud() {
+	   return showInHud;
+   }
 
+   
    public void enable() {
       this.enabled = true;
       this.onEnable();
@@ -192,9 +195,6 @@ public class Module {
    
    public void guiButtonToggled(TickSetting b, Component c) {
    }
-   
-   public void preClickGuiLoad() {
-   }
 
    public int getKeycode() {
       return this.keycode;
@@ -229,8 +229,13 @@ public class Module {
    public void clearBinds() {
       this.keycode = 0;
    }
+   
+   public boolean isClientConfig() {
+	   return clientConfig;
+   }
 
-   public enum ModuleCategory {
+
+public enum ModuleCategory {
       combat,
       movement,
       player,
@@ -239,6 +244,7 @@ public class Module {
       minigames,
       other,
       client,
-      hotkey
+      hotkey,
+      config
    }
 }
