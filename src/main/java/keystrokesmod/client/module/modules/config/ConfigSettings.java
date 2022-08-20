@@ -1,6 +1,25 @@
 package keystrokesmod.client.module.modules.config;
 
-public class ConfigSettings {
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 
-	//will do later
+public class ConfigSettings extends Module{
+
+	public TickSetting updateConfig;
+	
+	public ConfigSettings() {
+		super("Config", ModuleCategory.config);
+		this.registerSetting(updateConfig = new TickSetting("Update ConfigList", false));
+	}
+	
+	@Override
+	public boolean canBeEnabled() {
+		return false;
+	}
+	
+	public void guiButtonToggled(TickSetting b) {
+		b.setEnabled(false);
+		Raven.configManager.discoverConfigs();
+	}
 }

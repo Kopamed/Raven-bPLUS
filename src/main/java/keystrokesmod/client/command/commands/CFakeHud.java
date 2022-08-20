@@ -3,6 +3,7 @@ package keystrokesmod.client.command.commands;
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.module.modules.client.FakeHud;
+import keystrokesmod.client.utils.Utils;
 
 public class CFakeHud extends Command{
 
@@ -21,10 +22,12 @@ public class CFakeHud extends Command{
 				break;
 			case "remove":
 				for(int i = 1; i < args.length; i++) {
-					FakeHud.addModule(args[3]);
+					FakeHud.removeModule(args[i]);
 					Terminal.print("removed " + args[i] + "!");
 				}
 				break;
+			default:
+				Terminal.print("incorrect arguments");
 		}
 		
 	}

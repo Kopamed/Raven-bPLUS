@@ -228,12 +228,12 @@ public class HUD extends Module {
        logoHeight = sr.getScaledHeight() * logoScaleh.getInput() /10;
        if(logoLoaded()){
     	   if (HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
-               double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /10 * 1.2;
+               double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /8;
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
                Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
     	   } else {
-               double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /10;
+               double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /8;
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
                Gui.drawModalRectWithCustomSizedTexture((int) hudX, (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
