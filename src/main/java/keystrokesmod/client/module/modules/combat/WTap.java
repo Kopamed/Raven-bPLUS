@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.lwjgl.input.Keyboard;
 
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.combat.WTap.EventType;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
@@ -73,7 +74,7 @@ public class WTap extends Module {
     
     @SubscribeEvent
     public void event(LivingUpdateEvent e) {
-    	if(e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target && eventType.getMode() == EventType.Hurt)
+    	if(eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
     		wTap();
     }
     

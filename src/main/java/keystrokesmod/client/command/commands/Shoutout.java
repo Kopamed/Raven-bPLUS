@@ -11,8 +11,9 @@ public class Shoutout extends Command {
 
     @Override
     public void onCall(String[] args){
-        print("Everyone who made b+ possible:");
-        print("- kopamed (client dev)");
+        print("Everyone who made b++ possible:");
+        print("- kv! aka KingVoid (current dev)");
+        print("- kopamed (raven b+ dev)");
         print("- hevex/blowsy (weeaboo, b3 dev) (disapproves to b+ as he earned less money because less ppl clicked on his adfly link)");
         print("- blowsy (hevex's alt)");
         print("- jmraichdev (client dev)");

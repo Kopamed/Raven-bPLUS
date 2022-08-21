@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class VersionManager {
     private final String versionFilePath = "/assets/keystrokes/version";
     private final String branchFilePath = "/assets/keystrokes/branch";
-    private final String versionUrl = "https://raw.githubusercontent.com/Kopamed/Raven-bPLUS/main/src/main/resources/assets/keystrokes/version";
-    private final String branchUrl = "https://raw.githubusercontent.com/Kopamed/Raven-bPLUS/main/src/main/resources/assets/keystrokes/branch";
+    private final String versionUrl = "https://raw.githubusercontent.com/K-ov/Raven-bPLUS/blob/stable/src/main/resources/assets/keystrokes/version";
+    private final String branchUrl = "https://raw.githubusercontent.com/K-ov/Raven-bPLUS/blob/stable/src/main/resources/assets/keystrokes/branch";
 
     private Version latestVersion;
     private Version clientVersion;

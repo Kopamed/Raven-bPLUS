@@ -70,7 +70,7 @@ public class ShiftTap extends Module {
     
     @SubscribeEvent
     public void event(LivingUpdateEvent e) {
-    	if(e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target && eventType.getMode() == EventType.Hurt)
+    	if(eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
     		wTap();
     }
     

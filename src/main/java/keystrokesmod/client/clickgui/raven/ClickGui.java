@@ -73,7 +73,8 @@ public class ClickGui extends GuiScreen {
       this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, Utils.Client.rainbowDraw(2L, 900L));
       this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, Utils.Client.rainbowDraw(2L, 600L));
       this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, Utils.Client.rainbowDraw(2L, 300L));
-      this.drawCenteredString(this.fontRendererObj, "b+", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, Utils.Client.rainbowDraw(2L, 0L));
+      this.drawCenteredString(this.fontRendererObj, "b", halfScreenWidth + 1 + w_c, quarterScreenHeight + 25, Utils.Client.rainbowDraw(2L, 0L));
+      this.drawCenteredString(this.fontRendererObj, "+ +", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, Utils.Client.rainbowDraw(2L, -300L));
 
       float speed = 4890;
 
@@ -87,16 +88,16 @@ public class ClickGui extends GuiScreen {
             margin += 2;
          }
       }else {
-         mc.fontRendererObj.drawString("Raven B+ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
+         mc.fontRendererObj.drawString("Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
       }
 
-      this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
-      this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
+      this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38, Color.white.getRGB());
+      this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 38, Color.white.getRGB());
       int animationProggress;
       if (this.aL != null) {
          animationProggress = this.aL.getValueInt(0, 20, 2);
          this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + animationProggress, quarterScreenHeight - 29, -1);
-         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress, quarterScreenHeight + 42, -1);
+         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress, quarterScreenHeight + 38, -1);
       }
 
       for (CategoryComponent category : categoryList) {
