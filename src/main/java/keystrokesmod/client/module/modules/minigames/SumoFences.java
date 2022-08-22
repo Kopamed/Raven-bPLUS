@@ -31,6 +31,7 @@ public class SumoFences extends Module {
    private final String c3;
    private final String c4;
    private final String c5;
+   private int ymod = 0;
 
    public SumoFences() {
       super("Sumo Fences", ModuleCategory.minigames);
@@ -99,7 +100,7 @@ public class SumoFences extends Module {
 
                for (BlockPos p : SumoFences.f_p) {
                   for (int i = 0; (double) i < SumoFences.b.getInput(); ++i) {
-                     BlockPos p2 = new BlockPos(p.getX(), p.getY() + i, p.getZ());
+                     BlockPos p2 = new BlockPos(p.getX(), p.getY() + i + ymod, p.getZ());
                      if (Module.mc.theWorld.getBlockState(p2).getBlock() == Blocks.air) {
                         Module.mc.theWorld.setBlockState(p2, SumoFences.this.f);
                      }
@@ -118,6 +119,7 @@ public class SumoFences extends Module {
             String s = Utils.Java.str(l);
             if (s.startsWith("Map:")) {
                if (this.m.contains(s.substring(5))) {
+            	  ymod = s.contains("Fort Royale") ? 7 : 0;
                   return true;
                }
             } else if (s.equals(this.c1)) {

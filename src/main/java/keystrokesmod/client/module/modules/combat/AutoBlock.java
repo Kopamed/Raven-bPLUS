@@ -26,7 +26,7 @@ public class AutoBlock extends Module {
 
     @SubscribeEvent
     public void yes(TickEvent.RenderTickEvent e){
-        if(!Utils.Player.isPlayerInGame())
+        if(!Utils.Player.isPlayerInGame() || !Utils.Player.isPlayerHoldingSword())
             return;
 
         if(engaged){

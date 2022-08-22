@@ -1,25 +1,31 @@
 package keystrokesmod.client.module;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
+
 import com.google.gson.JsonObject;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.modules.HUD;
+
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import org.lwjgl.input.Keyboard;
-
-import java.util.ArrayList;
 
 public class Module {
    protected ArrayList<Setting> settings;
    private final String moduleName;
    private final ModuleCategory moduleCategory;
-   protected boolean enabled = false;
+   protected boolean hasBind = true, showInHud = true, clientConfig = false, enabled = false;
    protected boolean defaultEnabled = enabled;
    protected int keycode = 0;
    protected int defualtKeyCode = keycode;
-
+   
+   
+   protected ModuleComponent component;
+   
    protected static Minecraft mc;
    private boolean isToggled = false;
 
@@ -53,18 +59,22 @@ public class Module {
       this.description = i;
       return (E) this;
    }
+   
 
    public JsonObject getConfigAsJson(){
       JsonObject settings = new JsonObject();
 
       for(Setting setting : this.settings){
-         JsonObject settingData = setting.getConfigAsJson();
-         settings.add(setting.settingName, settingData);
+    	  if(setting != null) {
+    		  JsonObject settingData = setting.getConfigAsJson();
+              settings.add(setting.settingName, settingData);
+    	  }
       }
 
       JsonObject data = new JsonObject();
       data.addProperty("enabled", enabled);
       data.addProperty("keycode", keycode);
+      data.addProperty("showInHud", showInHud);
       data.add("settings", settings);
 
       return data;
@@ -82,9 +92,15 @@ public class Module {
                );
             }
          }
+         this.showInHud = data.get("showInHud").getAsBoolean();
       } catch (NullPointerException ignored){
 
       }
+      postApplyConfig();
+   }
+   
+   public void postApplyConfig() {
+
    }
 
 
@@ -99,20 +115,23 @@ public class Module {
       }
    }
 
+   
    public boolean canBeEnabled() {
       return true;
    }
+   
+   public boolean showInHud() {
+	   return showInHud;
+   }
 
+   
    public void enable() {
-      boolean oldState = this.enabled;
       this.enabled = true;
-
       this.onEnable();
       MinecraftForge.EVENT_BUS.register(this);
    }
 
    public void disable() {
-      boolean oldState = this.enabled;
       this.enabled = false;
       this.onDisable();
       MinecraftForge.EVENT_BUS.unregister(this);
@@ -125,6 +144,7 @@ public class Module {
          disable();
       }
    }
+   
 
    public String getName() {
       return this.moduleName;
@@ -145,6 +165,11 @@ public class Module {
    public void registerSetting(Setting Setting) {
       this.settings.add(Setting);
    }
+   
+   public void setVisableInHud(boolean vis) {
+	   this.showInHud = vis;
+   }
+   
 
    public ModuleCategory moduleCategory() {
       return this.moduleCategory;
@@ -176,10 +201,17 @@ public class Module {
 
    public void guiButtonToggled(TickSetting b) {
    }
+   
+   public void guiButtonToggled(ComboSetting b) {
+   }
+   
+   public void guiButtonToggled(TickSetting b, Component c) {
+   }
 
    public int getKeycode() {
       return this.keycode;
    }
+ 
 
    public void setbind(int keybind) {
       this.keycode = keybind;
@@ -193,6 +225,10 @@ public class Module {
          setting.resetToDefaults();
       }
    }
+   
+   public void setModuleComponent(ModuleComponent component) {
+	   this.component = component;
+   }
 
    public void onGuiClose() {
 
@@ -205,8 +241,13 @@ public class Module {
    public void clearBinds() {
       this.keycode = 0;
    }
+   
+   public boolean isClientConfig() {
+	   return clientConfig;
+   }
 
-   public enum ModuleCategory {
+
+public enum ModuleCategory {
       combat,
       movement,
       player,
@@ -215,6 +256,7 @@ public class Module {
       minigames,
       other,
       client,
-      hotkey
+      hotkey,
+      config
    }
 }

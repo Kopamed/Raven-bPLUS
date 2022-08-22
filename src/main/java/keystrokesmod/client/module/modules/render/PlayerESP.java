@@ -1,20 +1,22 @@
 package keystrokesmod.client.module.modules.render;
 
+import java.awt.Color;
+import java.util.Iterator;
+
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.awt.*;
-import java.util.Iterator;
 
 public class PlayerESP extends Module {
    public static DescriptionSetting g;
@@ -32,6 +34,7 @@ public class PlayerESP extends Module {
    public static TickSetting t4;
    public static TickSetting t5;
    public static TickSetting t6;
+   public static TickSetting t7;
    private int rgb_c = 0;
 
    public PlayerESP() {
@@ -51,6 +54,7 @@ public class PlayerESP extends Module {
       this.registerSetting(j = new SliderSetting("X-Shift", 0.0D, -35.0D, 10.0D, 1.0D));
       this.registerSetting(f = new TickSetting("Show invis", true));
       this.registerSetting(h = new TickSetting("Red on damage", true));
+      this.registerSetting(t7 = new TickSetting("Match Chestplate", false));
    }
 
    public void onDisable() {
@@ -94,13 +98,32 @@ public class PlayerESP extends Module {
                } while(!f.isToggled() && en.isInvisible());
 
                if (!AntiBot.bot(en)) {
-                  this.r(en, rgb);
+            	  if(t7.isToggled() && getColor(en.getCurrentArmor(2)) > 0) {
+            		  int E = new Color(getColor(en.getCurrentArmor(2))).getRGB();
+            		  this.r(en, E);
+            	  } else {
+            		  this.r(en, rgb);
+            	  }
                }
             }
          }
       }
    }
+   
+   public int getColor(ItemStack stack) {
+	   if(stack == null) 
+		   return -1; // not wearing a chestplate
+	   NBTTagCompound nbttagcompound = stack.getTagCompound();
+	   if (nbttagcompound != null) {
+		   NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+		   if (nbttagcompound1 != null && nbttagcompound1.hasKey("color", 3)) {
+			   return nbttagcompound1.getInteger("color");
+		   }
+	   }
 
+	   return -2; //chestplate has no colour
+   }
+   
    private void r(Entity en, int rgb) {
       if (t1.isToggled()) {
          Utils.HUD.drawBoxAroundEntity(en, 1, i.getInput(), j.getInput(), rgb, h.isToggled());

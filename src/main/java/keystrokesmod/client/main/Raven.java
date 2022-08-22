@@ -53,10 +53,10 @@ public class Raven {
    public static boolean debugger = false;
    public static final VersionManager versionManager  = new VersionManager();
    public static CommandManager commandManager;
-   public static final String sourceLocation = "https://github.com/Kopamed/Raven-bPLUS";
-   public static final String downloadLocation = "https://github.com/Kopamed/Raven-bPLUS/raw/main/build/libs/%5B1.8.9%5D%20BetterKeystrokes%20V-1.2.jar";
-   public static final String discord = "https://discord.gg/QQMQfCRyNP";
-   public static String[] updateText = {"Your version of Raven B+ (" + versionManager.getClientVersion().toString() + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + versionManager.getLatestVersion().toString()};
+   public static final String sourceLocation = "https://github.com/K-ov/Raven-bPLUS";
+   public static final String downloadLocation = "https://github.com/K-ov/Raven-bPLUS/raw/stable/build/libs/%5B1.8.9%5D%20BetterKeystrokes%20V-1.2.jar";
+   public static final String discord = "https://discord.gg/UqJ8ngteud";
+   public static String[] updateText = {"Your version of Raven B++ (" + versionManager.getClientVersion().toString() + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + versionManager.getLatestVersion().toString()};
    public static ConfigManager configManager;
    public static ClientConfig clientConfig;
 
@@ -116,14 +116,12 @@ public class Raven {
    public void onTick(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          if (Utils.Player.isPlayerInGame()) {
-            for (int i = 0; i < moduleManager.numberOfModules(); i++) {
-               Module module = moduleManager.getModules().get(i);
+            for (Module module : moduleManager.getModules()) {
                if (Minecraft.getMinecraft().currentScreen == null) {
                   module.keybind();
                } else if (Minecraft.getMinecraft().currentScreen instanceof ClickGui) {
                   module.guiUpdate();
                }
-
                if (module.isEnabled()) module.update();
             }
          }

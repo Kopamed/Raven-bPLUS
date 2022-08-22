@@ -1,22 +1,25 @@
 
 package keystrokesmod.client.clickgui.raven;
 
-import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.Module;
-import keystrokesmod.client.utils.Timer;
-import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.utils.version.Version;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.concurrent.ConcurrentException;
+
+import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
+import keystrokesmod.client.utils.Timer;
+import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.version.Version;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiInventory;
 
 public class ClickGui extends GuiScreen {
    private ScheduledFuture<?> sf;
@@ -70,7 +73,8 @@ public class ClickGui extends GuiScreen {
       this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, Utils.Client.rainbowDraw(2L, 900L));
       this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, Utils.Client.rainbowDraw(2L, 600L));
       this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, Utils.Client.rainbowDraw(2L, 300L));
-      this.drawCenteredString(this.fontRendererObj, "b+", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, Utils.Client.rainbowDraw(2L, 0L));
+      this.drawCenteredString(this.fontRendererObj, "b", halfScreenWidth + 1 + w_c, quarterScreenHeight + 25, Utils.Client.rainbowDraw(2L, 0L));
+      this.drawCenteredString(this.fontRendererObj, "+ +", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, Utils.Client.rainbowDraw(2L, -300L));
 
       float speed = 4890;
 
@@ -84,16 +88,16 @@ public class ClickGui extends GuiScreen {
             margin += 2;
          }
       }else {
-         mc.fontRendererObj.drawString("Raven B+ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
+         mc.fontRendererObj.drawString("Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
       }
 
-      this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
-      this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, Color.white.getRGB());
+      this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38, Color.white.getRGB());
+      this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 38, Color.white.getRGB());
       int animationProggress;
       if (this.aL != null) {
          animationProggress = this.aL.getValueInt(0, 20, 2);
          this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + animationProggress, quarterScreenHeight - 29, -1);
-         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress, quarterScreenHeight + 42, -1);
+         this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress, quarterScreenHeight + 38, -1);
       }
 
       for (CategoryComponent category : categoryList) {
@@ -143,10 +147,11 @@ public class ClickGui extends GuiScreen {
                }
             } while(!category.isOpened());
          } while(category.getModules().isEmpty());
-
-         for (Component c : category.getModules()) {
-            c.mouseDown(x, y, mouseButton);
-         }
+         try {
+        	 for (Component c : category.getModules()) {
+        		 c.mouseDown(x, y, mouseButton);
+        	 }
+         }  catch(ConcurrentModificationException e) {}
       }
    }
 
@@ -228,5 +233,12 @@ public class ClickGui extends GuiScreen {
 
    public ArrayList<CategoryComponent> getCategoryList() {
       return categoryList;
+   }
+   
+   public CategoryComponent getCategoryComponent(ModuleCategory mCat) {
+	   for(CategoryComponent cc : categoryList) {
+		   if(cc.categoryName == mCat) return cc;
+	   }
+	   return null;
    }
 }

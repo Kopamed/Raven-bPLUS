@@ -1,12 +1,27 @@
 package keystrokesmod.client.module.modules.combat;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.print.attribute.standard.Media;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.player.RightClicker;
-import keystrokesmod.client.module.setting.impl.*;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -17,19 +32,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class LeftClicker extends Module {
     public static DescriptionSetting bestWithDelayRemover;
     public static SliderSetting jitterLeft;
-    public static TickSetting weaponOnly;
-    public static TickSetting breakBlocks;
+    public static TickSetting weaponOnly, sound, breakBlocks;
     public static DoubleSliderSetting leftCPS, breakBlocksDelay;;
     public static TickSetting inventoryFill;
 
@@ -63,9 +70,10 @@ public class LeftClicker extends Module {
         this.registerSetting(inventoryFill = new TickSetting("Inventory fill", false));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
+        this.registerSetting(sound = new TickSetting("Play sound", true));
 
-        this.registerSetting(clickTimings = new ComboSetting("Click event", RightClicker.ClickEvent.Render));
-        this.registerSetting(clickStyle = new ComboSetting("Click Style", RightClicker.ClickStyle.Raven));
+        this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
+        this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
 
         try {
             this.playerMouseInput = ReflectionHelper.findMethod(
@@ -86,7 +94,6 @@ public class LeftClicker extends Module {
         if (this.playerMouseInput != null) {
             this.playerMouseInput.setAccessible(true);
         }
-
         autoClickerEnabled = false;
     }
 
@@ -117,13 +124,13 @@ public class LeftClicker extends Module {
         )
             return;
 
-        if(clickTimings.getMode() != RightClicker.ClickEvent.Render)
+        if(clickTimings.getMode() != ClickEvent.Render)
             return;
 
-        if(clickStyle.getMode() == RightClicker.ClickStyle.Raven){
+        if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();
         }
-        else if (clickStyle.getMode() == RightClicker.ClickStyle.SKid){
+        else if (clickStyle.getMode() == ClickStyle.SKid){
             skidClick(ev, null);
         }
     }
@@ -135,13 +142,13 @@ public class LeftClicker extends Module {
         )
             return;
 
-        if(clickTimings.getMode() != RightClicker.ClickEvent.Tick)
+        if(clickTimings.getMode() != ClickEvent.Tick)
             return;
 
-        if(clickStyle.getMode() == RightClicker.ClickStyle.Raven){
+        if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();
         }
-        else if (clickStyle.getMode() == RightClicker.ClickStyle.SKid){
+        else if (clickStyle.getMode() == ClickStyle.SKid){
             skidClick(null, ev);
         }
     }
@@ -217,7 +224,7 @@ public class LeftClicker extends Module {
         }
 
 
-
+        
         Mouse.poll();
         if(!Mouse.isButtonDown(0) && !leftDown) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
@@ -254,9 +261,10 @@ public class LeftClicker extends Module {
                 entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
             }
         }
-
+        
         if (this.leftUpTime > 0L && this.leftDownTime > 0L) {
             if (System.currentTimeMillis() > this.leftUpTime && leftDown) {
+            	if(sound.isToggled()) mc.thePlayer.playSound("game.neutral.hurt.fall.big", 1, 1);
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();

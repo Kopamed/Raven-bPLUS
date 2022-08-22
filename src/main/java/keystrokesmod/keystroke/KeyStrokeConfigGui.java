@@ -7,6 +7,7 @@ import java.io.IOException;
 import keystrokesmod.client.main.ClientConfig;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.utils.MouseManager;
+import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -96,6 +97,6 @@ public class KeyStrokeConfigGui extends GuiScreen {
    }
 
    public void onGuiClosed() {
-      ClientConfig.saveKeyStrokeSettingsToConfigFile();
+	  Raven.clientConfig.updateKeyStrokesSettings();
    }
 }
