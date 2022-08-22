@@ -198,7 +198,7 @@ public class ModuleManager {
       if (!initialized) return null;
 
       for (Module module : modules) {
-         if (module.getName().equalsIgnoreCase(name))
+         if (module.getName().replaceAll(" ", "").equalsIgnoreCase(name) || module.getName().equalsIgnoreCase(name))
             return module;
       }
       return null;

@@ -74,6 +74,7 @@ public class Module {
       JsonObject data = new JsonObject();
       data.addProperty("enabled", enabled);
       data.addProperty("keycode", keycode);
+      data.addProperty("showInHud", showInHud);
       data.add("settings", settings);
 
       return data;
@@ -91,6 +92,7 @@ public class Module {
                );
             }
          }
+         this.showInHud = data.get("showInHud").getAsBoolean();
       } catch (NullPointerException ignored){
 
       }
@@ -142,6 +144,7 @@ public class Module {
          disable();
       }
    }
+   
 
    public String getName() {
       return this.moduleName;
@@ -161,6 +164,10 @@ public class Module {
 
    public void registerSetting(Setting Setting) {
       this.settings.add(Setting);
+   }
+   
+   public void setVisableInHud(boolean vis) {
+	   this.showInHud = vis;
    }
    
 

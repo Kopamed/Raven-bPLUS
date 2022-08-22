@@ -35,6 +35,7 @@ public class CommandManager {
         this.addCommand(new VersionCommand());
         this.addCommand(new F3Name());
         this.addCommand(new CFakeHud());
+        this.addCommand(new CHideModule());
 
     }
 
