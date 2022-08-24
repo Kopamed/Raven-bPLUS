@@ -1,5 +1,7 @@
 package keystrokesmod.client.tweaker;
 
+import org.lwjgl.input.Mouse;
+
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
@@ -7,14 +9,11 @@ import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.movement.KeepSprint;
 import keystrokesmod.client.module.modules.movement.NoSlow;
 import keystrokesmod.client.module.modules.other.NameHider;
-import keystrokesmod.client.module.modules.other.StringEncrypt;
 import keystrokesmod.client.module.modules.player.SafeWalk;
-import keystrokesmod.client.module.modules.render.AntiShuffle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.input.Mouse;
 
 public class ASMEventHandler {
    private static final Minecraft mc = Minecraft.getMinecraft();
@@ -29,15 +28,6 @@ public class ASMEventHandler {
          s = NameHider.getUnformattedTextForChat(s);
       }
 
-      Module antiShuffle = Raven.moduleManager.getModuleByClazz(StringEncrypt.class);
-      if (antiShuffle != null && antiShuffle.isEnabled()) {
-         s = AntiShuffle.getUnformattedTextForChat(s);
-      }
-
-      Module stringEncrypt = Raven.moduleManager.getModuleByClazz(StringEncrypt.class);
-      if (stringEncrypt != null && stringEncrypt.isEnabled()) {
-         s = StringEncrypt.getUnformattedTextForChat(s);
-      }
 
       return s;
    }

@@ -1,15 +1,18 @@
 package keystrokesmod.client.tweaker.transformers;
 
+import java.util.List;
+
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.modules.client.ClientNameSpoof;
-import net.minecraftforge.fml.common.Loader;
-import org.objectweb.asm.tree.*;
 
-import java.util.List;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * @author JMRaich aka JMRaichDev
@@ -51,10 +54,6 @@ public class TransformerFMLCommonHandler implements Transformer {
     }
 
     public static String getModName() {
-        Module cns = Raven.moduleManager.getModuleByClazz(ClientNameSpoof.class);
-        if (cns != null && cns.isEnabled()){
-            return ClientNameSpoof.newName;
-        }
         List<String> modNames = Lists.newArrayListWithExpectedSize(3);
         modNames.add("fml");
         modNames.add("forge");

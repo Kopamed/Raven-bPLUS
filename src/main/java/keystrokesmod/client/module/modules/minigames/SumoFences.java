@@ -42,7 +42,7 @@ public class SumoFences extends Module {
       this.c4 = "Glass";
       this.c5 = "Barrier";
       this.registerSetting(a = new DescriptionSetting("Fences for Hypixel sumo."));
-      this.registerSetting(b = new SliderSetting("Fence height", 4.0D, 1.0D, 6.0D, 1.0D));
+      this.registerSetting(b = new SliderSetting("Fence height", 4.0D, 1.0D, 16.0D, 1.0D));
       this.registerSetting(c = new SliderSetting("Block type", 1.0D, 1.0D, 4.0D, 1.0D));
       this.registerSetting(d = new DescriptionSetting(Utils.md + this.c2));
    }
