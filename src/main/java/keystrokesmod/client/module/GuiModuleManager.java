@@ -16,7 +16,6 @@ public class GuiModuleManager {
 
 	      for(int category = 1; category < categoryAmount; ++category) {
 	         addModule(new GuiModule(values[category]));
-	         System.out.println("Bro" + values[category].name());
 	      }
 	      //Raven.clickGui.getCategoryComponent(ModuleCategory.category).updateModules();
 	      //Raven.clickGui.getCategoryComponent(ModuleCategory.category).r3nd3r();

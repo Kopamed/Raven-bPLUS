@@ -24,7 +24,7 @@ public class CategoryComponent {
 	public boolean n4m = false, pin = false;
 	public String pvp;
 	private double marginY, marginX;
-	public boolean visable = true;
+	private boolean visable = true;
 
 	public CategoryComponent(Module.ModuleCategory category) {
 		this.categoryName = category;
@@ -209,5 +209,13 @@ public class CategoryComponent {
 	public void setLocation(int parseInt, int parseInt1) {
 		this.x = parseInt;
 		this.y = parseInt1;
+	}
+	
+	public void setVisable(boolean vis) {
+		this.visable = vis;
+	}
+	
+	public boolean isVisable() {
+		return visable;
 	}
 }

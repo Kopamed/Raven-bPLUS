@@ -79,7 +79,7 @@ public class ClientConfig {
     	 JsonObject catData = new JsonObject();
     	 catData.addProperty("X", cat.getX());
     	 catData.addProperty("Y", cat.getY());
-    	 catData.addProperty("visable", cat.visable);
+    	 catData.addProperty("visable", cat.isVisable());
          catData.addProperty("opened", cat.isOpened());
          data.add(cat.categoryName.name(), catData);
       }
@@ -180,8 +180,8 @@ public class ClientConfig {
 		   cat.setY(catData.get("Y").getAsInt());
 		   cat.setOpened(catData.get("opened").getAsBoolean());
 		   if(cat.categoryName != ModuleCategory.category) {
-			   boolean visable = catData.get("visable").getAsBoolean();
-			   cat.visable = cat.categoryName == ModuleCategory.category ? true : visable;
+			   boolean visable = cat.categoryName == ModuleCategory.category ? true : catData.get("visable").getAsBoolean();
+			   cat.setVisable(visable);
 			   Raven.moduleManager.guiModuleManager.getModuleByModuleCategory(cat.categoryName).setToggled(visable);;
 		   }
 	   }

@@ -217,9 +217,7 @@ public class ModuleManager {
 	  ArrayList<Module> allModules = new ArrayList<Module>();
       allModules.addAll(modules);
       try{allModules.addAll(Raven.configManager.configModuleManager.getConfigModules());} catch (NullPointerException e) {}
-      try{allModules.addAll(guiModuleManager.getModules());} catch (NullPointerException e) {
-    	  System.out.println("Bro ");
-      }
+      try{allModules.addAll(guiModuleManager.getModules());} catch (NullPointerException e) {}
 	  return allModules;
    }
    

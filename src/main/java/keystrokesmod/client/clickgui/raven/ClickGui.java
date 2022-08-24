@@ -100,7 +100,7 @@ public class ClickGui extends GuiScreen {
       }
 
       for (CategoryComponent category : categoryList) {
-    	 if(category.visable) {
+    	 if(category.isVisable()) {
              category.rf(this.fontRendererObj);
              category.up(x, y);
              
@@ -237,14 +237,15 @@ public class ClickGui extends GuiScreen {
    
    public CategoryComponent getCategoryComponent(ModuleCategory mCat) {
 	   for(CategoryComponent cc : categoryList) {
+		   System.out.println(cc.categoryName.name() + " " + mCat.name());
 		   if(cc.categoryName == mCat) return cc;
 	   }
 	   return null;
    }
    
    public ArrayList<CategoryComponent> visableCategoryList() {
-	   ArrayList<CategoryComponent> newList = categoryList;
-	   newList.removeIf(obj -> !obj.visable);
+	   ArrayList<CategoryComponent> newList = (ArrayList<CategoryComponent>) categoryList.clone();
+	   newList.removeIf(obj -> !obj.isVisable());
 	   return newList;
    }
 }
