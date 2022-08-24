@@ -1,15 +1,12 @@
 # Raven B+
-<p align="center">
-  <img src="https://img.shields.io/badge/MC-1.8.9-brightgreen.svg" alt="Minecraft"/>
-</p>
 Raven b++ is built on top of Raven b+, adding quality of life improvements, bug fixes, and much more.<br>
 Discord:
 <br><a href="https://discord.gg/UqJ8ngteud"></a><br>
 
 # Installation
 ## User
-[Latest](https://raw.githubusercontent.com/K-ov/Raven-bPLUS/stable/build/libs/%5B1.8.9%5D%20BetterKeystrokes%20V-1.2.jar) <br> (Probs have quite a few bugs but no game breaking ones
-[Stable versions] All pervious versions can be found in the dc server
+[Latest](https://raw.githubusercontent.com/K-ov/Raven-bPLUS/stable/build/libs/%5B1.8.9%5D%20BetterKeystrokes%20V-1.2.jar) <br> (Probs have quite a few bugs but no game breaking ones </br>
+<br>[Stable versions] All pervious versions can be found in the dc server </br>
 
 ## Build
 1. [Get](https://gradle.org/next-steps/?version=2.7&format=bin) and [install](https://docs.gradle.org/current/userguide/installation.html) gradle.
