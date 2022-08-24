@@ -24,6 +24,7 @@ public class CategoryComponent {
 	public boolean n4m = false, pin = false;
 	public String pvp;
 	private double marginY, marginX;
+	public boolean visable = true;
 
 	public CategoryComponent(Module.ModuleCategory category) {
 		this.categoryName = category;
@@ -111,6 +112,8 @@ public class CategoryComponent {
 	}
 
 	public void rf(FontRenderer renderer) {
+		if(!visable)
+			return;
 		this.width = 92;
 		if (!this.getModules().isEmpty() && this.categoryOpened) {
 			int categoryHeight = 0;

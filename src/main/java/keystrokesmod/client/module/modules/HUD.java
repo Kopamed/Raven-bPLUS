@@ -52,7 +52,7 @@ public class HUD extends Module {
    public static boolean showedError;
    public static final String HUDX_prefix = "HUDX~ ";
    public static final String HUDY_prefix = "HUDY~ ";
-   public enum lmv {l1,l2,l3,l4,l5, CD}
+   public enum lmv {l1,l2,l3,l4,l5,l6,l7, CD}
 
 
    public HUD() {

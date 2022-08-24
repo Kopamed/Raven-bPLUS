@@ -104,7 +104,7 @@ public class STap extends Module {
         state = StapState.TAPPING;
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindBack.getKeyCode(), true);
         double cd = (double) ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax()+0.01);
-        if (dynamic.isToggled()) {
+        if (dynamic.isToggled() && mc.thePlayer != null && target != null) {
         	cd = 3 - mc.thePlayer.getDistanceToEntity(target) < 3 ? (cd + (3 - mc.thePlayer.getDistanceToEntity(target) * tapMultiplier.getInput() * 10)) : cd; 
         }
         

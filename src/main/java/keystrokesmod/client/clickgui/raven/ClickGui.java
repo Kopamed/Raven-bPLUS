@@ -9,10 +9,9 @@ import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.concurrent.ConcurrentException;
-
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.GuiModuleManager;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.utils.Timer;
@@ -101,12 +100,14 @@ public class ClickGui extends GuiScreen {
       }
 
       for (CategoryComponent category : categoryList) {
-         category.rf(this.fontRendererObj);
-         category.up(x, y);
-
-         for (Component module : category.getModules()) {
-            module.update(x, y);
-         }
+    	 if(category.visable) {
+             category.rf(this.fontRendererObj);
+             category.up(x, y);
+             
+             for (Component module : category.getModules()) {
+                module.update(x, y);
+             }
+    	 }
       }
 
 

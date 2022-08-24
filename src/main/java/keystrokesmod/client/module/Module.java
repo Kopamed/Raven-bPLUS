@@ -23,7 +23,6 @@ public class Module {
    protected int keycode = 0;
    protected int defualtKeyCode = keycode;
    
-   
    protected ModuleComponent component;
    
    protected static Minecraft mc;
@@ -73,7 +72,7 @@ public class Module {
 
       JsonObject data = new JsonObject();
       data.addProperty("enabled", enabled);
-      data.addProperty("keycode", keycode);
+      if(hasBind) data.addProperty("keycode", keycode);
       data.addProperty("showInHud", showInHud);
       data.add("settings", settings);
 
@@ -82,7 +81,7 @@ public class Module {
 
    public void applyConfigFromJson(JsonObject data){
       try {
-         this.keycode = data.get("keycode").getAsInt();
+    	 if(hasBind) data.addProperty("keycode", keycode); this.keycode = data.get("keycode").getAsInt();
          setToggled(data.get("enabled").getAsBoolean());
          JsonObject settingsData = data.get("settings").getAsJsonObject();
          for (Setting setting : getSettings()) {
@@ -143,6 +142,10 @@ public class Module {
       } else{
          disable();
       }
+   }
+   
+   public boolean isBindable() {
+	   return hasBind;
    }
    
 
@@ -248,6 +251,7 @@ public class Module {
 
 
 public enum ModuleCategory {
+	  category,
       combat,
       movement,
       player,

@@ -13,7 +13,9 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
+import keystrokesmod.client.module.GuiModule;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.keystroke.KeyStroke;
@@ -77,6 +79,7 @@ public class ClientConfig {
     	 JsonObject catData = new JsonObject();
     	 catData.addProperty("X", cat.getX());
     	 catData.addProperty("Y", cat.getY());
+    	 catData.addProperty("visable", cat.visable);
          catData.addProperty("opened", cat.isOpened());
          data.add(cat.categoryName.name(), catData);
       }
@@ -98,7 +101,8 @@ public class ClientConfig {
    private JsonObject getModulesAsJson() {
 	   JsonObject data = new JsonObject();
 	   for(Module m : Raven.moduleManager.getClientConfigModules()) {
-		   data.add(m.getName(), m.getConfigAsJson());
+		   if(!(m instanceof GuiModule))
+			   data.add(m.getName(), m.getConfigAsJson());
 	   }
 	   return data;
    }
@@ -175,6 +179,11 @@ public class ClientConfig {
 		   cat.setX(catData.get("X").getAsInt());
 		   cat.setY(catData.get("Y").getAsInt());
 		   cat.setOpened(catData.get("opened").getAsBoolean());
+		   if(cat.categoryName != ModuleCategory.category) {
+			   boolean visable = catData.get("visable").getAsBoolean();
+			   cat.visable = cat.categoryName == ModuleCategory.category ? true : visable;
+			   Raven.moduleManager.guiModuleManager.getModuleByModuleCategory(cat.categoryName).setToggled(visable);;
+		   }
 	   }
    } 
 
@@ -190,7 +199,6 @@ public class ClientConfig {
 	   for(Module module : knownModules){
 		   if(data.has(module.getName())){
 			   module.applyConfigFromJson(data.get(module.getName()).getAsJsonObject());
-			   System.out.println(module.getName());
 		   } else {
 			   module.resetToDefaults();
 		   }

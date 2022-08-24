@@ -17,7 +17,6 @@ import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.modules.combat.AutoBlock;
 import keystrokesmod.client.module.modules.combat.AutoWeapon;
 import keystrokesmod.client.module.modules.combat.BlockHit;
-import keystrokesmod.client.module.modules.combat.BurstClicker;
 import keystrokesmod.client.module.modules.combat.ClickAssist;
 import keystrokesmod.client.module.modules.combat.DelayRemover;
 import keystrokesmod.client.module.modules.combat.HitBox;
@@ -90,16 +89,16 @@ public class ModuleManager {
    private List<Module> modules = new ArrayList<>();
 
    public static boolean initialized = false;
+   public final GuiModuleManager guiModuleManager;
 
    public ModuleManager() {
+	  this.guiModuleManager = new GuiModuleManager();
       if (initialized) return;
-      
       addModule(new ChestStealer());
       addModule(new AutoArmour());
       addModule(new LeftClicker());
       addModule(new RightClicker());
       addModule(new AimAssist());
-      addModule(new BurstClicker());
       addModule(new ClickAssist());
       addModule(new DelayRemover());
       addModule(new HitBox());
@@ -218,6 +217,9 @@ public class ModuleManager {
 	  ArrayList<Module> allModules = new ArrayList<Module>();
       allModules.addAll(modules);
       try{allModules.addAll(Raven.configManager.configModuleManager.getConfigModules());} catch (NullPointerException e) {}
+      try{allModules.addAll(guiModuleManager.getModules());} catch (NullPointerException e) {
+    	  System.out.println("Bro ");
+      }
 	  return allModules;
    }
    

@@ -76,7 +76,8 @@ public class ModuleComponent implements Component {
 				   }
 		   }
 	   } 
-	   newSettings.add(new BindComponent(this, y));
+	   if(mod.isBindable())
+		   newSettings.add(new BindComponent(this, y));
 	   settings = newSettings;
 	   if(po) {
 		   this.category.r3nd3r();
@@ -243,7 +244,9 @@ public class ModuleComponent implements Component {
 
       if (this.ii(x, y) && b == 1) {
          if(!po) {
-        	 this.category.loadSpecificModule(mod);
+        	 if(mod.getSettings().size() > 0) {
+        		 this.category.loadSpecificModule(mod);
+        	 }
         	 po = true;
          } else if (po) {
         	 po = false;
