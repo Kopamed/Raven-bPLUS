@@ -26,7 +26,7 @@ public class ClickGui extends GuiScreen {
    private Timer aL;
    private Timer aE;
    private Timer aR;
-   private final  ArrayList<CategoryComponent> categoryList;
+   private final ArrayList<CategoryComponent> categoryList;
    public final Terminal terminal;
 
    public ClickGui() {
@@ -119,7 +119,7 @@ public class ClickGui extends GuiScreen {
    }
 
    public void mouseClicked(int x, int y, int mouseButton) throws IOException {
-      Iterator<CategoryComponent> btnCat = categoryList.iterator();
+      Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
 
       terminal.mouseDown(x, y, mouseButton);
       if(terminal.overPosition(x, y)) return;
@@ -131,9 +131,8 @@ public class ClickGui extends GuiScreen {
                if (!btnCat.hasNext()) {
                   return;
                }
-
                category = btnCat.next();
-               if (category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y) && mouseButton == 0) {
+               if ((category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y) && mouseButton == 0)) {
                   category.mousePressed(true);
                   category.xx = x - category.getX();
                   category.yy = y - category.getY();
@@ -161,7 +160,7 @@ public class ClickGui extends GuiScreen {
       if(terminal.overPosition(x, y)) return;
 
       if (s == 0) {
-         Iterator<CategoryComponent> btnCat = categoryList.iterator();
+         Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
 
          CategoryComponent c4t;
          while(btnCat.hasNext()) {
@@ -169,7 +168,7 @@ public class ClickGui extends GuiScreen {
             c4t.mousePressed(false);
          }
 
-         btnCat = categoryList.iterator();
+         btnCat = visableCategoryList().iterator();
 
          while(true) {
             do {
@@ -197,7 +196,7 @@ public class ClickGui extends GuiScreen {
       if (k == 1) {
          this.mc.displayGuiScreen(null);
       } else {
-         Iterator<CategoryComponent> btnCat = categoryList.iterator();
+         Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
 
          while(true) {
             CategoryComponent cat;
@@ -241,5 +240,11 @@ public class ClickGui extends GuiScreen {
 		   if(cc.categoryName == mCat) return cc;
 	   }
 	   return null;
+   }
+   
+   public ArrayList<CategoryComponent> visableCategoryList() {
+	   ArrayList<CategoryComponent> newList = categoryList;
+	   newList.removeIf(obj -> !obj.visable);
+	   return newList;
    }
 }
