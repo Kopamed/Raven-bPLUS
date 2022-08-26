@@ -39,7 +39,7 @@ public class AimAssist extends Module {
       this.registerSetting(speed = new SliderSetting("Speed 1", 45.0D, 5.0D, 100.0D, 1.0D));
       this.registerSetting(compliment = new SliderSetting("Speed 2", 15.0D, 2D, 97.0D, 1.0D));
       this.registerSetting(fov = new SliderSetting("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
-      this.registerSetting(distance = new SliderSetting("Distance", 4.5D, 1.0D, 10.0D, 0.5D));
+      this.registerSetting(distance = new SliderSetting("Distance", 4.5D, 1.0D, 10.0D, 0.1D));
       this.registerSetting(clickAim = new TickSetting("Click aim", true));
       this.registerSetting(breakBlocks = new TickSetting("Break blocks", true));
       this.registerSetting(ignoreFriends = new TickSetting("Ignore Friends", true));

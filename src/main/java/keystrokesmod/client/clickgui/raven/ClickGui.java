@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.GuiModuleManager;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.utils.Timer;
