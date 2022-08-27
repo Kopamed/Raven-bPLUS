@@ -403,7 +403,7 @@ public class Utils {
       public static boolean isHyp() {
          if(!Player.isPlayerInGame()) return false;
          try {
-            return !mc.isSingleplayer() && mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net");
+            return !mc.isSingleplayer() && (mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net") || mc.getCurrentServerData().serverIP.toLowerCase().contains("localhost"));
          } catch (Exception welpBruh) {
             welpBruh.printStackTrace();
             return false;
