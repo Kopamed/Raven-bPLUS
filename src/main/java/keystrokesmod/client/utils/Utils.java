@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
+import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import net.minecraft.client.Minecraft;
@@ -58,6 +59,7 @@ public class Utils {
    public static final String md = "Mode: ";
 
    public static class Player {
+	   
       public static void hotkeyToSlot(int slot) {
          if(!isPlayerInGame())
             return;
@@ -317,6 +319,27 @@ public class Utils {
             p.isSwingInProgress = true;
          }
 
+      }
+
+      public static EntityPlayer getClosestPlayer(double dis) {
+    	  if(mc.theWorld == null)
+    		  return null;
+    	  Iterator entities;
+    	  entities = mc.theWorld.loadedEntityList.iterator();
+    	  EntityPlayer cplayer = null;
+
+    	  while(entities.hasNext()) {
+    		  Entity en = (Entity)entities.next();
+    		  if (en instanceof EntityPlayer && en != mc.thePlayer) {
+    			  EntityPlayer pl = (EntityPlayer) en;
+    			  if(mc.thePlayer.getDistanceToEntity(pl) < dis && !AntiBot.bot(pl)) {
+    				  dis = mc.thePlayer.getDistanceToEntity(pl);
+    				  cplayer = pl;
+    			  }
+    		  }
+    	  }
+
+    	  return cplayer;
       }
    }
 

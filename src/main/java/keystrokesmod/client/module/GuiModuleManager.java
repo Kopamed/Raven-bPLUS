@@ -13,17 +13,13 @@ public class GuiModuleManager {
 	public GuiModuleManager() {
 	      Module.ModuleCategory[] values;
 	      int categoryAmount = (values = Module.ModuleCategory.values()).length;
-
 	      for(int category = 1; category < categoryAmount; ++category) {
-	         addModule(new GuiModule(values[category]));
+	         addModule(new GuiModule(values[category], values[category].getParentCategory())); 
 	      }
-	      //Raven.clickGui.getCategoryComponent(ModuleCategory.category).updateModules();
-	      //Raven.clickGui.getCategoryComponent(ModuleCategory.category).r3nd3r();
 	}
 	
 	public GuiModule getModuleByModuleCategory(ModuleCategory name) {
 		for (GuiModule module : guiModules) {
-			//System.out.println(name.name() + " " + module.getGuiCategory().name());
 			if (module.getGuiCategory() == name) return module;
 		}
 		return null;

@@ -38,6 +38,9 @@ import keystrokesmod.client.module.modules.minigames.BridgeInfo;
 import keystrokesmod.client.module.modules.minigames.DuelsStats;
 import keystrokesmod.client.module.modules.minigames.MurderMystery;
 import keystrokesmod.client.module.modules.minigames.SumoFences;
+import keystrokesmod.client.module.modules.minigames.Sumo.SumoBot;
+import keystrokesmod.client.module.modules.minigames.Sumo.SumoClicker;
+import keystrokesmod.client.module.modules.minigames.Sumo.SumoStats;
 import keystrokesmod.client.module.modules.movement.AutoHeader;
 import keystrokesmod.client.module.modules.movement.Boost;
 import keystrokesmod.client.module.modules.movement.Fly;
@@ -166,6 +169,9 @@ public class ModuleManager {
       addModule(new Projectiles());
       addModule(new FakeHud());
       addModule(new ConfigSettings());
+      addModule(new SumoBot());
+      addModule(new SumoClicker());
+      //addModule(new SumoStats());
       //addModule(new AutoPot());
       // why ?
       // idk dude. you tell me why. I am pretty sure this was blowsy's work.

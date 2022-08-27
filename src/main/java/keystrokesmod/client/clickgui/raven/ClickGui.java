@@ -38,6 +38,7 @@ public class ClickGui extends GuiScreen {
       for(int category = 0; category < categoryAmount; ++category) {
          Module.ModuleCategory moduleCategory = values[category];
          CategoryComponent currentModuleCategory = new CategoryComponent(moduleCategory);
+         currentModuleCategory.setVisable(currentModuleCategory.categoryName.isShownByDefault());
          currentModuleCategory.setY(topOffset);
          categoryList.add(currentModuleCategory);
          topOffset += 20;

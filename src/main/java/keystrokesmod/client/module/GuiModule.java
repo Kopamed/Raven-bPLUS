@@ -6,12 +6,11 @@ public class GuiModule extends Module{
 	
 	private ModuleCategory moduleCategory;
 
-	public GuiModule(ModuleCategory moduleCategory) {
-		super(moduleCategory.name(), ModuleCategory.category);
+	public GuiModule(ModuleCategory moduleCategory, ModuleCategory parentCategory) {
+		super(moduleCategory.name(), parentCategory);
 		this.moduleCategory = moduleCategory;
 		hasBind = false;
 		showInHud = false;
-		enabled = true;
 	}
 	
 	@Override

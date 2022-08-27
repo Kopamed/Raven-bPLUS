@@ -251,16 +251,33 @@ public class Module {
 
 
 	public enum ModuleCategory {
-		category,
-		combat,
-		movement,
-		player,
-		world,
-		render,
-		minigames,
-		other,
-		client,
-		hotkey,
-		config
+		category(true, null),
+		combat(true, category),
+		movement(true, category),
+		player(true, category),
+		world(true, category),
+		render(true, category),
+		minigames(true, category),
+		other(true, category),
+		client(true, category),
+		hotkey(true, category),
+		config(true, client),
+		sumo(false, minigames);
+		
+	    private final boolean defaultShown;
+	    private final ModuleCategory topCatagory;
+	    
+	    private ModuleCategory(boolean defaultShown,ModuleCategory topCatagory) {
+	        this.defaultShown = defaultShown;
+	        this.topCatagory = topCatagory;
+	    }
+	    
+	    public boolean isShownByDefault() {
+	    	return defaultShown;
+	    }
+	    
+	    public ModuleCategory getParentCategory() {
+	    	return topCatagory;
+	    }
 	}
 }
