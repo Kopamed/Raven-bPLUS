@@ -2,11 +2,8 @@ package keystrokesmod.client.module.modules.combat;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.print.attribute.standard.Media;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -21,24 +18,26 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class LeftClicker extends Module {
     public static DescriptionSetting bestWithDelayRemover;
-    public static SliderSetting jitterLeft;
+    public static SliderSetting jitterLeft, hitSelectTick;
     public static TickSetting weaponOnly, sound, breakBlocks;
     public static DoubleSliderSetting leftCPS, breakBlocksDelay;;
-    public static TickSetting inventoryFill;
+    public static TickSetting inventoryFill, hitSelect;
 
     public static ComboSetting clickStyle, clickTimings;
 
@@ -57,7 +56,9 @@ public class LeftClicker extends Module {
     private double leftm;
     private boolean leftn;
     private boolean breakHeld;
-
+    private boolean hitSelected;
+    private boolean firstDown;
+    private EntityLivingBase target;
     private Random rand = null;
     private Method playerMouseInput;
 
@@ -71,6 +72,8 @@ public class LeftClicker extends Module {
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
         this.registerSetting(sound = new TickSetting("Play sound", true));
+        this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
+        this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
 
         this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
         this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
@@ -115,18 +118,38 @@ public class LeftClicker extends Module {
         this.leftUpTime = 0L;
         autoClickerEnabled = false;
     }
+    
+    @SubscribeEvent
+    public void onAttack(AttackEntityEvent e) {
+    	target = e.entityLiving;
+    }
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent ev) {
+    	if(ev.phase == TickEvent.Phase.END)
+    		return;
         if(!Utils.Client.currentScreenMinecraft() &&
                 !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
             return;
 
+        if (!Mouse.isButtonDown(0)) {
+        	hitSelected = false;
+        }
+        
         if(clickTimings.getMode() != ClickEvent.Render)
             return;
-
+        
+        //Utils.Player.sendMessageToSelf(" " + (hitSelected) + " " + (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput()));
+        if(hitSelect.isToggled()) {
+        	if(hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
+        		hitSelected = true;
+        	} else {
+        		return;
+        	}
+    	}
+        	
         if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();
         }
@@ -168,10 +191,6 @@ public class LeftClicker extends Module {
             doInventoryClick();
             return;
         }
-
-
-
-
 
         // Uhh left click only, mate
         if (Mouse.isButtonDown(0)) {
