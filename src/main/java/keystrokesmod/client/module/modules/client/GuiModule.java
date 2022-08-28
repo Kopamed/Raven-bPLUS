@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.client;
 
+import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -11,7 +12,7 @@ public class GuiModule extends Module {
    public static final int bind = 54;
    public static SliderSetting guiTheme, backgroundOpacity;
    public static DescriptionSetting guiThemeDesc;
-   public static TickSetting categoryBackground;
+   public static TickSetting categoryBackground, cleanUp;
 
    public GuiModule() {
       super("Gui", ModuleCategory.client);
@@ -21,6 +22,18 @@ public class GuiModule extends Module {
       this.registerSetting(guiThemeDesc = new DescriptionSetting(Utils.md + "b+"));
       this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
+      this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
+   }
+   
+   @Override
+   public void guiButtonToggled(TickSetting setting) {
+	   if(setting == cleanUp) {
+		   cleanUp.disable();
+		   for(CategoryComponent cc : Raven.clickGui.getCategoryList()) {
+			   cc.setX((cc.getX()/50*50) + (cc.getX() % 50 > 25 ? 50:0 ));
+			   cc.setY((cc.getY()/50*50) + (cc.getY() % 50 > 25 ? 50:0 ));
+		   }
+	   }
    }
 
    public void onEnable() {
