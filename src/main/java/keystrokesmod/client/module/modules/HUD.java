@@ -62,7 +62,7 @@ public class HUD extends Module {
       this.registerSetting(logo = new TickSetting("Logo", true));
       this.registerSetting(logoScaleh = new SliderSetting("Logo Scale height ", 1, 0, 10, 0.01));
       this.registerSetting(logoScalew = new SliderSetting("Logo Scale width ", 2, 0, 10, 0.01));
-      this.registerSetting(logoMode = new ComboSetting("Logo Mode:", lmv.l1));
+      this.registerSetting(logoMode = new ComboSetting("Logo Mode:", lmv.l7));
       this.registerSetting(logoDesc1 = new DescriptionSetting("cd logomode put an image logo.png"));
       this.registerSetting(logoDesc1 = new DescriptionSetting("in the keystrokes folder"));
       this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 5, 1));

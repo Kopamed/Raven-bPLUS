@@ -1,15 +1,9 @@
 package keystrokesmod.client.clickgui.raven.components;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.HashMap;
-
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
-import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -40,7 +34,7 @@ public class RGBComponent implements Component {
         Gui.drawRect(this.module.category.getX() + boxMargin, this.module.category.getY() + this.moduleStartY + textSize, this.module.category.getX() - boxMargin + this.module.category.getWidth(), this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
         int drawColor[] = {0xffff0000, 0xff00ff00, 0xff0000ff};
         for(int i = 0; i < 3; i++) {
-        	int color = (int) ((this.barWidth * this.setting.getColor(i)/256f) + this.module.category.getX() + boxMargin);
+        	int color = (int) ((this.barWidth * this.setting.getColor(i)/255f) + this.module.category.getX() + boxMargin);
             Gui.drawRect(color, this.module.category.getY() + this.moduleStartY + textSize - 1, color+(color%2==0? 2:1), this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, drawColor[i]);
         }
         GL11.glPushMatrix();
@@ -61,7 +55,7 @@ public class RGBComponent implements Component {
         	mouseP = mouseP > 0 ? mouseP < 1 ? mouseP : 1 : 0;
         	//Utils.Player.sendMessageToSelf(mode.name());
         	if(mode != Helping.NONE) {
-            	this.setting.setColor(mode.id, (int) (mouseP * 256));
+            	this.setting.setColor(mode.id, (int) (mouseP * 255));
             	return;
         	}
 
@@ -77,7 +71,7 @@ public class RGBComponent implements Component {
         			mode = Helping.BLUE;
         			break;
         	}
-			this.setting.setColor(mode.id, (int) (mouseP * 256));
+			this.setting.setColor(mode.id, (int) (mouseP * 255));
         	
         } else {
             mode = Helping.NONE;
@@ -115,9 +109,9 @@ public class RGBComponent implements Component {
     	int r = 0;
     	float c = 1;
     	for(int i = 0; i < 3; i++) {
-    		if(Math.abs((this.setting.getColor(i)/256f) - p) < c) {
+    		if(Math.abs((this.setting.getColor(i)/255f) - p) < c) {
     			r = i;
-    			c = Math.abs((this.setting.getColor(i)/256f) - p);
+    			c = Math.abs((this.setting.getColor(i)/255f) - p);
     		}
     	}
     	return r;

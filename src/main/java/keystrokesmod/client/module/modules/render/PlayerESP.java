@@ -38,7 +38,7 @@ public class PlayerESP extends Module {
 
    public PlayerESP() {
       super("PlayerESP", ModuleCategory.render);
-      this.registerSetting(rgb = new RGBSetting("RGB",0,256,0));
+      this.registerSetting(rgb = new RGBSetting("RGB",0,255,0));
       this.registerSetting(d = new TickSetting("Rainbow", false));
       this.registerSetting(g = new DescriptionSetting("ESP Types"));
       this.registerSetting(t3 = new TickSetting("2D", false));
