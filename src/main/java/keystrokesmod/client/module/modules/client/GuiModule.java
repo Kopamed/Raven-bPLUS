@@ -18,7 +18,7 @@ public class GuiModule extends Module {
       super("Gui", ModuleCategory.client);
       withKeycode(54);
 
-      this.registerSetting(guiTheme = new SliderSetting("Theme", 3.0D, 1.0D, 4.0D, 1.0D));
+      this.registerSetting(guiTheme = new SliderSetting("Theme", 3.0D, 1.0D, 5.0D, 1.0D));
       this.registerSetting(guiThemeDesc = new DescriptionSetting(Utils.md + "b+"));
       this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
@@ -60,6 +60,10 @@ public class GuiModule extends Module {
       case 4:
          guiThemeDesc.setDesc(Utils.md + "b+");
          break;
+       
+      case 5:
+          guiThemeDesc.setDesc(Utils.md + "kv");
+          break;
       }
    }
 }

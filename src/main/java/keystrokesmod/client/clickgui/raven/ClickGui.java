@@ -136,14 +136,17 @@ public class ClickGui extends GuiScreen {
                   category.mousePressed(true);
                   category.xx = x - category.getX();
                   category.yy = y - category.getY();
+                  break;
                }
 
                if (category.mousePressed(x, y) && mouseButton == 0) {
                   category.setOpened(!category.isOpened());
+                  break;
                }
 
                if (category.i(x, y) && mouseButton == 0) {
                   category.cv(!category.p());
+                  break;
                }
             } while(!category.isOpened());
          } while(category.getModules().isEmpty());

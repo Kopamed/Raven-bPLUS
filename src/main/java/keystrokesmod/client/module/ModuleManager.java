@@ -40,7 +40,6 @@ import keystrokesmod.client.module.modules.minigames.MurderMystery;
 import keystrokesmod.client.module.modules.minigames.SumoFences;
 import keystrokesmod.client.module.modules.minigames.Sumo.SumoBot;
 import keystrokesmod.client.module.modules.minigames.Sumo.SumoClicker;
-import keystrokesmod.client.module.modules.minigames.Sumo.SumoStats;
 import keystrokesmod.client.module.modules.movement.AutoHeader;
 import keystrokesmod.client.module.modules.movement.Boost;
 import keystrokesmod.client.module.modules.movement.Fly;
@@ -67,6 +66,7 @@ import keystrokesmod.client.module.modules.player.FallSpeed;
 import keystrokesmod.client.module.modules.player.FastPlace;
 import keystrokesmod.client.module.modules.player.Freecam;
 import keystrokesmod.client.module.modules.player.NoFall;
+import keystrokesmod.client.module.modules.player.Parkour;
 import keystrokesmod.client.module.modules.player.RightClicker;
 import keystrokesmod.client.module.modules.player.SafeWalk;
 import keystrokesmod.client.module.modules.render.AntiShuffle;
@@ -171,6 +171,7 @@ public class ModuleManager {
       addModule(new ConfigSettings());
       addModule(new SumoBot());
       addModule(new SumoClicker());
+      addModule(new Parkour());
       //addModule(new SumoStats());
       //addModule(new AutoPot());
       // why ?

@@ -15,6 +15,7 @@ import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -73,6 +74,11 @@ public class ModuleComponent implements Component {
 					   ModeComponent s = new ModeComponent(n, this, y);
 					   newSettings.add(s);
 					   y += 12;
+				   } else if (v instanceof RGBSetting) {
+					   RGBSetting n = (RGBSetting) v;
+					   RGBComponent s = new RGBComponent(n, this, y);
+					   newSettings.add(s);
+					   y += 12;
 				   }
 		   }
 	   } 
@@ -90,7 +96,7 @@ public class ModuleComponent implements Component {
 
       for (Component c : this.settings) {
          c.setComponentStartAt(y);
-         if (c instanceof SliderComponent || c instanceof RangeSliderComponent) {
+         if (c instanceof SliderComponent || c instanceof RangeSliderComponent || c instanceof RGBComponent) {
             y += 16;
          } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof BindComponent) {
             y += 12;
@@ -215,7 +221,7 @@ public class ModuleComponent implements Component {
          int h = 16;
 
          for (Component c : this.settings) {
-            if (c instanceof SliderComponent || c instanceof RangeSliderComponent) {
+            if (c instanceof SliderComponent || c instanceof RangeSliderComponent || c instanceof RGBComponent) {
                h += 16;
             } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof BindComponent) {
                h += 12;

@@ -7,6 +7,7 @@ import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -20,9 +21,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerESP extends Module {
    public static DescriptionSetting g;
-   public static SliderSetting a;
-   public static SliderSetting b;
-   public static SliderSetting c;
    public static SliderSetting i;
    public static SliderSetting j;
    public static TickSetting d;
@@ -35,13 +33,12 @@ public class PlayerESP extends Module {
    public static TickSetting t5;
    public static TickSetting t6;
    public static TickSetting t7;
+   public static RGBSetting rgb;
    private int rgb_c = 0;
 
    public PlayerESP() {
       super("PlayerESP", ModuleCategory.render);
-      this.registerSetting(a = new SliderSetting("Red", 0.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(b = new SliderSetting("Green", 255.0D, 0.0D, 255.0D, 1.0D));
-      this.registerSetting(c = new SliderSetting("Blue", 0.0D, 0.0D, 255.0D, 1.0D));
+      this.registerSetting(rgb = new RGBSetting("RGB",0,256,0));
       this.registerSetting(d = new TickSetting("Rainbow", false));
       this.registerSetting(g = new DescriptionSetting("ESP Types"));
       this.registerSetting(t3 = new TickSetting("2D", false));
@@ -62,7 +59,7 @@ public class PlayerESP extends Module {
    }
 
    public void guiUpdate() {
-      this.rgb_c = (new Color((int)a.getInput(), (int)b.getInput(), (int)c.getInput())).getRGB();
+      this.rgb_c = (new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue()).getRGB());
    }
 
    @SubscribeEvent
