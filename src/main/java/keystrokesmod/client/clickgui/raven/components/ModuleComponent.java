@@ -22,10 +22,6 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 public class ModuleComponent implements Component {
-   private final int c1 = (new Color(0, 85, 255)).getRGB();
-   private final int c2 = (new Color(154, 2, 255)).getRGB();
-   private final int c3 = (new Color(175, 143, 233) ).getRGB();
-   private final int c5 = (new Color(254, 153, 51) ).getRGB(); 
    public Module mod;
    public CategoryComponent category;
    public int o;
@@ -125,28 +121,15 @@ public class ModuleComponent implements Component {
       GL11.glEdgeFlag(true);
    }
 
-   public static void g(int h) {
-      float a = 0.0F;
-      float r = 0.0F;
-      float g = 0.0F;
-      float b = 0.0F;
-      if (GuiModule.guiTheme.getInput() == 1.0D) {
-         a = (float)(h >> 14 & 255) / 255.0F;
-         r = (float)(h >> 5 & 255) / 255.0F;
-         g = (float)(h >> 5 & 255) / 2155.0F;
-         b = (float)(h & 255);
-      } else if (GuiModule.guiTheme.getInput() == 2.0D) {
-         a = (float)(h >> 14 & 255) / 255.0F;
-         r = (float)(h >> 5 & 255) / 2155.0F;
-         g = (float)(h >> 5 & 255) / 255.0F;
-         b = (float)(h & 255);
-      } else if (GuiModule.guiTheme.getInput() == 3.0D) {
-      } 
-
+   public static void g(int[] rgb) {
+	   float a = 255;
+	   float r = (float) rgb[0]/255f;
+	   float g = (float) rgb[1]/255f;
+	   float b = (float) rgb[2]/255f;
       GL11.glColor4f(r, g, b, a);
    }
 
-   public static void v(float x, float y, float x1, float y1, int t, int b) {
+   public static void v(float x, float y, float x1, float y1, int[] t, int[] b) {
       e();
       GL11.glShadeModel(7425);
       GL11.glBegin(7);
@@ -162,45 +145,30 @@ public class ModuleComponent implements Component {
    }
 
    public void draw() {
-      v((float)this.category.getX(), (float)(this.category.getY() + this.o), (float)(this.category.getX() + this.category.getWidth()), (float)(this.category.getY() + 15 + this.o), this.mod.isEnabled() ? this.c2 : -12829381, this.mod.isEnabled() ? this.c2 : -12302777);
+	   if(GuiModule.showGradientEnabled.isToggled() && mod.isEnabled()) {
+		   v((float)this.category.getX(),
+				   (float)(this.category.getY() + this.o),
+				   (float)(this.category.getX() + this.category.getWidth()),
+				   (float)(this.category.getY() + 15 + this.o),
+				   GuiModule.enabledTopRGB.getColors(),
+				   GuiModule.enabledBottomRGB.getColors());
+	   } else if (GuiModule.showGradientDisabled.isToggled() && !mod.isEnabled()) {
+		   v((float)this.category.getX(),
+				   (float)(this.category.getY() + this.o),
+				   (float)(this.category.getX() + this.category.getWidth()),
+				   (float)(this.category.getY() + 15 + this.o),
+				   GuiModule.disabledTopRGB.getColors(),
+				   GuiModule.disabledBottomRGB.getColors());
+	   }
       GL11.glPushMatrix();
       // module text button
       int button_rgb;
-      switch ((int) GuiModule.guiTheme.getInput()) {
-      	 case 5: 
-      		if (this.mod.isEnabled()) {
-                button_rgb = this.c5;
-             } else if (this.mod.canBeEnabled()) {
-                button_rgb = Color.lightGray.getRGB();
-             } else {
-                button_rgb = new Color(102, 102, 102).getRGB();
-             }
-             break;
-         case 4:
-            if (this.mod.isEnabled()) {
-               button_rgb = this.c3;
-            } else if (this.mod.canBeEnabled()) {
-               button_rgb = Color.lightGray.getRGB();
-            } else {
-               button_rgb = new Color(102, 102, 102).getRGB();
-            }
-            break;
-         case 3:
-            if (this.mod.isEnabled()) {
-               button_rgb = this.c1;
-            } else if (this.mod.canBeEnabled()) {
-               button_rgb = Color.lightGray.getRGB();
-            } else {
-               button_rgb = new Color(102, 102, 102).getRGB();
-            }
-            break;
-         default:
-            if (this.mod.canBeEnabled()) {
-               button_rgb = Color.lightGray.getRGB();
-            } else {
-               button_rgb = new Color(102, 102, 102).getRGB();
-            }
-            break;
+      if (this.mod.isEnabled()) {
+    	  button_rgb = GuiModule.enabledTextRGB.getRGB();
+      } else if (this.mod.canBeEnabled()) {
+    	  button_rgb = GuiModule.disabledTextRGB.getRGB();
+      } else {
+    	  button_rgb = new Color(102, 102, 102).getRGB();
       }
       Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
       GL11.glPopMatrix();
