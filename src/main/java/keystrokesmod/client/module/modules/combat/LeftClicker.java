@@ -155,10 +155,10 @@ public class LeftClicker extends Module {
         	if(hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
         		hitSelected = true;
         	} else {
-        		return true;
+        		return false;
         	}
         }
-		return false;
+		return true;
 	}
 
 	@SubscribeEvent
