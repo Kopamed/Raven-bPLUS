@@ -433,6 +433,19 @@ public class Utils {
          long time = System.currentTimeMillis() + (delay.length > 0 ? delay[0] : 0L);
          return Color.getHSBColor((float)(time % (15000L / speed)) / (15000.0F / (float)speed), 1.0F, 1.0F).getRGB();
       }
+      
+      public static int customDraw(int delay) {
+          int r = (int) getColorBetween(150,250, delay);
+          int g = (int) getColorBetween(0,165, delay);
+          int b = (int) getColorBetween(0,1, delay);
+          return new Color(r, g, b).getRGB();
+       }
+      
+      public static int getColorBetween(int min, int max,int delay) {
+    	  int c = (int) Math.abs((((System.currentTimeMillis()/10)+delay) % (2 * (max-min))) - (max-min)) + min;
+    	 // System.out.println(Math.abs((System.currentTimeMillis() % (2 * (max-min)) - (max-min))) + min);
+    	  return c;
+      }
 
       public static int astolfoColorsDraw(int yOffset, int yTotal, float speed) {
          float hue = (float) (System.currentTimeMillis() % (int)speed) + ((yTotal - yOffset) * 9);

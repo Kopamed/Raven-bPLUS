@@ -77,6 +77,7 @@ import keystrokesmod.client.module.modules.render.Fullbright;
 import keystrokesmod.client.module.modules.render.Nametags;
 import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.render.Projectiles;
+import keystrokesmod.client.module.modules.render.TargetHUD;
 import keystrokesmod.client.module.modules.render.Tracers;
 import keystrokesmod.client.module.modules.render.Xray;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -172,6 +173,7 @@ public class ModuleManager {
       addModule(new SumoBot());
       addModule(new SumoClicker());
       addModule(new Parkour());
+      //addModule(new TargetHUD());
       //addModule(new SumoStats());
       //addModule(new AutoPot());
       // why ?

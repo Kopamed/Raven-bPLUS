@@ -20,8 +20,8 @@ public class RGBComponent implements Component {
     private double barWidth;
     
 	private boolean mouseDown;
-	private double blankWidth;
 	private Helping mode;
+	private static RGBComponent helping;
 	
 	public RGBComponent(RGBSetting setting, ModuleComponent module, int moduleStartY) {
 		this.setting = setting;
@@ -47,6 +47,8 @@ public class RGBComponent implements Component {
 	@Override
 	public void update(int mousePosX, int mousePosY) {
         this.barWidth = (double)(this.module.category.getWidth() - boxMargin*2);
+        if(helping != null && helping != this)
+        	return;
         if((this.mouseDown)  
         		&& ((mousePosX > this.module.category.getX() + boxMargin && mousePosX < (this.module.category.getX() + this.module.category.getWidth() - boxMargin)
         		&& mousePosY > this.module.category.getY() + this.moduleStartY &&mousePosY < this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1)
@@ -72,9 +74,13 @@ public class RGBComponent implements Component {
         			break;
         	}
 			this.setting.setColor(mode.id, (int) (mouseP * 255));
+			helping = this;
         	
         } else {
             mode = Helping.NONE;
+            if(helping == this) {
+            	helping = null;
+            }
         }
 	}
 

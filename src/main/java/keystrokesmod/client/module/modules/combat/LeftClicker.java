@@ -126,7 +126,7 @@ public class LeftClicker extends Module {
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent ev) {
-    	if(ev.phase == TickEvent.Phase.END)
+    	if(ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Render)
     		return;
         if(!Utils.Client.currentScreenMinecraft() &&
                 !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
@@ -134,21 +134,9 @@ public class LeftClicker extends Module {
         )
             return;
 
-        if (!Mouse.isButtonDown(0)) {
-        	hitSelected = false;
-        }
-        
-        if(clickTimings.getMode() != ClickEvent.Render)
-            return;
-        
-        //Utils.Player.sendMessageToSelf(" " + (hitSelected) + " " + (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput()));
-        if(hitSelect.isToggled()) {
-        	if(hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
-        		hitSelected = true;
-        	} else {
-        		return;
-        	}
-    	}
+       if(!shouldClick()) {
+    	   return;
+       }
         	
         if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();
@@ -158,15 +146,33 @@ public class LeftClicker extends Module {
         }
     }
 
-    @SubscribeEvent
+    private boolean shouldClick() {
+        if (!Mouse.isButtonDown(0)) {
+        	hitSelected = false;
+        }
+
+        if(hitSelect.isToggled()) {
+        	if(hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
+        		hitSelected = true;
+        	} else {
+        		return true;
+        	}
+        }
+		return false;
+	}
+
+	@SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent ev) {
+    	if(ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Tick)
+    		return;
         if(!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
             return;
 
-        if(clickTimings.getMode() != ClickEvent.Tick)
-            return;
+        if(!shouldClick()) {
+     	   return;
+        }
 
         if(clickStyle.getMode() == ClickStyle.Raven){
             ravenClick();

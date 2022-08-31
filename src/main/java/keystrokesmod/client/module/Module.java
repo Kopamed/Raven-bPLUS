@@ -86,9 +86,7 @@ public class Module {
 			JsonObject settingsData = data.get("settings").getAsJsonObject();
 			for (Setting setting : getSettings()) {
 				if (settingsData.has(setting.getName())) {
-					setting.applyConfigFromJson(
-							settingsData.get(setting.getName()).getAsJsonObject()
-							);
+					setting.applyConfigFromJson(settingsData.get(setting.getName()).getAsJsonObject());
 				}
 			}
 			this.showInHud = data.get("showInHud").getAsBoolean();

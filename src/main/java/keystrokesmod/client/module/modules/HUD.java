@@ -60,7 +60,7 @@ public class HUD extends Module {
       this.registerSetting(editPosition = new TickSetting("Edit position", false));
       this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
       this.registerSetting(logo = new TickSetting("Logo", true));
-      this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 5, 1));
+      this.registerSetting(colourMode = new SliderSetting("Value: ", 1, 1, 6, 1));
       this.registerSetting(colourModeDesc = new DescriptionSetting("Mode: RAVEN"));
       this.registerSetting(logoScaleh = new SliderSetting("Logo Scale height ", 1, 0, 10, 0.01));
       this.registerSetting(logoScalew = new SliderSetting("Logo Scale width ", 2, 0, 10, 0.01));
@@ -192,7 +192,11 @@ public class HUD extends Module {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
-                  }
+                  } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
+                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.customDraw(del), dropShadow.isToggled());
+                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
+                      del -= 10;
+                   }
                } else {
                   if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
@@ -214,7 +218,11 @@ public class HUD extends Module {
                      mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
-                  }
+                  }  else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
+                      mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.customDraw(del), dropShadow.isToggled());
+                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
+                      del -= 10;
+                   }
                }
             }
          }
@@ -372,7 +380,7 @@ public class HUD extends Module {
       ASTOLFO,
       ASTOLFO2,
       ASTOLFO3,
-      KOPAMED
+      KV
    }
 
    public static int getHudX() {
