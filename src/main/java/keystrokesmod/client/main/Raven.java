@@ -1,5 +1,6 @@
 package keystrokesmod.client.main;
 
+import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.utils.version.VersionManager;
 import keystrokesmod.client.clickgui.raven.ClickGui;
@@ -83,6 +84,8 @@ public class Raven {
       MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
       MinecraftForge.EVENT_BUS.register(new MouseManager());
       MinecraftForge.EVENT_BUS.register(new ChatHelper());
+
+      FontUtil.bootstrap();
 
       Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
 

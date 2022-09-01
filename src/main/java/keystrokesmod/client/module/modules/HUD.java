@@ -22,6 +22,7 @@ import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -193,7 +194,7 @@ public class HUD extends Module {
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
-                      mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.customDraw(del), dropShadow.isToggled());
+                	  FontUtil.two.drawString(m.getName(), (double) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (double) y, Utils.Client.customDraw(del), dropShadow.isToggled(), 10);
                       y += mc.fontRendererObj.FONT_HEIGHT + margin;
                       del -= 10;
                    }
@@ -219,8 +220,11 @@ public class HUD extends Module {
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   }  else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
-                      mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.customDraw(del), dropShadow.isToggled());
-                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
+                      FontUtil.two.drawString(m.getName(),
+                    		  (float) hudX,
+                    		  (float) y,
+                    		  Utils.Client.customDraw(del));
+                      y += mc.fontRendererObj.FONT_HEIGHT - 2;
                       del -= 10;
                    }
                }
