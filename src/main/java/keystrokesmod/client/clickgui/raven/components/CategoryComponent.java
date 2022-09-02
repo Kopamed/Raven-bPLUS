@@ -124,7 +124,9 @@ public class CategoryComponent {
 			}
 
 			//drawing the background for every module in the category
-			net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, (new Color(0, 0, 0, (int)(GuiModule.backgroundOpacity.getInput()/100 * 255))).getRGB());
+			net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4,
+					(new Color(GuiModule.categoryBackgroundRGB.getRed(), GuiModule.categoryBackgroundRGB.getGreen(), GuiModule.categoryBackgroundRGB.getBlue(),
+							(int) (GuiModule.backgroundOpacity.getInput()/100 * 255))).getRGB()); // 1000000 character lines make me want to kill myself
 		}
 
 		if(GuiModule.categoryBackground.isToggled())

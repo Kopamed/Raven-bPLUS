@@ -13,7 +13,8 @@ public class GuiModule extends Module {
    public static SliderSetting backgroundOpacity;
    public static TickSetting categoryBackground, cleanUp, matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, showTextColour;
    public static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
-   							disabledTopRGB, disabledBottomRGB, disabledTextRGB;
+   							disabledTopRGB, disabledBottomRGB, disabledTextRGB,
+                            backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB;
 
    public GuiModule() {
       super("Gui", ModuleCategory.client);
@@ -26,6 +27,10 @@ public class GuiModule extends Module {
       this.registerSetting(disabledTopRGB = new RGBSetting("DisabledTopRGB", 0, 200, 50));
       this.registerSetting(disabledBottomRGB = new RGBSetting("DisabledBottomRGB", 0, 200, 50));
       this.registerSetting(disabledTextRGB = new RGBSetting("DisabledTextRGB", 0, 200, 50));
+
+       this.registerSetting(backgroundRGB = new RGBSetting("BackgroundRGB", 0, 0, 0));
+       this.registerSetting(settingBackgroundRGB = new RGBSetting("SettingBackgroundRGB", 0, 0, 0));
+       this.registerSetting(categoryBackgroundRGB = new RGBSetting("CategoryBackgroundRGB", 0, 0, 0));
       
       this.registerSetting(matchTopWBottomEnabled = new TickSetting("Match Top enabled w/ bottom enabled", false));
       this.registerSetting(matchTopWBottomDisabled = new TickSetting("Match Top enabled w/ bottom disabled", false));
