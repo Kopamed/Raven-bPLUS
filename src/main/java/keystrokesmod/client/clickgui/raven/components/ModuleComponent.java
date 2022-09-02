@@ -19,6 +19,7 @@ import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 
 public class ModuleComponent implements Component {
@@ -162,7 +163,7 @@ public class ModuleComponent implements Component {
 	   }
       GL11.glPushMatrix();
       // module text button
-      int button_rgb;
+      int button_rgb = GuiModule.enabledTextRGB.getRGB();
       if (this.mod.isEnabled()) {
     	  button_rgb = GuiModule.enabledTextRGB.getRGB();
       } else if (this.mod.canBeEnabled()) {
@@ -170,7 +171,11 @@ public class ModuleComponent implements Component {
       } else {
     	  button_rgb = new Color(102, 102, 102).getRGB();
       }
-      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
+      if(GuiModule.useCustomFont.isToggled()) {
+    	  FontUtil.normal.drawCenteredString(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth()/2), (float)(this.category.getY() + this.o + 4), button_rgb);
+      } else {
+    	  Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
+      }
       GL11.glPopMatrix();
       if (this.po && !this.settings.isEmpty()) {
          for (Component c : this.settings) {

@@ -11,7 +11,10 @@ import keystrokesmod.client.utils.Utils;
 public class GuiModule extends Module {
    public static final int bind = 54;
    public static SliderSetting backgroundOpacity;
-   public static TickSetting categoryBackground, cleanUp, matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, showTextColour;
+   public static TickSetting categoryBackground, cleanUp,
+   							matchTopWBottomEnabled, matchTopWBottomDisabled,
+   							showGradientEnabled, showGradientDisabled,
+   							showTextColour, useCustomFont;
    public static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
    							disabledTopRGB, disabledBottomRGB, disabledTextRGB;
 
@@ -35,6 +38,7 @@ public class GuiModule extends Module {
       
       this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
       this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
+      this.registerSetting(useCustomFont = new TickSetting("Smooth Font (Very Bad)", true));
       this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
    }
    

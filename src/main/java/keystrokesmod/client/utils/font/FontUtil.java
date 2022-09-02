@@ -1,12 +1,11 @@
 package keystrokesmod.client.utils.font;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-
-import java.awt.*;
+import java.awt.Font;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import keystrokesmod.client.module.modules.HUD;
 
 @SuppressWarnings("NonAtomicOperationOnVolatileField")
 public class FontUtil {
@@ -25,8 +24,7 @@ public class FontUtil {
             if (locationMap.containsKey(location)) {
                 font = locationMap.get(location).deriveFont(Font.PLAIN, size);
             } else {
-                InputStream is = Minecraft.getMinecraft().getResourceManager()
-                        .getResource(new ResourceLocation("assets/keystrokes/fonts" + location)).getInputStream();
+                InputStream is = HUD.class.getResourceAsStream("/assets/keystrokes/font/" + location);
                 font = Font.createFont(0, is);
                 locationMap.put(location, font);
                 font = font.deriveFont(Font.PLAIN, size);
@@ -34,7 +32,7 @@ public class FontUtil {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading font");
-            font = new Font("comfortaa", Font.PLAIN, +10);
+            font = new Font("comfortaa", Font.ROMAN_BASELINE, +10);
         }
 
         return font;

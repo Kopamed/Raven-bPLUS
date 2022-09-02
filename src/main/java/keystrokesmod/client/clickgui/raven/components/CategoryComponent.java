@@ -5,13 +5,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.client.utils.font.FontRenderer;
+import keystrokesmod.client.utils.font.FontUtil;
+import net.minecraft.client.Minecraft;
+
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
-import net.minecraft.client.gui.FontRenderer;
 
 public class CategoryComponent {
 	public ArrayList<Component> modulesInCategory = new ArrayList<>();
@@ -111,7 +114,8 @@ public class CategoryComponent {
 		}
 	}
 
-	public void rf(FontRenderer renderer) {
+	public void rf() {
+		Minecraft mc = Minecraft.getMinecraft();
 		if(!visable)
 			return;
 		this.width = 92;
@@ -129,12 +133,15 @@ public class CategoryComponent {
 
 		if(GuiModule.categoryBackground.isToggled())
 			TickComponent.renderMain((float)(this.x - 2), (float)this.y, (float)(this.x + this.width + 2), (float)(this.y + this.bh + 3), -1);
-		renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
-		//renderer.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), ay.astolfoColorsDraw(10, 14), false);
+		if(GuiModule.useCustomFont.isToggled()) {
+			FontUtil.two.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB());
+		} else {
+			mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
+		}
 		if (!this.n4m) {
 			GL11.glPushMatrix();
 			//Opened/closed unicode... :yes: :holsum: :evil:
-			renderer.drawString(this.categoryOpened ? "-" : "+", (float)(this.x + marginX), (float)((double)this.y + marginY), Color.white.getRGB(), false);
+			mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float)(this.x + marginX), (float)((double)this.y + marginY), Color.white.getRGB(), false);
 			GL11.glPopMatrix();
 			if (this.categoryOpened && !this.getModules().isEmpty()) {
 				Iterator var5 = this.getModules().iterator();

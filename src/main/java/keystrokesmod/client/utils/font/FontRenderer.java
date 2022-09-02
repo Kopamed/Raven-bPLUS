@@ -61,7 +61,7 @@ public class FontRenderer extends CFont {
         return this.drawStringWithShadow(text, x2 - (float) (this.getStringWidth(text) / 2), y2, color);
     }
 
-    public float drawString(String text, double x, double y, int color, boolean shadow, float kerning) {
+	public float drawString(String text, double x, double y, int color, boolean shadow, float kerning) {
         x -= 1.0;
 
         if (text == null) {
@@ -91,8 +91,10 @@ public class FontRenderer extends CFont {
         x *= 2;
         y = (y - 3) * 2;
         GL11.glPushMatrix();
+        GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glColor3d(1d, 1d, 1d);
         GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
         GlStateManager.enableTexture2D();
         GlStateManager.bindTexture(this.tex.getGlTextureId());
@@ -185,6 +187,7 @@ public class FontRenderer extends CFont {
         }
 
         GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_DONT_CARE);
+        GlStateManager.resetColor();
         GL11.glPopMatrix();
         GL11.glColor4f(1, 1, 1, 1);
         return (float) x / 2f;
