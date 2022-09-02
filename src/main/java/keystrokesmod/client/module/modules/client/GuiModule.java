@@ -53,7 +53,7 @@ public class GuiModule extends Module {
 
 		this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
 		this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
-		this.registerSetting(useCustomFont = new TickSetting("Smooth Font (Very Bad)", false));
+		this.registerSetting(useCustomFont = new TickSetting("Smooth Font (BROKEN DONT USE)", false));
 		this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
 		this.registerSetting(reset = new TickSetting("Reset position", false));
 		this.registerSetting(usePreset = new TickSetting("Use preset", false));
