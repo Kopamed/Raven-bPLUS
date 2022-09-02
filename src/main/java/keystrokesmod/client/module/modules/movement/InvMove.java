@@ -1,5 +1,8 @@
 package keystrokesmod.client.module.modules.movement;
 
+import keystrokesmod.client.clickgui.raven.ClickGui;
+import keystrokesmod.client.module.setting.impl.TickSetting;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
 
 import keystrokesmod.client.module.Module;
@@ -10,11 +13,14 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class InvMove extends Module {
 
-	private DescriptionSetting ds;
+	private DescriptionSetting ds, ds2;
+	private TickSetting undetectable;
 	
 	public InvMove() {
 		super("InvMove", ModuleCategory.movement);
-		registerSetting(ds = new DescriptionSetting("Does NOT work no hypixel!"));
+		registerSetting(ds = new DescriptionSetting("Does NOT work on Hypixel!"));
+		registerSetting(undetectable = new TickSetting("Only ClickGui", true));
+		registerSetting(ds2 = new DescriptionSetting(EnumChatFormatting.GRAY + "Only ClickGui is fully undetectable!"));
 	}
 
 	public void update() {
@@ -22,6 +28,9 @@ public class InvMove extends Module {
 			if (mc.currentScreen instanceof GuiChat) {
 				return;
 			}
+
+			if(undetectable.isToggled() && !(mc.currentScreen instanceof ClickGui))
+				return;
 
 			KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode()));
 			KeyBinding.setKeyBindState(mc.gameSettings.keyBindBack.getKeyCode(), Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode()));

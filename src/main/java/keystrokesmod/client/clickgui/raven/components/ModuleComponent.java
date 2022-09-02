@@ -175,7 +175,7 @@ public class ModuleComponent implements Component {
 	    	  button_rgb = new Color(102, 102, 102).getRGB();
 	      }
 	      if(preset.useCustomFont) {
-	    	  FontUtil.normal.drawCenteredString(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth()/2), (float)(this.category.getY() + this.o + 4), button_rgb);
+	    	  FontUtil.normal.drawNoBSCenteredString(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth()/2), (float)(this.category.getY() + this.o + 4), button_rgb);
 	      } else {
 	    	  Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
 	      }

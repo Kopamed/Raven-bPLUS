@@ -165,7 +165,7 @@ public class CategoryComponent {
 		}
 
 		if(GuiModule.useCustomFont.isToggled()) {
-			FontUtil.two.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), colorCN);
+			FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), colorCN);
 		} else {
 			mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), colorCN, false);
 		}
