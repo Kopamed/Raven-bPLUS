@@ -1,33 +1,28 @@
 package keystrokesmod.client.module.modules.player;
 
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
-import keystrokesmod.client.module.modules.player.FastPlace;
-import keystrokesmod.client.module.setting.impl.*;
-import keystrokesmod.client.tweaker.interfaces.IThrowableItem;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
-import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class RightClicker extends Module {
    public static SliderSetting jitterRight;

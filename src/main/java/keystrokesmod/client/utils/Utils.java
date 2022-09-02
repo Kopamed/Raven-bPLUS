@@ -345,6 +345,12 @@ public class Utils {
 
    public static class Client{
 
+      public static boolean isThrowableItem(ItemStack is) {
+         Item i = is.getItem();
+         return i instanceof ItemEgg || i instanceof ItemEnderEye || i instanceof ItemEnderPearl || i instanceof ItemSnowball || i instanceof ItemExpBottle ||
+                 (i instanceof ItemPotion && ItemPotion.isSplash(is.getMetadata()));
+      }
+
       public static List<NetworkPlayerInfo> getPlayers() {
          List<NetworkPlayerInfo> yes = new ArrayList<>();
          List<NetworkPlayerInfo> mmmm = new ArrayList<>();

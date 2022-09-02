@@ -7,15 +7,20 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+        maven {
+            url 'https://repo.spongepowered.org/maven'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 compileJava {
     sourceCompatibility = '1.8'
@@ -26,6 +31,20 @@ compileJava {
 dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     compile fileTree(dir: "lib", include: "discord-rpc.jar")
+
+    embed('org.spongepowered:mixin:0.6-SNAPSHOT') {
+
+        // Excludes unneeded stuff.
+        exclude module: 'gson'
+        exclude module: 'guava'
+        exclude module: 'jarjar'
+        exclude module: 'commons-codec'
+        exclude module: 'commons-io'
+        exclude module: 'launchwrapper'
+        exclude module: 'asm-commons'
+        exclude module: 'slf4j-api'
+    }
+    implementation 'org.jetbrains:annotations:22.0.0'
 }
 
 
@@ -46,6 +65,7 @@ minecraft {
 
     mappings = "stable_20"
     //clientJvmArgs += "-Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin"
+    clientJvmArgs += '-Dfml.coreMods.load=keystrokesmod.client.mixin.MixinLoader'
 }
 
 /* -Dfml.coreMods.load=keystrokesmod.sToNkS.tweaker.FMLLoadingPlugin*/
@@ -54,16 +74,47 @@ jar {
     dependsOn(shadowJar { classifier = null })
 }
 
+repositories {
+    // The mavenCentral() alias means that dependencies are fetched from the central Maven 2 repository (https://repo1.maven.org/maven2).
+    mavenCentral()
+    // The url to get the spongepowered dependencies from.
+    maven {
+        url 'https://repo.spongepowered.org/maven'
+    }
+}
+
+configurations {
+    // Adds a reference so that we extend/add on to it with depends so we can grab them and compile them into the jar.
+    embed
+    // Grabs what's extended/added on from/to embed and compiles it into the jar when being built.
+    compile.extendsFrom embed
+}
+
+mixin {
+    // The obfuscation environment to use when generating refMaps. This is the obfuscation which will end up in the mappings in the generated refMap.
+    defaultObfuscationEnv searge // Types of obf env: searge, notch.
+    // Sets the main sourceSets refmap name instead of add sourceSets.main so there is no conflict cause of it adding another value instead of setting the 1 value.
+    sourceSets {
+        main {
+            ext.refMap = 'mixins.keystrokesmod.refmap.json'
+        }
+    }
+}
+
 shadowJar {
     manifest {
         attributes(
-                "FMLCorePlugin": "keystrokesmod.client.tweaker.FMLLoadingPlugin",
+                'MixinConfigs': 'mixins.keystrokesmod.json',
+                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'TweakOrder': 0,
+                "FMLCorePlugin": "keystrokesmod.client.mixin.Mixinloader",
                 "ForceLoadAsMod": true,
                 FMLCorePluginContainsFMLMod: true,
                 "ModSide": "CLIENT"
         )
     }
 }
+
 reobf {
     shadowJar {} // Reobfuscate the shadowed JAR
 }

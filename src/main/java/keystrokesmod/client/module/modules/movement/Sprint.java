@@ -9,9 +9,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class Sprint extends Module {
+   public static TickSetting multiDir, ignoreBlindness;
 
    public Sprint() {
       super("Sprint", ModuleCategory.movement);
+      this.registerSetting(multiDir = new TickSetting("All Directions", false));
+      this.registerSetting(ignoreBlindness = new TickSetting("Ignore Blindness", false));
    }
 
    @SubscribeEvent
