@@ -1,19 +1,25 @@
 package keystrokesmod.client.mixin.mixins;
 
 import com.mojang.authlib.GameProfile;
+import keystrokesmod.client.event.EventTiming;
+import keystrokesmod.client.event.impl.TickEvent;
+import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.combat.LeftClicker;
 import keystrokesmod.client.module.modules.movement.NoSlow;
 import keystrokesmod.client.module.modules.movement.Sprint;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,6 +53,96 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     @Shadow private float horseJumpPower;
 
     @Shadow protected abstract void sendHorseJump();
+
+    @Shadow private boolean serverSprintState;
+    @Shadow @Final public NetHandlerPlayClient sendQueue;
+
+    @Shadow public abstract boolean isSneaking();
+
+    @Shadow private boolean serverSneakState;
+    @Shadow private double lastReportedPosX;
+    @Shadow private double lastReportedPosY;
+    @Shadow private double lastReportedPosZ;
+    @Shadow private float lastReportedYaw;
+    @Shadow private float lastReportedPitch;
+    @Shadow private int positionUpdateTicks;
+
+    /**
+     * @author mc code
+     */
+    @Overwrite
+    public void onUpdateWalkingPlayer() {
+
+        Raven.eventBus.post(new TickEvent());
+
+        boolean flag = this.isSprinting();
+        if (flag != this.serverSprintState) {
+            if (flag) {
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
+            } else {
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SPRINTING));
+            }
+
+            this.serverSprintState = flag;
+        }
+
+        boolean flag1 = this.isSneaking();
+        if (flag1 != this.serverSneakState) {
+            if (flag1) {
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SNEAKING));
+            } else {
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SNEAKING));
+            }
+
+            this.serverSneakState = flag1;
+        }
+
+        if (this.isCurrentViewEntity()) {
+
+            UpdateEvent e = new UpdateEvent(EventTiming.PRE, this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
+            Raven.eventBus.post(e);
+            
+            double d0 = e.getX() - this.lastReportedPosX;
+            double d1 = e.getY() - this.lastReportedPosY;
+            double d2 = e.getZ() - this.lastReportedPosZ;
+            double d3 = e.getYaw() - this.lastReportedYaw;
+            double d4 = e.getPitch() - this.lastReportedPitch;
+            boolean flag2 = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.positionUpdateTicks >= 20;
+            boolean flag3 = d3 != 0.0D || d4 != 0.0D;
+            if (this.ridingEntity == null) {
+                if (flag2 && flag3) {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(e.getX(), e.getY(), e.getZ(), e.getYaw(), e.getPitch(), e.isOnGround()));
+                } else if (flag2) {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(e.getX(), e.getY(), e.getZ(), e.isOnGround()));
+                } else if (flag3) {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), e.getPitch(), e.isOnGround()));
+                } else {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer(e.isOnGround()));
+                }
+            } else {
+                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, e.getYaw(), e.getPitch(), e.isOnGround()));
+                flag2 = false;
+            }
+
+            ++this.positionUpdateTicks;
+            if (flag2) {
+                this.lastReportedPosX = e.getX();
+                this.lastReportedPosY = e.getY();
+                this.lastReportedPosZ = e.getZ();
+                this.positionUpdateTicks = 0;
+            }
+
+            if (flag3) {
+                this.lastReportedYaw = e.getYaw();
+                this.lastReportedPitch = e.getPitch();
+            }
+
+            e = UpdateEvent.convertPost(e);
+            Raven.eventBus.post(e);
+
+        }
+
+    }
 
     /**
      * @author mc code

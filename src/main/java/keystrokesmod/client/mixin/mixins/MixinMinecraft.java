@@ -1,5 +1,6 @@
 package keystrokesmod.client.mixin.mixins;
 
+import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
@@ -20,6 +21,8 @@ public class MixinMinecraft {
         if (autoClicker == null || !autoClicker.isEnabled() || !Mouse.isButtonDown(0) || !Reach.call()) {
             Minecraft.getMinecraft().entityRenderer.getMouseOver(1.0F);
         }
+
+        Raven.eventBus.post(new GameLoopEvent());
     }
 
 }

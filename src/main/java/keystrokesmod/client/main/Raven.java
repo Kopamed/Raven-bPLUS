@@ -1,5 +1,6 @@
 package keystrokesmod.client.main;
 
+import com.google.common.eventbus.EventBus;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.utils.version.VersionManager;
@@ -71,6 +72,8 @@ public class Raven {
    public static ResourceLocation mResourceLocation;
 
    public static final String osName, osArch;
+
+   public static final EventBus eventBus = new EventBus(); // use this
 
 
    static {

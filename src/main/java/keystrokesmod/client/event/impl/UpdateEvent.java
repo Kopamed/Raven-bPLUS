@@ -21,6 +21,10 @@ public class UpdateEvent extends Event implements IEventTiming {
         this.onGround = onGround;
     }
 
+    public static UpdateEvent convertPost(UpdateEvent e) {
+        return new UpdateEvent(EventTiming.POST, e.getX(), e.getY(), e.getZ(), e.getYaw(), e.getPitch(), e.isOnGround());
+    }
+
     @Override
     public EventTiming getTiming() {
         return timing;
