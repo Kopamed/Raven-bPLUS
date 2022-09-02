@@ -30,37 +30,37 @@ public class GuiModule extends Module {
 		super("Gui", ModuleCategory.client);
 		withKeycode(54);
 
-      this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
-      this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
-      this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
-      
-      this.registerSetting(disabledTopRGB = new RGBSetting("DisabledTopRGB", 0, 200, 50));
-      this.registerSetting(disabledBottomRGB = new RGBSetting("DisabledBottomRGB", 0, 200, 50));
-      this.registerSetting(disabledTextRGB = new RGBSetting("DisabledTextRGB", 0, 200, 50));
+		this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
+		this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
+		this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
 
-      this.registerSetting(backgroundRGB = new RGBSetting("BackgroundRGB", 0, 0, 0));
-      this.registerSetting(settingBackgroundRGB = new RGBSetting("SettingBackgroundRGB", 0, 0, 0));
-      this.registerSetting(categoryBackgroundRGB = new RGBSetting("CategoryBackgroundRGB", 0, 0, 0));
-      
-      this.registerSetting(matchTopWBottomEnabled = new TickSetting("Match Top enabled w/ bottom enabled", false));
-      this.registerSetting(matchTopWBottomDisabled = new TickSetting("Match Top enabled w/ bottom disabled", false));
-      
-      this.registerSetting(showGradientDisabled = new TickSetting("Show gradient when disabled", true));
-      this.registerSetting(showGradientEnabled = new TickSetting("Show gradient when enabled", true));
-      
-      this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
-      this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
-        this.registerSetting(useCustomFont = new TickSetting("Smooth Font (Very Bad)", false));
-        this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
-        this.registerSetting(reset = new TickSetting("Reset position", false));
-        this.registerSetting(usePreset = new TickSetting("Use preset", false));
-        this.registerSetting(preset = new ComboSetting("Preset", Preset.IcyBlue));
-   }
-   
-   @Override
-   public void guiButtonToggled(TickSetting setting) {
-	   if(setting == cleanUp) {
-		   cleanUp.disable();
+		this.registerSetting(disabledTopRGB = new RGBSetting("DisabledTopRGB", 0, 200, 50));
+		this.registerSetting(disabledBottomRGB = new RGBSetting("DisabledBottomRGB", 0, 200, 50));
+		this.registerSetting(disabledTextRGB = new RGBSetting("DisabledTextRGB", 0, 200, 50));
+
+		this.registerSetting(backgroundRGB = new RGBSetting("BackgroundRGB", 0, 0, 0));
+		this.registerSetting(settingBackgroundRGB = new RGBSetting("SettingBackgroundRGB", 0, 0, 0));
+		this.registerSetting(categoryBackgroundRGB = new RGBSetting("CategoryBackgroundRGB", 0, 0, 0));
+
+		this.registerSetting(matchTopWBottomEnabled = new TickSetting("Match Top enabled w/ bottom enabled", false));
+		this.registerSetting(matchTopWBottomDisabled = new TickSetting("Match Top enabled w/ bottom disabled", false));
+
+		this.registerSetting(showGradientDisabled = new TickSetting("Show gradient when disabled", true));
+		this.registerSetting(showGradientEnabled = new TickSetting("Show gradient when enabled", true));
+
+		this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
+		this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
+		this.registerSetting(useCustomFont = new TickSetting("Smooth Font (Very Bad)", false));
+		this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
+		this.registerSetting(reset = new TickSetting("Reset position", false));
+		this.registerSetting(usePreset = new TickSetting("Use preset", false));
+		this.registerSetting(preset = new ComboSetting("Preset", Preset.IcyBlue));
+	}
+
+	@Override
+	public void guiButtonToggled(TickSetting setting) {
+		if(setting == cleanUp) {
+			cleanUp.disable();
 		   for(CategoryComponent cc : Raven.clickGui.getCategoryList()) {
 			   cc.setX((cc.getX()/50*50) + (cc.getX() % 50 > 25 ? 50:0 ));
 			   cc.setY((cc.getY()/50*50) + (cc.getY() % 50 > 25 ? 50:0 ));
