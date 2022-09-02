@@ -189,7 +189,7 @@ public class ClickGui extends GuiScreen {
 						break;
 					}
 
-					if (category.mousePressed(x, y) && mouseButton == 0) {
+					if ((category.mousePressed(x, y) && mouseButton == 0) || (category.insideArea(x, y) && mouseButton == 1)) {
 						category.setOpened(!category.isOpened());
 						break;
 					}
