@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -29,7 +30,7 @@ public class ClientConfig {
    private JsonObject config;
    private boolean applying;
    //when you are coding the config manager and life be like
-   //public static String ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed_is_sexy = "https://imgur.com/a/hYd1023";
+   //public static String ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed(kv_is_still_sexier_tho)_is_sexy = "https://imgur.com/a/hYd1023";
    //dude wtf bro i was not expecting that i opened that up on my school bus
    
    public ClientConfig(){
@@ -43,15 +44,14 @@ public class ClientConfig {
          } catch (IOException e) {
             e.printStackTrace();
          }
-      }
-      
-      JsonParser jsonParser = new JsonParser();
-      try (FileReader reader = new FileReader(cfgFile))
-      {
-          Object obj = jsonParser.parse(reader);
-          config = (JsonObject) obj;
-      } catch (JsonSyntaxException | ClassCastException | IOException e) {
-          e.printStackTrace();
+      } else {
+          JsonParser jsonParser = new JsonParser();
+          try (FileReader reader = new FileReader(cfgFile)) {
+              Object obj = jsonParser.parse(reader);
+              config = (JsonObject) obj;
+          } catch (JsonSyntaxException | ClassCastException | IOException e) {
+              e.printStackTrace();
+          }
       }
    }
    
@@ -180,10 +180,10 @@ public class ClientConfig {
 		   cat.setY(catData.get("Y").getAsInt());
 		   cat.setOpened(catData.get("opened").getAsBoolean());
 		   if(cat.categoryName != ModuleCategory.category) {
-			   boolean visable = cat.categoryName == ModuleCategory.category ? true : catData.get("visable").getAsBoolean();
+			   boolean visable = cat.categoryName == ModuleCategory.category ? true : (catData.get("visable").getAsBoolean());
 			   cat.setVisable(visable);
 			   Raven.moduleManager.guiModuleManager.getModuleByModuleCategory(cat.categoryName).setToggled(visable);;
-		   }
+		   } 
 	   }
    } 
 

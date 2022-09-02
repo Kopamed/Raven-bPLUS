@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontRenderer;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
@@ -14,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.modules.client.GuiModule;
 
 public class CategoryComponent {
@@ -134,9 +136,9 @@ public class CategoryComponent {
 		if(GuiModule.categoryBackground.isToggled())
 			TickComponent.renderMain((float)(this.x - 2), (float)this.y, (float)(this.x + this.width + 2), (float)(this.y + this.bh + 3), -1);
 		if(GuiModule.useCustomFont.isToggled()) {
-			FontUtil.two.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB());
+			FontUtil.two.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB());
 		} else {
-			mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.name(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
+			mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
 		}
 		if (!this.n4m) {
 			GL11.glPushMatrix();

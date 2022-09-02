@@ -32,7 +32,7 @@ public class FontUtil {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading font");
-            font = new Font("comfortaa", Font.ROMAN_BASELINE, +10);
+            font = new Font("comfortaa", Font.PLAIN, +10);
         }
 
         return font;

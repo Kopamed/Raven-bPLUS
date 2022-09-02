@@ -27,7 +27,7 @@ public class Tracers extends Module {
 		this.registerSetting(a = new TickSetting("Show invis", true));
 		this.registerSetting(f = new SliderSetting("Line Width", 1.0D, 1.0D, 5.0D, 1.0D));
 		this.registerSetting(sl = new SliderSetting("Distance", 1.0D, 1.0D, 512.0D, 1.0D));
-		this.registerSetting(rgb = new RGBSetting("Color:", 0, 255, 255));
+		this.registerSetting(rgb = new RGBSetting("Color:", 0, 255, 0));
 		this.registerSetting(e = new TickSetting("Rainbow", false));
 		this.registerSetting(o = new TickSetting("Redshift w distance", false));
 	}
@@ -77,7 +77,7 @@ public class Tracers extends Module {
 				} while(!a.isToggled() && en.isInvisible());
 
 				if (!AntiBot.bot(en)) {
-					Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(this.rgb.getRed() + (Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)), this.rgb.getGreen(), this.rgb.getGreen()).getRGB() : rgb, (float)f.getInput());
+					Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(this.rgb.getRed() + ((Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)*10 > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)*10)), this.rgb.getGreen(), this.rgb.getGreen()).getRGB() : rgb, (float)f.getInput());
 				}
 			}
 		}
