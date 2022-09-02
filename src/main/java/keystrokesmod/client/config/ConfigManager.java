@@ -62,6 +62,7 @@ public class ConfigManager {
     /**
      * Parses through all the files in the cfg dir and creates a new config class for each one
      */
+    // need to change this so that it only creates a new config class when loading the config so its quicker
     public void discoverConfigs(){
         configs.clear();
         if(configDirectory.listFiles() == null || !(Objects.requireNonNull(configDirectory.listFiles()).length > 0))

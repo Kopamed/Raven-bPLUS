@@ -69,7 +69,7 @@ public class Utils {
 
       public static void sendMessageToSelf(String txt) {
          if (isPlayerInGame()) {
-            String m = Client.reformat("&7[&dR&7]&r " + txt);
+            String m = Client.reformat("&7[&6R&7]&r " + txt);
             mc.thePlayer.addChatMessage(new ChatComponentText(m));
          }
       }
@@ -91,8 +91,8 @@ public class Utils {
                if (pc) {
                   mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(y, p, mc.thePlayer.onGround));
                } else {
-                  mc.thePlayer.rotationYaw = y;
-                  mc.thePlayer.rotationPitch = p;
+                  mc.thePlayer.rotationYawHead = y;
+                  mc.thePlayer.setRotationYawHead(p);
                }
             }
 

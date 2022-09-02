@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.GuiModule.Preset;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -19,6 +20,7 @@ import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 
 public class ModuleComponent implements Component {
@@ -145,33 +147,75 @@ public class ModuleComponent implements Component {
    }
 
    public void draw() {
-	   if(GuiModule.showGradientEnabled.isToggled() && mod.isEnabled()) {
-		   v((float)this.category.getX(),
-				   (float)(this.category.getY() + this.o),
-				   (float)(this.category.getX() + this.category.getWidth()),
-				   (float)(this.category.getY() + 15 + this.o),
-				   GuiModule.enabledTopRGB.getColors(),
-				   GuiModule.enabledBottomRGB.getColors());
-	   } else if (GuiModule.showGradientDisabled.isToggled() && !mod.isEnabled()) {
-		   v((float)this.category.getX(),
-				   (float)(this.category.getY() + this.o),
-				   (float)(this.category.getX() + this.category.getWidth()),
-				   (float)(this.category.getY() + 15 + this.o),
-				   GuiModule.disabledTopRGB.getColors(),
-				   GuiModule.disabledBottomRGB.getColors());
-	   }
-      GL11.glPushMatrix();
-      // module text button
-      int button_rgb;
-      if (this.mod.isEnabled()) {
-    	  button_rgb = GuiModule.enabledTextRGB.getRGB();
-      } else if (this.mod.canBeEnabled()) {
-    	  button_rgb = GuiModule.disabledTextRGB.getRGB();
-      } else {
-    	  button_rgb = new Color(102, 102, 102).getRGB();
-      }
-      Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
-      GL11.glPopMatrix();
+	  if(GuiModule.usePreset.isToggled()) {
+		  GuiModule.Preset preset = (Preset) GuiModule.preset.getMode();
+		  if(preset.showGradientEnabled && mod.isEnabled()) {
+			   v((float)this.category.getX(),
+					   (float)(this.category.getY() + this.o),
+					   (float)(this.category.getX() + this.category.getWidth()),
+					   (float)(this.category.getY() + 15 + this.o),
+					   new int[] {preset.enabledTopRGB.getRed(), preset.enabledTopRGB.getGreen(), preset.enabledTopRGB.getBlue()} ,
+					   new int[] {preset.enabledBottomRGB.getRed(), preset.enabledBottomRGB.getGreen(), preset.enabledBottomRGB.getBlue()});
+		   } else if (preset.showGradientDisabled && !mod.isEnabled()) {
+			   v((float)this.category.getX(),
+					   (float)(this.category.getY() + this.o),
+					   (float)(this.category.getX() + this.category.getWidth()),
+					   (float)(this.category.getY() + 15 + this.o),
+					   new int[] {preset.disabledTopRGB.getRed(), preset.disabledTopRGB.getGreen(), preset.disabledTopRGB.getBlue()} ,
+					   new int[] {preset.disabledBottomRGB.getRed(), preset.disabledBottomRGB.getGreen(), preset.disabledBottomRGB.getBlue()});
+		   }
+	      GL11.glPushMatrix();
+	      // module text button
+	      int button_rgb = preset.enabledTextRGB.getRGB();
+	      if (this.mod.isEnabled()) {
+	    	  button_rgb = preset.enabledTextRGB.getRGB();
+	      } else if (this.mod.canBeEnabled()) {
+	    	  button_rgb = preset.disabledTextRGB.getRGB();
+	      } else {
+	    	  button_rgb = new Color(102, 102, 102).getRGB();
+	      }
+	      if(preset.useCustomFont) {
+	    	  FontUtil.normal.drawCenteredString(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth()/2), (float)(this.category.getY() + this.o + 4), button_rgb);
+	      } else {
+	    	  Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
+	      }
+	      GL11.glPopMatrix();
+	      
+	  } else {
+		  if(GuiModule.showGradientEnabled.isToggled() && mod.isEnabled()) {
+			   v((float)this.category.getX(),
+					   (float)(this.category.getY() + this.o),
+					   (float)(this.category.getX() + this.category.getWidth()),
+					   (float)(this.category.getY() + 15 + this.o),
+					   GuiModule.enabledTopRGB.getColors(),
+					   GuiModule.enabledBottomRGB.getColors());
+		   } else if (GuiModule.showGradientDisabled.isToggled() && !mod.isEnabled()) {
+			   v((float)this.category.getX(),
+					   (float)(this.category.getY() + this.o),
+					   (float)(this.category.getX() + this.category.getWidth()),
+					   (float)(this.category.getY() + 15 + this.o),
+					   GuiModule.disabledTopRGB.getColors(),
+					   GuiModule.disabledBottomRGB.getColors());
+		   }
+	      GL11.glPushMatrix();
+	      // module text button
+	      int button_rgb = GuiModule.enabledTextRGB.getRGB();
+	      if (this.mod.isEnabled()) {
+	    	  button_rgb = GuiModule.enabledTextRGB.getRGB();
+	      } else if (this.mod.canBeEnabled()) {
+	    	  button_rgb = GuiModule.disabledTextRGB.getRGB();
+	      } else {
+	    	  button_rgb = new Color(102, 102, 102).getRGB();
+	      }
+	      if(GuiModule.useCustomFont.isToggled()) {
+	    	  FontUtil.normal.drawCenteredString(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth()/2), (float)(this.category.getY() + this.o + 4), button_rgb);
+	      } else {
+	    	  Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float)(this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float)(this.category.getY() + this.o + 4), button_rgb);
+	      }
+	      GL11.glPopMatrix();
+	  }
+	   
+	   
       if (this.po && !this.settings.isEmpty()) {
          for (Component c : this.settings) {
             c.draw();

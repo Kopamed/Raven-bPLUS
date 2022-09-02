@@ -249,25 +249,31 @@ public class Module {
 
 
 	public enum ModuleCategory {
-		category(true, null),
-		combat(true, category),
-		movement(true, category),
-		player(true, category),
-		world(true, category),
-		render(true, category),
-		minigames(true, category),
-		other(true, category),
-		client(true, category),
-		hotkey(true, category),
-		config(true, client),
-		sumo(false, minigames);
+		category(true, null, "Ravenb++"),
+		combat(false, category, "Combat"),
+		movement(false, category, "Movement"),
+		player(false, category, "Player"),
+		world(false, category, "World"),
+		render(false, category, "Render"),
+		minigames(false, category, "Minigames"),
+		other(false, category, "Other"),
+		client(false, category, "Client"),
+		hotkey(false, category, "Hotkey"),
+		config(false, client, "Config"),
+		sumo(false, minigames, "Sumo");
 		
 	    private final boolean defaultShown;
 	    private final ModuleCategory topCatagory;
+	    private final String name;
 	    
-	    private ModuleCategory(boolean defaultShown,ModuleCategory topCatagory) {
+	    private ModuleCategory(boolean defaultShown,ModuleCategory topCatagory,String name) {
 	        this.defaultShown = defaultShown;
 	        this.topCatagory = topCatagory;
+	        this.name = name;
+	    }
+	    
+	    public String getName() {
+	    	return name;
 	    }
 	    
 	    public boolean isShownByDefault() {

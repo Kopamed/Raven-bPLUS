@@ -7,7 +7,7 @@ public class GuiModule extends Module{
 	private ModuleCategory moduleCategory;
 
 	public GuiModule(ModuleCategory moduleCategory, ModuleCategory parentCategory) {
-		super(moduleCategory.name(), parentCategory);
+		super(moduleCategory.getName(), parentCategory);
 		this.moduleCategory = moduleCategory;
 		hasBind = false;
 		showInHud = false;
