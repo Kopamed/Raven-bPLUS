@@ -15,7 +15,7 @@ public class GuiModule extends Module {
 	public static final int bind = 54;
 	public static SliderSetting backgroundOpacity;
 
-	public static ComboSetting preset;
+	public static ComboSetting preset, cnColor;
 
 	public static TickSetting categoryBackground, cleanUp, reset, usePreset,
 
@@ -24,7 +24,7 @@ public class GuiModule extends Module {
 	useCustomFont;
 
 	public static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
-	disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB;
+	disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
 
 	public GuiModule() {
 		super("Gui", ModuleCategory.client);
@@ -41,6 +41,9 @@ public class GuiModule extends Module {
 		this.registerSetting(backgroundRGB = new RGBSetting("BackgroundRGB", 0, 0, 0));
 		this.registerSetting(settingBackgroundRGB = new RGBSetting("SettingBackgroundRGB", 0, 0, 0));
 		this.registerSetting(categoryBackgroundRGB = new RGBSetting("CategoryBackgroundRGB", 0, 0, 0));
+
+		this.registerSetting(cnColor = new ComboSetting("Category Name Color", CNColor.STATIC));
+		this.registerSetting(categoryNameRGB = new RGBSetting("CategoryNameRGB", 255, 255, 255));
 
 		this.registerSetting(matchTopWBottomEnabled = new TickSetting("Match Top enabled w/ bottom enabled", false));
 		this.registerSetting(matchTopWBottomDisabled = new TickSetting("Match Top enabled w/ bottom disabled", false));
@@ -148,5 +151,9 @@ public class GuiModule extends Module {
 			this.disabledBottomRGB = disabledBottomRGB;
 			this.disabledTextRGB = disabledTextRGB;
 		}
+	}
+
+	public enum CNColor {
+		RAINBOW, STATIC
 	}
 }
