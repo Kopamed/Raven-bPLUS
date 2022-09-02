@@ -8,15 +8,16 @@ import keystrokesmod.client.utils.Utils;
 public class NameHider extends Module {
    public static DescriptionSetting a;
    public static String n = "ravenb++";
+   public static String playerNick = "";
 
    public NameHider() {
       super("Name Hider", ModuleCategory.other);
       this.registerSetting(a = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": cname [name]"));
    }
 
-   public static String getUnformattedTextForChat(String s) {
+   public static String format(String s) {
       if (mc.thePlayer != null) {
-         s = DuelsStats.playerNick.isEmpty() ? s.replace(mc.thePlayer.getName(), n) : s.replace(DuelsStats.playerNick, n);
+         s = playerNick.isEmpty() ? s.replace(mc.thePlayer.getName(), n) : s.replace(playerNick, n);
       }
 
       return s;

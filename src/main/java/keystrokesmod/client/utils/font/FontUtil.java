@@ -10,14 +10,16 @@ import keystrokesmod.client.module.modules.HUD;
 @SuppressWarnings("NonAtomicOperationOnVolatileField")
 public class FontUtil {
     public static volatile int completed;
+
     public static FontRenderer normal;
-
     public static FontRenderer two;
+    public static FontRenderer small;
+
     private static Font normal_;
-
     private static Font two_;
+    private static Font small_;
 
-    private static Font getFont(Map<String, Font> locationMap, String location, int size) {
+    private static Font getFont(Map<String, Font> locationMap, String location, int size, int fonttype) {
         Font font = null;
 
         try {
@@ -25,14 +27,15 @@ public class FontUtil {
                 font = locationMap.get(location).deriveFont(Font.PLAIN, size);
             } else {
                 InputStream is = HUD.class.getResourceAsStream("/assets/keystrokes/font/" + location);
-                font = Font.createFont(0, is);
+                assert is != null;
+                font = Font.createFont(Font.TRUETYPE_FONT, is);
                 locationMap.put(location, font);
-                font = font.deriveFont(Font.PLAIN, size);
+                font = font.deriveFont(fonttype, size);
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading font");
-            font = new Font("comfortaa", Font.PLAIN, +10);
+            font = new Font("comfortaa", Font.PLAIN, +size);
         }
 
         return font;
@@ -46,8 +49,9 @@ public class FontUtil {
         new Thread(() ->
         {
             Map<String, Font> locationMap = new HashMap<>();
-            normal_ = getFont(locationMap, "comfortaa.ttf", 19);
-            two_ = getFont(locationMap, "comfortaa.ttf", 30);
+            normal_ = getFont(locationMap, "gilroy.otf", 19, Font.PLAIN);
+            two_ = getFont(locationMap, "gilroy.otf", 30, Font.PLAIN);
+            small_ = getFont(locationMap, "gilroybold.otf", 14, Font.BOLD);
             completed++;
         }).start();
         new Thread(() ->
@@ -72,5 +76,6 @@ public class FontUtil {
 
         normal = new FontRenderer(normal_, true, true);
         two = new FontRenderer(normal_, true, true);
+        small = new FontRenderer(small_, true, true);
     }
 }

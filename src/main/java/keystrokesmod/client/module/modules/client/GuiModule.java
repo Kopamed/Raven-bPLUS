@@ -15,7 +15,7 @@ public class GuiModule extends Module {
 	public static final int bind = 54;
 	public static SliderSetting backgroundOpacity;
 
-	public static ComboSetting preset;
+	public static ComboSetting preset, cnColor;
 
 	public static TickSetting categoryBackground, cleanUp, reset, usePreset,
 
@@ -24,7 +24,7 @@ public class GuiModule extends Module {
 	useCustomFont;
 
 	public static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
-	disabledTopRGB, disabledBottomRGB, disabledTextRGB;
+	disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
 
 	public GuiModule() {
 		super("Gui", ModuleCategory.client);
@@ -32,21 +32,28 @@ public class GuiModule extends Module {
 
 		this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
 		this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
-		this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 255, 170, 0));
+		this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
 
 		this.registerSetting(disabledTopRGB = new RGBSetting("DisabledTopRGB", 0, 200, 50));
 		this.registerSetting(disabledBottomRGB = new RGBSetting("DisabledBottomRGB", 0, 200, 50));
-		this.registerSetting(disabledTextRGB = new RGBSetting("DisabledTextRGB", 255, 255, 255));
+		this.registerSetting(disabledTextRGB = new RGBSetting("DisabledTextRGB", 0, 200, 50));
+
+		this.registerSetting(backgroundRGB = new RGBSetting("BackgroundRGB", 0, 0, 0));
+		this.registerSetting(settingBackgroundRGB = new RGBSetting("SettingBackgroundRGB", 0, 0, 0));
+		this.registerSetting(categoryBackgroundRGB = new RGBSetting("CategoryBackgroundRGB", 0, 0, 0));
+
+		this.registerSetting(cnColor = new ComboSetting("Category Name Color", CNColor.STATIC));
+		this.registerSetting(categoryNameRGB = new RGBSetting("CategoryNameRGB", 255, 255, 255));
 
 		this.registerSetting(matchTopWBottomEnabled = new TickSetting("Match Top enabled w/ bottom enabled", false));
 		this.registerSetting(matchTopWBottomDisabled = new TickSetting("Match Top enabled w/ bottom disabled", false));
 
-		this.registerSetting(showGradientDisabled = new TickSetting("Show gradient when disabled", false));
-		this.registerSetting(showGradientEnabled = new TickSetting("Show gradient when enabled", false));
+		this.registerSetting(showGradientDisabled = new TickSetting("Show gradient when disabled", true));
+		this.registerSetting(showGradientEnabled = new TickSetting("Show gradient when enabled", true));
 
 		this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
 		this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
-		this.registerSetting(useCustomFont = new TickSetting("Smooth Font (Very Bad)", false));
+		this.registerSetting(useCustomFont = new TickSetting("Smooth Font (BROKEN DONT USE)", false));
 		this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
 		this.registerSetting(reset = new TickSetting("Reset position", false));
 		this.registerSetting(usePreset = new TickSetting("Use preset", false));
@@ -57,23 +64,23 @@ public class GuiModule extends Module {
 	public void guiButtonToggled(TickSetting setting) {
 		if(setting == cleanUp) {
 			cleanUp.disable();
-			for(CategoryComponent cc : Raven.clickGui.getCategoryList()) {
-				cc.setX((cc.getX()/50*50) + (cc.getX() % 50 > 25 ? 50:0 ));
-				cc.setY((cc.getY()/50*50) + (cc.getY() % 50 > 25 ? 50:0 ));
-			}
-		} else if (setting == matchTopWBottomEnabled){
-			matchTopWBottomEnabled.disable();
-			enabledTopRGB.setColors(enabledBottomRGB.getColors());
-		} else if (setting == matchTopWBottomDisabled){
-			matchTopWBottomDisabled.disable();
-			disabledTopRGB.setColors(disabledBottomRGB.getColors());
-		} else if(setting == reset) {
-			reset.disable();
-			Raven.clickGui.resetSort();
-		}
-
-
-	}
+		   for(CategoryComponent cc : Raven.clickGui.getCategoryList()) {
+			   cc.setX((cc.getX()/50*50) + (cc.getX() % 50 > 25 ? 50:0 ));
+			   cc.setY((cc.getY()/50*50) + (cc.getY() % 50 > 25 ? 50:0 ));
+		   }
+	   } else if (setting == matchTopWBottomEnabled){
+		   matchTopWBottomEnabled.disable();
+		   enabledTopRGB.setColors(enabledBottomRGB.getColors());
+	   } else if (setting == matchTopWBottomDisabled){
+		   matchTopWBottomDisabled.disable();
+		   disabledTopRGB.setColors(disabledBottomRGB.getColors());
+	   } else if(setting == reset) {
+           reset.disable();
+           Raven.clickGui.resetSort();
+       }
+	   
+	   
+   }
 
 	public void onEnable() {
 		if (Utils.Player.isPlayerInGame() && mc.currentScreen != Raven.clickGui) {
@@ -123,8 +130,8 @@ public class GuiModule extends Module {
 				new Color(27,25,26),
 				new Color(255,255,255)
 				);
-		
-		
+
+
 
 		public boolean showGradientEnabled, showGradientDisabled, useCustomFont;
 		public Color enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB;
@@ -142,7 +149,11 @@ public class GuiModule extends Module {
 			this.enabledTextRGB = enabledTextRGB;
 			this.disabledTopRGB = disabledTopRGB;
 			this.disabledBottomRGB = disabledBottomRGB;
-			this.disabledTextRGB = disabledTextRGB;   
+			this.disabledTextRGB = disabledTextRGB;
 		}
+	}
+
+	public enum CNColor {
+		RAINBOW, STATIC
 	}
 }

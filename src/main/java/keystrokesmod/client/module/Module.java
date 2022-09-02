@@ -249,7 +249,7 @@ public class Module {
 
 
 	public enum ModuleCategory {
-		category(true, null, "Ravenb++"),
+		category(true, null, "Raven B++"),
 		combat(false, category, "Combat"),
 		movement(false, category, "Movement"),
 		player(false, category, "Player"),

@@ -1,5 +1,6 @@
 package keystrokesmod.client.config;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -40,8 +41,8 @@ public class Config {
         JsonParser jsonParser = new JsonParser();
         try (FileReader reader = new FileReader(file))
         {
-            Object obj = jsonParser.parse(reader);
-            return (JsonObject) obj;
+            JsonElement obj = jsonParser.parse(reader);
+            return obj.isJsonNull()? null : obj.getAsJsonObject();
         } catch (JsonSyntaxException | ClassCastException | IOException e) {
             e.printStackTrace();
         }

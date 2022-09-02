@@ -25,7 +25,6 @@ import java.util.List;
 public class DuelsStats extends Module {
    public static ComboSetting selectedGameMode;
    public static TickSetting sendIgnOnJoin;
-   public static String playerNick = "";
    private final List<String> queue = new ArrayList<>();
 
    public DuelsStats() {

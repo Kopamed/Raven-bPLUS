@@ -10,6 +10,8 @@ import keystrokesmod.client.utils.font.FontRenderer;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
@@ -130,16 +132,44 @@ public class CategoryComponent {
 			}
 
 			//drawing the background for every module in the category
-			net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, (new Color(0, 0, 0, (int)(GuiModule.backgroundOpacity.getInput()/100 * 255))).getRGB());
+			Color bgColor = moduleOpened? (new Color(GuiModule.settingBackgroundRGB.getRed(), GuiModule.settingBackgroundRGB.getGreen(), GuiModule.settingBackgroundRGB.getBlue(),
+					(int) (GuiModule.backgroundOpacity.getInput()/100 * 255))) : (new Color(GuiModule.backgroundRGB.getRed(), GuiModule.backgroundRGB.getGreen(),
+					GuiModule.backgroundRGB.getBlue(), (int) (GuiModule.backgroundOpacity.getInput()/100 * 255)));
+
+			net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
+			// 1000000 character lines make me want to kill myself
 		}
 
-		if(GuiModule.categoryBackground.isToggled())
-			TickComponent.renderMain((float)(this.x - 2), (float)this.y, (float)(this.x + this.width + 2), (float)(this.y + this.bh + 3), -1);
-		if(GuiModule.useCustomFont.isToggled()) {
-			FontUtil.two.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB());
-		} else {
-			mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB(), false);
+		if(GuiModule.categoryBackground.isToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
+			Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
+					GuiModule.categoryBackgroundRGB.getRGB());
+			GlStateManager.resetColor();
 		}
+
+		// category name
+		int colorCN;
+
+		switch ((GuiModule.CNColor) GuiModule.cnColor.getMode()) {
+
+			case STATIC:
+				colorCN = GuiModule.categoryNameRGB.getRGB();
+				break;
+
+			case RAINBOW:
+				colorCN = Color.getHSBColor((float)(System.currentTimeMillis() % (7500L / (long)this.chromaSpeed)) / (7500.0F / (float)this.chromaSpeed), 1.0F, 1.0F).getRGB();
+				break;
+
+			default:
+				throw new RuntimeException("if this happens, im coming to your house (you broke my code)");
+
+		}
+
+		if(GuiModule.useCustomFont.isToggled()) {
+			FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), colorCN);
+		} else {
+			mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float)(this.x + 2), (float)(this.y + 4), colorCN, false);
+		}
+
 		if (!this.n4m) {
 			GL11.glPushMatrix();
 			//Opened/closed unicode... :yes: :holsum: :evil:
