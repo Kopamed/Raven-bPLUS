@@ -5,20 +5,17 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.utils.font.FontRenderer;
-import keystrokesmod.client.utils.font.FontUtil;
-import net.minecraft.client.Minecraft;
-
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.GuiModule.Preset;
+import keystrokesmod.client.utils.font.FontUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class CategoryComponent {
 	public ArrayList<Component> modulesInCategory = new ArrayList<>();
@@ -132,24 +129,40 @@ public class CategoryComponent {
 			}
 
 			//drawing the background for every module in the category
-			Color bgColor = moduleOpened? (new Color(GuiModule.settingBackgroundRGB.getRed(), GuiModule.settingBackgroundRGB.getGreen(), GuiModule.settingBackgroundRGB.getBlue(),
-					(int) (GuiModule.backgroundOpacity.getInput()/100 * 255))) : (new Color(GuiModule.backgroundRGB.getRed(), GuiModule.backgroundRGB.getGreen(),
-					GuiModule.backgroundRGB.getBlue(), (int) (GuiModule.backgroundOpacity.getInput()/100 * 255)));
-
+			Color bgColor;
+			if(GuiModule.usePreset.isToggled()) {
+				Preset preset = (Preset) GuiModule.preset.getMode();
+				bgColor = moduleOpened? (new Color(preset.settingBackgroundRGB.getRed(), preset.settingBackgroundRGB.getGreen(), preset.settingBackgroundRGB.getBlue(),
+						(int) (preset.backgroundOpacity/100 * 255))) : (new Color(preset.backgroundRGB.getRed(), preset.backgroundRGB.getGreen(),
+								preset.backgroundRGB.getBlue(), (int) (preset.backgroundOpacity/100 * 255)));
+			} else {
+				bgColor = (moduleOpened? (new Color(GuiModule.settingBackgroundRGB.getRed(), GuiModule.settingBackgroundRGB.getGreen(), GuiModule.settingBackgroundRGB.getBlue(),
+						(int) (GuiModule.backgroundOpacity.getInput()/100 * 255))) : (new Color(GuiModule.backgroundRGB.getRed(), GuiModule.backgroundRGB.getGreen(),
+						GuiModule.backgroundRGB.getBlue(), (int) (GuiModule.backgroundOpacity.getInput()/100 * 255))));
+			}
+			
 			net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
 			// 1000000 character lines make me want to kill myself
 		}
 
 		if(GuiModule.categoryBackground.isToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
-			Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-					GuiModule.categoryBackgroundRGB.getRGB());
-			GlStateManager.resetColor();
+			if(GuiModule.usePreset.isToggled()) {
+				Preset preset = (Preset) GuiModule.preset.getMode();
+				Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
+						preset.categoryBackgroundRGB.getRGB());
+				GlStateManager.resetColor();
+			} else {
+				Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
+						GuiModule.categoryBackgroundRGB.getRGB());
+				GlStateManager.resetColor();
+			}
+
 		}
 
 		// category name
 		int colorCN;
-
-		switch ((GuiModule.CNColor) GuiModule.cnColor.getMode()) {
+		Preset preset = (Preset) GuiModule.preset.getMode();
+		switch (GuiModule.usePreset.isToggled() ? (GuiModule.CNColor) preset.cnColor : (GuiModule.CNColor) GuiModule.cnColor.getMode()) {
 
 			case STATIC:
 				colorCN = GuiModule.categoryNameRGB.getRGB();
