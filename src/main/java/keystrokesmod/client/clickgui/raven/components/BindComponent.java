@@ -1,5 +1,6 @@
 package keystrokesmod.client.clickgui.raven.components;
 
+import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.BindStage;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
@@ -47,6 +48,12 @@ public class BindComponent implements Component {
     public void mouseDown(int x, int y, int b) {
         if (this.i(x, y) && b == 0 && this.p.po) {
             this.isBinding = !this.isBinding;
+
+            if(isBinding) {
+                ClickGui.binding++;
+            } else {
+                ClickGui.binding--;
+            }
         }
 
     }
@@ -60,7 +67,7 @@ public class BindComponent implements Component {
     public void keyTyped(char t, int k) {
         if (!this.p.mod.getName().equalsIgnoreCase("AutoConfig")) {
             if (this.isBinding) {
-                if (k == 11) {
+                if (k == Keyboard.KEY_0 || k == Keyboard.KEY_ESCAPE) {
                     if (this.p.mod instanceof GuiModule) {
                         this.p.mod.setbind(54);
                     } else {
@@ -70,6 +77,7 @@ public class BindComponent implements Component {
                     this.p.mod.setbind(k);
                 }
 
+                ClickGui.binding--;
                 this.isBinding = false;
             }
 

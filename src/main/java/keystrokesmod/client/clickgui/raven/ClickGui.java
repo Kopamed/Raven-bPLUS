@@ -29,6 +29,8 @@ public class ClickGui extends GuiScreen {
 	private final ArrayList<CategoryComponent> categoryList;
 	public final Terminal terminal;
 
+	public static int binding;
+
 	public ClickGui() {
 		this.terminal = new Terminal();
 		this.categoryList = new ArrayList<>();
@@ -246,7 +248,7 @@ public class ClickGui extends GuiScreen {
 
 	public void keyTyped(char t, int k) {
 		terminal.keyTyped(t, k);
-		if (k == 1) {
+		if (k == 1 && binding <= 0) {
 			this.mc.displayGuiScreen(null);
 		} else {
 			Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
@@ -278,6 +280,8 @@ public class ClickGui extends GuiScreen {
 		}
 		Raven.configManager.save();
 		Raven.clientConfig.saveConfig();
+
+		binding = 0;
 	}
 
 	public boolean doesGuiPauseGame() {
