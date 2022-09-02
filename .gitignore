@@ -15,7 +15,7 @@ out
 
 # gradle
 build/*
-!build/libs
+!build/libss
 .gradle
 
 # other
