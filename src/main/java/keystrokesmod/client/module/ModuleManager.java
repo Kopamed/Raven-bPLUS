@@ -11,10 +11,7 @@ import keystrokesmod.client.module.modules.minigames.*;
 import keystrokesmod.client.module.modules.minigames.Sumo.SumoBot;
 import keystrokesmod.client.module.modules.minigames.Sumo.SumoClicker;
 import keystrokesmod.client.module.modules.movement.*;
-import keystrokesmod.client.module.modules.other.FakeChat;
-import keystrokesmod.client.module.modules.other.MiddleClick;
-import keystrokesmod.client.module.modules.other.NameHider;
-import keystrokesmod.client.module.modules.other.WaterBucket;
+import keystrokesmod.client.module.modules.other.*;
 import keystrokesmod.client.module.modules.player.*;
 import keystrokesmod.client.module.modules.render.*;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -115,6 +112,7 @@ public class ModuleManager {
         addModule(new SumoBot());
         addModule(new SumoClicker());
         addModule(new Parkour());
+        addModule(new Disabler());
         // why ?
         // idk dude. you tell me why. I am pretty sure this was blowsy's work.
 
