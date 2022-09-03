@@ -35,7 +35,7 @@ public class FastPlace extends Module {
         this.registerSetting(delaySlider = new SliderSetting("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
         this.registerSetting(blockOnly = new TickSetting("Blocks only", true));
         this.registerSetting(projSeparate = new TickSetting("Separate Projectile Delay", true));
-        this.registerSetting(delaySlider = new SliderSetting("Projectile Delay", 2.0D, 0.0D, 4.0D, 1.0D));
+        this.registerSetting(projSlider = new SliderSetting("Projectile Delay", 2.0D, 0.0D, 4.0D, 1.0D));
 
     }
 
