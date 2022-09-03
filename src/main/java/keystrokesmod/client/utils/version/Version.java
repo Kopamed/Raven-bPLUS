@@ -8,7 +8,7 @@ public class Version {
     private final int branchCommit;
     private final ArrayList<Integer> versionNumbers = new ArrayList<>();
 
-    public Version(String version, String branchName, int branchCommit){
+    public Version(String version, String branchName, int branchCommit) {
         this.version = version.replace("-", ".");
         this.branchName = branchName;
         this.branchCommit = branchCommit;
@@ -29,25 +29,25 @@ public class Version {
         return branchCommit;
     }
 
-    public ArrayList<Integer> getVersionNumbers(){
+    public ArrayList<Integer> getVersionNumbers() {
         return versionNumbers;
     }
 
     public boolean isNewerThan(Version versionToCompare) {
         if (versionToCompare.getVersionNumbers().get(0) < this.getVersionNumbers().get(0)) {
             return true;
-        } else if(versionToCompare.getVersionNumbers().get(0) > this.getVersionNumbers().get(0)){
+        } else if (versionToCompare.getVersionNumbers().get(0) > this.getVersionNumbers().get(0)) {
             return false;
         }
         if (versionToCompare.getVersionNumbers().get(1) < this.getVersionNumbers().get(1)) {
             return true;
-        } else if(versionToCompare.getVersionNumbers().get(1) > this.getVersionNumbers().get(1)){
+        } else if (versionToCompare.getVersionNumbers().get(1) > this.getVersionNumbers().get(1)) {
             return false;
         }
         return versionToCompare.getVersionNumbers().get(2) < this.getVersionNumbers().get(2);
     }
 
-    public boolean equals(Version version){
+    public boolean equals(Version version) {
         ArrayList<Integer> now = this.getVersionNumbers();
         ArrayList<Integer> nvw = version.getVersionNumbers();
 

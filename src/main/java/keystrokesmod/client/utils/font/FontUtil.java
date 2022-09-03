@@ -1,11 +1,11 @@
 package keystrokesmod.client.utils.font;
 
-import java.awt.Font;
+import keystrokesmod.client.module.modules.HUD;
+
+import java.awt.*;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import keystrokesmod.client.module.modules.HUD;
 
 @SuppressWarnings("NonAtomicOperationOnVolatileField")
 public class FontUtil {
@@ -26,7 +26,7 @@ public class FontUtil {
             if (locationMap.containsKey(location)) {
                 font = locationMap.get(location).deriveFont(Font.PLAIN, size);
             } else {
-                InputStream is = HUD.class.getResourceAsStream("/assets/keystrokes/font/" + location);
+                InputStream is = HUD.class.getResourceAsStream("/assets/keystrokes/fonts/" + location);
                 assert is != null;
                 font = Font.createFont(Font.TRUETYPE_FONT, is);
                 locationMap.put(location, font);

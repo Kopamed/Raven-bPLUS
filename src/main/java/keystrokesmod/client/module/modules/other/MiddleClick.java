@@ -1,17 +1,15 @@
 package keystrokesmod.client.module.modules.other;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
-import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 import java.awt.*;
@@ -44,16 +42,17 @@ public class MiddleClick extends Module {
         pearlEvent = 4;
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent e) {
-        if(!Utils.Player.isPlayerInGame()) return;
+    @Subscribe
+    public void onTick(TickEvent e) {
+        if (!Utils.Player.isPlayerInGame())
+            return;
 
-        if(pearlEvent < 4){
-            if(pearlEvent==3) mc.thePlayer.inventory.currentItem = prevSlot;
+        if (pearlEvent < 4) {
+            if (pearlEvent == 3) mc.thePlayer.inventory.currentItem = prevSlot;
             pearlEvent++;
         }
 
-        if(Mouse.isButtonDown(2) && !hasClicked) {
+        if (Mouse.isButtonDown(2) && !hasClicked) {
             if (ThrowPearl.equals(actionSetting.getMode())) {
                 for (int slot = 0; slot <= 8; slot++) {
                     ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
@@ -75,20 +74,20 @@ public class MiddleClick extends Module {
                 if (showHelp.isToggled()) showHelpMessage();
             }
             hasClicked = true;
-        } else if(!Mouse.isButtonDown(2) && hasClicked) {
+        } else if (!Mouse.isButtonDown(2) && hasClicked) {
             hasClicked = false;
         }
     }
 
     private void showHelpMessage() {
-        if(showHelp.isToggled()) {
+        if (showHelp.isToggled()) {
             Utils.Player.sendMessageToSelf("Run 'help friends' in CommandLine to find out how to add, remove and view friends.");
         }
     }
 
     private void removeFriend() {
         Entity player = mc.objectMouseOver.entityHit;
-        if(player == null) {
+        if (player == null) {
             Utils.Player.sendMessageToSelf("Please aim at a player/entity when removing them.");
         } else {
             if (AimAssist.removeFriend(player)) {
@@ -101,10 +100,9 @@ public class MiddleClick extends Module {
 
     private void addFriend() {
         Entity player = mc.objectMouseOver.entityHit;
-        if(player == null) {
+        if (player == null) {
             Utils.Player.sendMessageToSelf("Please aim at a player/entity when adding them.");
-        }
-        else {
+        } else {
             AimAssist.addFriend(player);
             Utils.Player.sendMessageToSelf("Successfully added " + player.getName() + " to friends list.");
         }

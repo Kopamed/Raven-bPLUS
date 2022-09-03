@@ -1,10 +1,10 @@
 package keystrokesmod.client.module.modules.movement;
 
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -60,7 +60,7 @@ public class SlyPort extends Module {
         double dist = r + 1.0D;
         Iterator var6 = mc.theWorld.loadedEntityList.iterator();
 
-        while(true) {
+        while (true) {
             Entity ent;
             do {
                 do {
@@ -70,11 +70,11 @@ public class SlyPort extends Module {
                                 return en;
                             }
 
-                            ent = (Entity)var6.next();
-                        } while(ent == mc.thePlayer);
-                    } while(!(ent instanceof EntityLivingBase));
-                } while(((EntityLivingBase)ent).deathTime != 0);
-            } while(SlyPort.d.isToggled() && !(ent instanceof EntityPlayer));
+                            ent = (Entity) var6.next();
+                        } while (ent == mc.thePlayer);
+                    } while (!(ent instanceof EntityLivingBase));
+                } while (((EntityLivingBase) ent).deathTime != 0);
+            } while (d.isToggled() && !(ent instanceof EntityPlayer));
 
             if (!AntiBot.bot(ent)) {
                 double d = mc.thePlayer.getDistanceSqToEntity(ent);

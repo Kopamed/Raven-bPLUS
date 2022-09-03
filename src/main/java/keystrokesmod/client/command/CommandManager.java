@@ -3,11 +3,9 @@ package keystrokesmod.client.command;
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.commands.*;
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class CommandManager {
@@ -74,6 +72,6 @@ public class CommandManager {
     }
 
     public void sort() {
-    	this.sortedCommandList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+        this.sortedCommandList.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
     }
 }

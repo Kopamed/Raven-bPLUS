@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(priority = 1005, value = FontRenderer.class)
 public class MixinFontRenderer {
 
-    @Inject(method = "renderStringAtPos", at = @At(value = "HEAD"))
+    @Inject(method = "renderStringAtPos", at = @At("HEAD"))
     private void renderStringAtPos(String p_renderStringAtPos_1_, boolean p_renderStringAtPos_2_, CallbackInfo ci) {
         Module nameHider = Raven.moduleManager.getModuleByClazz(NameHider.class);
         if (nameHider != null && nameHider.isEnabled()) {
@@ -21,7 +21,7 @@ public class MixinFontRenderer {
         }
     }
 
-    @Inject(method = "getStringWidth", at = @At(value = "HEAD"))
+    @Inject(method = "getStringWidth", at = @At("HEAD"))
     private void getStringWidth(String p_getStringWidth_1_, CallbackInfoReturnable<Integer> cir) {
         Module nameHider = Raven.moduleManager.getModuleByClazz(NameHider.class);
         if (nameHider != null && nameHider.isEnabled()) {

@@ -6,9 +6,8 @@
     "mixins": [
         "MixinEntity",
         "MixinEntityPlayer",
-        "MixinFontRenderer"
-    ],
-    "client": [
+        "MixinFontRenderer",
+        "MixinNetworkManager",
         "MixinEntityPlayerSP",
         "MixinGuiUtilRenderComponents",
         "MixinMinecraft"

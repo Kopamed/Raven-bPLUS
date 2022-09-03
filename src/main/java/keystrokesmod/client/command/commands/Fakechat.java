@@ -8,7 +8,7 @@ import keystrokesmod.client.utils.Utils;
 
 public class Fakechat extends Command {
     public Fakechat() {
-        super(FakeChat.command, "Sends a message in chat", 1, 600,  new String[] {"text"},  new String[] {"fkct"});
+        super(FakeChat.command, "Sends a message in chat", 1, 600, new String[]{"text"}, new String[]{"fkct"});
     }
 
     @Override

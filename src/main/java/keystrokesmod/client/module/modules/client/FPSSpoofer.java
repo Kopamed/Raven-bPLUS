@@ -1,11 +1,12 @@
 package keystrokesmod.client.module.modules.client;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Field;
@@ -33,26 +34,20 @@ public class FPSSpoofer extends Module {
         return fpsField != null;
     }
 
-    public void onEnable(){
+    public void onEnable() {
         ticksPassed = 0;
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event){
-        if(event.phase == TickEvent.Phase.START){
-            //if(ticksPassed % 20 == 0) {
-                guiUpdate();
-
-                try {
-                    int fpsN = ThreadLocalRandom.current().nextInt((int)fps.getInputMin(), (int)fps.getInputMax() + 1);
-                    fpsField.set(mc, fpsN);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                    this.disable();
-                }
-                ticksPassed = 0;
-           // }
-            ticksPassed++;
+    @Subscribe
+    public void onGameLoop(GameLoopEvent e) {
+        try {
+            int fpsN = ThreadLocalRandom.current().nextInt((int) fps.getInputMin(), (int) fps.getInputMax() + 1);
+            fpsField.set(mc, fpsN);
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+            Utils.Java.throwException(new RuntimeException("Could not access FPS field, THIS SHOULD NOT HAPPEN"));
+            this.disable();
         }
     }
+
 }

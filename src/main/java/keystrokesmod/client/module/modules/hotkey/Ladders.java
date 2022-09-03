@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 public class Ladders extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
+
     public Ladders() {
         super("Ladders", ModuleCategory.hotkey);
 
@@ -24,7 +25,7 @@ public class Ladders extends Module {
         if (preferSlot.isToggled()) {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
 
-            if(checkSlot(preferedSlot)) {
+            if (checkSlot(preferedSlot)) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
@@ -32,8 +33,8 @@ public class Ladders extends Module {
         }
 
         for (int slot = 0; slot <= 8; slot++) {
-            if(checkSlot(slot)) {
-                if(mc.thePlayer.inventory.currentItem != slot){
+            if (checkSlot(slot)) {
+                if (mc.thePlayer.inventory.currentItem != slot) {
                     mc.thePlayer.inventory.currentItem = slot;
                 } else {
                     return;
@@ -47,7 +48,7 @@ public class Ladders extends Module {
 
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return false;
 
         return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder");

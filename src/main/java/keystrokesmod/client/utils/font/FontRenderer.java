@@ -61,7 +61,7 @@ public class FontRenderer extends CFont {
         return this.drawStringWithShadow(text, x2 - (float) (this.getStringWidth(text) / 2), y2, color);
     }
 
-	public float drawString(String text, double x, double y, int color, boolean shadow, float kerning) {
+    public float drawString(String text, double x, double y, int color, boolean shadow, float kerning) {
         x -= 1.0;
 
         if (text == null) {

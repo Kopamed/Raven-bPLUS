@@ -97,7 +97,7 @@ public class RavenB3 implements Theme {
 
     @Override
     public Color getArrayListColour(double currentY, double fullY, double speed) {
-        double time = System.currentTimeMillis() + (speed * (currentY/fullY));
-        return new Color(Color.HSBtoRGB((float)(time % (15000L / speed)) / (15000.0F / (float)speed), 1.0F, 1.0F));
+        double time = System.currentTimeMillis() + (speed * (currentY / fullY));
+        return new Color(Color.HSBtoRGB((float) (time % (15000L / speed)) / (15000.0F / (float) speed), 1.0F, 1.0F));
     }
 }

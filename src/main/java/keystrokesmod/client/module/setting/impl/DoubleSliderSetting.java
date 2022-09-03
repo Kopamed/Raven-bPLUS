@@ -55,7 +55,7 @@ public class DoubleSliderSetting extends Setting {
 
     @Override
     public void applyConfigFromJson(JsonObject data) {
-        if(!data.get("type").getAsString().equals(getSettingType()))
+        if (!data.get("type").getAsString().equals(getSettingType()))
             return;
 
         setValueMax(data.get("valueMax").getAsDouble());
@@ -70,6 +70,7 @@ public class DoubleSliderSetting extends Setting {
     public double getInputMin() {
         return round(this.valMin, 2);
     }
+
     public double getInputMax() {
         return round(this.valMax, 2);
     }
@@ -84,13 +85,13 @@ public class DoubleSliderSetting extends Setting {
 
     public void setValueMin(double n) {
         n = correct(n, this.min, this.valMax);
-        n = (double)Math.round(n * (1.0D / this.interval)) / (1.0D / this.interval);
+        n = (double) Math.round(n * (1.0D / this.interval)) / (1.0D / this.interval);
         this.valMin = n;
     }
 
     public void setValueMax(double n) {
         n = correct(n, this.valMin, this.max);
-        n = (double)Math.round(n * (1.0D / this.interval)) / (1.0D / this.interval);
+        n = (double) Math.round(n * (1.0D / this.interval)) / (1.0D / this.interval);
         this.valMax = n;
     }
 

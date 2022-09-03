@@ -2,7 +2,6 @@ package keystrokesmod.client.module.modules.hotkey;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -14,7 +13,8 @@ public class Healing extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
     private final ComboSetting itemMode;
-    private HealingItems mode = HealingItems.HEAL_POT;
+    private final HealingItems mode = HealingItems.HEAL_POT;
+
     public Healing() {
         super("Healing", ModuleCategory.hotkey);
 
@@ -33,48 +33,48 @@ public class Healing extends Module {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
 
 
-            if(itemMode.getMode() == HealingItems.SOUP && isSoup(preferedSlot)) {
+            if (itemMode.getMode() == HealingItems.SOUP && isSoup(preferedSlot)) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.GAPPLE && isGapple(preferedSlot)){
+            } else if (itemMode.getMode() == HealingItems.GAPPLE && isGapple(preferedSlot)) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.FOOD && isFood(preferedSlot)){
+            } else if (itemMode.getMode() == HealingItems.FOOD && isFood(preferedSlot)) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.ALL && (isGapple(preferedSlot) || isFood(preferedSlot) || isSoup(preferedSlot))){
+            } else if (itemMode.getMode() == HealingItems.ALL && (isGapple(preferedSlot) || isFood(preferedSlot) || isSoup(preferedSlot))) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.HEAL_POT && (isHPot(preferedSlot))){
+            } else if (itemMode.getMode() == HealingItems.HEAL_POT && (isHPot(preferedSlot))) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
             }
 
         }
-        
+
         for (int slot = 0; slot <= 8; slot++) {
-            if(itemMode.getMode() == HealingItems.SOUP && isSoup(slot)) {
+            if (itemMode.getMode() == HealingItems.SOUP && isSoup(slot)) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.GAPPLE && isGapple(slot)){
+            } else if (itemMode.getMode() == HealingItems.GAPPLE && isGapple(slot)) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.FOOD && isFood(slot)){
+            } else if (itemMode.getMode() == HealingItems.FOOD && isFood(slot)) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.ALL && (isGapple(slot) || isFood(slot) || isSoup(slot))){
+            } else if (itemMode.getMode() == HealingItems.ALL && (isGapple(slot) || isFood(slot) || isSoup(slot))) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 return;
-            } else if(itemMode.getMode() == HealingItems.HEAL_POT && isHPot(slot)){
+            } else if (itemMode.getMode() == HealingItems.HEAL_POT && isHPot(slot)) {
                 mc.thePlayer.inventory.currentItem = slot;
                 this.disable();
                 System.out.println("a");
@@ -100,51 +100,51 @@ public class Healing extends Module {
         ALL
     }
 
-    public boolean isSoup(int slot){
+    public boolean isSoup(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return false;
         return itemInSlot.getItem() instanceof ItemSoup;
     }
 
-    public boolean isGapple(int slot){
+    public boolean isGapple(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return false;
 
         return itemInSlot.getItem() instanceof ItemAppleGold;
     }
-    
-    public boolean isHPot(int slot){
+
+    public boolean isHPot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return false;
-        
-        if(itemInSlot.getItem() instanceof ItemPotion) {
-        	ItemPotion ip = (ItemPotion) itemInSlot.getItem();
-        	Utils.Player.sendMessageToSelf("" + slot);
-        	for(PotionEffect pe : ip.getEffects(itemInSlot)) {
-        		if(pe.getPotionID() == Potion.heal.id) {
-        			return true;
-        		}
-        	}
-        	
+
+        if (itemInSlot.getItem() instanceof ItemPotion) {
+            ItemPotion ip = (ItemPotion) itemInSlot.getItem();
+            Utils.Player.sendMessageToSelf("" + slot);
+            for (PotionEffect pe : ip.getEffects(itemInSlot)) {
+                if (pe.getPotionID() == Potion.heal.id) {
+                    return true;
+                }
+            }
+
         }
-        
+
         return false;
     }
 
-    public boolean isHead(int slot){
+    public boolean isHead(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return false;
 
         return itemInSlot.getItem() instanceof Item;
     }
 
-    public boolean isFood(int slot){
+    public boolean isFood(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return false;
 
         return itemInSlot.getItem() instanceof ItemFood;

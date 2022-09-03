@@ -6,69 +6,69 @@ import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class TickSetting extends Setting {
-   private final String name;
-   private boolean isEnabled;
-   private final boolean defaultValue;
+    private final String name;
+    private boolean isEnabled;
+    private final boolean defaultValue;
 
-   public TickSetting(String name, boolean isEnabled) {
-      super(name);
-      this.name = name;
-      this.isEnabled = isEnabled;
-      this.defaultValue = isEnabled;
-   }
+    public TickSetting(String name, boolean isEnabled) {
+        super(name);
+        this.name = name;
+        this.isEnabled = isEnabled;
+        this.defaultValue = isEnabled;
+    }
 
-   public String getName() {
-      return this.name;
-   }
+    public String getName() {
+        return this.name;
+    }
 
-   @Override
-   public void resetToDefaults() {
-      this.isEnabled = defaultValue;
-   }
+    @Override
+    public void resetToDefaults() {
+        this.isEnabled = defaultValue;
+    }
 
-   @Override
-   public JsonObject getConfigAsJson() {
-      JsonObject data = new JsonObject();
-      data.addProperty("type", getSettingType());
-      data.addProperty("value", isToggled());
-      return data;
-   }
+    @Override
+    public JsonObject getConfigAsJson() {
+        JsonObject data = new JsonObject();
+        data.addProperty("type", getSettingType());
+        data.addProperty("value", isToggled());
+        return data;
+    }
 
-   @Override
-   public String getSettingType() {
-      return "tick";
-   }
+    @Override
+    public String getSettingType() {
+        return "tick";
+    }
 
-   @Override
-   public void applyConfigFromJson(JsonObject data) {
-      if(!data.get("type").getAsString().equals(getSettingType()))
-         return;
+    @Override
+    public void applyConfigFromJson(JsonObject data) {
+        if (!data.get("type").getAsString().equals(getSettingType()))
+            return;
 
-      setEnabled(data.get("value").getAsBoolean());
-   }
+        setEnabled(data.get("value").getAsBoolean());
+    }
 
-   @Override
-   public Component createComponent(ModuleComponent moduleComponent) {
-      return null;
-   }
+    @Override
+    public Component createComponent(ModuleComponent moduleComponent) {
+        return null;
+    }
 
-   public boolean isToggled() {
-      return this.isEnabled;
-   }
+    public boolean isToggled() {
+        return this.isEnabled;
+    }
 
-   public void toggle() {
-      this.isEnabled = !this.isEnabled;
-   }
+    public void toggle() {
+        this.isEnabled = !this.isEnabled;
+    }
 
-   public void enable() {
-      this.isEnabled = true;
-   }
+    public void enable() {
+        this.isEnabled = true;
+    }
 
-   public void disable() {
-      this.isEnabled = false;
-   }
+    public void disable() {
+        this.isEnabled = false;
+    }
 
-   public void setEnabled(boolean b) {
-      this.isEnabled = b;
-   }
+    public void setEnabled(boolean b) {
+        this.isEnabled = b;
+    }
 }

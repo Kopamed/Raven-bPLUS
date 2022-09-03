@@ -60,7 +60,7 @@ public class VersionManager {
         this.latestVersion = new Version(version, branch, branchCommit);
     }
 
-    private void createClientVersion(){
+    private void createClientVersion() {
         String version = "1.0.0";
         String branch = "";
         int branchCommit = 0;
@@ -78,16 +78,17 @@ public class VersionManager {
         branch = line[0];
         try {
             branchCommit = Integer.parseInt(line[1]);
-        } catch (NumberFormatException ignored){}
+        } catch (NumberFormatException ignored) {
+        }
 
         this.clientVersion = new Version(version, branch, branchCommit);
     }
 
-    public Version getClientVersion(){
+    public Version getClientVersion() {
         return clientVersion;
     }
 
-    public Version getLatestVersion(){
+    public Version getLatestVersion() {
         return latestVersion;
     }
 }

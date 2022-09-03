@@ -29,21 +29,29 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
         super(p_i1594_1_);
     }
 
-    @Shadow public abstract ItemStack getHeldItem();
+    @Shadow
+    public abstract ItemStack getHeldItem();
 
-    @Shadow public abstract void onCriticalHit(Entity p_onCriticalHit_1_);
+    @Shadow
+    public abstract void onCriticalHit(Entity p_onCriticalHit_1_);
 
-    @Shadow public abstract void onEnchantmentCritical(Entity p_onEnchantmentCritical_1_);
+    @Shadow
+    public abstract void onEnchantmentCritical(Entity p_onEnchantmentCritical_1_);
 
-    @Shadow public abstract void triggerAchievement(StatBase p_triggerAchievement_1_);
+    @Shadow
+    public abstract void triggerAchievement(StatBase p_triggerAchievement_1_);
 
-    @Shadow public abstract ItemStack getCurrentEquippedItem();
+    @Shadow
+    public abstract ItemStack getCurrentEquippedItem();
 
-    @Shadow public abstract void destroyCurrentEquippedItem();
+    @Shadow
+    public abstract void destroyCurrentEquippedItem();
 
-    @Shadow public abstract void addStat(StatBase p_addStat_1_, int p_addStat_2_);
+    @Shadow
+    public abstract void addStat(StatBase p_addStat_1_, int p_addStat_2_);
 
-    @Shadow public abstract void addExhaustion(float p_addExhaustion_1_);
+    @Shadow
+    public abstract void addExhaustion(float p_addExhaustion_1_);
 
     /**
      * @author mc code
@@ -85,7 +93,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
                     boolean flag2 = p_attackTargetEntityWithCurrentItem_1_.attackEntityFrom(DamageSource.causePlayerDamage(((EntityPlayer) (Object) this)), f);
                     if (flag2) {
                         if (i > 0) {
-                            p_attackTargetEntityWithCurrentItem_1_.addVelocity((double) (-MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F));
+                            p_attackTargetEntityWithCurrentItem_1_.addVelocity(-MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F, 0.1D, MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F);
 
                             Module keepSprint = Raven.moduleManager.getModuleByClazz(KeepSprint.class);
                             if (keepSprint != null && keepSprint.isEnabled()) {

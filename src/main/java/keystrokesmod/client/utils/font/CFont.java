@@ -12,7 +12,7 @@ public class CFont {
     CharData[] charData = new CharData[256];
     Font font;
     boolean antiAlias, fractionalMetrics;
-    int fontHeight = -1, charOffset = 0;
+    int fontHeight = -1, charOffset;
     DynamicTexture tex;
 
     public CFont(Font font, boolean antiAlias, boolean fractionalMetrics) {

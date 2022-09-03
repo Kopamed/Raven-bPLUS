@@ -7,6 +7,7 @@ public class DimensionHelper {
         NETHER(-1), OVERWORLD(0), END(1);
 
         private final int dimensionID;
+
         DIMENSIONS(int n) {
             this.dimensionID = n;
         }

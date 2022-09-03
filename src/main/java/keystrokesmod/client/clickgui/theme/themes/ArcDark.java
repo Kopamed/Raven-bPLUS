@@ -17,22 +17,22 @@ public class ArcDark implements Theme {
 
     @Override
     public Color getBackgroundColour() {
-        return new Color(56,60,74);
+        return new Color(56, 60, 74);
     }
 
     @Override
     public Color getSecondBackgroundColour() {
-        return new Color(64,69,82);
+        return new Color(64, 69, 82);
     }
 
     @Override
     public Color getForegroundColour() {
-        return new Color(124,129,140);
+        return new Color(124, 129, 140);
     }
 
     @Override
     public Color getSelectionBackgroundColour() {
-        return new Color(75,81,98);
+        return new Color(75, 81, 98);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class ArcDark implements Theme {
 
     @Override
     public Color getButtonColour() {
-        return new Color(64,69,82);
+        return new Color(64, 69, 82);
     }
 
     @Override
     public Color getDisabledColour() {
-        return new Color(56,56,56);
+        return new Color(56, 56, 56);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ArcDark implements Theme {
 
     @Override
     public Color getAccentColour() {
-        return new Color(82,148,226);
+        return new Color(82, 148, 226);
     }
 
     @Override
@@ -92,15 +92,15 @@ public class ArcDark implements Theme {
 
     @Override
     public Color getBackdropColour() {
-        return new Color(68,73,86, 40);
+        return new Color(68, 73, 86, 40);
     }
 
     @Override
     public Color getArrayListColour(double currentY, double fullY, double speed) {
         long time = System.currentTimeMillis();
-        long l1 = (long)(fullY - currentY) * 10L;
-        float f1 = (float)(time % (l1 / speed));
-        float f2 = (l1 / (float)speed);
+        long l1 = (long) (fullY - currentY) * 10L;
+        float f1 = (float) (time % (l1 / speed));
+        float f2 = (l1 / (float) speed);
         float c = f1 / f2;
         return Color.getHSBColor(c, 1.0F, 1.0F);
     }

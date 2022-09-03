@@ -1,13 +1,13 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class BridgeAssist extends Module {
     private final TickSetting setLook;
@@ -18,6 +18,7 @@ public class BridgeAssist extends Module {
     private final SliderSetting assistMode;
     private final SliderSetting assistRange;
     private final DescriptionSetting assistModeDesc;
+    DescriptionSetting goodAdvice;
     private boolean waitingForAim;
     private boolean gliding;
     private long startWaitTime;
@@ -31,12 +32,11 @@ public class BridgeAssist extends Module {
 
     public BridgeAssist() {
         super("Bridge Assist", ModuleCategory.player);
-        DescriptionSetting goodAdvice;
         this.registerSetting(goodAdvice = new DescriptionSetting("Best with fastplace, not autoplace"));
         this.registerSetting(waitFor = new SliderSetting("Wait time (ms)", 500, 0, 5000, 25));
         this.registerSetting(setLook = new TickSetting("Set look pos", true));
         this.registerSetting(onSneak = new TickSetting("Work only when sneaking", true));
-        this.registerSetting(workWithSafeWalk= new TickSetting("Work with safewalk", false));
+        this.registerSetting(workWithSafeWalk = new TickSetting("Work with safewalk", false));
         this.registerSetting(assistRange = new SliderSetting("Assist range", 10.0D, 1.0D, 40.0D, 1.0D));
         this.registerSetting(glideTime = new SliderSetting("Glide speed", 500, 1, 201, 5));
         this.registerSetting(assistMode = new SliderSetting("Value", 1.0D, 1.0D, 4.0D, 1.0D));
@@ -44,7 +44,7 @@ public class BridgeAssist extends Module {
     }
 
     public void guiUpdate() {
-        assistModeDesc.setDesc(Utils.md + Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)].name());
+        assistModeDesc.setDesc(Utils.md + Utils.Modes.BridgeMode.values()[(int) (assistMode.getInput() - 1.0D)].name());
     }
 
     @Override
@@ -54,8 +54,8 @@ public class BridgeAssist extends Module {
         super.onEnable();
     }
 
-    @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onRender2D(Render2DEvent e) {
         if (!Utils.Player.isPlayerInGame()) {
             return;
         }
@@ -78,12 +78,12 @@ public class BridgeAssist extends Module {
         }
 
 
-        if (gliding){
+        if (gliding) {
             float fuckedYaw = mc.thePlayer.rotationYaw;
             float fuckedPitch = mc.thePlayer.rotationPitch;
 
-            float yaw = fuckedYaw - ((int)fuckedYaw/360) * 360;
-            float pitch = fuckedPitch - ((int)fuckedPitch/360) * 360;
+            float yaw = fuckedYaw - ((int) fuckedYaw / 360f) * 360;
+            float pitch = fuckedPitch - ((int) fuckedPitch / 360f) * 360;
 
             double ilovebloat1 = yaw - speedYaw,
                     ilovebloat2 = yaw + speedYaw,
@@ -136,17 +136,17 @@ public class BridgeAssist extends Module {
         float fuckedYaw = mc.thePlayer.rotationYaw;
         float fuckedPitch = mc.thePlayer.rotationPitch;
 
-        float yaw = fuckedYaw - ((int)fuckedYaw/360) * 360;
-        float pitch = fuckedPitch - ((int)fuckedPitch/360) * 360;
+        float yaw = fuckedYaw - ((int) fuckedYaw / 360f) * 360;
+        float pitch = fuckedPitch - ((int) fuckedPitch / 360f) * 360;
 
         float range = (float) assistRange.getInput();
 
-        switch (Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)]) {
+        switch (Utils.Modes.BridgeMode.values()[(int) (assistMode.getInput() - 1.0D)]) {
             case GODBRIDGE:
                 if (godbridgePos[0] >= (pitch - range) && godbridgePos[0] <= (pitch + range)) {
                     for (int k = 1; k < godbridgePos.length; k++) {
                         if (godbridgePos[k] >= (yaw - range) && godbridgePos[k] <= (yaw + range)) {
-                            aimAt(godbridgePos[0], godbridgePos[k], fuckedYaw, fuckedPitch);
+                            aimAt(godbridgePos[0], godbridgePos[k], fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -158,7 +158,7 @@ public class BridgeAssist extends Module {
                 if (moonwalkPos[0] >= (pitch - range) && moonwalkPos[0] <= (pitch + range)) {
                     for (int k = 1; k < moonwalkPos.length; k++) {
                         if (moonwalkPos[k] >= (yaw - range) && moonwalkPos[k] <= (yaw + range)) {
-                            aimAt(moonwalkPos[0], moonwalkPos[k], fuckedYaw, fuckedPitch);
+                            aimAt(moonwalkPos[0], moonwalkPos[k], fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -169,7 +169,7 @@ public class BridgeAssist extends Module {
                 if (breezilyPos[0] >= (pitch - range) && breezilyPos[0] <= (pitch + range)) {
                     for (int k = 1; k < breezilyPos.length; k++) {
                         if (breezilyPos[k] >= (yaw - range) && breezilyPos[k] <= (yaw + range)) {
-                            aimAt(breezilyPos[0], breezilyPos[k], fuckedYaw, fuckedPitch);
+                            aimAt(breezilyPos[0], breezilyPos[k], fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -180,7 +180,7 @@ public class BridgeAssist extends Module {
                 if (normalPos[0] >= (pitch - range) && normalPos[0] <= (pitch + range)) {
                     for (int k = 1; k < normalPos.length; k++) {
                         if (normalPos[k] >= (yaw - range) && normalPos[k] <= (yaw + range)) {
-                            aimAt(normalPos[0], normalPos[k], fuckedYaw, fuckedPitch);
+                            aimAt(normalPos[0], normalPos[k], fuckedPitch);
                             this.waitingForAim = false;
                             return;
                         }
@@ -190,10 +190,10 @@ public class BridgeAssist extends Module {
         this.waitingForAim = false;
     }
 
-    public void aimAt(float pitch, float yaw, float fuckedYaw, float fuckedPitch){
-       if(setLook.isToggled()) {
-               mc.thePlayer.rotationPitch = pitch + ((int)fuckedPitch/360) * 360;
-               mc.thePlayer.rotationYaw = yaw;
+    public void aimAt(float pitch, float yaw, float fuckedPitch) {
+        if (setLook.isToggled()) {
+            mc.thePlayer.rotationPitch = pitch + ((int) fuckedPitch / 360f) * 360;
+            mc.thePlayer.rotationYaw = yaw;
         }
     }
 }
