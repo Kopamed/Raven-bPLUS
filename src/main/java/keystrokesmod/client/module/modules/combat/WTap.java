@@ -116,7 +116,7 @@ public class WTap extends Module {
     public void startCombo() {
         state = WtapState.TAPPING;
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), false);
-        double cd = (double) ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax()+0.01);
+        double cd = ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax()+0.01);
         if (dynamic.isToggled()) {
         	cd = 3 - mc.thePlayer.getDistanceToEntity(target) < 3 ? (cd + (3 - mc.thePlayer.getDistanceToEntity(target) * tapMultiplier.getInput() * 10)) : cd; 
         }

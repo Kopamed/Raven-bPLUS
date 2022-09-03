@@ -51,7 +51,7 @@ public class ClickGui extends GuiScreen {
 			xOffSet = xOffSet + 100;
 			if(xOffSet > 400) {
 				xOffSet = 5;
-				yOffSet += (int) 120; 
+				yOffSet += 120;
 			}
 		}
 		terminal.setLocation(380, 0);
@@ -67,7 +67,7 @@ public class ClickGui extends GuiScreen {
 			xOffSet = xOffSet + 100;
 			if(xOffSet > this.width - 100) {
 				xOffSet = 5;
-				yOffSet += (int) this.height/3; 
+				yOffSet += this.height /3;
 			}
 		}
 	}

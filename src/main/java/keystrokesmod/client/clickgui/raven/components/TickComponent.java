@@ -19,7 +19,7 @@ public class TickComponent implements Component {
    private int o;
    private int x;
    private int y;
-   private int boxSize = 6;
+   private final int boxSize = 6;
 
    public TickComponent(Module mod, TickSetting op, ModuleComponent b, int o) {
       this.mod = mod;

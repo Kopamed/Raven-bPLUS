@@ -1,13 +1,13 @@
 package keystrokesmod.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
 import io.netty.util.internal.ThreadLocalRandom;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
 public class AutoHeader extends Module {
@@ -23,7 +23,6 @@ public class AutoHeader extends Module {
         this.registerSetting(onlyWhenHoldingSpacebar = new TickSetting("Only when holding jump", true));
         this.registerSetting(pbs = new SliderSetting("Jump Presses per second", 12, 1, 20, 1));
 
-        boolean jumping = false;
     }
 
     @Override
@@ -32,10 +31,11 @@ public class AutoHeader extends Module {
         super.onEnable();
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
+
         if (cancelDuringShift.isToggled() && mc.thePlayer.isSneaking())
             return;
 
@@ -44,7 +44,6 @@ public class AutoHeader extends Module {
                 return;
             }
         }
-
 
         if (Utils.Player.playerUnderBlock() && mc.thePlayer.onGround){
             if(startWait + (1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.543543, pbs.getInput() + 1.32748923)) < System.currentTimeMillis()){

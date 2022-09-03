@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.minigames.Sumo;
 
+import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.RightClicker;
 import keystrokesmod.client.module.setting.impl.*;
@@ -14,8 +15,6 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -30,7 +29,7 @@ public class SumoClicker extends Module {
     public static SliderSetting jitterLeft;
     public static TickSetting weaponOnly;
     public static TickSetting breakBlocks;
-    public static DoubleSliderSetting leftCPS, breakBlocksDelay;;
+    public static DoubleSliderSetting leftCPS;
     public static TickSetting inventoryFill;
 
     public static ComboSetting clickStyle, clickTimings;
@@ -38,10 +37,8 @@ public class SumoClicker extends Module {
 
     private long lastClick;
     private long leftHold;
-    private boolean allowedClick;
-    public static boolean autoClickerEnabled, breakTimeDone;
-    private double breakBlockFinishWaitTime;
-    private boolean watingForBreakTimeout;
+    public boolean allowedClick;
+    public static boolean autoClickerEnabled;
     private boolean leftDown;
     private long leftDownTime;
     private long leftUpTime;
@@ -109,8 +106,8 @@ public class SumoClicker extends Module {
         autoClickerEnabled = false;
     }
 
-    @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent ev) {
+    @Subscribe
+    public void onRenderTick() {
         if(!Utils.Client.currentScreenMinecraft() &&
                 !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
@@ -124,12 +121,12 @@ public class SumoClicker extends Module {
             ravenClick();
         }
         else if (clickStyle.getMode() == RightClicker.ClickStyle.SKid){
-            skidClick(ev, null);
+            skidClick();
         }
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent ev) {
+    @Subscribe
+    public void onTick() {
         if(!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
@@ -142,11 +139,11 @@ public class SumoClicker extends Module {
             ravenClick();
         }
         else if (clickStyle.getMode() == RightClicker.ClickStyle.SKid){
-            skidClick(null, ev);
+            skidClick();
         }
     }
 
-    private void skidClick(TickEvent.RenderTickEvent er, TickEvent.PlayerTickEvent e) {
+    private void skidClick() {
         if (!Utils.Player.isPlayerInGame())
             return;
 
@@ -162,19 +159,19 @@ public class SumoClicker extends Module {
             return;
         }
 
-
-
-
-
         // Uhh left click only, mate
         if (Mouse.isButtonDown(0)) {
-            if(breakBlock()) return;
+            if(breakBlock())
+                return;
+
             if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
                 return;
             }
+
             if (jitterLeft.getInput() > 0.0D) {
                 double a = jitterLeft.getInput() * 0.45D;
                 EntityPlayerSP entityPlayer;
+
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
                     entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
@@ -193,12 +190,16 @@ public class SumoClicker extends Module {
             }
 
             double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2, leftCPS.getInputMax());
+
             if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
                 lastClick = System.currentTimeMillis();
+
                 if (leftHold < lastClick){
                     leftHold = lastClick;
                 }
+
                 int key = mc.gameSettings.keyBindAttack.getKeyCode();
+
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 Utils.Client.setMouseButtonState(0, true);
@@ -215,22 +216,23 @@ public class SumoClicker extends Module {
     		return;
     	}
 
-
-
     	Mouse.poll();
+
     	if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
     		return;
     	}
+
     	this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
     }
 
     public void leftClickExecute(int key) {
-
-        if(breakBlock()) return;
+        if(breakBlock())
+            return;
 
         if (jitterLeft.getInput() > 0.0D) {
             double a = jitterLeft.getInput() * 0.45D;
             EntityPlayerSP entityPlayer;
+
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
                 entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
@@ -252,12 +254,17 @@ public class SumoClicker extends Module {
             if (System.currentTimeMillis() > this.leftUpTime && leftDown) {
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
+
                 this.genLeftTimings();
+
                 Utils.Client.setMouseButtonState(0, true);
+
                 leftDown = false;
             } else if (System.currentTimeMillis() > this.leftDownTime) {
                 KeyBinding.setKeyBindState(key, false);
+
                 leftDown = true;
+
                 Utils.Client.setMouseButtonState(0, false);
             }
         } else {

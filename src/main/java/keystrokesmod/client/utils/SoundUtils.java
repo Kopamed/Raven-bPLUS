@@ -8,7 +8,7 @@ import javax.sound.sampled.Clip;
 
 public class SoundUtils {
 	
-	private static HashMap<String, AudioInputStream> sounds = new HashMap<String, AudioInputStream>();
+	private static final HashMap<String, AudioInputStream> sounds = new HashMap<String, AudioInputStream>();
 	
 	
 	public static void start() {

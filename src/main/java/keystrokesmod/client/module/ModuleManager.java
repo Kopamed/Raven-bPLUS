@@ -85,7 +85,7 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
 public class ModuleManager {
-   private List<Module> modules = new ArrayList<>();
+   private final List<Module> modules = new ArrayList<>();
 
    public static boolean initialized = false;
    public final GuiModuleManager guiModuleManager;
@@ -292,5 +292,4 @@ public class ModuleManager {
       return length;
    }
 
-   public void
 }

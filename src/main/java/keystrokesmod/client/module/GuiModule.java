@@ -4,7 +4,7 @@ import keystrokesmod.client.main.Raven;
 
 public class GuiModule extends Module{
 	
-	private ModuleCategory moduleCategory;
+	private final ModuleCategory moduleCategory;
 
 	public GuiModule(ModuleCategory moduleCategory, ModuleCategory parentCategory) {
 		super(moduleCategory.getName(), parentCategory);

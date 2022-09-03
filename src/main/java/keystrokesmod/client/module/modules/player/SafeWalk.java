@@ -34,7 +34,7 @@ public class SafeWalk extends Module {
    private static boolean shouldBridge = false;
    private static boolean isShifting = false;
    private boolean allowedShift;
-   private CoolDown shiftTimer = new CoolDown(0);
+   private final CoolDown shiftTimer = new CoolDown(0);
 
    public SafeWalk() {
       super("SafeWalk",ModuleCategory.player);
@@ -205,8 +205,8 @@ public class SafeWalk extends Module {
       KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), sh);
    }
 
-   public static enum BlockAmountInfo {
+   public enum BlockAmountInfo {
       BLOCKS_IN_TOTAL,
-      BLOCKS_IN_CURRENT_STACK;
+      BLOCKS_IN_CURRENT_STACK
    }
 }

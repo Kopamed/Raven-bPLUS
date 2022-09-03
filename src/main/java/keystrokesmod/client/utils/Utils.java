@@ -144,11 +144,11 @@ public class Utils {
       }
       
   	public static boolean isPlayerHoldingSword() {
-  		return mc.thePlayer.getCurrentEquippedItem() == null ? false : mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
+  		return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
 	}
   	
   	public static boolean isPlayerHoldingAxe() {
-  		return mc.thePlayer.getCurrentEquippedItem() == null ? false : mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
+  		return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
 	}
 
       public static boolean isPlayerHoldingWeapon() {
@@ -441,9 +441,9 @@ public class Utils {
       }
       
       public static int customDraw(int delay) {
-          int r = (int) getColorBetween(150,250, delay);
-          int g = (int) getColorBetween(0,165, delay);
-          int b = (int) getColorBetween(0,1, delay);
+          int r = getColorBetween(150,250, delay);
+          int g = getColorBetween(0,165, delay);
+          int b = getColorBetween(0,1, delay);
           return new Color(r, g, b).getRGB();
        }
       

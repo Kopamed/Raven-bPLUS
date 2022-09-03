@@ -77,7 +77,7 @@ public class Tracers extends Module {
 				} while(!a.isToggled() && en.isInvisible());
 
 				if (!AntiBot.bot(en)) {
-					Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(this.rgb.getRed() + ((Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)*10 > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)*10)), this.rgb.getGreen(), this.rgb.getGreen()).getRGB() : rgb, (float)f.getInput());
+					Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(Tracers.rgb.getRed() + ((Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)*10 > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25)*10)), Tracers.rgb.getGreen(), Tracers.rgb.getGreen()).getRGB() : rgb, (float)f.getInput());
 				}
 			}
 		}

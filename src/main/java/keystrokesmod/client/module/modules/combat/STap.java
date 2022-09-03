@@ -1,16 +1,11 @@
 package keystrokesmod.client.module.modules.combat;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.WTap.EventType;
-import keystrokesmod.client.module.modules.combat.WTap.WtapState;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -19,11 +14,11 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class STap extends Module {
 	public ComboSetting eventType;
@@ -113,7 +108,7 @@ public class STap extends Module {
     public void startCombo() {
         state = StapState.TAPPING;
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindBack.getKeyCode(), true);
-        double cd = (double) ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax()+0.01);
+        double cd = ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax()+0.01);
         if (dynamic.isToggled() && mc.thePlayer != null && target != null) {
         	cd = 3 - mc.thePlayer.getDistanceToEntity(target) < 3 ? (cd + (3 - mc.thePlayer.getDistanceToEntity(target) * tapMultiplier.getInput() * 10)) : cd; 
         }

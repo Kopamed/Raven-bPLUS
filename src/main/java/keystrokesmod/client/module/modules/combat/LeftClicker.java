@@ -37,7 +37,6 @@ public class LeftClicker extends Module {
     public static SliderSetting jitterLeft, hitSelectTick;
     public static TickSetting weaponOnly, sound, breakBlocks;
     public static DoubleSliderSetting leftCPS;
-    ;
     public static TickSetting inventoryFill, hitSelect;
 
     public static ComboSetting clickStyle, clickTimings;

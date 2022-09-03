@@ -263,7 +263,7 @@ public class Module {
 	    private final ModuleCategory topCatagory;
 	    private final String name;
 	    
-	    private ModuleCategory(boolean defaultShown,ModuleCategory topCatagory,String name) {
+	    ModuleCategory(boolean defaultShown, ModuleCategory topCatagory, String name) {
 	        this.defaultShown = defaultShown;
 	        this.topCatagory = topCatagory;
 	        this.name = name;

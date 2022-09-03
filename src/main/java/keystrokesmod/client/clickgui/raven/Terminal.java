@@ -17,14 +17,20 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class Terminal implements Component {
-    private int x, y, width, height, barHeight, border;
-    private int minWidth, minHeight;
-    private int resizeButtonSize;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private final int barHeight;
+    private final int border;
+    private final int minWidth;
+    private final int minHeight;
+    private final int resizeButtonSize;
     public boolean opened = false;
     public boolean hidden = false;
     private boolean resizing = false;
     private boolean focused = false;
-    private CoolDown keyDown = new CoolDown(500);
+    private final CoolDown keyDown = new CoolDown(500);
 
     private int backCharsCursor = 0;
 
@@ -34,7 +40,7 @@ public class Terminal implements Component {
     private final FontRenderer fr;
 
     private String inputText = "";
-    private static ArrayList<String> out = new ArrayList<>();
+    private static final ArrayList<String> out = new ArrayList<>();
     private final String prefix = "$ ";
 
     private boolean dragging = false;
@@ -225,7 +231,7 @@ public class Terminal implements Component {
                 if(fr.getStringWidth(newLine) * scaleSize <= maxTextWidth){
                     return mergeArray(
                             new String[]{newLine},
-                            splitUpLine(currentLine.substring(i, currentLine.length()), maxTextWidth, scaleSize)
+                            splitUpLine(currentLine.substring(i), maxTextWidth, scaleSize)
                     );
                 }
             }
@@ -306,7 +312,7 @@ public class Terminal implements Component {
                     inputText = inputText.substring(0, inputText.length() - 1);
                 } else {
                     String deletable = inputText.substring(0, inputText.length() - backCharsCursor);
-                    String appendable = inputText.substring(inputText.length() - backCharsCursor, inputText.length());
+                    String appendable = inputText.substring(inputText.length() - backCharsCursor);
                     if(deletable.length() > 0){
                         deletable = deletable.substring(0, deletable.length() - 1);
                     }
@@ -353,7 +359,7 @@ public class Terminal implements Component {
             inputText += e;
         } else {
             String deletable = inputText.substring(0, inputText.length() - backCharsCursor);
-            String appendable = inputText.substring(inputText.length() - backCharsCursor, inputText.length());
+            String appendable = inputText.substring(inputText.length() - backCharsCursor);
             inputText = deletable + e + appendable;
         }
     }
@@ -363,7 +369,7 @@ public class Terminal implements Component {
             try{
                 String command = inputText.split(" ")[0];
                 boolean hasArgs = inputText.contains(" ");
-                String[] args = hasArgs ? inputText.substring(command.length() + 1, inputText.length()).split(" ") : new String[0];
+                String[] args = hasArgs ? inputText.substring(command.length() + 1).split(" ") : new String[0];
 
                 Raven.commandManager.executeCommand(command, args);
             } catch (IndexOutOfBoundsException fuck){}

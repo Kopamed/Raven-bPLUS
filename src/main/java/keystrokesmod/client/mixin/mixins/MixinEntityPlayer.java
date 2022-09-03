@@ -85,7 +85,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
                     boolean flag2 = p_attackTargetEntityWithCurrentItem_1_.attackEntityFrom(DamageSource.causePlayerDamage(((EntityPlayer) (Object) this)), f);
                     if (flag2) {
                         if (i > 0) {
-                            p_attackTargetEntityWithCurrentItem_1_.addVelocity((double) (-MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F));
+                            p_attackTargetEntityWithCurrentItem_1_.addVelocity(-MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F, 0.1D, MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F);
 
                             Module keepSprint = Raven.moduleManager.getModuleByClazz(KeepSprint.class);
                             if (keepSprint != null && keepSprint.isEnabled()) {

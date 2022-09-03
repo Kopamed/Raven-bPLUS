@@ -14,7 +14,7 @@ public class Healing extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
     private final ComboSetting itemMode;
-    private HealingItems mode = HealingItems.HEAL_POT;
+    private final HealingItems mode = HealingItems.HEAL_POT;
     public Healing() {
         super("Healing", ModuleCategory.hotkey);
 

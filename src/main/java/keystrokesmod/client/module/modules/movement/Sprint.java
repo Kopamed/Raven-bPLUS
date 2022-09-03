@@ -1,12 +1,11 @@
 package keystrokesmod.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class Sprint extends Module {
    public static TickSetting multiDir, ignoreBlindness;
@@ -17,12 +16,11 @@ public class Sprint extends Module {
       this.registerSetting(ignoreBlindness = new TickSetting("Ignore Blindness", false));
    }
 
-   @SubscribeEvent
-   public void p(PlayerTickEvent e) {
+   @Subscribe
+   public void p(TickEvent e) {
       if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus) {
-         EntityPlayerSP p = mc.thePlayer;
          KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
       }
-
    }
+
 }

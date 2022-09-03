@@ -30,7 +30,8 @@ public class CategoryComponent {
 	public int xx, yy, chromaSpeed;
 	public boolean n4m = false, pin = false;
 	public String pvp;
-	private double marginY, marginX;
+	private final double marginY;
+	private final double marginX;
 	private boolean visable = true;
 
 	public CategoryComponent(Module.ModuleCategory category) {

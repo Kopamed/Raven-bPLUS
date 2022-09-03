@@ -60,7 +60,7 @@ public class Velocity extends Module {
                            (item instanceof ItemEgg
                                    || item instanceof ItemBow
                                    || item instanceof ItemSnow
-                                   || item instanceof ItemFishingRod) && mode == mode.ItemHeld) {
+                                   || item instanceof ItemFishingRod) && mode == Mode.ItemHeld) {
                        velo();
                        return;
                    } else if (attacker.getDistanceToEntity(mc.thePlayer) > dt.getInput()) {

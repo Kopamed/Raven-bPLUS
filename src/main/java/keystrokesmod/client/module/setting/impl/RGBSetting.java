@@ -10,7 +10,7 @@ import keystrokesmod.client.module.setting.Setting;
 
 public class RGBSetting extends Setting {
 	
-	private String name;
+	private final String name;
 	private int[] colour = new int[2];
 	private int[] defaultColour = new int[2];
 	private int colorRGB;

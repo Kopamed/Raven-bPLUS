@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.world;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
@@ -29,13 +31,18 @@ public class AntiBot extends Module {
       newEnt.clear();
    }
 
-   @SubscribeEvent
-   public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-      if(!Utils.Player.isPlayerInGame()) return;
-      if (a.isToggled() && event.entity instanceof EntityPlayer && event.entity != mc.thePlayer) {
-         newEnt.put((EntityPlayer)event.entity, System.currentTimeMillis());
-      }
+   @Subscribe
+   public void onEntityJoinWorld(ForgeEvent fe) {
+      if(fe.getEvent() instanceof EntityJoinWorldEvent) {
+         EntityJoinWorldEvent event = ((EntityJoinWorldEvent) fe.getEvent());
 
+         if (!Utils.Player.isPlayerInGame())
+            return;
+
+         if (a.isToggled() && event.entity instanceof EntityPlayer && event.entity != mc.thePlayer) {
+            newEnt.put((EntityPlayer) event.entity, System.currentTimeMillis());
+         }
+      }
    }
 
    public void update() {

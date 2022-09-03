@@ -8,7 +8,7 @@ import keystrokesmod.client.module.Module.ModuleCategory;
 
 public class GuiModuleManager {
 	
-	private List<GuiModule> guiModules = new ArrayList<GuiModule>();
+	private final List<GuiModule> guiModules = new ArrayList<GuiModule>();
 
 	public GuiModuleManager() {
 	      Module.ModuleCategory[] values;

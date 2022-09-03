@@ -9,7 +9,7 @@ import keystrokesmod.client.module.Module.ModuleCategory;
 
 public class ConfigModuleManager {
 	
-	private List<ConfigModule> modules = new ArrayList<ConfigModule>();
+	private final List<ConfigModule> modules = new ArrayList<ConfigModule>();
 
 	public ConfigModuleManager() {
 		

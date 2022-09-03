@@ -2,6 +2,9 @@ package keystrokesmod.client.module.modules.minigames.Sumo;
 
 import java.io.IOException;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.AimAssist;
@@ -12,8 +15,6 @@ import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class SumoBot extends Module{
 
@@ -21,8 +22,10 @@ public class SumoBot extends Module{
 	private STap sTap;
 	private SumoClicker leftClicker;
 	private AimAssist aimAssist; 
-	private CoolDown timer = new CoolDown(0), rcTimer = new CoolDown(0), slotTimer = new CoolDown(0);
-	private SliderSetting autoClickerTrigger;
+	private final CoolDown timer = new CoolDown(0);
+	private final CoolDown rcTimer = new CoolDown(0);
+	private final CoolDown slotTimer = new CoolDown(0);
+	private final SliderSetting autoClickerTrigger;
 	
 	public SumoBot() {
 		super("Sumo Bot", ModuleCategory.sumo);
@@ -61,8 +64,8 @@ public class SumoBot extends Module{
 		KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), false);
 	}
 	
-	@SubscribeEvent
-	public void event(TickEvent.RenderTickEvent e) {
+	@Subscribe
+	public void onRender2D(Render2DEvent e) {
 		if(!Utils.Player.isPlayerInGame()) 
 			return;
 		//Utils.Player.sendMessageToSelf(state.toString());
@@ -96,12 +99,8 @@ public class SumoBot extends Module{
 				timer.setCooldown(1500);
 				timer.start();
 			}
-		} 
-	} 
-	
-	
-	@SubscribeEvent
-	public void event2(TickEvent.RenderTickEvent e) {
+		}
+
 		if(state == State.INGAME) {
 			if(leftClicker.isEnabled()) {
 				if(Utils.Player.getClosestPlayer(autoClickerTrigger.getInput()) == null) {
@@ -115,10 +114,13 @@ public class SumoBot extends Module{
 		}
 	}
 	
-	@SubscribeEvent
-	public void onChat(ClientChatReceivedEvent e) throws IOException {
-		if(AntiShuffle.getUnformattedTextForChat(e.message.getFormattedText()).contains("WINNER") || AntiShuffle.getUnformattedTextForChat(e.message.getFormattedText()).contains("DRAW")) {
-			matchEnd();
+	@Subscribe
+	public void onForgeEvent(ForgeEvent fe) {
+		if(fe.getEvent() instanceof ClientChatReceivedEvent) {
+			if (AntiShuffle.getUnformattedTextForChat(((ClientChatReceivedEvent) fe.getEvent()).message.getFormattedText()).contains("WINNER") ||
+					AntiShuffle.getUnformattedTextForChat(((ClientChatReceivedEvent) fe.getEvent()).message.getFormattedText()).contains("DRAW")) {
+				matchEnd();
+			}
 		}
 	}
 	

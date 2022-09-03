@@ -79,9 +79,9 @@ public class SumoStats extends Module {
       if (Utils.URLS.hypixelApiKey.isEmpty()) {
          Utils.Player.sendMessageToSelf("&cAPI Key is empty!");
       } else {
-         Utils.Profiles.DuelsStatsMode dm = (Utils.Profiles.DuelsStatsMode) DuelsStatsMode.SUMO;
+         Utils.Profiles.DuelsStatsMode dm = DuelsStatsMode.SUMO;
          Raven.getExecutor().execute(() -> {
-            PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), (Utils.Profiles.DuelsStatsMode) DuelsStatsMode.SUMO);
+            PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), DuelsStatsMode.SUMO);
             playerProfile.populateStats();
 
             if(!playerProfile.isPlayer)return;

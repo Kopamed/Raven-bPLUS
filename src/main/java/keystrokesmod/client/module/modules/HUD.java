@@ -194,7 +194,7 @@ public class HUD extends Module {
                      y += mc.fontRendererObj.FONT_HEIGHT + margin;
                      del -= 10;
                   } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
-                	  FontUtil.two.drawString(m.getName(), (double) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (double) y, Utils.Client.customDraw(del), dropShadow.isToggled(), 10);
+                	  FontUtil.two.drawString(m.getName(), (double) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), y, Utils.Client.customDraw(del), dropShadow.isToggled(), 10);
                       y += mc.fontRendererObj.FONT_HEIGHT + margin;
                       del -= 10;
                    }
@@ -243,12 +243,12 @@ public class HUD extends Module {
                double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /8;
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
-               Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+               Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
     	   } else {
                double logoWidth = sr.getScaledWidth() * logoScalew.getInput() /8;
                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                GL11.glColor4f(1, 1, 1, 1);
-               Gui.drawModalRectWithCustomSizedTexture((int) hudX, (int) hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+               Gui.drawModalRectWithCustomSizedTexture(hudX, hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
     	   }
        } else {
     	   logoHeight = 0;

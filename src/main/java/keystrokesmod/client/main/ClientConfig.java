@@ -180,9 +180,9 @@ public class ClientConfig {
 		   cat.setY(catData.get("Y").getAsInt());
 		   cat.setOpened(catData.get("opened").getAsBoolean());
 		   if(cat.categoryName != ModuleCategory.category) {
-			   boolean visable = cat.categoryName == ModuleCategory.category ? true : (catData.get("visable").getAsBoolean());
+			   boolean visable = cat.categoryName == ModuleCategory.category || (catData.get("visable").getAsBoolean());
 			   cat.setVisable(visable);
-			   Raven.moduleManager.guiModuleManager.getModuleByModuleCategory(cat.categoryName).setToggled(visable);;
+			   Raven.moduleManager.guiModuleManager.getModuleByModuleCategory(cat.categoryName).setToggled(visable);
 		   } 
 	   }
    } 

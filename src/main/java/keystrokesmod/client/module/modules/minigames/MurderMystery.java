@@ -53,7 +53,7 @@ public class MurderMystery extends Module {
                            return;
                         }
 
-                        entity = (EntityPlayer)entityPlayerIterator.next();
+                        entity = entityPlayerIterator.next();
                      } while(entity == mc.thePlayer);
                   } while(entity.isInvisible());
                } while(AntiBot.bot(entity));

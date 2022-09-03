@@ -13,8 +13,9 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class InvMove extends Module {
 
-	private DescriptionSetting ds, ds2;
-	private TickSetting undetectable;
+	private final DescriptionSetting ds;
+    private final DescriptionSetting ds2;
+	private final TickSetting undetectable;
 	
 	public InvMove() {
 		super("InvMove", ModuleCategory.movement);

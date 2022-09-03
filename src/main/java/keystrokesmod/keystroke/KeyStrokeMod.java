@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class KeyStrokeMod {
     private static KeyStroke keyStroke;
-    private static KeyStrokeRenderer keyStrokeRenderer = new KeyStrokeRenderer();
+    private static final KeyStrokeRenderer keyStrokeRenderer = new KeyStrokeRenderer();
     private static boolean isKeyStrokeConfigGuiToggled = false;
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {

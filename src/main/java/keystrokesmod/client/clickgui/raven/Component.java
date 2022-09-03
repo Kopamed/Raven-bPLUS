@@ -1,17 +1,17 @@
 package keystrokesmod.client.clickgui.raven;
 
 public interface Component {
-   public void draw();
+   void draw();
 
-   public void update(int mousePosX, int mousePosY);
+   void update(int mousePosX, int mousePosY);
 
-   public void mouseDown(int x, int y, int b);
+   void mouseDown(int x, int y, int b);
 
-   public void mouseReleased(int x, int y, int m);
+   void mouseReleased(int x, int y, int m);
 
-   public void keyTyped(char t, int k);
+   void keyTyped(char t, int k);
 
-   public void setComponentStartAt(int n);
+   void setComponentStartAt(int n);
 
-   public int getHeight();
+   int getHeight();
 }

@@ -32,7 +32,7 @@ public class RGBComponent implements Component {
 	@Override
 	public void draw(){
         Gui.drawRect(this.module.category.getX() + boxMargin, this.module.category.getY() + this.moduleStartY + textSize, this.module.category.getX() - boxMargin + this.module.category.getWidth(), this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
-        int drawColor[] = {0xffff0000, 0xff00ff00, 0xff0000ff};
+        int[] drawColor = {0xffff0000, 0xff00ff00, 0xff0000ff};
         for(int i = 0; i < 3; i++) {
         	int color = (int) ((this.barWidth * this.setting.getColor(i)/255f) + this.module.category.getX() + boxMargin);
             Gui.drawRect(color, this.module.category.getY() + this.moduleStartY + textSize - 1, color+(color%2==0? 2:1), this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, drawColor[i]);
@@ -46,7 +46,7 @@ public class RGBComponent implements Component {
 
 	@Override
 	public void update(int mousePosX, int mousePosY) {
-        this.barWidth = (double)(this.module.category.getWidth() - boxMargin*2);
+        this.barWidth = this.module.category.getWidth() - boxMargin*2;
         if(helping != null && helping != this)
         	return;
         if((this.mouseDown)  
@@ -131,7 +131,7 @@ public class RGBComponent implements Component {
     	
     	private final int id;
     	
-		private Helping(int id) {
+		Helping(int id) {
     		this.id = id;
     	}
 		

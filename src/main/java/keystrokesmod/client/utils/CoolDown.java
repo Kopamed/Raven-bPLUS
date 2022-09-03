@@ -16,11 +16,8 @@ public class CoolDown {
     }
 
     public boolean hasFinished(){
-        if(System.currentTimeMillis() >= start + lasts) {
-            //Utils.Player.sendMessageToSelf("Time finished");
-            return true;
-        }
-        return false;
+        //Utils.Player.sendMessageToSelf("Time finished");
+        return System.currentTimeMillis() >= start + lasts;
     }
     public boolean firstFinish(){
         if(System.currentTimeMillis() >= start + lasts && !checkedFinish) {

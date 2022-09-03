@@ -121,7 +121,7 @@ public abstract class MixinEntity {
 
             Minecraft mc = Minecraft.getMinecraft();
 
-            if (((Entity) ((Object) this)) == mc.thePlayer && mc.thePlayer.onGround) {
+            if ((Object) this == mc.thePlayer && mc.thePlayer.onGround) {
                 Module safeWalk = Raven.moduleManager.getModuleByClazz(SafeWalk.class);
 
                 if (safeWalk != null && safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
@@ -212,7 +212,7 @@ public abstract class MixinEntity {
                 double d8 = p_moveEntity_5_;
                 AxisAlignedBB axisalignedbb3 = this.getEntityBoundingBox();
                 this.setEntityBoundingBox(axisalignedbb);
-                p_moveEntity_3_ = (double) this.stepHeight;
+                p_moveEntity_3_ = this.stepHeight;
                 List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().addCoord(d3, p_moveEntity_3_, d5));
                 AxisAlignedBB axisalignedbb4 = this.getEntityBoundingBox();
                 AxisAlignedBB axisalignedbb5 = axisalignedbb4.addCoord(d3, 0.0D, d5);

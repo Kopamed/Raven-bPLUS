@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class Parkour extends Module {
 	
-	private CoolDown cd = new CoolDown(1);
+	private final CoolDown cd = new CoolDown(1);
 	private RGBSetting rgb;
 
 	public Parkour() {

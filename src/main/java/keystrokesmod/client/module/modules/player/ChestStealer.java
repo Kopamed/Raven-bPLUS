@@ -18,10 +18,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ChestStealer extends Module {
 
-	private DoubleSliderSetting firstDelay, delay, closeDelay;
-	private TickSetting autoClose;
+	private final DoubleSliderSetting firstDelay;
+	private final DoubleSliderSetting delay;
+	private final DoubleSliderSetting closeDelay;
+	private final TickSetting autoClose;
 	private boolean inChest;
-	private CoolDown delayTimer = new CoolDown(0), closeTimer = new CoolDown(0);
+	private final CoolDown delayTimer = new CoolDown(0);
+	private final CoolDown closeTimer = new CoolDown(0);
 	private ArrayList<Slot> sortedSlots;
 	private ContainerChest chest;
 
