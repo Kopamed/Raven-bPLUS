@@ -4,7 +4,6 @@ import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -62,9 +61,8 @@ public class Tracers extends Module {
     public void onForgeEvent(ForgeEvent fe) {
         if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (Utils.Player.isPlayerInGame()) {
-                int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
-                Iterator var3;
-                var3 = mc.theWorld.playerEntities.iterator();
+				int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
+				Iterator var3 = mc.theWorld.playerEntities.iterator();
 
                 while (true) {
                     EntityPlayer en;
@@ -80,12 +78,19 @@ public class Tracers extends Module {
                         } while (en.deathTime != 0);
                     } while (!a.isToggled() && en.isInvisible());
 
-                    if (!AntiBot.bot(en)) {
-                        Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(Tracers.rgb.getRed() + ((Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10 > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10)), Tracers.rgb.getGreen(), Tracers.rgb.getGreen()).getRGB() : rgb, (float) f.getInput());
-                    }
-                }
-            }
-        }
-    }
-
+				if (/*!AntiBot.bot(en)*/ true) {
+					if(o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25) {
+						//ik i can use a lot of tenary statements but my brain
+						int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10);
+						int green = Math.abs(red - 255);
+						int rgbs = new Color(red, green, this.rgb.getBlue()).getRGB();
+						Utils.Player.sendMessageToSelf(red + "");
+						Utils.HUD.dtl(en, rgbs, (float)f.getInput());
+					} else {
+						Utils.HUD.dtl(en, rgb, (float)f.getInput());
+					}
+				}
+			}
+		}
+	}
 }
