@@ -60,9 +60,7 @@ xray (but good)
 
 killaura
 
-rotations on bedaura idk
-
-
+make bedaura bypass
 
 packet velo
 
