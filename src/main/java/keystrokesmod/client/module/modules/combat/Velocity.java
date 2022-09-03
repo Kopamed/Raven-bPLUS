@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import org.lwjgl.input.Keyboard;
 
 import keystrokesmod.client.module.Module;
@@ -40,50 +42,51 @@ public class Velocity extends Module {
 	  this.registerSetting(dt = new SliderSetting("Distance projectiles", 3D, 0.0D, 20D, 0.1D));
    }
 
-   @SubscribeEvent
-   public void c(LivingUpdateEvent ev) {
-      if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime)
-      {
-          if (d.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
-              return;
+   @Subscribe
+   public void onLivingUpdate(ForgeEvent fe) {
+       if(fe.getEvent() instanceof LivingUpdateEvent) {
+           if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
+               if (d.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+                   return;
+               }
+
+               if (e.isToggled() && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())) {
+                   return;
+               }
+               if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
+                   EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
+                   Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem() : null;
+                   if (
+                           (item instanceof ItemEgg
+                                   || item instanceof ItemBow
+                                   || item instanceof ItemSnow
+                                   || item instanceof ItemFishingRod) && mode == mode.ItemHeld) {
+                       velo();
+                       return;
+                   } else if (attacker.getDistanceToEntity(mc.thePlayer) > dt.getInput()) {
+                       velo();
+                       return;
+                   }
+               }
+
+
+               if (c.getInput() != 100.0D) {
+                   double ch = Math.random();
+                   if (ch >= c.getInput() / 100.0D) {
+                       return;
+                   }
+               }
+
+               if (a.getInput() != 100.0D) {
+                   mc.thePlayer.motionX *= a.getInput() / 100.0D;
+                   mc.thePlayer.motionZ *= a.getInput() / 100.0D;
+               }
+
+               if (b.getInput() != 100.0D) {
+                   mc.thePlayer.motionY *= b.getInput() / 100.0D;
+               }
            }
-
-           if (e.isToggled() && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())) {
-              return;
-           }
-    	 if(mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
-    		 EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
-    		 Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem() : null;
-    		 if(
-    				 (item instanceof ItemEgg 
-    				 || item instanceof ItemBow
-    				 || item instanceof ItemSnow
-    				 || item instanceof ItemFishingRod) && mode == mode.ItemHeld){
-    			 	 velo();
-    		         return;
-    		 } else if(attacker.getDistanceToEntity(mc.thePlayer) > dt.getInput()) {
-    			 velo();
-    			 return;
-    		 }
-    	 }
-
-
-         if (c.getInput() != 100.0D) {
-            double ch = Math.random();
-            if (ch >= c.getInput() / 100.0D) {
-               return;
-            }
-         }
-
-         if (a.getInput() != 100.0D) {
-            mc.thePlayer.motionX *= a.getInput() / 100.0D;
-            mc.thePlayer.motionZ *= a.getInput() / 100.0D;
-         }
-
-         if (b.getInput() != 100.0D) {
-            mc.thePlayer.motionY *= b.getInput() / 100.0D;
-         }
-      }
+       }
    } 
    
    public void velo() {

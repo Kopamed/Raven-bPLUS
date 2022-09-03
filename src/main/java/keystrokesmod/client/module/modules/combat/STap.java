@@ -3,6 +3,9 @@ package keystrokesmod.client.module.modules.combat;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.WTap.EventType;
 import keystrokesmod.client.module.modules.combat.WTap.WtapState;
@@ -25,14 +28,17 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class STap extends Module {
 	public ComboSetting eventType;
     public SliderSetting range, chance, tapMultiplier;
-    public DescriptionSetting eventTypeDesc;
-    public TickSetting onlyPlayers, onlySword, autoCfg, dynamic;
-    public DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
+    public TickSetting onlyPlayers;
+    public TickSetting onlySword;
+    public TickSetting dynamic;
+    public DoubleSliderSetting waitMs;
+    public DoubleSliderSetting actionMs;
+    public DoubleSliderSetting hitPer;
     public int hits, rhit;
     public boolean call, p;
     public long s;
     private StapState state = StapState.NONE;
-    private CoolDown timer = new CoolDown(0);
+    private final CoolDown timer = new CoolDown(0);
     private Entity target;
    
     public Random r = new Random();
@@ -52,8 +58,8 @@ public class STap extends Module {
         this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
     }
 
-    @SubscribeEvent
-    public void wTapUpdate(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onRender2D(Render2DEvent e) {
     	if(state == StapState.NONE)
     		return;
     	if(state == StapState.WAITINGTOTAP && timer.hasFinished()) {
@@ -62,18 +68,22 @@ public class STap extends Module {
     		finishCombo();
     	}
     }
-    
-    @SubscribeEvent
-    public void event(AttackEntityEvent e) {
-    	target = e.target;
-    	if(isSecondCall() && eventType.getMode() == EventType.Attack) 
-    		sTap();
-    }
-    
-    @SubscribeEvent
-    public void event(LivingUpdateEvent e) {
-    	if(eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
-    		sTap();
+
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof AttackEntityEvent) {
+            AttackEntityEvent e = ((AttackEntityEvent) fe.getEvent());
+
+            target = e.target;
+
+            if(isSecondCall() && eventType.getMode() == EventType.Attack)
+                sTap();
+        } else if(fe.getEvent() instanceof LivingUpdateEvent) {
+            LivingUpdateEvent e = ((LivingUpdateEvent) fe.getEvent());
+
+            if(eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
+                sTap();
+        }
     }
     
     public void sTap() {

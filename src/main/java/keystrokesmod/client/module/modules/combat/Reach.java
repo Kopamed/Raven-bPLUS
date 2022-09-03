@@ -1,5 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
@@ -36,23 +39,34 @@ public class Reach extends Module {
       this.registerSetting(hit_through_blocks = new TickSetting("Hit through blocks", false));
    }
 
-   @SubscribeEvent
-   public void onMouse(MouseEvent ev) {
-      // legit event
-      if(!Utils.Player.isPlayerInGame()) return;
-      Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-      if (autoClicker != null && autoClicker.isEnabled() && Mouse.isButtonDown(0)) return;
-      if (ev.button >= 0 && ev.buttonstate) {
-         call();
+   @Subscribe
+   public void onMouse(ForgeEvent fe) {
+      if(fe.getEvent() instanceof MouseEvent) {
+         MouseEvent ev = (MouseEvent) fe.getEvent();
+
+         if (!Utils.Player.isPlayerInGame())
+            return;
+
+         Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+
+         if (autoClicker != null && autoClicker.isEnabled() && Mouse.isButtonDown(0))
+            return;
+
+         if (ev.button >= 0 && ev.buttonstate) {
+            call();
+         }
       }
    }
 
-   @SubscribeEvent
-   public void onRenderTick(TickEvent.RenderTickEvent ev) {
-      // autoclick event
-      if(!Utils.Player.isPlayerInGame()) return;
+   @Subscribe
+   public void onRender2D(Render2DEvent ev) {
+      if(!Utils.Player.isPlayerInGame())
+         return;
+
       Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-      if (autoClicker == null || !autoClicker.isEnabled()) return;
+
+      if (autoClicker == null || !autoClicker.isEnabled())
+         return;
 
       if (autoClicker.isEnabled()  && Mouse.isButtonDown(0)){
          call();
@@ -60,10 +74,18 @@ public class Reach extends Module {
    }
 
    public static boolean call() {
-      if (!Utils.Player.isPlayerInGame()) return false;
-      if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) return false;
-      if (moving_only.isToggled() && (double)mc.thePlayer.moveForward == 0.0D && (double)mc.thePlayer.moveStrafing == 0.0D) return false;
-      if (sprint_only.isToggled() && !mc.thePlayer.isSprinting()) return false;
+      if (!Utils.Player.isPlayerInGame())
+         return false;
+
+      if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon())
+         return false;
+
+      if (moving_only.isToggled() && (double)mc.thePlayer.moveForward == 0.0D && (double)mc.thePlayer.moveStrafing == 0.0D)
+         return false;
+
+      if (sprint_only.isToggled() && !mc.thePlayer.isSprinting())
+         return false;
+
       if (!hit_through_blocks.isToggled() && mc.objectMouseOver != null) {
          BlockPos p = mc.objectMouseOver.getBlockPos();
          if (p != null && mc.theWorld.getBlockState(p).getBlock() != Blocks.air) {
@@ -73,6 +95,7 @@ public class Reach extends Module {
 
       double r = Utils.Client.ranModuleVal(reach, Utils.Java.rand());
       Object[] o = zz(r, 0.0D);
+
       if (o == null) {
          return false;
       } else {

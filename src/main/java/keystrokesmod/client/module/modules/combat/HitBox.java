@@ -1,5 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -17,7 +20,6 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -39,18 +41,24 @@ public class HitBox extends Module {
       gmo(1.0F);
    }
 
-   @SubscribeEvent
-   public void m(MouseEvent e) {
-      if(!Utils.Player.isPlayerInGame()) return;
-      if (e.button == 0 && e.buttonstate && mv != null) {
-         mc.objectMouseOver = mv;
+   @Subscribe
+   public void onMouse(ForgeEvent fe) {
+      if(fe.getEvent() instanceof MouseEvent) {
+         MouseEvent e = (MouseEvent) fe.getEvent();
+
+         if (!Utils.Player.isPlayerInGame())
+            return;
+
+         if (e.button == 0 && e.buttonstate && mv != null) {
+            mc.objectMouseOver = mv;
+         }
       }
    }
 
-   @SubscribeEvent
-   public void ef(TickEvent.RenderTickEvent ev) {
-      // autoclick event
-      if(!Utils.Player.isPlayerInGame()) return;
+   @Subscribe
+   public void onRender2D(Render2DEvent ev) {
+      if(!Utils.Player.isPlayerInGame())
+         return;
 
       Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
       if(autoClicker != null && !autoClicker.isEnabled()) return;
@@ -62,15 +70,16 @@ public class HitBox extends Module {
       }
    }
 
-   @SubscribeEvent
-   public void r1(RenderWorldLastEvent e) {
-      if (b.isToggled() && Utils.Player.isPlayerInGame()) {
-         for (Entity en : mc.theWorld.loadedEntityList) {
-            if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase) en).deathTime == 0 && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
-               this.rh(en, Color.WHITE);
+   @Subscribe
+   public void onRenderWorldLast(ForgeEvent fe) {
+      if(fe.getEvent() instanceof RenderWorldLastEvent) {
+         if (b.isToggled() && Utils.Player.isPlayerInGame()) {
+            for (Entity en : mc.theWorld.loadedEntityList) {
+               if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase) en).deathTime == 0 && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
+                  this.rh(en, Color.WHITE);
+               }
             }
          }
-
       }
    }
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import keystrokesmod.client.main.Raven;
@@ -15,16 +14,15 @@ import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
 
 public class FakeHud extends Module{
-	
-	private Gson gson = new Gson();
-	public DescriptionSetting ds;
 
-	public static List<Module> list = new ArrayList<Module>();	
+	public DescriptionSetting description;
+
+	public static List<Module> list = new ArrayList<>();
 
 	public FakeHud() {
 		super("Fake Hud", ModuleCategory.client);
 		enableAll();
-		this.registerSetting(ds = new DescriptionSetting("Command: fakehud add/remove <name>"));
+		this.registerSetting(description = new DescriptionSetting("Command: fakehud add/remove <name>"));
 	}
 
 	
@@ -43,11 +41,11 @@ public class FakeHud extends Module{
 		data.addProperty("enabled", enabled);
 		data.addProperty("keycode", keycode);
 		data.add("settings", settings);
-		String str = "";
+		StringBuilder str = new StringBuilder();
 		for(Module m : list) {
-			str = str + m.getName() + ",";
+			str.append(m.getName()).append(",");
 		}
-		data.addProperty("list", str);
+		data.addProperty("list", str.toString());
 
 		return data;
 	}
@@ -70,9 +68,8 @@ public class FakeHud extends Module{
 		} 
 		try {
 			String str = data.get("list").getAsString();
-			String strl[] = str.split(",");
-			List<Module> configList = new ArrayList<Module>();
-			for(String s : strl) {
+			String[] strList = str.split(",");
+			for(String s : strList) {
 				addModule(s);
 			}
 		} catch (NullPointerException e) {
@@ -90,10 +87,10 @@ public class FakeHud extends Module{
 	}
 	
 	public void onEnable() {
-		s();
+		sortModules();
 	}
 
-	public static void s() {
+	public static void sortModules() {
 		if (HUD.positionMode == Utils.HUD.PositionMode.UPLEFT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
 			sortShortLong();
 		}
@@ -104,14 +101,14 @@ public class FakeHud extends Module{
 
 	public static List<Module> getModules() {
 		int i = 0;
-		List<Module> rlist = new ArrayList<Module>();
+		List<Module> enabledList = new ArrayList<>();
 		for(Module module : Raven.moduleManager.getModules()) {
 			if(module.isEnabled() && list.size() > i) {
-				rlist.add(list.get(i));
+				enabledList.add(list.get(i));
 				i++;
 			}
 		}
-		return rlist;
+		return enabledList;
 	}
 
 	public static void addModule(String str) {
@@ -123,18 +120,17 @@ public class FakeHud extends Module{
 		Module m = new Module(str, ModuleCategory.client);
 		m.enable();
 		list.add(m);
-		s();
+		sortModules();
 	}
 
-	public static boolean removeModule(String str) {
+	public static void removeModule(String str) {
 		for(Module module : list) {
 			if(module.getName().equals(str)) {
 				list.remove(module);
-				s();
-				return true;
+				sortModules();
+				return;
 			}
 		}
-		return false;
 	}
 
 	public void enableAll() {
@@ -143,11 +139,6 @@ public class FakeHud extends Module{
 		}
 	}
 
-	public static void sort() {
-		list.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
-	}
-
-
 	public static void sortLongShort() {
 		list.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())));
 	}
@@ -155,4 +146,5 @@ public class FakeHud extends Module{
 	public static void sortShortLong() {
 		list.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
 	}
+
 }

@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -9,7 +11,6 @@ import keystrokesmod.client.utils.MouseManager;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 import java.awt.*;
@@ -55,69 +56,70 @@ public class ClickAssist extends Module {
       this.bot = null;
    }
 
-   @SubscribeEvent
-   public void onMouseUpdate(MouseEvent ev) {
-      if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && Utils.Player.isPlayerInGame()) {
-         if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
-            double ch;
-            if (ev.button == 0 && L.isToggled()) {
-               if (this.engagedLeft) {
-                  this.engagedLeft = false;
-               } else {
-                  if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
-                     return;
-                  }
+   @Subscribe
+   public void onMouseUpdate(ForgeEvent fe) {
+      if(fe.getEvent() instanceof MouseEvent) {
+         MouseEvent ev = (MouseEvent) fe.getEvent();
 
-                  if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
-                     return;
-                  }
-
-                  if (chance.getInput() != 100.0D) {
-                     ch = Math.random();
-                     if (ch >= chance.getInput() / 100.0D) {
-                        this.fix(0);
+         if (ev.button >= 0 && ev.buttonstate && chance.getInput() != 0.0D && Utils.Player.isPlayerInGame()) {
+            if (mc.currentScreen == null && !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
+               double ch;
+               if (ev.button == 0 && L.isToggled()) {
+                  if (this.engagedLeft) {
+                     this.engagedLeft = false;
+                  } else {
+                     if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
                         return;
                      }
-                  }
 
-                  this.bot.mouseRelease(16);
-                  this.bot.mousePress(16);
-                  this.engagedLeft = true;
-               }
-            } else if (ev.button == 1 && R.isToggled()) {
-               if (this.engagedRight) {
-                  this.engagedRight = false;
-               } else {
-                  if (blocksOnly.isToggled()) {
-                     ItemStack item = mc.thePlayer.getHeldItem();
-                     if (item == null || !(item.getItem() instanceof ItemBlock)) {
+                     if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+                        return;
+                     }
+
+                     if (chance.getInput() != 100.0D) {
+                        ch = Math.random();
+                        if (ch >= chance.getInput() / 100.0D) {
+                           this.fix(0);
+                           return;
+                        }
+                     }
+
+                     this.bot.mouseRelease(16);
+                     this.bot.mousePress(16);
+                     this.engagedLeft = true;
+                  }
+               } else if (ev.button == 1 && R.isToggled()) {
+                  if (this.engagedRight) {
+                     this.engagedRight = false;
+                  } else {
+                     if (blocksOnly.isToggled()) {
+                        ItemStack item = mc.thePlayer.getHeldItem();
+                        if (item == null || !(item.getItem() instanceof ItemBlock)) {
+                           this.fix(1);
+                           return;
+                        }
+                     }
+
+                     if (above5.isToggled() && MouseManager.getRightClickCounter() <= 5) {
                         this.fix(1);
                         return;
                      }
-                  }
 
-                  if (above5.isToggled() && MouseManager.getRightClickCounter() <= 5) {
-                     this.fix(1);
-                     return;
-                  }
-
-                  if (chance.getInput() != 100.0D) {
-                     ch = Math.random();
-                     if (ch >= chance.getInput() / 100.0D) {
-                        this.fix(1);
-                        return;
+                     if (chance.getInput() != 100.0D) {
+                        ch = Math.random();
+                        if (ch >= chance.getInput() / 100.0D) {
+                           this.fix(1);
+                           return;
+                        }
                      }
-                  }
 
-                  this.bot.mouseRelease(4);
-                  this.bot.mousePress(4);
-                  this.engagedRight = true;
+                     this.bot.mouseRelease(4);
+                     this.bot.mousePress(4);
+                     this.engagedRight = true;
+                  }
                }
+
             }
-
-            this.fix(0);
-            this.fix(1);
-         } else {
             this.fix(0);
             this.fix(1);
          }

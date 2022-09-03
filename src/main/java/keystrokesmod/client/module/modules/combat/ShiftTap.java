@@ -3,6 +3,9 @@ package keystrokesmod.client.module.modules.combat;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.WTap.EventType;
 import keystrokesmod.client.module.modules.combat.WTap.WtapState;
@@ -23,9 +26,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ShiftTap extends Module {
     public SliderSetting range, chance, tapMultiplier;
-    public DescriptionSetting eventTypeDesc;
-    public TickSetting onlyPlayers, onlySword, autoCfg, dynamic;
-    public DoubleSliderSetting waitMs,actionMs, hitPer, postDelay;
+    public TickSetting onlyPlayers;
+    public TickSetting onlySword;
+    public TickSetting dynamic;
+    public DoubleSliderSetting waitMs;
+    public DoubleSliderSetting actionMs;
+    public DoubleSliderSetting hitPer;
     public ComboSetting eventType; 
     public int hits, rhit;
     public boolean call;
@@ -38,7 +44,7 @@ public class ShiftTap extends Module {
     public ShiftTap(){
         super("ShiftTap", ModuleCategory.combat);
         
-        this.registerSetting(eventType = new ComboSetting("Event:", WTap.EventType.Attack));
+        this.registerSetting(eventType = new ComboSetting("Event", WTap.EventType.Attack));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Release w for ... ms", 30, 40, 1, 300, 1));
@@ -50,8 +56,8 @@ public class ShiftTap extends Module {
         this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
     }
 
-    @SubscribeEvent
-    public void wTapUpdate(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onRender2D(Render2DEvent e) {
     	if(state == WtapState.NONE)
     		return;
     	if(state == WtapState.WAITINGTOTAP && timer.hasFinished()) {
@@ -61,17 +67,21 @@ public class ShiftTap extends Module {
     	}
     }
     
-    @SubscribeEvent
-    public void event(AttackEntityEvent e) {
-    	target = e.target;
-    	if(isSecondCall() && eventType.getMode() == EventType.Attack) 
-    		wTap();
-    }
-    
-    @SubscribeEvent
-    public void event(LivingUpdateEvent e) {
-    	if(eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
-    		wTap();
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof AttackEntityEvent) {
+            AttackEntityEvent e = ((AttackEntityEvent) fe.getEvent());
+
+            target = e.target;
+
+            if (isSecondCall() && eventType.getMode() == EventType.Attack)
+                wTap();
+        } else if(fe.getEvent() instanceof LivingUpdateEvent) {
+            LivingUpdateEvent e = ((LivingUpdateEvent) fe.getEvent());
+
+            if(eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
+                wTap();
+        }
     }
     
     public void wTap() {

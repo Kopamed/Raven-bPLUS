@@ -1,6 +1,7 @@
 package keystrokesmod.client.main;
 
 import com.google.common.eventbus.EventBus;
+import keystrokesmod.client.event.forge.ForgeEventListener;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import keystrokesmod.client.utils.version.VersionManager;
@@ -87,6 +88,8 @@ public class Raven {
       MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
       MinecraftForge.EVENT_BUS.register(new MouseManager());
       MinecraftForge.EVENT_BUS.register(new ChatHelper());
+
+      MinecraftForge.EVENT_BUS.register(new ForgeEventListener());
 
       FontUtil.bootstrap();
 

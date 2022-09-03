@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.RightClicker;
@@ -48,7 +50,8 @@ public class AimAssist extends Module {
       this.registerSetting(blatantMode = new TickSetting("Blatant mode", false));
    }
 
-   public void update() {
+   @Subscribe
+   public void onTick(TickEvent e) {
 
       if(!Utils.Client.currentScreenMinecraft()){
          return;
@@ -59,7 +62,7 @@ public class AimAssist extends Module {
             BlockPos p = mc.objectMouseOver.getBlockPos();
             if (p != null) {
                Block bl = mc.theWorld.getBlockState(p).getBlock();
-               if (bl != Blocks.air && !(bl instanceof BlockLiquid) && bl instanceof  Block) {
+               if (bl != Blocks.air && !(bl instanceof BlockLiquid) && bl != null) {
                   return;
                }
             }
@@ -68,7 +71,7 @@ public class AimAssist extends Module {
 
          if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
-            Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class);
+            Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class); // right clicker???????????
             //what if player clicking but mouse not down ????
             if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
                Entity en = this.getEnemy();
@@ -83,7 +86,6 @@ public class AimAssist extends Module {
                      double n = Utils.Player.fovFromEntity(en);
                      if (n > 1.0D || n < -1.0D) {
                         double complimentSpeed = n*(ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328, compliment.getInput() + 2.48293)/100);
-                        double val2 = complimentSpeed + ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput());
                         float val = (float)(-(complimentSpeed + n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
                         mc.thePlayer.rotationYaw += val;
                      }
@@ -124,7 +126,7 @@ public class AimAssist extends Module {
 
    public Entity getEnemy() {
       int fov = (int) AimAssist.fov.getInput();
-      Iterator var2 = mc.theWorld.playerEntities.iterator();
+      Iterator<EntityPlayer> var2 = mc.theWorld.playerEntities.iterator();
 
       EntityPlayer en;
       do {
@@ -138,7 +140,7 @@ public class AimAssist extends Module {
                               return null;
                            }
 
-                           en = (EntityPlayer) var2.next();
+                           en = var2.next();
                         } while (ignoreFriends.isToggled() && isAFriend(en));
                      } while(en == mc.thePlayer);
                   } while(en.isDead);

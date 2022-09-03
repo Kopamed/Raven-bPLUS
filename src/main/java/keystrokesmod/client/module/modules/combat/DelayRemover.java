@@ -1,11 +1,11 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Field;
@@ -29,8 +29,8 @@ public class DelayRemover extends Module {
       return this.leftClickCounterField != null;
    }
 
-   @SubscribeEvent
-   public void playerTickEvent(PlayerTickEvent event) {
+   @Subscribe
+   public void onGameLoop(GameLoopEvent event) {
       if (Utils.Player.isPlayerInGame() && this.leftClickCounterField != null) {
          if (!mc.inGameHasFocus || mc.thePlayer.capabilities.isCreativeMode) {
             return;

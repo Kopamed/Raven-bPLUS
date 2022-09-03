@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -23,12 +25,10 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -36,7 +36,8 @@ public class LeftClicker extends Module {
     public static DescriptionSetting bestWithDelayRemover;
     public static SliderSetting jitterLeft, hitSelectTick;
     public static TickSetting weaponOnly, sound, breakBlocks;
-    public static DoubleSliderSetting leftCPS, breakBlocksDelay;;
+    public static DoubleSliderSetting leftCPS;
+    ;
     public static TickSetting inventoryFill, hitSelect;
 
     public static ComboSetting clickStyle, clickTimings;
@@ -44,10 +45,7 @@ public class LeftClicker extends Module {
 
     private long lastClick;
     private long leftHold;
-    private boolean allowedClick;
-    public static boolean autoClickerEnabled, breakTimeDone;
-    private double breakBlockFinishWaitTime;
-    private boolean watingForBreakTimeout;
+    public static boolean autoClickerEnabled;
     private boolean leftDown;
     private long leftDownTime;
     private long leftUpTime;
@@ -57,10 +55,9 @@ public class LeftClicker extends Module {
     private boolean leftn;
     private boolean breakHeld;
     private boolean hitSelected;
-    private boolean firstDown;
-    private EntityLivingBase target;
     private Random rand = null;
     private Method playerMouseInput;
+    public EntityLivingBase target;
 
     public LeftClicker(){
         super("Left Clicker", ModuleCategory.combat);
@@ -107,7 +104,7 @@ public class LeftClicker extends Module {
         }
 
 
-        this.allowedClick = false;
+        boolean allowedClick = false;
         this.rand = new Random();
         autoClickerEnabled = true;
     }
@@ -118,35 +115,38 @@ public class LeftClicker extends Module {
         this.leftUpTime = 0L;
         autoClickerEnabled = false;
     }
-    
-    @SubscribeEvent
-    public void onAttack(AttackEntityEvent e) {
-    	target = e.entityLiving;
+
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof AttackEntityEvent) {
+            target = ((AttackEntityEvent) fe.getEvent()).entityLiving;
+        } else if(fe.getEvent() instanceof TickEvent.RenderTickEvent) {
+            TickEvent.RenderTickEvent ev = (TickEvent.RenderTickEvent) fe.getEvent();
+
+            if(ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Render)
+                return;
+
+            if(!Utils.Client.currentScreenMinecraft() &&
+                    !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
+                    && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
+            )
+                return;
+
+            if(shouldNotClick()) {
+                return;
+            }
+
+            if(clickStyle.getMode() == ClickStyle.Raven){
+                ravenClick();
+            }
+
+            else if (clickStyle.getMode() == ClickStyle.SKid){
+                skidClick();
+            }
+        }
     }
 
-    @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent ev) {
-    	if(ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Render)
-    		return;
-        if(!Utils.Client.currentScreenMinecraft() &&
-                !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
-                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
-        )
-            return;
-
-       if(!shouldClick()) {
-    	   return;
-       }
-        	
-        if(clickStyle.getMode() == ClickStyle.Raven){
-            ravenClick();
-        }
-        else if (clickStyle.getMode() == ClickStyle.SKid){
-            skidClick(ev, null);
-        }
-    }
-
-    private boolean shouldClick() {
+    private boolean shouldNotClick() {
         if (!Mouse.isButtonDown(0)) {
         	hitSelected = false;
         }
@@ -155,22 +155,23 @@ public class LeftClicker extends Module {
         	if(hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
         		hitSelected = true;
         	} else {
-        		return false;
+        		return true;
         	}
         }
-		return true;
+		return false;
 	}
 
-	@SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent ev) {
-    	if(ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Tick)
+	@Subscribe
+    public void onGameLoop() {
+    	if(clickTimings.getMode() != ClickEvent.Tick)
     		return;
+
         if(!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
             return;
 
-        if(!shouldClick()) {
+        if(shouldNotClick()) {
      	   return;
         }
 
@@ -178,11 +179,11 @@ public class LeftClicker extends Module {
             ravenClick();
         }
         else if (clickStyle.getMode() == ClickStyle.SKid){
-            skidClick(null, ev);
+            skidClick();
         }
     }
 
-    private void skidClick(TickEvent.RenderTickEvent er, TickEvent.PlayerTickEvent e) {
+    private void skidClick() {
         if (!Utils.Player.isPlayerInGame())
             return;
 
@@ -342,7 +343,7 @@ public class LeftClicker extends Module {
 
         try {
             this.playerMouseInput.invoke(guiScreen, mouseInGUIPosX, mouseInGUIPosY, 0);
-        } catch (IllegalAccessException | InvocationTargetException var5) {
+        } catch (IllegalAccessException | InvocationTargetException ignored) {
         }
 
     }

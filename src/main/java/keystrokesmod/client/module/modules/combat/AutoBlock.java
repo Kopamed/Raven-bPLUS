@@ -1,20 +1,20 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoBlock extends Module {
     public static DoubleSliderSetting duration, distance;
     public static SliderSetting chance;
     private boolean engaged;
-    private CoolDown engagedTime = new CoolDown(0);
+    private final CoolDown engagedTime = new CoolDown(0);
 
     public AutoBlock(){
         super("AutoBlock", ModuleCategory.combat);
@@ -24,8 +24,8 @@ public class AutoBlock extends Module {
         this.registerSetting(chance = new SliderSetting("Chance %", 100, 0, 100, 1));
     }
 
-    @SubscribeEvent
-    public void yes(TickEvent.RenderTickEvent e){
+    @Subscribe
+    public void onRender(Render2DEvent e){
         if(!Utils.Player.isPlayerInGame() || !Utils.Player.isPlayerHoldingSword())
             return;
 

@@ -604,6 +604,14 @@ public class Utils {
 
    public static class Java {
 
+      public static void throwException(Exception e) {
+         try {
+            throw e;
+         } catch (Exception ex) {
+            ex.printStackTrace();
+         }
+      }
+
       public static int getValue(JsonObject type, String member) {
          try {
             return type.get(member).getAsInt();

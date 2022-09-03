@@ -1,11 +1,10 @@
 package keystrokesmod.client.module.modules.combat;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraft.entity.Entity;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoWeapon extends Module {
@@ -21,10 +20,10 @@ public class AutoWeapon extends Module {
         this.registerSetting(goBackToPrevSlot = new TickSetting("Revert to old slot", true));
     }
 
-    @SubscribeEvent
-    public void datsDaSoundOfDaPolis(TickEvent.RenderTickEvent ev){
-        if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return;
-
+    @Subscribe
+    public void onRender2D(Render2DEvent ev){
+        if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
+            return;
 
         if(mc.objectMouseOver==null || mc.objectMouseOver.entityHit==null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))){
             if(onWeapon){
@@ -34,10 +33,10 @@ public class AutoWeapon extends Module {
                 }
             }
         } else{
-            Entity target = mc.objectMouseOver.entityHit;
             if(onlyWhenHoldingDown.isToggled()){
                 if(!Mouse.isButtonDown(0)) return;
             }
+
             if(!onWeapon){
                 prevSlot = mc.thePlayer.inventory.currentItem;
                 onWeapon = true;

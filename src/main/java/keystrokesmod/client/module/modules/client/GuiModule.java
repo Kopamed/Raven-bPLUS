@@ -12,7 +12,6 @@ import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 
 public class GuiModule extends Module {
-	public static final int bind = 54;
 	public static SliderSetting backgroundOpacity;
 
 	public static ComboSetting preset, cnColor;
@@ -137,10 +136,10 @@ public class GuiModule extends Module {
 		public Color enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB;
 
 
-		private Preset(
+		Preset(
 				boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
 				Color enabledTopRGB, Color enabledBottomRGB, Color enabledTextRGB, Color disabledTopRGB, Color disabledBottomRGB, Color disabledTextRGB
-				) {
+		) {
 			this.showGradientEnabled = showGradientEnabled;
 			this.showGradientDisabled = showGradientDisabled;
 			this.useCustomFont = useCustomFont;

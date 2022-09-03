@@ -2,6 +2,7 @@ package keystrokesmod.client.module;
 
 import java.util.ArrayList;
 
+import keystrokesmod.client.main.Raven;
 import org.lwjgl.input.Keyboard;
 
 import com.google.gson.JsonObject;
@@ -125,13 +126,15 @@ public class Module {
 	public void enable() {
 		this.enabled = true;
 		this.onEnable();
-		MinecraftForge.EVENT_BUS.register(this);
+		if(enabled) {
+			Raven.eventBus.register(this);
+		}
 	}
 
 	public void disable() {
 		this.enabled = false;
+		Raven.eventBus.unregister(this);
 		this.onDisable();
-		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 
 	public void setToggled(boolean enabled) {
@@ -192,12 +195,6 @@ public class Module {
 		} else {
 			this.enable();
 		}
-	}
-
-	public void update() {
-	}
-
-	public void guiUpdate() {
 	}
 
 	public void guiButtonToggled(TickSetting b) {

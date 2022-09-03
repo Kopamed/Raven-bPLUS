@@ -36,5 +36,6 @@ public class SelfDestruct extends Module {
       MinecraftForge.EVENT_BUS.unregister(new MouseManager());
       MinecraftForge.EVENT_BUS.unregister(new KeyStrokeRenderer());
       MinecraftForge.EVENT_BUS.unregister(new ChatHelper());
+      // TODO: throw forge events out the window
    }
 }
