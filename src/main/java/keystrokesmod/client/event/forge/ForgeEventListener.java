@@ -25,8 +25,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class ForgeEventListener {
 
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
+    public void onTick(TickEvent.ClientTickEvent e) {
+        if (e.phase == TickEvent.Phase.END) {
             if (Utils.Player.isPlayerInGame()) {
                 for (Module module : Raven.moduleManager.getModules()) {
                     if (Minecraft.getMinecraft().currentScreen instanceof ClickGui) {
@@ -35,6 +35,22 @@ public class ForgeEventListener {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent e) {
+        if (e.phase == TickEvent.Phase.END) {
+            if (Utils.Player.isPlayerInGame()) {
+                for (Module module : Raven.moduleManager.getModules()) {
+                    if (Minecraft.getMinecraft().currentScreen == null) {
+                        module.keybind();
+                    }
+                }
+            }
+        }
+
+
+        Raven.eventBus.post(new ForgeEvent(e));
     }
 
     @SubscribeEvent
@@ -49,11 +65,6 @@ public class ForgeEventListener {
 
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent e) {
-        Raven.eventBus.post(new ForgeEvent(e));
-    }
-
-    @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent e) {
         Raven.eventBus.post(new ForgeEvent(e));
     }
 
