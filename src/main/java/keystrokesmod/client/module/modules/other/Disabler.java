@@ -34,6 +34,8 @@ public class Disabler extends Module {
         this.registerSetting(mmcSafeWarning2 = new DescriptionSetting(EnumChatFormatting.GRAY + "should be less than 5."));
         this.registerSetting(mmcSafeDelay = new DoubleSliderSetting("MMCSafe Delay", 77, 80, 10, 200, 1));
 
+        this.registerSetting(new DescriptionSetting(EnumChatFormatting.BOLD.toString() + EnumChatFormatting.AQUA + "GHOST CLIENT WITH DISABLER OP"));
+
     }
 
     @Override
