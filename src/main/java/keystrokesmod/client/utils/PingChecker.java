@@ -4,7 +4,7 @@ import keystrokesmod.client.clickgui.raven.Terminal;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ChatHelper {
+public class PingChecker {
    private static boolean e = false;
    private static long s = 0L;
 

@@ -51,6 +51,31 @@ Fix aim assist
 tooltips, fix murder mystery detective, fix autotool
  */
 
+/*
+todo shit sigmaclientwastaken edition
+
+improve Nametags module
+
+xray (but good)
+
+killaura
+
+rotations on bedaura idk
+
+Verus nofall cause why not
+
+Projectiles in FastPlace
+
+packet velo
+
+improved arraylist
+
+separate logo from arraylist
+
+fix version checks being completely fucked
+
+ */
+
 public class Raven {
 
    public static boolean debugger = false;
@@ -87,7 +112,7 @@ public class Raven {
       MinecraftForge.EVENT_BUS.register(new Raven());
       MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
       MinecraftForge.EVENT_BUS.register(new MouseManager());
-      MinecraftForge.EVENT_BUS.register(new ChatHelper());
+      MinecraftForge.EVENT_BUS.register(new PingChecker());
 
       MinecraftForge.EVENT_BUS.register(new ForgeEventListener());
 
@@ -119,22 +144,6 @@ public class Raven {
             throw new RuntimeException(e);
          }
       });
-   }
-
-   @SubscribeEvent
-   public void onTick(ClientTickEvent event) {
-      if (event.phase == Phase.END) {
-         if (Utils.Player.isPlayerInGame()) {
-            for (Module module : moduleManager.getModules()) {
-               if (Minecraft.getMinecraft().currentScreen == null) {
-                  module.keybind();
-               } else if (Minecraft.getMinecraft().currentScreen instanceof ClickGui) {
-                  module.guiUpdate();
-               }
-               if (module.isEnabled()) module.update();
-            }
-         }
-      }
    }
 
    @SuppressWarnings("unused")

@@ -1,7 +1,7 @@
 package keystrokesmod.client.command.commands;
 
 import keystrokesmod.client.command.Command;
-import keystrokesmod.client.utils.ChatHelper;
+import keystrokesmod.client.utils.PingChecker;
 
 public class Ping extends Command {
     public Ping() {
@@ -10,6 +10,6 @@ public class Ping extends Command {
 
     @Override
     public void onCall(String[] args) {
-        ChatHelper.checkPing();
+        PingChecker.checkPing();
     }
 }

@@ -72,13 +72,11 @@ import keystrokesmod.client.module.modules.player.SafeWalk;
 import keystrokesmod.client.module.modules.render.AntiShuffle;
 import keystrokesmod.client.module.modules.render.Chams;
 import keystrokesmod.client.module.modules.render.ChestESP;
-import keystrokesmod.client.module.modules.render.ExplicitB9NameTags;
 import keystrokesmod.client.module.modules.render.Fullbright;
 import keystrokesmod.client.module.modules.render.Nametags;
 import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.render.Projectiles;
 import keystrokesmod.client.module.modules.render.Tracers;
-import keystrokesmod.client.module.modules.render.Xray;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.modules.world.ChatLogger;
 import keystrokesmod.client.utils.Utils;
@@ -163,7 +161,6 @@ public class ModuleManager {
       addModule(new ShiftTap());
       addModule(new FPSSpoofer());
 
-      addModule(new ExplicitB9NameTags());
       addModule(new AutoBlock());
       addModule(new MiddleClick());
       addModule(new Projectiles());

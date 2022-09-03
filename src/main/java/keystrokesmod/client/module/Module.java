@@ -31,7 +31,9 @@ public class Module {
 
 	private String description = "";
 
+	public void guiUpdate() {
 
+	}
 
 	public Module(String name, ModuleCategory moduleCategory) {
 		this.moduleName = name;

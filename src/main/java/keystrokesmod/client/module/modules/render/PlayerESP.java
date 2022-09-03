@@ -3,6 +3,8 @@ package keystrokesmod.client.module.modules.render;
 import java.awt.Color;
 import java.util.Iterator;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -17,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerESP extends Module {
    public static DescriptionSetting g;
@@ -62,45 +63,47 @@ public class PlayerESP extends Module {
       this.rgb_c = (new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue()).getRGB());
    }
 
-   @SubscribeEvent
-   public void r1(RenderWorldLastEvent e) {
-      if (Utils.Player.isPlayerInGame()) {
-         int rgb = d.isToggled() ? 0 : this.rgb_c;
-         Iterator var3;
-         if (Raven.debugger) {
-            var3 = mc.theWorld.loadedEntityList.iterator();
+   @Subscribe
+   public void onForgeEvent(ForgeEvent fe) {
+      if(fe.getEvent() instanceof RenderWorldLastEvent) {
+         if (Utils.Player.isPlayerInGame()) {
+            int rgb = d.isToggled() ? 0 : this.rgb_c;
+            Iterator var3;
+            if (Raven.debugger) {
+               var3 = mc.theWorld.loadedEntityList.iterator();
 
-            while(var3.hasNext()) {
-               Entity en = (Entity)var3.next();
-               if (en instanceof EntityLivingBase && en != mc.thePlayer) {
-                  this.r(en, rgb);
+               while (var3.hasNext()) {
+                  Entity en = (Entity) var3.next();
+                  if (en instanceof EntityLivingBase && en != mc.thePlayer) {
+                     this.r(en, rgb);
+                  }
                }
-            }
 
-         } else {
-            var3 = mc.theWorld.playerEntities.iterator();
+            } else {
+               var3 = mc.theWorld.playerEntities.iterator();
 
-            while(true) {
-               EntityPlayer en;
-               do {
+               while (true) {
+                  EntityPlayer en;
                   do {
                      do {
-                        if (!var3.hasNext()) {
-                           return;
-                        }
+                        do {
+                           if (!var3.hasNext()) {
+                              return;
+                           }
 
-                        en = (EntityPlayer)var3.next();
-                     } while(en == mc.thePlayer);
-                  } while(en.deathTime != 0);
-               } while(!f.isToggled() && en.isInvisible());
+                           en = (EntityPlayer) var3.next();
+                        } while (en == mc.thePlayer);
+                     } while (en.deathTime != 0);
+                  } while (!f.isToggled() && en.isInvisible());
 
-               if (!AntiBot.bot(en)) {
-            	  if(t7.isToggled() && getColor(en.getCurrentArmor(2)) > 0) {
-            		  int E = new Color(getColor(en.getCurrentArmor(2))).getRGB();
-            		  this.r(en, E);
-            	  } else {
-            		  this.r(en, rgb);
-            	  }
+                  if (!AntiBot.bot(en)) {
+                     if (t7.isToggled() && getColor(en.getCurrentArmor(2)) > 0) {
+                        int E = new Color(getColor(en.getCurrentArmor(2))).getRGB();
+                        this.r(en, E);
+                     } else {
+                        this.r(en, rgb);
+                     }
+                  }
                }
             }
          }
