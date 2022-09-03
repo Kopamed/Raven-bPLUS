@@ -3,7 +3,7 @@ package keystrokesmod.client.module.modules.player;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.*;
+import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -36,7 +36,7 @@ public class BridgeAssist extends Module {
         this.registerSetting(waitFor = new SliderSetting("Wait time (ms)", 500, 0, 5000, 25));
         this.registerSetting(setLook = new TickSetting("Set look pos", true));
         this.registerSetting(onSneak = new TickSetting("Work only when sneaking", true));
-        this.registerSetting(workWithSafeWalk= new TickSetting("Work with safewalk", false));
+        this.registerSetting(workWithSafeWalk = new TickSetting("Work with safewalk", false));
         this.registerSetting(assistRange = new SliderSetting("Assist range", 10.0D, 1.0D, 40.0D, 1.0D));
         this.registerSetting(glideTime = new SliderSetting("Glide speed", 500, 1, 201, 5));
         this.registerSetting(assistMode = new SliderSetting("Value", 1.0D, 1.0D, 4.0D, 1.0D));
@@ -44,7 +44,7 @@ public class BridgeAssist extends Module {
     }
 
     public void guiUpdate() {
-        assistModeDesc.setDesc(Utils.md + Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)].name());
+        assistModeDesc.setDesc(Utils.md + Utils.Modes.BridgeMode.values()[(int) (assistMode.getInput() - 1.0D)].name());
     }
 
     @Override
@@ -78,12 +78,12 @@ public class BridgeAssist extends Module {
         }
 
 
-        if (gliding){
+        if (gliding) {
             float fuckedYaw = mc.thePlayer.rotationYaw;
             float fuckedPitch = mc.thePlayer.rotationPitch;
 
-            float yaw = fuckedYaw - ((int)fuckedYaw/360f) * 360;
-            float pitch = fuckedPitch - ((int)fuckedPitch/360f) * 360;
+            float yaw = fuckedYaw - ((int) fuckedYaw / 360f) * 360;
+            float pitch = fuckedPitch - ((int) fuckedPitch / 360f) * 360;
 
             double ilovebloat1 = yaw - speedYaw,
                     ilovebloat2 = yaw + speedYaw,
@@ -136,12 +136,12 @@ public class BridgeAssist extends Module {
         float fuckedYaw = mc.thePlayer.rotationYaw;
         float fuckedPitch = mc.thePlayer.rotationPitch;
 
-        float yaw = fuckedYaw - ((int)fuckedYaw/360f) * 360;
-        float pitch = fuckedPitch - ((int)fuckedPitch/360f) * 360;
+        float yaw = fuckedYaw - ((int) fuckedYaw / 360f) * 360;
+        float pitch = fuckedPitch - ((int) fuckedPitch / 360f) * 360;
 
         float range = (float) assistRange.getInput();
 
-        switch (Utils.Modes.BridgeMode.values()[(int)(assistMode.getInput() - 1.0D)]) {
+        switch (Utils.Modes.BridgeMode.values()[(int) (assistMode.getInput() - 1.0D)]) {
             case GODBRIDGE:
                 if (godbridgePos[0] >= (pitch - range) && godbridgePos[0] <= (pitch + range)) {
                     for (int k = 1; k < godbridgePos.length; k++) {
@@ -190,10 +190,10 @@ public class BridgeAssist extends Module {
         this.waitingForAim = false;
     }
 
-    public void aimAt(float pitch, float yaw, float fuckedPitch){
-       if(setLook.isToggled()) {
-               mc.thePlayer.rotationPitch = pitch + ((int)fuckedPitch/360f) * 360;
-               mc.thePlayer.rotationYaw = yaw;
+    public void aimAt(float pitch, float yaw, float fuckedPitch) {
+        if (setLook.isToggled()) {
+            mc.thePlayer.rotationPitch = pitch + ((int) fuckedPitch / 360f) * 360;
+            mc.thePlayer.rotationYaw = yaw;
         }
     }
 }

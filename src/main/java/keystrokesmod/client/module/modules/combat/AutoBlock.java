@@ -16,7 +16,7 @@ public class AutoBlock extends Module {
     private boolean engaged;
     private final CoolDown engagedTime = new CoolDown(0);
 
-    public AutoBlock(){
+    public AutoBlock() {
         super("AutoBlock", ModuleCategory.combat);
 
         this.registerSetting(duration = new DoubleSliderSetting("Block duration (MS)", 20, 100, 1, 500, 1));
@@ -25,21 +25,21 @@ public class AutoBlock extends Module {
     }
 
     @Subscribe
-    public void onRender(Render2DEvent e){
-        if(!Utils.Player.isPlayerInGame() || !Utils.Player.isPlayerHoldingSword())
+    public void onRender(Render2DEvent e) {
+        if (!Utils.Player.isPlayerInGame() || !Utils.Player.isPlayerHoldingSword())
             return;
 
-        if(engaged){
-            if((engagedTime.hasFinished() || !Mouse.isButtonDown(0)) && duration.getInputMin() <= engagedTime.getElapsedTime()){
+        if (engaged) {
+            if ((engagedTime.hasFinished() || !Mouse.isButtonDown(0)) && duration.getInputMin() <= engagedTime.getElapsedTime()) {
                 engaged = false;
                 release();
             }
             return;
         }
 
-        if (Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin()&& mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax() && (chance.getInput() == 100 || Math.random() <= chance.getInput() / 100)){
+        if (Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin() && mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax() && (chance.getInput() == 100 || Math.random() <= chance.getInput() / 100)) {
             engaged = true;
-            engagedTime.setCooldown((long)duration.getInputMax());
+            engagedTime.setCooldown((long) duration.getInputMax());
             engagedTime.start();
             press();
         }

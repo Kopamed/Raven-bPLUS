@@ -1,21 +1,9 @@
 package keystrokesmod.client.module.modules.combat;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
-import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
-import keystrokesmod.client.module.setting.impl.SliderSetting;
-import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.module.setting.impl.*;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -31,6 +19,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LeftClicker extends Module {
     public static DescriptionSetting bestWithDelayRemover;
@@ -58,7 +53,7 @@ public class LeftClicker extends Module {
     private Method playerMouseInput;
     public EntityLivingBase target;
 
-    public LeftClicker(){
+    public LeftClicker() {
         super("Left Clicker", ModuleCategory.combat);
 
         this.registerSetting(bestWithDelayRemover = new DescriptionSetting("Best with delay remover."));
@@ -117,29 +112,27 @@ public class LeftClicker extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof AttackEntityEvent) {
+        if (fe.getEvent() instanceof AttackEntityEvent) {
             target = ((AttackEntityEvent) fe.getEvent()).entityLiving;
-        } else if(fe.getEvent() instanceof TickEvent.RenderTickEvent) {
+        } else if (fe.getEvent() instanceof TickEvent.RenderTickEvent) {
             TickEvent.RenderTickEvent ev = (TickEvent.RenderTickEvent) fe.getEvent();
 
-            if(ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Render)
+            if (ev.phase == TickEvent.Phase.END || clickTimings.getMode() != ClickEvent.Render)
                 return;
 
-            if(!Utils.Client.currentScreenMinecraft() &&
+            if (!Utils.Client.currentScreenMinecraft() &&
                     !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
                     && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
             )
                 return;
 
-            if(shouldNotClick()) {
+            if (shouldNotClick()) {
                 return;
             }
 
-            if(clickStyle.getMode() == ClickStyle.Raven){
+            if (clickStyle.getMode() == ClickStyle.Raven) {
                 ravenClick();
-            }
-
-            else if (clickStyle.getMode() == ClickStyle.SKid){
+            } else if (clickStyle.getMode() == ClickStyle.SKid) {
                 skidClick();
             }
         }
@@ -147,37 +140,36 @@ public class LeftClicker extends Module {
 
     private boolean shouldNotClick() {
         if (!Mouse.isButtonDown(0)) {
-        	hitSelected = false;
+            hitSelected = false;
         }
 
-        if(hitSelect.isToggled()) {
-        	if(hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
-        		hitSelected = true;
-        	} else {
-        		return true;
-        	}
+        if (hitSelect.isToggled()) {
+            if (hitSelected || (mc.thePlayer.hurtTime != 0 && mc.thePlayer.hurtTime > hitSelectTick.getInput())) {
+                hitSelected = true;
+            } else {
+                return true;
+            }
         }
-		return false;
-	}
+        return false;
+    }
 
-	@Subscribe
+    @Subscribe
     public void onGameLoop() {
-    	if(clickTimings.getMode() != ClickEvent.Tick)
-    		return;
+        if (clickTimings.getMode() != ClickEvent.Tick)
+            return;
 
-        if(!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
+        if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
             return;
 
-        if(shouldNotClick()) {
-     	   return;
+        if (shouldNotClick()) {
+            return;
         }
 
-        if(clickStyle.getMode() == ClickStyle.Raven){
+        if (clickStyle.getMode() == ClickStyle.Raven) {
             ravenClick();
-        }
-        else if (clickStyle.getMode() == ClickStyle.SKid){
+        } else if (clickStyle.getMode() == ClickStyle.SKid) {
             skidClick();
         }
     }
@@ -193,14 +185,14 @@ public class LeftClicker extends Module {
         // return;
         //}
         Mouse.poll();
-        if(mc.currentScreen != null || !mc.inGameHasFocus) {
+        if (mc.currentScreen != null || !mc.inGameHasFocus) {
             doInventoryClick();
             return;
         }
 
         // Uhh left click only, mate
         if (Mouse.isButtonDown(0)) {
-            if(breakBlock()) return;
+            if (breakBlock()) return;
             if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) {
                 return;
             }
@@ -209,25 +201,25 @@ public class LeftClicker extends Module {
                 EntityPlayerSP entityPlayer;
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
+                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw + (double) this.rand.nextFloat() * a);
                 } else {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * a);
+                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw - (double) this.rand.nextFloat() * a);
                 }
 
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
+                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch + (double) this.rand.nextFloat() * a * 0.45D);
                 } else {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
+                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch - (double) this.rand.nextFloat() * a * 0.45D);
                 }
             }
 
             double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2, leftCPS.getInputMax());
             if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
                 lastClick = System.currentTimeMillis();
-                if (leftHold < lastClick){
+                if (leftHold < lastClick) {
                     leftHold = lastClick;
                 }
                 int key = mc.gameSettings.keyBindAttack.getKeyCode();
@@ -243,15 +235,14 @@ public class LeftClicker extends Module {
 
     private void ravenClick() {
 
-        if(mc.currentScreen != null || !mc.inGameHasFocus) {
+        if (mc.currentScreen != null || !mc.inGameHasFocus) {
             doInventoryClick();
             return;
         }
 
 
-        
         Mouse.poll();
-        if(!Mouse.isButtonDown(0) && !leftDown) {
+        if (!Mouse.isButtonDown(0) && !leftDown) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
             Utils.Client.setMouseButtonState(0, false);
         }
@@ -265,31 +256,31 @@ public class LeftClicker extends Module {
 
     public void leftClickExecute(int key) {
 
-        if(breakBlock()) return;
+        if (breakBlock()) return;
 
         if (jitterLeft.getInput() > 0.0D) {
             double a = jitterLeft.getInput() * 0.45D;
             EntityPlayerSP entityPlayer;
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw + (double)this.rand.nextFloat() * a);
+                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw + (double) this.rand.nextFloat() * a);
             } else {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationYaw = (float)((double)entityPlayer.rotationYaw - (double)this.rand.nextFloat() * a);
+                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw - (double) this.rand.nextFloat() * a);
             }
 
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch + (double)this.rand.nextFloat() * a * 0.45D);
+                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch + (double) this.rand.nextFloat() * a * 0.45D);
             } else {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationPitch = (float)((double)entityPlayer.rotationPitch - (double)this.rand.nextFloat() * a * 0.45D);
+                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch - (double) this.rand.nextFloat() * a * 0.45D);
             }
         }
-        
+
         if (this.leftUpTime > 0L && this.leftDownTime > 0L) {
             if (System.currentTimeMillis() > this.leftUpTime && leftDown) {
-            	if(sound.isToggled()) mc.thePlayer.playSound("game.neutral.hurt.fall.big", 1, 1);
+                if (sound.isToggled()) mc.thePlayer.playSound("game.neutral.hurt.fall.big", 1, 1);
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();
@@ -308,7 +299,7 @@ public class LeftClicker extends Module {
 
     public void genLeftTimings() {
         double clickSpeed = Utils.Client.ranModuleVal(leftCPS, this.rand) + 0.4D * this.rand.nextDouble();
-        long delay = (int)Math.round(1000.0D / clickSpeed);
+        long delay = (int) Math.round(1000.0D / clickSpeed);
         if (System.currentTimeMillis() > this.leftk) {
             if (!this.leftn && this.rand.nextInt(100) >= 85) {
                 this.leftn = true;
@@ -317,23 +308,23 @@ public class LeftClicker extends Module {
                 this.leftn = false;
             }
 
-            this.leftk = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
+            this.leftk = System.currentTimeMillis() + 500L + (long) this.rand.nextInt(1500);
         }
 
         if (this.leftn) {
-            delay = (long)((double)delay * this.leftm);
+            delay = (long) ((double) delay * this.leftm);
         }
 
         if (System.currentTimeMillis() > this.leftl) {
             if (this.rand.nextInt(100) >= 80) {
-                delay += 50L + (long)this.rand.nextInt(100);
+                delay += 50L + (long) this.rand.nextInt(100);
             }
 
-            this.leftl = System.currentTimeMillis() + 500L + (long)this.rand.nextInt(1500);
+            this.leftl = System.currentTimeMillis() + 500L + (long) this.rand.nextInt(1500);
         }
 
         this.leftUpTime = System.currentTimeMillis() + delay;
-        this.leftDownTime = System.currentTimeMillis() + delay / 2L - (long)this.rand.nextInt(10);
+        this.leftDownTime = System.currentTimeMillis() + delay / 2L - (long) this.rand.nextInt(10);
     }
 
     private void inInvClick(GuiScreen guiScreen) {
@@ -362,7 +353,7 @@ public class LeftClicker extends Module {
                     }
                     return true;
                 }
-                if(breakHeld) {
+                if (breakHeld) {
                     breakHeld = false;
                 }
             }
@@ -370,7 +361,7 @@ public class LeftClicker extends Module {
         return false;
     }
 
-    public void doInventoryClick(){
+    public void doInventoryClick() {
         if (inventoryFill.isToggled() && (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChest)) {
             if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
                 this.leftDownTime = 0L;

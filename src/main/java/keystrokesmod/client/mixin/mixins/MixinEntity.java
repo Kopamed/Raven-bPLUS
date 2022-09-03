@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -32,63 +31,99 @@ import java.util.Random;
 @Mixin(priority = 995, value = Entity.class)
 public abstract class MixinEntity {
 
-    @Shadow public boolean noClip;
+    @Shadow
+    public boolean noClip;
 
-    @Shadow public abstract void setEntityBoundingBox(AxisAlignedBB p_setEntityBoundingBox_1_);
+    @Shadow
+    public abstract void setEntityBoundingBox(AxisAlignedBB p_setEntityBoundingBox_1_);
 
-    @Shadow public abstract AxisAlignedBB getEntityBoundingBox();
+    @Shadow
+    public abstract AxisAlignedBB getEntityBoundingBox();
 
-    @Shadow protected abstract void resetPositionToBB();
+    @Shadow
+    protected abstract void resetPositionToBB();
 
-    @Shadow public World worldObj;
-    @Shadow public double posX;
-    @Shadow public double posY;
-    @Shadow public double posZ;
-    @Shadow protected boolean isInWeb;
-    @Shadow public double motionX;
-    @Shadow public double motionY;
-    @Shadow public double motionZ;
-    @Shadow public boolean onGround;
+    @Shadow
+    public World worldObj;
+    @Shadow
+    public double posX;
+    @Shadow
+    public double posY;
+    @Shadow
+    public double posZ;
+    @Shadow
+    protected boolean isInWeb;
+    @Shadow
+    public double motionX;
+    @Shadow
+    public double motionY;
+    @Shadow
+    public double motionZ;
+    @Shadow
+    public boolean onGround;
 
-    @Shadow public abstract boolean isSneaking();
+    @Shadow
+    public abstract boolean isSneaking();
 
-    @Shadow public float stepHeight;
-    @Shadow public boolean isCollidedHorizontally;
-    @Shadow public boolean isCollidedVertically;
-    @Shadow public boolean isCollided;
+    @Shadow
+    public float stepHeight;
+    @Shadow
+    public boolean isCollidedHorizontally;
+    @Shadow
+    public boolean isCollidedVertically;
+    @Shadow
+    public boolean isCollided;
 
-    @Shadow protected abstract void updateFallState(double p_updateFallState_1_, boolean p_updateFallState_3_, Block p_updateFallState_4_, BlockPos p_updateFallState_5_);
+    @Shadow
+    protected abstract void updateFallState(double p_updateFallState_1_, boolean p_updateFallState_3_, Block p_updateFallState_4_, BlockPos p_updateFallState_5_);
 
-    @Shadow protected abstract boolean canTriggerWalking();
+    @Shadow
+    protected abstract boolean canTriggerWalking();
 
-    @Shadow public Entity ridingEntity;
-    @Shadow public float distanceWalkedModified;
-    @Shadow public float distanceWalkedOnStepModified;
-    @Shadow private int nextStepDistance;
+    @Shadow
+    public Entity ridingEntity;
+    @Shadow
+    public float distanceWalkedModified;
+    @Shadow
+    public float distanceWalkedOnStepModified;
+    @Shadow
+    private int nextStepDistance;
 
-    @Shadow public abstract boolean isInWater();
+    @Shadow
+    public abstract boolean isInWater();
 
-    @Shadow public abstract void playSound(String p_playSound_1_, float p_playSound_2_, float p_playSound_3_);
+    @Shadow
+    public abstract void playSound(String p_playSound_1_, float p_playSound_2_, float p_playSound_3_);
 
-    @Shadow protected abstract String getSwimSound();
+    @Shadow
+    protected abstract String getSwimSound();
 
-    @Shadow protected Random rand;
+    @Shadow
+    protected Random rand;
 
-    @Shadow protected abstract void playStepSound(BlockPos p_playStepSound_1_, Block p_playStepSound_2_);
+    @Shadow
+    protected abstract void playStepSound(BlockPos p_playStepSound_1_, Block p_playStepSound_2_);
 
-    @Shadow protected abstract void doBlockCollisions();
+    @Shadow
+    protected abstract void doBlockCollisions();
 
-    @Shadow public abstract void addEntityCrashInfo(CrashReportCategory p_addEntityCrashInfo_1_);
+    @Shadow
+    public abstract void addEntityCrashInfo(CrashReportCategory p_addEntityCrashInfo_1_);
 
-    @Shadow public abstract boolean isWet();
+    @Shadow
+    public abstract boolean isWet();
 
-    @Shadow protected abstract void dealFireDamage(int p_dealFireDamage_1_);
+    @Shadow
+    protected abstract void dealFireDamage(int p_dealFireDamage_1_);
 
-    @Shadow private int fire;
+    @Shadow
+    private int fire;
 
-    @Shadow public abstract void setFire(int p_setFire_1_);
+    @Shadow
+    public abstract void setFire(int p_setFire_1_);
 
-    @Shadow public int fireResistance;
+    @Shadow
+    public int fireResistance;
 
     /**
      * @author mc code
@@ -139,7 +174,7 @@ public abstract class MixinEntity {
             } else {
                 flag = false;
             }
-            
+
             if (flag) {
                 double d6;
                 for (d6 = 0.05D; p_moveEntity_1_ != 0.0D && this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, 0.0D)).isEmpty(); d3 = p_moveEntity_1_) {

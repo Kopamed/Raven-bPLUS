@@ -6,11 +6,11 @@ import static keystrokesmod.client.clickgui.raven.Terminal.print;
 
 public class Shoutout extends Command {
     public Shoutout() {
-        super("shoutout", "Everyone who helped make b+", 0, 0,  new String[] {},  new String[] {"love", "thanks"});
+        super("shoutout", "Everyone who helped make b+", 0, 0, new String[]{}, new String[]{"love", "thanks"});
     }
 
     @Override
-    public void onCall(String[] args){
+    public void onCall(String[] args) {
         print("Everyone who made b++ possible:");
         print("- kv! aka KingVoid (current dev)");
         print("- kopamed (raven b+ dev)");

@@ -8,12 +8,12 @@ import keystrokesmod.client.utils.Utils;
 
 public class SetKey extends Command {
     public SetKey() {
-        super("setkey", "Sets hypixel's API key. To get a new key, run `/api new`", 2, 2, new String[] {"key"}, new String[] {"apikey"});
+        super("setkey", "Sets hypixel's API key. To get a new key, run `/api new`", 2, 2, new String[]{"key"}, new String[]{"apikey"});
     }
 
     @Override
     public void onCall(String[] args) {
-        if(args.length == 0) {
+        if (args.length == 0) {
             this.incorrectArgs();
             return;
         }

@@ -9,15 +9,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderLivingEvent.Specials;
+import net.minecraftforge.client.event.RenderPlayerEvent.Post;
+import net.minecraftforge.client.event.RenderPlayerEvent.Pre;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent.Post;
-import net.minecraftforge.client.event.RenderPlayerEvent.Pre;
-import net.minecraftforge.client.event.RenderLivingEvent.Specials;
 
 /**
  * Why? Other than the main few events that modules will be using, there's a ton of other events they use.

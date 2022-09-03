@@ -6,51 +6,51 @@ import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class DescriptionSetting extends Setting {
-   private String desc;
-   private final String defaultDesc;
+    private String desc;
+    private final String defaultDesc;
 
-   public DescriptionSetting(String t) {
-      super(t);
-      this.desc = t;
-      this.defaultDesc = t;
-   }
+    public DescriptionSetting(String t) {
+        super(t);
+        this.desc = t;
+        this.defaultDesc = t;
+    }
 
-   public String getDesc() {
-      return this.desc;
-   }
+    public String getDesc() {
+        return this.desc;
+    }
 
-   public void setDesc(String t) {
-      this.desc = t;
-   }
+    public void setDesc(String t) {
+        this.desc = t;
+    }
 
-   @Override
-   public void resetToDefaults() {
-      this.desc = defaultDesc;
-   }
+    @Override
+    public void resetToDefaults() {
+        this.desc = defaultDesc;
+    }
 
-   @Override
-   public JsonObject getConfigAsJson() {
-      JsonObject data = new JsonObject();
-      data.addProperty("type", getSettingType());
-      data.addProperty("value", getDesc());
-      return data;
-   }
+    @Override
+    public JsonObject getConfigAsJson() {
+        JsonObject data = new JsonObject();
+        data.addProperty("type", getSettingType());
+        data.addProperty("value", getDesc());
+        return data;
+    }
 
-   @Override
-   public String getSettingType() {
-      return "desc";
-   }
+    @Override
+    public String getSettingType() {
+        return "desc";
+    }
 
-   @Override
-   public void applyConfigFromJson(JsonObject data) {
-      if(!data.get("type").getAsString().equals(getSettingType()))
-         return;
+    @Override
+    public void applyConfigFromJson(JsonObject data) {
+        if (!data.get("type").getAsString().equals(getSettingType()))
+            return;
 
-      setDesc(data.get("value").getAsString());
-   }
+        setDesc(data.get("value").getAsString());
+    }
 
-   @Override
-   public Component createComponent(ModuleComponent moduleComponent) {
-      return null;
-   }
+    @Override
+    public Component createComponent(ModuleComponent moduleComponent) {
+        return null;
+    }
 }

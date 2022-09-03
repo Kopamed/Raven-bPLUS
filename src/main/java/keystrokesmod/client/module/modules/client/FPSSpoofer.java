@@ -34,14 +34,14 @@ public class FPSSpoofer extends Module {
         return fpsField != null;
     }
 
-    public void onEnable(){
+    public void onEnable() {
         ticksPassed = 0;
     }
 
     @Subscribe
     public void onGameLoop(GameLoopEvent e) {
         try {
-            int fpsN = ThreadLocalRandom.current().nextInt((int)fps.getInputMin(), (int)fps.getInputMax() + 1);
+            int fpsN = ThreadLocalRandom.current().nextInt((int) fps.getInputMin(), (int) fps.getInputMax() + 1);
             fpsField.set(mc, fpsN);
         } catch (IllegalAccessException ex) {
             ex.printStackTrace();

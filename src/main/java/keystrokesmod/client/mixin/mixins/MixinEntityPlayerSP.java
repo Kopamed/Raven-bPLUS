@@ -27,45 +27,70 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(priority = 995, value = EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
-    @Shadow public int sprintingTicksLeft;
+    @Shadow
+    public int sprintingTicksLeft;
 
     public MixinEntityPlayerSP(World p_i45074_1_, GameProfile p_i45074_2_) {
         super(p_i45074_1_, p_i45074_2_);
     }
 
-    @Shadow public abstract void setSprinting(boolean p_setSprinting_1_);
+    @Shadow
+    public abstract void setSprinting(boolean p_setSprinting_1_);
 
-    @Shadow protected int sprintToggleTimer;
-    @Shadow public float prevTimeInPortal;
-    @Shadow public float timeInPortal;
-    @Shadow protected Minecraft mc;
-    @Shadow public MovementInput movementInput;
+    @Shadow
+    protected int sprintToggleTimer;
+    @Shadow
+    public float prevTimeInPortal;
+    @Shadow
+    public float timeInPortal;
+    @Shadow
+    protected Minecraft mc;
+    @Shadow
+    public MovementInput movementInput;
 
-    @Shadow protected abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_, double p_pushOutOfBlocks_5_);
+    @Shadow
+    protected abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_, double p_pushOutOfBlocks_5_);
 
-    @Shadow public abstract void sendPlayerAbilities();
+    @Shadow
+    public abstract void sendPlayerAbilities();
 
-    @Shadow protected abstract boolean isCurrentViewEntity();
+    @Shadow
+    protected abstract boolean isCurrentViewEntity();
 
-    @Shadow public abstract boolean isRidingHorse();
+    @Shadow
+    public abstract boolean isRidingHorse();
 
-    @Shadow private int horseJumpPowerCounter;
-    @Shadow private float horseJumpPower;
+    @Shadow
+    private int horseJumpPowerCounter;
+    @Shadow
+    private float horseJumpPower;
 
-    @Shadow protected abstract void sendHorseJump();
+    @Shadow
+    protected abstract void sendHorseJump();
 
-    @Shadow private boolean serverSprintState;
-    @Shadow @Final public NetHandlerPlayClient sendQueue;
+    @Shadow
+    private boolean serverSprintState;
+    @Shadow
+    @Final
+    public NetHandlerPlayClient sendQueue;
 
-    @Shadow public abstract boolean isSneaking();
+    @Shadow
+    public abstract boolean isSneaking();
 
-    @Shadow private boolean serverSneakState;
-    @Shadow private double lastReportedPosX;
-    @Shadow private double lastReportedPosY;
-    @Shadow private double lastReportedPosZ;
-    @Shadow private float lastReportedYaw;
-    @Shadow private float lastReportedPitch;
-    @Shadow private int positionUpdateTicks;
+    @Shadow
+    private boolean serverSneakState;
+    @Shadow
+    private double lastReportedPosX;
+    @Shadow
+    private double lastReportedPosY;
+    @Shadow
+    private double lastReportedPosZ;
+    @Shadow
+    private float lastReportedYaw;
+    @Shadow
+    private float lastReportedPitch;
+    @Shadow
+    private int positionUpdateTicks;
 
     /**
      * @author mc code
@@ -101,7 +126,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
             UpdateEvent e = new UpdateEvent(EventTiming.PRE, this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
             Raven.eventBus.post(e);
-            
+
             double d0 = e.getX() - this.lastReportedPosX;
             double d1 = e.getY() - this.lastReportedPosY;
             double d2 = e.getZ() - this.lastReportedPosZ;
@@ -208,8 +233,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
             MovementInput var10000 = this.movementInput;
 
-            if(noSlow.isEnabled()) {
-                float slowdown = (float) ((100-NoSlow.b.getInput())/100F);
+            if (noSlow.isEnabled()) {
+                float slowdown = (float) ((100 - NoSlow.b.getInput()) / 100F);
                 var10000.moveStrafe *= slowdown;
                 var10000.moveForward *= slowdown;
             } else {
@@ -240,7 +265,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             this.setSprinting(true);
         }
 
-        if (this.isSprinting() && (((sprint.isEnabled() && Sprint.multiDir.isToggled())? !(movementInput.moveForward != 0 || movementInput.moveStrafe != 0) :
+        if (this.isSprinting() && (((sprint.isEnabled() && Sprint.multiDir.isToggled()) ? !(movementInput.moveForward != 0 || movementInput.moveStrafe != 0) :
                 this.movementInput.moveForward < f) || this.isCollidedHorizontally || !flag3)) {
             this.setSprinting(false);
         }

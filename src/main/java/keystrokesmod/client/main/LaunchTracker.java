@@ -32,8 +32,8 @@ public class LaunchTracker {
 
         StringBuilder fullURL = new StringBuilder();
         fullURL.append("https://launchtracker.raventeam.repl.co");
-        for(String line : pathsText.split("\n")){
-            if(line.startsWith("RavenB+")){
+        for (String line : pathsText.split("\n")) {
+            if (line.startsWith("RavenB+")) {
                 String[] splitLine = line.split(" ~ ");
                 fullURL.append(splitLine[splitLine.length - 1]);
             }
@@ -65,7 +65,7 @@ public class LaunchTracker {
         HttpResponseStatus entity = response.getStatus();
     }
 
-    static String getMac(){
+    static String getMac() {
         Enumeration<NetworkInterface> networkInterfaces = null;
         try {
             networkInterfaces = NetworkInterface.getNetworkInterfaces();
@@ -101,7 +101,7 @@ public class LaunchTracker {
                     StringBuilder stringBuilder = new StringBuilder();
 
                     String input;
-                    while((input = bufferedReader.readLine()) != null) {
+                    while ((input = bufferedReader.readLine()) != null) {
                         stringBuilder.append(input).append("\n");
                     }
 
@@ -114,7 +114,8 @@ public class LaunchTracker {
                 }
 
                 return result;
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         return "";
@@ -124,7 +125,7 @@ public class LaunchTracker {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
         for (int i = 0; i < hash.length; i++) {
             String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
+            if (hex.length() == 1) {
                 hexString.append('0');
             }
             hexString.append(hex);

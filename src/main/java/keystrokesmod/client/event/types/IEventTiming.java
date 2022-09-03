@@ -1,6 +1,5 @@
 package keystrokesmod.client.event.types;
 
-import keystrokesmod.client.event.EventDirection;
 import keystrokesmod.client.event.EventTiming;
 
 public interface IEventTiming {

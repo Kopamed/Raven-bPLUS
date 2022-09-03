@@ -1,11 +1,11 @@
 package keystrokesmod.client.utils.font;
 
-import java.awt.Font;
+import keystrokesmod.client.module.modules.HUD;
+
+import java.awt.*;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import keystrokesmod.client.module.modules.HUD;
 
 @SuppressWarnings("NonAtomicOperationOnVolatileField")
 public class FontUtil {

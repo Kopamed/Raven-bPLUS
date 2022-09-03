@@ -50,7 +50,7 @@ public class UpdateCheck extends Module {
             if (copyToClipboard.isToggled())
                 if (Utils.Client.copyToClipboard(Raven.downloadLocation))
                     Utils.Player.sendMessageToSelf("Successfully copied download link to clipboard!");
-                    Utils.Player.sendMessageToSelf(Raven.sourceLocation);
+            Utils.Player.sendMessageToSelf(Raven.sourceLocation);
 
             if (openLink.isToggled()) {
                 try {

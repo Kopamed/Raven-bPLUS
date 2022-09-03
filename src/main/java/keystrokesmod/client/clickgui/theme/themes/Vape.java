@@ -99,9 +99,9 @@ public class Vape implements Theme {
     @Override
     public Color getArrayListColour(double currentY, double fullY, double speed) {
         long time = System.currentTimeMillis();
-        long l1 = (long)(fullY - currentY) * 10L;
-        float f1 = (float)(time % (l1 / speed));
-        float f2 = (l1 / (float)speed);
+        long l1 = (long) (fullY - currentY) * 10L;
+        float f1 = (float) (time % (l1 / speed));
+        float f2 = (l1 / (float) speed);
         float c = f1 / f2;
         return Color.getHSBColor(c, 1.0F, 1.0F);
     }

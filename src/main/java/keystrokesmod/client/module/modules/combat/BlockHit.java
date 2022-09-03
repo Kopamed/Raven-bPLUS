@@ -37,30 +37,30 @@ public class BlockHit extends Module {
         this.registerSetting(onlyForward = new TickSetting("Only blockhit when walking forward", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Action Time (MS)", 30, 40, 1, 300, 1));
         this.registerSetting(actionMs = new DoubleSliderSetting("Block after ... ms", 20, 30, 1, 300, 1));
-        this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1)); 
-        this.registerSetting(chance =  new SliderSetting("Chance %", 100, 0, 100, 1));
+        this.registerSetting(hitPer = new DoubleSliderSetting("Once every ... hits", 1, 1, 1, 10, 1));
+        this.registerSetting(chance = new SliderSetting("Chance %", 100, 0, 100, 1));
         this.registerSetting(range = new SliderSetting("Range: ", 3, 1, 6, 0.05));
 
     }
 
     @Subscribe
     public void onRender(Render2DEvent e) {
-    	if(!Utils.Player.isPlayerInGame())
-    		return;
-    	
-    	if(tryStartCombo && waitTimer.hasFinished()) {
-    		tryStartCombo = false;
-    		startCombo();
-    	}
-    	if(actionTimer.hasFinished() && executingAction) {
-    		finishCombo();
-    	}
-    	
+        if (!Utils.Player.isPlayerInGame())
+            return;
+
+        if (tryStartCombo && waitTimer.hasFinished()) {
+            tryStartCombo = false;
+            startCombo();
+        }
+        if (actionTimer.hasFinished() && executingAction) {
+            finishCombo();
+        }
+
     }
 
     @Subscribe
     public void onHit(ForgeEvent fe) {
-    	if(fe.getEvent() instanceof AttackEntityEvent) {
+        if (fe.getEvent() instanceof AttackEntityEvent) {
             AttackEntityEvent e = (AttackEntityEvent) fe.getEvent();
 
             if (isSecondCall() || executingAction)
@@ -87,38 +87,38 @@ public class BlockHit extends Module {
     }
 
     private void finishCombo() {
-    	executingAction = false;
+        executingAction = false;
         int key = mc.gameSettings.keyBindUseItem.getKeyCode();
         KeyBinding.setKeyBindState(key, false);
         Utils.Client.setMouseButtonState(1, false);
     }
 
     private void startCombo() {
-        if(!(Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode())) && onlyForward.isToggled())
+        if (!(Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode())) && onlyForward.isToggled())
             return;
-        
+
         executingAction = true;
         int key = mc.gameSettings.keyBindUseItem.getKeyCode();
         KeyBinding.setKeyBindState(key, true);
         KeyBinding.onTick(key);
         Utils.Client.setMouseButtonState(1, true);
-        actionTimer.setCooldown((long)ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(),  waitMs.getInputMax()+0.01));
-    	actionTimer.start();
+        actionTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax() + 0.01));
+        actionTimer.start();
     }
-    
+
     public void tryStartCombo() {
-    	tryStartCombo = true;
-    	waitTimer.setCooldown((long)ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(),  actionMs.getInputMax()+0.01));
-    	waitTimer.start();
+        tryStartCombo = true;
+        waitTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(), actionMs.getInputMax() + 0.01));
+        waitTimer.start();
     }
-    
+
     private static boolean isSecondCall() {
-    	if(call) {
-    		call = false;
-    		return true;
-    	} else {
-    		call = true;
-    		return false;
-    	}
+        if (call) {
+            call = false;
+            return true;
+        } else {
+            call = true;
+            return false;
+        }
     }
 }

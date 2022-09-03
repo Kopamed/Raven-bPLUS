@@ -3,11 +3,10 @@ package keystrokesmod.client.command.commands;
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.module.modules.other.NameHider;
-import keystrokesmod.client.utils.Utils;
 
 public class Cname extends Command {
     public Cname() {
-        super("cname", "Hides your name client-side", 1, 1, new String[] {"New name"}, new String[] {"cn", "changename"});
+        super("cname", "Hides your name client-side", 1, 1, new String[]{"New name"}, new String[]{"cn", "changename"});
     }
 
     @Override
@@ -18,6 +17,6 @@ public class Cname extends Command {
         }
 
         NameHider.n = args[0];
-        Terminal.print("Nick has been set to: " +  NameHider.n);
+        Terminal.print("Nick has been set to: " + NameHider.n);
     }
 }

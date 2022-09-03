@@ -26,7 +26,7 @@ public class AutoHeader extends Module {
     }
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         startWait = System.currentTimeMillis();
         super.onEnable();
     }
@@ -39,14 +39,14 @@ public class AutoHeader extends Module {
         if (cancelDuringShift.isToggled() && mc.thePlayer.isSneaking())
             return;
 
-        if(onlyWhenHoldingSpacebar.isToggled()){
-            if(!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())){
+        if (onlyWhenHoldingSpacebar.isToggled()) {
+            if (!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) {
                 return;
             }
         }
 
-        if (Utils.Player.playerUnderBlock() && mc.thePlayer.onGround){
-            if(startWait + (1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.543543, pbs.getInput() + 1.32748923)) < System.currentTimeMillis()){
+        if (Utils.Player.playerUnderBlock() && mc.thePlayer.onGround) {
+            if (startWait + (1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.543543, pbs.getInput() + 1.32748923)) < System.currentTimeMillis()) {
                 mc.thePlayer.jump();
                 startWait = System.currentTimeMillis();
             }

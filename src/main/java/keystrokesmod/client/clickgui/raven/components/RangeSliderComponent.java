@@ -24,7 +24,7 @@ public class RangeSliderComponent implements Component {
     private final int boxHeight = 4;
     private final int textSize = 11;
 
-    public RangeSliderComponent(DoubleSliderSetting doubleSlider, ModuleComponent module, int moduleStartY){
+    public RangeSliderComponent(DoubleSliderSetting doubleSlider, ModuleComponent module, int moduleStartY) {
         this.doubleSlider = doubleSlider;
         this.module = module;
         this.sliderStartX = this.module.category.getX() + boxMargin;
@@ -32,20 +32,20 @@ public class RangeSliderComponent implements Component {
         this.moduleStartY = moduleStartY;
     }
 
-    public void draw(){
+    public void draw() {
         //drawing the grey box lol
         net.minecraft.client.gui.Gui.drawRect(this.module.category.getX() + boxMargin, this.module.category.getY() + this.moduleStartY + textSize, this.module.category.getX() - boxMargin + this.module.category.getWidth(), this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
         int startToDrawFrom = this.module.category.getX() + boxMargin + (int) this.blankWidth;
-        int finishDrawingAt = startToDrawFrom + (int)this.barWidth;
-        int middleThing = (int)Utils.Java.round(this.barWidth/2, 0) + this.module.category.getX() + (int) this.blankWidth + boxMargin - 1;
+        int finishDrawingAt = startToDrawFrom + (int) this.barWidth;
+        int middleThing = (int) Utils.Java.round(this.barWidth / 2, 0) + this.module.category.getX() + (int) this.blankWidth + boxMargin - 1;
 
         //drwing the main colourded bar
         net.minecraft.client.gui.Gui.drawRect(startToDrawFrom, this.module.category.getY() + this.moduleStartY + textSize, finishDrawingAt, this.module.category.getY() + this.moduleStartY + textSize + boxHeight, Utils.Client.astolfoColorsDraw(14, 10));
-        net.minecraft.client.gui.Gui.drawRect(middleThing, this.module.category.getY() + this.moduleStartY + textSize - 1, middleThing+(middleThing%2==0? 2:1), this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, 0xff1D1D1F);
+        net.minecraft.client.gui.Gui.drawRect(middleThing, this.module.category.getY() + this.moduleStartY + textSize - 1, middleThing + (middleThing % 2 == 0 ? 2 : 1), this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, 0xff1D1D1F);
         //drawing le text
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.doubleSlider.getName() + ": " + this.doubleSlider.getInputMin() + ", " + this.doubleSlider.getInputMax(), (float)((int)((float)(this.module.category.getX() + 4) * 2.0F)), (float)((int)((float)(this.module.category.getY() + this.moduleStartY + 3) * 2.0F)), -1);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.doubleSlider.getName() + ": " + this.doubleSlider.getInputMin() + ", " + this.doubleSlider.getInputMax(), (float) ((int) ((float) (this.module.category.getX() + 4) * 2.0F)), (float) ((int) ((float) (this.module.category.getY() + this.moduleStartY + 3) * 2.0F)), -1);
         GL11.glPopMatrix();
     }
 
@@ -58,63 +58,62 @@ public class RangeSliderComponent implements Component {
         return 0;
     }
 
-    public void update(int mousePosX, int mousePosY){
+    public void update(int mousePosX, int mousePosY) {
         this.sliderStartY = this.module.category.getY() + this.moduleStartY;
         this.sliderStartX = this.module.category.getX() + boxMargin;
 
-        double mousePressedAt = Math.min(this.module.category.getWidth() - boxMargin*2 /*we make it so that the mouse press HAS to be inside the box*/, Math.max(0, mousePosX - this.sliderStartX));
-        this.blankWidth = (double)(this.module.category.getWidth() - boxMargin*2) //the bar width in pixels
+        double mousePressedAt = Math.min(this.module.category.getWidth() - boxMargin * 2 /*we make it so that the mouse press HAS to be inside the box*/, Math.max(0, mousePosX - this.sliderStartX));
+        this.blankWidth = (double) (this.module.category.getWidth() - boxMargin * 2) //the bar width in pixels
                 * (this.doubleSlider.getInputMin() - this.doubleSlider.getMin()) //bar width in int terms
                 / (this.doubleSlider.getMax() - this.doubleSlider.getMin());
-        this.barWidth = (double)(this.module.category.getWidth() - boxMargin*2) //the bar width of the lsider
+        this.barWidth = (double) (this.module.category.getWidth() - boxMargin * 2) //the bar width of the lsider
                 * (this.doubleSlider.getInputMax() - this.doubleSlider.getInputMin()) //bar width in int terms
                 / (this.doubleSlider.getMax() - this.doubleSlider.getMin());//divided by total width of grey bar
         //divided by total width of grey bar
 
 
+        //  if(this.module.category.inUse && this.mode==Helping.NONE){
+        if (this.mouseDown) {
 
-      //  if(this.module.category.inUse && this.mode==Helping.NONE){
-           if(this.mouseDown) {
+            if (mousePressedAt > blankWidth + barWidth / 2 || mode == Helping.MAX) {
+                //manipulate max slider
+                if (this.mode == Helping.NONE) this.mode = Helping.MAX;
+                if (this.mode == Helping.MAX) {
+                    if (mousePressedAt <= blankWidth) {
+                        this.doubleSlider.setValueMax(this.doubleSlider.getInputMin());
+                    } else {
+                        double n = r(mousePressedAt
+                                / (double) (this.module.category.getWidth() - boxMargin * 2)
+                                * (this.doubleSlider.getMax() - this.doubleSlider.getMin())
+                                + this.doubleSlider.getMin(), 2);
+                        this.doubleSlider.setValueMax(n);
+                    }
+                }
+                //this.mode = Helping.MAX;
+            }
 
-               if (mousePressedAt > blankWidth + barWidth / 2 || mode == Helping.MAX) {
-                   //manipulate max slider
-                   if (this.mode == Helping.NONE) this.mode = Helping.MAX;
-                   if(this.mode == Helping.MAX){
-                       if (mousePressedAt <= blankWidth) {
-                           this.doubleSlider.setValueMax(this.doubleSlider.getInputMin());
-                       } else {
-                           double n = r(mousePressedAt
-                                   / (double) (this.module.category.getWidth() - boxMargin * 2)
-                                   * (this.doubleSlider.getMax() - this.doubleSlider.getMin())
-                                   + this.doubleSlider.getMin(), 2);
-                           this.doubleSlider.setValueMax(n);
-                       }
-                   }
-                   //this.mode = Helping.MAX;
-               }
+            if (mousePressedAt < blankWidth + barWidth / 2 || mode == Helping.MIN) {
+                //manipulate min slider
+                if (this.mode == Helping.NONE) this.mode = Helping.MIN;
+                if (this.mode == Helping.MIN) {
+                    if (mousePressedAt == 0.0D) {
+                        this.doubleSlider.setValueMin(this.doubleSlider.getMin());
+                    } else if (mousePressedAt >= barWidth + blankWidth) {
+                        this.doubleSlider.setValueMin(this.doubleSlider.getMax());
+                    } else {
+                        double n = r(mousePressedAt
+                                / (double) (this.module.category.getWidth() - boxMargin * 2)
+                                * (this.doubleSlider.getMax() - this.doubleSlider.getMin())
+                                + this.doubleSlider.getMin(), 2);
+                        this.doubleSlider.setValueMin(n);
+                    }
+                }
+            }
+        } else {
+            if (mode != Helping.NONE) mode = Helping.NONE;
+        }
 
-               if (mousePressedAt < blankWidth + barWidth / 2 || mode == Helping.MIN) {
-                   //manipulate min slider
-                   if (this.mode == Helping.NONE) this.mode = Helping.MIN;
-                   if(this.mode == Helping.MIN) {
-                       if (mousePressedAt == 0.0D) {
-                           this.doubleSlider.setValueMin(this.doubleSlider.getMin());
-                       } else if(mousePressedAt >= barWidth + blankWidth){
-                           this.doubleSlider.setValueMin(this.doubleSlider.getMax());
-                       }else {
-                           double n = r(mousePressedAt
-                                   / (double) (this.module.category.getWidth() - boxMargin*2)
-                                   * (this.doubleSlider.getMax() - this.doubleSlider.getMin())
-                                   + this.doubleSlider.getMin(), 2);
-                           this.doubleSlider.setValueMin(n);
-                       }
-                   }
-               }
-           } else {
-               if(mode != Helping.NONE) mode = Helping.NONE;
-           }
-
-       // }
+        // }
 
     }
 

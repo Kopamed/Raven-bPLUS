@@ -44,7 +44,7 @@ public class ChatLogger extends Module {
 
     @Subscribe
     public void onMessageRecieved(ForgeEvent fe) {
-        if(fe.getEvent() instanceof ClientChatReceivedEvent) {
+        if (fe.getEvent() instanceof ClientChatReceivedEvent) {
             try (FileWriter fw = new FileWriter(this.chatLog.getPath(), true);
                  BufferedWriter bw = new BufferedWriter(fw);
                  PrintWriter out = new PrintWriter(bw)) {

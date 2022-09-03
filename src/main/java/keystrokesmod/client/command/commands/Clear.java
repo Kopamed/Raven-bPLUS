@@ -5,7 +5,7 @@ import keystrokesmod.client.command.Command;
 
 public class Clear extends Command {
     public Clear() {
-        super("clear", "Clears the terminal", 0,0, new String[] {}, new String[] {"l", "clr"});
+        super("clear", "Clears the terminal", 0, 0, new String[]{}, new String[]{"l", "clr"});
     }
 
     @Override

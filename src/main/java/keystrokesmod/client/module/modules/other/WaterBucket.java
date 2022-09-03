@@ -18,93 +18,93 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 public class WaterBucket extends Module {
-   public static DescriptionSetting moduleDesc;
-   private boolean handling;
+    public static DescriptionSetting moduleDesc;
+    private boolean handling;
 
-   public WaterBucket() {
-      super("Water bucket", ModuleCategory.other);
-      this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy"));
-      this.registerSetting(moduleDesc = new DescriptionSetting("Disabled in the Nether"));
-   }
+    public WaterBucket() {
+        super("Water bucket", ModuleCategory.other);
+        this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy"));
+        this.registerSetting(moduleDesc = new DescriptionSetting("Disabled in the Nether"));
+    }
 
-   @Override
-   public boolean canBeEnabled() {
-      return !DimensionHelper.isPlayerInNether();
-   }
+    @Override
+    public boolean canBeEnabled() {
+        return !DimensionHelper.isPlayerInNether();
+    }
 
-   @SubscribeEvent
-   public void onTick(ClientTickEvent ev) {
-      if (ev.phase != Phase.END && Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
-         if (DimensionHelper.isPlayerInNether()) this.disable();
+    @SubscribeEvent
+    public void onTick(ClientTickEvent ev) {
+        if (ev.phase != Phase.END && Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
+            if (DimensionHelper.isPlayerInNether()) this.disable();
 
-         if (this.inPosition() && this.holdWaterBucket()) {
-            this.handling = true;
-         }
-
-         if (this.handling) {
-            this.mlg();
-            if (mc.thePlayer.onGround || mc.thePlayer.motionY > 0.0D) {
-               this.reset();
+            if (this.inPosition() && this.holdWaterBucket()) {
+                this.handling = true;
             }
-         }
 
-      }
-   }
-
-   private boolean inPosition() {
-      if (mc.thePlayer.motionY < -0.6D && !mc.thePlayer.onGround && !mc.thePlayer.capabilities.isFlying && !mc.thePlayer.capabilities.isCreativeMode && !this.handling) {
-         BlockPos playerPos = mc.thePlayer.getPosition();
-
-         for(int i = 1; i < 3; ++i) {
-            BlockPos blockPos = playerPos.down(i);
-            Block block = mc.theWorld.getBlockState(blockPos).getBlock();
-            if (block.isBlockSolid(mc.theWorld, blockPos, EnumFacing.UP)) {
-               return false;
+            if (this.handling) {
+                this.mlg();
+                if (mc.thePlayer.onGround || mc.thePlayer.motionY > 0.0D) {
+                    this.reset();
+                }
             }
-         }
 
-         return true;
-      } else {
-         return false;
-      }
-   }
+        }
+    }
 
-   private boolean holdWaterBucket() {
-      if (this.containsItem(mc.thePlayer.getHeldItem(), Items.water_bucket)) {
-         return true;
-      } else {
-         for(int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
-            if (this.containsItem(mc.thePlayer.inventory.mainInventory[i], Items.water_bucket)) {
-               mc.thePlayer.inventory.currentItem = i;
-               return true;
+    private boolean inPosition() {
+        if (mc.thePlayer.motionY < -0.6D && !mc.thePlayer.onGround && !mc.thePlayer.capabilities.isFlying && !mc.thePlayer.capabilities.isCreativeMode && !this.handling) {
+            BlockPos playerPos = mc.thePlayer.getPosition();
+
+            for (int i = 1; i < 3; ++i) {
+                BlockPos blockPos = playerPos.down(i);
+                Block block = mc.theWorld.getBlockState(blockPos).getBlock();
+                if (block.isBlockSolid(mc.theWorld, blockPos, EnumFacing.UP)) {
+                    return false;
+                }
             }
-         }
 
-         return false;
-      }
-   }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-   private void mlg() {
-      ItemStack heldItem = mc.thePlayer.getHeldItem();
-      if (this.containsItem(heldItem, Items.water_bucket) && mc.thePlayer.rotationPitch >= 70.0F) {
-         MovingObjectPosition object = mc.objectMouseOver;
-         if (object.typeOfHit == MovingObjectType.BLOCK && object.sideHit == EnumFacing.UP) {
+    private boolean holdWaterBucket() {
+        if (this.containsItem(mc.thePlayer.getHeldItem(), Items.water_bucket)) {
+            return true;
+        } else {
+            for (int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
+                if (this.containsItem(mc.thePlayer.inventory.mainInventory[i], Items.water_bucket)) {
+                    mc.thePlayer.inventory.currentItem = i;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    private void mlg() {
+        ItemStack heldItem = mc.thePlayer.getHeldItem();
+        if (this.containsItem(heldItem, Items.water_bucket) && mc.thePlayer.rotationPitch >= 70.0F) {
+            MovingObjectPosition object = mc.objectMouseOver;
+            if (object.typeOfHit == MovingObjectType.BLOCK && object.sideHit == EnumFacing.UP) {
+                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, heldItem);
+            }
+        }
+
+    }
+
+    private void reset() {
+        ItemStack heldItem = mc.thePlayer.getHeldItem();
+        if (this.containsItem(heldItem, Items.bucket)) {
             mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, heldItem);
-         }
-      }
+        }
 
-   }
+        this.handling = false;
+    }
 
-   private void reset() {
-      ItemStack heldItem = mc.thePlayer.getHeldItem();
-      if (this.containsItem(heldItem, Items.bucket)) {
-         mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, heldItem);
-      }
-
-      this.handling = false;
-   }
-
-   private boolean containsItem(ItemStack itemStack, Item item) {
-      return itemStack != null && itemStack.getItem() == item;
-   }
+    private boolean containsItem(ItemStack itemStack, Item item) {
+        return itemStack != null && itemStack.getItem() == item;
+    }
 }

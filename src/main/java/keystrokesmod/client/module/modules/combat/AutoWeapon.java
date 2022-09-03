@@ -13,7 +13,7 @@ public class AutoWeapon extends Module {
     private boolean onWeapon;
     private int prevSlot;
 
-    public AutoWeapon(){
+    public AutoWeapon() {
         super("AutoWeapon", ModuleCategory.combat);
 
         this.registerSetting(onlyWhenHoldingDown = new TickSetting("Only when holding lmb", true));
@@ -21,29 +21,29 @@ public class AutoWeapon extends Module {
     }
 
     @Subscribe
-    public void onRender2D(Render2DEvent ev){
-        if(!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
+    public void onRender2D(Render2DEvent ev) {
+        if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
 
-        if(mc.objectMouseOver==null || mc.objectMouseOver.entityHit==null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))){
-            if(onWeapon){
+        if (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))) {
+            if (onWeapon) {
                 onWeapon = false;
-                if(goBackToPrevSlot.isToggled()){
+                if (goBackToPrevSlot.isToggled()) {
                     mc.thePlayer.inventory.currentItem = prevSlot;
                 }
             }
-        } else{
-            if(onlyWhenHoldingDown.isToggled()){
-                if(!Mouse.isButtonDown(0)) return;
+        } else {
+            if (onlyWhenHoldingDown.isToggled()) {
+                if (!Mouse.isButtonDown(0)) return;
             }
 
-            if(!onWeapon){
+            if (!onWeapon) {
                 prevSlot = mc.thePlayer.inventory.currentItem;
                 onWeapon = true;
 
                 int maxDamageSlot = Utils.Player.getMaxDamageSlot();
 
-                if(maxDamageSlot > 0 && Utils.Player.getSlotDamage(maxDamageSlot) > Utils.Player.getSlotDamage(mc.thePlayer.inventory.currentItem)){
+                if (maxDamageSlot > 0 && Utils.Player.getSlotDamage(maxDamageSlot) > Utils.Player.getSlotDamage(mc.thePlayer.inventory.currentItem)) {
                     mc.thePlayer.inventory.currentItem = maxDamageSlot;
                 }
             }

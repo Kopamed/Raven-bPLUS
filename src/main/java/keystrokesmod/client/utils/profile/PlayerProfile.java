@@ -16,20 +16,20 @@ public class PlayerProfile {
     public String uuid;
     private final Utils.Profiles.DuelsStatsMode statsMode;
 
-    public PlayerProfile(UUID uuid, Utils.Profiles.DuelsStatsMode mode){
+    public PlayerProfile(UUID uuid, Utils.Profiles.DuelsStatsMode mode) {
         this.uuid = uuid.uuid;
         this.statsMode = mode;
     }
 
-    public PlayerProfile(String name, Utils.Profiles.DuelsStatsMode mode){
+    public PlayerProfile(String name, Utils.Profiles.DuelsStatsMode mode) {
         this.inGameName = name;
         this.statsMode = mode;
     }
 
-    public void populateStats(){
-        if(uuid == null){
+    public void populateStats() {
+        if (uuid == null) {
             this.uuid = Utils.Profiles.getUUIDFromName(inGameName);
-            if(uuid.isEmpty()){
+            if (uuid.isEmpty()) {
                 this.isPlayer = false;
                 return;
             }
@@ -50,7 +50,7 @@ public class PlayerProfile {
                 return;
             }
 
-            switch(statsMode) {
+            switch (statsMode) {
                 case OVERALL:
                     this.wins = getValueAsInt(d, "wins");
                     this.losses = getValueAsInt(d, "losses");
