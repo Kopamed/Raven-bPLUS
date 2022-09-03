@@ -6,7 +6,8 @@
     "mixins": [
         "MixinEntity",
         "MixinEntityPlayer",
-        "MixinFontRenderer"
+        "MixinFontRenderer",
+        "MixinNetworkManager"
     ],
     "client": [
         "MixinEntityPlayerSP",
