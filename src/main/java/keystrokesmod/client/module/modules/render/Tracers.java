@@ -58,7 +58,7 @@ public class Tracers extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+        if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (Utils.Player.isPlayerInGame()) {
                 int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
                 Iterator var3;

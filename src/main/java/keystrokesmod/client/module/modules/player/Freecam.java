@@ -150,13 +150,13 @@ public class Freecam extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+        if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (Utils.Player.isPlayerInGame()) {
                 mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
                 Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
                 Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
             }
-        } else if(fe.getEvent() instanceof MouseEvent) {
+        } else if (fe.getEvent() instanceof MouseEvent) {
             MouseEvent e = ((MouseEvent) fe.getEvent());
 
             if (Utils.Player.isPlayerInGame() && e.button != -1) {

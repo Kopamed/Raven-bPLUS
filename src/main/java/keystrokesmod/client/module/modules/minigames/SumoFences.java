@@ -72,7 +72,7 @@ public class SumoFences extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof MouseEvent) {
+        if (fe.getEvent() instanceof MouseEvent) {
             MouseEvent e = ((MouseEvent) fe.getEvent());
 
             if (e.buttonstate && (e.button == 0 || e.button == 1) && Utils.Player.isPlayerInGame() && this.is()) {

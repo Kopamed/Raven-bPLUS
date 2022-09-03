@@ -21,6 +21,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -122,7 +123,7 @@ public class BridgeInfo extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof ClientChatReceivedEvent) {
+        if (fe.getEvent() instanceof ClientChatReceivedEvent) {
             ClientChatReceivedEvent c = ((ClientChatReceivedEvent) fe.getEvent());
 
             if (Utils.Player.isPlayerInGame()) {
@@ -142,7 +143,7 @@ public class BridgeInfo extends Module {
                     }
                 }
             }
-        } else if(fe.getEvent() instanceof EntityJoinWorldEvent) {
+        } else if (fe.getEvent() instanceof EntityJoinWorldEvent) {
             if (((EntityJoinWorldEvent) fe.getEvent()).entity == mc.thePlayer) {
                 this.rv();
             }

@@ -52,12 +52,12 @@ public class BedwarsOverlay extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof ClientChatReceivedEvent)
-        if (Utils.Player.isPlayerInGame()) {
-            if (Utils.Java.str(((ClientChatReceivedEvent) fe.getEvent()).message.getUnformattedText()).startsWith("Sending you to")) {
-                playerStats.clear();
+        if (fe.getEvent() instanceof ClientChatReceivedEvent)
+            if (Utils.Player.isPlayerInGame()) {
+                if (Utils.Java.str(((ClientChatReceivedEvent) fe.getEvent()).message.getUnformattedText()).startsWith("Sending you to")) {
+                    playerStats.clear();
+                }
             }
-        }
     }
 
     @Subscribe

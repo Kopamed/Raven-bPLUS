@@ -36,7 +36,7 @@ public class MurderMystery extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+        if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (Utils.Player.isPlayerInGame()) {
                 PlayerESP p = (PlayerESP) Raven.moduleManager.getModuleByName("PlayerESP");
                 assert p != null;

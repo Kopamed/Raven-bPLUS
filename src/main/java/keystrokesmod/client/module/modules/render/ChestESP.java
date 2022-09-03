@@ -34,7 +34,7 @@ public class ChestESP extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+        if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (Utils.Player.isPlayerInGame()) {
                 int rgb = d.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : (new Color((int) a.getInput(), (int) b.getInput(), (int) c.getInput())).getRGB();
                 Iterator var3 = mc.theWorld.loadedTileEntityList.iterator();

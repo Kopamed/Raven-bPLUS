@@ -70,7 +70,7 @@ public class AutoPlace extends Module {
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
-        if(fe.getEvent() instanceof DrawBlockHighlightEvent) {
+        if (fe.getEvent() instanceof DrawBlockHighlightEvent) {
             if (Utils.Player.isPlayerInGame()) {
                 if (mc.currentScreen == null && !mc.thePlayer.capabilities.isFlying) {
                     ItemStack i = mc.thePlayer.getHeldItem();
