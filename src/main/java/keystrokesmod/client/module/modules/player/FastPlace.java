@@ -67,7 +67,7 @@ public class FastPlace extends Module {
                         }
                     } catch (IllegalAccessException | IndexOutOfBoundsException ignored) {
                     }
-                } else if(item != null && (item.getItem() instanceof ItemSnowball || item.getItem() instanceof ItemEgg) && projSeparate.isToggled()) {
+                } else if (item != null && (item.getItem() instanceof ItemSnowball || item.getItem() instanceof ItemEgg) && projSeparate.isToggled()) {
                     try {
                         int c = (int) projSlider.getInput();
                         if (c == 0) {

@@ -90,95 +90,94 @@ public class GuiModule extends Module {
         this.disable();
     }
 
-	public enum Preset {
-		IcyBlue(
-				true, false, false, true, 100,
-				CNColor.STATIC,
-				new Color(0,0,0),
-				new Color(0,0,0),
-				new Color(0,0,0),
-				new Color(0,89,218),
-				new Color(151,236,245),
-				new Color(255,245,224),
-				new Color(10,0,36),
-				new Color(0,0,160),
-				new Color(3,200,218),
-				new Color(50,50,50)
-				),
-		Seaweed(
-				false, false, false, true, 100,
-				CNColor.STATIC,
-				new Color(0,0,0),
-				new Color(0,0,0),
-				new Color(50,50,50),
-				new Color(0,0,0),
-				new Color(0,0,0),
-				new Color(85,186,131),
-				new Color(0,0,0),
-				new Color(0,0,0),
-				new Color(55,66,58),
-				new Color(0,0,0)
-				),
-		Vape(
-				true, false, false, true, 100,
-				CNColor.STATIC,
-				new Color(255,255,255),
-				new Color(27,25,26),
-				new Color(27,25,26),
-				new Color(59,132,107),
-				new Color(59,132,107),
-				new Color(255,255,255),
-				new Color(27,25,26),
-				new Color(27,25,26),
-				new Color(255,255,255),
-				new Color(27,25,26)
-				),
-		Vape2(
-				true, false, true, true, 100,
-				CNColor.STATIC,
-				new Color(255,255,255),
-				new Color(27,25,26),
-				new Color(27,25,26),
-				new Color(59,132,107),
-				new Color(59,132,107),
-				new Color(250,250,250),
-				new Color(27,25,26),
-				new Color(27,25,26),
-				new Color(255,255,255),
-				new Color(27,25,26)
-				);;
+    public enum Preset {
+        IcyBlue(
+                true, false, false, true, 100,
+                CNColor.STATIC,
+                new Color(0, 0, 0),
+                new Color(0, 0, 0),
+                new Color(0, 0, 0),
+                new Color(0, 89, 218),
+                new Color(151, 236, 245),
+                new Color(255, 245, 224),
+                new Color(10, 0, 36),
+                new Color(0, 0, 160),
+                new Color(3, 200, 218),
+                new Color(50, 50, 50)
+        ),
+        Seaweed(
+                false, false, false, true, 100,
+                CNColor.STATIC,
+                new Color(0, 0, 0),
+                new Color(0, 0, 0),
+                new Color(50, 50, 50),
+                new Color(0, 0, 0),
+                new Color(0, 0, 0),
+                new Color(85, 186, 131),
+                new Color(0, 0, 0),
+                new Color(0, 0, 0),
+                new Color(55, 66, 58),
+                new Color(0, 0, 0)
+        ),
+        Vape(
+                true, false, false, true, 100,
+                CNColor.STATIC,
+                new Color(255, 255, 255),
+                new Color(27, 25, 26),
+                new Color(27, 25, 26),
+                new Color(59, 132, 107),
+                new Color(59, 132, 107),
+                new Color(255, 255, 255),
+                new Color(27, 25, 26),
+                new Color(27, 25, 26),
+                new Color(255, 255, 255),
+                new Color(27, 25, 26)
+        ),
+        Vape2(
+                true, false, true, true, 100,
+                CNColor.STATIC,
+                new Color(255, 255, 255),
+                new Color(27, 25, 26),
+                new Color(27, 25, 26),
+                new Color(59, 132, 107),
+                new Color(59, 132, 107),
+                new Color(250, 250, 250),
+                new Color(27, 25, 26),
+                new Color(27, 25, 26),
+                new Color(255, 255, 255),
+                new Color(27, 25, 26)
+        );;
 
 
-		public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground;
-		public int backgroundOpacity;
-		public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
-		public CNColor cnColor;
+        public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground;
+        public int backgroundOpacity;
+        public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
+        public CNColor cnColor;
 
-		private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont, boolean categoryBackground, int backgroundOpacity,
-				CNColor cnColor,
-				Color categoryNameRGB, Color settingBackgroundRGB, Color categoryBackgroundRGB, Color enabledTopRGB,
-				Color enabledBottomRGB, Color enabledTextRGB, Color disabledTopRGB, Color disabledBottomRGB,
-				Color disabledTextRGB, Color backgroundRGB) {
-			this.backgroundOpacity = backgroundOpacity;
-			this.cnColor = cnColor;
-			this.showGradientEnabled = showGradientEnabled;
-			this.showGradientDisabled = showGradientDisabled;
-			this.useCustomFont = useCustomFont;
-			this.categoryNameRGB = categoryNameRGB;
-			this.settingBackgroundRGB = settingBackgroundRGB;
-			this.categoryBackgroundRGB = categoryBackgroundRGB;
-			this.enabledTopRGB = enabledTopRGB;
-			this.enabledBottomRGB = enabledBottomRGB;
-			this.enabledTextRGB = enabledTextRGB;
-			this.disabledTopRGB = disabledTopRGB;
-			this.disabledBottomRGB = disabledBottomRGB;
-			this.disabledTextRGB = disabledTextRGB;
-			this.backgroundRGB = backgroundRGB;
-		}
+        private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont, boolean categoryBackground, int backgroundOpacity,
+                       CNColor cnColor,
+                       Color categoryNameRGB, Color settingBackgroundRGB, Color categoryBackgroundRGB, Color enabledTopRGB,
+                       Color enabledBottomRGB, Color enabledTextRGB, Color disabledTopRGB, Color disabledBottomRGB,
+                       Color disabledTextRGB, Color backgroundRGB) {
+            this.backgroundOpacity = backgroundOpacity;
+            this.cnColor = cnColor;
+            this.showGradientEnabled = showGradientEnabled;
+            this.showGradientDisabled = showGradientDisabled;
+            this.useCustomFont = useCustomFont;
+            this.categoryNameRGB = categoryNameRGB;
+            this.settingBackgroundRGB = settingBackgroundRGB;
+            this.categoryBackgroundRGB = categoryBackgroundRGB;
+            this.enabledTopRGB = enabledTopRGB;
+            this.enabledBottomRGB = enabledBottomRGB;
+            this.enabledTextRGB = enabledTextRGB;
+            this.disabledTopRGB = disabledTopRGB;
+            this.disabledBottomRGB = disabledBottomRGB;
+            this.disabledTextRGB = disabledTextRGB;
+            this.backgroundRGB = backgroundRGB;
+        }
 
 
-
-	}
+    }
 
     public enum CNColor {
         RAINBOW, STATIC

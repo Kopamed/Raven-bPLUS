@@ -2,7 +2,6 @@ package keystrokesmod.client.module.modules.other;
 
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.PacketEvent;
-import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -14,7 +13,6 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 public class Disabler extends Module {
     public static DescriptionSetting warning, mmcSafeWarning1, mmcSafeWarning2;
@@ -47,13 +45,13 @@ public class Disabler extends Module {
     public void onPacket(PacketEvent e) {
         switch ((Mode) mode.getMode()) {
             case MMCSafe:
-                if(e.isOutgoing() && !mmc) {
-                    if(e.getPacket() instanceof C00PacketKeepAlive) {
+                if (e.isOutgoing() && !mmc) {
+                    if (e.getPacket() instanceof C00PacketKeepAlive) {
                         mmcPackets.add(e.getPacket());
                         e.cancel();
                     }
 
-                    if(e.getPacket() instanceof C0FPacketConfirmTransaction) {
+                    if (e.getPacket() instanceof C0FPacketConfirmTransaction) {
                         mmcPackets.add(e.getPacket());
                         e.cancel();
                     }

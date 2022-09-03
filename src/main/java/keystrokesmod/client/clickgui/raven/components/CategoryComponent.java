@@ -8,7 +8,6 @@ import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -126,41 +125,41 @@ public class CategoryComponent {
                 moduleRenderManager = (Component) moduleInCategoryIterator.next();
             }
 
-			//drawing the background for every module in the category
-			Color bgColor;
-			if(GuiModule.usePreset.isToggled()) {
-				Preset preset = (Preset) GuiModule.preset.getMode();
-				bgColor = moduleOpened? (new Color(preset.settingBackgroundRGB.getRed(), preset.settingBackgroundRGB.getGreen(), preset.settingBackgroundRGB.getBlue(),
-						(int) (preset.backgroundOpacity/100 * 255))) : (new Color(preset.backgroundRGB.getRed(), preset.backgroundRGB.getGreen(),
-								preset.backgroundRGB.getBlue(), (int) (preset.backgroundOpacity/100 * 255)));
-			} else {
-				bgColor = (moduleOpened? (new Color(GuiModule.settingBackgroundRGB.getRed(), GuiModule.settingBackgroundRGB.getGreen(), GuiModule.settingBackgroundRGB.getBlue(),
-						(int) (GuiModule.backgroundOpacity.getInput()/100 * 255))) : (new Color(GuiModule.backgroundRGB.getRed(), GuiModule.backgroundRGB.getGreen(),
-						GuiModule.backgroundRGB.getBlue(), (int) (GuiModule.backgroundOpacity.getInput()/100 * 255))));
-			}
+            //drawing the background for every module in the category
+            Color bgColor;
+            if (GuiModule.usePreset.isToggled()) {
+                Preset preset = (Preset) GuiModule.preset.getMode();
+                bgColor = moduleOpened ? (new Color(preset.settingBackgroundRGB.getRed(), preset.settingBackgroundRGB.getGreen(), preset.settingBackgroundRGB.getBlue(),
+                        (int) (preset.backgroundOpacity / 100 * 255))) : (new Color(preset.backgroundRGB.getRed(), preset.backgroundRGB.getGreen(),
+                        preset.backgroundRGB.getBlue(), (int) (preset.backgroundOpacity / 100 * 255)));
+            } else {
+                bgColor = (moduleOpened ? (new Color(GuiModule.settingBackgroundRGB.getRed(), GuiModule.settingBackgroundRGB.getGreen(), GuiModule.settingBackgroundRGB.getBlue(),
+                        (int) (GuiModule.backgroundOpacity.getInput() / 100 * 255))) : (new Color(GuiModule.backgroundRGB.getRed(), GuiModule.backgroundRGB.getGreen(),
+                        GuiModule.backgroundRGB.getBlue(), (int) (GuiModule.backgroundOpacity.getInput() / 100 * 255))));
+            }
 
-			net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
-			// 1000000 character lines make me want to kill myself
-		}
+            net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
+            // 1000000 character lines make me want to kill myself
+        }
 
-		if(GuiModule.categoryBackground.isToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
-			if(GuiModule.usePreset.isToggled()) {
-				Preset preset = (Preset) GuiModule.preset.getMode();
-				Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-						preset.categoryBackgroundRGB.getRGB());
-				GlStateManager.resetColor();
-			} else {
-				Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-						GuiModule.categoryBackgroundRGB.getRGB());
-				GlStateManager.resetColor();
-			}
+        if (GuiModule.categoryBackground.isToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
+            if (GuiModule.usePreset.isToggled()) {
+                Preset preset = (Preset) GuiModule.preset.getMode();
+                Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
+                        preset.categoryBackgroundRGB.getRGB());
+                GlStateManager.resetColor();
+            } else {
+                Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
+                        GuiModule.categoryBackgroundRGB.getRGB());
+                GlStateManager.resetColor();
+            }
 
-		}
+        }
 
-		// category name
-		int colorCN;
-		Preset preset = (Preset) GuiModule.preset.getMode();
-		switch (GuiModule.usePreset.isToggled() ? (GuiModule.CNColor) preset.cnColor : (GuiModule.CNColor) GuiModule.cnColor.getMode()) {
+        // category name
+        int colorCN;
+        Preset preset = (Preset) GuiModule.preset.getMode();
+        switch (GuiModule.usePreset.isToggled() ? (GuiModule.CNColor) preset.cnColor : (GuiModule.CNColor) GuiModule.cnColor.getMode()) {
 
             case STATIC:
                 colorCN = GuiModule.categoryNameRGB.getRGB();
@@ -181,10 +180,10 @@ public class CategoryComponent {
             mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2), (float) (this.y + 4), colorCN, false);
         }
 
-		if (!this.n4m) {
-			mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float)(this.x + marginX), (float)((double)this.y + marginY), Color.white.getRGB(), false);
-			if (this.categoryOpened && !this.getModules().isEmpty()) {
-				Iterator var5 = this.getModules().iterator();
+        if (!this.n4m) {
+            mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float) (this.x + marginX), (float) ((double) this.y + marginY), Color.white.getRGB(), false);
+            if (this.categoryOpened && !this.getModules().isEmpty()) {
+                Iterator var5 = this.getModules().iterator();
 
                 while (var5.hasNext()) {
                     Component c2 = (Component) var5.next();
