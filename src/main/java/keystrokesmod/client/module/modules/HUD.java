@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.FakeHud;
@@ -14,9 +16,6 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import org.lwjgl.opengl.GL11;
 
 import javax.imageio.ImageIO;
@@ -108,9 +107,9 @@ public class HUD extends Module {
         }
     }
 
-    @SubscribeEvent
-    public void a(RenderTickEvent ev) {
-        if (ev.phase == Phase.END && Utils.Player.isPlayerInGame()) {
+    @Subscribe
+    public void onRender2D(Render2DEvent ev) {
+        if (Utils.Player.isPlayerInGame()) {
             if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
                 return;
             }

@@ -1,6 +1,9 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonObject;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -12,8 +15,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashMap;
 
@@ -49,17 +50,18 @@ public class BedwarsOverlay extends Module {
         //marginTextX = 21;
     }
 
-    @SubscribeEvent
-    public void onChatMessageRecieved(ClientChatReceivedEvent event) {
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof ClientChatReceivedEvent)
         if (Utils.Player.isPlayerInGame()) {
-            if (Utils.Java.str(event.message.getUnformattedText()).startsWith("Sending you to")) {
+            if (Utils.Java.str(((ClientChatReceivedEvent) fe.getEvent()).message.getUnformattedText()).startsWith("Sending you to")) {
                 playerStats.clear();
             }
         }
     }
 
-    @SubscribeEvent
-    public void onRender(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onRender2D(Render2DEvent e) {
         if (!active) {
             return;
         }

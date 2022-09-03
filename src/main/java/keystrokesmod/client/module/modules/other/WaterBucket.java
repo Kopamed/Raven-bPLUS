@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.other;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.DimensionHelper;
@@ -13,9 +15,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 public class WaterBucket extends Module {
     public static DescriptionSetting moduleDesc;
@@ -32,9 +31,9 @@ public class WaterBucket extends Module {
         return !DimensionHelper.isPlayerInNether();
     }
 
-    @SubscribeEvent
-    public void onTick(ClientTickEvent ev) {
-        if (ev.phase != Phase.END && Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
+    @Subscribe
+    public void onTick(TickEvent ev) {
+        if (Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
             if (DimensionHelper.isPlayerInNether()) this.disable();
 
             if (this.inPosition() && this.holdWaterBucket()) {

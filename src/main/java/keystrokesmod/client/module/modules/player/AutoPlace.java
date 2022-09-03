@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -16,7 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 public class AutoPlace extends Module {
@@ -67,35 +68,37 @@ public class AutoPlace extends Module {
 
     }
 
-    @SubscribeEvent
-    public void bh(DrawBlockHighlightEvent ev) {
-        if (Utils.Player.isPlayerInGame()) {
-            if (mc.currentScreen == null && !mc.thePlayer.capabilities.isFlying) {
-                ItemStack i = mc.thePlayer.getHeldItem();
-                if (i != null && i.getItem() instanceof ItemBlock) {
-                    MovingObjectPosition m = mc.objectMouseOver;
-                    if (m != null && m.typeOfHit == MovingObjectType.BLOCK && ((m.sideHit != EnumFacing.UP && m.sideHit != EnumFacing.DOWN) || top.isToggled())) {
-                        if (this.lm != null && (double) this.f < c.getInput()) {
-                            ++this.f;
-                        } else {
-                            this.lm = m;
-                            BlockPos pos = m.getBlockPos();
-                            if (this.lp == null || pos.getX() != this.lp.getX() || pos.getY() != this.lp.getY() || pos.getZ() != this.lp.getZ()) {
-                                Block b = mc.theWorld.getBlockState(pos).getBlock();
-                                if (b != null && b != Blocks.air && !(b instanceof BlockLiquid)) {
-                                    if (!a.isToggled() || Mouse.isButtonDown(1)) {
-                                        long n = System.currentTimeMillis();
-                                        if (n - this.l >= 25L) {
-                                            this.l = n;
-                                            if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, i, pos, m.sideHit, m.hitVec)) {
-                                                Utils.Client.setMouseButtonState(1, true);
-                                                mc.thePlayer.swingItem();
-                                                mc.getItemRenderer().resetEquippedProgress();
-                                                Utils.Client.setMouseButtonState(1, false);
-                                                this.lp = pos;
-                                                this.f = 0;
-                                            }
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof DrawBlockHighlightEvent) {
+            if (Utils.Player.isPlayerInGame()) {
+                if (mc.currentScreen == null && !mc.thePlayer.capabilities.isFlying) {
+                    ItemStack i = mc.thePlayer.getHeldItem();
+                    if (i != null && i.getItem() instanceof ItemBlock) {
+                        MovingObjectPosition m = mc.objectMouseOver;
+                        if (m != null && m.typeOfHit == MovingObjectType.BLOCK && ((m.sideHit != EnumFacing.UP && m.sideHit != EnumFacing.DOWN) || top.isToggled())) {
+                            if (this.lm != null && (double) this.f < c.getInput()) {
+                                ++this.f;
+                            } else {
+                                this.lm = m;
+                                BlockPos pos = m.getBlockPos();
+                                if (this.lp == null || pos.getX() != this.lp.getX() || pos.getY() != this.lp.getY() || pos.getZ() != this.lp.getZ()) {
+                                    Block b = mc.theWorld.getBlockState(pos).getBlock();
+                                    if (b != null && b != Blocks.air && !(b instanceof BlockLiquid)) {
+                                        if (!a.isToggled() || Mouse.isButtonDown(1)) {
+                                            long n = System.currentTimeMillis();
+                                            if (n - this.l >= 25L) {
+                                                this.l = n;
+                                                if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, i, pos, m.sideHit, m.hitVec)) {
+                                                    Utils.Client.setMouseButtonState(1, true);
+                                                    mc.thePlayer.swingItem();
+                                                    mc.getItemRenderer().resetEquippedProgress();
+                                                    Utils.Client.setMouseButtonState(1, false);
+                                                    this.lp = pos;
+                                                    this.f = 0;
+                                                }
 
+                                            }
                                         }
                                     }
                                 }

@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.other;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -8,8 +10,6 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 import java.awt.*;
@@ -42,9 +42,10 @@ public class MiddleClick extends Module {
         pearlEvent = 4;
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent e) {
-        if (!Utils.Player.isPlayerInGame()) return;
+    @Subscribe
+    public void onTick(TickEvent e) {
+        if (!Utils.Player.isPlayerInGame())
+            return;
 
         if (pearlEvent < 4) {
             if (pearlEvent == 3) mc.thePlayer.inventory.currentItem = prevSlot;

@@ -1,5 +1,8 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -18,10 +21,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
-
 import java.awt.*;
 import java.io.IOException;
 
@@ -102,9 +101,9 @@ public class BridgeInfo extends Module {
         }
     }
 
-    @SubscribeEvent
-    public void a(RenderTickEvent ev) {
-        if (ev.phase == Phase.END && Utils.Player.isPlayerInGame() && this.ibd()) {
+    @Subscribe
+    public void onRender2D(Render2DEvent ev) {
+        if (Utils.Player.isPlayerInGame() && this.ibd()) {
             if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
                 return;
             }
@@ -121,34 +120,33 @@ public class BridgeInfo extends Module {
 
     }
 
-    @SubscribeEvent
-    public void o(ClientChatReceivedEvent c) {
-        if (Utils.Player.isPlayerInGame()) {
-            String s = Utils.Java.str(c.message.getUnformattedText());
-            if (s.startsWith(" ")) {
-                String qt = "First player to score 5 goals wins";
-                if (s.contains(qt)) {
-                    this.q = true;
-                } else if (this.q && s.contains("Opponent:")) {
-                    String n = s.split(":")[1].trim();
-                    if (n.contains("[")) {
-                        n = n.split("] ")[1];
-                    }
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof ClientChatReceivedEvent) {
+            ClientChatReceivedEvent c = ((ClientChatReceivedEvent) fe.getEvent());
 
-                    this.en = n;
-                    this.q = false;
+            if (Utils.Player.isPlayerInGame()) {
+                String s = Utils.Java.str(c.message.getUnformattedText());
+                if (s.startsWith(" ")) {
+                    String qt = "First player to score 5 goals wins";
+                    if (s.contains(qt)) {
+                        this.q = true;
+                    } else if (this.q && s.contains("Opponent:")) {
+                        String n = s.split(":")[1].trim();
+                        if (n.contains("[")) {
+                            n = n.split("] ")[1];
+                        }
+
+                        this.en = n;
+                        this.q = false;
+                    }
                 }
             }
+        } else if(fe.getEvent() instanceof EntityJoinWorldEvent) {
+            if (((EntityJoinWorldEvent) fe.getEvent()).entity == mc.thePlayer) {
+                this.rv();
+            }
         }
-
-    }
-
-    @SubscribeEvent
-    public void w(EntityJoinWorldEvent j) {
-        if (j.entity == mc.thePlayer) {
-            this.rv();
-        }
-
     }
 
     private boolean ibd() {

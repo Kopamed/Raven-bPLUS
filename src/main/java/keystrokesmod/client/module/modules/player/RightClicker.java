@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -14,9 +15,6 @@ import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.*;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.input.Mouse;
 
@@ -104,8 +102,8 @@ public class RightClicker extends Module {
         this.rightClickWaiting = false;
     }
 
-    @SubscribeEvent
-    public void onRenderTick(RenderTickEvent ev) {
+    @Subscribe
+    public void onRender2D() {
         if (!Utils.Client.currentScreenMinecraft() &&
                 !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
@@ -118,12 +116,12 @@ public class RightClicker extends Module {
         if (clickStyle.getMode() == ClickStyle.Raven) {
             ravenClick();
         } else if (clickStyle.getMode() == ClickStyle.SKid) {
-            skidClick(ev, null);
+            skidClick();
         }
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent ev) {
+    @Subscribe
+    public void onTick() {
         if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
@@ -135,11 +133,11 @@ public class RightClicker extends Module {
         if (clickStyle.getMode() == ClickStyle.Raven) {
             ravenClick();
         } else if (clickStyle.getMode() == ClickStyle.SKid) {
-            skidClick(null, ev);
+            skidClick();
         }
     }
 
-    private void skidClick(RenderTickEvent er, TickEvent.PlayerTickEvent e) {
+    private void skidClick() {
         if (!Utils.Player.isPlayerInGame())
             return;
 
@@ -358,7 +356,7 @@ public class RightClicker extends Module {
 
         try {
             this.playerMouseInput.invoke(guiScreen, mouseInGUIPosX, mouseInGUIPosY, 0);
-        } catch (IllegalAccessException | InvocationTargetException var5) {
+        } catch (IllegalAccessException | InvocationTargetException ignored) {
         }
 
     }

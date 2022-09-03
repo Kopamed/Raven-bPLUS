@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -7,7 +9,6 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -147,21 +148,20 @@ public class Freecam extends Module {
         }
     }
 
-    @SubscribeEvent
-    public void re(RenderWorldLastEvent e) {
-        if (Utils.Player.isPlayerInGame()) {
-            mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
-            Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
-            Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+            if (Utils.Player.isPlayerInGame()) {
+                mc.thePlayer.renderArmPitch = mc.thePlayer.prevRenderArmPitch = 700.0F;
+                Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 1, 0.0D, 0.0D, Color.green.getRGB(), false);
+                Utils.HUD.drawBoxAroundEntity(mc.thePlayer, 2, 0.0D, 0.0D, Color.green.getRGB(), false);
+            }
+        } else if(fe.getEvent() instanceof MouseEvent) {
+            MouseEvent e = ((MouseEvent) fe.getEvent());
+
+            if (Utils.Player.isPlayerInGame() && e.button != -1) {
+                e.setCanceled(true);
+            }
         }
-
-    }
-
-    @SubscribeEvent
-    public void m(MouseEvent e) {
-        if (Utils.Player.isPlayerInGame() && e.button != -1) {
-            e.setCanceled(true);
-        }
-
     }
 }

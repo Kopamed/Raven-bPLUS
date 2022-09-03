@@ -1,5 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -12,9 +15,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -63,8 +63,8 @@ public class SafeWalk extends Module {
         blockShowModeDesc.setDesc(Utils.md + BlockAmountInfo.values()[(int) blockShowMode.getInput() - 1]);
     }
 
-    @SubscribeEvent
-    public void p(PlayerTickEvent e) {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (!Utils.Client.currentScreenMinecraft())
             return;
 
@@ -145,50 +145,48 @@ public class SafeWalk extends Module {
         }
     }
 
-    @SubscribeEvent
-    public void r(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onRender2D(Render2DEvent e) {
         if (!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame()) return;
-        if (e.phase == TickEvent.Phase.END) {
-            if (mc.currentScreen == null) {
-                if (shouldBridge) {
-                    ScaledResolution res = new ScaledResolution(mc);
+        if (mc.currentScreen == null) {
+            if (shouldBridge) {
+                ScaledResolution res = new ScaledResolution(mc);
 
-                    int totalBlocks = 0;
-                    if (BlockAmountInfo.values()[(int) blockShowMode.getInput() - 1] == BlockAmountInfo.BLOCKS_IN_CURRENT_STACK) {
-                        totalBlocks = Utils.Player.getBlockAmountInCurrentStack(mc.thePlayer.inventory.currentItem);
-                    } else {
-                        for (int slot = 0; slot < 36; slot++) {
-                            totalBlocks += Utils.Player.getBlockAmountInCurrentStack(slot);
-                        }
+                int totalBlocks = 0;
+                if (BlockAmountInfo.values()[(int) blockShowMode.getInput() - 1] == BlockAmountInfo.BLOCKS_IN_CURRENT_STACK) {
+                    totalBlocks = Utils.Player.getBlockAmountInCurrentStack(mc.thePlayer.inventory.currentItem);
+                } else {
+                    for (int slot = 0; slot < 36; slot++) {
+                        totalBlocks += Utils.Player.getBlockAmountInCurrentStack(slot);
                     }
-
-                    if (totalBlocks <= 0) {
-                        return;
-                    }
-
-                    int rgb;
-                    if (totalBlocks < 16.0D) {
-                        rgb = Color.red.getRGB();
-                    } else if (totalBlocks < 32.0D) {
-                        rgb = Color.orange.getRGB();
-                    } else if (totalBlocks < 128.0D) {
-                        rgb = Color.yellow.getRGB();
-                    } else if (totalBlocks > 128.0D) {
-                        rgb = Color.green.getRGB();
-                    } else {
-                        rgb = Color.black.getRGB();
-                    }
-
-                    String t = totalBlocks + " blocks";
-                    int x = res.getScaledWidth() / 2 - mc.fontRendererObj.getStringWidth(t) / 2;
-                    int y;
-                    if (Raven.debugger) {
-                        y = res.getScaledHeight() / 2 + 17 + mc.fontRendererObj.FONT_HEIGHT;
-                    } else {
-                        y = res.getScaledHeight() / 2 + 15;
-                    }
-                    mc.fontRendererObj.drawString(t, (float) x, (float) y, rgb, false);
                 }
+
+                if (totalBlocks <= 0) {
+                    return;
+                }
+
+                int rgb;
+                if (totalBlocks < 16.0D) {
+                    rgb = Color.red.getRGB();
+                } else if (totalBlocks < 32.0D) {
+                    rgb = Color.orange.getRGB();
+                } else if (totalBlocks < 128.0D) {
+                    rgb = Color.yellow.getRGB();
+                } else if (totalBlocks > 128.0D) {
+                    rgb = Color.green.getRGB();
+                } else {
+                    rgb = Color.black.getRGB();
+                }
+
+                String t = totalBlocks + " blocks";
+                int x = res.getScaledWidth() / 2 - mc.fontRendererObj.getStringWidth(t) / 2;
+                int y;
+                if (Raven.debugger) {
+                    y = res.getScaledHeight() / 2 + 17 + mc.fontRendererObj.FONT_HEIGHT;
+                } else {
+                    y = res.getScaledHeight() / 2 + 15;
+                }
+                mc.fontRendererObj.drawString(t, (float) x, (float) y, rgb, false);
             }
         }
     }

@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.render;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
@@ -8,7 +10,6 @@ import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -55,31 +56,34 @@ public class Tracers extends Module {
         this.rgb_c = rgb.getRGB();
     }
 
-    @SubscribeEvent
-    public void o(RenderWorldLastEvent ev) {
-        if (Utils.Player.isPlayerInGame()) {
-            int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
-            Iterator var3;
-            var3 = mc.theWorld.playerEntities.iterator();
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+            if (Utils.Player.isPlayerInGame()) {
+                int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
+                Iterator var3;
+                var3 = mc.theWorld.playerEntities.iterator();
 
-            while (true) {
-                EntityPlayer en;
-                do {
+                while (true) {
+                    EntityPlayer en;
                     do {
                         do {
-                            if (!var3.hasNext()) {
-                                return;
-                            }
+                            do {
+                                if (!var3.hasNext()) {
+                                    return;
+                                }
 
-                            en = (EntityPlayer) var3.next();
-                        } while (en == mc.thePlayer);
-                    } while (en.deathTime != 0);
-                } while (!a.isToggled() && en.isInvisible());
+                                en = (EntityPlayer) var3.next();
+                            } while (en == mc.thePlayer);
+                        } while (en.deathTime != 0);
+                    } while (!a.isToggled() && en.isInvisible());
 
-                if (!AntiBot.bot(en)) {
-                    Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(Tracers.rgb.getRed() + ((Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10 > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10)), Tracers.rgb.getGreen(), Tracers.rgb.getGreen()).getRGB() : rgb, (float) f.getInput());
+                    if (!AntiBot.bot(en)) {
+                        Utils.HUD.dtl(en, o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25 ? new Color(Tracers.rgb.getRed() + ((Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10 > 255 ? 255 : Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10)), Tracers.rgb.getGreen(), Tracers.rgb.getGreen()).getRGB() : rgb, (float) f.getInput());
+                    }
                 }
             }
         }
     }
+
 }

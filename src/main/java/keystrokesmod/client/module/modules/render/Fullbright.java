@@ -1,10 +1,10 @@
 package keystrokesmod.client.module.modules.render;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class Fullbright extends Module {
     private float defaultGamma;
@@ -30,8 +30,8 @@ public class Fullbright extends Module {
         mc.gameSettings.gammaSetting = this.defaultGamma;
     }
 
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (!Utils.Player.isPlayerInGame()) {
             onDisable();
             return;

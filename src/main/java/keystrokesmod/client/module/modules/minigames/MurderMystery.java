@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.render.PlayerESP;
@@ -12,7 +14,6 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,74 +34,76 @@ public class MurderMystery extends Module {
         this.registerSetting(announceMurder = new TickSetting("Announce murderer", false));
     }
 
-    @SubscribeEvent
-    public void o(RenderWorldLastEvent e) {
-        if (Utils.Player.isPlayerInGame()) {
-            PlayerESP p = (PlayerESP) Raven.moduleManager.getModuleByName("PlayerESP");
-            assert p != null;
-            if (p.isEnabled()) {
-                p.disable();
-            }
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof RenderWorldLastEvent) {
+            if (Utils.Player.isPlayerInGame()) {
+                PlayerESP p = (PlayerESP) Raven.moduleManager.getModuleByName("PlayerESP");
+                assert p != null;
+                if (p.isEnabled()) {
+                    p.disable();
+                }
 
-            if (!this.inMMGame()) {
-                this.c();
-            } else {
-                Iterator<EntityPlayer> entityPlayerIterator = mc.theWorld.playerEntities.iterator();
+                if (!this.inMMGame()) {
+                    this.c();
+                } else {
+                    Iterator<EntityPlayer> entityPlayerIterator = mc.theWorld.playerEntities.iterator();
 
-                while (true) {
-                    EntityPlayer entity;
-                    do {
+                    while (true) {
+                        EntityPlayer entity;
                         do {
                             do {
-                                if (!entityPlayerIterator.hasNext()) {
-                                    return;
+                                do {
+                                    if (!entityPlayerIterator.hasNext()) {
+                                        return;
+                                    }
+
+                                    entity = entityPlayerIterator.next();
+                                } while (entity == mc.thePlayer);
+                            } while (entity.isInvisible());
+                        } while (AntiBot.bot(entity));
+                        String c4 = "&7[&cALERT&7]";
+                        if (entity.getHeldItem() != null && entity.getHeldItem().hasDisplayName()) {
+                            Item i = entity.getHeldItem().getItem();
+                            if (i instanceof ItemSword || i instanceof ItemAxe || entity.getHeldItem().getDisplayName().contains("Knife")) {
+
+                                if (!mur.contains(entity)) {
+                                    mur.add(entity);
+                                    String c6 = "is a murderer!";
+                                    if (alertMurderers.isToggled()) {
+                                        String c5 = "note.pling";
+                                        mc.thePlayer.playSound(c5, 1.0F, 1.0F);
+                                        Utils.Player.sendMessageToSelf(c4 + " &e" + entity.getName() + " &3" + c6);
+                                    }
+
+                                    if (announceMurder.isToggled()) {
+                                        String msg = Utils.Java.randomChoice(new String[]{entity.getName() + " " + c6, entity.getName()});
+                                        mc.thePlayer.sendChatMessage(msg);
+                                    }
                                 }
-
-                                entity = entityPlayerIterator.next();
-                            } while (entity == mc.thePlayer);
-                        } while (entity.isInvisible());
-                    } while (AntiBot.bot(entity));
-                    String c4 = "&7[&cALERT&7]";
-                    if (entity.getHeldItem() != null && entity.getHeldItem().hasDisplayName()) {
-                        Item i = entity.getHeldItem().getItem();
-                        if (i instanceof ItemSword || i instanceof ItemAxe || entity.getHeldItem().getDisplayName().contains("Knife")) {
-
-                            if (!mur.contains(entity)) {
-                                mur.add(entity);
-                                String c6 = "is a murderer!";
+                            } else if (i instanceof ItemBow && searchDetectives.isToggled() && !det.contains(entity)) {
+                                det.add(entity);
+                                String c7 = "has a bow!";
                                 if (alertMurderers.isToggled()) {
-                                    String c5 = "note.pling";
-                                    mc.thePlayer.playSound(c5, 1.0F, 1.0F);
-                                    Utils.Player.sendMessageToSelf(c4 + " &e" + entity.getName() + " &3" + c6);
+                                    Utils.Player.sendMessageToSelf(c4 + " &e" + entity.getName() + " &3" + c7);
                                 }
 
                                 if (announceMurder.isToggled()) {
-                                    String msg = Utils.Java.randomChoice(new String[]{entity.getName() + " " + c6, entity.getName()});
-                                    mc.thePlayer.sendChatMessage(msg);
+                                    mc.thePlayer.sendChatMessage(entity.getName() + " " + c7);
                                 }
-                            }
-                        } else if (i instanceof ItemBow && searchDetectives.isToggled() && !det.contains(entity)) {
-                            det.add(entity);
-                            String c7 = "has a bow!";
-                            if (alertMurderers.isToggled()) {
-                                Utils.Player.sendMessageToSelf(c4 + " &e" + entity.getName() + " &3" + c7);
-                            }
 
-                            if (announceMurder.isToggled()) {
-                                mc.thePlayer.sendChatMessage(entity.getName() + " " + c7);
                             }
-
                         }
-                    }
 
-                    int rgb = Color.cyan.getRGB();
-                    if (mur.contains(entity)) {
-                        rgb = Color.red.getRGB();
-                    } else if (det.contains(entity)) {
-                        rgb = Color.green.getRGB();
-                    }
+                        int rgb = Color.cyan.getRGB();
+                        if (mur.contains(entity)) {
+                            rgb = Color.red.getRGB();
+                        } else if (det.contains(entity)) {
+                            rgb = Color.green.getRGB();
+                        }
 
-                    Utils.HUD.drawBoxAroundEntity(entity, 2, 0.0D, 0.0D, rgb, false);
+                        Utils.HUD.drawBoxAroundEntity(entity, 2, 0.0D, 0.0D, rgb, false);
+                    }
                 }
             }
         }

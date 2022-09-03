@@ -1,13 +1,13 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.inventory.ContainerChest;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +35,8 @@ public class ChestStealer extends Module {
         this.registerSetting(closeDelay = new DoubleSliderSetting("Close delay", 150, 250, 0, 1000, 1));
     }
 
-    @SubscribeEvent
-    public void openChest(TickEvent.RenderTickEvent e) {
+    @Subscribe
+    public void onRender2D(Render2DEvent e) {
         if (!Utils.Player.isPlayerInGame())
             return;
         if (mc != null && mc.currentScreen != null && mc.thePlayer != null) {

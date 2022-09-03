@@ -6,13 +6,10 @@ import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.RenderLivingEvent.Specials;
 import net.minecraftforge.client.event.RenderPlayerEvent.Post;
 import net.minecraftforge.client.event.RenderPlayerEvent.Pre;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -92,6 +89,11 @@ public class ForgeEventListener {
 
     @SubscribeEvent
     public void onRenderPlayerEventPre(RenderLivingEvent e) {
+        Raven.eventBus.post(new ForgeEvent(e));
+    }
+
+    @SubscribeEvent
+    public void onDrawBlockHighlight(DrawBlockHighlightEvent e) {
         Raven.eventBus.post(new ForgeEvent(e));
     }
 

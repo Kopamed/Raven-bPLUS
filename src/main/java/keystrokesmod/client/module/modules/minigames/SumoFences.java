@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -10,7 +12,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
@@ -69,28 +70,31 @@ public class SumoFences extends Module {
 
     }
 
-    @SubscribeEvent
-    public void m(MouseEvent e) {
-        if (e.buttonstate && (e.button == 0 || e.button == 1) && Utils.Player.isPlayerInGame() && this.is()) {
-            MovingObjectPosition mop = mc.objectMouseOver;
-            if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
-                int x = mop.getBlockPos().getX();
-                int z = mop.getBlockPos().getZ();
+    @Subscribe
+    public void onForgeEvent(ForgeEvent fe) {
+        if(fe.getEvent() instanceof MouseEvent) {
+            MouseEvent e = ((MouseEvent) fe.getEvent());
 
-                for (BlockPos pos : f_p) {
-                    if (pos.getX() == x && pos.getZ() == z) {
-                        e.setCanceled(true);
-                        if (e.button == 0) {
-                            Utils.Player.swing();
+            if (e.buttonstate && (e.button == 0 || e.button == 1) && Utils.Player.isPlayerInGame() && this.is()) {
+                MovingObjectPosition mop = mc.objectMouseOver;
+                if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
+                    int x = mop.getBlockPos().getX();
+                    int z = mop.getBlockPos().getZ();
+
+                    for (BlockPos pos : f_p) {
+                        if (pos.getX() == x && pos.getZ() == z) {
+                            e.setCanceled(true);
+                            if (e.button == 0) {
+                                Utils.Player.swing();
+                            }
+
+                            Mouse.poll();
+                            break;
                         }
-
-                        Mouse.poll();
-                        break;
                     }
                 }
             }
         }
-
     }
 
     public TimerTask t() {
