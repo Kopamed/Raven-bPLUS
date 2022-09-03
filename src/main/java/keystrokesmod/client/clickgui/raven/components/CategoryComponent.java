@@ -128,7 +128,7 @@ public class CategoryComponent {
             //drawing the background for every module in the category
             Color bgColor;
             if (GuiModule.usePreset.isToggled()) {
-                Preset preset = (Preset) GuiModule.preset.getMode();
+                GuiModule.Preset preset = (GuiModule.Preset) GuiModule.preset.getMode();
                 bgColor = moduleOpened ? (new Color(preset.settingBackgroundRGB.getRed(), preset.settingBackgroundRGB.getGreen(), preset.settingBackgroundRGB.getBlue(),
                         (int) (preset.backgroundOpacity / 100 * 255))) : (new Color(preset.backgroundRGB.getRed(), preset.backgroundRGB.getGreen(),
                         preset.backgroundRGB.getBlue(), (int) (preset.backgroundOpacity / 100 * 255)));
@@ -144,7 +144,7 @@ public class CategoryComponent {
 
         if (GuiModule.categoryBackground.isToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
             if (GuiModule.usePreset.isToggled()) {
-                Preset preset = (Preset) GuiModule.preset.getMode();
+                GuiModule.Preset preset = (GuiModule.Preset) GuiModule.preset.getMode();
                 Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
                         preset.categoryBackgroundRGB.getRGB());
                 GlStateManager.resetColor();
@@ -158,7 +158,7 @@ public class CategoryComponent {
 
         // category name
         int colorCN;
-        Preset preset = (Preset) GuiModule.preset.getMode();
+        GuiModule.Preset preset = (GuiModule.Preset) GuiModule.preset.getMode();
         switch (GuiModule.usePreset.isToggled() ? (GuiModule.CNColor) preset.cnColor : (GuiModule.CNColor) GuiModule.cnColor.getMode()) {
 
             case STATIC:
