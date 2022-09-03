@@ -1,6 +1,8 @@
 package keystrokesmod.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.clickgui.raven.ClickGui;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -23,7 +25,8 @@ public class InvMove extends Module {
         registerSetting(ds2 = new DescriptionSetting(EnumChatFormatting.GRAY + "Only ClickGui is fully undetectable!"));
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (mc.currentScreen != null) {
             if (mc.currentScreen instanceof GuiChat) {
                 return;

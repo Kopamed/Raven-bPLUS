@@ -3,6 +3,7 @@ package keystrokesmod.client.module.modules.combat;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.Render2DEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -36,7 +37,8 @@ public class HitBox extends Module {
         this.registerSetting(b = new TickSetting("Show new hitbox", false));
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         gmo(1.0F);
     }
 

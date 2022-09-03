@@ -3,6 +3,7 @@ package keystrokesmod.client.module.modules.minigames;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.Render2DEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -57,7 +58,8 @@ public class BridgeInfo extends Module {
 
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent ev) {
         if (!this.en.isEmpty() && this.ibd()) {
             EntityPlayer enem = null;
 

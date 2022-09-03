@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.world;
 
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.Freecam;
@@ -43,7 +44,8 @@ public class AntiBot extends Module {
         }
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent ev) {
         if (a.isToggled() && !newEnt.isEmpty()) {
             long now = System.currentTimeMillis();
             newEnt.values().removeIf((e) -> e < now - 4000L);

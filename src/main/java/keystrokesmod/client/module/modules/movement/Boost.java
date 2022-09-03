@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -43,7 +45,8 @@ public class Boost extends Module {
         this.t = false;
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (this.i == 0) {
             this.i = mc.thePlayer.ticksExisted;
         }

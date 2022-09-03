@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.render;
 
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
@@ -45,7 +46,8 @@ public class Tracers extends Module {
         mc.gameSettings.viewBobbing = this.g;
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (mc.gameSettings.viewBobbing) {
             mc.gameSettings.viewBobbing = false;
         }

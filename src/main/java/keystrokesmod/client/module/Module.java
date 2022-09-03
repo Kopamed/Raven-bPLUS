@@ -28,6 +28,8 @@ public class Module {
 
     private String description = "";
 
+    private boolean registered;
+
     public void guiUpdate() {
 
     }
@@ -126,14 +128,18 @@ public class Module {
     public void enable() {
         this.enabled = true;
         this.onEnable();
-        if (enabled) {
+        if (enabled && !registered) {
             Raven.eventBus.register(this);
+            registered = true;
         }
     }
 
     public void disable() {
         this.enabled = false;
-        Raven.eventBus.unregister(this);
+        if(registered) {
+            Raven.eventBus.unregister(this);
+            registered = false;
+        }
         this.onDisable();
     }
 

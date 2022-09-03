@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.movement.Fly;
@@ -19,7 +21,8 @@ public class FallSpeed extends Module {
         this.registerSetting(b = new TickSetting("Disable XZ motion", true));
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if ((double) mc.thePlayer.fallDistance >= 2.5D) {
             Module fly = Raven.moduleManager.getModuleByClazz(Fly.class);
             Module noFall = Raven.moduleManager.getModuleByClazz(NoFall.class);

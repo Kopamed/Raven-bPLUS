@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.combat;
 
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.*;
 import keystrokesmod.client.utils.Utils;
@@ -154,7 +155,7 @@ public class LeftClicker extends Module {
     }
 
     @Subscribe
-    public void onGameLoop() {
+    public void onGameLoop(GameLoopEvent e) {
         if (clickTimings.getMode() != ClickEvent.Tick)
             return;
 

@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -44,7 +46,8 @@ public class Fly extends Module {
 
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         switch ((int) a.getInput()) {
             case 1:
                 this.vanFly.update();

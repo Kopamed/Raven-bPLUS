@@ -108,7 +108,7 @@ public class HUD extends Module {
     }
 
     @Subscribe
-    public void onRender2D(Render2DEvent ev) {
+    public void onRender2D(Render2DEvent ev) {;
         if (Utils.Player.isPlayerInGame()) {
             if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
                 return;

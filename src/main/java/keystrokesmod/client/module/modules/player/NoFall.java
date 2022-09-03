@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -19,7 +21,8 @@ public class NoFall extends Module {
         this.registerSetting(mode = new ComboSetting("Mode", Mode.Spoof));
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         switch ((Mode) mode.getMode()) {
             case Spoof:
                 if ((double) mc.thePlayer.fallDistance > 2.5D) {

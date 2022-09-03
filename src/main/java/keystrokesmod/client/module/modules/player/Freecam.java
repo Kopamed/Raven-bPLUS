@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.player;
 
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -70,7 +71,8 @@ public class Freecam extends Module {
 
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (!Utils.Player.isPlayerInGame() || en == null)
             return;
         if (b.isToggled() && mc.thePlayer.hurtTime != 0) {

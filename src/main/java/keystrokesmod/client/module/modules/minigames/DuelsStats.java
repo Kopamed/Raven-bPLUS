@@ -1,7 +1,9 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -46,7 +48,8 @@ public class DuelsStats extends Module {
         this.queue.clear();
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (!this.isDuel()) return;
 
         // Thanks to https://github.com/Scherso for the code from https://github.com/Scherso/Seraph

@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.player;
 
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -55,7 +56,8 @@ public class AutoPlace extends Module {
         this.rv();
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         Module fastPlace = Raven.moduleManager.getModuleByClazz(FastPlace.class);
         if (a.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && fastPlace != null && !fastPlace.isEnabled()) {
             ItemStack i = mc.thePlayer.getHeldItem();

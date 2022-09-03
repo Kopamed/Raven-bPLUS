@@ -2,6 +2,7 @@ package keystrokesmod.client.event.forge;
 
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.utils.Utils;
@@ -47,6 +48,8 @@ public class ForgeEventListener {
                     }
                 }
             }
+
+            Raven.eventBus.post(new Render2DEvent());
         }
 
 

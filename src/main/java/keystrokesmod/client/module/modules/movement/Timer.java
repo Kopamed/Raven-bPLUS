@@ -1,6 +1,8 @@
 package keystrokesmod.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.clickgui.raven.ClickGui;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -18,7 +20,8 @@ public class Timer extends Module {
         this.registerSetting(b);
     }
 
-    public void update() {
+    @Subscribe
+    public void onTick(TickEvent e) {
         if (!(mc.currentScreen instanceof ClickGui)) {
             if (b.isToggled() && mc.thePlayer.moveStrafing == 0.0F) {
                 Utils.Client.resetTimer();
