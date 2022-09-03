@@ -62,8 +62,6 @@ killaura
 
 rotations on bedaura idk
 
-Verus nofall cause why not
-
 Projectiles in FastPlace
 
 packet velo
