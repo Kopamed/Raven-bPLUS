@@ -49,7 +49,7 @@ public class LeftClicker extends Module {
     private boolean leftn;
     private boolean breakHeld;
     private boolean hitSelected;
-    private Random rand = null;
+    private Random rand;
     private Method playerMouseInput;
     public EntityLivingBase target;
 

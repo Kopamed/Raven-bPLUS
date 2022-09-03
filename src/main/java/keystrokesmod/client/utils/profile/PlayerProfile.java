@@ -8,10 +8,10 @@ import static keystrokesmod.client.utils.Utils.Profiles.parseJson;
 
 public class PlayerProfile {
     public boolean isPlayer = true;
-    public boolean nicked = false;
-    public int wins = 0;
-    public int losses = 0;
-    public int winStreak = 0;
+    public boolean nicked;
+    public int wins;
+    public int losses;
+    public int winStreak;
     public String inGameName;
     public String uuid;
     private final Utils.Profiles.DuelsStatsMode statsMode;

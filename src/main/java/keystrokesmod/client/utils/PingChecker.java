@@ -5,8 +5,8 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PingChecker {
-    private static boolean e = false;
-    private static long s = 0L;
+    private static boolean e;
+    private static long s;
 
     @SubscribeEvent
     public void onChatMessageReceived(ClientChatReceivedEvent event) {

@@ -21,7 +21,7 @@ public class Tracers extends Module {
     public static TickSetting o;
     public static SliderSetting f, sl;
     private boolean g;
-    private int rgb_c = 0;
+    private int rgb_c;
 
     public Tracers() {
         super("Tracers", ModuleCategory.render);

@@ -21,13 +21,13 @@ public class Terminal implements Component {
     private final int minWidth;
     private final int minHeight;
     private final int resizeButtonSize;
-    public boolean opened = false;
-    public boolean hidden = false;
-    private boolean resizing = false;
-    private boolean focused = false;
+    public boolean opened;
+    public boolean hidden;
+    private boolean resizing;
+    private boolean focused;
     private final CoolDown keyDown = new CoolDown(500);
 
-    private int backCharsCursor = 0;
+    private int backCharsCursor;
 
     public final int[] acceptableKeycodes = {41, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 26, 27, 39, 40, 0, 51, 52, 53, 41, 145, 144, 147, 146, 57, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 38, 44, 45, 46, 47, 48, 49, 50};
 
@@ -38,7 +38,7 @@ public class Terminal implements Component {
     private static final ArrayList<String> out = new ArrayList<>();
     private final String prefix = "$ ";
 
-    private boolean dragging = false;
+    private boolean dragging;
     private double windowStartDragX;
     private double windowStartDragY;
     private double mouseStartDragX;

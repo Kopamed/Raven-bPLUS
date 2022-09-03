@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KeyStrokeMouse {
-    private static final String[] a = new String[]{"LMB", "RMB"};
+    private static final String[] a = {"LMB", "RMB"};
     private final Minecraft b = Minecraft.getMinecraft();
     private final int c;
     private final int d;
     private final int e;
     private final List<Long> f = new ArrayList();
     private boolean g = true;
-    private long h = 0L;
+    private long h;
 
     public KeyStrokeMouse(int k, int l, int m) {
         this.c = k;

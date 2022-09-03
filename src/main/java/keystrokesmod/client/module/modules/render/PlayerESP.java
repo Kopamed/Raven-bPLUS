@@ -35,7 +35,7 @@ public class PlayerESP extends Module {
     public static TickSetting t6;
     public static TickSetting t7;
     public static RGBSetting rgb;
-    private int rgb_c = 0;
+    private int rgb_c;
 
     public PlayerESP() {
         super("PlayerESP", ModuleCategory.render);

@@ -31,12 +31,12 @@ public class BridgeInfo extends Module {
     private static int hudX = 5;
     private static int hudY = 70;
     private String en = "";
-    private BlockPos g1p = null;
-    private BlockPos g2p = null;
-    private boolean q = false;
-    private double d1 = 0.0D;
-    private double d2 = 0.0D;
-    private int blc = 0;
+    private BlockPos g1p;
+    private BlockPos g2p;
+    private boolean q;
+    private double d1;
+    private double d2;
+    private int blc;
 
     public BridgeInfo() {
         super("Bridge Info", ModuleCategory.minigames);
@@ -176,23 +176,23 @@ public class BridgeInfo extends Module {
     static class eh extends GuiScreen {
         final String a = "Enemy: Player123-Distance to goal: 17.2-Enemy distance to goal: 16.3-Blocks: 98";
         GuiButtonExt rp;
-        boolean d = false;
-        int miX = 0;
-        int miY = 0;
-        int maX = 0;
-        int maY = 0;
+        boolean d;
+        int miX;
+        int miY;
+        int maX;
+        int maY;
         int aX = 5;
         int aY = 70;
-        int laX = 0;
-        int laY = 0;
-        int lmX = 0;
-        int lmY = 0;
+        int laX;
+        int laY;
+        int lmX;
+        int lmY;
 
         public void initGui() {
             super.initGui();
             this.buttonList.add(this.rp = new GuiButtonExt(1, this.width - 90, 5, 85, 20, "Reset position"));
-            this.aX = BridgeInfo.hudX;
-            this.aY = BridgeInfo.hudY;
+            this.aX = hudX;
+            this.aY = hudY;
         }
 
         public void drawScreen(int mX, int mY, float pt) {
@@ -206,8 +206,8 @@ public class BridgeInfo extends Module {
             this.miY = miY;
             this.maX = maX;
             this.maY = maY;
-            BridgeInfo.hudX = miX;
-            BridgeInfo.hudY = miY;
+            hudX = miX;
+            hudY = miY;
             ScaledResolution res = new ScaledResolution(this.mc);
             int x = res.getScaledWidth() / 2 - 84;
             int y = res.getScaledHeight() / 2 - 20;
@@ -228,7 +228,7 @@ public class BridgeInfo extends Module {
             int var6 = var5.length;
 
             for (String s : var5) {
-                fr.drawString(s, (float) x, (float) y, BridgeInfo.rgb, true);
+                fr.drawString(s, (float) x, (float) y, rgb, true);
                 y += fr.FONT_HEIGHT + 2;
             }
 
@@ -261,8 +261,8 @@ public class BridgeInfo extends Module {
 
         public void actionPerformed(GuiButton b) {
             if (b == this.rp) {
-                this.aX = BridgeInfo.hudX = 5;
-                this.aY = BridgeInfo.hudY = 70;
+                this.aX = hudX = 5;
+                this.aY = hudY = 70;
             }
 
         }

@@ -85,7 +85,7 @@ public class AutoArmour extends Module {
         final int y;
         final int s;
         int at;
-        float v = 0;
+        float v;
 
         public Slot(int s) {
             this.s = s;

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class KeyStrokeRenderer {
-    private static final int[] a = new int[]{16777215, 16711680, 65280, 255, 16776960, 11141290};
+    private static final int[] a = {16777215, 16711680, 65280, 255, 16776960, 11141290};
     private final Minecraft mc = Minecraft.getMinecraft();
     private final KeyStrokeKeyRenderer[] b = new KeyStrokeKeyRenderer[4];
     private final KeyStrokeMouse[] c = new KeyStrokeMouse[2];

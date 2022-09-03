@@ -17,9 +17,9 @@ public class Freecam extends Module {
     public static SliderSetting a;
     public static TickSetting b;
     private final double toRad = 0.017453292519943295D;
-    public static EntityOtherPlayerMP en = null;
-    private int[] lcc = new int[]{Integer.MAX_VALUE, 0};
-    private final float[] sAng = new float[]{0.0F, 0.0F};
+    public static EntityOtherPlayerMP en;
+    private int[] lcc = {Integer.MAX_VALUE, 0};
+    private final float[] sAng = {0.0F, 0.0F};
 
     public Freecam() {
         super("Freecam", ModuleCategory.player);

@@ -10,8 +10,8 @@ public class Boost extends Module {
     public static DescriptionSetting c;
     public static SliderSetting a;
     public static SliderSetting b;
-    private int i = 0;
-    private boolean t = false;
+    private int i;
+    private boolean t;
 
     public Boost() {
         super("Boost", ModuleCategory.movement);

@@ -48,7 +48,7 @@ public class SumoClicker extends Module {
     private boolean leftn;
     private boolean breakHeld;
 
-    private Random rand = null;
+    private Random rand;
     private Method playerMouseInput;
 
     public SumoClicker() {

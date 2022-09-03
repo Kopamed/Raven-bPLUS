@@ -285,7 +285,7 @@ public class BedwarsOverlay extends Module {
         // credit to hevex
         // https://github.com/hevex/bedwars-lobby-checker/blob/d30a0495ca35ea0085c0a6913c17628e334aec64/FastScanner.java#L158
         // Stars, FK, FD, Wins, Losses, Winstreak
-        final int[] stats = new int[9];
+        int[] stats = new int[9];
         // open connection to api
         String connection = Utils.URLS.getTextFromURL("https://api.hypixel.net/player?key=" + Utils.URLS.hypixelApiKey + "&uuid=" + uuid);
         // error getting contents of link

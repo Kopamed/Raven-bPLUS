@@ -22,7 +22,7 @@ public class CategoryComponent {
     private int width, x, y;
     private final int bh;
     public int xx, yy, chromaSpeed;
-    public boolean n4m = false, pin = false;
+    public boolean n4m, pin;
     public String pvp;
     private final double marginY;
     private final double marginX;

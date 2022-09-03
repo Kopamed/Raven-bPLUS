@@ -8,9 +8,9 @@ public class NoFall extends Module {
     public static DescriptionSetting warning;
     public static ComboSetting mode;
 
-    int ticks = 0;
-    double dist = 0;
-    boolean spoofing = false;
+    int ticks;
+    double dist;
+    boolean spoofing;
 
     public NoFall() {
         super("NoFall", ModuleCategory.player);

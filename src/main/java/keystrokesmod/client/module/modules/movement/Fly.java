@@ -67,7 +67,7 @@ public class Fly extends Module {
     }
 
     class GliFly {
-        boolean opf = false;
+        boolean opf;
 
         public void onEnable() {
         }
@@ -89,7 +89,7 @@ public class Fly extends Module {
                         return;
                     }
 
-                    double s = 1.94D * Fly.b.getInput();
+                    double s = 1.94D * b.getInput();
                     double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                     Module.mc.thePlayer.motionX = s * Math.cos(r);
                     Module.mc.thePlayer.motionZ = s * Math.sin(r);
@@ -118,7 +118,7 @@ public class Fly extends Module {
 
         public void update() {
             Module.mc.thePlayer.motionY = 0.0D;
-            Module.mc.thePlayer.capabilities.setFlySpeed((float) (0.05000000074505806D * Fly.b.getInput()));
+            Module.mc.thePlayer.capabilities.setFlySpeed((float) (0.05000000074505806D * b.getInput()));
             Module.mc.thePlayer.capabilities.isFlying = true;
         }
     }

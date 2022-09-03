@@ -9,7 +9,7 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class AutoJump extends Module {
     public static TickSetting b;
-    private boolean c = false;
+    private boolean c;
 
     public AutoJump() {
         super("AutoJump", ModuleCategory.player);

@@ -94,7 +94,7 @@ public class ChestStealer extends Module {
                 out[in.length - 1] = Arrays.stream(in).filter(p -> !p.visited).findAny().orElseGet(null);
                 break;
             }
-            final Slot finalCurrent = current;
+            Slot finalCurrent = current;
             out[i] = finalCurrent;
             finalCurrent.visit();
             Slot next = Arrays.stream(in).filter(p -> !p.visited).min(Comparator.comparingDouble(p -> p.getDistance(finalCurrent))).get();

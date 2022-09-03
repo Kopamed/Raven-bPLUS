@@ -877,7 +877,7 @@ public class Utils {
         }
 
         public static int[] getHypixelStats(String UUID, DuelsStatsMode dm) {
-            int[] s = new int[]{0, 0, 0};
+            int[] s = {0, 0, 0};
             String u = UUID;
 
             String c = URLS.getTextFromURL("https://api.hypixel.net/player?key=" + URLS.hypixelApiKey + "&uuid=" + u);
@@ -964,7 +964,7 @@ public class Utils {
         public static final int rc = -1089466352;
         private static final double p2 = 6.283185307179586D;
         private static final Minecraft mc = Minecraft.getMinecraft();
-        public static boolean ring_c = false;
+        public static boolean ring_c;
 
         public static void re(BlockPos bp, int color, boolean shade) {
             if (bp != null) {

@@ -17,7 +17,7 @@ public class FastPlace extends Module {
     public static SliderSetting delaySlider;
     public static TickSetting blockOnly;
 
-    public final static Field rightClickDelayTimerField;
+    public static final Field rightClickDelayTimerField;
 
     static {
         rightClickDelayTimerField = ReflectionHelper.findField(Minecraft.class, "field_71467_ac", "rightClickDelayTimer");

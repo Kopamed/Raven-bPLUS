@@ -14,7 +14,7 @@ public class KeyStrokeKeyRenderer {
     private final int c;
     private final int d;
     private boolean e = true;
-    private long f = 0L;
+    private long f;
 
     public KeyStrokeKeyRenderer(KeyBinding i, int j, int k) {
         this.keyBinding = i;

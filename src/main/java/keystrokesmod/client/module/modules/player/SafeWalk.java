@@ -31,8 +31,8 @@ public class SafeWalk extends Module {
     public static DescriptionSetting blockShowModeDesc;
     public static DoubleSliderSetting shiftTime;
 
-    private static boolean shouldBridge = false;
-    private static boolean isShifting = false;
+    private static boolean shouldBridge;
+    private static boolean isShifting;
     private boolean allowedShift;
     private final CoolDown shiftTimer = new CoolDown(0);
 

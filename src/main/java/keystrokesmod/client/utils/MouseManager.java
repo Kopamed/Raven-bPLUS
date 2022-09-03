@@ -13,8 +13,8 @@ import java.util.List;
 public class MouseManager {
     private static final List<Long> leftClicks = new ArrayList<>();
     private static final List<Long> rightClicks = new ArrayList<>();
-    public static long leftClickTimer = 0L;
-    public static long rightClickTimer = 0L;
+    public static long leftClickTimer;
+    public static long rightClickTimer;
 
     @SubscribeEvent
     public void onMouseUpdate(MouseEvent mouse) {

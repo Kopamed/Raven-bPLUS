@@ -16,15 +16,15 @@ public class Module {
     protected ArrayList<Setting> settings;
     private final String moduleName;
     private final ModuleCategory moduleCategory;
-    protected boolean hasBind = true, showInHud = true, clientConfig = false, enabled = false;
+    protected boolean hasBind = true, showInHud = true, clientConfig, enabled;
     protected boolean defaultEnabled = enabled;
-    protected int keycode = 0;
+    protected int keycode;
     protected int defualtKeyCode = keycode;
 
     protected ModuleComponent component;
 
     protected static Minecraft mc;
-    private boolean isToggled = false;
+    private boolean isToggled;
 
     private String description = "";
 

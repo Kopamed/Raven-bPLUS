@@ -33,7 +33,7 @@ public class RightClicker extends Module {
     public static DoubleSliderSetting rightCPS;
     public static ComboSetting clickStyle, clickTimings;
 
-    private Random rand = null;
+    private Random rand;
     private Method playerMouseInput;
     private long righti;
     private long rightj;

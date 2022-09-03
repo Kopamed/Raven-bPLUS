@@ -29,12 +29,15 @@ import java.util.List;
 public class ModuleManager {
     private final List<Module> modules = new ArrayList<>();
 
-    public static boolean initialized = false;
+    public static boolean initialized;
     public final GuiModuleManager guiModuleManager;
 
     public ModuleManager() {
         this.guiModuleManager = new GuiModuleManager();
-        if (initialized) return;
+
+        if (initialized)
+            return;
+
         addModule(new ChestStealer());
         addModule(new AutoArmour());
         addModule(new LeftClicker());
@@ -70,7 +73,6 @@ public class ModuleManager {
         addModule(new PlayerESP());
         addModule(new Tracers());
         addModule(new HUD());
-        addModule(new Xray());
         addModule(new BridgeInfo());
         addModule(new DuelsStats());
         addModule(new MurderMystery());
@@ -152,15 +154,14 @@ public class ModuleManager {
     }
 
     public List<Module> getModules() {
-        ArrayList<Module> allModules = new ArrayList<Module>();
-        allModules.addAll(modules);
+        ArrayList<Module> allModules = new ArrayList<>(modules);
         try {
             allModules.addAll(Raven.configManager.configModuleManager.getConfigModules());
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
         }
         try {
             allModules.addAll(guiModuleManager.getModules());
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
         }
         return allModules;
     }

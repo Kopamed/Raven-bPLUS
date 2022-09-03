@@ -32,7 +32,7 @@ public class SumoFences extends Module {
     private final String c3;
     private final String c4;
     private final String c5;
-    private int ymod = 0;
+    private int ymod;
 
     public SumoFences() {
         super("Sumo Fences", ModuleCategory.minigames);
@@ -102,8 +102,8 @@ public class SumoFences extends Module {
             public void run() {
                 if (SumoFences.this.is()) {
 
-                    for (BlockPos p : SumoFences.f_p) {
-                        for (int i = 0; (double) i < SumoFences.b.getInput(); ++i) {
+                    for (BlockPos p : f_p) {
+                        for (int i = 0; (double) i < b.getInput(); ++i) {
                             BlockPos p2 = new BlockPos(p.getX(), p.getY() + i + ymod, p.getZ());
                             if (Module.mc.theWorld.getBlockState(p2).getBlock() == Blocks.air) {
                                 Module.mc.theWorld.setBlockState(p2, SumoFences.this.f);

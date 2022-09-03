@@ -74,7 +74,7 @@ public class SlyPort extends Module {
                         } while (ent == mc.thePlayer);
                     } while (!(ent instanceof EntityLivingBase));
                 } while (((EntityLivingBase) ent).deathTime != 0);
-            } while (SlyPort.d.isToggled() && !(ent instanceof EntityPlayer));
+            } while (d.isToggled() && !(ent instanceof EntityPlayer));
 
             if (!AntiBot.bot(ent)) {
                 double d = mc.thePlayer.getDistanceSqToEntity(ent);

@@ -12,7 +12,7 @@ import keystrokesmod.client.utils.Timer;
 import keystrokesmod.client.utils.Utils;
 
 public class Terminal extends Module {
-    public static boolean b = false;
+    public static boolean b;
     public static Timer animation;
     public static SliderSetting opacity;
 

@@ -15,7 +15,7 @@ public class SliderComponent implements Component {
     private int o;
     private int x;
     private int y;
-    private boolean d = false;
+    private boolean d;
     private double w;
     private final int msl = 84;
 

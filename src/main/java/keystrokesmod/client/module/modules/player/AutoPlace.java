@@ -24,12 +24,12 @@ public class AutoPlace extends Module {
     public static DescriptionSetting ds;
     public static TickSetting a, b, top;
     public static SliderSetting c;
-    private double lfd = 0.0D;
+    private double lfd;
     private final int d = 25;
-    private long l = 0L;
-    private int f = 0;
-    private MovingObjectPosition lm = null;
-    private BlockPos lp = null;
+    private long l;
+    private int f;
+    private MovingObjectPosition lm;
+    private BlockPos lp;
 
     public AutoPlace() {
         super("AutoPlace", ModuleCategory.player);

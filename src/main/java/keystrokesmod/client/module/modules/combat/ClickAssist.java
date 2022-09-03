@@ -25,8 +25,8 @@ public class ClickAssist extends Module {
     public static TickSetting onlyWhileTargeting;
     public static TickSetting above5;
     private Robot bot;
-    private boolean engagedLeft = false;
-    private boolean engagedRight = false;
+    private boolean engagedLeft;
+    private boolean engagedRight;
 
     public ClickAssist() {
         super("ClickAssist", ModuleCategory.combat);

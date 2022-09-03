@@ -10,12 +10,12 @@ import net.minecraft.client.gui.GuiScreen;
 import java.io.IOException;
 
 public class KeyStrokeConfigGui extends GuiScreen {
-    private static final String[] colors = new String[]{"White", "Red", "Green", "Blue", "Yellow", "Purple", "Rainbow"};
+    private static final String[] colors = {"White", "Red", "Green", "Blue", "Yellow", "Purple", "Rainbow"};
     private GuiButton modeBtn;
     private GuiButton textColorBtn;
     private GuiButton showMouseBtn;
     private GuiButton outlineBtn;
-    private boolean d = false;
+    private boolean d;
     private int lx;
     private int ly;
 

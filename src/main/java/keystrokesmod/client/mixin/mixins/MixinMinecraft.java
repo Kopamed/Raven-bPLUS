@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(priority = 1005, value = Minecraft.class)
 public class MixinMinecraft {
 
-    @Inject(method = "runTick", at = @At(value = "HEAD"))
+    @Inject(method = "runTick", at = @At("HEAD"))
     public void onTick(CallbackInfo ci) {
         Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
         if (autoClicker == null || !autoClicker.isEnabled() || !Mouse.isButtonDown(0) || !Reach.call()) {

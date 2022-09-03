@@ -16,7 +16,7 @@ public class BedAura extends Module {
     public static DescriptionSetting d;
     public static SliderSetting r;
     private java.util.Timer t;
-    private BlockPos m = null;
+    private BlockPos m;
     private final long per = 600L;
 
     public BedAura() {
@@ -42,7 +42,7 @@ public class BedAura extends Module {
     public TimerTask t() {
         return new TimerTask() {
             public void run() {
-                int ra = (int) BedAura.r.getInput();
+                int ra = (int) r.getInput();
 
                 for (int y = ra; y >= -ra; --y) {
                     for (int x = -ra; x <= ra; ++x) {
