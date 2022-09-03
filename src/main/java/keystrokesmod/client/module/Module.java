@@ -136,7 +136,7 @@ public class Module {
 
     public void disable() {
         this.enabled = false;
-        if(registered) {
+        if (registered) {
             Raven.eventBus.unregister(this);
             registered = false;
         }
