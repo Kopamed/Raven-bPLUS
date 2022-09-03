@@ -184,10 +184,7 @@ public class CategoryComponent {
 		}
 
 		if (!this.n4m) {
-			GL11.glPushMatrix();
-			//Opened/closed unicode... :yes: :holsum: :evil:
 			mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float)(this.x + marginX), (float)((double)this.y + marginY), Color.white.getRGB(), false);
-			GL11.glPopMatrix();
 			if (this.categoryOpened && !this.getModules().isEmpty()) {
 				Iterator var5 = this.getModules().iterator();
 

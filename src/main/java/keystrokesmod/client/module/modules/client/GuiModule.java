@@ -142,7 +142,7 @@ public class GuiModule extends Module {
 				new Color(27,25,26),
 				new Color(59,132,107),
 				new Color(59,132,107),
-				new Color(255,255,255),
+				new Color(250,250,250),
 				new Color(27,25,26),
 				new Color(27,25,26),
 				new Color(255,255,255),
