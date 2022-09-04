@@ -1,6 +1,8 @@
 package keystrokesmod.client.module.modules.minigames.Sumo;
 
 import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.Render2DEvent;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.RightClicker;
 import keystrokesmod.client.module.setting.impl.*;
@@ -107,7 +109,7 @@ public class SumoClicker extends Module {
     }
 
     @Subscribe
-    public void onRenderTick() {
+    public void onRender2D(Render2DEvent e) {
         if (!Utils.Client.currentScreenMinecraft() &&
                 !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
@@ -125,7 +127,7 @@ public class SumoClicker extends Module {
     }
 
     @Subscribe
-    public void onTick() {
+    public void onTick(TickEvent tick) {
         if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )

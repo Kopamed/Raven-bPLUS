@@ -1,6 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
 import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -121,7 +122,7 @@ public class RightClicker extends Module {
     }
 
     @Subscribe
-    public void onTick() {
+    public void onTick(TickEvent tick) {
         if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
