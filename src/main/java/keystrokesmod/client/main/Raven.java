@@ -1,12 +1,22 @@
 package keystrokesmod.client.main;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import javax.imageio.ImageIO;
+
 import com.google.common.eventbus.EventBus;
+
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.command.CommandManager;
 import keystrokesmod.client.config.ConfigManager;
 import keystrokesmod.client.event.forge.ForgeEventListener;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.module.modules.HUD;
+import keystrokesmod.client.notifications.NotificationRenderer;
 import keystrokesmod.client.utils.DebugInfoRenderer;
 import keystrokesmod.client.utils.MouseManager;
 import keystrokesmod.client.utils.PingChecker;
@@ -19,13 +29,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 
 //Todo fix wtap
@@ -111,6 +114,7 @@ public class Raven {
         MinecraftForge.EVENT_BUS.register(new PingChecker());
 
         MinecraftForge.EVENT_BUS.register(new ForgeEventListener());
+        eventBus.register(NotificationRenderer.notificationRenderer);
 
         FontUtil.bootstrap();
 

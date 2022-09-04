@@ -22,6 +22,7 @@ import java.util.Objects;
 public class ConfigManager {
 
     public final ConfigModuleManager configModuleManager;
+    public static boolean applyingConfig;
     private final File configDirectory = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs");
     private Config config;
     private final ArrayList<Config> configs = new ArrayList<>();
@@ -103,6 +104,7 @@ public class ConfigManager {
     }
 
     public void setConfig(Config config) {
+	applyingConfig = true;
         this.config = config;
         JsonObject data = config.getData().get("modules").getAsJsonObject();
         List<Module> knownModules = new ArrayList<>(Raven.moduleManager.getConfigModules());
@@ -117,6 +119,7 @@ public class ConfigManager {
                 }
             }
         }
+        applyingConfig = false;
     }
 
     public void loadConfigByName(String replace) {

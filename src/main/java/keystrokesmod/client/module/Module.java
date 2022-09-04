@@ -1,16 +1,19 @@
 package keystrokesmod.client.module;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
+
 import com.google.gson.JsonObject;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.notifications.NotificationRenderer;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Keyboard;
-
-import java.util.ArrayList;
 
 public class Module {
     protected ArrayList<Setting> settings;
@@ -132,6 +135,7 @@ public class Module {
             Raven.eventBus.register(this);
             registered = true;
         }
+        NotificationRenderer.moduleStateChanged(this);
     }
 
     public void disable() {
@@ -141,6 +145,7 @@ public class Module {
             registered = false;
         }
         this.onDisable();
+        NotificationRenderer.moduleStateChanged(this);
     }
 
     public void setToggled(boolean enabled) {

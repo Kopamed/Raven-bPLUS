@@ -17,7 +17,7 @@ public class GuiModule extends Module {
 
     private static ComboSetting preset, cnColor;
 
-    private static TickSetting categoryBackground, cleanUp, reset, usePreset,
+    private static TickSetting categoryBackground, cleanUp, reset, usePreset, rainbowNotification, notifications,
 
     matchTopWBottomEnabled, matchTopWBottomDisabled,
     showGradientEnabled, showGradientDisabled,
@@ -55,9 +55,11 @@ public class GuiModule extends Module {
         this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
         this.registerSetting(useCustomFont = new TickSetting("Smooth Font (BROKEN DONT USE)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
+        this.registerSetting(notifications = new TickSetting("Notifications", true));
+        this.registerSetting(rainbowNotification = new TickSetting("Rainbow Notifications", true));
         this.registerSetting(reset = new TickSetting("Reset position", false));
         this.registerSetting(usePreset = new TickSetting("Use preset", true));
-        this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
+        this.registerSetting(preset = new ComboSetting("Preset", Preset.Vape));
     }
 
     @Override
@@ -160,6 +162,14 @@ public class GuiModule extends Module {
 
     public static CNColor getCNColor() {
         return usePreset.isToggled() ? getPresetMode().cnColor : (CNColor) cnColor.getMode();
+    }
+    
+    public static boolean rainbowNotification() {
+	return rainbowNotification.isToggled();
+    }
+    
+    public static boolean notifications() {
+	return notifications.isToggled();
     }
 
     public enum Preset {
