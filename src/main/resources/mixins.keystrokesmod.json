@@ -10,6 +10,7 @@
         "MixinNetworkManager",
         "MixinEntityPlayerSP",
         "MixinGuiUtilRenderComponents",
-        "MixinMinecraft"
+        "MixinMinecraft",
+        "MixinEntityRenderer"
     ]
 }

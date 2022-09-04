@@ -17,11 +17,6 @@ public class MixinMinecraft {
 
     @Inject(method = "runTick", at = @At("HEAD"))
     public void onTick(CallbackInfo ci) {
-        Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-        if (autoClicker == null || !autoClicker.isEnabled() || !Mouse.isButtonDown(0) || !Reach.call()) {
-            Minecraft.getMinecraft().entityRenderer.getMouseOver(1.0F);
-        }
-
         Raven.eventBus.post(new GameLoopEvent());
     }
 

@@ -38,40 +38,6 @@ public class HitBox extends Module {
     }
 
     @Subscribe
-    public void onTick(TickEvent e) {
-        gmo(1.0F);
-    }
-
-    @Subscribe
-    public void onMouse(ForgeEvent fe) {
-        if (fe.getEvent() instanceof MouseEvent) {
-            MouseEvent e = (MouseEvent) fe.getEvent();
-
-            if (!Utils.Player.isPlayerInGame())
-                return;
-
-            if (e.button == 0 && e.buttonstate && mv != null) {
-                mc.objectMouseOver = mv;
-            }
-        }
-    }
-
-    @Subscribe
-    public void onRender2D(Render2DEvent ev) {
-        if (!Utils.Player.isPlayerInGame())
-            return;
-
-        Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-        if (autoClicker != null && !autoClicker.isEnabled()) return;
-
-        if (autoClicker != null && autoClicker.isEnabled() && Mouse.isButtonDown(0)) {
-            if (mv != null) {
-                mc.objectMouseOver = mv;
-            }
-        }
-    }
-
-    @Subscribe
     public void onRenderWorldLast(ForgeEvent fe) {
         if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (b.isToggled() && Utils.Player.isPlayerInGame()) {
@@ -87,65 +53,6 @@ public class HitBox extends Module {
     public static double exp(Entity en) {
         Module hitBox = Raven.moduleManager.getModuleByClazz(HitBox.class);
         return (hitBox != null && hitBox.isEnabled() && !AntiBot.bot(en)) ? a.getInput() : 1.0D;
-    }
-
-    public static void gmo(float partialTicks) {
-        if (mc.getRenderViewEntity() != null && mc.theWorld != null) {
-            mc.pointedEntity = null;
-            Entity pE = null;
-            double d0 = 3.0D;
-            mv = mc.getRenderViewEntity().rayTrace(d0, partialTicks);
-            double d2 = d0;
-            Vec3 vec3 = mc.getRenderViewEntity().getPositionEyes(partialTicks);
-            if (mv != null) {
-                d2 = mv.hitVec.distanceTo(vec3);
-            }
-
-            Vec3 vec4 = mc.getRenderViewEntity().getLook(partialTicks);
-            Vec3 vec5 = vec3.addVector(vec4.xCoord * d0, vec4.yCoord * d0, vec4.zCoord * d0);
-            Vec3 vec6 = null;
-            float f1 = 1.0F;
-            List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.getRenderViewEntity(), mc.getRenderViewEntity().getEntityBoundingBox().addCoord(vec4.xCoord * d0, vec4.yCoord * d0, vec4.zCoord * d0).expand(f1, f1, f1));
-            double d3 = d2;
-
-            for (Object o : list) {
-                Entity entity = (Entity) o;
-                if (entity.canBeCollidedWith()) {
-                    float ex = (float) ((double) entity.getCollisionBorderSize() * exp(entity));
-                    AxisAlignedBB ax = entity.getEntityBoundingBox().expand(ex, ex, ex);
-                    MovingObjectPosition mop = ax.calculateIntercept(vec3, vec5);
-                    if (ax.isVecInside(vec3)) {
-                        if (0.0D < d3 || d3 == 0.0D) {
-                            pE = entity;
-                            vec6 = mop == null ? vec3 : mop.hitVec;
-                            d3 = 0.0D;
-                        }
-                    } else if (mop != null) {
-                        double d4 = vec3.distanceTo(mop.hitVec);
-                        if (d4 < d3 || d3 == 0.0D) {
-                            if (entity == mc.getRenderViewEntity().ridingEntity && !entity.canRiderInteract()) {
-                                if (d3 == 0.0D) {
-                                    pE = entity;
-                                    vec6 = mop.hitVec;
-                                }
-                            } else {
-                                pE = entity;
-                                vec6 = mop.hitVec;
-                                d3 = d4;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (pE != null && (d3 < d2 || mv == null)) {
-                mv = new MovingObjectPosition(pE, vec6);
-                if (pE instanceof EntityLivingBase || pE instanceof EntityItemFrame) {
-                    mc.pointedEntity = pE;
-                }
-            }
-        }
-
     }
 
     private void rh(Entity e, Color c) {
