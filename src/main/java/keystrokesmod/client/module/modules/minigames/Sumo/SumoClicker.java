@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
@@ -112,7 +113,7 @@ public class SumoClicker extends Module {
     public void onRender2D(Render2DEvent e) {
         if (!Utils.Client.currentScreenMinecraft() &&
                 !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
-                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
+                && !(Minecraft.getMinecraft().currentScreen instanceof GuiContainer) // to make it work in chests
         )
             return;
 
