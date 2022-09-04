@@ -26,7 +26,7 @@ public class Disabler extends Module {
     public Disabler() {
         super("Disabler", ModuleCategory.other);
 
-        this.registerSetting(warning = new DescriptionSetting("Might not always work."));
+        this.registerSetting(warning = new DescriptionSetting("WILL BAN DONT USE"));
         this.registerSetting(mode = new ComboSetting("Mode", Mode.MMCSafe));
         this.registerSetting(mmcSafeWarning1 = new DescriptionSetting(EnumChatFormatting.GRAY + "Difference between min and max"));
         this.registerSetting(mmcSafeWarning2 = new DescriptionSetting(EnumChatFormatting.GRAY + "should be less than 5."));

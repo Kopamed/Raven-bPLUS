@@ -12,17 +12,18 @@ import keystrokesmod.client.utils.Utils;
 import java.awt.*;
 
 public class GuiModule extends Module {
-    public static SliderSetting backgroundOpacity;
 
-    public static ComboSetting preset, cnColor;
+    private static SliderSetting backgroundOpacity;
 
-    public static TickSetting categoryBackground, cleanUp, reset, usePreset,
+    private static ComboSetting preset, cnColor;
+
+    private static TickSetting categoryBackground, cleanUp, reset, usePreset,
 
     matchTopWBottomEnabled, matchTopWBottomDisabled,
             showGradientEnabled, showGradientDisabled,
             useCustomFont;
 
-    public static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
+    private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
             disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
 
     public GuiModule() {
@@ -89,64 +90,94 @@ public class GuiModule extends Module {
 
         this.disable();
     }
+    
+    private static Preset getPresetMode() {
+	return (Preset) preset.getMode();
+    }
+    
+    
+    public static int getBackgroundOpacity() {
+        return usePreset.isToggled() ? getPresetMode().backgroundOpacity : (int) backgroundOpacity.getInput();
+    }
+
+    public static boolean isCategoryBackgroundToggled() {
+        return usePreset.isToggled() ? getPresetMode().categoryBackground : categoryBackground.isToggled();
+    }
+
+    public static boolean showGradientEnabled() {
+	return usePreset.isToggled() ? getPresetMode().showGradientEnabled : showGradientEnabled.isToggled();
+    }
+
+    public static boolean showGradientDisabled() {
+	return usePreset.isToggled() ? getPresetMode().showGradientDisabled : showGradientDisabled.isToggled();
+    }
+
+    public static boolean useCustomFont() {
+	return usePreset.isToggled() ? getPresetMode().useCustomFont : useCustomFont.isToggled();
+    }
+
+    public static int getEnabledTopRGB() {
+	return usePreset.isToggled() ? getPresetMode().enabledTopRGB.getRGB() : enabledTopRGB.getRGB();
+    }
+
+    public static int getEnabledBottomRGB() {
+	return usePreset.isToggled() ? getPresetMode().enabledBottomRGB.getRGB() : enabledBottomRGB.getRGB();
+    }
+
+    public static int getEnabledTextRGB() {
+	return usePreset.isToggled() ? getPresetMode().enabledTextRGB.getRGB() : enabledTextRGB.getRGB();
+    }
+
+    public static int getDisabledTopRGB() {
+	return usePreset.isToggled() ? getPresetMode().disabledTopRGB.getRGB() : disabledTopRGB.getRGB();
+    }
+
+    public static int getDisabledBottomRGB() {
+	return usePreset.isToggled() ? getPresetMode().disabledBottomRGB.getRGB() : disabledBottomRGB.getRGB();
+    }
+
+    public static int getDisabledTextRGB() {
+	return usePreset.isToggled() ? getPresetMode().disabledTextRGB.getRGB() : disabledTextRGB.getRGB();
+    }
+
+    public static int getBackgroundRGB() {
+	return usePreset.isToggled() ? getPresetMode().backgroundRGB.getRGB() : backgroundRGB.getRGB();
+    }
+
+    public static Color getSettingBackgroundColor() {
+	return usePreset.isToggled() ? getPresetMode().settingBackgroundRGB : 
+	    new Color(settingBackgroundRGB.getRed(), settingBackgroundRGB.getGreen(), settingBackgroundRGB.getBlue(), (int) backgroundOpacity.getInput());
+    }
+
+    public static Color getCategoryBackgroundColor() {
+	return usePreset.isToggled() ? getPresetMode().categoryBackgroundRGB : 
+	    new Color(categoryBackgroundRGB.getRed(), categoryBackgroundRGB.getGreen(), categoryBackgroundRGB.getBlue(), (int) backgroundOpacity.getInput());
+    }
+
+    public static int getCategoryNameRGB() {
+	return usePreset.isToggled() ? getPresetMode().categoryNameRGB.getRGB() : categoryNameRGB.getRGB();
+    }
+    
+    public static CNColor getCNColor() {
+	return usePreset.isToggled() ? getPresetMode().cnColor : (CNColor) cnColor.getMode();
+    }
 
     public enum Preset {
-        IcyBlue(
-                true, false, false, true, 100,
-                CNColor.STATIC,
-                new Color(0, 0, 0),
-                new Color(0, 0, 0),
-                new Color(0, 0, 0),
-                new Color(0, 89, 218),
-                new Color(151, 236, 245),
-                new Color(255, 245, 224),
-                new Color(10, 0, 36),
-                new Color(0, 0, 160),
-                new Color(3, 200, 218),
-                new Color(50, 50, 50)
-        ),
-        Seaweed(
-                false, false, false, true, 100,
-                CNColor.STATIC,
-                new Color(0, 0, 0),
-                new Color(0, 0, 0),
-                new Color(50, 50, 50),
-                new Color(0, 0, 0),
-                new Color(0, 0, 0),
-                new Color(85, 186, 131),
-                new Color(0, 0, 0),
-                new Color(0, 0, 0),
-                new Color(55, 66, 58),
-                new Color(0, 0, 0)
-        ),
         Vape(
-                true, false, false, true, 100,
-                CNColor.STATIC,
-                new Color(255, 255, 255),
-                new Color(27, 25, 26),
-                new Color(27, 25, 26),
-                new Color(59, 132, 107),
-                new Color(59, 132, 107),
-                new Color(255, 255, 255),
-                new Color(27, 25, 26),
-                new Color(27, 25, 26),
-                new Color(255, 255, 255),
-                new Color(27, 25, 26)
-        ),
-        Vape2(
-                true, false, true, true, 100,
-                CNColor.STATIC,
-                new Color(255, 255, 255),
-                new Color(27, 25, 26),
-                new Color(27, 25, 26),
-                new Color(59, 132, 107),
-                new Color(59, 132, 107),
-                new Color(250, 250, 250),
-                new Color(27, 25, 26),
-                new Color(27, 25, 26),
-                new Color(255, 255, 255),
-                new Color(27, 25, 26)
-        );;
+                true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont - categoryBackground
+                CNColor.STATIC, // just leave this
+                //new Color(red, green, blue, alpha (optional out of 255 default is 255))
+                new Color(255, 255, 255), // categoryNameRGB
+                new Color(27, 25, 26, 255), // settingBackgroundRGB
+                new Color(27, 25, 26), // categoryBackgroundRGB
+                new Color(59, 132, 107), // enabledTopRGB
+                new Color(59, 132, 107), // enabledBottomRGB
+                new Color(250, 250, 250), // enabledTextRGB
+                new Color(27, 25, 26), // disabledTopRGB
+                new Color(27, 25, 26), // disabledBottomRGB
+                new Color(255, 255, 255), // disabledTextRGB
+                new Color(27, 25, 26) // backgroundRGB
+        );
 
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground;
@@ -154,26 +185,27 @@ public class GuiModule extends Module {
         public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
         public CNColor cnColor;
 
-        private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont, boolean categoryBackground, int backgroundOpacity,
+	private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont, boolean categoryBackground,
                        CNColor cnColor,
                        Color categoryNameRGB, Color settingBackgroundRGB, Color categoryBackgroundRGB, Color enabledTopRGB,
                        Color enabledBottomRGB, Color enabledTextRGB, Color disabledTopRGB, Color disabledBottomRGB,
                        Color disabledTextRGB, Color backgroundRGB) {
-            this.backgroundOpacity = backgroundOpacity;
-            this.cnColor = cnColor;
-            this.showGradientEnabled = showGradientEnabled;
-            this.showGradientDisabled = showGradientDisabled;
-            this.useCustomFont = useCustomFont;
-            this.categoryNameRGB = categoryNameRGB;
-            this.settingBackgroundRGB = settingBackgroundRGB;
-            this.categoryBackgroundRGB = categoryBackgroundRGB;
-            this.enabledTopRGB = enabledTopRGB;
-            this.enabledBottomRGB = enabledBottomRGB;
-            this.enabledTextRGB = enabledTextRGB;
-            this.disabledTopRGB = disabledTopRGB;
-            this.disabledBottomRGB = disabledBottomRGB;
-            this.disabledTextRGB = disabledTextRGB;
-            this.backgroundRGB = backgroundRGB;
+	    this.showGradientEnabled = showGradientEnabled;
+	    this.showGradientDisabled = showGradientDisabled;
+	    this.useCustomFont = useCustomFont;
+	    this.categoryBackground = categoryBackground;
+	    this.backgroundOpacity = backgroundOpacity;
+	    this.categoryNameRGB = categoryNameRGB;
+	    this.settingBackgroundRGB = settingBackgroundRGB;
+	    this.categoryBackgroundRGB = categoryBackgroundRGB;
+	    this.enabledTopRGB = enabledTopRGB;
+	    this.enabledBottomRGB = enabledBottomRGB;
+	    this.enabledTextRGB = enabledTextRGB;
+	    this.disabledTopRGB = disabledTopRGB;
+	    this.disabledBottomRGB = disabledBottomRGB;
+	    this.disabledTextRGB = disabledTextRGB;
+	    this.backgroundRGB = backgroundRGB;
+	    this.cnColor = cnColor;
         }
 
 

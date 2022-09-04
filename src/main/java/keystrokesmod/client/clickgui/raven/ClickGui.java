@@ -106,7 +106,7 @@ public class ClickGui extends GuiScreen {
             int rows = 1;
             for (int i = Raven.updateText.length - 1; i >= 0; i--) {
                 String up = Raven.updateText[i];
-                if (GuiModule.useCustomFont.isToggled()) {
+                if (GuiModule.useCustomFont()) {
                     FontUtil.normal.drawSmoothString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, Utils.Client.astolfoColorsDraw(10, 28, speed));
                 } else {
                     mc.fontRendererObj.drawStringWithShadow(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2, this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin, Utils.Client.astolfoColorsDraw(10, 28, speed));
@@ -115,7 +115,7 @@ public class ClickGui extends GuiScreen {
                 margin += 2;
             }
         } else {
-            if (GuiModule.useCustomFont.isToggled()) {
+            if (GuiModule.useCustomFont()) {
                 FontUtil.normal.drawSmoothString("Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
             } else {
                 mc.fontRendererObj.drawStringWithShadow("Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4, this.height - 3 - mc.fontRendererObj.FONT_HEIGHT, Utils.Client.astolfoColorsDraw(10, 14, speed));
