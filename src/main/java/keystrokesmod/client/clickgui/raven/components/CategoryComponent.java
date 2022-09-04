@@ -126,43 +126,23 @@ public class CategoryComponent {
             }
 
             //drawing the background for every module in the category
-            Color bgColor;
-            if (GuiModule.usePreset.isToggled()) {
-                GuiModule.Preset preset = (GuiModule.Preset) GuiModule.preset.getMode();
-                bgColor = moduleOpened ? (new Color(preset.settingBackgroundRGB.getRed(), preset.settingBackgroundRGB.getGreen(), preset.settingBackgroundRGB.getBlue(),
-                        (int) (preset.backgroundOpacity / 100 * 255))) : (new Color(preset.backgroundRGB.getRed(), preset.backgroundRGB.getGreen(),
-                        preset.backgroundRGB.getBlue(), (int) (preset.backgroundOpacity / 100 * 255)));
-            } else {
-                bgColor = (moduleOpened ? (new Color(GuiModule.settingBackgroundRGB.getRed(), GuiModule.settingBackgroundRGB.getGreen(), GuiModule.settingBackgroundRGB.getBlue(),
-                        (int) (GuiModule.backgroundOpacity.getInput() / 100 * 255))) : (new Color(GuiModule.backgroundRGB.getRed(), GuiModule.backgroundRGB.getGreen(),
-                        GuiModule.backgroundRGB.getBlue(), (int) (GuiModule.backgroundOpacity.getInput() / 100 * 255))));
-            }
-
+            Color bgColor = moduleOpened ? GuiModule.getCategoryBackgroundColor() : GuiModule.getSettingBackgroundColor();
             net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
             // 1000000 character lines make me want to kill myself
         }
 
-        if (GuiModule.categoryBackground.isToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
-            if (GuiModule.usePreset.isToggled()) {
-                GuiModule.Preset preset = (GuiModule.Preset) GuiModule.preset.getMode();
-                Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-                        preset.categoryBackgroundRGB.getRGB());
+        if (GuiModule.isCategoryBackgroundToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
+            Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
+                        GuiModule.getBackgroundRGB());
                 GlStateManager.resetColor();
-            } else {
-                Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-                        GuiModule.categoryBackgroundRGB.getRGB());
-                GlStateManager.resetColor();
-            }
-
         }
 
         // category name
         int colorCN;
-        GuiModule.Preset preset = (GuiModule.Preset) GuiModule.preset.getMode();
-        switch (GuiModule.usePreset.isToggled() ? (GuiModule.CNColor) preset.cnColor : (GuiModule.CNColor) GuiModule.cnColor.getMode()) {
+        switch (GuiModule.getCNColor()) {
 
             case STATIC:
-                colorCN = GuiModule.categoryNameRGB.getRGB();
+                colorCN = GuiModule.getCategoryNameRGB();
                 break;
 
             case RAINBOW:
@@ -174,7 +154,7 @@ public class CategoryComponent {
 
         }
 
-        if (GuiModule.useCustomFont.isToggled()) {
+        if (GuiModule.useCustomFont()) {
             FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2), (float) (this.y + 4), colorCN);
         } else {
             mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2), (float) (this.y + 4), colorCN, false);

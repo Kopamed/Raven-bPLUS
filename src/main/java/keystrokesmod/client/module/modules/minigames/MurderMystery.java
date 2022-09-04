@@ -1,6 +1,12 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.common.eventbus.Subscribe;
+
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -12,13 +18,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemEnderPearl;
+import net.minecraft.item.ItemFishingRod;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class MurderMystery extends Module {
     public static TickSetting alertMurderers;
@@ -65,7 +70,7 @@ public class MurderMystery extends Module {
                         String c4 = "&7[&cALERT&7]";
                         if (entity.getHeldItem() != null && entity.getHeldItem().hasDisplayName()) {
                             Item i = entity.getHeldItem().getItem();
-                            if (i instanceof ItemSword || i instanceof ItemAxe || entity.getHeldItem().getDisplayName().contains("Knife")) {
+                            if (i instanceof ItemSword || i instanceof ItemAxe || i instanceof ItemEnderPearl || i instanceof ItemHoe || i instanceof ItemPickaxe || i instanceof ItemFishingRod || entity.getHeldItem().getDisplayName().contains("Knife")) {
 
                                 if (!mur.contains(entity)) {
                                     mur.add(entity);
