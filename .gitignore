@@ -28,5 +28,3 @@ logs/
 saves/
 mc/
 jh
-src/main/java/keystrokesmod/client/elements/moduleelement/modules/combat/KillAura.java
-src/main/java/keystrokesmod/client/module/modules/combat/KillAura.java
