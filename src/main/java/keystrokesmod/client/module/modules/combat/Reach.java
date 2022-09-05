@@ -26,7 +26,6 @@ public class Reach extends Module {
     public static TickSetting weapon_only;
     public static TickSetting moving_only;
     public static TickSetting sprint_only;
-    public static TickSetting hit_through_blocks;
 
     public Reach() {
         super("Reach", ModuleCategory.combat);
@@ -34,74 +33,22 @@ public class Reach extends Module {
         this.registerSetting(weapon_only = new TickSetting("Weapon only", false));
         this.registerSetting(moving_only = new TickSetting("Moving only", false));
         this.registerSetting(sprint_only = new TickSetting("Sprint only", false));
-        this.registerSetting(hit_through_blocks = new TickSetting("Hit through blocks", false));
     }
 
-    @Subscribe
-    public void onMouse(ForgeEvent fe) {
-        if (fe.getEvent() instanceof MouseEvent) {
-            MouseEvent ev = (MouseEvent) fe.getEvent();
-
-            if (!Utils.Player.isPlayerInGame())
-                return;
-
-            Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-
-            if (autoClicker != null && autoClicker.isEnabled() && Mouse.isButtonDown(0))
-                return;
-
-            if (ev.button >= 0 && ev.buttonstate) {
-                call();
-            }
-        }
-    }
-
-    @Subscribe
-    public void onRender2D(Render2DEvent ev) {
+    public static double getReach() {
         if (!Utils.Player.isPlayerInGame())
-            return;
-
-        Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-
-        if (autoClicker == null || !autoClicker.isEnabled())
-            return;
-
-        if (autoClicker.isEnabled() && Mouse.isButtonDown(0)) {
-            call();
-        }
-    }
-
-    public static boolean call() {
-        if (!Utils.Player.isPlayerInGame())
-            return false;
+            return 0;
 
         if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon())
-            return false;
+            return 0;
 
         if (moving_only.isToggled() && (double) mc.thePlayer.moveForward == 0.0D && (double) mc.thePlayer.moveStrafing == 0.0D)
-            return false;
+            return 0;
 
         if (sprint_only.isToggled() && !mc.thePlayer.isSprinting())
-            return false;
+            return 0;
 
-        if (!hit_through_blocks.isToggled() && mc.objectMouseOver != null) {
-            BlockPos p = mc.objectMouseOver.getBlockPos();
-            if (p != null && mc.theWorld.getBlockState(p).getBlock() != Blocks.air) {
-                return false;
-            }
-        }
-
-        double r = Utils.Client.ranModuleVal(reach, Utils.Java.rand());
-        Object[] o = zz(r, 0.0D);
-
-        if (o == null) {
-            return false;
-        } else {
-            Entity en = (Entity) o[0];
-            mc.objectMouseOver = new MovingObjectPosition(en, (Vec3) o[1]);
-            mc.pointedEntity = en;
-            return true;
-        }
+        return Utils.Client.ranModuleVal(reach, Utils.Java.rand());
     }
 
     private static Object[] zz(double zzD, double zzE) {
