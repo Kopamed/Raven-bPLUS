@@ -21,7 +21,7 @@ jobs:
           java-version: 8
           cache: "gradle"
       - name: Build
-        run: ./gradlew setupCiWorkspace && ./gradlew build
+        run: ./gradlew setupCiWorkspace clean build
         
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
