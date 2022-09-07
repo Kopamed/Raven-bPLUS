@@ -1,1 +1,0 @@
-.\\gradlew setupCiWorkspace clean build
