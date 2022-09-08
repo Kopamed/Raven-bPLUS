@@ -35,7 +35,8 @@ public class PlayerProfile {
             }
         }
 
-        String textFromURL = Utils.URLS.getTextFromURL("https://api.hypixel.net/player?key=" + Utils.URLS.hypixelApiKey + "&uuid=" + uuid);
+        String textFromURL = Utils.URLS
+                .getTextFromURL("https://api.hypixel.net/player?key=" + Utils.URLS.hypixelApiKey + "&uuid=" + uuid);
         if (textFromURL.isEmpty()) {
             this.nicked = true;
         } else if (textFromURL.equals("{\"success\":true,\"player\":null}")) {
@@ -51,40 +52,40 @@ public class PlayerProfile {
             }
 
             switch (statsMode) {
-                case OVERALL:
-                    this.wins = getValueAsInt(d, "wins");
-                    this.losses = getValueAsInt(d, "losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak");
-                    break;
-                case BRIDGE:
-                    this.wins = getValueAsInt(d, "bridge_duel_wins");
-                    this.losses = getValueAsInt(d, "bridge_duel_losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak_mode_bridge_duel");
-                    break;
-                case UHC:
-                    this.wins = getValueAsInt(d, "uhc_duel_wins");
-                    this.losses = getValueAsInt(d, "uhc_duel_losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak_mode_uhc_duel");
-                    break;
-                case SKYWARS:
-                    this.wins = getValueAsInt(d, "sw_duel_wins");
-                    this.losses = getValueAsInt(d, "sw_duel_losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak_mode_sw_duel");
-                    break;
-                case CLASSIC:
-                    this.wins = getValueAsInt(d, "classic_duel_wins");
-                    this.losses = getValueAsInt(d, "classic_duel_losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak_mode_classic_duel");
-                    break;
-                case SUMO:
-                    this.wins = getValueAsInt(d, "sumo_duel_wins");
-                    this.losses = getValueAsInt(d, "sumo_duel_losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak_mode_sumo_duel");
-                    break;
-                case OP:
-                    this.wins = getValueAsInt(d, "op_duel_wins");
-                    this.losses = getValueAsInt(d, "op_duel_losses");
-                    this.winStreak = getValueAsInt(d, "current_winstreak_mode_op_duel");
+            case OVERALL:
+                this.wins = getValueAsInt(d, "wins");
+                this.losses = getValueAsInt(d, "losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak");
+                break;
+            case BRIDGE:
+                this.wins = getValueAsInt(d, "bridge_duel_wins");
+                this.losses = getValueAsInt(d, "bridge_duel_losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak_mode_bridge_duel");
+                break;
+            case UHC:
+                this.wins = getValueAsInt(d, "uhc_duel_wins");
+                this.losses = getValueAsInt(d, "uhc_duel_losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak_mode_uhc_duel");
+                break;
+            case SKYWARS:
+                this.wins = getValueAsInt(d, "sw_duel_wins");
+                this.losses = getValueAsInt(d, "sw_duel_losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak_mode_sw_duel");
+                break;
+            case CLASSIC:
+                this.wins = getValueAsInt(d, "classic_duel_wins");
+                this.losses = getValueAsInt(d, "classic_duel_losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak_mode_classic_duel");
+                break;
+            case SUMO:
+                this.wins = getValueAsInt(d, "sumo_duel_wins");
+                this.losses = getValueAsInt(d, "sumo_duel_losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak_mode_sumo_duel");
+                break;
+            case OP:
+                this.wins = getValueAsInt(d, "op_duel_wins");
+                this.losses = getValueAsInt(d, "op_duel_losses");
+                this.winStreak = getValueAsInt(d, "current_winstreak_mode_op_duel");
             }
         }
     }

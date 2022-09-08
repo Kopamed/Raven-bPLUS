@@ -70,7 +70,9 @@ public class MurderMystery extends Module {
                         String c4 = "&7[&cALERT&7]";
                         if (entity.getHeldItem() != null && entity.getHeldItem().hasDisplayName()) {
                             Item i = entity.getHeldItem().getItem();
-                            if (i instanceof ItemSword || i instanceof ItemAxe || i instanceof ItemEnderPearl || i instanceof ItemHoe || i instanceof ItemPickaxe || i instanceof ItemFishingRod || entity.getHeldItem().getDisplayName().contains("Knife")) {
+                            if (i instanceof ItemSword || i instanceof ItemAxe || i instanceof ItemEnderPearl
+                                    || i instanceof ItemHoe || i instanceof ItemPickaxe || i instanceof ItemFishingRod
+                                    || entity.getHeldItem().getDisplayName().contains("Knife")) {
 
                                 if (!mur.contains(entity)) {
                                     mur.add(entity);
@@ -82,7 +84,8 @@ public class MurderMystery extends Module {
                                     }
 
                                     if (announceMurder.isToggled()) {
-                                        String msg = Utils.Java.randomChoice(new String[]{entity.getName() + " " + c6, entity.getName()});
+                                        String msg = Utils.Java.randomChoice(
+                                                new String[] { entity.getName() + " " + c6, entity.getName() });
                                         mc.thePlayer.sendChatMessage(msg);
                                     }
                                 }
@@ -116,7 +119,8 @@ public class MurderMystery extends Module {
 
     private boolean inMMGame() {
         if (Utils.Client.isHyp()) {
-            if (mc.thePlayer.getWorldScoreboard() == null || mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1) == null) {
+            if (mc.thePlayer.getWorldScoreboard() == null
+                    || mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1) == null) {
                 return false;
             }
 

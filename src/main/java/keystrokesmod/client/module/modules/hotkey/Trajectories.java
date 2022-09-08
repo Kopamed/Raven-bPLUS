@@ -52,6 +52,7 @@ public class Trajectories extends Module {
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
 
-        return itemInSlot != null && (itemInSlot.getItem() instanceof ItemSnowball || itemInSlot.getItem() instanceof ItemEgg || itemInSlot.getItem() instanceof ItemFishingRod);
+        return itemInSlot != null && (itemInSlot.getItem() instanceof ItemSnowball
+                || itemInSlot.getItem() instanceof ItemEgg || itemInSlot.getItem() instanceof ItemFishingRod);
     }
 }

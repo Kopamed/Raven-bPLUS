@@ -35,15 +35,18 @@ public class AutoArmour extends Module {
         if (mc.currentScreen != null && mc.thePlayer != null) {
             if (mc.thePlayer.openContainer instanceof ContainerPlayer) {
                 if (!inInv) {
-                    delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(), firstDelay.getInputMax() + 0.01));
+                    delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(),
+                            firstDelay.getInputMax() + 0.01));
                     delayTimer.start();
                     generatePath((ContainerPlayer) mc.thePlayer.openContainer);
                     inInv = true;
                 }
                 if (!sortedSlots.isEmpty()) {
                     if (delayTimer.hasFinished()) {
-                        mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1, mc.thePlayer);
-                        delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(), delay.getInputMax() + 0.01));
+                        mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1,
+                                mc.thePlayer);
+                        delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(),
+                                delay.getInputMax() + 0.01));
                         delayTimer.start();
                         sortedSlots.remove(0);
                     }
@@ -56,11 +59,13 @@ public class AutoArmour extends Module {
 
     public void generatePath(ContainerPlayer inv) {
         ArrayList<Slot> slots = new ArrayList<>();
-        Slot[] bestArmour = {new Slot(-1), new Slot(-1), new Slot(-1), new Slot(-1)};
+        Slot[] bestArmour = { new Slot(-1), new Slot(-1), new Slot(-1), new Slot(-1) };
         for (int i = 0; i < inv.getInventory().size(); i++) {
-            if (inv.getInventory().get(i) != null && inv.getInventory().get(i).getItem() instanceof ItemArmor && !(i > 4 && i < 9)) {
+            if (inv.getInventory().get(i) != null && inv.getInventory().get(i).getItem() instanceof ItemArmor
+                    && !(i > 4 && i < 9)) {
                 Slot ia = new Slot(i);
-                if (bestArmour[ia.at].v < ia.v) bestArmour[ia.at] = ia;
+                if (bestArmour[ia.at].v < ia.v)
+                    bestArmour[ia.at] = ia;
             }
         }
         for (int i = 0; i < 4; i++) {

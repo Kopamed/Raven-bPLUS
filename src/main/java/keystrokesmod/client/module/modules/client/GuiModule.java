@@ -19,12 +19,10 @@ public class GuiModule extends Module {
 
     private static TickSetting categoryBackground, cleanUp, reset, usePreset, rainbowNotification, notifications,
 
-    matchTopWBottomEnabled, matchTopWBottomDisabled,
-    showGradientEnabled, showGradientDisabled,
-    useCustomFont;
+            matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, useCustomFont;
 
-    private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB,
-    disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
+    private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB,
+            disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
 
     public GuiModule() {
         super("Gui", ModuleCategory.client);
@@ -81,7 +79,6 @@ public class GuiModule extends Module {
             Raven.clickGui.resetSort();
         }
 
-
     }
 
     public void onEnable() {
@@ -97,9 +94,8 @@ public class GuiModule extends Module {
         return (Preset) preset.getMode();
     }
 
-
     public static int getBackgroundOpacity() {
-        return  usePreset.isToggled() ? getPresetMode().backgroundOpacity : (int) (backgroundOpacity.getInput() * 2.55);
+        return usePreset.isToggled() ? getPresetMode().backgroundOpacity : (int) (backgroundOpacity.getInput() * 2.55);
     }
 
     public static boolean isCategoryBackgroundToggled() {
@@ -147,13 +143,15 @@ public class GuiModule extends Module {
     }
 
     public static Color getSettingBackgroundColor() {
-        return usePreset.isToggled() ? getPresetMode().settingBackgroundRGB : 
-            new Color(settingBackgroundRGB.getRed(), settingBackgroundRGB.getGreen(), settingBackgroundRGB.getBlue(), (int) getBackgroundOpacity());
+        return usePreset.isToggled() ? getPresetMode().settingBackgroundRGB
+                : new Color(settingBackgroundRGB.getRed(), settingBackgroundRGB.getGreen(),
+                        settingBackgroundRGB.getBlue(), (int) getBackgroundOpacity());
     }
 
     public static Color getCategoryBackgroundColor() {
-        return usePreset.isToggled() ? getPresetMode().categoryBackgroundRGB : 
-            new Color(categoryBackgroundRGB.getRed(), categoryBackgroundRGB.getGreen(), categoryBackgroundRGB.getBlue(), (int) getBackgroundOpacity());
+        return usePreset.isToggled() ? getPresetMode().categoryBackgroundRGB
+                : new Color(categoryBackgroundRGB.getRed(), categoryBackgroundRGB.getGreen(),
+                        categoryBackgroundRGB.getBlue(), (int) getBackgroundOpacity());
     }
 
     public static int getCategoryNameRGB() {
@@ -163,20 +161,20 @@ public class GuiModule extends Module {
     public static CNColor getCNColor() {
         return usePreset.isToggled() ? getPresetMode().cnColor : (CNColor) cnColor.getMode();
     }
-    
+
     public static boolean rainbowNotification() {
-	return rainbowNotification.isToggled();
+        return rainbowNotification.isToggled();
     }
-    
+
     public static boolean notifications() {
-	return notifications.isToggled();
+        return notifications.isToggled();
     }
 
     public enum Preset {
-        Vape(
-                true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont - categoryBackground
+        Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+                                      // categoryBackground
                 CNColor.STATIC, // just leave this
-                //new Color(red, green, blue, alpha (optional out of 255 default is 255))
+                // new Color(red, green, blue, alpha (optional out of 255 default is 255))
                 new Color(255, 255, 255), // categoryNameRGB
                 new Color(27, 25, 26, 255), // settingBackgroundRGB
                 new Color(27, 25, 26), // categoryBackgroundRGB
@@ -187,11 +185,11 @@ public class GuiModule extends Module {
                 new Color(27, 25, 26), // disabledBottomRGB
                 new Color(255, 255, 255), // disabledTextRGB
                 new Color(27, 25, 26) // backgroundRGBW
-                ),
-        PlusPlus( // name
-                false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont - categoryBackground
+        ), PlusPlus( // name
+                false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+                                          // categoryBackground
                 CNColor.STATIC, // just leave this
-                //new Color(red, green, blue, alpha (optional out of 255 default is 255))
+                // new Color(red, green, blue, alpha (optional out of 255 default is 255))
                 new Color(255, 255, 255), // categoryNameRGB
                 new Color(176, 103, 255, 153), // settingBackgroundRGB
                 new Color(176, 103, 255, 153), // categoryBackgroundRGB
@@ -204,17 +202,16 @@ public class GuiModule extends Module {
                 new Color(173, 0, 233) // backgroundRGB
         );
 
-
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground;
         public int backgroundOpacity;
-        public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
+        public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
+                enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
         public CNColor cnColor;
 
-        private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont, boolean categoryBackground,
-                CNColor cnColor,
-                Color categoryNameRGB, Color settingBackgroundRGB, Color categoryBackgroundRGB, Color enabledTopRGB,
-                Color enabledBottomRGB, Color enabledTextRGB, Color disabledTopRGB, Color disabledBottomRGB,
-                Color disabledTextRGB, Color backgroundRGB) {
+        private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
+                boolean categoryBackground, CNColor cnColor, Color categoryNameRGB, Color settingBackgroundRGB,
+                Color categoryBackgroundRGB, Color enabledTopRGB, Color enabledBottomRGB, Color enabledTextRGB,
+                Color disabledTopRGB, Color disabledBottomRGB, Color disabledTextRGB, Color backgroundRGB) {
             this.showGradientEnabled = showGradientEnabled;
             this.showGradientDisabled = showGradientDisabled;
             this.useCustomFont = useCustomFont;
@@ -232,7 +229,6 @@ public class GuiModule extends Module {
             this.backgroundRGB = backgroundRGB;
             this.cnColor = cnColor;
         }
-
 
     }
 

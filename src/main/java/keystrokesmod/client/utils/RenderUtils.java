@@ -30,15 +30,8 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         try {
-            Method m = ReflectionHelper.findMethod(
-                    EntityRenderer.class,
-                    Minecraft.getMinecraft().entityRenderer,
-                    new String[]{
-                            "func_78479_a",
-                            "setupCameraTransform"
-                    },
-                    float.class, int.class
-            );
+            Method m = ReflectionHelper.findMethod(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer,
+                    new String[] { "func_78479_a", "setupCameraTransform" }, float.class, int.class);
 
             m.setAccessible(true);
             m.invoke(Minecraft.getMinecraft().entityRenderer, Utils.Client.getTimer().renderPartialTicks, 0);
@@ -56,7 +49,8 @@ public class RenderUtils {
         color.getColorComponents(afloat);
         color1.getColorComponents(afloat1);
 
-        return new Color(afloat[0] * f + afloat1[0] * f1, afloat[1] * f + afloat1[1] * f1, afloat[2] * f + afloat1[2] * f1);
+        return new Color(afloat[0] * f + afloat1[0] * f1, afloat[1] * f + afloat1[1] * f1,
+                afloat[2] * f + afloat1[2] * f1);
     }
 
     public static void drawImage(ResourceLocation image, float x, float y, float width, float height) {

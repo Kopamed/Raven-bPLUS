@@ -20,7 +20,7 @@ public abstract class Command {
     }
 
     public Command(String name, String help, int minArgs, int maxArgs, String[] args) {
-        this(name, help, minArgs, maxArgs, args, new String[]{});
+        this(name, help, minArgs, maxArgs, args, new String[] {});
     }
 
     public String getName() {

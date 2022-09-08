@@ -39,7 +39,8 @@ public class Boost extends Module {
 
         if (this.t) {
             Module timer = Raven.moduleManager.getModuleByClazz(Timer.class);
-            if (timer != null) timer.enable();
+            if (timer != null)
+                timer.enable();
         }
 
         this.t = false;

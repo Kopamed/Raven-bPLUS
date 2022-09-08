@@ -76,7 +76,8 @@ public class SafeWalk extends Module {
 
         if (doShift.isToggled()) {
             if (lookDown.isToggled()) {
-                if (mc.thePlayer.rotationPitch < pitchRange.getInputMin() || mc.thePlayer.rotationPitch > pitchRange.getInputMax()) {
+                if (mc.thePlayer.rotationPitch < pitchRange.getInputMin()
+                        || mc.thePlayer.rotationPitch > pitchRange.getInputMax()) {
                     shouldBridge = false;
                     if (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
                         setShift(true);
@@ -107,26 +108,36 @@ public class SafeWalk extends Module {
                 if (Utils.Player.playerOverAir()) {
                     // code fo the timer
                     if (shiftTimeSettingActive) { // making sure that the player has set the value so some number
-                        shiftTimer.setCooldown(Utils.Java.randomInt(shiftTime.getInputMin(), shiftTime.getInputMax() + 0.1));
+                        shiftTimer.setCooldown(
+                                Utils.Java.randomInt(shiftTime.getInputMin(), shiftTime.getInputMax() + 0.1));
                         shiftTimer.start();
                     }
 
                     isShifting = true;
                     this.setShift(true);
                     shouldBridge = true;
-                } else if (mc.thePlayer.isSneaking() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled()) { // if player is smeaking and shiftDown and holdSetting turned on
+                } else if (mc.thePlayer.isSneaking() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())
+                        && onHold.isToggled()) { // if player is smeaking and shiftDown and holdSetting turned on
                     isShifting = false;
                     shouldBridge = false;
                     this.setShift(false);
-                } else if (onHold.isToggled() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) { // if shiftDown and holdSetting turned on
+                } else if (onHold.isToggled() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) { // if
+                                                                                                                   // shiftDown
+                                                                                                                   // and
+                                                                                                                   // holdSetting
+                                                                                                                   // turned
+                                                                                                                   // on
                     isShifting = false;
                     shouldBridge = false;
                     this.setShift(false);
-                } else if (mc.thePlayer.isSneaking() && (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled()) && (!shiftTimeSettingActive || shiftTimer.hasFinished())) {
+                } else if (mc.thePlayer.isSneaking()
+                        && (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && onHold.isToggled())
+                        && (!shiftTimeSettingActive || shiftTimer.hasFinished())) {
                     isShifting = false;
                     this.setShift(false);
                     shouldBridge = true;
-                } else if (mc.thePlayer.isSneaking() && !onHold.isToggled() && (!shiftTimeSettingActive || shiftTimer.hasFinished())) {
+                } else if (mc.thePlayer.isSneaking() && !onHold.isToggled()
+                        && (!shiftTimeSettingActive || shiftTimer.hasFinished())) {
                     isShifting = false;
                     this.setShift(false);
                     shouldBridge = true;
@@ -138,7 +149,8 @@ public class SafeWalk extends Module {
                 isShifting = true;
                 this.setShift(true);
             } else {
-                // rn we are in the air and we are not flying, meaning that we are in a jump. and since shiftOnJump is turned off, we just unshift and uhh... nyoooom
+                // rn we are in the air and we are not flying, meaning that we are in a jump.
+                // and since shiftOnJump is turned off, we just unshift and uhh... nyoooom
                 isShifting = false;
                 this.setShift(false);
             }
@@ -147,13 +159,15 @@ public class SafeWalk extends Module {
 
     @Subscribe
     public void onRender2D(Render2DEvent e) {
-        if (!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame()) return;
+        if (!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame())
+            return;
         if (mc.currentScreen == null) {
             if (shouldBridge) {
                 ScaledResolution res = new ScaledResolution(mc);
 
                 int totalBlocks = 0;
-                if (BlockAmountInfo.values()[(int) blockShowMode.getInput() - 1] == BlockAmountInfo.BLOCKS_IN_CURRENT_STACK) {
+                if (BlockAmountInfo.values()[(int) blockShowMode.getInput()
+                        - 1] == BlockAmountInfo.BLOCKS_IN_CURRENT_STACK) {
                     totalBlocks = Utils.Player.getBlockAmountInCurrentStack(mc.thePlayer.inventory.currentItem);
                 } else {
                     for (int slot = 0; slot < 36; slot++) {
@@ -196,7 +210,6 @@ public class SafeWalk extends Module {
     }
 
     public enum BlockAmountInfo {
-        BLOCKS_IN_TOTAL,
-        BLOCKS_IN_CURRENT_STACK
+        BLOCKS_IN_TOTAL, BLOCKS_IN_CURRENT_STACK
     }
 }

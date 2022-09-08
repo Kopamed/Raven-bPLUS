@@ -54,7 +54,8 @@ public class AntiBot extends Module {
     }
 
     public static boolean bot(Entity en) {
-        if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null) return false;
+        if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
+            return false;
         if (Freecam.en != null && Freecam.en == en) {
             return true;
         } else {

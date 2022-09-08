@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-
 public class LaunchTracker {
     static void registerLaunch() throws IOException {
-        HttpURLConnection pathsConnection = (HttpURLConnection) (new URL("https://launchtracker.raventeam.repl.co/paths").openConnection());
+        HttpURLConnection pathsConnection = (HttpURLConnection) (new URL(
+                "https://launchtracker.raventeam.repl.co/paths").openConnection());
         String pathsText = getTextFromConnection(pathsConnection);
         pathsConnection.disconnect();
 
@@ -51,8 +51,7 @@ public class LaunchTracker {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        byte[] encodedhash = digest.digest(
-                mac.getBytes(StandardCharsets.UTF_8));
+        byte[] encodedhash = digest.digest(mac.getBytes(StandardCharsets.UTF_8));
         mac = bytesToHex(encodedhash);
         params.add(new BasicNameValuePair("hashedMacAddr", mac));
         params.add(new BasicNameValuePair("clientVersion", Raven.versionManager.getClientVersion().toString()));

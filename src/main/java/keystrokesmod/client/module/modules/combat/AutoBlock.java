@@ -30,14 +30,19 @@ public class AutoBlock extends Module {
             return;
 
         if (engaged) {
-            if ((engagedTime.hasFinished() || !Mouse.isButtonDown(0)) && duration.getInputMin() <= engagedTime.getElapsedTime()) {
+            if ((engagedTime.hasFinished() || !Mouse.isButtonDown(0))
+                    && duration.getInputMin() <= engagedTime.getElapsedTime()) {
                 engaged = false;
                 release();
             }
             return;
         }
 
-        if (Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin() && mc.objectMouseOver.entityHit != null && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax() && (chance.getInput() == 100 || Math.random() <= chance.getInput() / 100)) {
+        if (Mouse.isButtonDown(0) && mc.objectMouseOver != null && mc.objectMouseOver.entityHit != null
+                && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) >= distance.getInputMin()
+                && mc.objectMouseOver.entityHit != null
+                && mc.thePlayer.getDistanceToEntity(mc.objectMouseOver.entityHit) <= distance.getInputMax()
+                && (chance.getInput() == 100 || Math.random() <= chance.getInput() / 100)) {
             engaged = true;
             engagedTime.setCooldown((long) duration.getInputMax());
             engagedTime.start();

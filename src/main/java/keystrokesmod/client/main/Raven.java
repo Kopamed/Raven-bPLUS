@@ -30,7 +30,6 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-
 //Todo fix wtap
 /* todo dump
 ghost blocks add ability to place air and or other block by ID possibly
@@ -83,14 +82,18 @@ public class Raven {
     public static final String sourceLocation = "https://github.com/K-ov/Raven-bPLUS";
     public static final String downloadLocation = "https://github.com/K-ov/Raven-bPLUS/raw/stable/build/libs/%5B1.8.9%5D%20BetterKeystrokes%20V-1.2.jar";
     public static final String discord = "https://discord.gg/UqJ8ngteud";
-    public static String[] updateText = {"Your version of Raven B++ (" + versionManager.getClientVersion().toString() + ") is outdated!", "Enter the command update into client CommandLine to open the download page", "or just enable the update module to get a message in chat.", "", "Newest version: " + versionManager.getLatestVersion().toString()};
+    public static String[] updateText = {
+            "Your version of Raven B++ (" + versionManager.getClientVersion().toString() + ") is outdated!",
+            "Enter the command update into client CommandLine to open the download page",
+            "or just enable the update module to get a message in chat.", "",
+            "Newest version: " + versionManager.getLatestVersion().toString() };
     public static ConfigManager configManager;
     public static ClientConfig clientConfig;
 
     public static final ModuleManager moduleManager = new ModuleManager();
 
     public static ClickGui clickGui;
-    //public static TabGui tabGui;
+    // public static TabGui tabGui;
 
     private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
 
@@ -99,7 +102,6 @@ public class Raven {
     public static final String osName, osArch;
 
     public static final EventBus eventBus = new EventBus(); // use this
-
 
     static {
         osName = System.getProperty("os.name").toLowerCase();
@@ -125,7 +127,8 @@ public class Raven {
         try {
             assert ravenLogoInputStream != null;
             bf = ImageIO.read(ravenLogoInputStream);
-            mResourceLocation = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
+            mResourceLocation = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",
+                    new DynamicTexture(bf));
         } catch (IOException | IllegalArgumentException | NullPointerException noway) {
             noway.printStackTrace();
             mResourceLocation = null;

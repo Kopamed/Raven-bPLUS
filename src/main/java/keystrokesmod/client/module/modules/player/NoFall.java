@@ -24,56 +24,56 @@ public class NoFall extends Module {
     @Subscribe
     public void onTick(TickEvent e) {
         switch ((Mode) mode.getMode()) {
-            case Spoof:
-                if ((double) mc.thePlayer.fallDistance > 2.5D) {
-                    mc.thePlayer.onGround = true;
-                }
-                break;
+        case Spoof:
+            if ((double) mc.thePlayer.fallDistance > 2.5D) {
+                mc.thePlayer.onGround = true;
+            }
+            break;
 
-            case HypixelSpoof:
-                if (mc.thePlayer.onGround) {
-                    ticks = 0;
-                    dist = 0;
-                    spoofing = false;
-                } else {
-                    if (mc.thePlayer.fallDistance > 2) {
-                        if (spoofing) {
-                            ticks++;
-                            mc.thePlayer.onGround = true;
+        case HypixelSpoof:
+            if (mc.thePlayer.onGround) {
+                ticks = 0;
+                dist = 0;
+                spoofing = false;
+            } else {
+                if (mc.thePlayer.fallDistance > 2) {
+                    if (spoofing) {
+                        ticks++;
+                        mc.thePlayer.onGround = true;
 
-                            if (ticks >= 2) {
-                                spoofing = false;
-                                ticks = 0;
-                                dist = mc.thePlayer.fallDistance;
-                            }
-                        } else {
-                            if (mc.thePlayer.fallDistance - dist > 2) {
-                                spoofing = true;
-                            }
-                        }
-                    }
-                }
-                break;
-
-            case Verus:
-                if (mc.thePlayer.onGround) {
-                    dist = 0;
-                    spoofing = false;
-                } else {
-                    if (mc.thePlayer.fallDistance > 2) {
-                        if (spoofing) {
-                            mc.thePlayer.onGround = true;
-                            mc.thePlayer.motionY = 0;
+                        if (ticks >= 2) {
                             spoofing = false;
+                            ticks = 0;
                             dist = mc.thePlayer.fallDistance;
-                        } else {
-                            if (mc.thePlayer.fallDistance - dist > 2) {
-                                spoofing = true;
-                            }
+                        }
+                    } else {
+                        if (mc.thePlayer.fallDistance - dist > 2) {
+                            spoofing = true;
                         }
                     }
                 }
-                break;
+            }
+            break;
+
+        case Verus:
+            if (mc.thePlayer.onGround) {
+                dist = 0;
+                spoofing = false;
+            } else {
+                if (mc.thePlayer.fallDistance > 2) {
+                    if (spoofing) {
+                        mc.thePlayer.onGround = true;
+                        mc.thePlayer.motionY = 0;
+                        spoofing = false;
+                        dist = mc.thePlayer.fallDistance;
+                    } else {
+                        if (mc.thePlayer.fallDistance - dist > 2) {
+                            spoofing = true;
+                        }
+                    }
+                }
+            }
+            break;
         }
     }
 

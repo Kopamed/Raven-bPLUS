@@ -34,7 +34,8 @@ public class WaterBucket extends Module {
     @Subscribe
     public void onTick(TickEvent ev) {
         if (Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
-            if (DimensionHelper.isPlayerInNether()) this.disable();
+            if (DimensionHelper.isPlayerInNether())
+                this.disable();
 
             if (this.inPosition() && this.holdWaterBucket()) {
                 this.handling = true;
@@ -51,7 +52,8 @@ public class WaterBucket extends Module {
     }
 
     private boolean inPosition() {
-        if (mc.thePlayer.motionY < -0.6D && !mc.thePlayer.onGround && !mc.thePlayer.capabilities.isFlying && !mc.thePlayer.capabilities.isCreativeMode && !this.handling) {
+        if (mc.thePlayer.motionY < -0.6D && !mc.thePlayer.onGround && !mc.thePlayer.capabilities.isFlying
+                && !mc.thePlayer.capabilities.isCreativeMode && !this.handling) {
             BlockPos playerPos = mc.thePlayer.getPosition();
 
             for (int i = 1; i < 3; ++i) {

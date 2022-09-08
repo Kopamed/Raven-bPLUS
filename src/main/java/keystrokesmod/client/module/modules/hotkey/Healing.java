@@ -23,7 +23,6 @@ public class Healing extends Module {
         this.registerSetting(itemMode = new ComboSetting("Mode:", mode));
     }
 
-
     @Override
     public void onEnable() {
         if (!Utils.Player.isPlayerInGame())
@@ -31,7 +30,6 @@ public class Healing extends Module {
 
         if (preferSlot.isToggled()) {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
-
 
             if (itemMode.getMode() == HealingItems.SOUP && isSoup(preferedSlot)) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
@@ -45,7 +43,8 @@ public class Healing extends Module {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
-            } else if (itemMode.getMode() == HealingItems.ALL && (isGapple(preferedSlot) || isFood(preferedSlot) || isSoup(preferedSlot))) {
+            } else if (itemMode.getMode() == HealingItems.ALL
+                    && (isGapple(preferedSlot) || isFood(preferedSlot) || isSoup(preferedSlot))) {
                 mc.thePlayer.inventory.currentItem = preferedSlot;
                 this.disable();
                 return;
@@ -91,13 +90,10 @@ public class Healing extends Module {
     }
 
     public enum HealingItems {
-        SOUP,
-        GAPPLE,
-        //NOTCH_APPLE,
-        //HEAD,
-        FOOD,
-        HEAL_POT,
-        ALL
+        SOUP, GAPPLE,
+        // NOTCH_APPLE,
+        // HEAD,
+        FOOD, HEAL_POT, ALL
     }
 
     public boolean isSoup(int slot) {

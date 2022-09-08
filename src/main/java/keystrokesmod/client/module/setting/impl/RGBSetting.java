@@ -14,12 +14,11 @@ public class RGBSetting extends Setting {
     private int[] defaultColour = new int[2];
     private int colorRGB;
 
-
     public RGBSetting(String name, int defaultRed, int defaultGreen, int defaultBlue) {
         super(name);
         this.name = name;
-        this.defaultColour = new int[]{defaultRed, defaultGreen, defaultBlue};
-        this.colour = new int[]{defaultRed, defaultGreen, defaultBlue};
+        this.defaultColour = new int[] { defaultRed, defaultGreen, defaultBlue };
+        this.colour = new int[] { defaultRed, defaultGreen, defaultBlue };
         colorRGB = new Color(defaultRed, defaultGreen, defaultBlue).getRGB();
     }
 

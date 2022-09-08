@@ -78,7 +78,7 @@ public class ModuleManager {
         addModule(new FakeChat());
         addModule(new NameHider());
         addModule(new WaterBucket());
-        //addModule(new AutoConfig());
+        // addModule(new AutoConfig());
         addModule(new Terminal());
         addModule(new GuiModule());
         addModule(new SelfDestruct());
@@ -133,7 +133,8 @@ public class ModuleManager {
     // prefer using getModuleByClazz();
     // ok might add in 1.0.18
     public Module getModuleByName(String name) {
-        if (!initialized) return null;
+        if (!initialized)
+            return null;
 
         for (Module module : modules) {
             if (module.getName().replaceAll(" ", "").equalsIgnoreCase(name) || module.getName().equalsIgnoreCase(name))
@@ -143,7 +144,8 @@ public class ModuleManager {
     }
 
     public Module getModuleByClazz(Class<? extends Module> c) {
-        if (!initialized) return null;
+        if (!initialized)
+            return null;
 
         for (Module module : modules) {
             if (module.getClass().equals(c))
@@ -202,7 +204,8 @@ public class ModuleManager {
     }
 
     public void sort() {
-        modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+        modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())
+                - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
     }
 
     public int numberOfModules() {
@@ -214,7 +217,8 @@ public class ModuleManager {
     }
 
     public void sortShortLong() {
-        modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+        modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())
+                - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
     }
 
     public int getLongestActiveModule(FontRenderer fr) {

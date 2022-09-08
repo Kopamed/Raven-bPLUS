@@ -6,7 +6,8 @@ import keystrokesmod.client.module.modules.other.NameHider;
 
 public class Cname extends Command {
     public Cname() {
-        super("cname", "Hides your name client-side", 1, 1, new String[]{"New name"}, new String[]{"cn", "changename"});
+        super("cname", "Hides your name client-side", 1, 1, new String[] { "New name" },
+                new String[] { "cn", "changename" });
     }
 
     @Override

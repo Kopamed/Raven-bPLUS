@@ -29,7 +29,6 @@ public class Weapon extends Module {
                 }
             }
 
-
         }
         if (index > -1 && damage > -1) {
             if (mc.thePlayer.inventory.currentItem != index) {

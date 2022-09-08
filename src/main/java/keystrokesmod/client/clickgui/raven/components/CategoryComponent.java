@@ -45,7 +45,8 @@ public class CategoryComponent {
     public void loadAllModules() {
         this.modulesInCategory.clear();
         int tY = this.bh + 3;
-        for (Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+        for (Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3
+                .hasNext(); tY += 16) {
             Module mod = var3.next();
             ModuleComponent b = new ModuleComponent(mod, this, tY);
             this.modulesInCategory.add(b);
@@ -121,47 +122,55 @@ public class CategoryComponent {
             int categoryHeight = 0;
 
             Component moduleRenderManager;
-            for (Iterator moduleInCategoryIterator = this.getModules().iterator(); moduleInCategoryIterator.hasNext(); categoryHeight += moduleRenderManager.getHeight()) {
+            for (Iterator moduleInCategoryIterator = this.getModules().iterator(); moduleInCategoryIterator
+                    .hasNext(); categoryHeight += moduleRenderManager.getHeight()) {
                 moduleRenderManager = (Component) moduleInCategoryIterator.next();
             }
 
-            //drawing the background for every module in the category
-            Color bgColor = moduleOpened ? GuiModule.getCategoryBackgroundColor() : GuiModule.getSettingBackgroundColor();
-            net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1, this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
+            // drawing the background for every module in the category
+            Color bgColor = moduleOpened ? GuiModule.getCategoryBackgroundColor()
+                    : GuiModule.getSettingBackgroundColor();
+            net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1,
+                    this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
             // 1000000 character lines make me want to kill myself
         }
 
-        if (GuiModule.isCategoryBackgroundToggled()) { // any reason for this to be gl fuckery instead of a drawrect except making code look broken?
+        if (GuiModule.isCategoryBackgroundToggled()) { // any reason for this to be gl fuckery instead of a drawrect
+                                                       // except making code look broken?
             Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-                        GuiModule.getBackgroundRGB());
-                GlStateManager.resetColor();
+                    GuiModule.getBackgroundRGB());
+            GlStateManager.resetColor();
         }
 
         // category name
         int colorCN;
         switch (GuiModule.getCNColor()) {
 
-            case STATIC:
-                colorCN = GuiModule.getCategoryNameRGB();
-                break;
+        case STATIC:
+            colorCN = GuiModule.getCategoryNameRGB();
+            break;
 
-            case RAINBOW:
-                colorCN = Color.getHSBColor((float) (System.currentTimeMillis() % (7500L / (long) this.chromaSpeed)) / (7500.0F / (float) this.chromaSpeed), 1.0F, 1.0F).getRGB();
-                break;
+        case RAINBOW:
+            colorCN = Color.getHSBColor((float) (System.currentTimeMillis() % (7500L / (long) this.chromaSpeed))
+                    / (7500.0F / (float) this.chromaSpeed), 1.0F, 1.0F).getRGB();
+            break;
 
-            default:
-                throw new RuntimeException("if this happens, im coming to your house (you broke my code)");
+        default:
+            throw new RuntimeException("if this happens, im coming to your house (you broke my code)");
 
         }
 
         if (GuiModule.useCustomFont()) {
-            FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2), (float) (this.y + 4), colorCN);
+            FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2),
+                    (float) (this.y + 4), colorCN);
         } else {
-            mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2), (float) (this.y + 4), colorCN, false);
+            mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2),
+                    (float) (this.y + 4), colorCN, false);
         }
 
         if (!this.n4m) {
-            mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float) (this.x + marginX), (float) ((double) this.y + marginY), Color.white.getRGB(), false);
+            mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float) (this.x + marginX),
+                    (float) ((double) this.y + marginY), Color.white.getRGB(), false);
             if (this.categoryOpened && !this.getModules().isEmpty()) {
                 Iterator var5 = this.getModules().iterator();
 
@@ -177,7 +186,8 @@ public class CategoryComponent {
     public void updateModules() {
         int tY = this.bh + 3;
         this.modulesInCategory.clear();
-        for (Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3.hasNext(); tY += 16) {
+        for (Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3
+                .hasNext(); tY += 16) {
             Module mod = var3.next();
             ModuleComponent b = new ModuleComponent(mod, this, tY);
             this.modulesInCategory.add(b);
@@ -217,11 +227,13 @@ public class CategoryComponent {
     }
 
     public boolean i(int x, int y) {
-        return x >= this.x + 92 - 13 && x <= this.x + this.width && (float) y >= (float) this.y + 2.0F && y <= this.y + this.bh + 1;
+        return x >= this.x + 92 - 13 && x <= this.x + this.width && (float) y >= (float) this.y + 2.0F
+                && y <= this.y + this.bh + 1;
     }
 
     public boolean mousePressed(int x, int y) {
-        return x >= this.x + 77 && x <= this.x + this.width - 6 && (float) y >= (float) this.y + 2.0F && y <= this.y + this.bh + 1;
+        return x >= this.x + 77 && x <= this.x + this.width - 6 && (float) y >= (float) this.y + 2.0F
+                && y <= this.y + this.bh + 1;
     }
 
     public boolean insideArea(int x, int y) {

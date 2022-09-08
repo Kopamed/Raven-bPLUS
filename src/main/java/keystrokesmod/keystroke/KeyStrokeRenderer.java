@@ -9,7 +9,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class KeyStrokeRenderer {
-    private static final int[] a = {16777215, 16711680, 65280, 255, 16776960, 11141290};
+    private static final int[] a = { 16777215, 16711680, 65280, 255, 16776960, 11141290 };
     private final Minecraft mc = Minecraft.getMinecraft();
     private final KeyStrokeKeyRenderer[] b = new KeyStrokeKeyRenderer[4];
     private final KeyStrokeMouse[] c = new KeyStrokeMouse[2];
@@ -73,7 +73,9 @@ public class KeyStrokeRenderer {
     }
 
     private int getColor(int index) {
-        return index == 6 ? Color.getHSBColor((float) (System.currentTimeMillis() % 3750L) / 3750.0F, 1.0F, 1.0F).getRGB() : a[index];
+        return index == 6
+                ? Color.getHSBColor((float) (System.currentTimeMillis() % 3750L) / 3750.0F, 1.0F, 1.0F).getRGB()
+                : a[index];
     }
 
     private void drawMovementKeys(int x, int y, int textColor) {

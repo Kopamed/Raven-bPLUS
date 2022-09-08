@@ -46,7 +46,8 @@ public class AutoHeader extends Module {
         }
 
         if (Utils.Player.playerUnderBlock() && mc.thePlayer.onGround) {
-            if (startWait + (1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.543543, pbs.getInput() + 1.32748923)) < System.currentTimeMillis()) {
+            if (startWait + (1000 / ThreadLocalRandom.current().nextDouble(pbs.getInput() - 0.543543,
+                    pbs.getInput() + 1.32748923)) < System.currentTimeMillis()) {
                 mc.thePlayer.jump();
                 startWait = System.currentTimeMillis();
             }

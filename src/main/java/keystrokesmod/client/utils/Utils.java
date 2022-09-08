@@ -127,7 +127,8 @@ public class Utils {
             double x = mc.thePlayer.posX;
             double y = mc.thePlayer.posY - 1.0D;
             double z = mc.thePlayer.posZ;
-            BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
+            BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y),
+                    MathHelper.floor_double(z));
             return mc.theWorld.isAirBlock(p);
         }
 
@@ -135,7 +136,8 @@ public class Utils {
             double x = mc.thePlayer.posX;
             double y = mc.thePlayer.posY + 2.0D;
             double z = mc.thePlayer.posZ;
-            BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
+            BlockPos p = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y),
+                    MathHelper.floor_double(z));
             return mc.theWorld.isBlockFullCube(p) || mc.theWorld.isBlockNormalCube(p, false);
         }
 
@@ -144,11 +146,13 @@ public class Utils {
         }
 
         public static boolean isPlayerHoldingSword() {
-            return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
+            return mc.thePlayer.getCurrentEquippedItem() != null
+                    && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
         }
 
         public static boolean isPlayerHoldingAxe() {
-            return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
+            return mc.thePlayer.getCurrentEquippedItem() != null
+                    && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
         }
 
         public static boolean isPlayerHoldingWeapon() {
@@ -169,7 +173,6 @@ public class Utils {
                         index = slot;
                     }
                 }
-
 
             }
             return index;
@@ -229,16 +232,21 @@ public class Utils {
                 double diffY;
                 if (q instanceof EntityLivingBase) {
                     EntityLivingBase en = (EntityLivingBase) q;
-                    diffY = en.posY + (double) en.getEyeHeight() * 0.9D - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
+                    diffY = en.posY + (double) en.getEyeHeight() * 0.9D
+                            - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
                 } else {
-                    diffY = (q.getEntityBoundingBox().minY + q.getEntityBoundingBox().maxY) / 2.0D - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
+                    diffY = (q.getEntityBoundingBox().minY + q.getEntityBoundingBox().maxY) / 2.0D
+                            - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
                 }
 
                 double diffZ = q.posZ - mc.thePlayer.posZ;
                 double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
                 float yaw = (float) (Math.atan2(diffZ, diffX) * 180.0D / 3.141592653589793D) - 90.0F;
                 float pitch = (float) (-(Math.atan2(diffY, dist) * 180.0D / 3.141592653589793D));
-                return new float[]{mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw), mc.thePlayer.rotationPitch + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch)};
+                return new float[] {
+                        mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw),
+                        mc.thePlayer.rotationPitch
+                                + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch) };
             }
         }
 
@@ -313,7 +321,11 @@ public class Utils {
 
         public static void swing() {
             EntityPlayerSP p = mc.thePlayer;
-            int armSwingEnd = p.isPotionActive(Potion.digSpeed) ? 6 - (1 + p.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (p.isPotionActive(Potion.digSlowdown) ? 6 + (1 + p.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
+            int armSwingEnd = p.isPotionActive(Potion.digSpeed)
+                    ? 6 - (1 + p.getActivePotionEffect(Potion.digSpeed).getAmplifier())
+                    : (p.isPotionActive(Potion.digSlowdown)
+                            ? 6 + (1 + p.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2
+                            : 6);
             if (!p.isSwingInProgress || p.swingProgressInt >= armSwingEnd / 2 || p.swingProgressInt < 0) {
                 p.swingProgressInt = -1;
                 p.isSwingInProgress = true;
@@ -347,8 +359,9 @@ public class Utils {
 
         public static boolean isThrowableItem(ItemStack is) {
             Item i = is.getItem();
-            return i instanceof ItemEgg || i instanceof ItemEnderEye || i instanceof ItemEnderPearl || i instanceof ItemSnowball || i instanceof ItemExpBottle ||
-                    (i instanceof ItemPotion && ItemPotion.isSplash(is.getMetadata()));
+            return i instanceof ItemEgg || i instanceof ItemEnderEye || i instanceof ItemEnderPearl
+                    || i instanceof ItemSnowball || i instanceof ItemExpBottle
+                    || (i instanceof ItemPotion && ItemPotion.isSplash(is.getMetadata()));
         }
 
         public static List<NetworkPlayerInfo> getPlayers() {
@@ -371,7 +384,8 @@ public class Utils {
 
         public static boolean othersExist() {
             for (Entity wut : mc.theWorld.getLoadedEntityList()) {
-                if (wut instanceof EntityPlayer) return true;
+                if (wut instanceof EntityPlayer)
+                    return true;
             }
             return false;
         }
@@ -399,17 +413,21 @@ public class Utils {
         }
 
         public static double ranModuleVal(SliderSetting a, SliderSetting b, Random r) {
-            return a.getInput() == b.getInput() ? a.getInput() : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
+            return a.getInput() == b.getInput() ? a.getInput()
+                    : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
         }
 
         public static double ranModuleVal(DoubleSliderSetting a, Random r) {
-            return a.getInputMin() == a.getInputMax() ? a.getInputMin() : a.getInputMin() + r.nextDouble() * (a.getInputMax() - a.getInputMin());
+            return a.getInputMin() == a.getInputMax() ? a.getInputMin()
+                    : a.getInputMin() + r.nextDouble() * (a.getInputMax() - a.getInputMin());
         }
 
         public static boolean isHyp() {
-            if (!Player.isPlayerInGame()) return false;
+            if (!Player.isPlayerInGame())
+                return false;
             try {
-                return !mc.isSingleplayer() && (mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net") || mc.getCurrentServerData().serverIP.toLowerCase().contains("localhost"));
+                return !mc.isSingleplayer() && (mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net")
+                        || mc.getCurrentServerData().serverIP.toLowerCase().contains("localhost"));
             } catch (Exception welpBruh) {
                 welpBruh.printStackTrace();
                 return false;
@@ -417,7 +435,8 @@ public class Utils {
         }
 
         public static net.minecraft.util.Timer getTimer() {
-            return ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "timer", "field_71428_T");
+            return ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "timer",
+                    "field_71428_T");
         }
 
         public static void resetTimer() {
@@ -432,13 +451,15 @@ public class Utils {
             Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
             if (autoClicker != null && autoClicker.isEnabled()) {
                 return autoClicker.isEnabled() && Mouse.isButtonDown(0);
-            } //else return mouseManager.getLeftClickCounter() > 1 && System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
+            } // else return mouseManager.getLeftClickCounter() > 1 &&
+              // System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
             return false;
         }
 
         public static int rainbowDraw(long speed, long... delay) {
             long time = System.currentTimeMillis() + (delay.length > 0 ? delay[0] : 0L);
-            return Color.getHSBColor((float) (time % (15000L / speed)) / (15000.0F / (float) speed), 1.0F, 1.0F).getRGB();
+            return Color.getHSBColor((float) (time % (15000L / speed)) / (15000.0F / (float) speed), 1.0F, 1.0F)
+                    .getRGB();
         }
 
         public static int customDraw(int delay) {
@@ -449,8 +470,10 @@ public class Utils {
         }
 
         public static int getColorBetween(int min, int max, int delay) {
-            int c = (int) Math.abs((((System.currentTimeMillis() / 10) + delay) % (2 * (max - min))) - (max - min)) + min;
-            // System.out.println(Math.abs((System.currentTimeMillis() % (2 * (max-min)) - (max-min))) + min);
+            int c = (int) Math.abs((((System.currentTimeMillis() / 10) + delay) % (2 * (max - min))) - (max - min))
+                    + min;
+            // System.out.println(Math.abs((System.currentTimeMillis() % (2 * (max-min)) -
+            // (max-min))) + min);
             return c;
         }
 
@@ -477,7 +500,8 @@ public class Utils {
             try {
                 hue = (float) (System.currentTimeMillis() % (int) speed) + ((yTotal - yOffset) / (yOffset / yTotal));
             } catch (ArithmeticException divisionByZero) {
-                hue = (float) (System.currentTimeMillis() % (int) speed) + ((yTotal - yOffset) / ((yOffset / yTotal + 1) + 1));
+                hue = (float) (System.currentTimeMillis() % (int) speed)
+                        + ((yTotal - yOffset) / ((yOffset / yTotal + 1) + 1));
             }
 
             while (hue > speed) {
@@ -573,7 +597,8 @@ public class Utils {
                         Score score;
                         while (var5.hasNext()) {
                             score = var5.next();
-                            if (score != null && score.getPlayerName() != null && !score.getPlayerName().startsWith("#")) {
+                            if (score != null && score.getPlayerName() != null
+                                    && !score.getPlayerName().startsWith("#")) {
                                 list.add(score);
                             }
                         }
@@ -623,7 +648,8 @@ public class Utils {
 
         public static int indexOf(String key, String[] wut) {
             for (int o = 0; o < wut.length; o++) {
-                if (wut[o].equals(key)) return o;
+                if (wut[o].equals(key))
+                    return o;
             }
             return -1;
         }
@@ -740,7 +766,8 @@ public class Utils {
         private static String getTextFromConnection(HttpURLConnection connection) {
             if (connection != null) {
                 try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    BufferedReader bufferedReader = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
 
                     String result;
                     try {
@@ -787,7 +814,6 @@ public class Utils {
 
         public static String createPaste(String name, String content) {
 
-
             try {
                 HttpURLConnection request = (HttpURLConnection) (new URL(base_url)).openConnection();
                 request.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -797,7 +823,8 @@ public class Utils {
                 request.connect();
                 OutputStream outputStream = request.getOutputStream();
                 Throwable occuredErrors = null;
-                String payload = base_paste.replace("TitleGoesHere", name).replace("BodyGoesHere", content).replace("\\", "");
+                String payload = base_paste.replace("TitleGoesHere", name).replace("BodyGoesHere", content)
+                        .replace("\\", "");
 
                 try {
                     // sending data
@@ -877,7 +904,7 @@ public class Utils {
         }
 
         public static int[] getHypixelStats(String UUID, DuelsStatsMode dm) {
-            int[] s = {0, 0, 0};
+            int[] s = { 0, 0, 0 };
             String u = UUID;
 
             String c = URLS.getTextFromURL("https://api.hypixel.net/player?key=" + URLS.hypixelApiKey + "&uuid=" + u);
@@ -896,40 +923,40 @@ public class Utils {
                 }
 
                 switch (dm) {
-                    case OVERALL:
-                        s[0] = getValueAsInt(d, "wins");
-                        s[1] = getValueAsInt(d, "losses");
-                        s[2] = getValueAsInt(d, "current_winstreak");
-                        break;
-                    case BRIDGE:
-                        s[0] = getValueAsInt(d, "bridge_duel_wins");
-                        s[1] = getValueAsInt(d, "bridge_duel_losses");
-                        s[2] = getValueAsInt(d, "current_winstreak_mode_bridge_duel");
-                        break;
-                    case UHC:
-                        s[0] = getValueAsInt(d, "uhc_duel_wins");
-                        s[1] = getValueAsInt(d, "uhc_duel_losses");
-                        s[2] = getValueAsInt(d, "current_winstreak_mode_uhc_duel");
-                        break;
-                    case SKYWARS:
-                        s[0] = getValueAsInt(d, "sw_duel_wins");
-                        s[1] = getValueAsInt(d, "sw_duel_losses");
-                        s[2] = getValueAsInt(d, "current_winstreak_mode_sw_duel");
-                        break;
-                    case CLASSIC:
-                        s[0] = getValueAsInt(d, "classic_duel_wins");
-                        s[1] = getValueAsInt(d, "classic_duel_losses");
-                        s[2] = getValueAsInt(d, "current_winstreak_mode_classic_duel");
-                        break;
-                    case SUMO:
-                        s[0] = getValueAsInt(d, "sumo_duel_wins");
-                        s[1] = getValueAsInt(d, "sumo_duel_losses");
-                        s[2] = getValueAsInt(d, "current_winstreak_mode_sumo_duel");
-                        break;
-                    case OP:
-                        s[0] = getValueAsInt(d, "op_duel_wins");
-                        s[1] = getValueAsInt(d, "op_duel_losses");
-                        s[2] = getValueAsInt(d, "current_winstreak_mode_op_duel");
+                case OVERALL:
+                    s[0] = getValueAsInt(d, "wins");
+                    s[1] = getValueAsInt(d, "losses");
+                    s[2] = getValueAsInt(d, "current_winstreak");
+                    break;
+                case BRIDGE:
+                    s[0] = getValueAsInt(d, "bridge_duel_wins");
+                    s[1] = getValueAsInt(d, "bridge_duel_losses");
+                    s[2] = getValueAsInt(d, "current_winstreak_mode_bridge_duel");
+                    break;
+                case UHC:
+                    s[0] = getValueAsInt(d, "uhc_duel_wins");
+                    s[1] = getValueAsInt(d, "uhc_duel_losses");
+                    s[2] = getValueAsInt(d, "current_winstreak_mode_uhc_duel");
+                    break;
+                case SKYWARS:
+                    s[0] = getValueAsInt(d, "sw_duel_wins");
+                    s[1] = getValueAsInt(d, "sw_duel_losses");
+                    s[2] = getValueAsInt(d, "current_winstreak_mode_sw_duel");
+                    break;
+                case CLASSIC:
+                    s[0] = getValueAsInt(d, "classic_duel_wins");
+                    s[1] = getValueAsInt(d, "classic_duel_losses");
+                    s[2] = getValueAsInt(d, "current_winstreak_mode_classic_duel");
+                    break;
+                case SUMO:
+                    s[0] = getValueAsInt(d, "sumo_duel_wins");
+                    s[1] = getValueAsInt(d, "sumo_duel_losses");
+                    s[2] = getValueAsInt(d, "current_winstreak_mode_sumo_duel");
+                    break;
+                case OP:
+                    s[0] = getValueAsInt(d, "op_duel_wins");
+                    s[1] = getValueAsInt(d, "op_duel_losses");
+                    s[2] = getValueAsInt(d, "current_winstreak_mode_op_duel");
                 }
 
                 return s;
@@ -949,13 +976,7 @@ public class Utils {
         }
 
         public enum DuelsStatsMode {
-            OVERALL,
-            BRIDGE,
-            UHC,
-            SKYWARS,
-            CLASSIC,
-            SUMO,
-            OP
+            OVERALL, BRIDGE, UHC, SKYWARS, CLASSIC, SUMO, OP
         }
     }
 
@@ -994,11 +1015,15 @@ public class Utils {
             }
         }
 
-        public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color, boolean damage) {
+        public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color,
+                boolean damage) {
             if (e instanceof EntityLivingBase) {
-                double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
-                double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
-                double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+                double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks
+                        - mc.getRenderManager().viewerPosX;
+                double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks
+                        - mc.getRenderManager().viewerPosY;
+                double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks
+                        - mc.getRenderManager().viewerPosZ;
                 float d = (float) expand / 40.0F;
                 if (e instanceof EntityPlayer && damage && ((EntityPlayer) e).hurtTime != 0) {
                     color = Color.RED.getRGB();
@@ -1036,7 +1061,9 @@ public class Utils {
                         EntityLivingBase en = (EntityLivingBase) e;
                         double r = en.getHealth() / en.getMaxHealth();
                         int b = (int) (74.0D * r);
-                        int hc = r < 0.3D ? Color.red.getRGB() : (r < 0.5D ? Color.orange.getRGB() : (r < 0.7D ? Color.yellow.getRGB() : Color.green.getRGB()));
+                        int hc = r < 0.3D ? Color.red.getRGB()
+                                : (r < 0.5D ? Color.orange.getRGB()
+                                        : (r < 0.7D ? Color.yellow.getRGB() : Color.green.getRGB()));
                         GL11.glTranslated(x, y - 0.2D, z);
                         GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
                         GlStateManager.disableDepth();
@@ -1076,8 +1103,11 @@ public class Utils {
                             d2p(0.0D, 95.0D, 8, 3, color);
                             GlStateManager.enableDepth();
                         } else {
-                            AxisAlignedBB bbox = e.getEntityBoundingBox().expand(0.1D + expand, 0.1D + expand, 0.1D + expand);
-                            AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y, bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);
+                            AxisAlignedBB bbox = e.getEntityBoundingBox().expand(0.1D + expand, 0.1D + expand,
+                                    0.1D + expand);
+                            AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y,
+                                    bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y,
+                                    bbox.maxZ - e.posZ + z);
                             GL11.glBlendFunc(770, 771);
                             GL11.glEnable(3042);
                             GL11.glDisable(3553);
@@ -1171,9 +1201,13 @@ public class Utils {
 
         public static void dtl(Entity e, int color, float lw) {
             if (e != null) {
-                double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
-                double y = (double) e.getEyeHeight() + e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
-                double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+                double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks
+                        - mc.getRenderManager().viewerPosX;
+                double y = (double) e.getEyeHeight() + e.lastTickPosY
+                        + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks
+                        - mc.getRenderManager().viewerPosY;
+                double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks
+                        - mc.getRenderManager().viewerPosZ;
                 float a = (float) (color >> 24 & 255) / 255.0F;
                 float r = (float) (color >> 16 & 255) / 255.0F;
                 float g = (float) (color >> 8 & 255) / 255.0F;
@@ -1246,7 +1280,8 @@ public class Utils {
             net.minecraft.client.gui.Gui.drawRect(0, 0, w, h, c);
         }
 
-        public static void drawColouredText(String text, char lineSplit, int leftOffset, int topOffset, long colourParam1, long shift, boolean rect, FontRenderer fontRenderer) {
+        public static void drawColouredText(String text, char lineSplit, int leftOffset, int topOffset,
+                long colourParam1, long shift, boolean rect, FontRenderer fontRenderer) {
             int bX = leftOffset;
             int l = 0;
             long colourControl = 0L;
@@ -1257,10 +1292,11 @@ public class Utils {
                     ++l;
                     leftOffset = bX;
                     topOffset += fontRenderer.FONT_HEIGHT + 5;
-                    //reseting text colour?
+                    // reseting text colour?
                     colourControl = shift * (long) l;
                 } else {
-                    fontRenderer.drawString(String.valueOf(c), (float) leftOffset, (float) topOffset, Client.astolfoColorsDraw((int) colourParam1, (int) colourControl), rect);
+                    fontRenderer.drawString(String.valueOf(c), (float) leftOffset, (float) topOffset,
+                            Client.astolfoColorsDraw((int) colourParam1, (int) colourControl), rect);
                     leftOffset += fontRenderer.getCharWidth(c);
                     if (c != ' ') {
                         colourControl -= 90L;
@@ -1312,7 +1348,8 @@ public class Utils {
 
             for (int i = 0; i < sides; ++i) {
                 double angle = 6.283185307179586D * (double) i / (double) sides + Math.toRadians(180.0D);
-                worldrenderer.pos(x + Math.sin(angle) * (double) radius, y + Math.cos(angle) * (double) radius, 0.0D).endVertex();
+                worldrenderer.pos(x + Math.sin(angle) * (double) radius, y + Math.cos(angle) * (double) radius, 0.0D)
+                        .endVertex();
             }
 
             tessellator.draw();
@@ -1320,7 +1357,8 @@ public class Utils {
             GlStateManager.disableBlend();
         }
 
-        public static void d3p(double x, double y, double z, double radius, int sides, float lineWidth, int color, boolean chroma) {
+        public static void d3p(double x, double y, double z, double radius, int sides, float lineWidth, int color,
+                boolean chroma) {
             float a = (float) (color >> 24 & 255) / 255.0F;
             float r = (float) (color >> 16 & 255) / 255.0F;
             float g = (float) (color >> 8 & 255) / 255.0F;
@@ -1374,35 +1412,25 @@ public class Utils {
         }
 
         public enum PositionMode {
-            UPLEFT,
-            UPRIGHT,
-            DOWNLEFT,
-            DOWNRIGHT
+            UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT
         }
     }
 
-
     public static class Modes {
         public enum ClickEvents {
-            RENDER,
-            TICK
+            RENDER, TICK
         }
 
         public enum BridgeMode {
-            GODBRIDGE,
-            MOONWALK,
-            BREEZILY,
-            NORMAL
+            GODBRIDGE, MOONWALK, BREEZILY, NORMAL
         }
 
         public enum ClickTimings {
-            RAVEN,
-            SKID
+            RAVEN, SKID
         }
 
         public enum SprintResetTimings {
-            PRE,
-            POST
+            PRE, POST
         }
     }
 }

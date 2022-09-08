@@ -121,7 +121,7 @@ public class PlayerESP extends Module {
             }
         }
 
-        return -2; //chestplate has no colour
+        return -2; // chestplate has no colour
     }
 
     private void r(Entity en, int rgb) {

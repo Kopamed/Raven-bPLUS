@@ -42,7 +42,8 @@ public class Reach extends Module {
         if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon())
             return 0;
 
-        if (moving_only.isToggled() && (double) mc.thePlayer.moveForward == 0.0D && (double) mc.thePlayer.moveStrafing == 0.0D)
+        if (moving_only.isToggled() && (double) mc.thePlayer.moveForward == 0.0D
+                && (double) mc.thePlayer.moveStrafing == 0.0D)
             return 0;
 
         if (sprint_only.isToggled() && !mc.thePlayer.isSprinting())
@@ -67,7 +68,8 @@ public class Reach extends Module {
             Vec3 look = entity1.getLook(1.0F);
             Vec3 new_eyes_pos = eyes_positions.addVector(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD);
             Vec3 zz6 = null;
-            List<Entity> zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(entity1, entity1.getEntityBoundingBox().addCoord(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
+            List<Entity> zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(entity1, entity1.getEntityBoundingBox()
+                    .addCoord(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
             double zz9 = zzD;
 
             for (Entity o : zz8) {
@@ -106,7 +108,7 @@ public class Reach extends Module {
 
             mc.mcProfiler.endSection();
             if (entity != null && zz6 != null) {
-                return new Object[]{entity, zz6};
+                return new Object[] { entity, zz6 };
             } else {
                 return null;
             }

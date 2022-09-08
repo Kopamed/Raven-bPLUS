@@ -38,7 +38,6 @@ public class SumoBot extends Module {
         mc.gameSettings.pauseOnLostFocus = false;
     }
 
-
     private void matchStart() {
         state = State.INGAME;
         sTap.setToggled(true);
@@ -48,7 +47,6 @@ public class SumoBot extends Module {
         slotTimer.start();
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
     }
-
 
     private void matchEnd() {
         timer.setCooldown(2300);
@@ -66,7 +64,7 @@ public class SumoBot extends Module {
     public void onRender2D(Render2DEvent e) {
         if (!Utils.Player.isPlayerInGame())
             return;
-        //Utils.Player.sendMessageToSelf(state.toString());
+        // Utils.Player.sendMessageToSelf(state.toString());
         if (slotTimer.firstFinish()) {
             mc.thePlayer.inventory.currentItem = 4;
         }
@@ -115,8 +113,13 @@ public class SumoBot extends Module {
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
         if (fe.getEvent() instanceof ClientChatReceivedEvent) {
-            if (AntiShuffle.getUnformattedTextForChat(((ClientChatReceivedEvent) fe.getEvent()).message.getFormattedText()).contains("WINNER") ||
-                    AntiShuffle.getUnformattedTextForChat(((ClientChatReceivedEvent) fe.getEvent()).message.getFormattedText()).contains("DRAW")) {
+            if (AntiShuffle
+                    .getUnformattedTextForChat(((ClientChatReceivedEvent) fe.getEvent()).message.getFormattedText())
+                    .contains("WINNER")
+                    || AntiShuffle
+                            .getUnformattedTextForChat(
+                                    ((ClientChatReceivedEvent) fe.getEvent()).message.getFormattedText())
+                            .contains("DRAW")) {
                 matchEnd();
             }
         }
@@ -128,11 +131,7 @@ public class SumoBot extends Module {
     }
 
     public enum State {
-        INGAME,
-        HUB,
-        QUEUE,
-        GAMEEND
+        INGAME, HUB, QUEUE, GAMEEND
     }
-
 
 }

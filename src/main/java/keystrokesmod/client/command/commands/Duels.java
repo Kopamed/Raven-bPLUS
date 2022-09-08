@@ -1,6 +1,5 @@
 package keystrokesmod.client.command.commands;
 
-
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
@@ -9,7 +8,9 @@ import keystrokesmod.client.utils.profile.PlayerProfile;
 
 public class Duels extends Command {
     public Duels() {
-        super("duels", "Fetches a player's stats", 1, 2, new String[]{"Player name", "overall/uhc/bridge/skywars/sumo/classic/op"}, new String[]{"d", "duel", "stat", "stats", "check"});
+        super("duels", "Fetches a player's stats", 1, 2,
+                new String[] { "Player name", "overall/uhc/bridge/skywars/sumo/classic/op" },
+                new String[] { "d", "duel", "stat", "stats", "check" });
     }
 
     @Override
@@ -35,7 +36,9 @@ public class Duels extends Command {
                 } else if (playerProfile.nicked) {
                     Terminal.print(n + " is nicked");
                 } else {
-                    double wlr = playerProfile.losses != 0 ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2) : (double) playerProfile.wins;
+                    double wlr = playerProfile.losses != 0
+                            ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2)
+                            : (double) playerProfile.wins;
                     Terminal.print(n + " overall stats:");
                     Terminal.print("Wins: " + playerProfile.wins);
                     Terminal.print("Losses: " + playerProfile.losses);
@@ -52,7 +55,8 @@ public class Duels extends Command {
             }
 
             if (gameMode == null) {
-                Terminal.print(stringGamemode + " is not a known gamemode. See \"help duels\" for a known list of gamemode");
+                Terminal.print(
+                        stringGamemode + " is not a known gamemode. See \"help duels\" for a known list of gamemode");
             } else {
                 String n;
                 n = args[0];
@@ -66,7 +70,9 @@ public class Duels extends Command {
                     } else if (playerProfile.nicked) {
                         Terminal.print(n + " is nicked");
                     } else {
-                        double wlr = playerProfile.losses != 0 ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2) : (double) playerProfile.wins;
+                        double wlr = playerProfile.losses != 0
+                                ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2)
+                                : (double) playerProfile.wins;
                         Terminal.print(n + " " + finalGameMode + " stats:");
                         Terminal.print("Wins: " + playerProfile.wins);
                         Terminal.print("Losses: " + playerProfile.losses);

@@ -59,11 +59,13 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
     @Overwrite
     public void attackTargetEntityWithCurrentItem(Entity p_attackTargetEntityWithCurrentItem_1_) {
         if (ForgeHooks.onPlayerAttackTarget(((EntityPlayer) (Object) this), p_attackTargetEntityWithCurrentItem_1_)) {
-            if (p_attackTargetEntityWithCurrentItem_1_.canAttackWithItem() && !p_attackTargetEntityWithCurrentItem_1_.hitByEntity(this)) {
+            if (p_attackTargetEntityWithCurrentItem_1_.canAttackWithItem()
+                    && !p_attackTargetEntityWithCurrentItem_1_.hitByEntity(this)) {
                 float f = (float) this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
                 float f1 = 0.0F;
                 if (p_attackTargetEntityWithCurrentItem_1_ instanceof EntityLivingBase) {
-                    f1 = EnchantmentHelper.func_152377_a(this.getHeldItem(), ((EntityLivingBase) p_attackTargetEntityWithCurrentItem_1_).getCreatureAttribute());
+                    f1 = EnchantmentHelper.func_152377_a(this.getHeldItem(),
+                            ((EntityLivingBase) p_attackTargetEntityWithCurrentItem_1_).getCreatureAttribute());
                 } else {
                     f1 = EnchantmentHelper.func_152377_a(this.getHeldItem(), EnumCreatureAttribute.UNDEFINED);
                 }
@@ -74,7 +76,9 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
                 }
 
                 if (f > 0.0F || f1 > 0.0F) {
-                    boolean flag = this.fallDistance > 0.0F && !this.onGround && !this.isOnLadder() && !this.isInWater() && !this.isPotionActive(Potion.blindness) && this.ridingEntity == null && p_attackTargetEntityWithCurrentItem_1_ instanceof EntityLivingBase;
+                    boolean flag = this.fallDistance > 0.0F && !this.onGround && !this.isOnLadder() && !this.isInWater()
+                            && !this.isPotionActive(Potion.blindness) && this.ridingEntity == null
+                            && p_attackTargetEntityWithCurrentItem_1_ instanceof EntityLivingBase;
                     if (flag && f > 0.0F) {
                         f *= 1.5F;
                     }
@@ -82,7 +86,8 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
                     f += f1;
                     boolean flag1 = false;
                     int j = EnchantmentHelper.getFireAspectModifier(this);
-                    if (p_attackTargetEntityWithCurrentItem_1_ instanceof EntityLivingBase && j > 0 && !p_attackTargetEntityWithCurrentItem_1_.isBurning()) {
+                    if (p_attackTargetEntityWithCurrentItem_1_ instanceof EntityLivingBase && j > 0
+                            && !p_attackTargetEntityWithCurrentItem_1_.isBurning()) {
                         flag1 = true;
                         p_attackTargetEntityWithCurrentItem_1_.setFire(1);
                     }
@@ -90,10 +95,13 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
                     double d0 = p_attackTargetEntityWithCurrentItem_1_.motionX;
                     double d1 = p_attackTargetEntityWithCurrentItem_1_.motionY;
                     double d2 = p_attackTargetEntityWithCurrentItem_1_.motionZ;
-                    boolean flag2 = p_attackTargetEntityWithCurrentItem_1_.attackEntityFrom(DamageSource.causePlayerDamage(((EntityPlayer) (Object) this)), f);
+                    boolean flag2 = p_attackTargetEntityWithCurrentItem_1_
+                            .attackEntityFrom(DamageSource.causePlayerDamage(((EntityPlayer) (Object) this)), f);
                     if (flag2) {
                         if (i > 0) {
-                            p_attackTargetEntityWithCurrentItem_1_.addVelocity(-MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F, 0.1D, MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F);
+                            p_attackTargetEntityWithCurrentItem_1_.addVelocity(
+                                    -MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F, 0.1D,
+                                    MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * (float) i * 0.5F);
 
                             Module keepSprint = Raven.moduleManager.getModuleByClazz(KeepSprint.class);
                             if (keepSprint != null && keepSprint.isEnabled()) {
@@ -106,8 +114,10 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
 
                         }
 
-                        if (p_attackTargetEntityWithCurrentItem_1_ instanceof EntityPlayerMP && p_attackTargetEntityWithCurrentItem_1_.velocityChanged) {
-                            ((EntityPlayerMP) p_attackTargetEntityWithCurrentItem_1_).playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(p_attackTargetEntityWithCurrentItem_1_));
+                        if (p_attackTargetEntityWithCurrentItem_1_ instanceof EntityPlayerMP
+                                && p_attackTargetEntityWithCurrentItem_1_.velocityChanged) {
+                            ((EntityPlayerMP) p_attackTargetEntityWithCurrentItem_1_).playerNetServerHandler
+                                    .sendPacket(new S12PacketEntityVelocity(p_attackTargetEntityWithCurrentItem_1_));
                             p_attackTargetEntityWithCurrentItem_1_.velocityChanged = false;
                             p_attackTargetEntityWithCurrentItem_1_.motionX = d0;
                             p_attackTargetEntityWithCurrentItem_1_.motionY = d1;
@@ -128,7 +138,8 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
 
                         this.setLastAttacker(p_attackTargetEntityWithCurrentItem_1_);
                         if (p_attackTargetEntityWithCurrentItem_1_ instanceof EntityLivingBase) {
-                            EnchantmentHelper.applyThornEnchantments((EntityLivingBase) p_attackTargetEntityWithCurrentItem_1_, this);
+                            EnchantmentHelper.applyThornEnchantments(
+                                    (EntityLivingBase) p_attackTargetEntityWithCurrentItem_1_, this);
                         }
 
                         EnchantmentHelper.applyArthropodEnchantments(this, p_attackTargetEntityWithCurrentItem_1_);

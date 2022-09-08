@@ -27,10 +27,7 @@ public class FallSpeed extends Module {
             Module fly = Raven.moduleManager.getModuleByClazz(Fly.class);
             Module noFall = Raven.moduleManager.getModuleByClazz(NoFall.class);
 
-            if (
-                    (fly != null && fly.isEnabled()) ||
-                            (noFall != null && noFall.isEnabled())
-            ) {
+            if ((fly != null && fly.isEnabled()) || (noFall != null && noFall.isEnabled())) {
                 return;
             }
 

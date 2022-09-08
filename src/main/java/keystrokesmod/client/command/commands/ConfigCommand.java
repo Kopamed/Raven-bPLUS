@@ -7,7 +7,8 @@ import keystrokesmod.client.main.Raven;
 
 public class ConfigCommand extends Command {
     public ConfigCommand() {
-        super("config", "Manages configs", 0, 3, new String[]{"load,save,list,remove,clear", "config's name"}, new String[]{"cfg", "profiles"});
+        super("config", "Manages configs", 0, 3, new String[] { "load,save,list,remove,clear", "config's name" },
+                new String[] { "cfg", "profiles" });
     }
 
     @Override
@@ -23,7 +24,8 @@ public class ConfigCommand extends Command {
             if (args[0].equalsIgnoreCase("list")) {
                 this.listConfigs();
             } else if (args[0].equalsIgnoreCase("clear")) {
-                Terminal.print("Are you sure you want to reset the config " + Raven.configManager.getConfig().getName() + "? If so, run \"config clear confirm\"");
+                Terminal.print("Are you sure you want to reset the config " + Raven.configManager.getConfig().getName()
+                        + "? If so, run \"config clear confirm\"");
             } else {
                 this.incorrectArgs();
             }
@@ -57,13 +59,15 @@ public class ConfigCommand extends Command {
                     if (config.getName().equalsIgnoreCase(args[1])) {
                         Raven.configManager.deleteConfig(config);
                         found = true;
-                        Terminal.print("Removed " + args[1] + " successfully! Current config: " + Raven.configManager.getConfig().getName());
+                        Terminal.print("Removed " + args[1] + " successfully! Current config: "
+                                + Raven.configManager.getConfig().getName());
                         break;
                     }
                 }
 
                 if (!found) {
-                    Terminal.print("Failed to delete " + args[1] + ". Unable to find a config with the name or an error occurred during removal");
+                    Terminal.print("Failed to delete " + args[1]
+                            + ". Unable to find a config with the name or an error occurred during removal");
                 }
 
             } else if (args[0].equalsIgnoreCase("clear")) {

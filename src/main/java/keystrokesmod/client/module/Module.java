@@ -65,7 +65,6 @@ public class Module {
         return (E) this;
     }
 
-
     public JsonObject getConfigAsJson() {
         JsonObject settings = new JsonObject();
 
@@ -78,7 +77,8 @@ public class Module {
 
         JsonObject data = new JsonObject();
         data.addProperty("enabled", enabled);
-        if (hasBind) data.addProperty("keycode", keycode);
+        if (hasBind)
+            data.addProperty("keycode", keycode);
         data.addProperty("showInHud", showInHud);
         data.add("settings", settings);
 
@@ -87,7 +87,8 @@ public class Module {
 
     public void applyConfigFromJson(JsonObject data) {
         try {
-            if (hasBind) this.keycode = data.get("keycode").getAsInt();
+            if (hasBind)
+                this.keycode = data.get("keycode").getAsInt();
             setToggled(data.get("enabled").getAsBoolean());
             JsonObject settingsData = data.get("settings").getAsJsonObject();
             for (Setting setting : getSettings()) {
@@ -106,7 +107,6 @@ public class Module {
 
     }
 
-
     public void keybind() {
         if (this.keycode != 0 && this.canBeEnabled()) {
             if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
@@ -118,7 +118,6 @@ public class Module {
         }
     }
 
-
     public boolean canBeEnabled() {
         return true;
     }
@@ -126,7 +125,6 @@ public class Module {
     public boolean showInHud() {
         return showInHud;
     }
-
 
     public void enable() {
         this.enabled = true;
@@ -160,7 +158,6 @@ public class Module {
         return hasBind;
     }
 
-
     public String getName() {
         return this.moduleName;
     }
@@ -184,7 +181,6 @@ public class Module {
     public void setVisableInHud(boolean vis) {
         this.showInHud = vis;
     }
-
 
     public ModuleCategory moduleCategory() {
         return this.moduleCategory;
@@ -221,7 +217,6 @@ public class Module {
         return this.keycode;
     }
 
-
     public void setbind(int keybind) {
         this.keycode = keybind;
     }
@@ -255,20 +250,11 @@ public class Module {
         return clientConfig;
     }
 
-
     public enum ModuleCategory {
-        category(true, null, "Raven B++"),
-        combat(false, category, "Combat"),
-        movement(false, category, "Movement"),
-        player(false, category, "Player"),
-        world(false, category, "World"),
-        render(false, category, "Render"),
-        minigames(false, category, "Minigames"),
-        other(false, category, "Other"),
-        client(false, category, "Client"),
-        hotkey(false, category, "Hotkey"),
-        config(false, client, "Config"),
-        sumo(false, minigames, "Sumo");
+        category(true, null, "Raven B++"), combat(false, category, "Combat"), movement(false, category, "Movement"),
+        player(false, category, "Player"), world(false, category, "World"), render(false, category, "Render"),
+        minigames(false, category, "Minigames"), other(false, category, "Other"), client(false, category, "Client"),
+        hotkey(false, category, "Hotkey"), config(false, client, "Config"), sumo(false, minigames, "Sumo");
 
         private final boolean defaultShown;
         private final ModuleCategory topCatagory;

@@ -24,7 +24,6 @@ public class FakeHud extends Module {
         this.registerSetting(description = new DescriptionSetting("Command: fakehud add/remove <name>"));
     }
 
-
     @Override
     public JsonObject getConfigAsJson() {
         JsonObject settings = new JsonObject();
@@ -57,9 +56,7 @@ public class FakeHud extends Module {
             JsonObject settingsData = data.get("settings").getAsJsonObject();
             for (Setting setting : getSettings()) {
                 if (settingsData.has(setting.getName())) {
-                    setting.applyConfigFromJson(
-                            settingsData.get(setting.getName()).getAsJsonObject()
-                    );
+                    setting.applyConfigFromJson(settingsData.get(setting.getName()).getAsJsonObject());
                 }
             }
         } catch (NullPointerException ignored) {
@@ -72,16 +69,18 @@ public class FakeHud extends Module {
                 addModule(s);
             }
         } catch (NullPointerException e) {
-            list = new ArrayList<Module>() {{
-                add(new Module("AntiFbi", ModuleCategory.client));
-                add(new Module("AutoBackdoor", ModuleCategory.client));
-                add(new Module("DupeMacro", ModuleCategory.client));
-                add(new Module("GroomAura", ModuleCategory.client));
-                add(new Module("Nostaff", ModuleCategory.client));
-                add(new Module("SimonDisabler", ModuleCategory.client));
-                add(new Module("Forceop", ModuleCategory.client));
-                add(new Module("Twerk", ModuleCategory.client));
-            }};
+            list = new ArrayList<Module>() {
+                {
+                    add(new Module("AntiFbi", ModuleCategory.client));
+                    add(new Module("AutoBackdoor", ModuleCategory.client));
+                    add(new Module("DupeMacro", ModuleCategory.client));
+                    add(new Module("GroomAura", ModuleCategory.client));
+                    add(new Module("Nostaff", ModuleCategory.client));
+                    add(new Module("SimonDisabler", ModuleCategory.client));
+                    add(new Module("Forceop", ModuleCategory.client));
+                    add(new Module("Twerk", ModuleCategory.client));
+                }
+            };
         }
     }
 
@@ -92,7 +91,8 @@ public class FakeHud extends Module {
     public static void sortModules() {
         if (HUD.positionMode == Utils.HUD.PositionMode.UPLEFT || HUD.positionMode == Utils.HUD.PositionMode.UPRIGHT) {
             sortShortLong();
-        } else if (HUD.positionMode == Utils.HUD.PositionMode.DOWNLEFT || HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
+        } else if (HUD.positionMode == Utils.HUD.PositionMode.DOWNLEFT
+                || HUD.positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
             sortLongShort();
         }
     }
@@ -142,7 +142,8 @@ public class FakeHud extends Module {
     }
 
     public static void sortShortLong() {
-        list.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName()) - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
+        list.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())
+                - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
     }
 
 }

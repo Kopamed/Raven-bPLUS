@@ -21,7 +21,8 @@ public class DelayRemover extends Module {
 
         this.registerSetting(desc = new DescriptionSetting("Gives you 1.7 hitreg."));
         this.leftClickCounterField = ReflectionHelper.findField(Minecraft.class, "field_71429_W", "leftClickCounter");
-        if (this.leftClickCounterField != null) this.leftClickCounterField.setAccessible(true);
+        if (this.leftClickCounterField != null)
+            this.leftClickCounterField.setAccessible(true);
     }
 
     @Override

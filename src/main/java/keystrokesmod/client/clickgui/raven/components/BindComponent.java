@@ -25,14 +25,15 @@ public class BindComponent implements Component {
 
     public void draw() {
         GL11.glPushMatrix();
-        //  if(!GuiModule.useCustomFont.isToggled())
+        // if(!GuiModule.useCustomFont.isToggled())
         GL11.glScaled(0.5D, 0.5D, 0.5D);
 
-        if (/*this.p.mod instanceof AutoConfig*/1 > 2) {
+        if (/* this.p.mod instanceof AutoConfig */1 > 2) {
             this.dr("Auto-configure modules.");
             GL11.glPopMatrix();
         } else {
-            this.dr(this.isBinding ? BindStage.binding : BindStage.bind + ": " + Keyboard.getKeyName(this.p.mod.getKeycode()));
+            this.dr(this.isBinding ? BindStage.binding
+                    : BindStage.bind + ": " + Keyboard.getKeyName(this.p.mod.getKeycode()));
             GL11.glPopMatrix();
         }
     }
@@ -98,9 +99,13 @@ public class BindComponent implements Component {
 
     private void dr(String s) {
         // if(GuiModule.useCustomFont.isToggled()) {
-        //     FontUtil.small.drawSmoothString(s, (float) ((this.p.category.getX() + 4)), (float) ((this.p.category.getY() + this.o + 2)), Color.HSBtoRGB((float) (System.currentTimeMillis() % 3750L) / 3750.0F, 0.3F, 0.8F));
+        // FontUtil.small.drawSmoothString(s, (float) ((this.p.category.getX() + 4)),
+        // (float) ((this.p.category.getY() + this.o + 2)), Color.HSBtoRGB((float)
+        // (System.currentTimeMillis() % 3750L) / 3750.0F, 0.3F, 0.8F));
         // } else {
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(s, (float) ((this.p.category.getX() + 4) * 2), (float) ((this.p.category.getY() + this.o + 3) * 2), Color.HSBtoRGB((float) (System.currentTimeMillis() % 3750L) / 3750.0F, 0.8F, 0.8F));
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(s, (float) ((this.p.category.getX() + 4) * 2),
+                (float) ((this.p.category.getY() + this.o + 3) * 2),
+                Color.HSBtoRGB((float) (System.currentTimeMillis() % 3750L) / 3750.0F, 0.8F, 0.8F));
         // }
     }
 }

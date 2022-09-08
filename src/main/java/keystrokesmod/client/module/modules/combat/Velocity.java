@@ -18,7 +18,6 @@ public class Velocity extends Module {
     public static ComboSetting g;
     public Mode mode = Mode.Distance;
 
-
     public Velocity() {
         super("Velocity", ModuleCategory.combat);
         this.registerSetting(a = new SliderSetting("Horizontal", 90.0D, -100.0D, 100.0D, 1.0D));
@@ -37,7 +36,8 @@ public class Velocity extends Module {
     @Subscribe
     public void onLivingUpdate(ForgeEvent fe) {
         if (fe.getEvent() instanceof LivingUpdateEvent) {
-            if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
+            if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0
+                    && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
                 if (d.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
                     return;
                 }
@@ -47,12 +47,10 @@ public class Velocity extends Module {
                 }
                 if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
                     EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
-                    Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem() : null;
-                    if (
-                            (item instanceof ItemEgg
-                                    || item instanceof ItemBow
-                                    || item instanceof ItemSnow
-                                    || item instanceof ItemFishingRod) && mode == Mode.ItemHeld) {
+                    Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem()
+                            : null;
+                    if ((item instanceof ItemEgg || item instanceof ItemBow || item instanceof ItemSnow
+                            || item instanceof ItemFishingRod) && mode == Mode.ItemHeld) {
                         velo();
                         return;
                     } else if (attacker.getDistanceToEntity(mc.thePlayer) > dt.getInput()) {
@@ -60,7 +58,6 @@ public class Velocity extends Module {
                         return;
                     }
                 }
-
 
                 if (c.getInput() != 100.0D) {
                     double ch = Math.random();
@@ -99,9 +96,7 @@ public class Velocity extends Module {
         }
     }
 
-
     public enum Mode {
-        Distance,
-        ItemHeld
+        Distance, ItemHeld
     }
 }

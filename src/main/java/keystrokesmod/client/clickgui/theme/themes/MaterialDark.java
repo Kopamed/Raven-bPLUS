@@ -1,6 +1,5 @@
 package keystrokesmod.client.clickgui.theme.themes;
 
-
 import keystrokesmod.client.clickgui.theme.Theme;
 
 import java.awt.*;

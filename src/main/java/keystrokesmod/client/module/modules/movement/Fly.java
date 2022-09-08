@@ -26,22 +26,22 @@ public class Fly extends Module {
 
     public void onEnable() {
         switch ((int) a.getInput()) {
-            case 1:
-                this.vanFly.onEnable();
-                break;
-            case 2:
-                this.gliFly.onEnable();
+        case 1:
+            this.vanFly.onEnable();
+            break;
+        case 2:
+            this.gliFly.onEnable();
         }
 
     }
 
     public void onDisable() {
         switch ((int) a.getInput()) {
-            case 1:
-                this.vanFly.onDisable();
-                break;
-            case 2:
-                this.gliFly.onDisable();
+        case 1:
+            this.vanFly.onDisable();
+            break;
+        case 2:
+            this.gliFly.onDisable();
         }
 
     }
@@ -49,22 +49,22 @@ public class Fly extends Module {
     @Subscribe
     public void onTick(TickEvent e) {
         switch ((int) a.getInput()) {
-            case 1:
-                this.vanFly.update();
-                break;
-            case 2:
-                this.gliFly.update();
+        case 1:
+            this.vanFly.update();
+            break;
+        case 2:
+            this.gliFly.update();
         }
 
     }
 
     public void guiUpdate() {
         switch ((int) a.getInput()) {
-            case 1:
-                dc.setDesc(Utils.md + c1);
-                break;
-            case 2:
-                dc.setDesc(Utils.md + c2);
+        case 1:
+            dc.setDesc(Utils.md + c1);
+            break;
+        case 2:
+            dc.setDesc(Utils.md + c2);
         }
 
     }

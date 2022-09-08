@@ -46,4 +46,3 @@ public class MixinLoader implements IFMLLoadingPlugin {
         return null;
     }
 }
-

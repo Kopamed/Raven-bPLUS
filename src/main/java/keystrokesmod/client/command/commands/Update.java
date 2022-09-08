@@ -1,6 +1,5 @@
 package keystrokesmod.client.command.commands;
 
-
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
@@ -12,7 +11,7 @@ import java.net.URL;
 
 public class Update extends Command {
     public Update() {
-        super("update", "Assists you in updating the client", 0, 0, new String[]{}, new String[]{"upgrade"});
+        super("update", "Assists you in updating the client", 0, 0, new String[] {}, new String[] { "upgrade" });
     }
 
     @Override

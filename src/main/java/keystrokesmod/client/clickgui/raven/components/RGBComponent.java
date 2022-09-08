@@ -30,47 +30,57 @@ public class RGBComponent implements Component {
 
     @Override
     public void draw() {
-        Gui.drawRect(this.module.category.getX() + boxMargin, this.module.category.getY() + this.moduleStartY + textSize, this.module.category.getX() - boxMargin + this.module.category.getWidth(), this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
-        int[] drawColor = {0xffff0000, 0xff00ff00, 0xff0000ff};
+        Gui.drawRect(this.module.category.getX() + boxMargin,
+                this.module.category.getY() + this.moduleStartY + textSize,
+                this.module.category.getX() - boxMargin + this.module.category.getWidth(),
+                this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
+        int[] drawColor = { 0xffff0000, 0xff00ff00, 0xff0000ff };
         for (int i = 0; i < 3; i++) {
-            int color = (int) ((this.barWidth * this.setting.getColor(i) / 255f) + this.module.category.getX() + boxMargin);
-            Gui.drawRect(color, this.module.category.getY() + this.moduleStartY + textSize - 1, color + (color % 2 == 0 ? 2 : 1), this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, drawColor[i]);
+            int color = (int) ((this.barWidth * this.setting.getColor(i) / 255f) + this.module.category.getX()
+                    + boxMargin);
+            Gui.drawRect(color, this.module.category.getY() + this.moduleStartY + textSize - 1,
+                    color + (color % 2 == 0 ? 2 : 1),
+                    this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, drawColor[i]);
         }
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.setting.getName() + ": " + this.setting.getRed() + ", " + this.setting.getGreen() + ", " + this.setting.getBlue(), (float) ((int) ((float) (this.module.category.getX() + 4) * 2.0F)), (float) ((int) ((float) (this.module.category.getY() + this.moduleStartY + 3) * 2.0F)), -1);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(
+                this.setting.getName() + ": " + this.setting.getRed() + ", " + this.setting.getGreen() + ", "
+                        + this.setting.getBlue(),
+                (float) ((int) ((float) (this.module.category.getX() + 4) * 2.0F)),
+                (float) ((int) ((float) (this.module.category.getY() + this.moduleStartY + 3) * 2.0F)), -1);
         GL11.glPopMatrix();
     }
-
 
     @Override
     public void update(int mousePosX, int mousePosY) {
         this.barWidth = this.module.category.getWidth() - boxMargin * 2;
         if (helping != null && helping != this)
             return;
-        if ((this.mouseDown)
-                && ((mousePosX > this.module.category.getX() + boxMargin && mousePosX < (this.module.category.getX() + this.module.category.getWidth() - boxMargin)
-                && mousePosY > this.module.category.getY() + this.moduleStartY && mousePosY < this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1)
+        if ((this.mouseDown) && ((mousePosX > this.module.category.getX() + boxMargin
+                && mousePosX < (this.module.category.getX() + this.module.category.getWidth() - boxMargin)
+                && mousePosY > this.module.category.getY() + this.moduleStartY
+                && mousePosY < this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1)
                 || mode != Helping.NONE)) {
             float mouseP = (mousePosX - this.module.category.getX() - boxMargin) / (float) barWidth;
             mouseP = mouseP > 0 ? mouseP < 1 ? mouseP : 1 : 0;
-            //Utils.Player.sendMessageToSelf(mode.name());
+            // Utils.Player.sendMessageToSelf(mode.name());
             if (mode != Helping.NONE) {
                 this.setting.setColor(mode.id, (int) (mouseP * 255));
                 return;
             }
 
-            //Utils.Player.sendMessageToSelf(getTick(mouseP) + " ");
+            // Utils.Player.sendMessageToSelf(getTick(mouseP) + " ");
             switch (getTick(mouseP)) {
-                case 0:
-                    mode = Helping.RED;
-                    break;
-                case 1:
-                    mode = Helping.GREEN;
-                    break;
-                case 2:
-                    mode = Helping.BLUE;
-                    break;
+            case 0:
+                mode = Helping.RED;
+                break;
+            case 1:
+                mode = Helping.GREEN;
+                break;
+            case 2:
+                mode = Helping.BLUE;
+                break;
             }
             this.setting.setColor(mode.id, (int) (mouseP * 255));
             helping = this;
@@ -124,10 +134,7 @@ public class RGBComponent implements Component {
     }
 
     public enum Helping {
-        RED(0),
-        GREEN(1),
-        BLUE(2),
-        NONE(-1);
+        RED(0), GREEN(1), BLUE(2), NONE(-1);
 
         private final int id;
 

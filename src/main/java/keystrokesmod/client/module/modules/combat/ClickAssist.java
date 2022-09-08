@@ -72,7 +72,8 @@ public class ClickAssist extends Module {
                                 return;
                             }
 
-                            if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+                            if (onlyWhileTargeting.isToggled()
+                                    && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
                                 return;
                             }
 

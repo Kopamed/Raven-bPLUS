@@ -9,13 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-@Mod(
-        modid = "keystrokesmod",
-        name = "KeystrokesMod",
-        version = "KMV5",
-        acceptedMinecraftVersions = "[1.8.9]",
-        clientSideOnly = true
-)
+@Mod(modid = "keystrokesmod", name = "KeystrokesMod", version = "KMV5", acceptedMinecraftVersions = "[1.8.9]", clientSideOnly = true)
 
 public class KeyStrokeMod {
     private static KeyStroke keyStroke;

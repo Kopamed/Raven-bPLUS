@@ -19,7 +19,8 @@ public class GuiModuleManager {
 
     public GuiModule getModuleByModuleCategory(ModuleCategory name) {
         for (GuiModule module : guiModules) {
-            if (module.getGuiCategory() == name) return module;
+            if (module.getGuiCategory() == name)
+                return module;
         }
         return null;
     }

@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FontRenderer extends CFont {
-    CFont.CharData[] boldChars = new CFont.CharData[256],
-            italicChars = new CFont.CharData[256],
+    CFont.CharData[] boldChars = new CFont.CharData[256], italicChars = new CFont.CharData[256],
             boldItalicChars = new CFont.CharData[256];
     int[] colorCode = new int[32];
     String colorcodeIdentifiers = "0123456789abcdefklmnor";
@@ -82,11 +81,7 @@ public class FontRenderer extends CFont {
 
         CFont.CharData[] currentData = this.charData;
         float alpha = (float) (color >> 24 & 255) / 255f;
-        boolean randomCase = false,
-                bold = false,
-                italic = false,
-                strikethrough = false,
-                underline = false,
+        boolean randomCase = false, bold = false, italic = false, strikethrough = false, underline = false,
                 render = true;
         x *= 2;
         y = (y - 3) * 2;
@@ -96,7 +91,8 @@ public class FontRenderer extends CFont {
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor3d(1d, 1d, 1d);
         GlStateManager.resetColor();
-        GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
+        GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f,
+                (float) (color & 255) / 255f, alpha);
         GlStateManager.enableTexture2D();
         GlStateManager.bindTexture(this.tex.getGlTextureId());
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.tex.getGlTextureId());
@@ -131,7 +127,8 @@ public class FontRenderer extends CFont {
                     }
 
                     int colorcode = this.colorCode[colorIndex];
-                    GlStateManager.color((float) (colorcode >> 16 & 255) / 255f, (float) (colorcode >> 8 & 255) / 255f, (float) (colorcode & 255) / 255f, alpha);
+                    GlStateManager.color((float) (colorcode >> 16 & 255) / 255f, (float) (colorcode >> 8 & 255) / 255f,
+                            (float) (colorcode & 255) / 255f, alpha);
                 } else if (colorIndex == 16) {
                     randomCase = true;
                 } else if (colorIndex == 17) {
@@ -164,7 +161,8 @@ public class FontRenderer extends CFont {
                     randomCase = false;
                     underline = false;
                     strikethrough = false;
-                    GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
+                    GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f,
+                            (float) (color & 255) / 255f, alpha);
                     GlStateManager.bindTexture(this.tex.getGlTextureId());
                     currentData = this.charData;
                 }
@@ -176,11 +174,15 @@ public class FontRenderer extends CFont {
                 GL11.glEnd();
 
                 if (strikethrough) {
-                    this.drawLine(x, y + (double) (currentData[character].height / 2), x + (double) currentData[character].width - 8, y + (double) (currentData[character].height / 2), 1);
+                    this.drawLine(x, y + (double) (currentData[character].height / 2),
+                            x + (double) currentData[character].width - 8,
+                            y + (double) (currentData[character].height / 2), 1);
                 }
 
                 if (underline) {
-                    this.drawLine(x, y + (double) currentData[character].height - 2, x + (double) currentData[character].width - 8, y + (double) currentData[character].height - 2, 1);
+                    this.drawLine(x, y + (double) currentData[character].height - 2,
+                            x + (double) currentData[character].width - 8,
+                            y + (double) currentData[character].height - 2, 1);
                 }
 
                 x += currentData[character].width - kerning + this.charOffset;
@@ -203,11 +205,7 @@ public class FontRenderer extends CFont {
 
         CFont.CharData[] currentData = this.charData;
         float alpha = (float) (color >> 24 & 255) / 255f;
-        boolean randomCase = false,
-                bold = false,
-                italic = false,
-                strikethrough = false,
-                underline = false,
+        boolean randomCase = false, bold = false, italic = false, strikethrough = false, underline = false,
                 render = true;
         x *= 2;
         y = (y - 3) * 2;
@@ -215,7 +213,8 @@ public class FontRenderer extends CFont {
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
+        GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f,
+                (float) (color & 255) / 255f, alpha);
         GlStateManager.enableTexture2D();
         GlStateManager.bindTexture(this.tex.getGlTextureId());
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.tex.getGlTextureId());
@@ -252,7 +251,8 @@ public class FontRenderer extends CFont {
                     }
 
                     int colorcode = this.colorCode[colorIndex];
-                    GlStateManager.color((float) (colorcode >> 16 & 255) / 255f, (float) (colorcode >> 8 & 255) / 255f, (float) (colorcode & 255) / 255f, alpha);
+                    GlStateManager.color((float) (colorcode >> 16 & 255) / 255f, (float) (colorcode >> 8 & 255) / 255f,
+                            (float) (colorcode & 255) / 255f, alpha);
                 } else if (colorIndex == 16) {
                     randomCase = true;
                 } else if (colorIndex == 17) {
@@ -285,7 +285,8 @@ public class FontRenderer extends CFont {
                     randomCase = false;
                     underline = false;
                     strikethrough = false;
-                    GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
+                    GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f,
+                            (float) (color & 255) / 255f, alpha);
                     GlStateManager.bindTexture(this.tex.getGlTextureId());
                     currentData = this.charData;
                 }
@@ -297,11 +298,15 @@ public class FontRenderer extends CFont {
                 GL11.glEnd();
 
                 if (strikethrough) {
-                    this.drawLine(x, y + (double) (currentData[character].height / 2), x + (double) currentData[character].width - 8, y + (double) (currentData[character].height / 2), 1);
+                    this.drawLine(x, y + (double) (currentData[character].height / 2),
+                            x + (double) currentData[character].width - 8,
+                            y + (double) (currentData[character].height / 2), 1);
                 }
 
                 if (underline) {
-                    this.drawLine(x, y + (double) currentData[character].height - 2, x + (double) currentData[character].width - 8, y + (double) currentData[character].height - 2, 1);
+                    this.drawLine(x, y + (double) currentData[character].height - 2,
+                            x + (double) currentData[character].width - 8,
+                            y + (double) currentData[character].height - 2, 1);
                 }
 
                 x += currentData[character].width - 8.3f + this.charOffset;
@@ -323,11 +328,7 @@ public class FontRenderer extends CFont {
 
         CFont.CharData[] currentData = this.charData;
         float alpha = (float) (color >> 24 & 0xFF) / 255f;
-        boolean randomCase = false,
-                bold = false,
-                italic = false,
-                strikethrough = false,
-                underline = false,
+        boolean randomCase = false, bold = false, italic = false, strikethrough = false, underline = false,
                 render = true;
         x *= 2;
         y = (y - 3) * 2;
@@ -335,7 +336,8 @@ public class FontRenderer extends CFont {
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
+        GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f,
+                (float) (color & 255) / 255f, alpha);
         GlStateManager.enableTexture2D();
         GlStateManager.bindTexture(this.tex.getGlTextureId());
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.tex.getGlTextureId());
@@ -372,7 +374,8 @@ public class FontRenderer extends CFont {
                     }
 
                     int colorcode = this.colorCode[colorIndex];
-                    GlStateManager.color((float) (colorcode >> 16 & 255) / 255f, (float) (colorcode >> 8 & 255) / 255f, (float) (colorcode & 255) / 255f, alpha);
+                    GlStateManager.color((float) (colorcode >> 16 & 255) / 255f, (float) (colorcode >> 8 & 255) / 255f,
+                            (float) (colorcode & 255) / 255f, alpha);
                 } else if (colorIndex == 16) {
                     randomCase = true;
                 } else if (colorIndex == 17) {
@@ -405,7 +408,8 @@ public class FontRenderer extends CFont {
                     randomCase = false;
                     underline = false;
                     strikethrough = false;
-                    GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f, (float) (color & 255) / 255f, alpha);
+                    GlStateManager.color((float) (color >> 16 & 255) / 255f, (float) (color >> 8 & 255) / 255f,
+                            (float) (color & 255) / 255f, alpha);
                     GlStateManager.bindTexture(this.tex.getGlTextureId());
                     currentData = this.charData;
                 }
@@ -417,11 +421,15 @@ public class FontRenderer extends CFont {
                 GL11.glEnd();
 
                 if (strikethrough) {
-                    this.drawLine(x, y + (double) (currentData[character].height / 2), x + (double) currentData[character].width - 8, y + (double) (currentData[character].height / 2), 1);
+                    this.drawLine(x, y + (double) (currentData[character].height / 2),
+                            x + (double) currentData[character].width - 8,
+                            y + (double) (currentData[character].height / 2), 1);
                 }
 
                 if (underline) {
-                    this.drawLine(x, y + (double) currentData[character].height - 2, x + (double) currentData[character].width - 8, y + (double) currentData[character].height - 2, 1);
+                    this.drawLine(x, y + (double) currentData[character].height - 2,
+                            x + (double) currentData[character].width - 8,
+                            y + (double) currentData[character].height - 2, 1);
                 }
 
                 x += currentData[character].width - 8.3f + this.charOffset;
@@ -511,9 +519,12 @@ public class FontRenderer extends CFont {
     }
 
     private void setupBoldItalicIDs() {
-        this.texBold = this.setupTexture(this.font.deriveFont(Font.BOLD), this.antiAlias, this.fractionalMetrics, this.boldChars);
-        this.texItalic = this.setupTexture(this.font.deriveFont(Font.ITALIC), this.antiAlias, this.fractionalMetrics, this.italicChars);
-        this.texItalicBold = this.setupTexture(this.font.deriveFont(Font.BOLD | Font.ITALIC), this.antiAlias, this.fractionalMetrics, this.boldItalicChars);
+        this.texBold = this.setupTexture(this.font.deriveFont(Font.BOLD), this.antiAlias, this.fractionalMetrics,
+                this.boldChars);
+        this.texItalic = this.setupTexture(this.font.deriveFont(Font.ITALIC), this.antiAlias, this.fractionalMetrics,
+                this.italicChars);
+        this.texItalicBold = this.setupTexture(this.font.deriveFont(Font.BOLD | Font.ITALIC), this.antiAlias,
+                this.fractionalMetrics, this.boldItalicChars);
     }
 
     private void drawLine(double x2, double y2, double x1, double y1, float width) {

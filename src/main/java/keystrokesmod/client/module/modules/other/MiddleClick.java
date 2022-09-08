@@ -48,7 +48,8 @@ public class MiddleClick extends Module {
             return;
 
         if (pearlEvent < 4) {
-            if (pearlEvent == 3) mc.thePlayer.inventory.currentItem = prevSlot;
+            if (pearlEvent == 3)
+                mc.thePlayer.inventory.currentItem = prevSlot;
             pearlEvent++;
         }
 
@@ -68,10 +69,12 @@ public class MiddleClick extends Module {
                 }
             } else if (AddFriend.equals(actionSetting.getMode())) {
                 addFriend();
-                if (showHelp.isToggled()) showHelpMessage();
+                if (showHelp.isToggled())
+                    showHelpMessage();
             } else if (RemoveFriend.equals(actionSetting.getMode())) {
                 removeFriend();
-                if (showHelp.isToggled()) showHelpMessage();
+                if (showHelp.isToggled())
+                    showHelpMessage();
             }
             hasClicked = true;
         } else if (!Mouse.isButtonDown(2) && hasClicked) {
@@ -81,7 +84,8 @@ public class MiddleClick extends Module {
 
     private void showHelpMessage() {
         if (showHelp.isToggled()) {
-            Utils.Player.sendMessageToSelf("Run 'help friends' in CommandLine to find out how to add, remove and view friends.");
+            Utils.Player.sendMessageToSelf(
+                    "Run 'help friends' in CommandLine to find out how to add, remove and view friends.");
         }
     }
 
@@ -109,8 +113,6 @@ public class MiddleClick extends Module {
     }
 
     public enum Action {
-        ThrowPearl,
-        AddFriend,
-        RemoveFriend
+        ThrowPearl, AddFriend, RemoveFriend
     }
 }

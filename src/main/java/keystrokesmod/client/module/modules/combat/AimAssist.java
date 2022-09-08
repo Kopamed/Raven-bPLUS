@@ -56,7 +56,8 @@ public class AimAssist extends Module {
         if (!Utils.Client.currentScreenMinecraft()) {
             return;
         }
-        if (!Utils.Player.isPlayerInGame()) return;
+        if (!Utils.Player.isPlayerInGame())
+            return;
 
         if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
             BlockPos p = mc.objectMouseOver.getBlockPos();
@@ -68,12 +69,13 @@ public class AimAssist extends Module {
             }
         }
 
-
         if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
             Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class); // right clicker???????????
-            //what if player clicking but mouse not down ????
-            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
+            // what if player clicking but mouse not down ????
+            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking())
+                    || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled())
+                    || !clickAim.isToggled()) {
                 Entity en = this.getEnemy();
                 if (en != null) {
                     if (Raven.debugger) {
@@ -85,8 +87,11 @@ public class AimAssist extends Module {
                     } else {
                         double n = Utils.Player.fovFromEntity(en);
                         if (n > 1.0D || n < -1.0D) {
-                            double complimentSpeed = n * (ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328, compliment.getInput() + 2.48293) / 100);
-                            float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current().nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
+                            double complimentSpeed = n
+                                    * (ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328,
+                                            compliment.getInput() + 2.48293) / 100);
+                            float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current()
+                                    .nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
                             mc.thePlayer.rotationYaw += val;
                         }
                     }
@@ -96,9 +101,9 @@ public class AimAssist extends Module {
         }
     }
 
-
     public static boolean isAFriend(Entity entity) {
-        if (entity == mc.thePlayer) return true;
+        if (entity == mc.thePlayer)
+            return true;
 
         for (Entity wut : friends) {
             if (wut.equals(entity))
@@ -107,19 +112,22 @@ public class AimAssist extends Module {
         try {
             EntityPlayer bruhentity = (EntityPlayer) entity;
             if (Raven.debugger) {
-                Utils.Player.sendMessageToSelf("unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
+                Utils.Player.sendMessageToSelf(
+                        "unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
 
-                Utils.Player.sendMessageToSelf("susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
-                Utils.Player.sendMessageToSelf("substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
+                Utils.Player.sendMessageToSelf(
+                        "susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
+                Utils.Player.sendMessageToSelf(
+                        "substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
             }
-            if (mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName().getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2)))
+            if (mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName()
+                    .getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2)))
                 return true;
         } catch (Exception fhwhfhwe) {
             if (Raven.debugger) {
                 Utils.Player.sendMessageToSelf(fhwhfhwe.getMessage());
             }
         }
-
 
         return false;
     }

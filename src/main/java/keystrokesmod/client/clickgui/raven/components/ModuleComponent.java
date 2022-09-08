@@ -33,7 +33,7 @@ public class ModuleComponent implements Component {
     }
 
     public void updateSettings() {
-        //ill fix this later but cannot be fked rn
+        // ill fix this later but cannot be fked rn
         ArrayList<Component> newSettings = new ArrayList<Component>();
         int y = o + 12;
         if (!mod.getSettings().isEmpty()) {
@@ -87,7 +87,8 @@ public class ModuleComponent implements Component {
             c.setComponentStartAt(y);
             if (c instanceof SliderComponent || c instanceof RangeSliderComponent || c instanceof RGBComponent) {
                 y += 16;
-            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof BindComponent) {
+            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent
+                    || c instanceof BindComponent) {
                 y += 12;
             }
         }
@@ -115,11 +116,11 @@ public class ModuleComponent implements Component {
     }
 
     public static void g(int rgb) {
-	Color c = new Color(rgb);
+        Color c = new Color(rgb);
         float a = 255;
-        float r = c.getRed()/255f;
-        float g = c.getGreen()/255f;
-        float b = c.getBlue()/255f;
+        float r = c.getRed() / 255f;
+        float g = c.getGreen() / 255f;
+        float b = c.getBlue() / 255f;
         GL11.glColor4f(r, g, b, a);
     }
 
@@ -139,38 +140,38 @@ public class ModuleComponent implements Component {
     }
 
     public void draw() {
-            if (GuiModule.showGradientEnabled() && mod.isEnabled()) {
-                v((float) this.category.getX(),
-                        (float) (this.category.getY() + this.o),
-                        (float) (this.category.getX() + this.category.getWidth()),
-                        (float) (this.category.getY() + 15 + this.o),
-                        GuiModule.getEnabledTopRGB(),
-                        GuiModule.getEnabledBottomRGB());
-            } else if (GuiModule.showGradientDisabled() && !mod.isEnabled()) {
-                v((float) this.category.getX(),
-                        (float) (this.category.getY() + this.o),
-                        (float) (this.category.getX() + this.category.getWidth()),
-                        (float) (this.category.getY() + 15 + this.o),
-                        GuiModule.getDisabledTopRGB(),
-                        GuiModule.getDisabledBottomRGB());
-            }
-            GL11.glPushMatrix();
-            // module text button
-            int button_rgb;
-            if (this.mod.isEnabled()) {
-                button_rgb = GuiModule.getEnabledTextRGB();
-            } else if (this.mod.canBeEnabled()) {
-                button_rgb = GuiModule.getDisabledTextRGB();
-            } else {
-                button_rgb = new Color(102, 102, 102).getRGB();
-            }
-            if (GuiModule.useCustomFont()) {
-                FontUtil.normal.drawCenteredString(this.mod.getName(), (float) (this.category.getX() + this.category.getWidth() / 2), (float) (this.category.getY() + this.o + 4), button_rgb);
-            } else {
-                Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(), (float) (this.category.getX() + this.category.getWidth() / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2), (float) (this.category.getY() + this.o + 4), button_rgb);
-            }
-            GL11.glPopMatrix();
-
+        if (GuiModule.showGradientEnabled() && mod.isEnabled()) {
+            v((float) this.category.getX(), (float) (this.category.getY() + this.o),
+                    (float) (this.category.getX() + this.category.getWidth()),
+                    (float) (this.category.getY() + 15 + this.o), GuiModule.getEnabledTopRGB(),
+                    GuiModule.getEnabledBottomRGB());
+        } else if (GuiModule.showGradientDisabled() && !mod.isEnabled()) {
+            v((float) this.category.getX(), (float) (this.category.getY() + this.o),
+                    (float) (this.category.getX() + this.category.getWidth()),
+                    (float) (this.category.getY() + 15 + this.o), GuiModule.getDisabledTopRGB(),
+                    GuiModule.getDisabledBottomRGB());
+        }
+        GL11.glPushMatrix();
+        // module text button
+        int button_rgb;
+        if (this.mod.isEnabled()) {
+            button_rgb = GuiModule.getEnabledTextRGB();
+        } else if (this.mod.canBeEnabled()) {
+            button_rgb = GuiModule.getDisabledTextRGB();
+        } else {
+            button_rgb = new Color(102, 102, 102).getRGB();
+        }
+        if (GuiModule.useCustomFont()) {
+            FontUtil.normal.drawCenteredString(this.mod.getName(),
+                    (float) (this.category.getX() + this.category.getWidth() / 2),
+                    (float) (this.category.getY() + this.o + 4), button_rgb);
+        } else {
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(),
+                    (float) (this.category.getX() + this.category.getWidth() / 2
+                            - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2),
+                    (float) (this.category.getY() + this.o + 4), button_rgb);
+        }
+        GL11.glPopMatrix();
 
         if (this.po && !this.settings.isEmpty()) {
             for (Component c : this.settings) {
@@ -178,9 +179,7 @@ public class ModuleComponent implements Component {
             }
         }
 
-
     }
-
 
     public int getHeight() {
         if (!this.po) {
@@ -191,7 +190,8 @@ public class ModuleComponent implements Component {
             for (Component c : this.settings) {
                 if (c instanceof SliderComponent || c instanceof RangeSliderComponent || c instanceof RGBComponent) {
                     h += 16;
-                } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent || c instanceof BindComponent) {
+                } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent
+                        || c instanceof BindComponent) {
                     h += 12;
                 }
             }
@@ -238,7 +238,7 @@ public class ModuleComponent implements Component {
     public void mouseReleased(int x, int y, int m) {
         for (Component c : this.settings) {
             c.mouseReleased(x, y, m);
-            //updateSettings();
+            // updateSettings();
         }
 
     }
@@ -251,6 +251,7 @@ public class ModuleComponent implements Component {
     }
 
     public boolean ii(int x, int y) {
-        return x > this.category.getX() && x < this.category.getX() + this.category.getWidth() && y > this.category.getY() + this.o && y < this.category.getY() + 16 + this.o;
+        return x > this.category.getX() && x < this.category.getX() + this.category.getWidth()
+                && y > this.category.getY() + this.o && y < this.category.getY() + 16 + this.o;
     }
 }

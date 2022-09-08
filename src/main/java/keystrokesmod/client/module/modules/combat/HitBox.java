@@ -42,7 +42,8 @@ public class HitBox extends Module {
         if (fe.getEvent() instanceof RenderWorldLastEvent) {
             if (b.isToggled() && Utils.Player.isPlayerInGame()) {
                 for (Entity en : mc.theWorld.loadedEntityList) {
-                    if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase) en).deathTime == 0 && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
+                    if (en != mc.thePlayer && en instanceof EntityLivingBase && ((EntityLivingBase) en).deathTime == 0
+                            && !(en instanceof EntityArmorStand) && !en.isInvisible()) {
                         this.rh(en, Color.WHITE);
                     }
                 }
@@ -57,12 +58,16 @@ public class HitBox extends Module {
 
     private void rh(Entity e, Color c) {
         if (e instanceof EntityLivingBase) {
-            double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosX;
-            double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosY;
-            double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Utils.Client.getTimer().renderPartialTicks - mc.getRenderManager().viewerPosZ;
+            double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks
+                    - mc.getRenderManager().viewerPosX;
+            double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks
+                    - mc.getRenderManager().viewerPosY;
+            double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Utils.Client.getTimer().renderPartialTicks
+                    - mc.getRenderManager().viewerPosZ;
             float ex = (float) ((double) e.getCollisionBorderSize() * a.getInput());
             AxisAlignedBB bbox = e.getEntityBoundingBox().expand(ex, ex, ex);
-            AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y, bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);
+            AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y,
+                    bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);
             GL11.glBlendFunc(770, 771);
             GL11.glEnable(3042);
             GL11.glDisable(3553);

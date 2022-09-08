@@ -42,29 +42,22 @@ public class Projectiles extends Module {
 
             Timer timer = new Timer(3F);
             // calculate starting position
-            double arrowPosX = player.lastTickPosX
-                    + (player.posX - player.lastTickPosX) * timer.renderPartialTicks
+            double arrowPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * timer.renderPartialTicks
                     - Math.cos((float) Math.toRadians(player.rotationYaw)) * 0.16F;
-            double arrowPosY = player.lastTickPosY
-                    + (player.posY - player.lastTickPosY)
-                    * timer.renderPartialTicks
+            double arrowPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * timer.renderPartialTicks
                     + player.getEyeHeight() - 0.1;
-            double arrowPosZ = player.lastTickPosZ
-                    + (player.posZ - player.lastTickPosZ)
-                    * timer.renderPartialTicks
+            double arrowPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * timer.renderPartialTicks
                     - Math.sin((float) Math.toRadians(player.rotationYaw)) * 0.16F;
 
             // calculate starting motion
             float arrowMotionFactor = 1F;
             float yaw = (float) Math.toRadians(player.rotationYaw);
             float pitch = (float) Math.toRadians(player.rotationPitch);
-            float arrowMotionX =
-                    (float) (-Math.sin(yaw) * Math.cos(pitch) * arrowMotionFactor);
+            float arrowMotionX = (float) (-Math.sin(yaw) * Math.cos(pitch) * arrowMotionFactor);
             float arrowMotionY = (float) (-Math.sin(pitch) * arrowMotionFactor);
-            float arrowMotionZ =
-                    (float) (Math.cos(yaw) * Math.cos(pitch) * arrowMotionFactor);
-            double arrowMotion = Math.sqrt(arrowMotionX * arrowMotionX
-                    + arrowMotionY * arrowMotionY + arrowMotionZ * arrowMotionZ);
+            float arrowMotionZ = (float) (Math.cos(yaw) * Math.cos(pitch) * arrowMotionFactor);
+            double arrowMotion = Math
+                    .sqrt(arrowMotionX * arrowMotionX + arrowMotionY * arrowMotionY + arrowMotionZ * arrowMotionZ);
             arrowMotionX /= arrowMotion;
             arrowMotionY /= arrowMotion;
             arrowMotionZ /= arrowMotion;
@@ -93,13 +86,11 @@ public class Projectiles extends Module {
 
             // draw trajectory line
             double gravity = 0.05D;
-            Vec3 playerVector = new Vec3(player.posX,
-                    player.posY + player.getEyeHeight(), player.posZ);
+            Vec3 playerVector = new Vec3(player.posX, player.posY + player.getEyeHeight(), player.posZ);
             GL11.glColor4f(0, 1, 0, 0.75F);
             GL11.glBegin(GL11.GL_LINE_STRIP);
             for (int i = 0; i < 1000; i++) {
-                GL11.glVertex3d(arrowPosX - renderManager.viewerPosX,
-                        arrowPosY - renderManager.viewerPosY,
+                GL11.glVertex3d(arrowPosX - renderManager.viewerPosX, arrowPosY - renderManager.viewerPosY,
                         arrowPosZ - renderManager.viewerPosZ);
 
                 arrowPosX += arrowMotionX * 0.1;
@@ -110,8 +101,7 @@ public class Projectiles extends Module {
                 arrowMotionZ *= 0.999D;
                 arrowMotionY -= gravity * 0.1;
 
-                if (mc.theWorld.rayTraceBlocks(playerVector,
-                        new Vec3(arrowPosX, arrowPosY, arrowPosZ)) != null)
+                if (mc.theWorld.rayTraceBlocks(playerVector, new Vec3(arrowPosX, arrowPosY, arrowPosZ)) != null)
                     break;
             }
             GL11.glEnd();
@@ -136,7 +126,6 @@ public class Projectiles extends Module {
             GL11.glDepthMask(true);
             GL11.glDisable(GL11.GL_LINE_SMOOTH);
             GL11.glPopMatrix();
-
 
         }
     }

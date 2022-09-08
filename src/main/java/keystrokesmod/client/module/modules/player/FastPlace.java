@@ -22,7 +22,8 @@ public class FastPlace extends Module {
     public static final Field rightClickDelayTimerField;
 
     static {
-        rightClickDelayTimerField = ReflectionHelper.findField(Minecraft.class, "field_71467_ac", "rightClickDelayTimer");
+        rightClickDelayTimerField = ReflectionHelper.findField(Minecraft.class, "field_71467_ac",
+                "rightClickDelayTimer");
 
         if (rightClickDelayTimerField != null) {
             rightClickDelayTimerField.setAccessible(true);
@@ -43,7 +44,6 @@ public class FastPlace extends Module {
     public boolean canBeEnabled() {
         return rightClickDelayTimerField != null;
     }
-
 
     @Subscribe
     public void onTick(TickEvent event) {
@@ -67,7 +67,8 @@ public class FastPlace extends Module {
                         }
                     } catch (IllegalAccessException | IndexOutOfBoundsException ignored) {
                     }
-                } else if (item != null && (item.getItem() instanceof ItemSnowball || item.getItem() instanceof ItemEgg) && projSeparate.isToggled()) {
+                } else if (item != null && (item.getItem() instanceof ItemSnowball || item.getItem() instanceof ItemEgg)
+                        && projSeparate.isToggled()) {
                     try {
                         int c = (int) projSlider.getInput();
                         if (c == 0) {

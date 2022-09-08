@@ -28,7 +28,8 @@ public class AutoTool extends Module {
     public static int previousSlot;
     public static boolean justFinishedMining, mining;
     public static CoolDown delay;
-    //public static List<Block> pickaxe = Arrays.asList(ItemBlock.class, BlockIce.class);
+    // public static List<Block> pickaxe = Arrays.asList(ItemBlock.class,
+    // BlockIce.class);
 
     public AutoTool() {
         super("Auto Tool", ModuleCategory.player);
@@ -52,8 +53,7 @@ public class AutoTool extends Module {
             return;
         }
 
-
-        //make sure that we are allowed to breack blocks if ac is enabled
+        // make sure that we are allowed to breack blocks if ac is enabled
         LeftClicker autoClicker = (LeftClicker) Raven.moduleManager.getModuleByClazz(LeftClicker.class);
         if (autoClicker.isEnabled()) {
             if (!LeftClicker.breakBlocks.isToggled()) {
@@ -72,7 +72,8 @@ public class AutoTool extends Module {
                         if (previousBlock != stateBlock) {
                             previousBlock = stateBlock;
                             isWaiting = true;
-                            delay.setCooldown((long) ThreadLocalRandom.current().nextDouble(mineDelay.getInputMin(), mineDelay.getInputMax() + 0.01));
+                            delay.setCooldown((long) ThreadLocalRandom.current().nextDouble(mineDelay.getInputMin(),
+                                    mineDelay.getInputMax() + 0.01));
                             delay.start();
                         } else {
                             if (isWaiting && delay.hasFinished()) {
@@ -110,7 +111,6 @@ public class AutoTool extends Module {
     private void hotkeyToFastest() {
         int index = -1;
         double speed = 1;
-
 
         for (int slot = 0; slot <= 8; slot++) {
             ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);

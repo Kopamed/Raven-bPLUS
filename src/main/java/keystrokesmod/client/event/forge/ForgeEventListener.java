@@ -18,10 +18,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 /**
- * Why? Other than the main few events that modules will be using, there's a ton of other events they use.
- * These are all Forge events, so there is no point in creating tons of mixins to hook all of them.
- * So instead, they are put into a ForgeEvent and handled by Raven's event system.
- * Also, the guiUpdate() in modules is hooked here because it's the best place to do it.
+ * Why? Other than the main few events that modules will be using, there's a ton
+ * of other events they use. These are all Forge events, so there is no point in
+ * creating tons of mixins to hook all of them. So instead, they are put into a
+ * ForgeEvent and handled by Raven's event system. Also, the guiUpdate() in
+ * modules is hooked here because it's the best place to do it.
  */
 public class ForgeEventListener {
 
@@ -51,7 +52,6 @@ public class ForgeEventListener {
 
             Raven.eventBus.post(new Render2DEvent());
         }
-
 
         Raven.eventBus.post(new ForgeEvent(e));
     }

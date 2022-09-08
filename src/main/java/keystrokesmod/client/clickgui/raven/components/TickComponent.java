@@ -71,7 +71,12 @@ public class TickComponent implements Component {
         // drawing main bg rect
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName() : "[-]  " + this.cl1ckbUtt0n.getName(), (float) ((this.module.category.getX() + 4) * 2), (float) ((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1, false);
+        Minecraft.getMinecraft().fontRendererObj.drawString(
+                this.cl1ckbUtt0n.isToggled() ? "[+]  " + this.cl1ckbUtt0n.getName()
+                        : "[-]  " + this.cl1ckbUtt0n.getName(),
+                (float) ((this.module.category.getX() + 4) * 2),
+                (float) ((this.module.category.getY() + this.o + 5) * 2), this.cl1ckbUtt0n.isToggled() ? this.c : -1,
+                false);
         GL11.glPopMatrix();
     }
 

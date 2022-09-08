@@ -21,7 +21,6 @@ public class Armour extends Module {
             return;
         }
 
-
         int index = -1;
         double strength = -1;
 
@@ -32,13 +31,15 @@ public class Armour extends Module {
                 ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(slot);
                 if (itemStack != null && itemStack.getItem() instanceof ItemArmor) {
                     ItemArmor armorPiece = (ItemArmor) itemStack.getItem();
-                    if (!Utils.Player.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()) {
+                    if (!Utils.Player.playerWearingArmor().contains(armorPiece.armorType)
+                            && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()) {
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {
                             strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                             index = slot;
                         }
 
-                    } else if (Utils.Player.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
+                    } else if (Utils.Player.playerWearingArmor().contains(armorPiece.armorType)
+                            && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
                         ItemArmor playerArmor;
                         if (armorType == 0) {
                             playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(3).getItem();
@@ -52,18 +53,20 @@ public class Armour extends Module {
                             continue;
                         }
 
-                        if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength && armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > playerArmor.getArmorMaterial().getDamageReductionAmount(armorType)) {
+                        if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength
+                                && armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > playerArmor
+                                        .getArmorMaterial().getDamageReductionAmount(armorType)) {
                             strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                             index = slot;
                         }
-                    } else if (!Utils.Player.playerWearingArmor().contains(armorPiece.armorType) && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
+                    } else if (!Utils.Player.playerWearingArmor().contains(armorPiece.armorType)
+                            && armorPiece.armorType == armorType && !ignoreIfAlreadyEquipped.isToggled()) {
 
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {
                             strength = armorPiece.getArmorMaterial().getDamageReductionAmount(armorType);
                             index = slot;
                         }
                     }
-
 
                 }
             }

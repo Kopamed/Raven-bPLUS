@@ -47,8 +47,9 @@ public class HUD extends Module {
     public static final String HUDX_prefix = "HUDX~ ";
     public static final String HUDY_prefix = "HUDY~ ";
 
-    public enum lmv {l1, l2, l3, l4, l5, l6, l7, CD}
-
+    public enum lmv {
+        l1, l2, l3, l4, l5, l6, l7, CD
+    }
 
     public HUD() {
         super("HUD", ModuleCategory.render);
@@ -68,11 +69,16 @@ public class HUD extends Module {
 
     private void setUpLogo() {
         try {
-            inputStream = logoMode.getMode() != lmv.CD ? HUD.class.getResourceAsStream("/assets/keystrokes/logohud/" + logoMode.getMode().toString() + ".png") : new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "logo.png"));
+            inputStream = logoMode.getMode() != lmv.CD
+                    ? HUD.class
+                            .getResourceAsStream("/assets/keystrokes/logohud/" + logoMode.getMode().toString() + ".png")
+                    : new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes"
+                            + File.separator + "logo.png"));
             BufferedImage bf = null;
             System.out.println(logoMode.getMode().toString());
             bf = ImageIO.read(inputStream);
-            ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven", new DynamicTexture(bf));
+            ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",
+                    new DynamicTexture(bf));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,13 +90,13 @@ public class HUD extends Module {
     }
 
     public void guiButtonToggled(ComboSetting b) {
-        if (b == logoMode) setUpLogo();
+        if (b == logoMode)
+            setUpLogo();
     }
 
     public boolean logoLoaded() {
         return ravenLogo != null && logo.isToggled();
     }
-
 
     public void guiUpdate() {
         colourModeDesc.setDesc(Utils.md + ColourModes.values()[(int) colourMode.getInput() - 1]);
@@ -124,7 +130,8 @@ public class HUD extends Module {
                     } else {
                         FakeHud.sortShortLong();
                     }
-                } else if (positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
+                } else if (positionMode == Utils.HUD.PositionMode.DOWNLEFT
+                        || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
                     if (!fhe) {
                         Raven.moduleManager.sortLongShort();
                     } else {
@@ -137,9 +144,9 @@ public class HUD extends Module {
             int y = hudY;
             int del = 0;
 
-
             List<Module> en = fhe ? FakeHud.getModules() : new ArrayList<>(Raven.moduleManager.getModules());
-            if (en.isEmpty()) return;
+            if (en.isEmpty())
+                return;
 
             int textBoxWidth = Raven.moduleManager.getLongestActiveModule(mc.fontRendererObj);
             int textBoxHeight = Raven.moduleManager.getBoxHeight(mc.fontRendererObj, margin);
@@ -165,58 +172,73 @@ public class HUD extends Module {
             y += logoHeight;
             for (Module m : en) {
                 if (m.isEnabled() && m.showInHud()) {
-                    if (positionMode == Utils.HUD.PositionMode.DOWNRIGHT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
+                    if (positionMode == Utils.HUD.PositionMode.DOWNRIGHT
+                            || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                         if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(),
+                                    (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
+                                    (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 120;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN2) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(),
+                                    (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
+                                    (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 10;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, 14), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(),
+                                    (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
+                                    (float) y, Utils.Client.astolfoColorsDraw(10, 14), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 120;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO2) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(),
+                                    (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
+                                    (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 120;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO3) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(),
+                                    (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
+                                    (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 10;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
-                            FontUtil.two.drawString(m.getName(), (double) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), y, Utils.Client.customDraw(del), dropShadow.isToggled(), 10);
+                            FontUtil.two.drawString(m.getName(),
+                                    (double) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())), y,
+                                    Utils.Client.customDraw(del), dropShadow.isToggled(), 10);
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 10;
                         }
                     } else {
                         if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
+                                    Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 120;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.RAVEN2) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
+                                    Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 10;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, 14), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
+                                    Utils.Client.astolfoColorsDraw(10, 14), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 120;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO2) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
+                                    Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 120;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.ASTOLFO3) {
-                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
+                            mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
+                                    Utils.Client.astolfoColorsDraw(10, del), dropShadow.isToggled());
                             y += mc.fontRendererObj.FONT_HEIGHT + margin;
                             del -= 10;
                         } else if (ColourModes.values()[(int) colourMode.getInput() - 1] == ColourModes.KV) {
-                            FontUtil.two.drawString(m.getName(),
-                                    (float) hudX,
-                                    (float) y,
-                                    Utils.Client.customDraw(del));
+                            FontUtil.two.drawString(m.getName(), (float) hudX, (float) y, Utils.Client.customDraw(del));
                             y += mc.fontRendererObj.FONT_HEIGHT - 2;
                             del -= 10;
                         }
@@ -236,12 +258,14 @@ public class HUD extends Module {
                 double logoWidth = sr.getScaledWidth() * logoScalew.getInput() / 8;
                 Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                 GL11.glColor4f(1, 1, 1, 1);
-                Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+                Gui.drawModalRectWithCustomSizedTexture((int) (hudX + e - logoWidth), hudY, 0, 0, (int) logoWidth,
+                        (int) logoHeight, (int) logoWidth, (int) logoHeight);
             } else {
                 double logoWidth = sr.getScaledWidth() * logoScalew.getInput() / 8;
                 Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
                 GL11.glColor4f(1, 1, 1, 1);
-                Gui.drawModalRectWithCustomSizedTexture(hudX, hudY, 0, 0, (int) logoWidth, (int) logoHeight, (int) logoWidth, (int) logoHeight);
+                Gui.drawModalRectWithCustomSizedTexture(hudX, hudY, 0, 0, (int) logoWidth, (int) logoHeight,
+                        (int) logoWidth, (int) logoHeight);
             }
         } else {
             logoHeight = 0;
@@ -266,7 +290,8 @@ public class HUD extends Module {
 
         public void initGui() {
             super.initGui();
-            this.buttonList.add(this.resetPosButton = new GuiButtonExt(1, this.width - 90, 5, 85, 20, "Reset position"));
+            this.buttonList
+                    .add(this.resetPosButton = new GuiButtonExt(1, this.width - 90, 5, 85, 20, "Reset position"));
             this.marginX = hudX;
             this.marginY = hudY;
             sr = new ScaledResolution(mc);
@@ -292,7 +317,8 @@ public class HUD extends Module {
             ScaledResolution res = new ScaledResolution(this.mc);
             int descriptionOffsetX = res.getScaledWidth() / 2 - 84;
             int descriptionOffsetY = res.getScaledHeight() / 2 - 20;
-            Utils.HUD.drawColouredText("Edit the HUD position by dragging.", '-', descriptionOffsetX, descriptionOffsetY, 2L, 0L, true, this.mc.fontRendererObj);
+            Utils.HUD.drawColouredText("Edit the HUD position by dragging.", '-', descriptionOffsetX,
+                    descriptionOffsetY, 2L, 0L, true, this.mc.fontRendererObj);
 
             try {
                 this.handleInput();
@@ -310,14 +336,17 @@ public class HUD extends Module {
             String[] var4 = t.split("-");
             ArrayList<String> var5 = Utils.Java.toArrayList(var4);
             if (positionMode == Utils.HUD.PositionMode.UPLEFT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
-                var5.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2) - Utils.mc.fontRendererObj.getStringWidth(o1));
-            } else if (positionMode == Utils.HUD.PositionMode.DOWNLEFT || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
+                var5.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2)
+                        - Utils.mc.fontRendererObj.getStringWidth(o1));
+            } else if (positionMode == Utils.HUD.PositionMode.DOWNLEFT
+                    || positionMode == Utils.HUD.PositionMode.DOWNRIGHT) {
                 var5.sort(Comparator.comparingInt(o2 -> Utils.mc.fontRendererObj.getStringWidth(o2)));
             }
 
             if (positionMode == Utils.HUD.PositionMode.DOWNRIGHT || positionMode == Utils.HUD.PositionMode.UPRIGHT) {
                 for (String s : var5) {
-                    fr.drawString(s, (float) x + (gap - fr.getStringWidth(s)), (float) y, Color.white.getRGB(), dropShadow.isToggled());
+                    fr.drawString(s, (float) x + (gap - fr.getStringWidth(s)), (float) y, Color.white.getRGB(),
+                            dropShadow.isToggled());
                     y += marginY;
                 }
             } else {
@@ -335,10 +364,13 @@ public class HUD extends Module {
                     this.marginX = this.lastMousePosX + (mousePosX - this.sessionMousePosX);
                     this.marginY = this.lastMousePosY + (mousePosY - this.sessionMousePosY);
                     sr = new ScaledResolution(mc);
-                    positionMode = Utils.HUD.getPostitionMode(marginX, marginY, sr.getScaledWidth(), sr.getScaledHeight());
+                    positionMode = Utils.HUD.getPostitionMode(marginX, marginY, sr.getScaledWidth(),
+                            sr.getScaledHeight());
 
-                    //in the else if statement, we check if the mouse is clicked AND inside the "text box"
-                } else if (mousePosX > this.textBoxStartX && mousePosX < this.textBoxEndX && mousePosY > this.textBoxStartY && mousePosY < this.textBoxEndY) {
+                    // in the else if statement, we check if the mouse is clicked AND inside the
+                    // "text box"
+                } else if (mousePosX > this.textBoxStartX && mousePosX < this.textBoxEndX
+                        && mousePosY > this.textBoxStartY && mousePosY < this.textBoxEndY) {
                     this.mouseDown = true;
                     this.sessionMousePosX = mousePosX;
                     this.sessionMousePosY = mousePosY;
@@ -371,12 +403,7 @@ public class HUD extends Module {
     }
 
     public enum ColourModes {
-        RAVEN,
-        RAVEN2,
-        ASTOLFO,
-        ASTOLFO2,
-        ASTOLFO3,
-        KV
+        RAVEN, RAVEN2, ASTOLFO, ASTOLFO2, ASTOLFO3, KV
     }
 
     public static int getHudX() {

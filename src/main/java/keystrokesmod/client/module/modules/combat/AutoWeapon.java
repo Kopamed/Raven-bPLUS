@@ -25,7 +25,8 @@ public class AutoWeapon extends Module {
         if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
 
-        if (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))) {
+        if (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null
+                || (onlyWhenHoldingDown.isToggled() && !Mouse.isButtonDown(0))) {
             if (onWeapon) {
                 onWeapon = false;
                 if (goBackToPrevSlot.isToggled()) {
@@ -34,7 +35,8 @@ public class AutoWeapon extends Module {
             }
         } else {
             if (onlyWhenHoldingDown.isToggled()) {
-                if (!Mouse.isButtonDown(0)) return;
+                if (!Mouse.isButtonDown(0))
+                    return;
             }
 
             if (!onWeapon) {
@@ -43,7 +45,8 @@ public class AutoWeapon extends Module {
 
                 int maxDamageSlot = Utils.Player.getMaxDamageSlot();
 
-                if (maxDamageSlot > 0 && Utils.Player.getSlotDamage(maxDamageSlot) > Utils.Player.getSlotDamage(mc.thePlayer.inventory.currentItem)) {
+                if (maxDamageSlot > 0 && Utils.Player.getSlotDamage(maxDamageSlot) > Utils.Player
+                        .getSlotDamage(mc.thePlayer.inventory.currentItem)) {
                     mc.thePlayer.inventory.currentItem = maxDamageSlot;
                 }
             }

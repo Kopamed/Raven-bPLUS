@@ -24,7 +24,9 @@ public class DescriptionComponent implements Component {
     public void draw() {
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.desc.getDesc(), (float) ((this.p.category.getX() + 4) * 2), (float) ((this.p.category.getY() + this.o + 4) * 2), this.c, true);
+        Minecraft.getMinecraft().fontRendererObj.drawString(this.desc.getDesc(),
+                (float) ((this.p.category.getX() + 4) * 2), (float) ((this.p.category.getY() + this.o + 4) * 2), this.c,
+                true);
         GL11.glPopMatrix();
     }
 

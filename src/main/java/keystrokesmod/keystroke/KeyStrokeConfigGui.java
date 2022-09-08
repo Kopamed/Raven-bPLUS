@@ -10,7 +10,7 @@ import net.minecraft.client.gui.GuiScreen;
 import java.io.IOException;
 
 public class KeyStrokeConfigGui extends GuiScreen {
-    private static final String[] colors = {"White", "Red", "Green", "Blue", "Yellow", "Purple", "Rainbow"};
+    private static final String[] colors = { "White", "Red", "Green", "Blue", "Yellow", "Purple", "Rainbow" };
     private GuiButton modeBtn;
     private GuiButton textColorBtn;
     private GuiButton showMouseBtn;
@@ -21,10 +21,14 @@ public class KeyStrokeConfigGui extends GuiScreen {
 
     public void initGui() {
         KeyStroke st = KeyStrokeMod.getKeyStroke();
-        this.buttonList.add(this.modeBtn = new GuiButton(0, this.width / 2 - 70, this.height / 2 - 28, 140, 20, "Mod: " + (KeyStroke.enabled ? "Enabled" : "Disabled")));
-        this.buttonList.add(this.textColorBtn = new GuiButton(1, this.width / 2 - 70, this.height / 2 - 6, 140, 20, "Text color: " + colors[KeyStroke.currentColorNumber]));
-        this.buttonList.add(this.showMouseBtn = new GuiButton(2, this.width / 2 - 70, this.height / 2 + 16, 140, 20, "Show mouse buttons: " + (KeyStroke.showMouseButtons ? "On" : "Off")));
-        this.buttonList.add(this.outlineBtn = new GuiButton(3, this.width / 2 - 70, this.height / 2 + 38, 140, 20, "Outline: " + (KeyStroke.outline ? "On" : "Off")));
+        this.buttonList.add(this.modeBtn = new GuiButton(0, this.width / 2 - 70, this.height / 2 - 28, 140, 20,
+                "Mod: " + (KeyStroke.enabled ? "Enabled" : "Disabled")));
+        this.buttonList.add(this.textColorBtn = new GuiButton(1, this.width / 2 - 70, this.height / 2 - 6, 140, 20,
+                "Text color: " + colors[KeyStroke.currentColorNumber]));
+        this.buttonList.add(this.showMouseBtn = new GuiButton(2, this.width / 2 - 70, this.height / 2 + 16, 140, 20,
+                "Show mouse buttons: " + (KeyStroke.showMouseButtons ? "On" : "Off")));
+        this.buttonList.add(this.outlineBtn = new GuiButton(3, this.width / 2 - 70, this.height / 2 + 38, 140, 20,
+                "Outline: " + (KeyStroke.outline ? "On" : "Off")));
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {

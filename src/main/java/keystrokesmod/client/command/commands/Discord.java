@@ -1,6 +1,5 @@
 package keystrokesmod.client.command.commands;
 
-
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
@@ -8,7 +7,8 @@ import keystrokesmod.client.utils.Utils;
 
 public class Discord extends Command {
     public Discord() {
-        super("discord", "Allows you to join the Raven B++ discord", 0, 3, new String[]{"copy", "open", "print"}, new String[]{"dc", "chat"});
+        super("discord", "Allows you to join the Raven B++ discord", 0, 3, new String[] { "copy", "open", "print" },
+                new String[] { "dc", "chat" });
     }
 
     @Override

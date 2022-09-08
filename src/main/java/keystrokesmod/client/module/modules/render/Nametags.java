@@ -54,7 +54,8 @@ public class Nametags extends Module {
                     String str = en.getDisplayName().getFormattedText();
                     if (c.isToggled()) {
                         double r = en.getHealth() / en.getMaxHealth();
-                        String h = (r < 0.3D ? "§c" : (r < 0.5D ? "§6" : (r < 0.7D ? "§e" : "§a"))) + Utils.Java.round(en.getHealth(), 1);
+                        String h = (r < 0.3D ? "§c" : (r < 0.5D ? "§6" : (r < 0.7D ? "§e" : "§a")))
+                                + Utils.Java.round(en.getHealth(), 1);
                         str = str + " " + h;
                     }
 

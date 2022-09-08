@@ -20,7 +20,10 @@ public class CombatUtils {
             boolean isTeam = isTeam(Minecraft.getMinecraft().thePlayer, entity);
             boolean isVisible = (!entity.isInvisible());
 
-            return !(entity instanceof EntityArmorStand) && isVisible && (entity instanceof EntityPlayer && !isTeam && !idk || entity instanceof EntityAnimal || entity instanceof EntityMob || entity instanceof EntityLivingBase && entityLivingBase.isEntityAlive());
+            return !(entity instanceof EntityArmorStand) && isVisible
+                    && (entity instanceof EntityPlayer && !isTeam && !idk || entity instanceof EntityAnimal
+                            || entity instanceof EntityMob
+                            || entity instanceof EntityLivingBase && entityLivingBase.isEntityAlive());
         } else {
             return false;
         }
@@ -50,6 +53,5 @@ public class CombatUtils {
             return true;
         }
     }
-
 
 }

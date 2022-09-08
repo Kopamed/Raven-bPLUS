@@ -77,9 +77,9 @@ public class Tracers extends Module {
                         } while (en.deathTime != 0);
                     } while (!a.isToggled() && en.isInvisible());
 
-                    if (/*!AntiBot.bot(en)*/ true) {
+                    if (/* !AntiBot.bot(en) */ true) {
                         if (o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25) {
-                            //ik i can use a lot of tenary statements but my brain
+                            // ik i can use a lot of tenary statements but my brain
                             int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10);
                             int green = Math.abs(red - 255);
                             int rgbs = new Color(red, green, this.rgb.getBlue()).getRGB();

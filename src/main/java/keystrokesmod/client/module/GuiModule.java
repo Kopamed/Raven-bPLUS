@@ -27,5 +27,4 @@ public class GuiModule extends Module {
         return moduleCategory;
     }
 
-
 }

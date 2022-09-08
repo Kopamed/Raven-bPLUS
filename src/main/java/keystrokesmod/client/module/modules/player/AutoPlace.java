@@ -59,7 +59,8 @@ public class AutoPlace extends Module {
     @Subscribe
     public void onTick(TickEvent e) {
         Module fastPlace = Raven.moduleManager.getModuleByClazz(FastPlace.class);
-        if (a.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && fastPlace != null && !fastPlace.isEnabled()) {
+        if (a.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && fastPlace != null
+                && !fastPlace.isEnabled()) {
             ItemStack i = mc.thePlayer.getHeldItem();
             if (i == null || !(i.getItem() instanceof ItemBlock)) {
                 return;
@@ -78,20 +79,23 @@ public class AutoPlace extends Module {
                     ItemStack i = mc.thePlayer.getHeldItem();
                     if (i != null && i.getItem() instanceof ItemBlock) {
                         MovingObjectPosition m = mc.objectMouseOver;
-                        if (m != null && m.typeOfHit == MovingObjectType.BLOCK && ((m.sideHit != EnumFacing.UP && m.sideHit != EnumFacing.DOWN) || top.isToggled())) {
+                        if (m != null && m.typeOfHit == MovingObjectType.BLOCK
+                                && ((m.sideHit != EnumFacing.UP && m.sideHit != EnumFacing.DOWN) || top.isToggled())) {
                             if (this.lm != null && (double) this.f < c.getInput()) {
                                 ++this.f;
                             } else {
                                 this.lm = m;
                                 BlockPos pos = m.getBlockPos();
-                                if (this.lp == null || pos.getX() != this.lp.getX() || pos.getY() != this.lp.getY() || pos.getZ() != this.lp.getZ()) {
+                                if (this.lp == null || pos.getX() != this.lp.getX() || pos.getY() != this.lp.getY()
+                                        || pos.getZ() != this.lp.getZ()) {
                                     Block b = mc.theWorld.getBlockState(pos).getBlock();
                                     if (b != null && b != Blocks.air && !(b instanceof BlockLiquid)) {
                                         if (!a.isToggled() || Mouse.isButtonDown(1)) {
                                             long n = System.currentTimeMillis();
                                             if (n - this.l >= 25L) {
                                                 this.l = n;
-                                                if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, i, pos, m.sideHit, m.hitVec)) {
+                                                if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, i,
+                                                        pos, m.sideHit, m.hitVec)) {
                                                     Utils.Client.setMouseButtonState(1, true);
                                                     mc.thePlayer.swingItem();
                                                     mc.getItemRenderer().resetEquippedProgress();

@@ -24,11 +24,11 @@ public class SelfDestruct extends Module {
             }
         }
 
-      /*
-         that just fully unload the event system
-         so we don't need to care anymore about the state of the mod... if it has been self-destructed events won't be called
-         including if they're still registered
-       */
+        /*
+         * that just fully unload the event system so we don't need to care anymore
+         * about the state of the mod... if it has been self-destructed events won't be
+         * called including if they're still registered
+         */
 
         // dude your event system doesnt even work bruh
         MinecraftForge.EVENT_BUS.unregister(new Raven());

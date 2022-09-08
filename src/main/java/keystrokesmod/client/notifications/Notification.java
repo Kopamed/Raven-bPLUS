@@ -24,7 +24,6 @@ public class Notification {
     private long fadeOut;
     private long end;
 
-
     public Notification(NotificationType type, String title, String messsage, int length) {
         this.type = type;
         this.title = title;
@@ -84,28 +83,40 @@ public class Notification {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
         if (Minecraft.getMinecraft().currentScreen instanceof ClickGui) {
-            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 22 - height, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight() - 22, color.getRGB());
-            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 22 - height, scaledResolution.getScaledWidth() - offset + 4, scaledResolution.getScaledHeight() - 22, color1.getRGB());
+            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 22 - height,
+                    scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight() - 22, color.getRGB());
+            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 22 - height,
+                    scaledResolution.getScaledWidth() - offset + 4, scaledResolution.getScaledHeight() - 22,
+                    color1.getRGB());
 
-            fontRenderer.drawString(title, (int) (scaledResolution.getScaledWidth() - offset + 8), scaledResolution.getScaledHeight() - 20 - height, -1);
+            fontRenderer.drawString(title, (int) (scaledResolution.getScaledWidth() - offset + 8),
+                    scaledResolution.getScaledHeight() - 20 - height, -1);
 
-            int xBegin = (int)(scaledResolution.getScaledWidth() - offset + 8);
+            int xBegin = (int) (scaledResolution.getScaledWidth() - offset + 8);
             int yBegin = scaledResolution.getScaledHeight() - 39;
             int xEnd = xBegin + titleWidth;
             int yEnd = yBegin + 1;
-            drawRect(xBegin, yBegin, xEnd, yEnd, (GuiModule.rainbowNotification() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
-            fontRenderer.drawString(messsage, (int) (scaledResolution.getScaledWidth() - offset + 8), scaledResolution.getScaledHeight() - 33, -1);
+            drawRect(xBegin, yBegin, xEnd, yEnd,
+                    (GuiModule.rainbowNotification() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
+            fontRenderer.drawString(messsage, (int) (scaledResolution.getScaledWidth() - offset + 8),
+                    scaledResolution.getScaledHeight() - 33, -1);
         } else {
-            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 5 - height, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight() - 5, color.getRGB());
-            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 5 - height, scaledResolution.getScaledWidth() - offset + 4, scaledResolution.getScaledHeight() - 5, color1.getRGB());
+            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 5 - height,
+                    scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight() - 5, color.getRGB());
+            drawRect(scaledResolution.getScaledWidth() - offset, scaledResolution.getScaledHeight() - 5 - height,
+                    scaledResolution.getScaledWidth() - offset + 4, scaledResolution.getScaledHeight() - 5,
+                    color1.getRGB());
 
-            fontRenderer.drawString(title, (int) (scaledResolution.getScaledWidth() - offset + 8), scaledResolution.getScaledHeight() - 2 - height, -1);
-            int xBegin = (int)(scaledResolution.getScaledWidth() - offset + 8);
+            fontRenderer.drawString(title, (int) (scaledResolution.getScaledWidth() - offset + 8),
+                    scaledResolution.getScaledHeight() - 2 - height, -1);
+            int xBegin = (int) (scaledResolution.getScaledWidth() - offset + 8);
             int yBegin = scaledResolution.getScaledHeight() - 22;
             int xEnd = xBegin + titleWidth;
             int yEnd = yBegin + 1;
-            drawRect(xBegin, yBegin, xEnd, yEnd, (GuiModule.rainbowNotification() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
-            fontRenderer.drawString(messsage, (int) (scaledResolution.getScaledWidth() - offset + 8), scaledResolution.getScaledHeight() - 15, -1);
+            drawRect(xBegin, yBegin, xEnd, yEnd,
+                    (GuiModule.rainbowNotification() ? Utils.Client.rainbowDraw(2L, 1200L) : new Color(-1).getRGB()));
+            fontRenderer.drawString(messsage, (int) (scaledResolution.getScaledWidth() - offset + 8),
+                    scaledResolution.getScaledHeight() - 15, -1);
         }
     }
 

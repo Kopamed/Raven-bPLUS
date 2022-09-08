@@ -23,7 +23,8 @@ public class ConfigManager {
 
     public final ConfigModuleManager configModuleManager;
     public static boolean applyingConfig;
-    private final File configDirectory = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs");
+    private final File configDirectory = new File(
+            Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs");
     private Config config;
     private final ArrayList<Config> configs = new ArrayList<>();
 
@@ -41,8 +42,8 @@ public class ConfigManager {
     }
 
     /**
-     * Function that checks if the config in a given file can be loaded
-     * Check is done by simply trying to parse the file as if it contains json data
+     * Function that checks if the config in a given file can be loaded Check is
+     * done by simply trying to parse the file as if it contains json data
      *
      * @param file File you want to check for being outdated
      * @return boolean whether the file is outdated
@@ -61,24 +62,25 @@ public class ConfigManager {
     }
 
     /**
-     * Parses through all the files in the cfg dir and creates a new config class for each one
+     * Parses through all the files in the cfg dir and creates a new config class
+     * for each one
      */
-    // need to change this so that it only creates a new config class when loading the config so its quicker
+    // need to change this so that it only creates a new config class when loading
+    // the config so its quicker
     public void discoverConfigs() {
         configs.clear();
         if (configDirectory.listFiles() == null || !(Objects.requireNonNull(configDirectory.listFiles()).length > 0))
-            return;  // nothing to discover if there are no files in the directory
+            return; // nothing to discover if there are no files in the directory
 
         for (File file : Objects.requireNonNull(configDirectory.listFiles())) {
             if (file.getName().endsWith(".bplus")) {
                 if (!isOutdated(file)) {
-                    configs.add(new Config(
-                            new File(file.getPath())
-                    ));
+                    configs.add(new Config(new File(file.getPath())));
                 }
             }
         }
-        if (configModuleManager != null) configModuleManager.updater(configs);
+        if (configModuleManager != null)
+            configModuleManager.updater(configs);
     }
 
     public Config getConfig() {
@@ -104,16 +106,14 @@ public class ConfigManager {
     }
 
     public void setConfig(Config config) {
-	applyingConfig = true;
+        applyingConfig = true;
         this.config = config;
         JsonObject data = config.getData().get("modules").getAsJsonObject();
         List<Module> knownModules = new ArrayList<>(Raven.moduleManager.getConfigModules());
         for (Module module : knownModules) {
             if (!module.isClientConfig()) {
                 if (data.has(module.getName())) {
-                    module.applyConfigFromJson(
-                            data.get(module.getName()).getAsJsonObject()
-                    );
+                    module.applyConfigFromJson(data.get(module.getName()).getAsJsonObject());
                 } else {
                     module.resetToDefaults();
                 }
@@ -143,7 +143,8 @@ public class ConfigManager {
 
     public void resetConfig() {
         for (Module module : Raven.moduleManager.getConfigModules())
-            if (!module.isClientConfig()) module.resetToDefaults();
+            if (!module.isClientConfig())
+                module.resetToDefaults();
         save();
     }
 

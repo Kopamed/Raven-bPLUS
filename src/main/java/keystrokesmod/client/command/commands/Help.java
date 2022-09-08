@@ -1,13 +1,13 @@
 package keystrokesmod.client.command.commands;
 
-
 import keystrokesmod.client.clickgui.raven.Terminal;
 import keystrokesmod.client.command.Command;
 import keystrokesmod.client.main.Raven;
 
 public class Help extends Command {
     public Help() {
-        super("help", "Shows you different command usages", 0, 1, new String[]{"name of module"}, new String[]{"?", "wtf", "what"});
+        super("help", "Shows you different command usages", 0, 1, new String[] { "name of module" },
+                new String[] { "?", "wtf", "what" });
     }
 
     @Override

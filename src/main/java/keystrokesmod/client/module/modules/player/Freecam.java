@@ -19,8 +19,8 @@ public class Freecam extends Module {
     public static TickSetting b;
     private final double toRad = 0.017453292519943295D;
     public static EntityOtherPlayerMP en;
-    private int[] lcc = {Integer.MAX_VALUE, 0};
-    private final float[] sAng = {0.0F, 0.0F};
+    private int[] lcc = { Integer.MAX_VALUE, 0 };
+    private final float[] sAng = { 0.0F, 0.0F };
 
     public Freecam() {
         super("Freecam", ModuleCategory.player);
@@ -56,7 +56,7 @@ public class Freecam extends Module {
             en = null;
         }
 
-        this.lcc = new int[]{Integer.MAX_VALUE, 0};
+        this.lcc = new int[] { Integer.MAX_VALUE, 0 };
         int rg = 1;
         int x = mc.thePlayer.chunkCoordX;
         int z = mc.thePlayer.chunkCoordZ;

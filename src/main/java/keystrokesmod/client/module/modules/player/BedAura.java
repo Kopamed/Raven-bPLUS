@@ -48,7 +48,8 @@ public class BedAura extends Module {
                     for (int x = -ra; x <= ra; ++x) {
                         for (int z = -ra; z <= ra; ++z) {
                             if (Utils.Player.isPlayerInGame()) {
-                                BlockPos p = new BlockPos(Module.mc.thePlayer.posX + (double) x, Module.mc.thePlayer.posY + (double) y, Module.mc.thePlayer.posZ + (double) z);
+                                BlockPos p = new BlockPos(Module.mc.thePlayer.posX + (double) x,
+                                        Module.mc.thePlayer.posY + (double) y, Module.mc.thePlayer.posZ + (double) z);
                                 boolean bed = Module.mc.theWorld.getBlockState(p).getBlock() == Blocks.bed;
                                 if (BedAura.this.m == p) {
                                     if (!bed) {
@@ -69,7 +70,9 @@ public class BedAura extends Module {
     }
 
     private void mi(BlockPos p) {
-        mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, p, EnumFacing.NORTH));
-        mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, p, EnumFacing.NORTH));
+        mc.thePlayer.sendQueue
+                .addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, p, EnumFacing.NORTH));
+        mc.thePlayer.sendQueue
+                .addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, p, EnumFacing.NORTH));
     }
 }

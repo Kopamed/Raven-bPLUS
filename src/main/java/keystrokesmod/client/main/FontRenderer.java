@@ -36,12 +36,13 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     public int FONT_HEIGHT = 9;
     public Random fontRandom = new Random();
     /**
-     * Array of the start/end column (in upper/lower nibble) for every glyph in the /font directory.
+     * Array of the start/end column (in upper/lower nibble) for every glyph in the
+     * /font directory.
      */
     protected byte[] glyphWidth = new byte[65536];
     /**
-     * Array of RGB triplets defining the 16 standard chat colors followed by 16 darker version of the same colors for
-     * drop shadows.
+     * Array of RGB triplets defining the 16 standard chat colors followed by 16
+     * darker version of the same colors for drop shadows.
      */
     private final int[] colorCode = new int[32];
     protected final ResourceLocation locationFontTexture;
@@ -58,11 +59,13 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
      */
     protected float posY;
     /**
-     * If true, strings should be rendered with Unicode fonts instead of the default.png font
+     * If true, strings should be rendered with Unicode fonts instead of the
+     * default.png font
      */
     private boolean unicodeFlag;
     /**
-     * If true, the Unicode Bidirectional Algorithm should be run before rendering any string.
+     * If true, the Unicode Bidirectional Algorithm should be run before rendering
+     * any string.
      */
     private boolean bidiFlag;
     /**
@@ -106,7 +109,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
      */
     private boolean strikethroughStyle;
 
-    public FontRenderer(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn, boolean unicode) {
+    public FontRenderer(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn,
+            boolean unicode) {
         super(gameSettingsIn, location, textureManagerIn, unicode);
         this.locationFontTexture = location;
         this.renderEngine = textureManagerIn;
@@ -217,13 +221,16 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
         if (ch == 32) {
             return 4.0F;
         } else {
-            int i = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".indexOf(ch);
-            return i != -1 && !this.unicodeFlag ? this.renderDefaultChar(i, italic) : this.renderUnicodeChar(ch, italic);
+            int i = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000"
+                    .indexOf(ch);
+            return i != -1 && !this.unicodeFlag ? this.renderDefaultChar(i, italic)
+                    : this.renderUnicodeChar(ch, italic);
         }
     }
 
     /**
-     * Render a single character with the default.png font at current (posX,posY) location...
+     * Render a single character with the default.png font at current (posX,posY)
+     * location...
      */
     protected float renderDefaultChar(int ch, boolean italic) {
         int i = ch % 16 * 8;
@@ -247,21 +254,24 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
 
     private ResourceLocation getUnicodePageLocation(int page) {
         if (unicodePageLocations[page] == null) {
-            unicodePageLocations[page] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", page));
+            unicodePageLocations[page] = new ResourceLocation(
+                    String.format("textures/font/unicode_page_%02x.png", page));
         }
 
         return unicodePageLocations[page];
     }
 
     /**
-     * Load one of the /font/glyph_XX.png into a new GL texture and store the texture ID in glyphTextureName array.
+     * Load one of the /font/glyph_XX.png into a new GL texture and store the
+     * texture ID in glyphTextureName array.
      */
     private void loadGlyphTexture(int page) {
         bindTexture(this.getUnicodePageLocation(page));
     }
 
     /**
-     * Render a single Unicode character at current (posX,posY) location using one of the /font/glyph_XX.png files...
+     * Render a single Unicode character at current (posX,posY) location using one
+     * of the /font/glyph_XX.png files...
      */
     protected float renderUnicodeChar(char ch, boolean italic) {
         if (this.glyphWidth[ch] == 0) {
@@ -324,7 +334,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Apply Unicode Bidirectional Algorithm to string and return a new possibly reordered string for visual rendering.
+     * Apply Unicode Bidirectional Algorithm to string and return a new possibly
+     * reordered string for visual rendering.
      */
     private String bidiReorder(String text) {
         try {
@@ -337,7 +348,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Reset all style flag fields in the class to false; called at the start of string rendering
+     * Reset all style flag fields in the class to false; called at the start of
+     * string rendering
      */
     private void resetStyles() {
         this.randomStyle = false;
@@ -374,7 +386,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
 
                     int j1 = this.colorCode[i1];
                     this.textColor = j1;
-                    setColor((float) (j1 >> 16) / 255.0F, (float) (j1 >> 8 & 255) / 255.0F, (float) (j1 & 255) / 255.0F, this.alpha);
+                    setColor((float) (j1 >> 16) / 255.0F, (float) (j1 >> 8 & 255) / 255.0F, (float) (j1 & 255) / 255.0F,
+                            this.alpha);
                 } else if (i1 == 16) {
                     this.randomStyle = true;
                 } else if (i1 == 17) {
@@ -396,15 +409,19 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
 
                 ++i;
             } else {
-                int j = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".indexOf(c0);
+                int j = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000"
+                        .indexOf(c0);
 
                 if (this.randomStyle && j != -1) {
                     int k = this.getCharWidth(c0);
                     char c1;
 
                     while (true) {
-                        j = this.fontRandom.nextInt("\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".length());
-                        c1 = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".charAt(j);
+                        j = this.fontRandom.nextInt(
+                                "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000"
+                                        .length());
+                        c1 = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000"
+                                .charAt(j);
 
                         if (k == this.getCharWidth(c1)) {
                             break;
@@ -463,7 +480,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION);
                     worldrenderer.pos(this.posX, this.posY + (float) (this.FONT_HEIGHT / 2), 0.0D).endVertex();
                     worldrenderer.pos(this.posX + f, this.posY + (float) (this.FONT_HEIGHT / 2), 0.0D).endVertex();
-                    worldrenderer.pos(this.posX + f, this.posY + (float) (this.FONT_HEIGHT / 2) - 1.0F, 0.0D).endVertex();
+                    worldrenderer.pos(this.posX + f, this.posY + (float) (this.FONT_HEIGHT / 2) - 1.0F, 0.0D)
+                            .endVertex();
                     worldrenderer.pos(this.posX, this.posY + (float) (this.FONT_HEIGHT / 2) - 1.0F, 0.0D).endVertex();
                     tessellator.draw();
                     GlStateManager.enableTexture2D();
@@ -478,7 +496,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
                     worldrenderer1.pos(this.posX + (float) l, this.posY + (float) this.FONT_HEIGHT, 0.0D).endVertex();
                     worldrenderer1.pos(this.posX + f, this.posY + (float) this.FONT_HEIGHT, 0.0D).endVertex();
                     worldrenderer1.pos(this.posX + f, this.posY + (float) this.FONT_HEIGHT - 1.0F, 0.0D).endVertex();
-                    worldrenderer1.pos(this.posX + (float) l, this.posY + (float) this.FONT_HEIGHT - 1.0F, 0.0D).endVertex();
+                    worldrenderer1.pos(this.posX + (float) l, this.posY + (float) this.FONT_HEIGHT - 1.0F, 0.0D)
+                            .endVertex();
                     tessellator1.draw();
                     GlStateManager.enableTexture2D();
                 }
@@ -501,7 +520,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Render single line string by setting GL color, current (posX,posY), and calling renderStringAtPos()
+     * Render single line string by setting GL color, current (posX,posY), and
+     * calling renderStringAtPos()
      */
     private int renderString(String text, float x, float y, int color, boolean dropShadow) {
         if (text == null) {
@@ -532,7 +552,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Returns the width of this string. Equivalent of FontMetrics.stringWidth(String s).
+     * Returns the width of this string. Equivalent of
+     * FontMetrics.stringWidth(String s).
      */
     public int getStringWidth(String text) {
         if (text == null) {
@@ -580,14 +601,14 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
         } else if (character == 32) {
             return 4;
         } else {
-            int i = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".indexOf(character);
+            int i = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000"
+                    .indexOf(character);
 
             if (character > 0 && i != -1 && !this.unicodeFlag) {
                 return this.charWidth[i];
             } else if (this.glyphWidth[character] != 0) {
                 int j = this.glyphWidth[character] >>> 4;
                 int k = this.glyphWidth[character] & 15;
-
 
                 ++k;
                 return (k - j) / 2 + 1;
@@ -675,8 +696,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Perform actual work of rendering a multi-line string with wordwrap and with darker drop shadow color if flag is
-     * set
+     * Perform actual work of rendering a multi-line string with wordwrap and with
+     * darker drop shadow color if flag is set
      */
     private void renderSplitString(String str, int x, int y, int wrapWidth, boolean addShadow) {
         for (String s : this.listFormattedStringToWidth(str, wrapWidth)) {
@@ -693,23 +714,24 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Set unicodeFlag controlling whether strings should be rendered with Unicode fonts instead of the default.png
-     * font.
+     * Set unicodeFlag controlling whether strings should be rendered with Unicode
+     * fonts instead of the default.png font.
      */
     public void setUnicodeFlag(boolean unicodeFlagIn) {
         this.unicodeFlag = unicodeFlagIn;
     }
 
     /**
-     * Get unicodeFlag controlling whether strings should be rendered with Unicode fonts instead of the default.png
-     * font.
+     * Get unicodeFlag controlling whether strings should be rendered with Unicode
+     * fonts instead of the default.png font.
      */
     public boolean getUnicodeFlag() {
         return this.unicodeFlag;
     }
 
     /**
-     * Set bidiFlag to control if the Unicode Bidirectional Algorithm should be run before rendering any string.
+     * Set bidiFlag to control if the Unicode Bidirectional Algorithm should be run
+     * before rendering any string.
      */
     public void setBidiFlag(boolean bidiFlagIn) {
         this.bidiFlag = bidiFlagIn;
@@ -720,7 +742,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Inserts newline and formatting into a string to wrap it within the specified width.
+     * Inserts newline and formatting into a string to wrap it within the specified
+     * width.
      */
     String wrapFormattedStringToWidth(String str, int wrapWidth) {
         int i = this.sizeStringToWidth(str, wrapWidth);
@@ -737,7 +760,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Determines how many characters from the string will fit into the specified width.
+     * Determines how many characters from the string will fit into the specified
+     * width.
      */
     private int sizeStringToWidth(String str, int wrapWidth) {
         int i = str.length();
@@ -749,33 +773,33 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
             char c0 = str.charAt(k);
 
             switch (c0) {
-                case '\n':
-                    --k;
-                    break;
-                case ' ':
-                    l = k;
-                default:
-                    j += this.getCharWidth(c0);
+            case '\n':
+                --k;
+                break;
+            case ' ':
+                l = k;
+            default:
+                j += this.getCharWidth(c0);
 
-                    if (flag) {
-                        ++j;
-                    }
+                if (flag) {
+                    ++j;
+                }
 
-                    break;
-                case '\u00a7':
+                break;
+            case '\u00a7':
 
-                    if (k < i - 1) {
-                        ++k;
-                        char c1 = str.charAt(k);
+                if (k < i - 1) {
+                    ++k;
+                    char c1 = str.charAt(k);
 
-                        if (c1 != 108 && c1 != 76) {
-                            if (c1 == 114 || c1 == 82 || isFormatColor(c1)) {
-                                flag = false;
-                            }
-                        } else {
-                            flag = true;
+                    if (c1 != 108 && c1 != 76) {
+                        if (c1 == 114 || c1 == 82 || isFormatColor(c1)) {
+                            flag = false;
                         }
+                    } else {
+                        flag = true;
                     }
+                }
             }
 
             if (c0 == 10) {
@@ -796,18 +820,21 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
      * Checks if the char code is a hexadecimal character, used to set colour.
      */
     private static boolean isFormatColor(char colorChar) {
-        return colorChar >= 48 && colorChar <= 57 || colorChar >= 97 && colorChar <= 102 || colorChar >= 65 && colorChar <= 70;
+        return colorChar >= 48 && colorChar <= 57 || colorChar >= 97 && colorChar <= 102
+                || colorChar >= 65 && colorChar <= 70;
     }
 
     /**
      * Checks if the char code is O-K...lLrRk-o... used to set special formatting.
      */
     private static boolean isFormatSpecial(char formatChar) {
-        return formatChar >= 107 && formatChar <= 111 || formatChar >= 75 && formatChar <= 79 || formatChar == 114 || formatChar == 82;
+        return formatChar >= 107 && formatChar <= 111 || formatChar >= 75 && formatChar <= 79 || formatChar == 114
+                || formatChar == 82;
     }
 
     /**
-     * Digests a string for nonprinting formatting characters then returns a string containing only that formatting.
+     * Digests a string for nonprinting formatting characters then returns a string
+     * containing only that formatting.
      */
     public static String getFormatFromString(String text) {
         StringBuilder s = new StringBuilder();
@@ -830,7 +857,8 @@ public class FontRenderer extends net.minecraft.client.gui.FontRenderer {
     }
 
     /**
-     * Get bidiFlag that controls if the Unicode Bidirectional Algorithm should be run before rendering any string
+     * Get bidiFlag that controls if the Unicode Bidirectional Algorithm should be
+     * run before rendering any string
      */
     public boolean getBidiFlag() {
         return this.bidiFlag;

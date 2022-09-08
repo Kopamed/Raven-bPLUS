@@ -32,7 +32,8 @@ public class DuelsStats extends Module {
     public DuelsStats() {
         super("Duels Stats", ModuleCategory.minigames);
 
-        this.registerSetting(selectedGameMode = new ComboSetting("Stats for mode:", Utils.Profiles.DuelsStatsMode.OVERALL));
+        this.registerSetting(
+                selectedGameMode = new ComboSetting("Stats for mode:", Utils.Profiles.DuelsStatsMode.OVERALL));
         this.registerSetting(sendIgnOnJoin = new TickSetting("Send ign on join", false));
     }
 
@@ -50,13 +51,16 @@ public class DuelsStats extends Module {
 
     @Subscribe
     public void onTick(TickEvent e) {
-        if (!this.isDuel()) return;
+        if (!this.isDuel())
+            return;
 
-        // Thanks to https://github.com/Scherso for the code from https://github.com/Scherso/Seraph
+        // Thanks to https://github.com/Scherso for the code from
+        // https://github.com/Scherso/Seraph
 
         for (ScorePlayerTeam team : Minecraft.getMinecraft().theWorld.getScoreboard().getTeams()) {
             for (String playerName : team.getMembershipCollection()) {
-                if (!queue.contains(playerName) && team.getColorPrefix().equals("§7§k") && !playerName.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getDisplayNameString())) {
+                if (!queue.contains(playerName) && team.getColorPrefix().equals("§7§k")
+                        && !playerName.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getDisplayNameString())) {
                     this.queue.add(playerName);
                     Raven.getExecutor().execute(() -> {
                         String id = getPlayerUUID(playerName);
@@ -79,10 +83,12 @@ public class DuelsStats extends Module {
         } else {
             Utils.Profiles.DuelsStatsMode dm = (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode();
             Raven.getExecutor().execute(() -> {
-                PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
+                PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid),
+                        (Utils.Profiles.DuelsStatsMode) selectedGameMode.getMode());
                 playerProfile.populateStats();
 
-                if (!playerProfile.isPlayer) return;
+                if (!playerProfile.isPlayer)
+                    return;
 
                 if (playerProfile.nicked) {
                     Utils.Player.sendMessageToSelf("&3" + playerName + " " + "&eis nicked!");
@@ -93,7 +99,9 @@ public class DuelsStats extends Module {
                     Utils.Player.sendMessageToSelf("&eOpponent found: " + "&3" + playerProfile.inGameName);
                 }
 
-                double wlr = playerProfile.losses != 0 ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2) : (double) playerProfile.wins;
+                double wlr = playerProfile.losses != 0
+                        ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2)
+                        : (double) playerProfile.wins;
                 Utils.Player.sendMessageToSelf("&7&m-------------------------");
                 if (dm != Utils.Profiles.DuelsStatsMode.OVERALL) {
                     Utils.Player.sendMessageToSelf("&e" + Utils.md + "&3" + dm.name());
@@ -132,7 +140,8 @@ public class DuelsStats extends Module {
     private String getPlayerUUID(String username) {
         String playerUUID = "";
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet(String.format("https://api.mojang.com/users/profiles/minecraft/%s", username));
+            HttpGet request = new HttpGet(
+                    String.format("https://api.mojang.com/users/profiles/minecraft/%s", username));
             try (InputStream is = client.execute(request).getEntity().getContent()) {
                 JsonParser parser = new JsonParser();
                 JsonObject object = parser.parse(new InputStreamReader(is, StandardCharsets.UTF_8)).getAsJsonObject();

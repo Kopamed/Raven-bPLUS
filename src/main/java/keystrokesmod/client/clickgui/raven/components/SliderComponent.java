@@ -28,17 +28,23 @@ public class SliderComponent implements Component {
     }
 
     public void draw() {
-        net.minecraft.client.gui.Gui.drawRect(this.p.category.getX() + 4, this.p.category.getY() + this.o + 11, this.p.category.getX() + 4 + this.p.category.getWidth() - 8, this.p.category.getY() + this.o + 15, -12302777);
+        net.minecraft.client.gui.Gui.drawRect(this.p.category.getX() + 4, this.p.category.getY() + this.o + 11,
+                this.p.category.getX() + 4 + this.p.category.getWidth() - 8, this.p.category.getY() + this.o + 15,
+                -12302777);
         int l = this.p.category.getX() + 4;
         int r = this.p.category.getX() + 4 + (int) this.w;
         if (r - l > 84) {
             r = l + 84;
         }
 
-        net.minecraft.client.gui.Gui.drawRect(l, this.p.category.getY() + this.o + 11, r, this.p.category.getY() + this.o + 15, Color.getHSBColor((float) (System.currentTimeMillis() % 11000L) / 11000.0F, 0.75F, 0.9F).getRGB());
+        net.minecraft.client.gui.Gui.drawRect(l, this.p.category.getY() + this.o + 11, r,
+                this.p.category.getY() + this.o + 15,
+                Color.getHSBColor((float) (System.currentTimeMillis() % 11000L) / 11000.0F, 0.75F, 0.9F).getRGB());
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.v.getName() + ": " + this.v.getInput(), (float) ((int) ((float) (this.p.category.getX() + 4) * 2.0F)), (float) ((int) ((float) (this.p.category.getY() + this.o + 3) * 2.0F)), -1);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.v.getName() + ": " + this.v.getInput(),
+                (float) ((int) ((float) (this.p.category.getX() + 4) * 2.0F)),
+                (float) ((int) ((float) (this.p.category.getY() + this.o + 3) * 2.0F)), -1);
         GL11.glPopMatrix();
     }
 
@@ -55,12 +61,14 @@ public class SliderComponent implements Component {
         this.y = this.p.category.getY() + this.o;
         this.x = this.p.category.getX();
         double d = Math.min(this.p.category.getWidth() - 8, Math.max(0, mousePosX - this.x));
-        this.w = (double) (this.p.category.getWidth() - 8) * (this.v.getInput() - this.v.getMin()) / (this.v.getMax() - this.v.getMin());
+        this.w = (double) (this.p.category.getWidth() - 8) * (this.v.getInput() - this.v.getMin())
+                / (this.v.getMax() - this.v.getMin());
         if (this.d) {
             if (d == 0.0D) {
                 this.v.setValue(this.v.getMin());
             } else {
-                double n = r(d / (double) (this.p.category.getWidth() - 8) * (this.v.getMax() - this.v.getMin()) + this.v.getMin(), 2);
+                double n = r(d / (double) (this.p.category.getWidth() - 8) * (this.v.getMax() - this.v.getMin())
+                        + this.v.getMin(), 2);
                 this.v.setValue(n);
             }
         }
@@ -102,6 +110,7 @@ public class SliderComponent implements Component {
     }
 
     public boolean i(int x, int y) {
-        return x > this.x + this.p.category.getWidth() / 2 && x < this.x + this.p.category.getWidth() && y > this.y && y < this.y + 16;
+        return x > this.x + this.p.category.getWidth() / 2 && x < this.x + this.p.category.getWidth() && y > this.y
+                && y < this.y + 16;
     }
 }

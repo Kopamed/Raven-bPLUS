@@ -28,9 +28,14 @@ public class ModeComponent implements Component {
     public void draw() {
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        int bruhWidth = (int) (Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mode.getName() + ": ") * 0.5);
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.mode.getName() + ": ", (float) ((this.module.category.getX() + 4) * 2), (float) ((this.module.category.getY() + this.o + 4) * 2), 0xffffffff, true);
-        Minecraft.getMinecraft().fontRendererObj.drawString(String.valueOf(this.mode.getMode()), (float) ((this.module.category.getX() + 4 + bruhWidth) * 2), (float) ((this.module.category.getY() + this.o + 4) * 2), this.c, true);
+        int bruhWidth = (int) (Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mode.getName() + ": ")
+                * 0.5);
+        Minecraft.getMinecraft().fontRendererObj.drawString(this.mode.getName() + ": ",
+                (float) ((this.module.category.getX() + 4) * 2),
+                (float) ((this.module.category.getY() + this.o + 4) * 2), 0xffffffff, true);
+        Minecraft.getMinecraft().fontRendererObj.drawString(String.valueOf(this.mode.getMode()),
+                (float) ((this.module.category.getX() + 4 + bruhWidth) * 2),
+                (float) ((this.module.category.getY() + this.o + 4) * 2), this.c, true);
         GL11.glPopMatrix();
     }
 
@@ -47,7 +52,6 @@ public class ModeComponent implements Component {
     public int getHeight() {
         return 0;
     }
-
 
     public void mouseDown(int x, int y, int b) {
         if (i(x, y)) {

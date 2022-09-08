@@ -17,7 +17,8 @@ public class DoubleSliderSetting extends Setting {
 
     private final double defaultValMin, defaultValMax;
 
-    public DoubleSliderSetting(String settingName, double defaultValueMin, double defaultValueMax, double min, double max, double intervals) {
+    public DoubleSliderSetting(String settingName, double defaultValueMin, double defaultValueMax, double min,
+            double max, double intervals) {
         super(settingName);
         this.name = settingName;
         this.valMin = defaultValueMin;

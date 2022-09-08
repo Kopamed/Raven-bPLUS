@@ -46,28 +46,25 @@ public class FontUtil {
     }
 
     public static void bootstrap() {
-        new Thread(() ->
-        {
+        new Thread(() -> {
             Map<String, Font> locationMap = new HashMap<>();
             normal_ = getFont(locationMap, "gilroy.otf", 19, Font.PLAIN);
             two_ = getFont(locationMap, "gilroy.otf", 30, Font.PLAIN);
             small_ = getFont(locationMap, "gilroybold.otf", 14, Font.BOLD);
             completed++;
         }).start();
-        new Thread(() ->
-        {
+        new Thread(() -> {
             Map<String, Font> locationMap = new HashMap<>();
             completed++;
         }).start();
-        new Thread(() ->
-        {
+        new Thread(() -> {
             Map<String, Font> locationMap = new HashMap<>();
             completed++;
         }).start();
 
         while (!hasLoaded()) {
             try {
-                //noinspection BusyWait
+                // noinspection BusyWait
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -37,7 +37,6 @@ public class SumoClicker extends Module {
 
     public static ComboSetting clickStyle, clickTimings;
 
-
     private long lastClick;
     private long leftHold;
     public boolean allowedClick;
@@ -68,17 +67,8 @@ public class SumoClicker extends Module {
         this.registerSetting(clickStyle = new ComboSetting("Click Style", RightClicker.ClickStyle.Raven));
 
         try {
-            this.playerMouseInput = ReflectionHelper.findMethod(
-                    GuiScreen.class,
-                    null,
-                    new String[]{
-                            "func_73864_a",
-                            "mouseClicked"
-                    },
-                    Integer.TYPE,
-                    Integer.TYPE,
-                    Integer.TYPE
-            );
+            this.playerMouseInput = ReflectionHelper.findMethod(GuiScreen.class, null,
+                    new String[] { "func_73864_a", "mouseClicked" }, Integer.TYPE, Integer.TYPE, Integer.TYPE);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -96,7 +86,6 @@ public class SumoClicker extends Module {
             this.disable();
         }
 
-
         this.allowedClick = false;
         this.rand = new Random();
         autoClickerEnabled = true;
@@ -111,8 +100,13 @@ public class SumoClicker extends Module {
 
     @Subscribe
     public void onRender2D(Render2DEvent e) {
-        if (!Utils.Client.currentScreenMinecraft() &&
-                !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
+        if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to
+                                                                                                                        // make
+                                                                                                                        // it
+                                                                                                                        // work
+                                                                                                                        // in
+                                                                                                                        // survival
+                                                                                                                        // inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiContainer) // to make it work in chests
         )
             return;
@@ -148,12 +142,15 @@ public class SumoClicker extends Module {
         if (!Utils.Player.isPlayerInGame())
             return;
 
-        double speedLeft1 = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2D, leftCPS.getInputMax());
-        double leftHoldLength = speedLeft1 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.02D, leftCPS.getInputMax());
-        //If none of the buttons are allowed to click, what is the point in generating clicktimes anyway?
-        //if (!leftActive && !rightActive) {
+        double speedLeft1 = 1.0 / io.netty.util.internal.ThreadLocalRandom.current()
+                .nextDouble(leftCPS.getInputMin() - 0.2D, leftCPS.getInputMax());
+        double leftHoldLength = speedLeft1 / io.netty.util.internal.ThreadLocalRandom.current()
+                .nextDouble(leftCPS.getInputMin() - 0.02D, leftCPS.getInputMax());
+        // If none of the buttons are allowed to click, what is the point in generating
+        // clicktimes anyway?
+        // if (!leftActive && !rightActive) {
         // return;
-        //}
+        // }
         Mouse.poll();
         if (mc.currentScreen != null || !mc.inGameHasFocus) {
             doInventoryClick();
@@ -175,22 +172,27 @@ public class SumoClicker extends Module {
 
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw + (double) this.rand.nextFloat() * a);
+                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                            + (double) this.rand.nextFloat() * a);
                 } else {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw - (double) this.rand.nextFloat() * a);
+                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                            - (double) this.rand.nextFloat() * a);
                 }
 
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch + (double) this.rand.nextFloat() * a * 0.45D);
+                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                            + (double) this.rand.nextFloat() * a * 0.45D);
                 } else {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch - (double) this.rand.nextFloat() * a * 0.45D);
+                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                            - (double) this.rand.nextFloat() * a * 0.45D);
                 }
             }
 
-            double speedLeft = 1.0 / ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2, leftCPS.getInputMax());
+            double speedLeft = 1.0
+                    / ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2, leftCPS.getInputMax());
 
             if (System.currentTimeMillis() - lastClick > speedLeft * 1000) {
                 lastClick = System.currentTimeMillis();
@@ -236,18 +238,22 @@ public class SumoClicker extends Module {
 
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw + (double) this.rand.nextFloat() * a);
+                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                        + (double) this.rand.nextFloat() * a);
             } else {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw - (double) this.rand.nextFloat() * a);
+                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                        - (double) this.rand.nextFloat() * a);
             }
 
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch + (double) this.rand.nextFloat() * a * 0.45D);
+                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                        + (double) this.rand.nextFloat() * a * 0.45D);
             } else {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch - (double) this.rand.nextFloat() * a * 0.45D);
+                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                        - (double) this.rand.nextFloat() * a * 0.45D);
             }
         }
 
@@ -339,7 +345,8 @@ public class SumoClicker extends Module {
     }
 
     public void doInventoryClick() {
-        if (inventoryFill.isToggled() && (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChest)) {
+        if (inventoryFill.isToggled()
+                && (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChest)) {
             if (!Mouse.isButtonDown(0) || !Keyboard.isKeyDown(54) && !Keyboard.isKeyDown(42)) {
                 this.leftDownTime = 0L;
                 this.leftUpTime = 0L;
@@ -355,12 +362,10 @@ public class SumoClicker extends Module {
     }
 
     public enum ClickStyle {
-        Raven,
-        SKid
+        Raven, SKid
     }
 
     public enum ClickEvent {
-        Tick,
-        Render
+        Tick, Render
     }
 }

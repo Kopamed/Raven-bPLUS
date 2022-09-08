@@ -80,12 +80,15 @@ public class BridgeInfo extends Module {
             }
 
             if (this.g1p != null && this.g2p != null) {
-                this.d1 = Utils.Java.round(mc.thePlayer.getDistance(this.g2p.getX(), this.g2p.getY(), this.g2p.getZ()) - 1.4D, 1);
+                this.d1 = Utils.Java
+                        .round(mc.thePlayer.getDistance(this.g2p.getX(), this.g2p.getY(), this.g2p.getZ()) - 1.4D, 1);
                 if (this.d1 < 0.0D) {
                     this.d1 = 0.0D;
                 }
 
-                this.d2 = enem == null ? 0.0D : Utils.Java.round(enem.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D, 1);
+                this.d2 = enem == null ? 0.0D
+                        : Utils.Java.round(enem.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D,
+                                1);
                 if (this.d2 < 0.0D) {
                     this.d2 = 0.0D;
                 }
@@ -95,7 +98,8 @@ public class BridgeInfo extends Module {
 
             for (int i = 0; i < 9; ++i) {
                 ItemStack stack = mc.thePlayer.inventory.getStackInSlot(i);
-                if (stack != null && stack.getItem() instanceof ItemBlock && ((ItemBlock) stack.getItem()).block.equals(Blocks.stained_hardened_clay)) {
+                if (stack != null && stack.getItem() instanceof ItemBlock
+                        && ((ItemBlock) stack.getItem()).block.equals(Blocks.stained_hardened_clay)) {
                     blc2 += stack.stackSize;
                 }
             }
@@ -214,7 +218,8 @@ public class BridgeInfo extends Module {
             ScaledResolution res = new ScaledResolution(this.mc);
             int x = res.getScaledWidth() / 2 - 84;
             int y = res.getScaledHeight() / 2 - 20;
-            Utils.HUD.drawColouredText("Edit the HUD position by dragging.", '-', x, y, 2L, 0L, true, this.mc.fontRendererObj);
+            Utils.HUD.drawColouredText("Edit the HUD position by dragging.", '-', x, y, 2L, 0L, true,
+                    this.mc.fontRendererObj);
 
             try {
                 this.handleInput();

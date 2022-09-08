@@ -78,7 +78,8 @@ public class WTap extends Module {
         } else if (fe.getEvent() instanceof LivingUpdateEvent) {
             LivingUpdateEvent e = ((LivingUpdateEvent) fe.getEvent());
 
-            if (eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0 && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
+            if (eventType.getMode() == EventType.Hurt && e.entityLiving.hurtTime > 0
+                    && e.entityLiving.hurtTime == e.entityLiving.maxHurtTime && e.entity == this.target)
                 wTap();
         }
     }
@@ -91,8 +92,7 @@ public class WTap extends Module {
         }
         if (mc.thePlayer.getDistanceToEntity(target) > range.getInput()
                 || (onlyPlayers.isToggled() && !(target instanceof EntityPlayer))
-                || (onlySword.isToggled() && !Utils.Player.isPlayerHoldingSword())
-                || !(rhit >= hits))
+                || (onlySword.isToggled() && !Utils.Player.isPlayerHoldingSword()) || !(rhit >= hits))
             return;
         trystartCombo();
     }
@@ -113,17 +113,19 @@ public class WTap extends Module {
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), false);
         double cd = ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax() + 0.01);
         if (dynamic.isToggled()) {
-            cd = 3 - mc.thePlayer.getDistanceToEntity(target) < 3 ? (cd + (3 - mc.thePlayer.getDistanceToEntity(target) * tapMultiplier.getInput() * 10)) : cd;
+            cd = 3 - mc.thePlayer.getDistanceToEntity(target) < 3
+                    ? (cd + (3 - mc.thePlayer.getDistanceToEntity(target) * tapMultiplier.getInput() * 10))
+                    : cd;
         }
 
         timer.setCooldown((long) cd);
         timer.start();
     }
 
-
     public void trystartCombo() {
         state = WtapState.WAITINGTOTAP;
-        timer.setCooldown((long) ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(), actionMs.getInputMax() + 0.01));
+        timer.setCooldown(
+                (long) ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(), actionMs.getInputMax() + 0.01));
         timer.start();
     }
 
@@ -138,14 +140,11 @@ public class WTap extends Module {
     }
 
     public enum EventType {
-        Attack,
-        Hurt,
+        Attack, Hurt,
     }
 
     public enum WtapState {
-        NONE,
-        WAITINGTOTAP,
-        TAPPING
+        NONE, WAITINGTOTAP, TAPPING
     }
 
 }

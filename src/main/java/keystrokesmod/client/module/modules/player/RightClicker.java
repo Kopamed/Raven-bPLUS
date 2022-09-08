@@ -50,7 +50,6 @@ public class RightClicker extends Module {
     private boolean allowedClick;
     private boolean rightDown;
 
-
     public RightClicker() {
         super("Right Clicker", ModuleCategory.player);
 
@@ -68,17 +67,8 @@ public class RightClicker extends Module {
         this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
 
         try {
-            this.playerMouseInput = ReflectionHelper.findMethod(
-                    GuiScreen.class,
-                    null,
-                    new String[]{
-                            "func_73864_a",
-                            "mouseClicked"
-                    },
-                    Integer.TYPE,
-                    Integer.TYPE,
-                    Integer.TYPE
-            );
+            this.playerMouseInput = ReflectionHelper.findMethod(GuiScreen.class, null,
+                    new String[] { "func_73864_a", "mouseClicked" }, Integer.TYPE, Integer.TYPE, Integer.TYPE);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -106,8 +96,13 @@ public class RightClicker extends Module {
 
     @Subscribe
     public void onRender2D(Render2DEvent e) {
-        if (!Utils.Client.currentScreenMinecraft() &&
-                !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
+        if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to
+                                                                                                                        // make
+                                                                                                                        // it
+                                                                                                                        // work
+                                                                                                                        // in
+                                                                                                                        // survival
+                                                                                                                        // inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
         )
             return;
@@ -146,8 +141,10 @@ public class RightClicker extends Module {
         if (mc.currentScreen != null || !mc.inGameHasFocus)
             return;
 
-        double speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightCPS.getInputMin() - 0.2D, rightCPS.getInputMax());
-        double rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current().nextDouble(rightCPS.getInputMin() - 0.02D, rightCPS.getInputMax());
+        double speedRight = 1.0 / io.netty.util.internal.ThreadLocalRandom.current()
+                .nextDouble(rightCPS.getInputMin() - 0.2D, rightCPS.getInputMax());
+        double rightHoldLength = speedRight / io.netty.util.internal.ThreadLocalRandom.current()
+                .nextDouble(rightCPS.getInputMin() - 0.02D, rightCPS.getInputMax());
 
         if (!Mouse.isButtonDown(1) && !rightDown) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
@@ -158,24 +155,27 @@ public class RightClicker extends Module {
             if (!this.rightClickAllowed())
                 return;
 
-
             if (jitterRight.getInput() > 0.0D) {
                 double jitterMultiplier = jitterRight.getInput() * 0.45D;
                 EntityPlayerSP entityPlayer;
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw + (double) this.rand.nextFloat() * jitterMultiplier);
+                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                            + (double) this.rand.nextFloat() * jitterMultiplier);
                 } else {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw - (double) this.rand.nextFloat() * jitterMultiplier);
+                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                            - (double) this.rand.nextFloat() * jitterMultiplier);
                 }
 
                 if (this.rand.nextBoolean()) {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch + (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
+                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                            + (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
                 } else {
                     entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch - (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
+                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                            - (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
                 }
             }
 
@@ -208,7 +208,6 @@ public class RightClicker extends Module {
         if (mc.currentScreen != null || !mc.inGameHasFocus)
             return;
 
-
         Mouse.poll();
         if (Mouse.isButtonDown(1)) {
             this.rightClickExecute(mc.gameSettings.keyBindUseItem.getKeyCode());
@@ -220,12 +219,12 @@ public class RightClicker extends Module {
         }
     }
 
-
     public boolean rightClickAllowed() {
         ItemStack item = mc.thePlayer.getHeldItem();
         if (item != null) {
             if (allowEat.isToggled()) {
-                if ((item.getItem() instanceof ItemFood) || item.getItem() instanceof ItemPotion || item.getItem() instanceof ItemBucketMilk) {
+                if ((item.getItem() instanceof ItemFood) || item.getItem() instanceof ItemPotion
+                        || item.getItem() instanceof ItemBucketMilk) {
                     return false;
                 }
             }
@@ -277,7 +276,6 @@ public class RightClicker extends Module {
             }
         }
 
-
         return true;
     }
 
@@ -290,18 +288,22 @@ public class RightClicker extends Module {
             EntityPlayerSP entityPlayer;
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw + (double) this.rand.nextFloat() * jitterMultiplier);
+                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                        + (double) this.rand.nextFloat() * jitterMultiplier);
             } else {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw - (double) this.rand.nextFloat() * jitterMultiplier);
+                entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
+                        - (double) this.rand.nextFloat() * jitterMultiplier);
             }
 
             if (this.rand.nextBoolean()) {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch + (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
+                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                        + (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
             } else {
                 entityPlayer = mc.thePlayer;
-                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch - (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
+                entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
+                        - (double) this.rand.nextFloat() * jitterMultiplier * 0.45D);
             }
         }
 
@@ -314,7 +316,7 @@ public class RightClicker extends Module {
                 this.genRightTimings();
             } else if (System.currentTimeMillis() > this.righti) {
                 KeyBinding.setKeyBindState(key, false);
-                //Utils.Client.setMouseButtonState(1, false);
+                // Utils.Client.setMouseButtonState(1, false);
             }
         } else {
             this.genRightTimings();
@@ -364,12 +366,10 @@ public class RightClicker extends Module {
     }
 
     public enum ClickStyle {
-        Raven,
-        SKid
+        Raven, SKid
     }
 
     public enum ClickEvent {
-        Tick,
-        Render
+        Tick, Render
     }
 }

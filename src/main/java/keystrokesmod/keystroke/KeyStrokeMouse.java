@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KeyStrokeMouse {
-    private static final String[] a = {"LMB", "RMB"};
+    private static final String[] a = { "LMB", "RMB" };
     private final Minecraft b = Minecraft.getMinecraft();
     private final int c;
     private final int d;
@@ -50,7 +50,8 @@ public class KeyStrokeMouse {
         int u = color >> 8 & 255;
         int v = color & 255;
         int c = (new Color(t, u, v)).getRGB();
-        net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e, o + this.d + 34, p + this.e + 22, 2013265920 + (i << 16) + (i << 8) + i);
+        net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e, o + this.d + 34, p + this.e + 22,
+                2013265920 + (i << 16) + (i << 8) + i);
         if (KeyStroke.outline) {
             net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e, o + this.d + 34, p + this.e + 1, c);
             net.minecraft.client.gui.Gui.drawRect(o + this.d, p + this.e + 21, o + this.d + 34, p + this.e + 22, c);
@@ -58,7 +59,8 @@ public class KeyStrokeMouse {
             net.minecraft.client.gui.Gui.drawRect(o + this.d + 33, p + this.e, o + this.d + 34, p + this.e + 22, c);
         }
 
-        this.b.fontRendererObj.drawString(s, o + this.d + 8, p + this.e + 4, -16777216 + ((int) ((double) t * j) << 16) + ((int) ((double) u * j) << 8) + (int) ((double) v * j));
+        this.b.fontRendererObj.drawString(s, o + this.d + 8, p + this.e + 4,
+                -16777216 + ((int) ((double) t * j) << 16) + ((int) ((double) u * j) << 8) + (int) ((double) v * j));
         String w = MouseManager.getLeftClickCounter() + " CPS";
         String x = MouseManager.getRightClickCounter() + " CPS";
         int y = this.b.fontRendererObj.getStringWidth(w);
@@ -66,7 +68,8 @@ public class KeyStrokeMouse {
         boolean a2 = this.c == 0;
         int b2 = a2 ? y : z;
         GL11.glScalef(0.5F, 0.5F, 0.5F);
-        this.b.fontRendererObj.drawString(a2 ? w : x, (o + this.d + 17) * 2 - b2 / 2, (p + this.e + 14) * 2, -16777216 + ((int) (255.0D * j) << 16) + ((int) (255.0D * j) << 8) + (int) (255.0D * j));
+        this.b.fontRendererObj.drawString(a2 ? w : x, (o + this.d + 17) * 2 - b2 / 2, (p + this.e + 14) * 2,
+                -16777216 + ((int) (255.0D * j) << 16) + ((int) (255.0D * j) << 8) + (int) (255.0D * j));
         GL11.glScalef(2.0F, 2.0F, 2.0F);
     }
 }

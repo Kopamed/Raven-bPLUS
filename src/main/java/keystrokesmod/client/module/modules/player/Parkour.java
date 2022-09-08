@@ -24,7 +24,8 @@ public class Parkour extends Module {
         if (!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode()) && cd.firstFinish())
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
 
-        if (mc.thePlayer.onGround && Utils.Player.playerOverAir() && (mc.thePlayer.motionX != 0 || mc.thePlayer.motionZ != 0)) {
+        if (mc.thePlayer.onGround && Utils.Player.playerOverAir()
+                && (mc.thePlayer.motionX != 0 || mc.thePlayer.motionZ != 0)) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), true);
             cd.setCooldown(10);
             cd.start();

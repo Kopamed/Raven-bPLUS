@@ -9,7 +9,8 @@ public class Uwu extends Command {
     private static boolean u;
 
     public Uwu() {
-        super("uwu", "hevex/blowsy added this lol", 0, 0, new String[]{}, new String[]{"hevex", "blowsy", "weeb", "torture", "noplsno"});
+        super("uwu", "hevex/blowsy added this lol", 0, 0, new String[] {},
+                new String[] { "hevex", "blowsy", "weeb", "torture", "noplsno" });
         u = false;
     }
 

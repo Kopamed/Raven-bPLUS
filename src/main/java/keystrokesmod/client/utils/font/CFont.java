@@ -33,7 +33,8 @@ public class CFont {
         }
     }
 
-    protected BufferedImage generateFontImage(Font font, boolean antiAlias, boolean fractionalMetrics, CharData[] chars) {
+    protected BufferedImage generateFontImage(Font font, boolean antiAlias, boolean fractionalMetrics,
+            CharData[] chars) {
         int imgSize = (int) this.imgSize;
         BufferedImage bufferedImage = new BufferedImage(imgSize, imgSize, 2);
         Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
@@ -41,9 +42,13 @@ public class CFont {
         graphics.setColor(new Color(255, 255, 255, 0));
         graphics.fillRect(0, 0, imgSize, imgSize);
         graphics.setColor(Color.WHITE);
-        graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, fractionalMetrics ? RenderingHints.VALUE_FRACTIONALMETRICS_ON : RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
-        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, antiAlias ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, antiAlias ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
+        graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                fractionalMetrics ? RenderingHints.VALUE_FRACTIONALMETRICS_ON
+                        : RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                antiAlias ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                antiAlias ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
         FontMetrics fontMetrics = graphics.getFontMetrics();
         int charHeight = 0;
         int positionX = 0;
@@ -85,13 +90,15 @@ public class CFont {
 
     public void drawChar(CharData[] chars, char c, float x, float y) throws ArrayIndexOutOfBoundsException {
         try {
-            this.drawQuad(x, y, chars[c].width, chars[c].height, chars[c].storedX, chars[c].storedY, chars[c].width, chars[c].height);
+            this.drawQuad(x, y, chars[c].width, chars[c].height, chars[c].storedX, chars[c].storedY, chars[c].width,
+                    chars[c].height);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void drawQuad(float x2, float y2, float width, float height, float srcX, float srcY, float srcWidth, float srcHeight) {
+    protected void drawQuad(float x2, float y2, float width, float height, float srcX, float srcY, float srcWidth,
+            float srcHeight) {
         float renderSRCX = srcX / this.imgSize;
         float renderSRCY = srcY / this.imgSize;
         float renderSRCWidth = srcWidth / this.imgSize;
@@ -134,8 +141,7 @@ public class CFont {
     }
 
     protected static class CharData {
-        public int width, height,
-                storedX, storedY;
+        public int width, height, storedX, storedY;
 
         protected CharData() {
         }

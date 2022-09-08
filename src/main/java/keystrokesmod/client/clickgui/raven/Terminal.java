@@ -29,7 +29,9 @@ public class Terminal implements Component {
 
     private int backCharsCursor;
 
-    public final int[] acceptableKeycodes = {41, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 26, 27, 39, 40, 0, 51, 52, 53, 41, 145, 144, 147, 146, 57, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 38, 44, 45, 46, 47, 48, 49, 50};
+    public final int[] acceptableKeycodes = { 41, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 26, 27, 39, 40, 0, 51, 52,
+            53, 41, 145, 144, 147, 146, 57, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+            44, 45, 46, 47, 48, 49, 50 };
 
     private final Minecraft mc;
     private final FontRenderer fr;
@@ -72,9 +74,10 @@ public class Terminal implements Component {
 
     @Override
     public void draw() {
-        if (hidden) return;
+        if (hidden)
+            return;
 
-        //this.barHeight = mc.displayHeight / 90;
+        // this.barHeight = mc.displayHeight / 90;
         double desiredTextSize = barHeight * 0.65;
         double scaleFactor = desiredTextSize / fr.FONT_HEIGHT;
         double coordFactor = 1 / scaleFactor;
@@ -102,67 +105,26 @@ public class Terminal implements Component {
         outStartY *= coordFactor;
         outFinishY *= coordFactor;
 
-        Gui.drawRect(x,
-                y,
-                x + width,
-                y + barHeight,
-                0xff2D3742
-        );
+        Gui.drawRect(x, y, x + width, y + barHeight, 0xff2D3742);
 
         if (opened) {
-            Gui.drawRect(x,
-                    y + barHeight,
-                    x + width,
-                    y + height,
-                    new Color(51, 51, 51, 210).getRGB()
-            );
+            Gui.drawRect(x, y + barHeight, x + width, y + height, new Color(51, 51, 51, 210).getRGB());
 
-            Gui.drawRect(x,
-                    y + barHeight,
-                    x + border,
-                    y + height,
-                    0xff2D3742
-            );
+            Gui.drawRect(x, y + barHeight, x + border, y + height, 0xff2D3742);
 
-            Gui.drawRect(x + width,
-                    y + barHeight,
-                    x + width - border,
-                    y + height,
-                    0xff2D3742
-            );
+            Gui.drawRect(x + width, y + barHeight, x + width - border, y + height, 0xff2D3742);
 
-            Gui.drawRect(x,
-                    y + height - border,
-                    x + width,
-                    y + height,
-                    0xff2D3742
-            );
+            Gui.drawRect(x, y + height - border, x + width, y + height, 0xff2D3742);
 
-            Gui.drawRect(x + width - resizeButtonSize,
-                    y + height - resizeButtonSize,
-                    x + width,
-                    y + height,
-                    new Color(79, 104, 158).getRGB()
-            );
+            Gui.drawRect(x + width - resizeButtonSize, y + height - resizeButtonSize, x + width, y + height,
+                    new Color(79, 104, 158).getRGB());
         }
 
         GL11.glPushMatrix();
         GL11.glScaled(scaleFactor, scaleFactor, scaleFactor);
-        fr.drawString(
-                "Terminal",
-                textX,
-                textY,
-                0xffffff,
-                false
-        );
+        fr.drawString("Terminal", textX, textY, 0xffffff, false);
 
-        fr.drawString(
-                opened ? "-" : "+",
-                buttonX,
-                textY,
-                0xffffff,
-                false
-        );
+        fr.drawString(opened ? "-" : "+", buttonX, textY, 0xffffff, false);
 
         if (opened) {
             ArrayList<String> currentOut = new ArrayList<>(out);
@@ -183,57 +145,42 @@ public class Terminal implements Component {
                 }
             }
 
-            String[] inputTextLineSplit = splitUpLine(prefix + inputText.substring(0, inputText.length() - backCharsCursor), maxTextWidth, scaleFactor);
+            String[] inputTextLineSplit = splitUpLine(
+                    prefix + inputText.substring(0, inputText.length() - backCharsCursor), maxTextWidth, scaleFactor);
             String finalInputLine = inputTextLineSplit[inputTextLineSplit.length - 1];
             cursorX += (int) (fr.getStringWidth(finalInputLine) * scaleFactor);
 
             for (int j = finalOut.size() - 1; j >= 0; j--) {
                 currentLine = finalOut.get(j);
-                int topMargin = (int) (
-                        ((finalOut.size() - 1 - j) * (desiredTextSize + margin) * coordFactor)
-                                + outStartY
-                );
+                int topMargin = (int) (((finalOut.size() - 1 - j) * (desiredTextSize + margin) * coordFactor)
+                        + outStartY);
 
-                fr.drawString(
-                        currentLine,
-                        (int) outStartX,
-                        topMargin,
-                        new Color(32, 194, 14).getRGB()
-                );
+                fr.drawString(currentLine, (int) outStartX, topMargin, new Color(32, 194, 14).getRGB());
                 if (currentLine.startsWith(finalInputLine))
                     cursorY = (int) (topMargin / coordFactor);
             }
 
-
         }
         GL11.glPopMatrix();
         if (opened) {
-            Gui.drawRect(
-                    cursorX,
-                    cursorY,
-                    cursorX + 1,
-                    (int) (cursorY + desiredTextSize),
-                    0xffffffff
-            );
+            Gui.drawRect(cursorX, cursorY, cursorX + 1, (int) (cursorY + desiredTextSize), 0xffffffff);
         }
     }
 
     private String[] splitUpLine(String currentLine, float maxTextWidth, double scaleSize) {
         if (fr.getStringWidth(currentLine) * scaleSize <= maxTextWidth) {
-            return new String[]{currentLine};
+            return new String[] { currentLine };
         } else {
             for (int i = currentLine.length(); i >= 0; i--) {
                 String newLine = currentLine.substring(0, i);
                 if (fr.getStringWidth(newLine) * scaleSize <= maxTextWidth) {
-                    return mergeArray(
-                            new String[]{newLine},
-                            splitUpLine(currentLine.substring(i), maxTextWidth, scaleSize)
-                    );
+                    return mergeArray(new String[] { newLine },
+                            splitUpLine(currentLine.substring(i), maxTextWidth, scaleSize));
                 }
             }
 
         }
-        return new String[]{""};
+        return new String[] { "" };
     }
 
     public static void print(String message) {
@@ -246,7 +193,8 @@ public class Terminal implements Component {
 
     @Override
     public void update(int x, int y) {
-        if (hidden) return;
+        if (hidden)
+            return;
         if (dragging) {
             this.x = (int) (windowStartDragX + (x - mouseStartDragX));
             this.y = (int) (windowStartDragY + (y - mouseStartDragY));
@@ -261,7 +209,8 @@ public class Terminal implements Component {
     @Override
     public void mouseDown(int x, int y, int b) {
         focused = false;
-        if (hidden) return;
+        if (hidden)
+            return;
         if (overToggleButton(x, y) && b == 0) {
             this.opened = !opened;
         } else if (overBar(x, y)) {
@@ -283,7 +232,8 @@ public class Terminal implements Component {
 
     @Override
     public void mouseReleased(int x, int y, int m) {
-        if (hidden) return;
+        if (hidden)
+            return;
         if (dragging) {
             dragging = false;
         } else if (resizing) {
@@ -293,14 +243,15 @@ public class Terminal implements Component {
 
     @Override
     public void keyTyped(char t, int k) {
-        if (!focused) return;
+        if (!focused)
+            return;
 
-        if (k == 28) { //enter
+        if (k == 28) { // enter
             out.add(prefix + inputText);
             proccessInput();
             inputText = "";
             backCharsCursor = 0;
-        } else if (k == 14) { //backspace
+        } else if (k == 14) { // backspace
             if (inputText.substring(0, inputText.length() - backCharsCursor).length() > 0) {
                 if (backCharsCursor == 0) {
                     inputText = inputText.substring(0, inputText.length() - 1);
@@ -331,13 +282,13 @@ public class Terminal implements Component {
             if (!e.isEmpty())
                 addCharToInput(e);
         }
-        //up arrow 200
-        //down 208
-        //left 203
-        //right 205
-        //enter 28
-        //backspace 14
-        //tab 15
+        // up arrow 200
+        // down 208
+        // left 203
+        // right 205
+        // enter 28
+        // backspace 14
+        // tab 15
     }
 
     private boolean containsElement(int[] acceptableKeycodes, int k) {
@@ -383,7 +334,8 @@ public class Terminal implements Component {
     }
 
     public boolean overPosition(int x, int y) {
-        if (hidden) return false;
+        if (hidden)
+            return false;
         return opened ? overWindow(x, y) : overBar(x, y);
     }
 
@@ -392,12 +344,14 @@ public class Terminal implements Component {
     }
 
     public boolean overWindow(int x, int y) {
-        if (!opened) return false;
+        if (!opened)
+            return false;
         return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
     }
 
     public boolean overResize(int x, int y) {
-        return x >= this.x + width - resizeButtonSize && x <= this.x + width && y >= this.y + height - resizeButtonSize && y <= this.y + height;
+        return x >= this.x + width - resizeButtonSize && x <= this.x + width && y >= this.y + height - resizeButtonSize
+                && y <= this.y + height;
     }
 
     public boolean overToggleButton(int x, int y) {

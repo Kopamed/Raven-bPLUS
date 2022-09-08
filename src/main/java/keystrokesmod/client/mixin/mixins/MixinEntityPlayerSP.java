@@ -49,7 +49,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     public MovementInput movementInput;
 
     @Shadow
-    protected abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_, double p_pushOutOfBlocks_5_);
+    protected abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_,
+            double p_pushOutOfBlocks_5_);
 
     @Shadow
     public abstract void sendPlayerAbilities();
@@ -103,9 +104,11 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         boolean flag = this.isSprinting();
         if (flag != this.serverSprintState) {
             if (flag) {
-                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
+                this.sendQueue
+                        .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
             } else {
-                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                this.sendQueue
+                        .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SPRINTING));
             }
 
             this.serverSprintState = flag;
@@ -114,9 +117,11 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         boolean flag1 = this.isSneaking();
         if (flag1 != this.serverSneakState) {
             if (flag1) {
-                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SNEAKING));
+                this.sendQueue
+                        .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SNEAKING));
             } else {
-                this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SNEAKING));
+                this.sendQueue
+                        .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SNEAKING));
             }
 
             this.serverSneakState = flag1;
@@ -124,7 +129,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
         if (this.isCurrentViewEntity()) {
 
-            UpdateEvent e = new UpdateEvent(EventTiming.PRE, this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
+            UpdateEvent e = new UpdateEvent(EventTiming.PRE, this.posX, this.getEntityBoundingBox().minY, this.posZ,
+                    this.rotationYaw, this.rotationPitch, this.onGround);
             Raven.eventBus.post(e);
 
             double d0 = e.getX() - this.lastReportedPosX;
@@ -136,16 +142,20 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             boolean flag3 = d3 != 0.0D || d4 != 0.0D;
             if (this.ridingEntity == null) {
                 if (flag2 && flag3) {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(e.getX(), e.getY(), e.getZ(), e.getYaw(), e.getPitch(), e.isOnGround()));
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(e.getX(), e.getY(),
+                            e.getZ(), e.getYaw(), e.getPitch(), e.isOnGround()));
                 } else if (flag2) {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(e.getX(), e.getY(), e.getZ(), e.isOnGround()));
+                    this.sendQueue.addToSendQueue(
+                            new C03PacketPlayer.C04PacketPlayerPosition(e.getX(), e.getY(), e.getZ(), e.isOnGround()));
                 } else if (flag3) {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), e.getPitch(), e.isOnGround()));
+                    this.sendQueue.addToSendQueue(
+                            new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), e.getPitch(), e.isOnGround()));
                 } else {
                     this.sendQueue.addToSendQueue(new C03PacketPlayer(e.isOnGround()));
                 }
             } else {
-                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, e.getYaw(), e.getPitch(), e.isOnGround()));
+                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D,
+                        this.motionZ, e.getYaw(), e.getPitch(), e.isOnGround()));
                 flag2 = false;
             }
 
@@ -193,7 +203,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             }
 
             if (this.timeInPortal == 0.0F) {
-                this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
+                this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"),
+                        this.rand.nextFloat() * 0.4F + 0.8F));
             }
 
             this.timeInPortal += 0.0125F;
@@ -202,7 +213,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             }
 
             this.inPortal = false;
-        } else if (this.isPotionActive(Potion.confusion) && this.getActivePotionEffect(Potion.confusion).getDuration() > 60) {
+        } else if (this.isPotionActive(Potion.confusion)
+                && this.getActivePotionEffect(Potion.confusion).getDuration() > 60) {
             this.timeInPortal += 0.006666667F;
             if (this.timeInPortal > 1.0F) {
                 this.timeInPortal = 1.0F;
@@ -244,14 +256,21 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             }
         }
 
-        this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double) this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ - (double) this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ - (double) this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double) this.width * 0.35D);
+        this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ + (double) this.width * 0.35D);
+        this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ - (double) this.width * 0.35D);
+        this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ - (double) this.width * 0.35D);
+        this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ + (double) this.width * 0.35D);
         boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
-        if (this.onGround && !flag1 && !flag2 && (this.movementInput.moveForward >= f || (sprint.isEnabled() && Sprint.multiDir.isToggled() && (movementInput.moveForward != 0 ||
-                movementInput.moveStrafe != 0))) && !this.isSprinting() && flag3 && (!this.isUsingItem() || noSlow.isEnabled()) && (!this.isPotionActive(Potion.blindness) ||
-                (sprint.isEnabled() && Sprint.ignoreBlindness.isToggled()))) {
+        if (this.onGround && !flag1 && !flag2
+                && (this.movementInput.moveForward >= f || (sprint.isEnabled() && Sprint.multiDir.isToggled()
+                        && (movementInput.moveForward != 0 || movementInput.moveStrafe != 0)))
+                && !this.isSprinting() && flag3 && (!this.isUsingItem() || noSlow.isEnabled())
+                && (!this.isPotionActive(Potion.blindness)
+                        || (sprint.isEnabled() && Sprint.ignoreBlindness.isToggled()))) {
             if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.isKeyDown()) {
                 this.sprintToggleTimer = 7;
             } else {
@@ -259,14 +278,19 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             }
         }
 
-        if (!this.isSprinting() && (this.movementInput.moveForward >= f || (sprint.isEnabled() && Sprint.multiDir.isToggled() && (movementInput.moveForward != 0 ||
-                movementInput.moveStrafe != 0))) && flag3 && (!this.isUsingItem() || noSlow.isEnabled()) && (!this.isPotionActive(Potion.blindness) || (sprint.isEnabled() &&
-                Sprint.ignoreBlindness.isToggled())) && this.mc.gameSettings.keyBindSprint.isKeyDown()) {
+        if (!this.isSprinting()
+                && (this.movementInput.moveForward >= f || (sprint.isEnabled() && Sprint.multiDir.isToggled()
+                        && (movementInput.moveForward != 0 || movementInput.moveStrafe != 0)))
+                && flag3 && (!this.isUsingItem() || noSlow.isEnabled())
+                && (!this.isPotionActive(Potion.blindness)
+                        || (sprint.isEnabled() && Sprint.ignoreBlindness.isToggled()))
+                && this.mc.gameSettings.keyBindSprint.isKeyDown()) {
             this.setSprinting(true);
         }
 
-        if (this.isSprinting() && (((sprint.isEnabled() && Sprint.multiDir.isToggled()) ? !(movementInput.moveForward != 0 || movementInput.moveStrafe != 0) :
-                this.movementInput.moveForward < f) || this.isCollidedHorizontally || !flag3)) {
+        if (this.isSprinting() && (((sprint.isEnabled() && Sprint.multiDir.isToggled())
+                ? !(movementInput.moveForward != 0 || movementInput.moveStrafe != 0)
+                : this.movementInput.moveForward < f) || this.isCollidedHorizontally || !flag3)) {
             this.setSprinting(false);
         }
 

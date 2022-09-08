@@ -75,7 +75,8 @@ public abstract class MixinEntity {
     public boolean isCollided;
 
     @Shadow
-    protected abstract void updateFallState(double p_updateFallState_1_, boolean p_updateFallState_3_, Block p_updateFallState_4_, BlockPos p_updateFallState_5_);
+    protected abstract void updateFallState(double p_updateFallState_1_, boolean p_updateFallState_3_,
+            Block p_updateFallState_4_, BlockPos p_updateFallState_5_);
 
     @Shadow
     protected abstract boolean canTriggerWalking();
@@ -132,7 +133,8 @@ public abstract class MixinEntity {
     @Overwrite
     public void moveEntity(double p_moveEntity_1_, double p_moveEntity_3_, double p_moveEntity_5_) {
         if (this.noClip) {
-            this.setEntityBoundingBox(this.getEntityBoundingBox().offset(p_moveEntity_1_, p_moveEntity_3_, p_moveEntity_5_));
+            this.setEntityBoundingBox(
+                    this.getEntityBoundingBox().offset(p_moveEntity_1_, p_moveEntity_3_, p_moveEntity_5_));
             this.resetPositionToBB();
         } else {
             this.worldObj.theProfiler.startSection("move");
@@ -152,7 +154,8 @@ public abstract class MixinEntity {
             double d3 = p_moveEntity_1_;
             double d4 = p_moveEntity_3_;
             double d5 = p_moveEntity_5_;
-            boolean flag; // = this.onGround && this.isSneaking() && ((Entity) ((Object) this)) instanceof EntityPlayer;
+            boolean flag; // = this.onGround && this.isSneaking() && ((Entity) ((Object) this)) instanceof
+                          // EntityPlayer;
 
             Minecraft mc = Minecraft.getMinecraft();
 
@@ -163,7 +166,8 @@ public abstract class MixinEntity {
                     if (SafeWalk.blocksOnly.isToggled()) {
                         ItemStack i = mc.thePlayer.getHeldItem();
                         if (i == null || !(i.getItem() instanceof ItemBlock)) {
-                            flag = mc.thePlayer.isSneaking(); // this is unused, whoever wrote the safewalk should explain why
+                            flag = mc.thePlayer.isSneaking(); // this is unused, whoever wrote the safewalk should
+                                                              // explain why
                         }
                     }
 
@@ -177,7 +181,10 @@ public abstract class MixinEntity {
 
             if (flag) {
                 double d6;
-                for (d6 = 0.05D; p_moveEntity_1_ != 0.0D && this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, 0.0D)).isEmpty(); d3 = p_moveEntity_1_) {
+                for (d6 = 0.05D; p_moveEntity_1_ != 0.0D && this.worldObj
+                        .getCollidingBoundingBoxes(((Entity) ((Object) this)),
+                                this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, 0.0D))
+                        .isEmpty(); d3 = p_moveEntity_1_) {
                     if (p_moveEntity_1_ < d6 && p_moveEntity_1_ >= -d6) {
                         p_moveEntity_1_ = 0.0D;
                     } else if (p_moveEntity_1_ > 0.0D) {
@@ -187,7 +194,10 @@ public abstract class MixinEntity {
                     }
                 }
 
-                for (; p_moveEntity_5_ != 0.0D && this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().offset(0.0D, -1.0D, p_moveEntity_5_)).isEmpty(); d5 = p_moveEntity_5_) {
+                for (; p_moveEntity_5_ != 0.0D && this.worldObj
+                        .getCollidingBoundingBoxes(((Entity) ((Object) this)),
+                                this.getEntityBoundingBox().offset(0.0D, -1.0D, p_moveEntity_5_))
+                        .isEmpty(); d5 = p_moveEntity_5_) {
                     if (p_moveEntity_5_ < d6 && p_moveEntity_5_ >= -d6) {
                         p_moveEntity_5_ = 0.0D;
                     } else if (p_moveEntity_5_ > 0.0D) {
@@ -197,7 +207,11 @@ public abstract class MixinEntity {
                     }
                 }
 
-                for (; p_moveEntity_1_ != 0.0D && p_moveEntity_5_ != 0.0D && this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, p_moveEntity_5_)).isEmpty(); d5 = p_moveEntity_5_) {
+                for (; p_moveEntity_1_ != 0.0D && p_moveEntity_5_ != 0.0D
+                        && this.worldObj
+                                .getCollidingBoundingBoxes(((Entity) ((Object) this)),
+                                        this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, p_moveEntity_5_))
+                                .isEmpty(); d5 = p_moveEntity_5_) {
                     if (p_moveEntity_1_ < d6 && p_moveEntity_1_ >= -d6) {
                         p_moveEntity_1_ = 0.0D;
                     } else if (p_moveEntity_1_ > 0.0D) {
@@ -217,11 +231,13 @@ public abstract class MixinEntity {
                 }
             }
 
-            List<AxisAlignedBB> list1 = this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().addCoord(p_moveEntity_1_, p_moveEntity_3_, p_moveEntity_5_));
+            List<AxisAlignedBB> list1 = this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)),
+                    this.getEntityBoundingBox().addCoord(p_moveEntity_1_, p_moveEntity_3_, p_moveEntity_5_));
             AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
 
             AxisAlignedBB axisalignedbb1;
-            for (Iterator var22 = list1.iterator(); var22.hasNext(); p_moveEntity_3_ = axisalignedbb1.calculateYOffset(this.getEntityBoundingBox(), p_moveEntity_3_)) {
+            for (Iterator var22 = list1.iterator(); var22.hasNext(); p_moveEntity_3_ = axisalignedbb1
+                    .calculateYOffset(this.getEntityBoundingBox(), p_moveEntity_3_)) {
                 axisalignedbb1 = (AxisAlignedBB) var22.next();
             }
 
@@ -230,13 +246,15 @@ public abstract class MixinEntity {
 
             AxisAlignedBB axisalignedbb13;
             Iterator var55;
-            for (var55 = list1.iterator(); var55.hasNext(); p_moveEntity_1_ = axisalignedbb13.calculateXOffset(this.getEntityBoundingBox(), p_moveEntity_1_)) {
+            for (var55 = list1.iterator(); var55.hasNext(); p_moveEntity_1_ = axisalignedbb13
+                    .calculateXOffset(this.getEntityBoundingBox(), p_moveEntity_1_)) {
                 axisalignedbb13 = (AxisAlignedBB) var55.next();
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(p_moveEntity_1_, 0.0D, 0.0D));
 
-            for (var55 = list1.iterator(); var55.hasNext(); p_moveEntity_5_ = axisalignedbb13.calculateZOffset(this.getEntityBoundingBox(), p_moveEntity_5_)) {
+            for (var55 = list1.iterator(); var55.hasNext(); p_moveEntity_5_ = axisalignedbb13
+                    .calculateZOffset(this.getEntityBoundingBox(), p_moveEntity_5_)) {
                 axisalignedbb13 = (AxisAlignedBB) var55.next();
             }
 
@@ -248,13 +266,15 @@ public abstract class MixinEntity {
                 AxisAlignedBB axisalignedbb3 = this.getEntityBoundingBox();
                 this.setEntityBoundingBox(axisalignedbb);
                 p_moveEntity_3_ = this.stepHeight;
-                List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)), this.getEntityBoundingBox().addCoord(d3, p_moveEntity_3_, d5));
+                List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes(((Entity) ((Object) this)),
+                        this.getEntityBoundingBox().addCoord(d3, p_moveEntity_3_, d5));
                 AxisAlignedBB axisalignedbb4 = this.getEntityBoundingBox();
                 AxisAlignedBB axisalignedbb5 = axisalignedbb4.addCoord(d3, 0.0D, d5);
                 double d9 = p_moveEntity_3_;
 
                 AxisAlignedBB axisalignedbb6;
-                for (Iterator var35 = list.iterator(); var35.hasNext(); d9 = axisalignedbb6.calculateYOffset(axisalignedbb5, d9)) {
+                for (Iterator var35 = list.iterator(); var35
+                        .hasNext(); d9 = axisalignedbb6.calculateYOffset(axisalignedbb5, d9)) {
                     axisalignedbb6 = (AxisAlignedBB) var35.next();
                 }
 
@@ -262,7 +282,8 @@ public abstract class MixinEntity {
                 double d15 = d3;
 
                 AxisAlignedBB axisalignedbb7;
-                for (Iterator var37 = list.iterator(); var37.hasNext(); d15 = axisalignedbb7.calculateXOffset(axisalignedbb4, d15)) {
+                for (Iterator var37 = list.iterator(); var37
+                        .hasNext(); d15 = axisalignedbb7.calculateXOffset(axisalignedbb4, d15)) {
                     axisalignedbb7 = (AxisAlignedBB) var37.next();
                 }
 
@@ -270,7 +291,8 @@ public abstract class MixinEntity {
                 double d16 = d5;
 
                 AxisAlignedBB axisalignedbb8;
-                for (Iterator var39 = list.iterator(); var39.hasNext(); d16 = axisalignedbb8.calculateZOffset(axisalignedbb4, d16)) {
+                for (Iterator var39 = list.iterator(); var39
+                        .hasNext(); d16 = axisalignedbb8.calculateZOffset(axisalignedbb4, d16)) {
                     axisalignedbb8 = (AxisAlignedBB) var39.next();
                 }
 
@@ -279,7 +301,8 @@ public abstract class MixinEntity {
                 double d17 = p_moveEntity_3_;
 
                 AxisAlignedBB axisalignedbb9;
-                for (Iterator var42 = list.iterator(); var42.hasNext(); d17 = axisalignedbb9.calculateYOffset(axisalignedbb14, d17)) {
+                for (Iterator var42 = list.iterator(); var42
+                        .hasNext(); d17 = axisalignedbb9.calculateYOffset(axisalignedbb14, d17)) {
                     axisalignedbb9 = (AxisAlignedBB) var42.next();
                 }
 
@@ -287,7 +310,8 @@ public abstract class MixinEntity {
                 double d18 = d3;
 
                 AxisAlignedBB axisalignedbb10;
-                for (Iterator var44 = list.iterator(); var44.hasNext(); d18 = axisalignedbb10.calculateXOffset(axisalignedbb14, d18)) {
+                for (Iterator var44 = list.iterator(); var44
+                        .hasNext(); d18 = axisalignedbb10.calculateXOffset(axisalignedbb14, d18)) {
                     axisalignedbb10 = (AxisAlignedBB) var44.next();
                 }
 
@@ -295,7 +319,8 @@ public abstract class MixinEntity {
                 double d19 = d5;
 
                 AxisAlignedBB axisalignedbb11;
-                for (Iterator var46 = list.iterator(); var46.hasNext(); d19 = axisalignedbb11.calculateZOffset(axisalignedbb14, d19)) {
+                for (Iterator var46 = list.iterator(); var46
+                        .hasNext(); d19 = axisalignedbb11.calculateZOffset(axisalignedbb14, d19)) {
                     axisalignedbb11 = (AxisAlignedBB) var46.next();
                 }
 
@@ -315,7 +340,8 @@ public abstract class MixinEntity {
                 }
 
                 AxisAlignedBB axisalignedbb12;
-                for (Iterator var50 = list.iterator(); var50.hasNext(); p_moveEntity_3_ = axisalignedbb12.calculateYOffset(this.getEntityBoundingBox(), p_moveEntity_3_)) {
+                for (Iterator var50 = list.iterator(); var50.hasNext(); p_moveEntity_3_ = axisalignedbb12
+                        .calculateYOffset(this.getEntityBoundingBox(), p_moveEntity_3_)) {
                     axisalignedbb12 = (AxisAlignedBB) var50.next();
                 }
 
@@ -373,17 +399,23 @@ public abstract class MixinEntity {
                     block1.onEntityCollidedWithBlock(this.worldObj, blockpos, ((Entity) ((Object) this)));
                 }
 
-                this.distanceWalkedModified = (float) ((double) this.distanceWalkedModified + (double) MathHelper.sqrt_double(d12 * d12 + d14 * d14) * 0.6D);
-                this.distanceWalkedOnStepModified = (float) ((double) this.distanceWalkedOnStepModified + (double) MathHelper.sqrt_double(d12 * d12 + d13 * d13 + d14 * d14) * 0.6D);
-                if (this.distanceWalkedOnStepModified > (float) this.nextStepDistance && block1.getMaterial() != Material.air) {
+                this.distanceWalkedModified = (float) ((double) this.distanceWalkedModified
+                        + (double) MathHelper.sqrt_double(d12 * d12 + d14 * d14) * 0.6D);
+                this.distanceWalkedOnStepModified = (float) ((double) this.distanceWalkedOnStepModified
+                        + (double) MathHelper.sqrt_double(d12 * d12 + d13 * d13 + d14 * d14) * 0.6D);
+                if (this.distanceWalkedOnStepModified > (float) this.nextStepDistance
+                        && block1.getMaterial() != Material.air) {
                     this.nextStepDistance = (int) this.distanceWalkedOnStepModified + 1;
                     if (this.isInWater()) {
-                        float f = MathHelper.sqrt_double(this.motionX * this.motionX * 0.20000000298023224D + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224D) * 0.35F;
+                        float f = MathHelper.sqrt_double(this.motionX * this.motionX * 0.20000000298023224D
+                                + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224D)
+                                * 0.35F;
                         if (f > 1.0F) {
                             f = 1.0F;
                         }
 
-                        this.playSound(this.getSwimSound(), f, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                        this.playSound(this.getSwimSound(), f,
+                                1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                     }
 
                     this.playStepSound(blockpos, block1);
@@ -394,7 +426,8 @@ public abstract class MixinEntity {
                 this.doBlockCollisions();
             } catch (Throwable var52) {
                 CrashReport crashreport = CrashReport.makeCrashReport(var52, "Checking entity block collision");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being checked for collision");
+                CrashReportCategory crashreportcategory = crashreport
+                        .makeCategory("Entity being checked for collision");
                 this.addEntityCrashInfo(crashreportcategory);
                 throw new ReportedException(crashreport);
             }

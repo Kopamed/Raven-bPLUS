@@ -20,8 +20,10 @@ import java.util.List;
 @Mixin(priority = 995, value = EntityRenderer.class)
 public class MixinEntityRenderer {
 
-    @Shadow private Minecraft mc;
-    @Shadow private Entity pointedEntity;
+    @Shadow
+    private Minecraft mc;
+    @Shadow
+    private Entity pointedEntity;
 
     /**
      * @author mc code
@@ -36,7 +38,7 @@ public class MixinEntityRenderer {
 
             Module reachMod = Raven.moduleManager.getModuleByClazz(Reach.class);
 
-            if(reachMod.isEnabled()) {
+            if (reachMod.isEnabled()) {
                 reach += Reach.getReach();
             }
 
@@ -46,7 +48,7 @@ public class MixinEntityRenderer {
             Vec3 vec3 = entity.getPositionEyes(p_getMouseOver_1_);
             boolean flag = false;
 
-            if(!reachMod.isEnabled()) {
+            if (!reachMod.isEnabled()) {
                 if (this.mc.playerController.extendedReach()) {
                     reach = 6.0D;
                     distanceToVec = 6.0D;
@@ -64,8 +66,9 @@ public class MixinEntityRenderer {
             this.pointedEntity = null;
             Vec3 vec33 = null;
             float f = 1.0F;
-            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * reach,
-                    vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
+            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity,
+                    entity.getEntityBoundingBox()
+                            .addCoord(vec31.xCoord * reach, vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
                     Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
             double d2 = distanceToVec;
 
@@ -99,7 +102,8 @@ public class MixinEntityRenderer {
             if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > 3.0D + Reach.getReach()) {
                 this.pointedEntity = null;
                 assert vec33 != null;
-                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, null, new BlockPos(vec33));
+                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33,
+                        null, new BlockPos(vec33));
             }
 
             if (this.pointedEntity != null && (d2 < distanceToVec || this.mc.objectMouseOver == null)) {

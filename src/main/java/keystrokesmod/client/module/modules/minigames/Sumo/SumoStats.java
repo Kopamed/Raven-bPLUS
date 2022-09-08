@@ -29,8 +29,9 @@ public class SumoStats extends Module {
     public String playerNick = "";
     private final List<String> queue = new ArrayList<>();
 
-    //idk where this came from it just appeared in the old src so like /shrug its legit just a copy of duels stats
-    //it also doesnt requeue LOL
+    // idk where this came from it just appeared in the old src so like /shrug its
+    // legit just a copy of duels stats
+    // it also doesnt requeue LOL
 
     public SumoStats() {
         super("Sumo Stats", ModuleCategory.sumo);
@@ -53,13 +54,16 @@ public class SumoStats extends Module {
 
     @Subscribe
     public void onTick(TickEvent e) {
-        if (!this.isDuel()) return;
+        if (!this.isDuel())
+            return;
 
-        // Thanks to https://github.com/Scherso for the code from https://github.com/Scherso/Seraph
+        // Thanks to https://github.com/Scherso for the code from
+        // https://github.com/Scherso/Seraph
 
         for (ScorePlayerTeam team : Minecraft.getMinecraft().theWorld.getScoreboard().getTeams()) {
             for (String playerName : team.getMembershipCollection()) {
-                if (!queue.contains(playerName) && team.getColorPrefix().equals("§7§k") && !playerName.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getDisplayNameString())) {
+                if (!queue.contains(playerName) && team.getColorPrefix().equals("§7§k")
+                        && !playerName.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getDisplayNameString())) {
                     this.queue.add(playerName);
                     Raven.getExecutor().execute(() -> {
                         String id = getPlayerUUID(playerName);
@@ -83,14 +87,17 @@ public class SumoStats extends Module {
                 PlayerProfile playerProfile = new PlayerProfile(new UUID(uuid), DuelsStatsMode.SUMO);
                 playerProfile.populateStats();
 
-                if (!playerProfile.isPlayer) return;
+                if (!playerProfile.isPlayer)
+                    return;
 
                 if (playerProfile.nicked) {
                     Utils.Player.sendMessageToSelf("&3" + playerName + " " + "&eis nicked!");
                     return;
                 }
 
-                double wlr = playerProfile.losses != 0 ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2) : (double) playerProfile.wins;
+                double wlr = playerProfile.losses != 0
+                        ? Utils.Java.round((double) playerProfile.wins / (double) playerProfile.losses, 2)
+                        : (double) playerProfile.wins;
                 Utils.Player.sendMessageToSelf("&7&m-------------------------");
                 if (dm != Utils.Profiles.DuelsStatsMode.OVERALL) {
                     Utils.Player.sendMessageToSelf("&e" + Utils.md + "&3" + dm.name());
@@ -131,7 +138,8 @@ public class SumoStats extends Module {
     private String getPlayerUUID(String username) {
         String playerUUID = "";
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet(String.format("https://api.mojang.com/users/profiles/minecraft/%s", username));
+            HttpGet request = new HttpGet(
+                    String.format("https://api.mojang.com/users/profiles/minecraft/%s", username));
             try (InputStream is = client.execute(request).getEntity().getContent()) {
                 JsonParser parser = new JsonParser();
                 JsonObject object = parser.parse(new InputStreamReader(is, StandardCharsets.UTF_8)).getAsJsonObject();

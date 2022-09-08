@@ -15,14 +15,14 @@ public class Timer {
         } else {
             float t = (float) (System.currentTimeMillis() - this.last) / this.updates;
             switch (type) {
-                case 1:
-                    t = t < 0.5F ? 4.0F * t * t * t : (t - 1.0F) * (2.0F * t - 2.0F) * (2.0F * t - 2.0F) + 1.0F;
-                    break;
-                case 2:
-                    t = (float) (1.0D - Math.pow(1.0F - t, 5.0D));
-                    break;
-                case 3:
-                    t = this.bounce(t);
+            case 1:
+                t = t < 0.5F ? 4.0F * t * t * t : (t - 1.0F) * (2.0F * t - 2.0F) * (2.0F * t - 2.0F) + 1.0F;
+                break;
+            case 2:
+                t = (float) (1.0D - Math.pow(1.0F - t, 5.0D));
+                break;
+            case 3:
+                t = this.bounce(t);
             }
 
             float value = begin + t * (end - begin);

@@ -76,10 +76,8 @@ public class BlockHit extends Module {
             }
 
             if (!(e.target instanceof EntityPlayer) && onlyPlayers.isToggled()
-                    || !(Math.random() <= chance.getInput() / 100)
-                    || !Utils.Player.isPlayerHoldingSword()
-                    || mc.thePlayer.getDistanceToEntity(e.target) > range.getInput()
-                    || !(rHit == hits))
+                    || !(Math.random() <= chance.getInput() / 100) || !Utils.Player.isPlayerHoldingSword()
+                    || mc.thePlayer.getDistanceToEntity(e.target) > range.getInput() || !(rHit == hits))
                 return;
 
             tryStartCombo();
@@ -102,13 +100,15 @@ public class BlockHit extends Module {
         KeyBinding.setKeyBindState(key, true);
         KeyBinding.onTick(key);
         Utils.Client.setMouseButtonState(1, true);
-        actionTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax() + 0.01));
+        actionTimer.setCooldown(
+                (long) ThreadLocalRandom.current().nextDouble(waitMs.getInputMin(), waitMs.getInputMax() + 0.01));
         actionTimer.start();
     }
 
     public void tryStartCombo() {
         tryStartCombo = true;
-        waitTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(), actionMs.getInputMax() + 0.01));
+        waitTimer.setCooldown(
+                (long) ThreadLocalRandom.current().nextDouble(actionMs.getInputMin(), actionMs.getInputMax() + 0.01));
         waitTimer.start();
     }
 

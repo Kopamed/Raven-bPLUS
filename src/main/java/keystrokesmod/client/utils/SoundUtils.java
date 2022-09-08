@@ -9,14 +9,14 @@ public class SoundUtils {
 
     private static final HashMap<String, AudioInputStream> sounds = new HashMap<String, AudioInputStream>();
 
-
     public static void start() {
         addSound("click1");
     }
 
     public static void addSound(String name) {
         try {
-            sounds.put(name, (AudioInputStream) SoundUtils.class.getResourceAsStream("/assets/keystrokes/sounds/" + name + ".wav"));
+            sounds.put(name, (AudioInputStream) SoundUtils.class
+                    .getResourceAsStream("/assets/keystrokes/sounds/" + name + ".wav"));
         } catch (Exception e) {
 
         }

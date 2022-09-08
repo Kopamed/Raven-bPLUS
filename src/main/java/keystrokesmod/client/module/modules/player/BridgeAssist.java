@@ -22,13 +22,13 @@ public class BridgeAssist extends Module {
     private boolean waitingForAim;
     private boolean gliding;
     private long startWaitTime;
-    private final float[] godbridgePos = {75.6f, -315, -225, -135, -45, 0, 45, 135, 225, 315};
-    private final float[] moonwalkPos = {79.6f, -340, -290, -250, -200, -160, -110, -70, -20, 0, 20, 70, 110, 160, 200, 250, 290, 340};
-    private final float[] breezilyPos = {79.9f, -360, -270, -180, -90, 0, 90, 180, 270, 360};
-    private final float[] normalPos = {78f, -315, -225, -135, -45, 0, 45, 135, 225, 315};
+    private final float[] godbridgePos = { 75.6f, -315, -225, -135, -45, 0, 45, 135, 225, 315 };
+    private final float[] moonwalkPos = { 79.6f, -340, -290, -250, -200, -160, -110, -70, -20, 0, 20, 70, 110, 160, 200,
+            250, 290, 340 };
+    private final float[] breezilyPos = { 79.9f, -360, -270, -180, -90, 0, 90, 180, 270, 360 };
+    private final float[] normalPos = { 78f, -315, -225, -135, -45, 0, 45, 135, 225, 315 };
     private double speedYaw, speedPitch;
     private float waitingForYaw, waitingForPitch;
-
 
     public BridgeAssist() {
         super("Bridge Assist", ModuleCategory.player);
@@ -77,7 +77,6 @@ public class BridgeAssist extends Module {
             }
         }
 
-
         if (gliding) {
             float fuckedYaw = mc.thePlayer.rotationYaw;
             float fuckedPitch = mc.thePlayer.rotationPitch;
@@ -85,9 +84,7 @@ public class BridgeAssist extends Module {
             float yaw = fuckedYaw - ((int) fuckedYaw / 360f) * 360;
             float pitch = fuckedPitch - ((int) fuckedPitch / 360f) * 360;
 
-            double ilovebloat1 = yaw - speedYaw,
-                    ilovebloat2 = yaw + speedYaw,
-                    ilovebloat3 = pitch - speedPitch,
+            double ilovebloat1 = yaw - speedYaw, ilovebloat2 = yaw + speedYaw, ilovebloat3 = pitch - speedPitch,
                     ilovebloat4 = pitch + speedPitch;
 
             if (ilovebloat1 < 0)
@@ -142,50 +139,49 @@ public class BridgeAssist extends Module {
         float range = (float) assistRange.getInput();
 
         switch (Utils.Modes.BridgeMode.values()[(int) (assistMode.getInput() - 1.0D)]) {
-            case GODBRIDGE:
-                if (godbridgePos[0] >= (pitch - range) && godbridgePos[0] <= (pitch + range)) {
-                    for (int k = 1; k < godbridgePos.length; k++) {
-                        if (godbridgePos[k] >= (yaw - range) && godbridgePos[k] <= (yaw + range)) {
-                            aimAt(godbridgePos[0], godbridgePos[k], fuckedPitch);
-                            this.waitingForAim = false;
-                            return;
-                        }
+        case GODBRIDGE:
+            if (godbridgePos[0] >= (pitch - range) && godbridgePos[0] <= (pitch + range)) {
+                for (int k = 1; k < godbridgePos.length; k++) {
+                    if (godbridgePos[k] >= (yaw - range) && godbridgePos[k] <= (yaw + range)) {
+                        aimAt(godbridgePos[0], godbridgePos[k], fuckedPitch);
+                        this.waitingForAim = false;
+                        return;
                     }
                 }
+            }
 
-
-            case MOONWALK:
-                if (moonwalkPos[0] >= (pitch - range) && moonwalkPos[0] <= (pitch + range)) {
-                    for (int k = 1; k < moonwalkPos.length; k++) {
-                        if (moonwalkPos[k] >= (yaw - range) && moonwalkPos[k] <= (yaw + range)) {
-                            aimAt(moonwalkPos[0], moonwalkPos[k], fuckedPitch);
-                            this.waitingForAim = false;
-                            return;
-                        }
+        case MOONWALK:
+            if (moonwalkPos[0] >= (pitch - range) && moonwalkPos[0] <= (pitch + range)) {
+                for (int k = 1; k < moonwalkPos.length; k++) {
+                    if (moonwalkPos[k] >= (yaw - range) && moonwalkPos[k] <= (yaw + range)) {
+                        aimAt(moonwalkPos[0], moonwalkPos[k], fuckedPitch);
+                        this.waitingForAim = false;
+                        return;
                     }
                 }
+            }
 
-            case BREEZILY:
-                if (breezilyPos[0] >= (pitch - range) && breezilyPos[0] <= (pitch + range)) {
-                    for (int k = 1; k < breezilyPos.length; k++) {
-                        if (breezilyPos[k] >= (yaw - range) && breezilyPos[k] <= (yaw + range)) {
-                            aimAt(breezilyPos[0], breezilyPos[k], fuckedPitch);
-                            this.waitingForAim = false;
-                            return;
-                        }
+        case BREEZILY:
+            if (breezilyPos[0] >= (pitch - range) && breezilyPos[0] <= (pitch + range)) {
+                for (int k = 1; k < breezilyPos.length; k++) {
+                    if (breezilyPos[k] >= (yaw - range) && breezilyPos[k] <= (yaw + range)) {
+                        aimAt(breezilyPos[0], breezilyPos[k], fuckedPitch);
+                        this.waitingForAim = false;
+                        return;
                     }
                 }
+            }
 
-            case NORMAL:
-                if (normalPos[0] >= (pitch - range) && normalPos[0] <= (pitch + range)) {
-                    for (int k = 1; k < normalPos.length; k++) {
-                        if (normalPos[k] >= (yaw - range) && normalPos[k] <= (yaw + range)) {
-                            aimAt(normalPos[0], normalPos[k], fuckedPitch);
-                            this.waitingForAim = false;
-                            return;
-                        }
+        case NORMAL:
+            if (normalPos[0] >= (pitch - range) && normalPos[0] <= (pitch + range)) {
+                for (int k = 1; k < normalPos.length; k++) {
+                    if (normalPos[k] >= (yaw - range) && normalPos[k] <= (yaw + range)) {
+                        aimAt(normalPos[0], normalPos[k], fuckedPitch);
+                        this.waitingForAim = false;
+                        return;
                     }
                 }
+            }
         }
         this.waitingForAim = false;
     }

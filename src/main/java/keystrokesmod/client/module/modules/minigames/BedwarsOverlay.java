@@ -40,21 +40,22 @@ public class BedwarsOverlay extends Module {
         this.registerSetting(margin = new SliderSetting("Margin", 4, 0, 100, 1));
         this.registerSetting(marginTextX = new SliderSetting("Margin Text X", 21, 0, 100, 1));
         this.registerSetting(marginTextY = new SliderSetting("Margin Text Y", 8, 0, 100, 1));
-        //overlayX = 4;
-        //overlayY = 4;
+        // overlayX = 4;
+        // overlayY = 4;
         mainTextColour = 0xffFEC5E5;
         backgroundColour = 0x903c3f41;
         errorColour = 0xffff0033;
-        //margin = 4;
-        //marginTextY = 8;
-        //marginTextX = 21;
+        // margin = 4;
+        // marginTextY = 8;
+        // marginTextX = 21;
     }
 
     @Subscribe
     public void onForgeEvent(ForgeEvent fe) {
         if (fe.getEvent() instanceof ClientChatReceivedEvent)
             if (Utils.Player.isPlayerInGame()) {
-                if (Utils.Java.str(((ClientChatReceivedEvent) fe.getEvent()).message.getUnformattedText()).startsWith("Sending you to")) {
+                if (Utils.Java.str(((ClientChatReceivedEvent) fe.getEvent()).message.getUnformattedText())
+                        .startsWith("Sending you to")) {
                     playerStats.clear();
                 }
             }
@@ -73,7 +74,6 @@ public class BedwarsOverlay extends Module {
             return;
         }
 
-
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
         linesDrawn = 0;
@@ -85,16 +85,15 @@ public class BedwarsOverlay extends Module {
             // return;
         }
 
-
         for (NetworkPlayerInfo player : Utils.Client.getPlayers()) {
             drawStats(player, fr);
         }
         overlayHeight = margin.getInput() * 2 + fr.FONT_HEIGHT * linesDrawn + marginTextY.getInput() * --linesDrawn;
 
         fr.drawString("", 0, 0, 0xffffffff);
-        // LEVEL   PLAYERS   PARTY   WS   BBBLR   FKDR   WLR   FINALS   WINS   THREAT
-        // 420     KOPAMED     -     23   84    9.3    6.3    30002     1
-        // 1       Jpzinn      -     0    1     0.07   0.01   22394    10
+        // LEVEL PLAYERS PARTY WS BBBLR FKDR WLR FINALS WINS THREAT
+        // 420 KOPAMED - 23 84 9.3 6.3 30002 1
+        // 1 Jpzinn - 0 1 0.07 0.01 22394 10
 
         // Colour pallette
         // grey
@@ -109,13 +108,14 @@ public class BedwarsOverlay extends Module {
     }
 
     private void drawStats(NetworkPlayerInfo player, FontRenderer fr) {
-        /*if(!playerStats.containsKey(player.getGameProfile().getId())){
-            Ravenbplus.getExecutor().execute(() -> {
-                playerStats.put(player.getGameProfile().getId().toString(), getBedwarsStats(player.getGameProfile().getId().toString()));
-            });
-        } else {
-
-        }*/
+        /*
+         * if(!playerStats.containsKey(player.getGameProfile().getId())){
+         * Ravenbplus.getExecutor().execute(() -> {
+         * playerStats.put(player.getGameProfile().getId().toString(),
+         * getBedwarsStats(player.getGameProfile().getId().toString())); }); } else {
+         * 
+         * }
+         */
         String name = player.getGameProfile().getName();
         String UUID = player.getGameProfile().getId().toString();
         if (Utils.URLS.hypixelApiKey.isEmpty()) {
@@ -126,14 +126,14 @@ public class BedwarsOverlay extends Module {
             double bbblr, wlr, fkdr;
             if (!playerStats.containsKey(UUID)) {
                 Raven.getExecutor().execute(() -> getBedwarsStats(UUID));
-                playerStats.put(UUID, new int[]{-16});
+                playerStats.put(UUID, new int[] { -16 });
                 return;
             }
 
             int[] stats = playerStats.get(UUID);
 
             if (stats.length == 1 && stats[0] == -16) {
-                //we are loading player stats so return
+                // we are loading player stats so return
                 return;
             }
 
@@ -161,7 +161,7 @@ public class BedwarsOverlay extends Module {
     }
 
     private int getTreatColour(String bad) {
-        //"&4VERY HIGH", "&cHIGH", "&6MODERATE", "&aLOW", "&2VERY LOW"
+        // "&4VERY HIGH", "&cHIGH", "&6MODERATE", "&aLOW", "&2VERY LOW"
         if (bad.equalsIgnoreCase("very high")) {
             return Colours.RED;
         } else if (bad.equalsIgnoreCase("high")) {
@@ -287,7 +287,8 @@ public class BedwarsOverlay extends Module {
         // Stars, FK, FD, Wins, Losses, Winstreak
         int[] stats = new int[9];
         // open connection to api
-        String connection = Utils.URLS.getTextFromURL("https://api.hypixel.net/player?key=" + Utils.URLS.hypixelApiKey + "&uuid=" + uuid);
+        String connection = Utils.URLS
+                .getTextFromURL("https://api.hypixel.net/player?key=" + Utils.URLS.hypixelApiKey + "&uuid=" + uuid);
         // error getting contents of link
         if (connection.isEmpty()) {
             return;
@@ -315,15 +316,17 @@ public class BedwarsOverlay extends Module {
         stats[2] = Utils.Java.getValue(bw, "winstreak");
         stats[3] = Utils.Java.getValue(bw, "beds_broken_bedwars");
         stats[4] = Utils.Java.getValue(bw, "beds_lost_bedwars");
-        //stats[3] = (int)(round(Utils.Java.getValue(bw, "beds_broken_bedwars") / Utils.Java.getValue(bw, "beds_lost_bedwars") * 100, 2));
-        //stats[4] = (int)(round(Utils.Java.getValue(bw, "final_kills_bedwars") / Utils.Java.getValue(bw, "final_deaths_bedwars") * 100, 2));
-        //stats[5] = (int)(round(Utils.Java.getValue(bw, "wins_bedwars") / Utils.Java.getValue(bw, "losses_bedwars") * 100, 2));
+        // stats[3] = (int)(round(Utils.Java.getValue(bw, "beds_broken_bedwars") /
+        // Utils.Java.getValue(bw, "beds_lost_bedwars") * 100, 2));
+        // stats[4] = (int)(round(Utils.Java.getValue(bw, "final_kills_bedwars") /
+        // Utils.Java.getValue(bw, "final_deaths_bedwars") * 100, 2));
+        // stats[5] = (int)(round(Utils.Java.getValue(bw, "wins_bedwars") /
+        // Utils.Java.getValue(bw, "losses_bedwars") * 100, 2));
         stats[6] = Utils.Java.getValue(bw, "final_deaths_bedwars");
         stats[5] = Utils.Java.getValue(bw, "final_kills_bedwars");
         stats[7] = Utils.Java.getValue(bw, "wins_bedwars");
         stats[8] = Utils.Java.getValue(bw, "losses_bedwars");
         playerStats.put(uuid, stats);
-
 
     }
 
@@ -331,11 +334,15 @@ public class BedwarsOverlay extends Module {
         String noApiKey = "API key is not set!";
         String noPlayers = "No players in lobby!";
         if (Utils.URLS.hypixelApiKey.isEmpty()) {
-            fr.drawString(noApiKey, (int) (overlayWidth + overlayX.getInput() - overlayWidth / 2 - fr.getStringWidth(noApiKey) / 2), (int) textY, errorColour);
+            fr.drawString(noApiKey,
+                    (int) (overlayWidth + overlayX.getInput() - overlayWidth / 2 - fr.getStringWidth(noApiKey) / 2),
+                    (int) textY, errorColour);
             textY += fr.FONT_HEIGHT + marginTextY.getInput();
             return true;
         } else if (!Utils.Client.othersExist()) {
-            fr.drawString(noPlayers, (int) (overlayWidth + overlayX.getInput() - overlayWidth / 2 - fr.getStringWidth(noPlayers) / 2), (int) textY, errorColour);
+            fr.drawString(noPlayers,
+                    (int) (overlayWidth + overlayX.getInput() - overlayWidth / 2 - fr.getStringWidth(noPlayers) / 2),
+                    (int) textY, errorColour);
             textY += fr.FONT_HEIGHT + marginTextY.getInput();
             return true;
         }
@@ -344,7 +351,8 @@ public class BedwarsOverlay extends Module {
     }
 
     private void drawMain(ScaledResolution sr, FontRenderer fr) {
-        Gui.drawRect((int) overlayX.getInput(), (int) overlayY.getInput(), (int) (overlayWidth + overlayX.getInput()), (int) (overlayHeight + overlayY.getInput()), backgroundColour);
+        Gui.drawRect((int) overlayX.getInput(), (int) overlayY.getInput(), (int) (overlayWidth + overlayX.getInput()),
+                (int) (overlayHeight + overlayY.getInput()), backgroundColour);
 
         double textX = margin.getInput() + overlayX.getInput();
         textY = margin.getInput() + overlayY.getInput();
@@ -393,16 +401,7 @@ public class BedwarsOverlay extends Module {
     }
 
     public enum StatType {
-        LEVEL,
-        PLAYER_NAME,
-        NICKED,
-        WS,
-        BBBLR,
-        FKDR,
-        WLR,
-        FINALS,
-        WINS,
-        OVERALLTHREAT
+        LEVEL, PLAYER_NAME, NICKED, WS, BBBLR, FKDR, WLR, FINALS, WINS, OVERALLTHREAT
     }
 
     public static class Colours {

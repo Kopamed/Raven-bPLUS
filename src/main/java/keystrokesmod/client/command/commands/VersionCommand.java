@@ -8,7 +8,8 @@ import static keystrokesmod.client.clickgui.raven.Terminal.print;
 
 public class VersionCommand extends Command {
     public VersionCommand() {
-        super("version", "tells you what build of B++ you are using", 0, 0, new String[]{}, new String[]{"v", "ver", "which", "build", "b"});
+        super("version", "tells you what build of B++ you are using", 0, 0, new String[] {},
+                new String[] { "v", "ver", "which", "build", "b" });
     }
 
     @Override
