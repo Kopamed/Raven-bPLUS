@@ -128,7 +128,7 @@ jar {
                 'MixinConfigs': 'mixins.keystrokesmod.json',
                 'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'TweakOrder': 0,
-                "FMLCorePlugin": "keystrokesmod.client.mixin.Mixinloader",
+                "FMLCorePlugin": "keystrokesmod.client.mixin.MixinLoader",
                 "ForceLoadAsMod": true,
                 'FMLCorePluginContainsFMLMod': true,
                 "ModSide": "CLIENT"
