@@ -7,6 +7,7 @@ import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -33,6 +34,7 @@ public class HitBox extends Module {
 
     public HitBox() {
         super("HitBox", ModuleCategory.combat);
+        this.registerSetting(new DescriptionSetting("Temporarily don't work due to issues."));
         this.registerSetting(a = new SliderSetting("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
         this.registerSetting(b = new TickSetting("Show new hitbox", false));
     }

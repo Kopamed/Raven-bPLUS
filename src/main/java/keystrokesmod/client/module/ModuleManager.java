@@ -114,6 +114,7 @@ public class ModuleManager {
         addModule(new Parkour());
         addModule(new Disabler());
         addModule(new JumpReset());
+        addModule(new LegitAura());
         // why ?
         // idk dude. you tell me why. I am pretty sure this was blowsy's work.
 

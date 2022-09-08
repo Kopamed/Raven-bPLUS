@@ -19,7 +19,9 @@ public class JumpReset extends Module {
         if (e.isIncoming()) {
             if (e.getPacket() instanceof S12PacketEntityVelocity) {
                 if (((S12PacketEntityVelocity) e.getPacket()).getEntityID() == mc.thePlayer.getEntityId()) {
-                    mc.thePlayer.jump();
+                    if(mc.thePlayer.onGround) {
+                        mc.thePlayer.jump();
+                    }
                 }
             }
         }
