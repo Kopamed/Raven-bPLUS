@@ -1,5 +1,6 @@
 package keystrokesmod.client.utils;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -7,6 +8,7 @@ import com.google.gson.JsonParser;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
+import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -22,6 +24,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
@@ -59,6 +62,72 @@ public class Utils {
     public static final String md = "Mode: ";
 
     public static class Player {
+
+        public static MovingObjectPosition rayTrace(double reach, float partialTicks) {
+            Entity entity = mc.getRenderViewEntity();
+            if (entity != null && mc.theWorld != null) {
+                Entity pointedEntity = null;
+
+                MovingObjectPosition objectMouseOver = entity.rayTrace(reach, partialTicks);
+                double distanceToVec = reach;
+
+                Vec3 vec3 = entity.getPositionEyes(partialTicks);
+
+                if (objectMouseOver != null) {
+                    distanceToVec = objectMouseOver.hitVec.distanceTo(vec3);
+                }
+
+                Vec3 vec31 = entity.getLook(partialTicks);
+                Vec3 vec32 = vec3.addVector(vec31.xCoord * reach, vec31.yCoord * reach, vec31.zCoord * reach);
+                Vec3 vec33 = null;
+
+                float f = 1.0F;
+                List<Entity> list = mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * reach,
+                                vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
+                        Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
+                double d2 = distanceToVec;
+
+                for (Entity entity1 : list) {
+                    float f1 = entity1.getCollisionBorderSize();
+                    AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1);
+                    MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+                    if (axisalignedbb.isVecInside(vec3)) {
+                        if (d2 >= 0.0D) {
+                            pointedEntity = entity1;
+                            vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
+                            d2 = 0.0D;
+                        }
+                    } else if (movingobjectposition != null) {
+                        double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+                        if (d3 < d2 || d2 == 0.0D) {
+                            if (entity1 == entity.ridingEntity && !entity.canRiderInteract()) {
+                                if (d2 == 0.0D) {
+                                    pointedEntity = entity1;
+                                    vec33 = movingobjectposition.hitVec;
+                                }
+                            } else {
+                                pointedEntity = entity1;
+                                vec33 = movingobjectposition.hitVec;
+                                d2 = d3;
+                            }
+                        }
+                    }
+                }
+
+                if (pointedEntity != null) {
+                    vec3.distanceTo(vec33);
+                    Reach.getReach();
+                }
+
+                if (pointedEntity != null && (d2 < distanceToVec || objectMouseOver == null)) {
+                    objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
+                }
+
+                return objectMouseOver;
+            }
+
+            return null;
+        }
 
         public static void hotkeyToSlot(int slot) {
             if (!isPlayerInGame())

@@ -21,7 +21,7 @@ build/*
 # other
 eclipse
 run
-
+.shelf
 
 
 logs/

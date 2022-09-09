@@ -6,11 +6,14 @@
     "mixins": [
         "MixinEntity",
         "MixinEntityPlayer",
-        "MixinFontRenderer",
-        "MixinNetworkManager",
         "MixinEntityPlayerSP",
+        "MixinEntityRenderer",
+        "MixinFontRenderer",
         "MixinGuiUtilRenderComponents",
         "MixinMinecraft",
-        "MixinEntityRenderer"
+        "MixinNetworkManager"
+    ],
+    "client": [
+        "IMinecraft"
     ]
 }
