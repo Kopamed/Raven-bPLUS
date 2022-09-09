@@ -39,7 +39,7 @@ public class MixinEntityRenderer {
             Module reachMod = Raven.moduleManager.getModuleByClazz(Reach.class);
 
             if (reachMod.isEnabled()) {
-                reach += Reach.getReach();
+                reach = Reach.getReach();
             }
 
             this.mc.objectMouseOver = entity.rayTrace(reach, p_getMouseOver_1_);

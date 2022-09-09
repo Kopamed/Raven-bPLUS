@@ -48,70 +48,7 @@ public class Reach extends Module {
 
         if (sprint_only.isToggled() && !mc.thePlayer.isSprinting())
             return 0;
-
+        
         return Utils.Client.ranModuleVal(reach, Utils.Java.rand());
-    }
-
-    private static Object[] zz(double zzD, double zzE) {
-        Module reach = Raven.moduleManager.getModuleByClazz(Reach.class);
-        if (reach != null && !reach.isEnabled()) {
-            zzD = mc.playerController.extendedReach() ? 6.0D : 3.0D;
-        }
-
-        Entity entity1 = mc.getRenderViewEntity();
-        Entity entity = null;
-        if (entity1 == null) {
-            return null;
-        } else {
-            mc.mcProfiler.startSection("pick");
-            Vec3 eyes_positions = entity1.getPositionEyes(1.0F);
-            Vec3 look = entity1.getLook(1.0F);
-            Vec3 new_eyes_pos = eyes_positions.addVector(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD);
-            Vec3 zz6 = null;
-            List<Entity> zz8 = mc.theWorld.getEntitiesWithinAABBExcludingEntity(entity1, entity1.getEntityBoundingBox()
-                    .addCoord(look.xCoord * zzD, look.yCoord * zzD, look.zCoord * zzD).expand(1.0D, 1.0D, 1.0D));
-            double zz9 = zzD;
-
-            for (Entity o : zz8) {
-                if (o.canBeCollidedWith()) {
-                    float ex = (float) ((double) o.getCollisionBorderSize() * HitBox.exp(o));
-                    AxisAlignedBB zz13 = o.getEntityBoundingBox().expand(ex, ex, ex);
-                    zz13 = zz13.expand(zzE, zzE, zzE);
-                    MovingObjectPosition zz14 = zz13.calculateIntercept(eyes_positions, new_eyes_pos);
-                    if (zz13.isVecInside(eyes_positions)) {
-                        if (0.0D < zz9 || zz9 == 0.0D) {
-                            entity = o;
-                            zz6 = zz14 == null ? eyes_positions : zz14.hitVec;
-                            zz9 = 0.0D;
-                        }
-                    } else if (zz14 != null) {
-                        double zz15 = eyes_positions.distanceTo(zz14.hitVec);
-                        if (zz15 < zz9 || zz9 == 0.0D) {
-                            if (o == entity1.ridingEntity) {
-                                if (zz9 == 0.0D) {
-                                    entity = o;
-                                    zz6 = zz14.hitVec;
-                                }
-                            } else {
-                                entity = o;
-                                zz6 = zz14.hitVec;
-                                zz9 = zz15;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (zz9 < zzD && !(entity instanceof EntityLivingBase) && !(entity instanceof EntityItemFrame)) {
-                entity = null;
-            }
-
-            mc.mcProfiler.endSection();
-            if (entity != null && zz6 != null) {
-                return new Object[] { entity, zz6 };
-            } else {
-                return null;
-            }
-        }
     }
 }
