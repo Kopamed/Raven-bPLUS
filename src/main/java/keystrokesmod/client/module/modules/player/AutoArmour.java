@@ -1,18 +1,21 @@
 package keystrokesmod.client.module.modules.player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import com.google.common.eventbus.Subscribe;
+
 import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import net.minecraft.item.ItemStack;
 
 public class AutoArmour extends Module {
 
@@ -30,26 +33,22 @@ public class AutoArmour extends Module {
 
     @Subscribe
     public void onRender2D(Render2DEvent e) {
-        if (!Utils.Player.isPlayerInGame())
-            return;
-        if (mc.currentScreen != null && mc.thePlayer != null) {
-            if (mc.thePlayer.openContainer instanceof ContainerPlayer) {
-                if (!inInv) {
-                    delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(),
-                            firstDelay.getInputMax() + 0.01));
+        if (Utils.Player.isPlayerInInventory()) {
+            if (!inInv) {
+                delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(),
+                        firstDelay.getInputMax() + 0.01));
+                delayTimer.start();
+                generatePath((ContainerPlayer) mc.thePlayer.openContainer);
+                inInv = true;
+            }
+            if (!sortedSlots.isEmpty()) {
+                if (delayTimer.hasFinished()) {
+                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1,
+                            mc.thePlayer);
+                    delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(),
+                            delay.getInputMax() + 0.01));
                     delayTimer.start();
-                    generatePath((ContainerPlayer) mc.thePlayer.openContainer);
-                    inInv = true;
-                }
-                if (!sortedSlots.isEmpty()) {
-                    if (delayTimer.hasFinished()) {
-                        mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1,
-                                mc.thePlayer);
-                        delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(),
-                                delay.getInputMax() + 0.01));
-                        delayTimer.start();
-                        sortedSlots.remove(0);
-                    }
+                    sortedSlots.remove(0);
                 }
             }
         } else {
@@ -103,12 +102,19 @@ public class AutoArmour extends Module {
             if (s < 0)
                 return;
 
-            Item is = mc.thePlayer.openContainer.getSlot(s).getStack().getItem();
+            ItemStack itemStack = mc.thePlayer.openContainer.getSlot(s).getStack();
+            Item is = itemStack.getItem();
             if (!(is instanceof ItemArmor))
                 return;
 
             ItemArmor as = (ItemArmor) is;
-            v = as.damageReduceAmount;
+            float pl;
+            try {
+               pl = EnchantmentHelper.getEnchantments(itemStack).get(0); 
+            } catch(Exception e) {
+                pl = 0;
+            }
+            v = as.damageReduceAmount + (float) (pl * 0.6);
             at = as.armorType;
         }
 

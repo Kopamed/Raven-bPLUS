@@ -37,37 +37,33 @@ public class ChestStealer extends Module {
 
     @Subscribe
     public void onRender2D(Render2DEvent e) {
-        if (!Utils.Player.isPlayerInGame())
-            return;
-        if (mc != null && mc.currentScreen != null && mc.thePlayer != null) {
-            if (mc.thePlayer.openContainer != null && mc.thePlayer.openContainer instanceof ContainerChest) {
-                if (!inChest) {
-                    chest = (ContainerChest) mc.thePlayer.openContainer;
-                    delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(),
-                            firstDelay.getInputMax() + 0.01));
+        if (Utils.Player.isPlayerInChest()) {
+            if (!inChest) {
+                chest = (ContainerChest) mc.thePlayer.openContainer;
+                delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(),
+                        firstDelay.getInputMax() + 0.01));
+                delayTimer.start();
+                generatePath(chest);
+                inChest = true;
+            }
+            if (inChest && !sortedSlots.isEmpty()) {
+                if (delayTimer.hasFinished()) {
+                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1,
+                            mc.thePlayer);
+                    delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(),
+                            delay.getInputMax() + 0.01));
                     delayTimer.start();
-                    generatePath(chest);
-                    inChest = true;
+                    sortedSlots.remove(0);
                 }
-                if (inChest && !sortedSlots.isEmpty()) {
-                    if (delayTimer.hasFinished()) {
-                        mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0).s, 0, 1,
-                                mc.thePlayer);
-                        delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(delay.getInputMin(),
-                                delay.getInputMax() + 0.01));
-                        delayTimer.start();
-                        sortedSlots.remove(0);
-                    }
-                }
-                if (sortedSlots.isEmpty() && autoClose.isToggled()) {
-                    if (closeTimer.firstFinish()) {
-                        mc.thePlayer.closeScreen();
-                        inChest = false;
-                    } else {
-                        closeTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(closeDelay.getInputMin(),
-                                closeDelay.getInputMax() + 0.01));
-                        closeTimer.start();
-                    }
+            }
+            if (sortedSlots.isEmpty() && autoClose.isToggled()) {
+                if (closeTimer.firstFinish()) {
+                    mc.thePlayer.closeScreen();
+                    inChest = false;
+                } else {
+                    closeTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(closeDelay.getInputMin(),
+                            closeDelay.getInputMax() + 0.01));
+                    closeTimer.start();
                 }
             }
         } else {
