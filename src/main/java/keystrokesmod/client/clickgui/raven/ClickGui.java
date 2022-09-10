@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.lwjgl.input.Mouse;
+
 public class ClickGui extends GuiScreen {
     private ScheduledFuture<?> sf;
     private Timer aT;
@@ -27,6 +29,7 @@ public class ClickGui extends GuiScreen {
     private Timer aR;
     private final ArrayList<CategoryComponent> categoryList;
     public final Terminal terminal;
+    private int mouseX, mouseY;
 
     public static int binding;
 
@@ -83,6 +86,7 @@ public class ClickGui extends GuiScreen {
     }
 
     public void drawScreen(int x, int y, float p) {
+        mouseX = x; mouseY = y;
         Version clientVersion = Raven.versionManager.getClientVersion();
         Version latestVersion = Raven.versionManager.getLatestVersion();
 
@@ -276,6 +280,17 @@ public class ClickGui extends GuiScreen {
                 for (Component c : cat.getModules()) {
                     c.keyTyped(t, k);
                 }
+            }
+        }
+    }
+    
+    public void handleMouseInput() throws IOException {
+        super.handleMouseInput();
+        for (CategoryComponent c : visableCategoryList()) {
+            if (c.insideAllArea(mouseX, mouseY)) {
+                int i = Mouse.getEventDWheel();
+                i = Integer.compare(i, 0);
+                c.scroll(i * 5f);
             }
         }
     }

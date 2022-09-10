@@ -113,4 +113,9 @@ public class SliderComponent implements Component {
         return x > this.x + this.p.category.getWidth() / 2 && x < this.x + this.p.category.getWidth() && y > this.y
                 && y < this.y + 16;
     }
+    
+    @Override
+    public int getY() {
+        return y;
+    }
 }

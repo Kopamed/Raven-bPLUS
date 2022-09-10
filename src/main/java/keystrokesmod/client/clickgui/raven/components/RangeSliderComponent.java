@@ -174,6 +174,11 @@ public class RangeSliderComponent implements Component {
                 && x < this.sliderStartX + this.module.category.getWidth() && y > this.sliderStartY
                 && y < this.sliderStartY + 16;
     }
+    
+    @Override 
+    public int getY() {
+        return moduleStartY;
+    }
 
     public enum Helping {
         MIN, MAX, NONE

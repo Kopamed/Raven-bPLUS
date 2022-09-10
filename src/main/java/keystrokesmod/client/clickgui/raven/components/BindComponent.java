@@ -96,6 +96,11 @@ public class BindComponent implements Component {
     public int getHeight() {
         return 16;
     }
+    
+    @Override
+    public int getY() {
+        return y;
+    }
 
     private void dr(String s) {
         // if(GuiModule.useCustomFont.isToggled()) {

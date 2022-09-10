@@ -60,7 +60,6 @@ public class MixinEntityRenderer {
                     reach = Reach.getReach();
                 }
             }
-            System.out.println(reach);
 
             if (this.mc.objectMouseOver != null) {
                 distanceToVec = this.mc.objectMouseOver.hitVec.distanceTo(vec3);

@@ -1,12 +1,13 @@
 package keystrokesmod.client.clickgui.raven.components;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 public class TickComponent implements Component {
     private final int c = (new Color(20, 255, 0)).getRGB();
@@ -114,5 +115,10 @@ public class TickComponent implements Component {
 
     public boolean i(int x, int y) {
         return x > this.x && x < this.x + this.module.category.getWidth() && y > this.y && y < this.y + 11;
+    }
+
+    @Override
+    public int getY() {
+        return y;
     }
 }

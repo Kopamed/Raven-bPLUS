@@ -1,18 +1,23 @@
 package keystrokesmod.client.clickgui.raven.components;
 
-import keystrokesmod.client.clickgui.raven.Component;
+import java.awt.Color;
+import java.util.ArrayList;
 
-import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.client.GuiModule;
-import keystrokesmod.client.module.modules.client.GuiModule.Preset;
-import keystrokesmod.client.module.setting.Setting;
-import keystrokesmod.client.module.setting.impl.*;
-import keystrokesmod.client.utils.font.FontUtil;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.util.ArrayList;
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.RGBSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.font.FontUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 
 public class ModuleComponent implements Component {
     public Module mod;
@@ -20,6 +25,7 @@ public class ModuleComponent implements Component {
     public int o;
     private ArrayList<Component> settings;
     public boolean po;
+    private static int sf;
 
     public ModuleComponent(Module mod, CategoryComponent p, int o) {
         this.mod = mod;
@@ -27,7 +33,6 @@ public class ModuleComponent implements Component {
         this.o = o;
         this.settings = new ArrayList<>();
         this.po = false;
-        int y = o + 12;
         mod.setModuleComponent(this);
         updateSettings();
     }
@@ -81,7 +86,7 @@ public class ModuleComponent implements Component {
 
     public void setComponentStartAt(int n) {
         this.o = n;
-        int y = this.o + 16;
+        int y = this.o + 16 + category.scrollheight;
 
         for (Component c : this.settings) {
             c.setComponentStartAt(y);
@@ -140,6 +145,8 @@ public class ModuleComponent implements Component {
     }
 
     public void draw() {
+        ScaledResolution sr =  new ScaledResolution(Minecraft.getMinecraft());
+        sf = sr.getScaleFactor();
         if (GuiModule.showGradientEnabled() && mod.isEnabled()) {
             v((float) this.category.getX(), (float) (this.category.getY() + this.o),
                     (float) (this.category.getX() + this.category.getWidth()),
@@ -173,12 +180,22 @@ public class ModuleComponent implements Component {
         }
         GL11.glPopMatrix();
 
+        
         if (this.po && !this.settings.isEmpty()) {
+            GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_SCISSOR_TEST);
             for (Component c : this.settings) {
                 c.draw();
             }
+            GL11.glScissor(
+                    category.getX() * sf,
+                    (sr.getScaledHeight() - category.getY() - getHeight() - category.getHeight()) * sf, //wtf bruh
+                    category.getWidth() * sf,
+                    (getHeight() - o - 4)* sf);
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
+            GL11.glPopMatrix();
         }
-
+        //GL11.glScissor(button_rgb, button_rgb, button_rgb, button_rgb);
     }
 
     public int getHeight() {
@@ -195,9 +212,8 @@ public class ModuleComponent implements Component {
                     h += 12;
                 }
             }
-
+            h += category.scrollheight;
             return h;
-
         }
     }
 
@@ -225,11 +241,14 @@ public class ModuleComponent implements Component {
             } else if (po) {
                 po = false;
                 this.category.moduleOpened = false;
+                this.category.scrollheight = 0;
             }
             this.category.r3nd3r();
         }
-
+        
+        
         for (Component c : this.settings) {
+            if(c.getY() > getY())
             c.mouseDown(x, y, b);
         }
 
@@ -247,11 +266,15 @@ public class ModuleComponent implements Component {
         for (Component c : this.settings) {
             c.keyTyped(t, k);
         }
-
     }
 
     public boolean ii(int x, int y) {
         return x > this.category.getX() && x < this.category.getX() + this.category.getWidth()
                 && y > this.category.getY() + this.o && y < this.category.getY() + 16 + this.o;
+    }
+    
+    @Override
+    public int getY() {
+        return this.category.getY() + this.o + 4;
     }
 }

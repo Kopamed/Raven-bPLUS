@@ -24,8 +24,11 @@ public class DescriptionComponent implements Component {
     public void draw() {
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawString(this.desc.getDesc(),
-                (float) ((this.p.category.getX() + 4) * 2), (float) ((this.p.category.getY() + this.o + 4) * 2), this.c,
+        Minecraft.getMinecraft().fontRendererObj.drawString(
+                this.desc.getDesc(),
+                (float) ((this.p.category.getX() + 4) * 2),
+                (float) ((this.p.category.getY() + this.o + 4) * 2),
+                this.c,
                 true);
         GL11.glPopMatrix();
     }
@@ -57,5 +60,10 @@ public class DescriptionComponent implements Component {
     @Override
     public int getHeight() {
         return 0;
+    }
+    
+    @Override
+    public int getY() {
+        return (this.p.category.getY() + this.o + 4) * 2;
     }
 }

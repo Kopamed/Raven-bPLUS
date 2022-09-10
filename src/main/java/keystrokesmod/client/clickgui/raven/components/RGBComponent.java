@@ -146,5 +146,10 @@ public class RGBComponent implements Component {
             return id;
         }
     }
+    
+    @Override
+    public int getY() {
+        return moduleStartY;
+    }
 
 }

@@ -69,6 +69,11 @@ public class ModeComponent implements Component {
     public void keyTyped(char t, int k) {
 
     }
+    
+    @Override
+    public int getY() {
+        return y;
+    }
 
     private boolean i(int x, int y) {
         return x > this.x && x < this.x + this.module.category.getWidth() && y > this.y && y < this.y + 11;

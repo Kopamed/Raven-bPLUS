@@ -14,4 +14,6 @@ public interface Component {
     void setComponentStartAt(int n);
 
     int getHeight();
+    
+    int getY();
 }

@@ -1,17 +1,18 @@
 package keystrokesmod.client.clickgui.raven.components;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CategoryComponent {
     public ArrayList<Component> modulesInCategory = new ArrayList<>();
@@ -26,6 +27,8 @@ public class CategoryComponent {
     private final double marginY;
     private final double marginX;
     private boolean visable = true;
+    public int scrollheight;
+    private int categoryHeight;
 
     public CategoryComponent(Module.ModuleCategory category) {
         this.categoryName = category;
@@ -119,7 +122,7 @@ public class CategoryComponent {
             return;
         this.width = 92;
         if (!this.getModules().isEmpty() && this.categoryOpened) {
-            int categoryHeight = 0;
+            categoryHeight = 0;
 
             Component moduleRenderManager;
             for (Iterator moduleInCategoryIterator = this.getModules().iterator(); moduleInCategoryIterator
@@ -225,6 +228,17 @@ public class CategoryComponent {
         }
 
     }
+    
+    public void scroll(float ss) {
+        if(ss > 0 || (getActualHeight() + ss) > 100 ) {
+            scrollheight += ss;
+        }
+        if(scrollheight <= 0) {
+            r3nd3r();
+        } else {
+            scrollheight = 0;
+        }
+    }
 
     public boolean i(int x, int y) {
         return x >= this.x + 92 - 13 && x <= this.x + this.width && (float) y >= (float) this.y + 2.0F
@@ -232,16 +246,37 @@ public class CategoryComponent {
     }
 
     public boolean mousePressed(int x, int y) {
-        return x >= this.x + 77 && x <= this.x + this.width - 6 && (float) y >= (float) this.y + 2.0F
+        return x >= this.x + 77 
+                && x <= this.x + this.width - 6 
+                && (float) y >= (float) this.y + 2.0F
                 && y <= this.y + this.bh + 1;
     }
 
     public boolean insideArea(int x, int y) {
         return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.bh;
     }
+    
+    public boolean insideAllArea(int x, int y) {                     
+         return x >= this.x 
+                && x <= this.x + this.width 
+                && y >= this.y
+                && y <= this.y + this.getActualHeight() - this.scrollheight;
+    }
 
     public String getName() {
         return String.valueOf(getModules());
+    }
+    
+    public int getHeight() {
+        return this.bh;
+    }
+    
+    public int getActualHeight() {
+        int h = this.bh + 16 + categoryHeight;
+        for(Component c : getModules()) {
+            h += c.getHeight();
+        }
+        return h;
     }
 
     public void setLocation(int parseInt, int parseInt1) {
