@@ -36,18 +36,15 @@ public class MixinEntityRenderer {
             this.mc.pointedEntity = null;
             double reach = this.mc.playerController.getBlockReachDistance();
 
-            Module reachMod = Raven.moduleManager.getModuleByClazz(Reach.class);
-
-            if (reachMod.isEnabled()) {
-                reach = Reach.getReach();
-            }
-
             this.mc.objectMouseOver = entity.rayTrace(reach, p_getMouseOver_1_);
             double distanceToVec = reach;
 
             Vec3 vec3 = entity.getPositionEyes(p_getMouseOver_1_);
             boolean flag = false;
 
+
+            Module reachMod = Raven.moduleManager.getModuleByClazz(Reach.class);
+            
             if (!reachMod.isEnabled()) {
                 if (this.mc.playerController.extendedReach()) {
                     reach = 6.0D;
@@ -55,7 +52,15 @@ public class MixinEntityRenderer {
                 } else if (reach > 3.0D) {
                     flag = true;
                 }
+            } else {
+                if (this.mc.playerController.extendedReach()) {
+                    reach = 6.0D;
+                    distanceToVec = 6.0D;
+                } else {
+                    reach = Reach.getReach();
+                }
             }
+            System.out.println(reach);
 
             if (this.mc.objectMouseOver != null) {
                 distanceToVec = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
