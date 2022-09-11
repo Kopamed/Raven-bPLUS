@@ -1,5 +1,6 @@
 package keystrokesmod.client.mixin.mixins;
 
+import keystrokesmod.client.event.impl.MoveInputEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.SafeWalk;
@@ -125,6 +126,8 @@ public abstract class MixinEntity {
 
     @Shadow
     public int fireResistance;
+
+    @Shadow public float rotationYaw;
 
     /**
      * @author mc code
@@ -451,6 +454,39 @@ public abstract class MixinEntity {
             }
 
             this.worldObj.theProfiler.endSection();
+        }
+
+    }
+
+    /**
+     * @author mc code
+     * @reason friction
+     */
+    @Overwrite
+    public void moveFlying(float strafe, float forward, float fric) {
+
+        MoveInputEvent e = new MoveInputEvent(strafe, forward, fric);
+        Raven.eventBus.post(e);
+
+        strafe = e.getStrafe();
+        forward = e.getForward();
+        fric = e.getFriction();
+
+        float f = strafe * strafe + forward * forward;
+
+        if (f >= 1.0E-4F) {
+            f = MathHelper.sqrt_float(f);
+            if (f < 1.0F) {
+                f = 1.0F;
+            }
+
+            f = fric / f;
+            strafe *= f;
+            forward *= f;
+            float f1 = MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F);
+            float f2 = MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F);
+            this.motionX += strafe * f2 - forward * f1;
+            this.motionZ += forward * f2 + strafe * f1;
         }
 
     }
