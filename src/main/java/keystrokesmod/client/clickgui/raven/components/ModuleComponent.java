@@ -184,18 +184,17 @@ public class ModuleComponent implements Component {
         if (this.po && !this.settings.isEmpty()) {
             GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
-            for (Component c : this.settings) {
-                c.draw();
-            }
             GL11.glScissor(
                     category.getX() * sf,
                     (sr.getScaledHeight() - category.getY() - getHeight() - category.getHeight()) * sf, //wtf bruh
                     category.getWidth() * sf,
                     (getHeight() - o - 4)* sf);
+            for (Component c : this.settings) {
+                c.draw();
+            }
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
             GL11.glPopMatrix();
         }
-        //GL11.glScissor(button_rgb, button_rgb, button_rgb, button_rgb);
     }
 
     public int getHeight() {

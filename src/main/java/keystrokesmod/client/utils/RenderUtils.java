@@ -131,4 +131,86 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
+    
+    public static void setColor(final int color) {
+        final float a = (color >> 24 & 0xFF) / 255.0f;
+        final float r = (color >> 16 & 0xFF) / 255.0f;
+        final float g = (color >> 8 & 0xFF) / 255.0f;
+        final float b = (color & 0xFF) / 255.0f;
+        GL11.glColor4f(r, g, b, a);
+    }
+    
+    public static void drawRoundedRect(float x, float y, float x1, float y1, final float radius, final int color) {
+        GL11.glPushAttrib(0);
+        GL11.glScaled(0.5, 0.5, 0.5);
+        x *= 2.0;
+        y *= 2.0;
+        x1 *= 2.0;
+        y1 *= 2.0;
+        GL11.glEnable(3042);
+        GL11.glDisable(3553);
+        GL11.glEnable(2848);
+        setColor(color);
+        GL11.glEnable(2848);
+        GL11.glBegin(9);
+        for (int i = 0; i <= 90; i += 3) {
+            GL11.glVertex2d(x + radius + Math.sin(i * 3.141592653589793 / 180.0) * radius * -1.0, y + radius + Math.cos(i * 3.141592653589793 / 180.0) * radius * -1.0);
+        }
+        for (int i = 90; i <= 180; i += 3) {
+            GL11.glVertex2d(x + radius + Math.sin(i * 3.141592653589793 / 180.0) * radius * -1.0, y1 - radius + Math.cos(i * 3.141592653589793 / 180.0) * radius * -1.0);
+        }
+        for (int i = 0; i <= 90; i += 3) {
+            GL11.glVertex2d(x1 - radius + Math.sin(i * 3.141592653589793 / 180.0) * radius, y1 - radius + Math.cos(i * 3.141592653589793 / 180.0) * radius);
+        }
+        for (int i = 90; i <= 180; i += 3) {
+            GL11.glVertex2d(x1 - radius + Math.sin(i * 3.141592653589793 / 180.0) * radius, y + radius + Math.cos(i * 3.141592653589793 / 180.0) * radius);
+        }
+        GL11.glEnd();
+        GL11.glEnable(3553);
+        GL11.glDisable(3042);
+        GL11.glDisable(2848);
+        GL11.glDisable(3042);
+        GL11.glDisable(2848);
+        GL11.glScaled(2.0, 2.0, 2.0);
+        GL11.glEnable(3042);
+        GL11.glPopAttrib();
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+    
+    public static void drawRoundedOutline(float x, float y, float x1, float y1, final float radius, final float lineWidth, final int color) {
+        GL11.glPushAttrib(0);
+        GL11.glScaled(0.5, 0.5, 0.5);
+        x *= 2.0;
+        y *= 2.0;
+        x1 *= 2.0;
+        y1 *= 2.0;
+        GL11.glEnable(3042);
+        GL11.glDisable(3553);
+        setColor(color);
+        GL11.glEnable(2848);
+        GL11.glLineWidth(lineWidth);
+        GL11.glBegin(2);
+        for (int i = 0; i <= 90; i += 3) {
+            GL11.glVertex2d(x + radius + Math.sin(i * 3.141592653589793 / 180.0) * radius * -1.0, y + radius + Math.cos(i * 3.141592653589793 / 180.0) * radius * -1.0);
+        }
+        for (int i = 90; i <= 180; i += 3) {
+            GL11.glVertex2d(x + radius + Math.sin(i * 3.141592653589793 / 180.0) * radius * -1.0, y1 - radius + Math.cos(i * 3.141592653589793 / 180.0) * radius * -1.0);
+        }
+        for (int i = 0; i <= 90; i += 3) {
+            GL11.glVertex2d(x1 - radius + Math.sin(i * 3.141592653589793 / 180.0) * radius, y1 - radius + Math.cos(i * 3.141592653589793 / 180.0) * radius);
+        }
+        for (int i = 90; i <= 180; i += 3) {
+            GL11.glVertex2d(x1 - radius + Math.sin(i * 3.141592653589793 / 180.0) * radius, y + radius + Math.cos(i * 3.141592653589793 / 180.0) * radius);
+        }
+        GL11.glEnd();
+        GL11.glEnable(3553);
+        GL11.glDisable(3042);
+        GL11.glDisable(2848);
+        GL11.glDisable(3042);
+        GL11.glEnable(3553);
+        GL11.glScaled(2.0, 2.0, 2.0);
+        GL11.glPopAttrib();
+        GL11.glLineWidth(1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
 }
