@@ -120,6 +120,8 @@ public class ConfigManager {
             }
         }
         applyingConfig = false;
+
+        System.gc(); // to whoever said configs memory leak, no they don't, but fuck you this is here now
     }
 
     public void loadConfigByName(String replace) {
