@@ -104,6 +104,7 @@ public class Raven {
     public static final String osName, osArch;
 
     public static final EventBus eventBus = new EventBus(); // use this
+    public static final Minecraft mc = Minecraft.getMinecraft();
 
     static {
         osName = System.getProperty("os.name").toLowerCase();

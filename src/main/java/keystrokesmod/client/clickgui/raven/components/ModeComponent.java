@@ -1,6 +1,7 @@
 package keystrokesmod.client.clickgui.raven.components;
 
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -57,6 +58,7 @@ public class ModeComponent implements Component {
         if (i(x, y)) {
             this.mode.nextMode();
             module.mod.guiButtonToggled(mode);
+            Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
         }
     }
 

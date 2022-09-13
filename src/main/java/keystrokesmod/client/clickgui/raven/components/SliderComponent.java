@@ -93,7 +93,6 @@ public class SliderComponent implements Component {
         if (this.i(x, y) && b == 0 && this.p.po) {
             this.d = true;
         }
-
     }
 
     public void mouseReleased(int x, int y, int m) {

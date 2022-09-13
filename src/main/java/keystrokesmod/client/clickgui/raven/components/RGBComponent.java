@@ -15,6 +15,7 @@ public class RGBComponent implements Component {
     private final int boxMargin = 4;
     private final int boxHeight = 4;
     private final int textSize = 11;
+    private final int x;
 
     private double barWidth;
 
@@ -26,6 +27,7 @@ public class RGBComponent implements Component {
         this.setting = setting;
         this.module = module;
         this.moduleStartY = moduleStartY;
+        this.x = module.category.getX() + module.category.getWidth();
     }
 
     @Override
@@ -95,7 +97,11 @@ public class RGBComponent implements Component {
 
     @Override
     public void mouseDown(int x, int y, int b) {
-        if (this.module.po && b == 0) {
+        if (this.u(x, y) && b == 0 && this.module.po) {
+            this.mouseDown = true;
+        }
+
+        if (this.i(x, y) && b == 0 && this.module.po) {
             this.mouseDown = true;
         }
     }
@@ -150,6 +156,15 @@ public class RGBComponent implements Component {
     @Override
     public int getY() {
         return moduleStartY;
+    }
+    
+    public boolean u(int x, int y) {
+        return x > this.x && x < this.x + this.module.category.getWidth() / 2 + 1 && y > this.moduleStartY && y < this.moduleStartY + 16;
+    }
+
+    public boolean i(int x, int y) {
+        return x > this.x + this.module.category.getWidth() / 2 && x < this.x + this.module.category.getWidth() && y > this.moduleStartY
+                && y < this.moduleStartY + 16;
     }
 
 }

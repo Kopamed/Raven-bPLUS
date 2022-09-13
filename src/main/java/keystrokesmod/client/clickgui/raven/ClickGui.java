@@ -203,6 +203,7 @@ public class ClickGui extends GuiScreen {
                     if ((category.mousePressed(x, y) && mouseButton == 0)
                             || (category.insideArea(x, y) && mouseButton == 1)) {
                         category.setOpened(!category.isOpened());
+                        mc.thePlayer.playSound("gui.button.press", 1, 1);
                         break;
                     }
 

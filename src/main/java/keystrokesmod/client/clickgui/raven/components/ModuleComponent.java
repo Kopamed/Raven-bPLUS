@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
@@ -228,6 +229,7 @@ public class ModuleComponent implements Component {
         if (mod.canBeEnabled()) {
             if (this.ii(x, y) && b == 0) {
                 this.mod.toggle();
+                Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
             }
         }
 
@@ -243,6 +245,7 @@ public class ModuleComponent implements Component {
                 this.category.scrollheight = 0;
             }
             this.category.r3nd3r();
+            Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
         }
         
         
