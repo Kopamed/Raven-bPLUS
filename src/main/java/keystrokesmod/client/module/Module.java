@@ -1,6 +1,7 @@
 package keystrokesmod.client.module;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
@@ -251,19 +252,39 @@ public class Module {
     }
 
     public enum ModuleCategory {
-        category(true, null, "Raven B++"), combat(false, category, "Combat"), movement(false, category, "Movement"),
-        player(false, category, "Player"), world(false, category, "World"), render(false, category, "Render"),
-        minigames(false, category, "Minigames"), other(false, category, "Other"), client(false, category, "Client"),
-        hotkey(false, category, "Hotkey"), config(false, client, "Config"), sumo(false, minigames, "Sumo");
+        category(true, null, "Raven B++"),
+        combat(false, category, "Combat"),
+        movement(false, category, "Movement"),
+        player(false, category, "Player"),
+        world(false, category, "World"),
+        render(false, category, "Render"),
+        minigames(false, category, "Minigames"),
+        other(false, category, "Other"),
+        client(false, category, "Client"),
+        hotkey(false, category, "Hotkey"),
+        config(false, client, "Config"),
+        sumo(false, minigames, "Sumo");
 
         private final boolean defaultShown;
-        private final ModuleCategory topCatagory;
+        private final ModuleCategory topCategory;
         private final String name;
+        private List<ModuleCategory> childCategories = new ArrayList<ModuleCategory>();
 
-        ModuleCategory(boolean defaultShown, ModuleCategory topCatagory, String name) {
+        ModuleCategory(boolean defaultShown, ModuleCategory topCategory, String name) {
+            if(topCategory != null) {
+                topCategory.addChildCategory(this);
+            }
             this.defaultShown = defaultShown;
-            this.topCatagory = topCatagory;
+            this.topCategory = topCategory;
             this.name = name;
+        }
+        
+        public void addChildCategory(ModuleCategory moduleCategory) {
+            childCategories.add(moduleCategory);
+        }
+        
+        public List<ModuleCategory> getChildCategories() {
+            return childCategories;
         }
 
         public String getName() {
@@ -275,7 +296,7 @@ public class Module {
         }
 
         public ModuleCategory getParentCategory() {
-            return topCatagory;
+            return topCategory;
         }
     }
 }

@@ -237,8 +237,8 @@ public class ModuleComponent implements Component {
             if (!po) {
                 if (mod.getSettings().size() > 0) {
                     this.category.loadSpecificModule(mod);
+                    po = true;
                 }
-                po = true;
             } else if (po) {
                 po = false;
                 this.category.moduleOpened = false;

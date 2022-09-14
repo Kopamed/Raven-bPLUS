@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.modules.client.FPSSpoofer;
 import keystrokesmod.client.module.modules.client.FakeHud;
@@ -86,17 +87,16 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
 public class ModuleManager {
-    private final List<Module> modules = new ArrayList<>();
+    private List<Module> modules = new ArrayList<>();
 
     public static boolean initialized;
-    public final GuiModuleManager guiModuleManager;
+    public GuiModuleManager guiModuleManager;
 
     public ModuleManager() {
-        this.guiModuleManager = new GuiModuleManager();
-
-        if (initialized)
+        System.out.println(ModuleCategory.values());
+        if(initialized)
             return;
-
+        this.guiModuleManager = new GuiModuleManager();
         addModule(new ChestStealer());
         addModule(new AutoArmour());
         addModule(new LeftClicker());
@@ -181,7 +181,6 @@ public class ModuleManager {
         //addModule(new TargetHUD());
         // why ?
         // idk dude. you tell me why. I am pretty sure this was blowsy's work.
-
         initialized = true;
     }
 

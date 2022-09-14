@@ -87,8 +87,8 @@ public class GuiModule extends Module {
     public void onEnable() {
         if (Utils.Player.isPlayerInGame() && (mc.currentScreen != Raven.clickGui || mc.currentScreen != Raven.kvCompactGui)) {
             if(Raven.debugger) {
+                Raven.kvCompactGui.onGuiOpen();
                 mc.displayGuiScreen(Raven.kvCompactGui);
-                Raven.kvCompactGui.initMain();
             } else {
                 mc.displayGuiScreen(Raven.clickGui);
                 Raven.clickGui.initMain();
