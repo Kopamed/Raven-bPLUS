@@ -465,12 +465,13 @@ public abstract class MixinEntity {
     @Overwrite
     public void moveFlying(float strafe, float forward, float fric) {
 
-        MoveInputEvent e = new MoveInputEvent(strafe, forward, fric);
+        MoveInputEvent e = new MoveInputEvent(strafe, forward, fric, this.rotationYaw);
         Raven.eventBus.post(e);
 
         strafe = e.getStrafe();
         forward = e.getForward();
         fric = e.getFriction();
+        float yaw = e.getYaw();
 
         float f = strafe * strafe + forward * forward;
 
@@ -483,8 +484,8 @@ public abstract class MixinEntity {
             f = fric / f;
             strafe *= f;
             forward *= f;
-            float f1 = MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F);
-            float f2 = MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F);
+            float f1 = MathHelper.sin(yaw * 3.1415927F / 180.0F);
+            float f2 = MathHelper.cos(yaw * 3.1415927F / 180.0F);
             this.motionX += strafe * f2 - forward * f1;
             this.motionZ += forward * f2 + strafe * f1;
         }

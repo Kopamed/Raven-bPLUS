@@ -4,12 +4,13 @@ import keystrokesmod.client.event.types.Event;
 
 public class MoveInputEvent extends Event {
 
-    private float strafe, forward, friction;
+    private float strafe, forward, friction, yaw;
 
-    public MoveInputEvent(float strafe, float forward, float friction) {
+    public MoveInputEvent(float strafe, float forward, float friction, float yaw) {
         this.strafe = strafe;
         this.forward = forward;
         this.friction = friction;
+        this.yaw = yaw;
     }
 
     public float getStrafe() {
@@ -34,6 +35,14 @@ public class MoveInputEvent extends Event {
 
     public void setFriction(float friction) {
         this.friction = friction;
+    }
+
+    public float getYaw() {
+        return yaw;
+    }
+
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
     }
 
 }
