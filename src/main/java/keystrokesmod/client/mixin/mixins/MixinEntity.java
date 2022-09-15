@@ -21,6 +21,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -166,15 +167,24 @@ public abstract class MixinEntity {
                 Module safeWalk = Raven.moduleManager.getModuleByClazz(SafeWalk.class);
 
                 if (safeWalk != null && safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
+                    flag = true;
+
                     if (SafeWalk.blocksOnly.isToggled()) {
                         ItemStack i = mc.thePlayer.getHeldItem();
                         if (i == null || !(i.getItem() instanceof ItemBlock)) {
-                            flag = mc.thePlayer.isSneaking(); // this is unused, whoever wrote the safewalk should
-                                                              // explain why
+                            flag = mc.thePlayer.isSneaking(); // this used to cause issues, sorry!
+                                                              // - sigmaclientwastaken
                         }
                     }
 
-                    flag = true;
+                    // this took 30 seconds
+                    if (SafeWalk.lookDown.isToggled()) {
+                        if (mc.thePlayer.rotationPitch < SafeWalk.pitchRange.getInputMin()
+                                || mc.thePlayer.rotationPitch > SafeWalk.pitchRange.getInputMax()) {
+                            flag = mc.thePlayer.isSneaking();
+                        }
+                    }
+
                 } else {
                     flag = mc.thePlayer.isSneaking();
                 }
