@@ -194,16 +194,29 @@ public class Utils {
 
         public static void aim(Entity en, float ps, boolean pc) {
             if (en != null) {
+               float[] t = getTargetRotations(en);
+               if (t != null) {
+                  float y = t[0];
+                  float p = t[1] + 4.0F + ps;
+                  if (pc) {
+                     mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(y, p, mc.thePlayer.onGround));
+                  } else {
+                     mc.thePlayer.rotationYaw = y;
+                     mc.thePlayer.rotationPitch = p;
+                  }
+               }
+
+            }
+         }
+        
+        public static void silentAim(Entity en, float ps, boolean pc) {
+            if (en != null) {
                 float[] t = getTargetRotations(en);
                 if (t != null) {
                     float y = t[0];
                     float p = t[1] + 4.0F + ps;
-                    if (pc) {
-                        mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(y, p, mc.thePlayer.onGround));
-                    } else {
-                        mc.thePlayer.rotationYawHead = y;
-                        mc.thePlayer.setRotationYawHead(p);
-                    }
+                     mc.thePlayer.rotationYawHead = y;
+                     mc.thePlayer.setRotationYawHead(p);
                 }
 
             }

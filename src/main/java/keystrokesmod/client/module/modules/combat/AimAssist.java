@@ -35,6 +35,7 @@ public class AimAssist extends Module {
     public static TickSetting breakBlocks;
     public static TickSetting blatantMode;
     public static TickSetting ignoreFriends;
+    public static TickSetting ignoreNaked;
     public static ArrayList<Entity> friends = new ArrayList<>();
 
     public AimAssist() {
@@ -50,6 +51,7 @@ public class AimAssist extends Module {
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(aimInvis = new TickSetting("Aim invis", false));
         this.registerSetting(blatantMode = new TickSetting("Blatant mode", false));
+        this.registerSetting(ignoreNaked = new TickSetting("Ignore naked", false));
     }
 
     @Subscribe
@@ -145,6 +147,7 @@ public class AimAssist extends Module {
                     && (mc.thePlayer.getDistanceToEntity(en) < distance.getInput())
                     && (!AntiBot.bot(en))
                     && (Utils.Player.fov(en, fov))
+                    && (!ignoreNaked.isToggled() || (en.getCurrentArmor(3) == null && en.getCurrentArmor(2) == null && en.getCurrentArmor(1) == null && en.getCurrentArmor(0) == null))
                     ) {
                 return en;
             }
