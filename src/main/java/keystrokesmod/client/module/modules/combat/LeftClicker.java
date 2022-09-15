@@ -6,6 +6,7 @@ import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.*;
+import keystrokesmod.client.utils.SoundUtils;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -63,7 +64,7 @@ public class LeftClicker extends Module {
         this.registerSetting(inventoryFill = new TickSetting("Inventory fill", false));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
-        this.registerSetting(sound = new TickSetting("Play sound", true));
+        this.registerSetting(sound = new TickSetting("Play sound (I broke this)", true));
         this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
         this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
 
@@ -285,8 +286,9 @@ public class LeftClicker extends Module {
 
         if (this.leftUpTime > 0L && this.leftDownTime > 0L) {
             if (System.currentTimeMillis() > this.leftUpTime && leftDown) {
-                if (sound.isToggled())
-                    mc.thePlayer.playSound("game.neutral.hurt.fall.big", 1, 1);
+                if (sound.isToggled()) {
+                    SoundUtils.playSound("click");
+                }
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();

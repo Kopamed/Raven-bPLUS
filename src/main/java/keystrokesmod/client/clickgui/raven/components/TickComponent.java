@@ -5,6 +5,7 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
@@ -99,6 +100,7 @@ public class TickComponent implements Component {
         if (this.i(x, y) && b == 0 && this.module.po) {
             this.cl1ckbUtt0n.toggle();
             this.mod.guiButtonToggled(this.cl1ckbUtt0n);
+            Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
         }
 
     }

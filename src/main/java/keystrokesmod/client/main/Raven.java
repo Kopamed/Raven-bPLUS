@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.EventBus;
 
+import keystrokesmod.client.clickgui.kv.KvCompactGui;
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.command.CommandManager;
 import keystrokesmod.client.config.ConfigManager;
@@ -93,6 +94,7 @@ public class Raven {
     public static final ModuleManager moduleManager = new ModuleManager();
 
     public static ClickGui clickGui;
+    public static KvCompactGui kvCompactGui;
     // public static TabGui tabGui;
 
     private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
@@ -102,6 +104,7 @@ public class Raven {
     public static final String osName, osArch;
 
     public static final EventBus eventBus = new EventBus(); // use this
+    public static final Minecraft mc = Minecraft.getMinecraft();
 
     static {
         osName = System.getProperty("os.name").toLowerCase();
@@ -136,6 +139,7 @@ public class Raven {
 
         commandManager = new CommandManager();
         clickGui = new ClickGui();
+        kvCompactGui = new KvCompactGui();
         configManager = new ConfigManager();
         clientConfig = new ClientConfig();
         clientConfig.applyConfig();

@@ -1,5 +1,7 @@
 package keystrokesmod.client.module.modules.client;
 
+import java.awt.Color;
+
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -9,25 +11,26 @@ import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 
-import java.awt.*;
-
 public class GuiModule extends Module {
 
     private static SliderSetting backgroundOpacity;
 
     private static ComboSetting preset, cnColor;
 
-    private static TickSetting categoryBackground, cleanUp, reset, usePreset, rainbowNotification, notifications,
+    private static TickSetting categoryBackground, cleanUp, reset, usePreset, rainbowNotification, notifications, betagui,
 
-            matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, useCustomFont;
+    matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, useCustomFont;
 
     private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB,
-            disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
+    disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
 
     public GuiModule() {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
+        if(Raven.debugger) {
+            this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
+        }   
         this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
         this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
         this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
@@ -82,9 +85,14 @@ public class GuiModule extends Module {
     }
 
     public void onEnable() {
-        if (Utils.Player.isPlayerInGame() && mc.currentScreen != Raven.clickGui) {
-            mc.displayGuiScreen(Raven.clickGui);
-            Raven.clickGui.initMain();
+        if (Utils.Player.isPlayerInGame() && (mc.currentScreen != Raven.clickGui || mc.currentScreen != Raven.kvCompactGui)) {
+            if(Raven.debugger) {
+                Raven.kvCompactGui.onGuiOpen();
+                mc.displayGuiScreen(Raven.kvCompactGui);
+            } else {
+                mc.displayGuiScreen(Raven.clickGui);
+                Raven.clickGui.initMain();
+            }
         }
 
         this.disable();
@@ -172,7 +180,7 @@ public class GuiModule extends Module {
 
     public enum Preset {
         Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                                      // categoryBackground
+                // categoryBackground
                 CNColor.STATIC, // just leave this
                 // new Color(red, green, blue, alpha (optional out of 255 default is 255))
                 new Color(255, 255, 255), // categoryNameRGB
@@ -185,9 +193,10 @@ public class GuiModule extends Module {
                 new Color(27, 25, 26), // disabledBottomRGB
                 new Color(255, 255, 255), // disabledTextRGB
                 new Color(27, 25, 26) // backgroundRGBW
-        ), PlusPlus( // name
+                ), 
+        PlusPlus( // name
                 false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                                          // categoryBackground
+                // categoryBackground
                 CNColor.STATIC, // just leave this
                 // new Color(red, green, blue, alpha (optional out of 255 default is 255))
                 new Color(255, 255, 255), // categoryNameRGB
@@ -200,12 +209,12 @@ public class GuiModule extends Module {
                 new Color(0, 0, 0), // disabledBottomRGB
                 new Color(255, 255, 255), // disabledTextRGB
                 new Color(173, 0, 233) // backgroundRGB
-        );
+                );
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground;
         public int backgroundOpacity;
         public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
-                enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
+        enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
         public CNColor cnColor;
 
         private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,

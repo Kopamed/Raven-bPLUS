@@ -1,7 +1,14 @@
 package keystrokesmod.client.module.modules.combat;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.lwjgl.input.Mouse;
+
 import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.TickEvent;
+
+import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.RightClicker;
@@ -17,11 +24,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import org.lwjgl.input.Mouse;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AimAssist extends Module {
     public static SliderSetting speed, compliment;
@@ -33,6 +35,7 @@ public class AimAssist extends Module {
     public static TickSetting breakBlocks;
     public static TickSetting blatantMode;
     public static TickSetting ignoreFriends;
+    public static TickSetting ignoreNaked;
     public static ArrayList<Entity> friends = new ArrayList<>();
 
     public AimAssist() {
@@ -48,10 +51,11 @@ public class AimAssist extends Module {
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(aimInvis = new TickSetting("Aim invis", false));
         this.registerSetting(blatantMode = new TickSetting("Blatant mode", false));
+        this.registerSetting(ignoreNaked = new TickSetting("Ignore naked", false));
     }
 
     @Subscribe
-    public void onTick(TickEvent e) {
+    public void onRender(Render2DEvent e) {
 
         if (!Utils.Client.currentScreenMinecraft()) {
             return;
@@ -134,30 +138,21 @@ public class AimAssist extends Module {
 
     public Entity getEnemy() {
         int fov = (int) AimAssist.fov.getInput();
-        Iterator<EntityPlayer> var2 = mc.theWorld.playerEntities.iterator();
-
-        EntityPlayer en;
-        do {
-            do {
-                do {
-                    do {
-                        do {
-                            do {
-                                do {
-                                    if (!var2.hasNext()) {
-                                        return null;
-                                    }
-
-                                    en = var2.next();
-                                } while (ignoreFriends.isToggled() && isAFriend(en));
-                            } while (en == mc.thePlayer);
-                        } while (en.isDead);
-                    } while (!aimInvis.isToggled() && en.isInvisible());
-                } while ((double) mc.thePlayer.getDistanceToEntity(en) > distance.getInput());
-            } while (AntiBot.bot(en));
-        } while (!blatantMode.isToggled() && !Utils.Player.fov(en, (float) fov));
-
-        return en;
+        List<EntityPlayer> var2 = mc.theWorld.playerEntities;
+        for(EntityPlayer en : var2) {
+            if(
+                    (!ignoreFriends.isToggled() || isAFriend(en))
+                    && (en != mc.thePlayer)
+                    && (aimInvis.isToggled() || !en.isInvisible())
+                    && (mc.thePlayer.getDistanceToEntity(en) < distance.getInput())
+                    && (!AntiBot.bot(en))
+                    && (Utils.Player.fov(en, fov))
+                    && (!ignoreNaked.isToggled() || (en.getCurrentArmor(3) == null && en.getCurrentArmor(2) == null && en.getCurrentArmor(1) == null && en.getCurrentArmor(0) == null))
+                    ) {
+                return en;
+            }
+        }
+        return null;
     }
 
     public static void addFriend(Entity entityPlayer) {

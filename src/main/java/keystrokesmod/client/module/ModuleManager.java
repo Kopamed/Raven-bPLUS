@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.modules.client.FPSSpoofer;
 import keystrokesmod.client.module.modules.client.FakeHud;
@@ -21,7 +22,6 @@ import keystrokesmod.client.module.modules.combat.DelayRemover;
 import keystrokesmod.client.module.modules.combat.HitBox;
 import keystrokesmod.client.module.modules.combat.JumpReset;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
-import keystrokesmod.client.module.modules.combat.LegitAura;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.combat.STap;
 import keystrokesmod.client.module.modules.combat.ShiftTap;
@@ -69,7 +69,6 @@ import keystrokesmod.client.module.modules.render.Fullbright;
 import keystrokesmod.client.module.modules.render.Nametags;
 import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.render.Projectiles;
-import keystrokesmod.client.module.modules.render.TargetHUD;
 import keystrokesmod.client.module.modules.render.Tracers;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.modules.world.ChatLogger;
@@ -77,17 +76,16 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
 public class ModuleManager {
-    private final List<Module> modules = new ArrayList<>();
+    private List<Module> modules = new ArrayList<>();
 
     public static boolean initialized;
-    public final GuiModuleManager guiModuleManager;
+    public GuiModuleManager guiModuleManager;
 
     public ModuleManager() {
-        this.guiModuleManager = new GuiModuleManager();
-
-        if (initialized)
+        System.out.println(ModuleCategory.values());
+        if(initialized)
             return;
-
+        this.guiModuleManager = new GuiModuleManager();
         addModule(new ChestStealer());
         addModule(new AutoArmour());
         addModule(new LeftClicker());
@@ -168,11 +166,11 @@ public class ModuleManager {
         addModule(new Parkour());
         addModule(new Disabler());
         addModule(new JumpReset());
+        //addModule(new SpeedTest());
         //addModule(new LegitAura());
         //addModule(new TargetHUD());
         // why ?
         // idk dude. you tell me why. I am pretty sure this was blowsy's work.
-
         initialized = true;
     }
 

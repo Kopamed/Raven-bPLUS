@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
@@ -184,18 +185,17 @@ public class ModuleComponent implements Component {
         if (this.po && !this.settings.isEmpty()) {
             GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
-            for (Component c : this.settings) {
-                c.draw();
-            }
             GL11.glScissor(
                     category.getX() * sf,
                     (sr.getScaledHeight() - category.getY() - getHeight() - category.getHeight()) * sf, //wtf bruh
                     category.getWidth() * sf,
                     (getHeight() - o - 4)* sf);
+            for (Component c : this.settings) {
+                c.draw();
+            }
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
             GL11.glPopMatrix();
         }
-        //GL11.glScissor(button_rgb, button_rgb, button_rgb, button_rgb);
     }
 
     public int getHeight() {
@@ -229,6 +229,7 @@ public class ModuleComponent implements Component {
         if (mod.canBeEnabled()) {
             if (this.ii(x, y) && b == 0) {
                 this.mod.toggle();
+                Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
             }
         }
 
@@ -236,14 +237,15 @@ public class ModuleComponent implements Component {
             if (!po) {
                 if (mod.getSettings().size() > 0) {
                     this.category.loadSpecificModule(mod);
+                    po = true;
                 }
-                po = true;
             } else if (po) {
                 po = false;
                 this.category.moduleOpened = false;
                 this.category.scrollheight = 0;
             }
             this.category.r3nd3r();
+            Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
         }
         
         

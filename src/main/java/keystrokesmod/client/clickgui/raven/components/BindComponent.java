@@ -1,13 +1,15 @@
 package keystrokesmod.client.clickgui.raven.components;
 
-import keystrokesmod.client.clickgui.raven.ClickGui;
-import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.module.modules.client.GuiModule;
-import net.minecraft.client.Minecraft;
+import java.awt.Color;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import keystrokesmod.client.clickgui.raven.ClickGui;
+import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.modules.client.GuiModule;
+import net.minecraft.client.Minecraft;
 
 public class BindComponent implements Component {
     private boolean isBinding;
@@ -48,7 +50,7 @@ public class BindComponent implements Component {
     public void mouseDown(int x, int y, int b) {
         if (this.i(x, y) && b == 0 && this.p.po) {
             this.isBinding = !this.isBinding;
-
+            Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
             if (isBinding) {
                 ClickGui.binding++;
             } else {
