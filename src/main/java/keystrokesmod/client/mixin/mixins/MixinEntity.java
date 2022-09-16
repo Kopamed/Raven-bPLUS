@@ -474,9 +474,9 @@ public abstract class MixinEntity {
      */
     @Overwrite
     public void moveFlying(float strafe, float forward, float fric) {
-
         MoveInputEvent e = new MoveInputEvent(strafe, forward, fric, this.rotationYaw);
-        Raven.eventBus.post(e);
+        if((Object) this == Minecraft.getMinecraft().thePlayer)
+            Raven.eventBus.post(e);
 
         strafe = e.getStrafe();
         forward = e.getForward();

@@ -209,14 +209,15 @@ public class Utils {
             }
          }
         
-        public static void silentAim(Entity en, float ps, boolean pc) {
+        public static void silentAim(Entity en) {
             if (en != null) {
                 float[] t = getTargetRotations(en);
                 if (t != null) {
                     float y = t[0];
-                    float p = t[1] + 4.0F + ps;
-                     mc.thePlayer.rotationYawHead = y;
-                     mc.thePlayer.setRotationYawHead(p);
+                    float p = t[1];
+                     //mc.thePlayer.rotationYawHead = y;
+                     mc.thePlayer.setRotationYawHead(y);
+                     mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(y, p, mc.thePlayer.onGround));
                 }
 
             }
