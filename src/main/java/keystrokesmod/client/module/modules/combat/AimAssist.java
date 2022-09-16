@@ -141,7 +141,7 @@ public class AimAssist extends Module {
         List<EntityPlayer> var2 = mc.theWorld.playerEntities;
         for(EntityPlayer en : var2) {
             if(
-                    (!ignoreFriends.isToggled() || isAFriend(en))
+                    (ignoreFriends.isToggled() || !isAFriend(en))
                     && (en != mc.thePlayer)
                     && (aimInvis.isToggled() || !en.isInvisible())
                     && (mc.thePlayer.getDistanceToEntity(en) < distance.getInput())
