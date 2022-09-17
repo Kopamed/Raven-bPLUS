@@ -4,6 +4,8 @@ import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.DimensionHelper;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;
@@ -18,12 +20,14 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class WaterBucket extends Module {
     public static DescriptionSetting moduleDesc;
+    public static SliderSetting distance;
     private boolean handling;
 
     public WaterBucket() {
         super("Water bucket", ModuleCategory.other);
         this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy"));
         this.registerSetting(moduleDesc = new DescriptionSetting("Disabled in the Nether"));
+        this.registerSetting(distance = new SliderSetting("Fall Distance", 3, 1, 10, 0.1));
     }
 
     @Override
@@ -53,7 +57,7 @@ public class WaterBucket extends Module {
 
     private boolean inPosition() {
         if (mc.thePlayer.motionY < -0.6D && !mc.thePlayer.onGround && !mc.thePlayer.capabilities.isFlying
-                && !mc.thePlayer.capabilities.isCreativeMode && !this.handling) {
+                && !mc.thePlayer.capabilities.isCreativeMode && !this.handling && mc.thePlayer.fallDistance > distance.getInput()) {
             BlockPos playerPos = mc.thePlayer.getPosition();
 
             for (int i = 1; i < 3; ++i) {
