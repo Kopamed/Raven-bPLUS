@@ -108,7 +108,7 @@ public class SafeWalk extends Module {
             }
 
             if(shawtyMoment.isToggled()) {
-                if(mc.thePlayer.movementInput.moveForward > 0 && mc.thePlayer.movementInput.moveStrafe == 0) {
+                if(mc.thePlayer.movementInput.moveForward >= 0) {
                     shouldBridge = false;
                     return;
                 }
