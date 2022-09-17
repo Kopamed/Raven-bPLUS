@@ -26,7 +26,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 public class LegitAura2 extends Module {
 
     private EntityPlayer target;
-    private DoubleSliderSetting reach;
+    public DoubleSliderSetting reach;
     private SliderSetting rotationDistance;
     private float yaw, pitch;
 
@@ -75,9 +75,5 @@ public class LegitAura2 extends Module {
     public void move(MoveInputEvent e) {
         if(target != null)
             e.setYaw(mc.thePlayer.prevRotationYawHead);
-    }
-
-    public DoubleSliderSetting getReach() {
-        return reach;
     }
 }

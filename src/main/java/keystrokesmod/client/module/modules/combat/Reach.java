@@ -27,7 +27,7 @@ public class Reach extends Module {
 
     public static double getReach() {
         //if(la.isEnabled()) 
-        //    return Utils.Client.ranModuleVal(la.getReach(), Utils.Java.rand());
+        //    return Utils.Client.ranModuleVal(la.reach, Utils.Java.rand());
 
         double normal = mc.playerController.extendedReach()? 5 : 3;
 
