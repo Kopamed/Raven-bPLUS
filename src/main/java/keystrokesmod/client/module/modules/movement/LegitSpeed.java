@@ -33,7 +33,7 @@ public class LegitSpeed extends Module {
             }
         }
 
-        if(legitStrafe.isToggled()) {
+        if(legitStrafe.isToggled() && !mc.thePlayer.onGround && (e.getStrafe() != 0 || e.getForward() != 0)) {
             e.setYaw(Utils.Player.getStrafeYaw(e.getForward(), e.getStrafe()));
             e.setForward(1);
             e.setStrafe(0);
