@@ -26,6 +26,7 @@ public class SafeWalk extends Module {
     public static TickSetting onHold;
     public static TickSetting showBlockAmount;
     public static TickSetting lookDown;
+    public static TickSetting shawtyMoment;
     public static DoubleSliderSetting pitchRange;
     public static SliderSetting blockShowMode;
     public static DescriptionSetting blockShowModeDesc;
@@ -48,6 +49,7 @@ public class SafeWalk extends Module {
         this.registerSetting(blockShowModeDesc = new DescriptionSetting("Mode: "));
         this.registerSetting(lookDown = new TickSetting("Only when looking down", true));
         this.registerSetting(pitchRange = new DoubleSliderSetting("Pitch min range:", 70D, 85, 0D, 90D, 1D));
+        this.registerSetting(shawtyMoment = new TickSetting("Shawty Moment", true));
     }
 
     public void onDisable() {
@@ -85,6 +87,7 @@ public class SafeWalk extends Module {
                     return;
                 }
             }
+
             if (onHold.isToggled()) {
                 if (!Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode())) {
                     shouldBridge = false;
@@ -100,6 +103,13 @@ public class SafeWalk extends Module {
                         this.setShift(false);
                     }
 
+                    return;
+                }
+            }
+
+            if(shawtyMoment.isToggled()) {
+                if(mc.thePlayer.movementInput.moveForward >= 0) {
+                    shouldBridge = false;
                     return;
                 }
             }

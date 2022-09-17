@@ -20,6 +20,9 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
+/**
+ * WHO MADE THIS AND WHY PLEASE WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHYW
+ */
 public class LegitAura2 extends Module {
 
     private EntityPlayer target;

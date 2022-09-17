@@ -185,6 +185,12 @@ public abstract class MixinEntity {
                         }
                     }
 
+                    if(SafeWalk.shawtyMoment.isToggled()) {
+                        if(mc.thePlayer.movementInput.moveForward > 0 && mc.thePlayer.movementInput.moveStrafe == 0) {
+                            flag = mc.thePlayer.isSneaking();
+                        }
+                    }
+
                 } else {
                     flag = mc.thePlayer.isSneaking();
                 }

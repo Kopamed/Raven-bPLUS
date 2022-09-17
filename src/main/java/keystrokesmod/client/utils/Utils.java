@@ -344,6 +344,9 @@ public class Utils {
             }
         }
 
+        /**
+         * questionable
+         */
         public static boolean tryingToCombo() {
             return Mouse.isButtonDown(0) && Mouse.isButtonDown(1);
         }
@@ -385,6 +388,7 @@ public class Utils {
             double forward = mc.thePlayer.movementInput.moveForward;
             double strafe = mc.thePlayer.movementInput.moveStrafe;
             float yaw = mc.thePlayer.rotationYaw;
+
             if (forward == 0.0D && strafe == 0.0D) {
                 mc.thePlayer.motionX = 0.0D;
                 mc.thePlayer.motionZ = 0.0D;
@@ -413,6 +417,27 @@ public class Utils {
 
         }
 
+        public static float getStrafeYaw(float forward, float strafe) {
+            float yaw = mc.thePlayer.rotationYaw;
+
+            if(forward == 0 && strafe == 0) {
+                return yaw;
+            }
+
+            boolean reversed = forward < 0.0f;
+            float strafingYaw = 90.0f *
+                    (forward > 0.0f ? 0.5f : reversed ? -0.5f : 1.0f);
+
+            if (reversed)
+                yaw += 180.0f;
+            if (strafe > 0.0f)
+                yaw -= strafingYaw;
+            else if (strafe < 0.0f)
+                yaw += strafingYaw;
+
+            return yaw;
+        }
+
         public static float correctRotations() {
             float yw = mc.thePlayer.rotationYaw;
             if (mc.thePlayer.moveForward < 0.0F) {
@@ -435,7 +460,9 @@ public class Utils {
                 yw += 90.0F * f;
             }
 
+            // what
             yw *= 0.017453292F;
+
             return yw;
         }
 

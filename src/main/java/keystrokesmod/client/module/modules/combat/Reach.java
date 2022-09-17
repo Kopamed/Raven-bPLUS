@@ -28,20 +28,22 @@ public class Reach extends Module {
     public static double getReach() {
         //if(la.isEnabled()) 
         //    return Utils.Client.ranModuleVal(la.getReach(), Utils.Java.rand());
-        
+
+        double normal = mc.playerController.extendedReach()? 5 : 3;
+
         if (!Utils.Player.isPlayerInGame())
-            return 0;
+            return normal;
 
         if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon())
-            return 0;
+            return normal;
 
         if (moving_only.isToggled() && (double) mc.thePlayer.moveForward == 0.0D
                 && (double) mc.thePlayer.moveStrafing == 0.0D)
-            return 0;
+            return normal;
 
         if (sprint_only.isToggled() && !mc.thePlayer.isSprinting())
-            return 0;
+            return normal;
         
-        return Utils.Client.ranModuleVal(reach, Utils.Java.rand());
+        return Utils.Client.ranModuleVal(reach, Utils.Java.rand()) + (mc.playerController.extendedReach()? 2 : 0);
     }
 }
