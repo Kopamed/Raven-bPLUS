@@ -209,18 +209,19 @@ public class Utils {
             }
          }
         
-        public static void silentAim(Entity en) {
+        public static float[] silentAim(Entity en) {
             if (en != null) {
                 float[] t = getTargetRotations(en);
                 if (t != null) {
                     float y = t[0];
                     float p = t[1];
-                     //mc.thePlayer.rotationYawHead = y;
+                     mc.thePlayer.rotationYawHead = y;
+                     //mc.thePlayer.rotationYaw = y;
                      mc.thePlayer.setRotationYawHead(y);
-                     mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(y, p, mc.thePlayer.onGround));
                 }
-
+                return t;
             }
+            return null;
         }
 
         public static double fovFromEntity(Entity en) {

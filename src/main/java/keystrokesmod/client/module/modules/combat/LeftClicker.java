@@ -64,7 +64,7 @@ public class LeftClicker extends Module {
         this.registerSetting(inventoryFill = new TickSetting("Inventory fill", false));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
-        this.registerSetting(sound = new TickSetting("Play sound (I broke this)", true));
+        this.registerSetting(sound = new TickSetting("Play sound (kills ur fps)", true));
         this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
         this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
 
