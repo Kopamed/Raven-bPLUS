@@ -181,7 +181,6 @@ public class ModuleComponent implements Component {
         }
         GL11.glPopMatrix();
 
-        
         if (this.po && !this.settings.isEmpty()) {
             GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -235,8 +234,8 @@ public class ModuleComponent implements Component {
 
         if (this.ii(x, y) && b == 1) {
             if (!po) {
-                if (mod.getSettings().size() > 0) {
-                    this.category.loadSpecificModule(mod);
+                if (!this.settings.isEmpty()) {
+                    this.category.loadSpecificModule(this);
                     po = true;
                 }
             } else if (po) {

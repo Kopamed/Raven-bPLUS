@@ -121,7 +121,9 @@ public class ConfigManager {
         }
         applyingConfig = false;
 
-        System.gc(); // to whoever said configs memory leak, no they don't, but fuck you this is here now
+        // System.gc(); 
+        // to whoever said configs memory leak, no they don't, but fuck you this is here now - sigma
+        // bro you you made configs take like 1289370471289 morbillion years to load how tf do i toggle
     }
 
     public void loadConfigByName(String replace) {

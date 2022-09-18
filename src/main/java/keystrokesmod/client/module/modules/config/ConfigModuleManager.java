@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ConfigModuleManager {
 
-    private final List<ConfigModule> modules = new ArrayList<ConfigModule>();
+    private List<ConfigModule> modules = new ArrayList<ConfigModule>();
 
     public ConfigModuleManager() {
 

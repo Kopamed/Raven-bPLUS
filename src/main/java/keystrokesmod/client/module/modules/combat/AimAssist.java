@@ -8,7 +8,7 @@ import org.lwjgl.input.Mouse;
 
 import com.google.common.eventbus.Subscribe;
 
-import keystrokesmod.client.event.impl.Render2DEvent;
+import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.player.RightClicker;
@@ -24,6 +24,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class AimAssist extends Module {
     public static SliderSetting speed, compliment;
@@ -55,52 +56,54 @@ public class AimAssist extends Module {
     }
 
     @Subscribe
-    public void onRender(Render2DEvent e) {
+    public void onRender(ForgeEvent fe) {
+        if(fe.getEvent() instanceof TickEvent.RenderTickEvent) {
+            TickEvent.RenderTickEvent e = (TickEvent.RenderTickEvent) fe.getEvent();
+            if (!Utils.Client.currentScreenMinecraft()) {
+                return;
+            }
+            if (!Utils.Player.isPlayerInGame())
+                return;
 
-        if (!Utils.Client.currentScreenMinecraft()) {
-            return;
-        }
-        if (!Utils.Player.isPlayerInGame())
-            return;
-
-        if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
-            BlockPos p = mc.objectMouseOver.getBlockPos();
-            if (p != null) {
-                Block bl = mc.theWorld.getBlockState(p).getBlock();
-                if (bl != Blocks.air && !(bl instanceof BlockLiquid) && bl != null) {
-                    return;
+            if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
+                BlockPos p = mc.objectMouseOver.getBlockPos();
+                if (p != null) {
+                    Block bl = mc.theWorld.getBlockState(p).getBlock();
+                    if (bl != Blocks.air && !(bl instanceof BlockLiquid) && bl != null) {
+                        return;
+                    }
                 }
             }
-        }
 
-        if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
+            if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
-            Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class); // right clicker???????????
-            // what if player clicking but mouse not down ????
-            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking())
-                    || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled())
-                    || !clickAim.isToggled()) {
-                Entity en = this.getEnemy();
-                if (en != null) {
-                    if (Raven.debugger) {
-                        Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
-                    }
+                Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class); // right clicker???????????
+                // what if player clicking but mouse not down ????
+                if ((clickAim.isToggled() && Utils.Client.autoClickerClicking())
+                        || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled())
+                        || !clickAim.isToggled()) {
+                    Entity en = this.getEnemy();
+                    if (en != null) {
+                        if (Raven.debugger) {
+                            Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
+                        }
 
-                    if (blatantMode.isToggled()) {
-                        Utils.Player.aim(en, 0.0F, false);
-                    } else {
-                        double n = Utils.Player.fovFromEntity(en);
-                        if (n > 1.0D || n < -1.0D) {
-                            double complimentSpeed = n
-                                    * (ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328,
-                                            compliment.getInput() + 2.48293) / 100);
-                            float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current()
-                                    .nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
-                            mc.thePlayer.rotationYaw += val;
+                        if (blatantMode.isToggled()) {
+                            Utils.Player.aim(en, 0.0F, false);
+                        } else {
+                            double n = Utils.Player.fovFromEntity(en);
+                            if (n > 1.0D || n < -1.0D) {
+                                double complimentSpeed = n
+                                        * (ThreadLocalRandom.current().nextDouble(compliment.getInput() - 1.47328,
+                                                compliment.getInput() + 2.48293) / 100);
+                                float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current()
+                                        .nextDouble(speed.getInput() - 4.723847, speed.getInput()))));
+                                mc.thePlayer.rotationYaw += val;
+                            }
                         }
                     }
-                }
 
+                }
             }
         }
     }

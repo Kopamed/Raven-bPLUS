@@ -17,6 +17,7 @@ public class ConfigModule extends Module {
 
     @Override
     public void toggle() {
+        Raven.configManager.save();
         Raven.configManager.loadConfigByName(getName());
         currentConfig = this;
     }

@@ -57,21 +57,10 @@ public class CategoryComponent {
         moduleOpened = false;
     }
 
-    public void loadSpecificModule(Module module) {
-        ModuleComponent component;
-        ArrayList<Component> newModules = new ArrayList<>();
-        for (Component c : modulesInCategory) {
-            if (c instanceof ModuleComponent) {
-                ModuleComponent e = (ModuleComponent) c;
-                if (e.mod == module) {
-                    component = (ModuleComponent) c;
-                    newModules.add(component);
-                    this.moduleInCategory = newModules;
-                    moduleOpened = true;
-                    return;
-                }
-            }
-        }
+    public void loadSpecificModule(Component component) {
+        moduleInCategory.clear();
+        moduleInCategory.add(component);
+        moduleOpened = true;
     }
 
     public ArrayList<Component> getModules() {
