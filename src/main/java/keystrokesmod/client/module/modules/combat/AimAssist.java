@@ -1,4 +1,4 @@
-package keystrokesmod.client.module.modules.combat;
+ package keystrokesmod.client.module.modules.combat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 public class AimAssist extends Module {
     public static SliderSetting speed, compliment;
@@ -57,8 +57,7 @@ public class AimAssist extends Module {
 
     @Subscribe
     public void onRender(ForgeEvent fe) {
-        if(fe.getEvent() instanceof TickEvent.RenderTickEvent) {
-            TickEvent.RenderTickEvent e = (TickEvent.RenderTickEvent) fe.getEvent();
+        if(fe.getEvent() instanceof ClientTickEvent) {
             if (!Utils.Client.currentScreenMinecraft()) {
                 return;
             }

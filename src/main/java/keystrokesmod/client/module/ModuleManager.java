@@ -178,7 +178,7 @@ public class ModuleManager {
         addModule(new Parkour());
         addModule(new Disabler());
         addModule(new JumpReset());
-        //addModule(new LegitAura2());
+        addModule(new LegitAura2());
         //addModule(new SpeedTest());
         //addModule(new LegitAura());
         //addModule(new TargetHUD());
