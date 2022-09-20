@@ -59,6 +59,7 @@ import keystrokesmod.client.module.modules.other.Disabler;
 import keystrokesmod.client.module.modules.other.FakeChat;
 import keystrokesmod.client.module.modules.other.MiddleClick;
 import keystrokesmod.client.module.modules.other.NameHider;
+import keystrokesmod.client.module.modules.other.Spin;
 import keystrokesmod.client.module.modules.other.WaterBucket;
 import keystrokesmod.client.module.modules.player.AutoArmour;
 import keystrokesmod.client.module.modules.player.AutoJump;
@@ -179,6 +180,7 @@ public class ModuleManager {
         addModule(new Disabler());
         addModule(new JumpReset());
         addModule(new LegitAura2());
+        addModule(new Spin());
         //addModule(new SpeedTest());
         //addModule(new LegitAura());
         //addModule(new TargetHUD());
