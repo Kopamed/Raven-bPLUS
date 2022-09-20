@@ -1,11 +1,6 @@
 package keystrokesmod.client.module.modules.combat;
 
-import java.awt.Color;
-
-import org.lwjgl.input.Mouse;
-
 import com.google.common.eventbus.Subscribe;
-
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
 import keystrokesmod.client.event.impl.PacketEvent;
@@ -23,10 +18,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import org.lwjgl.input.Mouse;
+
+import java.awt.*;
 
 /**
  * WHO MADE THIS AND WHY PLEASE WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHYW
  */
+
+// todo smoother rotations when exiting range
+// uh there was one other thing as well
 public class LegitAura2 extends Module {
 
     private EntityPlayer target;
@@ -110,8 +111,7 @@ public class LegitAura2 extends Module {
         if(target != null
                 && mc.thePlayer.getDistanceToEntity(target) < Utils.Client.ranModuleVal(reach, Utils.Java.rand())
                 && !mc.thePlayer.isBlocking()) {
-            mc.playerController.attackEntity(mc.thePlayer, target);
-            System.out.println(mc.objectMouseOver.entityHit != null);
+            //mc.playerController.attackEntity(mc.thePlayer, target);
         }
     }
 
