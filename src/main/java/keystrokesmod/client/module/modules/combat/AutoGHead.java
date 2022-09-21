@@ -42,21 +42,19 @@ public class AutoGHead extends Module {
                     mc.thePlayer.inventory.currentItem = slot;
                     
                     cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/3);
-                    state = State.SWITCHED;
                     break;
                 case SWITCHED:
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
 
                     cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/3);
-                    state = State.SWITCHEDANDCLICKED;
                     break;
                 case SWITCHEDANDCLICKED:
                     mc.thePlayer.inventory.currentItem = originalSlot;
                     
-                    state = State.NONE;
                     cd.setCooldown((int) Utils.Client.ranModuleVal(coolDown, Utils.Java.rand()));
                     break;
             }
+            state = state.next();
             cd.start();
         }
     }
@@ -76,6 +74,11 @@ public class AutoGHead extends Module {
         NONE,
         SWITCHED,
         SWITCHEDANDCLICKED;
+        
+        private static State[] vals = values();
+        public State next() {
+            return vals[(this.ordinal()+1) % vals.length];
+        }
     }
     
 }
