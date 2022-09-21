@@ -15,6 +15,7 @@ import keystrokesmod.client.module.modules.client.Terminal;
 import keystrokesmod.client.module.modules.client.UpdateCheck;
 import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.modules.combat.AutoBlock;
+import keystrokesmod.client.module.modules.combat.AutoGHead;
 import keystrokesmod.client.module.modules.combat.AutoWeapon;
 import keystrokesmod.client.module.modules.combat.BlockHit;
 import keystrokesmod.client.module.modules.combat.ClickAssist;
@@ -181,6 +182,8 @@ public class ModuleManager {
         addModule(new JumpReset());
         addModule(new LegitAura2());
         addModule(new Spin());
+        addModule(new AutoGHead());
+        
         //addModule(new SpeedTest());
         //addModule(new LegitAura());
         //addModule(new TargetHUD());
