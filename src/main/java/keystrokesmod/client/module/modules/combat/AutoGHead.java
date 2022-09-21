@@ -18,7 +18,7 @@ public class AutoGHead extends Module {
     private final DoubleSliderSetting coolDown;
     private final SliderSetting health;
     private final CoolDown cd = new CoolDown(1);
-    private State state = State.NONE;
+    private State state = State.WAITINGTOSWITCH;
     private int originalSlot;
     
     public AutoGHead() {
@@ -35,6 +35,9 @@ public class AutoGHead extends Module {
             return;
         if(mc.thePlayer.getHealth() < health.getInput() && cd.hasFinished()) {
             switch(state) {
+                case WAITINGTOSWITCH:
+                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/3);
+                    break;
                 case NONE:
                     int slot = getGHeadSlot();
                     if(slot == -1 ) return;
@@ -72,6 +75,7 @@ public class AutoGHead extends Module {
     
     public enum State {
         NONE,
+        WAITINGTOSWITCH,
         SWITCHED,
         SWITCHEDANDCLICKED;
         
