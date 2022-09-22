@@ -83,6 +83,7 @@ import keystrokesmod.client.module.modules.render.Fullbright;
 import keystrokesmod.client.module.modules.render.Nametags;
 import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.render.Projectiles;
+import keystrokesmod.client.module.modules.render.Radar;
 import keystrokesmod.client.module.modules.render.Tracers;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.modules.world.ChatLogger;
@@ -183,6 +184,7 @@ public class ModuleManager {
         addModule(new LegitAura2());
         addModule(new Spin());
         addModule(new AutoGHead());
+        addModule(new Radar());
         
         //addModule(new SpeedTest());
         //addModule(new LegitAura());

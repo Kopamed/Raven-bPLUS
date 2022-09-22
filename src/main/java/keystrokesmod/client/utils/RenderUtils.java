@@ -213,4 +213,10 @@ public class RenderUtils {
         GL11.glLineWidth(1.0f);
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     }
+    
+    
+    public static void drawBorderedRoundedRect(int x, int y, int x1, int y1, int radius, int borderSize, int borderC, int insideC) {
+        drawRoundedRect((x - borderSize), (y - borderSize), (x1 + borderSize), (y1 + borderSize), radius, insideC);
+        drawRoundedRect(x, y, x1, y1, radius + borderSize, borderC);
+    }
 }
