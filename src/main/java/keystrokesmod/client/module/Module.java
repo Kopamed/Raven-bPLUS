@@ -110,6 +110,7 @@ public class Module {
 
     public void keybind() {
         if (this.keycode != 0 && this.canBeEnabled()) {
+            System.out.println(Thread.currentThread().getStackTrace());
             if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
                 this.toggle();
                 this.isToggled = true;
@@ -249,6 +250,18 @@ public class Module {
 
     public boolean isClientConfig() {
         return clientConfig;
+    }
+    
+    public boolean isRegistered() {
+        return registered;
+    }
+    
+    public void unRegister() {
+        if(registered) {
+            registered = false;
+            Raven.eventBus.unregister(this);
+            onDisable();
+        }
     }
 
     public enum ModuleCategory {

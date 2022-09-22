@@ -1,18 +1,20 @@
 package keystrokesmod.client.module.modules.render;
 
+import java.awt.Color;
+import java.util.Iterator;
+
 import com.google.common.eventbus.Subscribe;
+
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-
-import java.awt.*;
-import java.util.Iterator;
 
 public class Tracers extends Module {
     public static TickSetting a;
@@ -77,7 +79,7 @@ public class Tracers extends Module {
                         } while (en.deathTime != 0);
                     } while (!a.isToggled() && en.isInvisible());
 
-                    if (/* !AntiBot.bot(en) */ true) {
+                    if (!AntiBot.bot(en)) {
                         if (o.isToggled() && mc.thePlayer.getDistanceToEntity(en) < 25) {
                             // ik i can use a lot of tenary statements but my brain
                             int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10);

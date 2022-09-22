@@ -3,6 +3,8 @@ package keystrokesmod.client.main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -102,7 +104,7 @@ public class Raven {
     public static ResourceLocation mResourceLocation;
 
     public static final String osName, osArch;
-
+    public static final List<Object> registered = new ArrayList<Object>();
     public static final EventBus eventBus = new EventBus(); // use this
     public static final Minecraft mc = Minecraft.getMinecraft();
 
@@ -112,13 +114,11 @@ public class Raven {
     }
 
     public static void init() {
-
-        MinecraftForge.EVENT_BUS.register(new Raven());
-        MinecraftForge.EVENT_BUS.register(new DebugInfoRenderer());
-        MinecraftForge.EVENT_BUS.register(new MouseManager());
-        MinecraftForge.EVENT_BUS.register(new PingChecker());
-
-        MinecraftForge.EVENT_BUS.register(new ForgeEventListener());
+        register(new Raven());
+        register(new DebugInfoRenderer());
+        register(new MouseManager());
+        register(new PingChecker());
+        register(new ForgeEventListener());
         eventBus.register(NotificationRenderer.notificationRenderer);
 
         FontUtil.bootstrap();
@@ -165,6 +165,11 @@ public class Raven {
                 clientConfig.saveConfig();
             }
         }
+    }
+    
+    public static void register(Object obj) {
+        registered.add(obj);
+        MinecraftForge.EVENT_BUS.register(obj);
     }
 
     public static ScheduledExecutorService getExecutor() {
