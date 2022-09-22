@@ -16,7 +16,6 @@ public class MixinGuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     @Shadow
     public String splashText;
 
-    @Override
     @Inject(method = "initGui", at = @At("RETURN"))
     public void initGui() {
         splashText = SelfDestruct.selfDestructed ? splashText : "Kopamed On Top!!";
