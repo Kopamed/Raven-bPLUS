@@ -6,13 +6,16 @@ import keystrokesmod.client.notifications.NotificationRenderer;
 import net.minecraftforge.common.MinecraftForge;
 
 public class SelfDestruct extends Module {
+    
+    public static boolean selfDestructed;
+    
     public SelfDestruct() {
         super("Self Destruct", ModuleCategory.client);
     }
 
     public void onEnable() {
         this.disable();
-
+        selfDestructed = true;
         mc.displayGuiScreen(null);
 
         for (Module module : Raven.moduleManager.getModules()) {
