@@ -1,43 +1,62 @@
 package keystrokesmod.client.module.modules.render;
 
-import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
 
 public class Fullbright extends Module {
-    private float defaultGamma;
-    private final float clientGamma;
+
+    private float originalGamma;
+    private ComboSetting mode;
+    public static boolean nightVision;
 
     public Fullbright() {
         super("Fullbright", ModuleCategory.render);
-
-        DescriptionSetting description;
-        this.registerSetting(description = new DescriptionSetting("No more darkness!"));
-        this.clientGamma = 10000;
+        this.registerSetting(mode = new ComboSetting("Mode", Mode.GAMMA));
+        this.registerSetting(new DescriptionSetting("No more darkness!"));
     }
 
     @Override
     public void onEnable() {
-        this.defaultGamma = mc.gameSettings.gammaSetting;
-        super.onEnable();
+        switch ((Mode) mode.getMode()) {
+        case GAMMA:
+            originalGamma = mc.gameSettings.gammaSetting;
+            mc.gameSettings.gammaSetting = 100;
+            break;
+        case NIGHTVISION:
+            nightVision = true;
+            break;
+        }
     }
 
     @Override
     public void onDisable() {
-        super.onEnable();
-        mc.gameSettings.gammaSetting = this.defaultGamma;
+        revertChanges((Mode) mode.getMode());
     }
 
-    @Subscribe
-    public void onTick(TickEvent e) {
-        if (!Utils.Player.isPlayerInGame()) {
-            onDisable();
-            return;
+    public void revertChanges(Mode mode) {
+        switch (mode) {
+        case GAMMA:
+            mc.gameSettings.gammaSetting = originalGamma > 10 ? 1 : originalGamma;
+            Utils.Player.sendMessageToSelf("" + mc.gameSettings.gammaSetting);
+            break;
+        case NIGHTVISION:
+            nightVision = false;
+            break;
         }
+    }
 
-        if (mc.gameSettings.gammaSetting != clientGamma)
-            mc.gameSettings.gammaSetting = clientGamma;
+    @Override
+    public void guiButtonToggled(ComboSetting b) {
+        if (b == mode) {
+            revertChanges((Mode) mode.getPrevMode());
+            onEnable();
+        }
+    }
+
+
+    public enum Mode {
+        GAMMA, NIGHTVISION
     }
 }

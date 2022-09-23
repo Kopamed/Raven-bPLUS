@@ -1,6 +1,7 @@
 package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
@@ -46,10 +47,9 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
             return;
 
         String bruh = data.get("value").getAsString();
-        for (T opt : options) {
+        for (T opt : options)
             if (opt.toString().equals(bruh))
                 setMode(opt);
-        }
     }
 
     @Override
@@ -66,11 +66,10 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
     }
 
     public void nextMode() {
-        for (int i = 0; i < options.length; i++) {
-            if (options[i] == currentOption) {
-                currentOption = options[(i + 1) % (options.length)];
-                return;
-            }
-        }
+        currentOption = options[(currentOption.ordinal() + 1) % (options.length)];
+    }
+
+    public T getPrevMode() {
+        return options[currentOption.ordinal() == 0 ? options.length - 1 : currentOption.ordinal() - 1];
     }
 }

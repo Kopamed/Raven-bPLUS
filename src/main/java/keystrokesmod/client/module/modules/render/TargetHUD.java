@@ -1,7 +1,5 @@
 package keystrokesmod.client.module.modules.render;
 
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.impl.ForgeEvent;
@@ -11,10 +9,8 @@ import keystrokesmod.client.module.setting.impl.TickSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 public class TargetHUD extends Module {
