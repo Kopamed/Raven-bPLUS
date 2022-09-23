@@ -69,12 +69,11 @@ public class Module {
     public JsonObject getConfigAsJson() {
         JsonObject settings = new JsonObject();
 
-        for (Setting setting : this.settings) {
+        for (Setting setting : this.settings)
             if (setting != null) {
                 JsonObject settingData = setting.getConfigAsJson();
                 settings.add(setting.settingName, settingData);
             }
-        }
 
         JsonObject data = new JsonObject();
         data.addProperty("enabled", enabled);
@@ -92,11 +91,9 @@ public class Module {
                 this.keycode = data.get("keycode").getAsInt();
             setToggled(data.get("enabled").getAsBoolean());
             JsonObject settingsData = data.get("settings").getAsJsonObject();
-            for (Setting setting : getSettings()) {
-                if (settingsData.has(setting.getName())) {
+            for (Setting setting : getSettings())
+                if (settingsData.has(setting.getName()))
                     setting.applyConfigFromJson(settingsData.get(setting.getName()).getAsJsonObject());
-                }
-            }
             this.showInHud = data.get("showInHud").getAsBoolean();
         } catch (NullPointerException ignored) {
 
@@ -109,15 +106,12 @@ public class Module {
     }
 
     public void keybind() {
-        if (this.keycode != 0 && this.canBeEnabled()) {
-            System.out.println(Thread.currentThread().getStackTrace());
+        if ((this.keycode != 0) && this.canBeEnabled())
             if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
                 this.toggle();
                 this.isToggled = true;
-            } else if (!Keyboard.isKeyDown(this.keycode)) {
+            } else if (!Keyboard.isKeyDown(this.keycode))
                 this.isToggled = false;
-            }
-        }
     }
 
     public boolean canBeEnabled() {
@@ -149,11 +143,10 @@ public class Module {
     }
 
     public void setToggled(boolean enabled) {
-        if (enabled) {
+        if (enabled)
             enable();
-        } else {
+        else
             disable();
-        }
     }
 
     public boolean isBindable() {
@@ -169,10 +162,9 @@ public class Module {
     }
 
     public Setting getSettingByName(String name) {
-        for (Setting setting : this.settings) {
+        for (Setting setting : this.settings)
             if (setting.getName().equalsIgnoreCase(name))
                 return setting;
-        }
         return null;
     }
 
@@ -199,11 +191,10 @@ public class Module {
     }
 
     public void toggle() {
-        if (this.enabled) {
+        if (this.enabled)
             this.disable();
-        } else {
+        else
             this.enable();
-        }
     }
 
     public void guiButtonToggled(TickSetting b) {
@@ -227,9 +218,8 @@ public class Module {
         this.keycode = defualtKeyCode;
         this.setToggled(defaultEnabled);
 
-        for (Setting setting : this.settings) {
+        for (Setting setting : this.settings)
             setting.resetToDefaults();
-        }
     }
 
     public void setModuleComponent(ModuleComponent component) {
@@ -284,9 +274,8 @@ public class Module {
         private List<ModuleCategory> childCategories = new ArrayList<ModuleCategory>();
 
         ModuleCategory(boolean defaultShown, ModuleCategory topCategory, String name) {
-            if(topCategory != null) {
+            if(topCategory != null)
                 topCategory.addChildCategory(this);
-            }
             this.defaultShown = defaultShown;
             this.topCategory = topCategory;
             this.name = name;
