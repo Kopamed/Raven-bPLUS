@@ -1,6 +1,9 @@
 package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvTickComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
@@ -17,7 +20,8 @@ public class TickSetting extends Setting {
         this.defaultValue = isEnabled;
     }
 
-    public String getName() {
+    @Override
+	public String getName() {
         return this.name;
     }
 
@@ -71,4 +75,9 @@ public class TickSetting extends Setting {
     public void setEnabled(boolean b) {
         this.isEnabled = b;
     }
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvTickComponent.class;
+	}
 }

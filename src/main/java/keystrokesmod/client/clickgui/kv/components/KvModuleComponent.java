@@ -1,9 +1,13 @@
 package keystrokesmod.client.clickgui.kv.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
@@ -13,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class KvModuleComponent extends KvComponent{
 
-    public Module module;
+    private Module module;
 
     private final static ResourceLocation settingIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/gear.png");;
     private ResourceLocation moduleIcon;
@@ -21,11 +25,18 @@ public class KvModuleComponent extends KvComponent{
     			settingX, settingY, settingWidth, settingHeight,
     			settingX2, settingY2, settingWidth2, settingHeight2,
     			titleBoxX, titleBoxY, titleBoxWidth, titleBoxHeight,
-    			settingsBoxX, settingsBoxY, settingsBoxWidth, settingsBoxHeight;
+    			settingsBoxX, settingsBoxY, settingsBoxWidth, settingsBoxHeight,
+    			nameHeight;
+    private List<KvComponent> settings = new ArrayList<KvComponent>();
 
     public KvModuleComponent(Module module) {
         this.module = module;
         moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
+        for(Setting setting : module.getSettings())
+			try {
+				Class<? extends KvComponent> clazz = setting.getComponentType();
+				clazz.getDeclaredConstructor(Setting.class).newInstance(setting);
+        	} catch(Exception e)  {e.printStackTrace();}
     }
 
     @Override
@@ -37,12 +48,12 @@ public class KvModuleComponent extends KvComponent{
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(moduleIcon);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
-        Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height - toggleHeight, width, height - toggleHeight);
+        Gui.drawModalRectWithCustomSizedTexture(x + (FontUtil.normal.getHeight()/2), y, 0, 0, width - FontUtil.normal.getHeight(), nameHeight, width - FontUtil.normal.getHeight(), nameHeight);
 
         Gui.drawRect(toggleX, toggleY, toggleX + width, toggleY + 1, Utils.Client.rainbowDraw(1, 0));
         Gui.drawRect(settingX, settingY, settingX + 1, settingY + settingHeight, Utils.Client.rainbowDraw(1, 0));
 
-        FontUtil.normal.drawCenteredString(module.getName(), x + (width / 2), (y + height) - (int) (((3 * height) / 3.8) / 2), 0xFFFFFFFF);
+        FontUtil.normal.drawCenteredString(module.getName(), x + (width / 2), y + nameHeight, 0xFFFFFFFF);
         FontUtil.two.drawCenteredString(module.isEnabled() ? "Enabled" : "Disabled", toggleX + (toggleWidth / 2), toggleY + (toggleHeight / 2), 0xFF000000);
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(settingIcon);
@@ -75,7 +86,7 @@ public class KvModuleComponent extends KvComponent{
                 settingsBoxY + settingsBoxHeight,
                 8,
                 2,
-                Utils.Client.rainbowDraw(1, 0), 0xA0FFFFFF,
+                Utils.Client.rainbowDraw(1, 0), 0x30000000,
                 new boolean[] {false, true, true, false});
     }
 
@@ -103,6 +114,7 @@ public class KvModuleComponent extends KvComponent{
         settingY = toggleY;
         settingWidth = width - toggleWidth;
         settingHeight = toggleHeight + 1;
+        nameHeight = height - toggleHeight - FontUtil.normal.getHeight() - 1;
     }
 
     public void setBoxCoords(int x, int y, int width, int height) {

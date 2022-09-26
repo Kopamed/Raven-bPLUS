@@ -1,11 +1,14 @@
 package keystrokesmod.client.module.setting.impl;
 
+import java.awt.Color;
+
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvRgbComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
-
-import java.awt.*;
 
 public class RGBSetting extends Setting {
 
@@ -24,9 +27,8 @@ public class RGBSetting extends Setting {
 
     @Override
     public void resetToDefaults() {
-        for (int i = 0; i <= colour.length; i++) {
-            this.colour[i] = this.defaultColour[i];
-        }
+        for (int i = 0; i <= colour.length; i++)
+			this.colour[i] = this.defaultColour[i];
     }
 
     @Override
@@ -103,5 +105,10 @@ public class RGBSetting extends Setting {
     public void setColors(int[] colour) {
         this.colour = colour.clone();
     }
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvRgbComponent.class;
+	}
 
 }

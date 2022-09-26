@@ -1,6 +1,8 @@
 package keystrokesmod.client.module.setting;
 
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 
@@ -24,4 +26,6 @@ public abstract class Setting {
     public abstract void applyConfigFromJson(JsonObject data);
 
     public abstract Component createComponent(ModuleComponent moduleComponent);
+
+    public abstract Class<? extends KvComponent> getComponentType();
 }

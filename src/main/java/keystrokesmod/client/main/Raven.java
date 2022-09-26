@@ -1,14 +1,10 @@
 package keystrokesmod.client.main;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-
-import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.EventBus;
 
@@ -18,16 +14,15 @@ import keystrokesmod.client.command.CommandManager;
 import keystrokesmod.client.config.ConfigManager;
 import keystrokesmod.client.event.forge.ForgeEventListener;
 import keystrokesmod.client.module.ModuleManager;
-import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.notifications.NotificationRenderer;
 import keystrokesmod.client.utils.DebugInfoRenderer;
 import keystrokesmod.client.utils.MouseManager;
 import keystrokesmod.client.utils.PingChecker;
+import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import keystrokesmod.client.utils.version.VersionManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -79,7 +74,7 @@ fix version checks being completely fucked
 
 public class Raven {
 
-	public static boolean debugger = true;
+	public static boolean debugger;
     public static final VersionManager versionManager = new VersionManager();
     public static CommandManager commandManager;
     public static final String sourceLocation = "https://github.com/K-ov/Raven-bPLUS";
@@ -125,17 +120,7 @@ public class Raven {
 
         Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
 
-		InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokesmod/raven.png");
-        BufferedImage bf;
-        try {
-            assert ravenLogoInputStream != null;
-            bf = ImageIO.read(ravenLogoInputStream);
-            mResourceLocation = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",
-                    new DynamicTexture(bf));
-        } catch (IOException | IllegalArgumentException | NullPointerException noway) {
-            noway.printStackTrace();
-            mResourceLocation = null;
-        }
+        mResourceLocation = RenderUtils.getResourcePath("/assets/keystrokesmod/raven.png");
 
         commandManager = new CommandManager();
         clickGui = new ClickGui();

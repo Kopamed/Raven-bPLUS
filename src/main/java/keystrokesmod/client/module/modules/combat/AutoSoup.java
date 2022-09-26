@@ -9,10 +9,10 @@ import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.ItemSkull;
+import net.minecraft.item.ItemSoup;
 import net.minecraft.item.ItemStack;
 
-public class AutoGHead extends Module {
+public class AutoSoup extends Module {
 
     private final DoubleSliderSetting delay;
     private final DoubleSliderSetting coolDown;
@@ -21,8 +21,8 @@ public class AutoGHead extends Module {
     private State state = State.WAITINGTOSWITCH;
     private int originalSlot;
 
-    public AutoGHead() {
-        super("AutoGHead", ModuleCategory.combat);
+    public AutoSoup() {
+        super("AutoSoup", ModuleCategory.combat);
         this.registerSetting(delay = new DoubleSliderSetting("delay", 50, 100, 0, 200, 1));
         this.registerSetting(coolDown = new DoubleSliderSetting("cooldown(ms)", 1000, 1200, 0, 5000, 1));
         this.registerSetting(health = new SliderSetting("health", 7, 0, 20, 0.1));
@@ -35,25 +35,31 @@ public class AutoGHead extends Module {
             return;
         if((mc.thePlayer.getHealth() < health.getInput()) && cd.hasFinished()) {
             switch(state) {
-            case WAITINGTOSWITCH:
-                cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/3);
-                break;
+                case WAITINGTOSWITCH:
+                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/4);
+                    break;
                 case NONE:
-                    int slot = getGHeadSlot();
+                    int slot = getSoupSlot();
                     if(slot == -1 ) return;
                     originalSlot = mc.thePlayer.inventory.currentItem;
                     mc.thePlayer.inventory.currentItem = slot;
 
-                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/3);
+                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/4);
                     break;
                 case SWITCHED:
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
 
-                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/3);
+                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/4);
                     break;
                 case SWITCHEDANDCLICKED:
+                    KeyBinding.onTick(mc.gameSettings.keyBindDrop.getKeyCode());
+
+                    cd.setCooldown((int) Utils.Client.ranModuleVal(delay, Utils.Java.rand())/4);
+                    break;
+                case SWITCHEDANDDROPPED:
                     mc.thePlayer.inventory.currentItem = originalSlot;
 
+                    //cd.setCooldown(1);
                     cd.setCooldown((int) Utils.Client.ranModuleVal(coolDown, Utils.Java.rand()));
                     break;
             }
@@ -62,12 +68,11 @@ public class AutoGHead extends Module {
         }
     }
 
-    public int getGHeadSlot() {
+    public int getSoupSlot() {
         for (int slot = 0; slot <= 8; slot++) {
             ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-            if ((itemInSlot != null) && (itemInSlot.getItem() instanceof ItemSkull)
-                    && (itemInSlot.getDisplayName().toLowerCase().contains("golden") && itemInSlot.getDisplayName().toLowerCase().contains("head")))
-				return slot;
+            if ((itemInSlot != null) && (itemInSlot.getItem() instanceof ItemSoup))
+                return slot;
         }
         return -1;
     }
@@ -76,7 +81,8 @@ public class AutoGHead extends Module {
     	WAITINGTOSWITCH,
         NONE,
         SWITCHED,
-        SWITCHEDANDCLICKED;
+        SWITCHEDANDCLICKED,
+        SWITCHEDANDDROPPED;
 
         private static State[] vals = values();
         public State next() {

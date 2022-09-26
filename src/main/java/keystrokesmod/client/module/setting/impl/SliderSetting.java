@@ -1,12 +1,15 @@
 package keystrokesmod.client.module.setting.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvSliderComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class SliderSetting extends Setting {
     private final String name;
@@ -26,7 +29,8 @@ public class SliderSetting extends Setting {
         this.defaultVal = defaultValue;
     }
 
-    public String getName() {
+    @Override
+	public String getName() {
         return this.name;
     }
 
@@ -86,12 +90,15 @@ public class SliderSetting extends Setting {
     }
 
     public static double r(double v, int p) {
-        if (p < 0) {
-            return 0.0D;
-        } else {
-            BigDecimal bd = new BigDecimal(v);
-            bd = bd.setScale(p, RoundingMode.HALF_UP);
-            return bd.doubleValue();
-        }
+        if (p < 0)
+			return 0.0D;
+		BigDecimal bd = new BigDecimal(v);
+		bd = bd.setScale(p, RoundingMode.HALF_UP);
+		return bd.doubleValue();
     }
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvSliderComponent.class;
+	}
 }

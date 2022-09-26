@@ -1,16 +1,11 @@
 package keystrokesmod.client.module.modules;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
@@ -24,6 +19,7 @@ import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
@@ -32,7 +28,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
@@ -75,21 +70,7 @@ public class HUD extends Module {
     }
 
     private void setUpLogo() {
-        try {
-            inputStream = logoMode.getMode() != lmv.CD
-                    ? HUD.class
-                            .getResourceAsStream("/assets/keystrokes/logohud/" + logoMode.getMode().toString() + ".png")
-                    : new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes"
-                            + File.separator + "logo.png"));
-            BufferedImage bf = null;
-            System.out.println(logoMode.getMode().toString());
-            bf = ImageIO.read(inputStream);
-            ravenLogo = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",
-                    new DynamicTexture(bf));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        RenderUtils.getResourcePath("/assets/keystrokes/logohud/" + logoMode.getMode().toString() + ".png");
     }
 
     @Override
@@ -161,9 +142,8 @@ public class HUD extends Module {
 
             if (hudX < 0)
 				hudX = margin;
-            if (hudY < 0) {
-			    hudY = margin;
-			}
+            if (hudY < 0)
+				hudY = margin;
 
             if ((hudX + textBoxWidth) > (mc.displayWidth / 2))
 				hudX = (mc.displayWidth / 2) - textBoxWidth - margin;

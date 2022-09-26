@@ -2,6 +2,8 @@ package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
 
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvComboComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
@@ -72,4 +74,9 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
     public T getPrevMode() {
         return options[currentOption.ordinal() == 0 ? options.length - 1 : currentOption.ordinal() - 1];
     }
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvComboComponent.class;
+	}
 }

@@ -1,12 +1,11 @@
 package keystrokesmod.client.clickgui.kv;
 
-public class KvComponent {
+public abstract class KvComponent {
 
     protected int x, y, width, height;
-    protected boolean isHovering;
 
     public void draw(int mouseX, int mouseY) {
-        isHovering = isMouseOver(mouseX, mouseY);
+
     }
 
 	public void clicked(int button, int x, int y) {
