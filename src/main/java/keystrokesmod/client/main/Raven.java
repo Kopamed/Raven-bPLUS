@@ -79,7 +79,7 @@ fix version checks being completely fucked
 
 public class Raven {
 
-    public static boolean debugger;
+	public static boolean debugger;
     public static final VersionManager versionManager = new VersionManager();
     public static CommandManager commandManager;
     public static final String sourceLocation = "https://github.com/K-ov/Raven-bPLUS";
@@ -125,7 +125,7 @@ public class Raven {
 
         Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
 
-        InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
+		InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokesmod/raven.png");
         BufferedImage bf;
         try {
             assert ravenLogoInputStream != null;
@@ -166,7 +166,7 @@ public class Raven {
             }
         }
     }
-    
+
     public static void register(Object obj) {
         registered.add(obj);
         MinecraftForge.EVENT_BUS.register(obj);
