@@ -28,9 +28,8 @@ public class GuiModule extends Module {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
-        if(Raven.debugger) {
-            this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
-        }   
+        if(Raven.debugger)
+			this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));   
         this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
         this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
         this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
@@ -68,8 +67,8 @@ public class GuiModule extends Module {
         if (setting == cleanUp) {
             cleanUp.disable();
             for (CategoryComponent cc : Raven.clickGui.getCategoryList()) {
-                cc.setX((cc.getX() / 50 * 50) + (cc.getX() % 50 > 25 ? 50 : 0));
-                cc.setY((cc.getY() / 50 * 50) + (cc.getY() % 50 > 25 ? 50 : 0));
+                cc.setX(((cc.getX() / 50) * 50) + ((cc.getX() % 50) > 25 ? 50 : 0));
+                cc.setY(((cc.getY() / 50) * 50) + ((cc.getY() % 50) > 25 ? 50 : 0));
             }
         } else if (setting == matchTopWBottomEnabled) {
             matchTopWBottomEnabled.disable();
@@ -84,16 +83,16 @@ public class GuiModule extends Module {
 
     }
 
-    public void onEnable() {
-        if (Utils.Player.isPlayerInGame() && (mc.currentScreen != Raven.clickGui || mc.currentScreen != Raven.kvCompactGui)) {
-            if(Raven.debugger) {
-                Raven.kvCompactGui.onGuiOpen();
+    @Override
+	public void onEnable() {
+        if (Utils.Player.isPlayerInGame() && ((mc.currentScreen != Raven.clickGui) || (mc.currentScreen != Raven.kvCompactGui)))
+			if(Raven.debugger) {
                 mc.displayGuiScreen(Raven.kvCompactGui);
+                Raven.kvCompactGui.initGui();
             } else {
                 mc.displayGuiScreen(Raven.clickGui);
                 Raven.clickGui.initMain();
             }
-        }
 
         this.disable();
     }

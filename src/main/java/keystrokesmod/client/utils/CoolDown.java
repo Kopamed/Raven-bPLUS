@@ -22,7 +22,6 @@ public class CoolDown {
 
     public boolean firstFinish() {
         if (System.currentTimeMillis() >= start + lasts && !checkedFinish) {
-            // Utils.Player.sendMessageToSelf("Time finished");
             checkedFinish = true;
             return true;
         }
@@ -30,8 +29,11 @@ public class CoolDown {
     }
 
     public void setCooldown(long time) {
-        // Utils.Player.sendMessageToSelf("Set cooldown to " + time);
         this.lasts = time;
+    }
+
+    public long getCooldownTime() {
+        return lasts;
     }
 
     public long getElapsedTime() {
