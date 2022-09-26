@@ -1,50 +1,31 @@
 package keystrokesmod.client.clickgui.kv.components;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
+import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class KvModuleComponent extends KvComponent{
 
     public Module module;
 
-    private static ResourceLocation settingIcon;
+    private final static ResourceLocation settingIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/gear.png");;
+    private ResourceLocation moduleIcon;
     private int toggleX, toggleY, toggleWidth, toggleHeight,
     			settingX, settingY, settingWidth, settingHeight,
     			settingX2, settingY2, settingWidth2, settingHeight2,
     			titleBoxX, titleBoxY, titleBoxWidth, titleBoxHeight,
     			settingsBoxX, settingsBoxY, settingsBoxWidth, settingsBoxHeight;
 
-    static {
-        InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokesmod/kvclickgui/gear.png");
-        BufferedImage bf;
-        try {
-            assert ravenLogoInputStream != null;
-            bf = ImageIO.read(ravenLogoInputStream);
-            settingIcon = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",
-                    new DynamicTexture(bf));
-        } catch (IOException | IllegalArgumentException | NullPointerException noway) {
-            noway.printStackTrace();
-            settingIcon = null;
-        }
-
-    }
-
     public KvModuleComponent(Module module) {
         this.module = module;
+        moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
     }
 
     @Override
@@ -54,6 +35,10 @@ public class KvModuleComponent extends KvComponent{
         RenderUtils.drawRoundedRect(toggleX, toggleY + 1, toggleX + toggleWidth, toggleY + toggleHeight + 1,12, module.isEnabled() ? 0xFF00FF00 : 0xFFFF0000, new boolean[] {false, true, false, false});
         RenderUtils.drawRoundedOutline(x, y, x + width, y + height, 12, 2, Utils.Client.rainbowDraw(1, 0));
 
+        Minecraft.getMinecraft().getTextureManager().bindTexture(moduleIcon);
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
+        Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height - toggleHeight, width, height - toggleHeight);
+
         Gui.drawRect(toggleX, toggleY, toggleX + width, toggleY + 1, Utils.Client.rainbowDraw(1, 0));
         Gui.drawRect(settingX, settingY, settingX + 1, settingY + settingHeight, Utils.Client.rainbowDraw(1, 0));
 
@@ -61,6 +46,7 @@ public class KvModuleComponent extends KvComponent{
         FontUtil.two.drawCenteredString(module.isEnabled() ? "Enabled" : "Disabled", toggleX + (toggleWidth / 2), toggleY + (toggleHeight / 2), 0xFF000000);
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(settingIcon);
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
         Gui.drawModalRectWithCustomSizedTexture(settingX, settingY, 0, 0, settingWidth, settingHeight, settingWidth, settingHeight);
     }
 
@@ -93,8 +79,9 @@ public class KvModuleComponent extends KvComponent{
                 new boolean[] {false, true, true, false});
     }
 
-    
-    public void clicked(int mouseButton, int x, int y) {
+
+    @Override
+	public void clicked(int mouseButton, int x, int y) {
     	System.out.println("b");
     	if ((x > settingX2) && (x < (settingX2 + settingWidth2)) && (y > settingY2) && (y < (settingY2 + settingHeight2)))
 			KvModuleSection.moduleSec.setOpenmodule(null);

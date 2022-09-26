@@ -1,11 +1,17 @@
 package keystrokesmod.client.utils;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+
+import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.main.Raven;
+import keystrokesmod.client.module.modules.HUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -13,6 +19,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -256,5 +263,18 @@ public class RenderUtils {
 	public static void drawBorderedRoundedRect(float x, float y, float d, float y1, float radius, float borderSize, int borderC, int insideC) {
 		drawRoundedRect(x, y, d, y1, radius, insideC);
 		drawRoundedOutline(x, y, d, y1, radius, borderSize, borderC);
+	}
+
+	public static ResourceLocation getResourcePath(String s) {
+        InputStream ravenLogoInputStream = HUD.class.getResourceAsStream(s);
+        BufferedImage bf;
+        try {
+            assert ravenLogoInputStream != null;
+            bf = ImageIO.read(ravenLogoInputStream);
+            return Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",new DynamicTexture(bf));
+        } catch (IOException | IllegalArgumentException | NullPointerException noway) {
+            noway.printStackTrace();
+            return new ResourceLocation("null");
+        }
 	}
 }
