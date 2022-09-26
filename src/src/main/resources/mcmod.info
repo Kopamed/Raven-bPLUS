@@ -1,0 +1,20 @@
+[
+    {
+        "modid": "keystrokesmod",
+        "name": "KeystrokesMod",
+        "description": "Shows your keystrokes ingame. | Updated and modified by spiderfrog | V5 by Yario & Extazz | Ported by OFP.",
+        "version": "KMV5",
+        "url": "https://www.youtube.com/ofpmedia",
+        "updateUrl": "",
+        "authorList": [
+            "OFP",
+            "Fyu",
+            "spiderfrog",
+            "Yario & Extazz"
+        ],
+        "credits": "OFP, Fyu, spiderfrog, Yario & Extazz",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]
