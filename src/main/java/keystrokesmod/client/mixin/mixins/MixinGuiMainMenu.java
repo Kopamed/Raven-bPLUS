@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import keystrokesmod.client.module.modules.client.SelfDestruct;
+import keystrokesmod.client.utils.SoundUtils;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNoCallback;
@@ -20,6 +21,7 @@ public class MixinGuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     @Inject(method = "initGui", at = @At("RETURN"))
     public void initGui(CallbackInfo ci) {
         splashText = SelfDestruct.selfDestructed ? splashText : "Kopamed On Top!!";
+        SoundUtils.playSound("sus");
     }
 
 }
