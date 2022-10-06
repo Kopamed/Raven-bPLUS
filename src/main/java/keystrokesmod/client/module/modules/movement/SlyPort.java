@@ -1,7 +1,5 @@
 package keystrokesmod.client.module.modules.movement;
 
-import java.util.Iterator;
-
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -12,6 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
+
+import java.util.Iterator;
 
 public class SlyPort extends Module {
     public static DescriptionSetting f;
@@ -30,25 +30,27 @@ public class SlyPort extends Module {
         this.registerSetting(d = new TickSetting("Players only", true));
     }
 
-    @Override
     public void onEnable() {
         Entity en = this.ge();
-        if (en != null)
+        if (en != null) {
             this.tp(en);
+        }
 
         this.disable();
     }
 
     private void tp(Entity en) {
-        if (b.isToggled())
+        if (b.isToggled()) {
             mc.thePlayer.playSound("mob.endermen.portal", 1.0F, 1.0F);
+        }
 
         Vec3 vec = en.getLookVec();
-        double x = en.posX - (vec.xCoord * 2.5D);
-        double z = en.posZ - (vec.zCoord * 2.5D);
+        double x = en.posX - vec.xCoord * 2.5D;
+        double z = en.posZ - vec.zCoord * 2.5D;
         mc.thePlayer.setPosition(x, mc.thePlayer.posY, z);
-        if (e.isToggled())
-            Utils.Player.aim(en, 0.0F);
+        if (e.isToggled()) {
+            Utils.Player.aim(en, 0.0F, false);
+        }
 
     }
 
@@ -60,18 +62,19 @@ public class SlyPort extends Module {
 
         while (true) {
             Entity ent;
-            do
-                do
-                    do
+            do {
+                do {
+                    do {
                         do {
-                            if (!var6.hasNext())
+                            if (!var6.hasNext()) {
                                 return en;
+                            }
 
                             ent = (Entity) var6.next();
                         } while (ent == mc.thePlayer);
-                    while (!(ent instanceof EntityLivingBase));
-                while (((EntityLivingBase) ent).deathTime != 0);
-            while (d.isToggled() && !(ent instanceof EntityPlayer));
+                    } while (!(ent instanceof EntityLivingBase));
+                } while (((EntityLivingBase) ent).deathTime != 0);
+            } while (d.isToggled() && !(ent instanceof EntityPlayer));
 
             if (!AntiBot.bot(ent)) {
                 double d = mc.thePlayer.getDistanceSqToEntity(ent);

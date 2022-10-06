@@ -58,6 +58,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
@@ -70,6 +71,7 @@ import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemSnowball;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
 import net.minecraft.potion.Potion;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -93,18 +95,18 @@ public class Utils {
     public static final String md = "Mode: ";
 
     public static class Player {
-
+        
         public static boolean isPlayerInChest() {
-            return (mc.currentScreen != null) && (mc.thePlayer.inventoryContainer != null) && (mc.thePlayer.inventoryContainer instanceof ContainerPlayer) && (mc.currentScreen instanceof GuiChest);
+            return mc.currentScreen != null && mc.thePlayer.inventoryContainer != null && mc.thePlayer.inventoryContainer instanceof ContainerPlayer && mc.currentScreen instanceof GuiChest;
         }
-
+        
         public static boolean isPlayerInInventory() {
-            return (mc.currentScreen != null) && (mc.thePlayer.inventoryContainer != null) && (mc.thePlayer.inventoryContainer instanceof ContainerPlayer) && (mc.currentScreen instanceof GuiInventory);
+            return mc.currentScreen != null && mc.thePlayer.inventoryContainer != null && mc.thePlayer.inventoryContainer instanceof ContainerPlayer && mc.currentScreen instanceof GuiInventory;
         }
 
         public static MovingObjectPosition rayTrace(double reach, float partialTicks) {
             Entity entity = mc.getRenderViewEntity();
-            if ((entity != null) && (mc.theWorld != null)) {
+            if (entity != null && mc.theWorld != null) {
                 Entity pointedEntity = null;
 
                 MovingObjectPosition objectMouseOver = entity.rayTrace(reach, partialTicks);
@@ -112,8 +114,9 @@ public class Utils {
 
                 Vec3 vec3 = entity.getPositionEyes(partialTicks);
 
-                if (objectMouseOver != null)
+                if (objectMouseOver != null) {
                     distanceToVec = objectMouseOver.hitVec.distanceTo(vec3);
+                }
 
                 Vec3 vec31 = entity.getLook(partialTicks);
                 Vec3 vec32 = vec3.addVector(vec31.xCoord * reach, vec31.yCoord * reach, vec31.zCoord * reach);
@@ -121,7 +124,7 @@ public class Utils {
 
                 float f = 1.0F;
                 List<Entity> list = mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * reach,
-                        vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
+                                vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
                         Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
                 double d2 = distanceToVec;
 
@@ -137,8 +140,8 @@ public class Utils {
                         }
                     } else if (movingobjectposition != null) {
                         double d3 = vec3.distanceTo(movingobjectposition.hitVec);
-                        if ((d3 < d2) || (d2 == 0.0D))
-                            if ((entity1 == entity.ridingEntity) && !entity.canRiderInteract()) {
+                        if (d3 < d2 || d2 == 0.0D) {
+                            if (entity1 == entity.ridingEntity && !entity.canRiderInteract()) {
                                 if (d2 == 0.0D) {
                                     pointedEntity = entity1;
                                     vec33 = movingobjectposition.hitVec;
@@ -148,6 +151,7 @@ public class Utils {
                                 vec33 = movingobjectposition.hitVec;
                                 d2 = d3;
                             }
+                        }
                     }
                 }
 
@@ -156,8 +160,9 @@ public class Utils {
                     Reach.getReach();
                 }
 
-                if ((pointedEntity != null) && ((d2 < distanceToVec) || (objectMouseOver == null)))
+                if (pointedEntity != null && (d2 < distanceToVec || objectMouseOver == null)) {
                     objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
+                }
 
                 return objectMouseOver;
             }
@@ -180,28 +185,47 @@ public class Utils {
         }
 
         public static boolean isPlayerInGame() {
-            return (mc.thePlayer != null) && (mc.theWorld != null);
+            return mc.thePlayer != null && mc.theWorld != null;
         }
 
         public static boolean isMoving() {
-            return (mc.thePlayer.moveForward != 0.0F) || (mc.thePlayer.moveStrafing != 0.0F);
+            return mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F;
         }
 
-        public static void aim(Entity en, float ps) {
+        public static void aim(Entity en, float ps, boolean pc) {
             if (en != null) {
-                float[] t = getTargetRotations(en, ps);
-                if (t != null) {
-                    float y = t[0];
-                    float p = (t[1] + 4.0F);
-                    mc.thePlayer.rotationYaw = y;
-                    mc.thePlayer.rotationPitch = p;
-                }
+               float[] t = getTargetRotations(en);
+               if (t != null) {
+                  float y = t[0];
+                  float p = t[1] + 4.0F + ps;
+                  if (pc) {
+                     mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(y, p, mc.thePlayer.onGround));
+                  } else {
+                     mc.thePlayer.rotationYaw = y;
+                     mc.thePlayer.rotationPitch = p;
+                  }
+               }
 
             }
+         }
+        
+        public static float[] silentAim(Entity en) {
+            if (en != null) {
+                float[] t = getTargetRotations(en);
+                if (t != null) {
+                    float y = t[0];
+                    float p = t[1];
+                     mc.thePlayer.rotationYawHead = y;
+                     //mc.thePlayer.rotationYaw = y;
+                     mc.thePlayer.setRotationYawHead(y);
+                }
+                return t;
+            }
+            return null;
         }
 
         public static double fovFromEntity(Entity en) {
-            return ((((double) (mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D) + 540.0D) % 360.0D) - 180.0D;
+            return ((double) (mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D + 540.0D) % 360.0D - 180.0D;
         }
 
         public static float fovToEntity(Entity ent) {
@@ -211,27 +235,16 @@ public class Utils {
             return (float) (yaw * -1.0D);
         }
 
-        public static double PitchFromEntity(Entity en, float f) {
-            return (double) (mc.thePlayer.rotationPitch - pitchToEntity(en, f));
-        }
-
-        public static float pitchToEntity(Entity ent, float f) {
-            double x = mc.thePlayer.getDistanceToEntity(ent);
-            double y = mc.thePlayer.posY - (ent.posY + f);
-            double pitch = (((Math.atan2(x, y) * 180.0D) / 3.141592653589793D));
-            return (float) (90 - pitch);
-        }
-
         public static boolean fov(Entity entity, float fov) {
             fov = (float) ((double) fov * 0.5D);
-            double v = ((((double) (mc.thePlayer.rotationYaw - fovToEntity(entity)) % 360.0D) + 540.0D) % 360.0D) - 180.0D;
-            return ((v > 0.0D) && (v < (double) fov)) || (((double) (-fov) < v) && (v < 0.0D));
+            double v = ((double) (mc.thePlayer.rotationYaw - fovToEntity(entity)) % 360.0D + 540.0D) % 360.0D - 180.0D;
+            return v > 0.0D && v < (double) fov || (double) (-fov) < v && v < 0.0D;
         }
 
         public static double getPlayerBPS(Entity en, int d) {
             double x = en.posX - en.prevPosX;
             double z = en.posZ - en.prevPosZ;
-            double sp = Math.sqrt((x * x) + (z * z)) * 20.0D;
+            double sp = Math.sqrt(x * x + z * z) * 20.0D;
             return Java.round(sp, d);
         }
 
@@ -258,13 +271,13 @@ public class Utils {
         }
 
         public static boolean isPlayerHoldingSword() {
-            return (mc.thePlayer.getCurrentEquippedItem() != null)
-                    && (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword);
+            return mc.thePlayer.getCurrentEquippedItem() != null
+                    && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
         }
 
         public static boolean isPlayerHoldingAxe() {
-            return (mc.thePlayer.getCurrentEquippedItem() != null)
-                    && (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe);
+            return mc.thePlayer.getCurrentEquippedItem() != null
+                    && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemAxe;
         }
 
         public static boolean isPlayerHoldingWeapon() {
@@ -279,11 +292,12 @@ public class Utils {
                 ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
                 if (itemInSlot == null)
                     continue;
-                for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values())
+                for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values()) {
                     if (mooommHelp.getAmount() > damage) {
                         damage = mooommHelp.getAmount();
                         index = slot;
                     }
+                }
 
             }
             return index;
@@ -293,26 +307,42 @@ public class Utils {
             ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
             if (itemInSlot == null)
                 return -1;
-            for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values())
+            for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values()) {
                 return mooommHelp.getAmount();
+            }
             return -1;
         }
 
         public static ArrayList<Integer> playerWearingArmor() {
             ArrayList<Integer> wearingArmor = new ArrayList<>();
-            for (int armorPiece = 0; armorPiece < 4; armorPiece++)
-                if (mc.thePlayer.getCurrentArmor(armorPiece) != null)
-                    wearingArmor.add(3 - armorPiece);
+            for (int armorPiece = 0; armorPiece < 4; armorPiece++) {
+                if (mc.thePlayer.getCurrentArmor(armorPiece) != null) {
+                    if (armorPiece == 0) {
+                        wearingArmor.add(3);
+                    } else if (armorPiece == 1) {
+                        wearingArmor.add(2);
+                    } else if (armorPiece == 2) {
+                        wearingArmor.add(1);
+                    } else if (armorPiece == 3) {
+                        wearingArmor.add(0);
+                    }
+                }
+            }
+
             return wearingArmor;
         }
 
         public static int getBlockAmountInCurrentStack(int currentItem) {
-            if (mc.thePlayer.inventory.getStackInSlot(currentItem) == null)
+            if (mc.thePlayer.inventory.getStackInSlot(currentItem) == null) {
                 return 0;
-            ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(currentItem);
-            if (itemStack.getItem() instanceof ItemBlock)
-                return itemStack.stackSize;
-            return 0;
+            } else {
+                ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(currentItem);
+                if (itemStack.getItem() instanceof ItemBlock) {
+                    return itemStack.stackSize;
+                } else {
+                    return 0;
+                }
+            }
         }
 
         /**
@@ -322,28 +352,30 @@ public class Utils {
             return Mouse.isButtonDown(0) && Mouse.isButtonDown(1);
         }
 
-        public static float[] getTargetRotations(Entity q, float ps) {
-            if (q == null)
+        public static float[] getTargetRotations(Entity q) {
+            if (q == null) {
                 return null;
-            double diffX = q.posX - mc.thePlayer.posX;
-            double diffY;
-            if (q instanceof EntityLivingBase) {
-                EntityLivingBase en = (EntityLivingBase) q;
-                diffY = (en.posY + ((double) en.getEyeHeight() * 0.9D))
-                        - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
-            } else
-                diffY = (((q.getEntityBoundingBox().minY + q.getEntityBoundingBox().maxY) / 2.0D) + ps)
-                - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
+            } else {
+                double diffX = q.posX - mc.thePlayer.posX;
+                double diffY;
+                if (q instanceof EntityLivingBase) {
+                    EntityLivingBase en = (EntityLivingBase) q;
+                    diffY = en.posY + (double) en.getEyeHeight() * 0.9D
+                            - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
+                } else {
+                    diffY = (q.getEntityBoundingBox().minY + q.getEntityBoundingBox().maxY) / 2.0D
+                            - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
+                }
 
-            double diffZ = q.posZ - mc.thePlayer.posZ;
-            double dist = MathHelper.sqrt_double((diffX * diffX) + (diffZ * diffZ));
-            float yaw = (float) ((Math.atan2(diffZ, diffX) * 180.0D) / 3.141592653589793D) - 90.0F;
-            float pitch = (float) (-((Math.atan2(diffY, dist) * 180.0D) / 3.141592653589793D));
-            return new float[] {
-                    mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw),
-                    mc.thePlayer.rotationPitch
-                    + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch) };
-            // tf is happening here
+                double diffZ = q.posZ - mc.thePlayer.posZ;
+                double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
+                float yaw = (float) (Math.atan2(diffZ, diffX) * 180.0D / 3.141592653589793D) - 90.0F;
+                float pitch = (float) (-(Math.atan2(diffY, dist) * 180.0D / 3.141592653589793D));
+                return new float[] {
+                        mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw),
+                        mc.thePlayer.rotationPitch
+                                + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch) };
+            }
         }
 
         public static void fixMovementSpeed(double s, boolean m) {
@@ -358,28 +390,30 @@ public class Utils {
             double strafe = mc.thePlayer.movementInput.moveStrafe;
             float yaw = mc.thePlayer.rotationYaw;
 
-            if ((forward == 0.0D) && (strafe == 0.0D)) {
+            if (forward == 0.0D && strafe == 0.0D) {
                 mc.thePlayer.motionX = 0.0D;
                 mc.thePlayer.motionZ = 0.0D;
             } else {
                 if (forward != 0.0D) {
-                    if (strafe > 0.0D)
+                    if (strafe > 0.0D) {
                         yaw += (float) (forward > 0.0D ? -45 : 45);
-                    else if (strafe < 0.0D)
+                    } else if (strafe < 0.0D) {
                         yaw += (float) (forward > 0.0D ? 45 : -45);
+                    }
 
                     strafe = 0.0D;
-                    if (forward > 0.0D)
+                    if (forward > 0.0D) {
                         forward = 1.0D;
-                    else if (forward < 0.0D)
+                    } else if (forward < 0.0D) {
                         forward = -1.0D;
+                    }
                 }
 
                 double rad = Math.toRadians(yaw + 90.0F);
                 double sin = Math.sin(rad);
                 double cos = Math.cos(rad);
-                mc.thePlayer.motionX = (forward * s * cos) + (strafe * s * sin);
-                mc.thePlayer.motionZ = (forward * s * sin) - (strafe * s * cos);
+                mc.thePlayer.motionX = forward * s * cos + strafe * s * sin;
+                mc.thePlayer.motionZ = forward * s * sin - strafe * s * cos;
             }
 
         }
@@ -387,8 +421,9 @@ public class Utils {
         public static float getStrafeYaw(float forward, float strafe) {
             float yaw = mc.thePlayer.rotationYaw;
 
-            if((forward == 0) && (strafe == 0))
+            if(forward == 0 && strafe == 0) {
                 return yaw;
+            }
 
             boolean reversed = forward < 0.0f;
             float strafingYaw = 90.0f *
@@ -406,21 +441,25 @@ public class Utils {
 
         public static float correctRotations() {
             float yw = mc.thePlayer.rotationYaw;
-            if (mc.thePlayer.moveForward < 0.0F)
+            if (mc.thePlayer.moveForward < 0.0F) {
                 yw += 180.0F;
+            }
 
             float f;
-            if (mc.thePlayer.moveForward < 0.0F)
+            if (mc.thePlayer.moveForward < 0.0F) {
                 f = -0.5F;
-            else if (mc.thePlayer.moveForward > 0.0F)
+            } else if (mc.thePlayer.moveForward > 0.0F) {
                 f = 0.5F;
-            else
+            } else {
                 f = 1.0F;
+            }
 
-            if (mc.thePlayer.moveStrafing > 0.0F)
+            if (mc.thePlayer.moveStrafing > 0.0F) {
                 yw -= 90.0F * f;
-            if (mc.thePlayer.moveStrafing < 0.0F)
+            }
+            if (mc.thePlayer.moveStrafing < 0.0F) {
                 yw += 90.0F * f;
+            }
 
             // what
             yw *= 0.017453292F;
@@ -429,17 +468,17 @@ public class Utils {
         }
 
         public static double pythagorasMovement() {
-            return Math.sqrt((mc.thePlayer.motionX * mc.thePlayer.motionX) + (mc.thePlayer.motionZ * mc.thePlayer.motionZ));
+            return Math.sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ);
         }
 
         public static void swing() {
             EntityPlayerSP p = mc.thePlayer;
             int armSwingEnd = p.isPotionActive(Potion.digSpeed)
                     ? 6 - (1 + p.getActivePotionEffect(Potion.digSpeed).getAmplifier())
-                            : (p.isPotionActive(Potion.digSlowdown)
-                                    ? 6 + ((1 + p.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2)
-                                            : 6);
-            if (!p.isSwingInProgress || (p.swingProgressInt >= (armSwingEnd / 2)) || (p.swingProgressInt < 0)) {
+                    : (p.isPotionActive(Potion.digSlowdown)
+                            ? 6 + (1 + p.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2
+                            : 6);
+            if (!p.isSwingInProgress || p.swingProgressInt >= armSwingEnd / 2 || p.swingProgressInt < 0) {
                 p.swingProgressInt = -1;
                 p.isSwingInProgress = true;
             }
@@ -455,9 +494,9 @@ public class Utils {
 
             while (entities.hasNext()) {
                 Entity en = (Entity) entities.next();
-                if ((en instanceof EntityPlayer) && (en != mc.thePlayer)) {
+                if (en instanceof EntityPlayer && en != mc.thePlayer) {
                     EntityPlayer pl = (EntityPlayer) en;
-                    if ((mc.thePlayer.getDistanceToEntity(pl) < dis) && !AntiBot.bot(pl)) {
+                    if (mc.thePlayer.getDistanceToEntity(pl) < dis && !AntiBot.bot(pl)) {
                         dis = mc.thePlayer.getDistanceToEntity(pl);
                         cplayer = pl;
                     }
@@ -472,9 +511,9 @@ public class Utils {
 
         public static boolean isThrowableItem(ItemStack is) {
             Item i = is.getItem();
-            return (i instanceof ItemEgg) || (i instanceof ItemEnderEye) || (i instanceof ItemEnderPearl)
-                    || (i instanceof ItemSnowball) || (i instanceof ItemExpBottle)
-                    || ((i instanceof ItemPotion) && ItemPotion.isSplash(is.getMetadata()));
+            return i instanceof ItemEgg || i instanceof ItemEnderEye || i instanceof ItemEnderPearl
+                    || i instanceof ItemSnowball || i instanceof ItemExpBottle
+                    || (i instanceof ItemPotion && ItemPotion.isSplash(is.getMetadata()));
         }
 
         public static List<NetworkPlayerInfo> getPlayers() {
@@ -486,17 +525,20 @@ public class Utils {
                 return yes;
             }
 
-            for (NetworkPlayerInfo ergy43d : yes)
-                if (!mmmm.contains(ergy43d))
+            for (NetworkPlayerInfo ergy43d : yes) {
+                if (!mmmm.contains(ergy43d)) {
                     mmmm.add(ergy43d);
+                }
+            }
 
             return mmmm;
         }
 
         public static boolean othersExist() {
-            for (Entity wut : mc.theWorld.getLoadedEntityList())
+            for (Entity wut : mc.theWorld.getLoadedEntityList()) {
                 if (wut instanceof EntityPlayer)
                     return true;
+            }
             return false;
         }
 
@@ -524,12 +566,12 @@ public class Utils {
 
         public static double ranModuleVal(SliderSetting a, SliderSetting b, Random r) {
             return a.getInput() == b.getInput() ? a.getInput()
-                    : a.getInput() + (r.nextDouble() * (b.getInput() - a.getInput()));
+                    : a.getInput() + r.nextDouble() * (b.getInput() - a.getInput());
         }
 
         public static double ranModuleVal(DoubleSliderSetting a, Random r) {
             return a.getInputMin() == a.getInputMax() ? a.getInputMin()
-                    : a.getInputMin() + (r.nextDouble() * (a.getInputMax() - a.getInputMin()));
+                    : a.getInputMin() + r.nextDouble() * (a.getInputMax() - a.getInputMin());
         }
 
         public static boolean isHyp() {
@@ -559,9 +601,10 @@ public class Utils {
 
         public static boolean autoClickerClicking() {
             Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-            if ((autoClicker != null) && autoClicker.isEnabled())
+            if (autoClicker != null && autoClicker.isEnabled()) {
                 return autoClicker.isEnabled() && Mouse.isButtonDown(0);
-            // System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
+            } // else return mouseManager.getLeftClickCounter() > 1 &&
+              // System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
             return false;
         }
 
@@ -588,11 +631,13 @@ public class Utils {
 
         public static int astolfoColorsDraw(int yOffset, int yTotal, float speed) {
             float hue = (float) (System.currentTimeMillis() % (int) speed) + ((yTotal - yOffset) * 9);
-            while (hue > speed)
+            while (hue > speed) {
                 hue -= speed;
+            }
             hue /= speed;
-            if (hue > 0.5)
+            if (hue > 0.5) {
                 hue = 0.5F - (hue - 0.5f);
+            }
             hue += 0.5F;
             return Color.HSBtoRGB(hue, 0.5f, 1F);
         }
@@ -608,23 +653,27 @@ public class Utils {
                 hue = (float) (System.currentTimeMillis() % (int) speed) + ((yTotal - yOffset) / (yOffset / yTotal));
             } catch (ArithmeticException divisionByZero) {
                 hue = (float) (System.currentTimeMillis() % (int) speed)
-                        + ((yTotal - yOffset) / (((yOffset / yTotal) + 1) + 1));
+                        + ((yTotal - yOffset) / ((yOffset / yTotal + 1) + 1));
             }
 
-            while (hue > speed)
+            while (hue > speed) {
                 hue -= speed;
+            }
             hue /= speed;
-            if (hue > 2)
+            if (hue > 2) {
                 hue = 2F - (hue - 2f);
+            }
             hue += 2F;
 
             float current = (System.currentTimeMillis() % speed) + ((yOffset + yTotal) * 9);
 
-            while (current > speed)
+            while (current > speed) {
                 current -= speed;
+            }
             current /= speed;
-            if (current > 2)
+            if (current > 2) {
                 current = 2F - (current - 2f);
+            }
             current += 2F;
 
             return Color.HSBtoRGB((current / (current - yTotal)) + current, 1f, 1F);
@@ -653,13 +702,14 @@ public class Utils {
 
         public static boolean openWebpage(URI uri) {
             Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-            if ((desktop != null) && desktop.isSupported(Desktop.Action.BROWSE))
+            if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                 try {
                     desktop.browse(uri);
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
             return false;
         }
 
@@ -685,40 +735,44 @@ public class Utils {
 
         public static List<String> getPlayersFromScoreboard() {
             List<String> lines = new ArrayList<>();
-            if (mc.theWorld == null)
+            if (mc.theWorld == null) {
                 return lines;
-            Scoreboard scoreboard = mc.theWorld.getScoreboard();
-            if (scoreboard != null) {
-                ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
-                if (objective != null) {
-                    Collection<Score> scores = scoreboard.getSortedScores(objective);
-                    List<Score> list = new ArrayList<>();
-                    Iterator<Score> var5 = scores.iterator();
+            } else {
+                Scoreboard scoreboard = mc.theWorld.getScoreboard();
+                if (scoreboard != null) {
+                    ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
+                    if (objective != null) {
+                        Collection<Score> scores = scoreboard.getSortedScores(objective);
+                        List<Score> list = new ArrayList<>();
+                        Iterator<Score> var5 = scores.iterator();
 
-                    Score score;
-                    while (var5.hasNext()) {
-                        score = var5.next();
-                        if ((score != null) && (score.getPlayerName() != null)
-                                && !score.getPlayerName().startsWith("#"))
-                            list.add(score);
+                        Score score;
+                        while (var5.hasNext()) {
+                            score = var5.next();
+                            if (score != null && score.getPlayerName() != null
+                                    && !score.getPlayerName().startsWith("#")) {
+                                list.add(score);
+                            }
+                        }
+
+                        if (list.size() > 15) {
+                            scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));
+                        } else {
+                            scores = list;
+                        }
+
+                        var5 = scores.iterator();
+
+                        while (var5.hasNext()) {
+                            score = var5.next();
+                            ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
+                            lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
+                        }
+
                     }
-
-                    if (list.size() > 15)
-                        scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));
-                    else
-                        scores = list;
-
-                    var5 = scores.iterator();
-
-                    while (var5.hasNext()) {
-                        score = var5.next();
-                        ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
-                        lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
-                    }
-
                 }
+                return lines;
             }
-            return lines;
         }
 
         public static String reformat(String txt) {
@@ -745,14 +799,15 @@ public class Utils {
         }
 
         public static int indexOf(String key, String[] wut) {
-            for (int o = 0; o < wut.length; o++)
+            for (int o = 0; o < wut.length; o++) {
                 if (wut[o].equals(key))
                     return o;
+            }
             return -1;
         }
 
         public static long getSystemTime() {
-            return (Sys.getTime() * 1000L) / Sys.getTimerResolution();
+            return Sys.getTime() * 1000L / Sys.getTimerResolution();
         }
 
         public static Random rand() {
@@ -760,19 +815,23 @@ public class Utils {
         }
 
         public static double round(double n, int d) {
-            if (d == 0)
+            if (d == 0) {
                 return (double) Math.round(n);
-            double p = Math.pow(10.0D, d);
-            return (double) Math.round(n * p) / p;
+            } else {
+                double p = Math.pow(10.0D, d);
+                return (double) Math.round(n * p) / p;
+            }
         }
 
         public static String str(String s) {
             char[] n = StringUtils.stripControlCodes(s).toCharArray();
             StringBuilder v = new StringBuilder();
 
-            for (char c : n)
-                if ((c < 127) && (c > 20))
+            for (char c : n) {
+                if (c < 127 && c > 20) {
                     v.append(c);
+                }
+            }
 
             return v.toString();
         }
@@ -788,13 +847,16 @@ public class Utils {
         }
 
         public static String joinStringList(String[] wtf, String okwaht) {
-            if ((wtf == null) || (wtf.length <= 1))
+            if (wtf == null)
+                return "";
+            if (wtf.length <= 1)
                 return "";
 
             StringBuilder finalString = new StringBuilder(wtf[0]);
 
-            for (int i = 1; i < wtf.length; i++)
+            for (int i = 1; i < wtf.length; i++) {
                 finalString.append(okwaht).append(wtf[i]);
+            }
 
             return finalString.toString();
         }
@@ -818,7 +880,7 @@ public class Utils {
         }
 
         public static int randomInt(double inputMin, double v) {
-            return (int) ((Math.random() * (v - inputMin)) + inputMin);
+            return (int) (Math.random() * (v - inputMin) + inputMin);
         }
     }
 
@@ -844,8 +906,9 @@ public class Utils {
                 r = getTextFromConnection(con);
             } catch (IOException ignored) {
             } finally {
-                if (con != null)
+                if (con != null) {
                     con.disconnect();
+                }
 
             }
 
@@ -853,7 +916,7 @@ public class Utils {
         }
 
         private static String getTextFromConnection(HttpURLConnection connection) {
-            if (connection != null)
+            if (connection != null) {
                 try {
                     BufferedReader bufferedReader = new BufferedReader(
                             new InputStreamReader(connection.getInputStream()));
@@ -863,8 +926,9 @@ public class Utils {
                         StringBuilder stringBuilder = new StringBuilder();
 
                         String input;
-                        while ((input = bufferedReader.readLine()) != null)
+                        while ((input = bufferedReader.readLine()) != null) {
                             stringBuilder.append(input);
+                        }
 
                         String res = stringBuilder.toString();
                         connection.disconnect();
@@ -877,6 +941,7 @@ public class Utils {
                     return result;
                 } catch (Exception ignored) {
                 }
+            }
 
             return "";
         }
@@ -921,15 +986,17 @@ public class Utils {
                     occuredErrors = microsoftMoment;
                     throw microsoftMoment;
                 } finally {
-                    if (outputStream != null)
-                        if (occuredErrors != null)
+                    if (outputStream != null) {
+                        if (occuredErrors != null) {
                             try {
                                 outputStream.close();
                             } catch (Throwable var48) {
                                 occuredErrors.addSuppressed(var48);
                             }
-                        else
+                        } else {
                             outputStream.close();
+                        }
+                    }
 
                 }
 
@@ -978,11 +1045,12 @@ public class Utils {
         public static String getUUIDFromName(String n) {
             String u = "";
             String r = URLS.getTextFromURL("https://api.mojang.com/users/profiles/minecraft/" + n);
-            if (!r.isEmpty())
+            if (!r.isEmpty()) {
                 try {
                     u = r.split("d\":\"")[1].split("\"")[0];
                 } catch (ArrayIndexOutOfBoundsException var4) {
                 }
+            }
 
             return u;
         }
@@ -992,11 +1060,12 @@ public class Utils {
             String u = UUID;
 
             String c = URLS.getTextFromURL("https://api.hypixel.net/player?key=" + URLS.hypixelApiKey + "&uuid=" + u);
-            if (c.isEmpty())
+            if (c.isEmpty()) {
                 return null;
-            if (c.equals("{\"success\":true,\"player\":null}"))
+            } else if (c.equals("{\"success\":true,\"player\":null}")) {
                 s[0] = -1;
-            else {
+                return s;
+            } else {
                 JsonObject d;
                 try {
                     JsonObject pr = parseJson(c).getAsJsonObject("player");
@@ -1041,8 +1110,9 @@ public class Utils {
                     s[1] = getValueAsInt(d, "op_duel_losses");
                     s[2] = getValueAsInt(d, "current_winstreak_mode_op_duel");
                 }
+
+                return s;
             }
-            return s;
         }
 
         public static JsonObject parseJson(String json) {
@@ -1080,14 +1150,15 @@ public class Utils {
                 GL11.glDisable(3553);
                 GL11.glDisable(2929);
                 GL11.glDepthMask(false);
-                float a = (float) ((color >> 24) & 255) / 255.0F;
-                float r = (float) ((color >> 16) & 255) / 255.0F;
-                float g = (float) ((color >> 8) & 255) / 255.0F;
+                float a = (float) (color >> 24 & 255) / 255.0F;
+                float r = (float) (color >> 16 & 255) / 255.0F;
+                float g = (float) (color >> 8 & 255) / 255.0F;
                 float b = (float) (color & 255) / 255.0F;
                 GL11.glColor4d(r, g, b, a);
                 RenderGlobal.drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D));
-                if (shade)
+                if (shade) {
                     dbb(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D), r, g, b);
+                }
 
                 GL11.glEnable(3553);
                 GL11.glEnable(2929);
@@ -1099,15 +1170,16 @@ public class Utils {
         public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color,
                 boolean damage) {
             if (e instanceof EntityLivingBase) {
-                double x = (e.lastTickPosX + ((e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks))
+                double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks
                         - mc.getRenderManager().viewerPosX;
-                double y = (e.lastTickPosY + ((e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks))
+                double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks
                         - mc.getRenderManager().viewerPosY;
-                double z = (e.lastTickPosZ + ((e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks))
+                double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks
                         - mc.getRenderManager().viewerPosZ;
                 float d = (float) expand / 40.0F;
-                if ((e instanceof EntityPlayer) && damage && (((EntityPlayer) e).hurtTime != 0))
+                if (e instanceof EntityPlayer && damage && ((EntityPlayer) e).hurtTime != 0) {
                     color = Color.RED.getRGB();
+                }
 
                 GlStateManager.pushMatrix();
                 if (type == 3) {
@@ -1148,20 +1220,21 @@ public class Utils {
                         GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
                         GlStateManager.disableDepth();
                         GL11.glScalef(0.03F + d, 0.03F + d, 0.03F + d);
-                        i = (int) (21.0D + (shift * 2.0D));
+                        i = (int) (21.0D + shift * 2.0D);
                         net.minecraft.client.gui.Gui.drawRect(i, -1, i + 5, 75, Color.black.getRGB());
                         net.minecraft.client.gui.Gui.drawRect(i + 1, b, i + 4, 74, Color.darkGray.getRGB());
                         net.minecraft.client.gui.Gui.drawRect(i + 1, 0, i + 4, b, hc);
                         GlStateManager.enableDepth();
-                    } else if (type == 6)
+                    } else if (type == 6) {
                         d3p(x, y, z, 0.699999988079071D, 45, 1.5F, color, color == 0);
-                    else {
-                        if (color == 0)
+                    } else {
+                        if (color == 0) {
                             color = Client.rainbowDraw(2L, 0L);
+                        }
 
-                        float a = (float) ((color >> 24) & 255) / 255.0F;
-                        float r = (float) ((color >> 16) & 255) / 255.0F;
-                        float g = (float) ((color >> 8) & 255) / 255.0F;
+                        float a = (float) (color >> 24 & 255) / 255.0F;
+                        float r = (float) (color >> 16 & 255) / 255.0F;
+                        float g = (float) (color >> 8 & 255) / 255.0F;
                         float b = (float) (color & 255) / 255.0F;
                         if (type == 5) {
                             GL11.glTranslated(x, y - 0.2D, z);
@@ -1171,20 +1244,22 @@ public class Utils {
                             int base = 1;
                             d2p(0.0D, 95.0D, 10, 3, Color.black.getRGB());
 
-                            for (i = 0; i < 6; ++i)
+                            for (i = 0; i < 6; ++i) {
                                 d2p(0.0D, 95 + (10 - i), 3, 4, Color.black.getRGB());
+                            }
 
-                            for (i = 0; i < 7; ++i)
+                            for (i = 0; i < 7; ++i) {
                                 d2p(0.0D, 95 + (10 - i), 2, 4, color);
+                            }
 
                             d2p(0.0D, 95.0D, 8, 3, color);
                             GlStateManager.enableDepth();
                         } else {
                             AxisAlignedBB bbox = e.getEntityBoundingBox().expand(0.1D + expand, 0.1D + expand,
                                     0.1D + expand);
-                            AxisAlignedBB axis = new AxisAlignedBB((bbox.minX - e.posX) + x, (bbox.minY - e.posY) + y,
-                                    (bbox.minZ - e.posZ) + z, (bbox.maxX - e.posX) + x, (bbox.maxY - e.posY) + y,
-                                    (bbox.maxZ - e.posZ) + z);
+                            AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y,
+                                    bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y,
+                                    bbox.maxZ - e.posZ + z);
                             GL11.glBlendFunc(770, 771);
                             GL11.glEnable(3042);
                             GL11.glDisable(3553);
@@ -1192,10 +1267,11 @@ public class Utils {
                             GL11.glDepthMask(false);
                             GL11.glLineWidth(2.0F);
                             GL11.glColor4f(r, g, b, a);
-                            if (type == 1)
+                            if (type == 1) {
                                 RenderGlobal.drawSelectionBoundingBox(axis);
-                            else if (type == 2)
+                            } else if (type == 2) {
                                 dbb(axis, r, g, b);
+                            }
 
                             GL11.glEnable(3553);
                             GL11.glEnable(2929);
@@ -1277,16 +1353,16 @@ public class Utils {
 
         public static void dtl(Entity e, int color, float lw) {
             if (e != null) {
-                double x = (e.lastTickPosX + ((e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks))
+                double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks
                         - mc.getRenderManager().viewerPosX;
-                double y = ((double) e.getEyeHeight() + e.lastTickPosY
-                        + ((e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks))
+                double y = (double) e.getEyeHeight() + e.lastTickPosY
+                        + (e.posY - e.lastTickPosY) * (double) Client.getTimer().renderPartialTicks
                         - mc.getRenderManager().viewerPosY;
-                double z = (e.lastTickPosZ + ((e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks))
+                double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Client.getTimer().renderPartialTicks
                         - mc.getRenderManager().viewerPosZ;
-                float a = (float) ((color >> 24) & 255) / 255.0F;
-                float r = (float) ((color >> 16) & 255) / 255.0F;
-                float g = (float) ((color >> 8) & 255) / 255.0F;
+                float a = (float) (color >> 24 & 255) / 255.0F;
+                float r = (float) (color >> 16 & 255) / 255.0F;
+                float g = (float) (color >> 8 & 255) / 255.0F;
                 float b = (float) (color & 255) / 255.0F;
                 GL11.glPushMatrix();
                 GL11.glEnable(3042);
@@ -1324,13 +1400,13 @@ public class Utils {
                 bottom = j;
             }
 
-            float f = (float) ((startColor >> 24) & 255) / 255.0F;
-            float f1 = (float) ((startColor >> 16) & 255) / 255.0F;
-            float f2 = (float) ((startColor >> 8) & 255) / 255.0F;
+            float f = (float) (startColor >> 24 & 255) / 255.0F;
+            float f1 = (float) (startColor >> 16 & 255) / 255.0F;
+            float f2 = (float) (startColor >> 8 & 255) / 255.0F;
             float f3 = (float) (startColor & 255) / 255.0F;
-            float f4 = (float) ((endColor >> 24) & 255) / 255.0F;
-            float f5 = (float) ((endColor >> 16) & 255) / 255.0F;
-            float f6 = (float) ((endColor >> 8) & 255) / 255.0F;
+            float f4 = (float) (endColor >> 24 & 255) / 255.0F;
+            float f5 = (float) (endColor >> 16 & 255) / 255.0F;
+            float f6 = (float) (endColor >> 8 & 255) / 255.0F;
             float f7 = (float) (endColor & 255) / 255.0F;
             GlStateManager.disableTexture2D();
             GlStateManager.enableBlend();
@@ -1374,8 +1450,9 @@ public class Utils {
                     fontRenderer.drawString(String.valueOf(c), (float) leftOffset, (float) topOffset,
                             Client.astolfoColorsDraw((int) colourParam1, (int) colourControl), rect);
                     leftOffset += fontRenderer.getCharWidth(c);
-                    if (c != ' ')
+                    if (c != ' ') {
                         colourControl -= 90L;
+                    }
                 }
             }
 
@@ -1388,26 +1465,30 @@ public class Utils {
             // up left
 
             if (marginY < halfHeight) {
-                if (marginX < halfWidth)
+                if (marginX < halfWidth) {
                     positionMode = PositionMode.UPLEFT;
-                if (marginX > halfWidth)
+                }
+                if (marginX > halfWidth) {
                     positionMode = PositionMode.UPRIGHT;
+                }
             }
 
             if (marginY > halfHeight) {
-                if (marginX < halfWidth)
+                if (marginX < halfWidth) {
                     positionMode = PositionMode.DOWNLEFT;
-                if (marginX > halfWidth)
+                }
+                if (marginX > halfWidth) {
                     positionMode = PositionMode.DOWNRIGHT;
+                }
             }
 
             return positionMode;
         }
 
         public static void d2p(double x, double y, int radius, int sides, int color) {
-            float a = (float) ((color >> 24) & 255) / 255.0F;
-            float r = (float) ((color >> 16) & 255) / 255.0F;
-            float g = (float) ((color >> 8) & 255) / 255.0F;
+            float a = (float) (color >> 24 & 255) / 255.0F;
+            float r = (float) (color >> 16 & 255) / 255.0F;
+            float g = (float) (color >> 8 & 255) / 255.0F;
             float b = (float) (color & 255) / 255.0F;
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -1418,9 +1499,9 @@ public class Utils {
             worldrenderer.begin(6, DefaultVertexFormats.POSITION);
 
             for (int i = 0; i < sides; ++i) {
-                double angle = ((6.283185307179586D * (double) i) / (double) sides) + Math.toRadians(180.0D);
-                worldrenderer.pos(x + (Math.sin(angle) * (double) radius), y + (Math.cos(angle) * (double) radius), 0.0D)
-                .endVertex();
+                double angle = 6.283185307179586D * (double) i / (double) sides + Math.toRadians(180.0D);
+                worldrenderer.pos(x + Math.sin(angle) * (double) radius, y + Math.cos(angle) * (double) radius, 0.0D)
+                        .endVertex();
             }
 
             tessellator.draw();
@@ -1430,9 +1511,9 @@ public class Utils {
 
         public static void d3p(double x, double y, double z, double radius, int sides, float lineWidth, int color,
                 boolean chroma) {
-            float a = (float) ((color >> 24) & 255) / 255.0F;
-            float r = (float) ((color >> 16) & 255) / 255.0F;
-            float g = (float) ((color >> 8) & 255) / 255.0F;
+            float a = (float) (color >> 24 & 255) / 255.0F;
+            float r = (float) (color >> 16 & 255) / 255.0F;
+            float g = (float) (color >> 8 & 255) / 255.0F;
             float b = (float) (color & 255) / 255.0F;
             mc.entityRenderer.disableLightmap();
             GL11.glDisable(3553);
@@ -1442,32 +1523,34 @@ public class Utils {
             GL11.glEnable(2848);
             GL11.glDepthMask(false);
             GL11.glLineWidth(lineWidth);
-            if (!chroma)
+            if (!chroma) {
                 GL11.glColor4f(r, g, b, a);
+            }
 
             GL11.glBegin(1);
             long d = 0L;
             long ed = 15000L / (long) sides;
             long hed = ed / 2L;
 
-            for (int i = 0; i < (sides * 2); ++i) {
+            for (int i = 0; i < sides * 2; ++i) {
                 if (chroma) {
-                    if ((i % 2) != 0) {
-                        if (i == 47)
+                    if (i % 2 != 0) {
+                        if (i == 47) {
                             d = hed;
+                        }
 
                         d += ed;
                     }
 
                     int c = Client.rainbowDraw(2L, d);
-                    float r2 = (float) ((c >> 16) & 255) / 255.0F;
-                    float g2 = (float) ((c >> 8) & 255) / 255.0F;
+                    float r2 = (float) (c >> 16 & 255) / 255.0F;
+                    float g2 = (float) (c >> 8 & 255) / 255.0F;
                     float b2 = (float) (c & 255) / 255.0F;
                     GL11.glColor3f(r2, g2, b2);
                 }
 
-                double angle = ((6.283185307179586D * (double) i) / (double) sides) + Math.toRadians(180.0D);
-                GL11.glVertex3d(x + (Math.cos(angle) * radius), y, z + (Math.sin(angle) * radius));
+                double angle = 6.283185307179586D * (double) i / (double) sides + Math.toRadians(180.0D);
+                GL11.glVertex3d(x + Math.cos(angle) * radius, y, z + Math.sin(angle) * radius);
             }
 
             GL11.glEnd();

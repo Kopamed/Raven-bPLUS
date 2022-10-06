@@ -4,12 +4,12 @@
     "refmap": "mixins.keystrokesmod.refmap.json",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
+        "MixinC03PacketPlayer",
         "MixinEntity",
         "MixinEntityPlayer",
         "MixinEntityPlayerSP",
         "MixinEntityRenderer",
         "MixinFontRenderer",
-        "MixinGuiMainMenu",
         "MixinGuiUtilRenderComponents",
         "MixinMinecraft",
         "MixinNetworkManager"
