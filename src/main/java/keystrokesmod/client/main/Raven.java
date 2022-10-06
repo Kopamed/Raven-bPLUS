@@ -125,7 +125,7 @@ public class Raven {
 
         Runtime.getRuntime().addShutdownHook(new Thread(ex::shutdown));
 
-        InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokes/raven.png");
+        InputStream ravenLogoInputStream = HUD.class.getResourceAsStream("/assets/keystrokesmod/raven.png");
         BufferedImage bf;
         try {
             assert ravenLogoInputStream != null;

@@ -3,22 +3,17 @@ package keystrokesmod.client.module.modules.combat;
 import java.awt.Color;
 
 import com.google.common.eventbus.Subscribe;
-import com.mojang.realmsclient.dto.RealmsServer.McoServerComparator;
 
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
-import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
-import keystrokesmod.client.mixin.mixins.MixinC03PacketPlayer;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 /**
@@ -37,24 +32,24 @@ public class LegitAura2 extends Module {
         this.registerSetting(rotationDistance = new SliderSetting("Rotation", 3.5, 3, 6, 0.05));
     }
 
-    @Subscribe 
+    @Subscribe
     public void onUpdate(UpdateEvent e) {
         if(e.isPre()) {
             target = (EntityPlayer) Utils.Player.getClosestPlayer((float) rotationDistance.getInput());
-            if(target != null && !AntiBot.bot(target)) {
-                float[] i = Utils.Player.getTargetRotations(target);
+            if((target != null) && !AntiBot.bot(target)) {
+                float[] i = Utils.Player.getTargetRotations(target, 0);
                 yaw = i[0];
                 pitch = i[1];
                 mc.thePlayer.setRotationYawHead(yaw);
                 e.setYaw(yaw);
                 e.setPitch(pitch);
-            } 
+            }
         }
     }
 
     @Subscribe
     public void renderWorldLast(ForgeEvent fe) {
-        if(fe.getEvent() instanceof RenderWorldLastEvent && target != null && !PlayerESP.t2.isToggled()) {
+        if((fe.getEvent() instanceof RenderWorldLastEvent) && (target != null) && !PlayerESP.t2.isToggled()) {
             RenderWorldLastEvent e = (RenderWorldLastEvent) fe.getEvent();
             int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
             int green =  255 - red;
