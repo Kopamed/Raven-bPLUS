@@ -257,7 +257,7 @@ public class MixinEntityRenderer {
      * @reason cant be fucked to deal with checking all the thing for night vision
      */
     @Overwrite
-    private float getNightVisionBrightness(EntityLivingBase entitylivingbaseIn, float partialTicks) {
+    public float getNightVisionBrightness(EntityLivingBase entitylivingbaseIn, float partialTicks) {
         if (!mc.thePlayer.isPotionActive(16))
             return 1;
         int i = entitylivingbaseIn.getActivePotionEffect(Potion.nightVision).getDuration();
