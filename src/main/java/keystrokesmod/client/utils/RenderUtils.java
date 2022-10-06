@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -51,20 +50,6 @@ public class RenderUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
-
-	public static void drawImage(ResourceLocation image, int x, int y, int width, int height, Color c) {
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glDepthMask(false);
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-		GL11.glColor4f(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha());
-		Raven.mc.getTextureManager().bindTexture(image);
-		Gui.drawModalRectWithCustomSizedTexture(x, y, 0.0f, 0.0f, width, height, width, height);
-		GL11.glDepthMask(true);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	public static Color blend(Color color, Color color1, double d0) {

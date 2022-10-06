@@ -36,7 +36,7 @@ public class KvModuleComponent extends KvComponent{
 			try {
 				Class<? extends KvComponent> clazz = setting.getComponentType();
 				clazz.getDeclaredConstructor(Setting.class).newInstance(setting);
-        	} catch(Exception e)  {e.printStackTrace();}
+        	} catch(Exception e)  {}
     }
 
     @Override
