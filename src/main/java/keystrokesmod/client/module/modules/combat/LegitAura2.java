@@ -111,7 +111,8 @@ public class LegitAura2 extends Module {
         if((target != null)
                 && (mc.thePlayer.getDistanceToEntity(target) < Utils.Client.ranModuleVal(reach, Utils.Java.rand()))
                 && !mc.thePlayer.isBlocking()) {
-            //mc.playerController.attackEntity(mc.thePlayer, target);
+            mc.thePlayer.swingItem();
+        	mc.playerController.attackEntity(mc.thePlayer, target);
         }
     }
 
@@ -128,17 +129,11 @@ public class LegitAura2 extends Module {
     public void leftClickExecute(int key) {
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
-                KeyBinding.setKeyBindState(key, true);
                 click();
-                KeyBinding.onTick(key);
                 this.genLeftTimings();
-                Utils.Client.setMouseButtonState(0, true);
                 leftDown = false;
-            } else if (System.currentTimeMillis() > this.leftDownTime) {
-                KeyBinding.setKeyBindState(key, false);
-                leftDown = true;
-                Utils.Client.setMouseButtonState(0, false);
-            }
+            } else if (System.currentTimeMillis() > this.leftDownTime)
+				leftDown = true;
         } else
             this.genLeftTimings();
 

@@ -14,7 +14,6 @@ import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.module.modules.client.GuiModule;
-import keystrokesmod.client.module.modules.render.CursorTrail;
 import keystrokesmod.client.utils.Timer;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
@@ -173,13 +172,6 @@ public class ClickGui extends GuiScreen {
 
         terminal.update(x, y);
         terminal.draw();
-
-    	try {
-    		CursorTrail cursorTrail = (CursorTrail) Raven.moduleManager.getModuleByClazz(CursorTrail.class);
-    		if(cursorTrail.isEnabled())
-    			cursorTrail.draw(mouseX, mouseY);
-    	} catch (Exception e) {}
-        return;
     }
 
     @Override
