@@ -7,11 +7,11 @@ import org.lwjgl.input.Mouse;
 import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.LookEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
 import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.render.PlayerESP;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -33,19 +33,18 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 public class LegitAura2 extends Module {
 
     private EntityPlayer target;
-    public DoubleSliderSetting reach;
-    private SliderSetting rotationDistance, fov;
+    private SliderSetting rotationDistance, fov, reach;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival;
+    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, raytrace;
     private CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn;
     private long leftDownTime, leftUpTime, leftk, leftl;
-    private float yaw, pitch;
+    private float yaw, pitch, prevYaw, prevPitch;
     private double leftm;
 
     public LegitAura2() {
         super("Aura", ModuleCategory.combat);
-        this.registerSetting(reach = new DoubleSliderSetting("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
+        this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
         this.registerSetting(rotationDistance = new SliderSetting("Rotation Range", 3.5, 3, 6, 0.05));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(fov = new SliderSetting("Fov", 30, 0, 360, 1));
@@ -57,35 +56,44 @@ public class LegitAura2 extends Module {
 
     @Subscribe
     public void onUpdate(UpdateEvent e) {
-        if(!e.isPre())
-            return;
+        if(!Utils.Player.isPlayerInGame()) {
+        	yaw = mc.thePlayer.rotationYaw;
+        	return;
+        }
         Mouse.poll();
-        target = Utils.Player.getClosestPlayer((float) rotationDistance.getInput());
-        if(!(
-                ((target != null) && AntiBot.bot(target) && (mc.currentScreen == null))
-                &&(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
-                && (coolDown.hasFinished())
-                && (!mouseDown.isToggled() || Mouse.isButtonDown(0))
-                && (!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying))
-                && (!Utils.Player.fov(target, (float) fov.getInput()))) {
+        EntityPlayer pTarget = Utils.Player.getClosestPlayer((float) rotationDistance.getInput());
+        //Utils.Player.sendMessageToSelf(!(!mouseDown.isToggled() || Mouse.isButtonDown(0)) + "");
+        if(
+                (pTarget == null)
+                || AntiBot.bot(pTarget)
+                || (mc.currentScreen != null)
+                || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
+                || !coolDown.hasFinished()
+                || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
+                || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)
+                || !Utils.Player.fov(pTarget, (float) fov.getInput())) {
             target = null;
+            prevYaw = yaw;
+            prevPitch = pitch;
             yaw = mc.thePlayer.rotationYaw;
             pitch = mc.thePlayer.rotationPitch;
             //need to add smooth rotations here
             return;
         }
+        target = pTarget;
         ravenClick();
+        prevYaw = yaw;
+        prevPitch = pitch;
         float[] i = Utils.Player.getTargetRotations(target, 0);
         yaw = i[0];
         pitch = i[1] + 4f;
-        mc.thePlayer.setRotationYawHead(yaw);
         e.setYaw(yaw);
         e.setPitch(pitch);
     }
 
     @Subscribe
     public void renderWorldLast(ForgeEvent fe) {
-        if((fe.getEvent() instanceof RenderWorldLastEvent) && (target != null) && !PlayerESP.t2.isToggled()) {
+        if((fe.getEvent() instanceof RenderWorldLastEvent) && (target != null)) {
             int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
             int green =  255 - red;
             int rgb = new Color(red, green, 0).getRGB();
@@ -103,21 +111,22 @@ public class LegitAura2 extends Module {
 
     @Subscribe
     public void move(MoveInputEvent e) {
-        if(target != null)
-            e.setYaw(yaw);
+    	if(target == null)
+    		return;
+    	e.setYaw(yaw);
     }
 
-    public void click() {
-        if((target != null)
-                && (mc.thePlayer.getDistanceToEntity(target) < Utils.Client.ranModuleVal(reach, Utils.Java.rand()))
-                && !mc.thePlayer.isBlocking()) {
-            mc.thePlayer.swingItem();
-        	mc.playerController.attackEntity(mc.thePlayer, target);
-        }
+    @Subscribe
+    public void lookEvent(LookEvent e) {
+    	if(target == null)
+    		return;
+    	e.setPrevYaw(prevYaw);
+    	e.setPrevPitch(prevPitch);
+    	e.setYaw(yaw);
+    	e.setPitch(pitch);
     }
 
     private void ravenClick() {
-        Mouse.poll();
         if (!Mouse.isButtonDown(0)) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
             Utils.Client.setMouseButtonState(0, false);
@@ -129,11 +138,16 @@ public class LegitAura2 extends Module {
     public void leftClickExecute(int key) {
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
-                click();
+                KeyBinding.setKeyBindState(key, true);
+                KeyBinding.onTick(key);
                 this.genLeftTimings();
+                Utils.Client.setMouseButtonState(0, true);
                 leftDown = false;
-            } else if (System.currentTimeMillis() > this.leftDownTime)
-				leftDown = true;
+            } else if (System.currentTimeMillis() > this.leftDownTime) {
+                KeyBinding.setKeyBindState(key, false);
+                leftDown = true;
+                Utils.Client.setMouseButtonState(0, false);
+            }
         } else
             this.genLeftTimings();
 
@@ -165,5 +179,4 @@ public class LegitAura2 extends Module {
         this.leftUpTime = System.currentTimeMillis() + delay;
         this.leftDownTime = (System.currentTimeMillis() + (delay / 2L)) - Utils.Java.rand().nextInt(10);
     }
-
 }

@@ -36,7 +36,6 @@ public class CursorTrail extends Module {
 		GL11.glLineWidth(5f);
 		GL11.glBegin(2);
 		GL11.glVertex2d(x, y);
-		int  it = 0;
 		for(CursorTrailPoint tp : trailPoints)
 			tp.draw();
 		GL11.glEnd();
@@ -45,11 +44,11 @@ public class CursorTrail extends Module {
 		GL11.glDisable(2848);
 		GL11.glDisable(3042);
 		GL11.glEnable(3553);
-		GL11.glScaled(2.0, 2.0, 2.0);
 		GL11.glPopAttrib();
 		GL11.glLineWidth(1.0f);
 		//GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+
 
 
 	public class CursorTrailPoint {

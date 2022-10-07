@@ -13,7 +13,8 @@
         "MixinGuiScreen",
         "MixinGuiUtilRenderComponents",
         "MixinMinecraft",
-        "MixinNetworkManager"
+        "MixinNetworkManager",
+        "MxinEntityLivingBase"
     ],
     "client": [
         "IMinecraft"
