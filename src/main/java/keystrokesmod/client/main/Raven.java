@@ -74,7 +74,7 @@ fix version checks being completely fucked
 
 public class Raven {
 
-	public static boolean debugger;
+	public static boolean debugger = true;
     public static final VersionManager versionManager = new VersionManager();
     public static CommandManager commandManager;
     public static final String sourceLocation = "https://github.com/K-ov/Raven-bPLUS";

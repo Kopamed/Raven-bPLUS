@@ -245,9 +245,9 @@ public class RenderUtils {
 		drawRoundedOutline(x, y, d, y1, radius, borderSize, borderC, round);
 	}
 
-	public static void drawBorderedRoundedRect(float x, float y, float d, float y1, float radius, float borderSize, int borderC, int insideC) {
-		drawRoundedRect(x, y, d, y1, radius, insideC);
-		drawRoundedOutline(x, y, d, y1, radius, borderSize, borderC);
+	public static void drawBorderedRoundedRect(float x, float y, float x1, float y1, float radius, float borderSize, int borderC, int insideC) {
+		drawRoundedRect(x, y, x1, y1, radius, insideC);
+		drawRoundedOutline(x, y, x1, y1, radius, borderSize, borderC);
 	}
 
 	public static ResourceLocation getResourcePath(String s) {
@@ -258,7 +258,7 @@ public class RenderUtils {
             bf = ImageIO.read(ravenLogoInputStream);
             return Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",new DynamicTexture(bf));
         } catch (IOException | IllegalArgumentException | NullPointerException noway) {
-            noway.printStackTrace();
+            //noway.printStackTrace();
             return new ResourceLocation("null");
         }
 	}

@@ -98,6 +98,7 @@ public class RGBSetting extends Setting {
     }
 
     public void setColor(int colour, int value) {
+    	value = value > 255 ? 255 : value < 0 ? 0 : value;
         this.colour[colour] = value;
         this.colorRGB = new Color(this.colour[0], this.colour[1], this.colour[2]).getRGB();
     }

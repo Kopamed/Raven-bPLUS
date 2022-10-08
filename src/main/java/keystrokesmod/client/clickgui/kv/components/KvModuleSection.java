@@ -60,8 +60,8 @@ public class KvModuleSection extends KvSection {
             categoryComponent.draw(mouseX, mouseY);
 
         // drawing modules/settings
-        if(openModule != null) { //eclipse wouldnt let me scroll to the end of the line :sob:
-            openModule.drawOpen();
+        if(openModule != null) {
+            openModule.drawOpen(mouseX, mouseY);
             return;
         }
         for (KvComponent module : currentComponents)
@@ -70,6 +70,7 @@ public class KvModuleSection extends KvSection {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
+    	//wtf did i do here i cant even remember
         if (super.mouseClicked(mouseX, mouseY, mouseButton))
             return true;
         if(openModule != null)
@@ -77,7 +78,7 @@ public class KvModuleSection extends KvSection {
         	openModule.clicked(mouseButton, mouseX, mouseY);
         	return false;
         	} catch(Exception e) {
-        		e.printStackTrace();
+        		e.printStackTrace(); // lol
         	}
         for (KvComponent component : allCurrentComponents)
             if (component.mouseDown(mouseX, mouseY, mouseButton))
@@ -148,6 +149,12 @@ public class KvModuleSection extends KvSection {
         allCurrentComponents.clear();
         allCurrentComponents.addAll(currentCategories);
         allCurrentComponents.addAll(currentComponents);
+    }
+
+    @Override
+    public void mouseReleased(int x, int y, int button) {
+    	for (KvComponent component : allCurrentComponents)
+			component.mouseReleased(x, y, button);
     }
 
 }

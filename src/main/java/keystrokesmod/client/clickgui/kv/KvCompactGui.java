@@ -74,6 +74,11 @@ public class KvCompactGui extends GuiScreen {
 		}
 	}
 
+    @Override
+    public void mouseReleased(int x, int y, int button) {
+    	currentSection.mouseReleased(x, y, button);
+    }
+
 	public KvSection getCurrentSection() {
 		return currentSection;
 	}

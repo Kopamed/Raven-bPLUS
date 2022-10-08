@@ -71,6 +71,10 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
         currentOption = options[(currentOption.ordinal() + 1) % (options.length)];
     }
 
+    public void prevMode() {
+        currentOption = options[currentOption.ordinal() == 0 ? options.length - 1 : currentOption.ordinal() - 1];
+    }
+
     public T getPrevMode() {
         return options[currentOption.ordinal() == 0 ? options.length - 1 : currentOption.ordinal() - 1];
     }

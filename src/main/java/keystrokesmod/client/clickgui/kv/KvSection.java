@@ -63,6 +63,10 @@ public class KvSection {
 		return false;
 	}
 
+    public void mouseReleased(int x, int y, int button) {
+
+    }
+
 	public boolean isMouseOver(int x, int y) {
 		return ((x > sectionX) && (x < (sectionX + width)) && (y > sectionY) && (y < (sectionY + height)));
 	}

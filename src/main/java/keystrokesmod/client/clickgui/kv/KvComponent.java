@@ -58,5 +58,4 @@ public abstract class KvComponent {
     public int getX() {
         return x;
     }
-
 }

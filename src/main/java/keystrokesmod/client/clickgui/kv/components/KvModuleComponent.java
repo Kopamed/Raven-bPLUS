@@ -35,7 +35,7 @@ public class KvModuleComponent extends KvComponent{
         for(Setting setting : module.getSettings())
 			try {
 				Class<? extends KvComponent> clazz = setting.getComponentType();
-				clazz.getDeclaredConstructor(Setting.class).newInstance(setting);
+				settings.add(clazz.getDeclaredConstructor(Setting.class).newInstance(setting));
         	} catch(Exception e)  {}
     }
 
@@ -61,7 +61,7 @@ public class KvModuleComponent extends KvComponent{
         Gui.drawModalRectWithCustomSizedTexture(settingX, settingY, 0, 0, settingWidth, settingHeight, settingWidth, settingHeight);
     }
 
-    public void drawOpen() {
+    public void drawOpen(int mouseX, int mouseY) {
         //title box
         RenderUtils.drawBorderedRoundedRect(
                 titleBoxX,
@@ -72,13 +72,12 @@ public class KvModuleComponent extends KvComponent{
                 2,
                 Utils.Client.rainbowDraw(1, 0), 0x00FFFFFF);
         FontUtil.normal.drawString(module.getName(), titleBoxX + 2, titleBoxY + (titleBoxHeight/2), 0xFFFFFFFF);
-
-
         Minecraft.getMinecraft().getTextureManager().bindTexture(settingIcon);
+
+      //settings icon
         Gui.drawModalRectWithCustomSizedTexture(settingX2, settingY2, 0, 0, settingWidth2, settingHeight2, settingWidth2, settingHeight2);
 
-
-        //settings
+        //settings box
         RenderUtils.drawBorderedRoundedRect(
                 settingsBoxX,
                 settingsBoxY,
@@ -88,14 +87,25 @@ public class KvModuleComponent extends KvComponent{
                 2,
                 Utils.Client.rainbowDraw(1, 0), 0x30000000,
                 new boolean[] {false, true, true, false});
+
+        //settings
+        for(KvComponent component : settings)
+			component.draw(mouseX, mouseY);
     }
 
 
     @Override
 	public void clicked(int mouseButton, int x, int y) {
     	System.out.println("b");
-    	if ((x > settingX2) && (x < (settingX2 + settingWidth2)) && (y > settingY2) && (y < (settingY2 + settingHeight2)))
-			KvModuleSection.moduleSec.setOpenmodule(null);
+    	if(KvModuleSection.moduleSec.openModule != null) {
+    		if ((x > settingX2) && (x < (settingX2 + settingWidth2)) && (y > settingY2) && (y < (settingY2 + settingHeight2))) {
+    			KvModuleSection.moduleSec.setOpenmodule(null);
+    			return;
+    		}
+    		for(KvComponent component : settings)
+				component.mouseDown(x, y, mouseButton);
+        }
+
 		else if ((x > settingX) && (x < (settingX + settingWidth)) && (y > settingY) && (y < (settingY + settingHeight)))
 			KvModuleSection.moduleSec.setOpenmodule(this);
 		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > toggleY) && (y < (toggleY + toggleHeight)))
@@ -132,12 +142,32 @@ public class KvModuleComponent extends KvComponent{
         settingsBoxY = titleBoxY + titleBoxHeight;
         settingsBoxWidth = titleBoxWidth - (KvModuleSection.padding * 2);
         settingsBoxHeight = height - titleBoxHeight - (KvModuleSection.padding * 2);
+
+        int yOffset = KvModuleSection.padding;
+        int xOffset = KvModuleSection.padding;
+        int i = 0;
+        for(KvComponent component : settings) {
+        	i++;
+        	component.setCoords(settingsBoxX + xOffset, settingsBoxY + yOffset);
+        	component.setDimensions((settingsBoxWidth/2) - (KvModuleSection.padding * 2), 12);
+        	yOffset += component.getHeight() + 2;
+        	if(i == (settings.size()/2)) {
+        		yOffset = KvModuleSection.padding;
+        		xOffset = settingsBoxWidth/2;
+        	}
+        }
     }
 
     @Override
     public void setDimensions(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    @Override
+    public void mouseReleased(int x, int y, int button) {
+    	for(KvComponent component : settings)
+			component.mouseReleased(x, y, button);
     }
 
 }
