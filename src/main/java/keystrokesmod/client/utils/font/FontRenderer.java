@@ -83,7 +83,6 @@ public class FontRenderer extends CFont {
         x *= 2;
         y = (y - 3) * 2;
         GL11.glPushMatrix();
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -191,7 +190,6 @@ public class FontRenderer extends CFont {
 
         GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_DONT_CARE);
         GlStateManager.resetColor();
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
         GL11.glPopMatrix();
         GL11.glColor4f(1, 1, 1, 1);
         return (float) x / 2f;
@@ -210,7 +208,6 @@ public class FontRenderer extends CFont {
         x *= 2;
         y = (y - 3) * 2;
         GL11.glPushMatrix();
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -317,7 +314,6 @@ public class FontRenderer extends CFont {
         }
 
         GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_DONT_CARE);
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
         GL11.glPopMatrix();
         GL11.glColor4f(1, 1, 1, 1);
         return (float) x / 2f;
@@ -336,7 +332,6 @@ public class FontRenderer extends CFont {
         x *= 2;
         y = (y - 3) * 2;
         GL11.glPushMatrix();
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -443,7 +438,6 @@ public class FontRenderer extends CFont {
         }
 
         GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_DONT_CARE);
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
         GL11.glPopMatrix();
         GL11.glColor4f(1, 1, 1, 1);
         return (float) x / 2f;

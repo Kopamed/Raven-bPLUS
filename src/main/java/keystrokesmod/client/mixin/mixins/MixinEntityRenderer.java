@@ -10,6 +10,7 @@ import com.google.common.base.Predicates;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.combat.LegitAura2;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.render.Fullbright;
 import net.minecraft.client.Minecraft;
@@ -66,8 +67,9 @@ public class MixinEntityRenderer {
 
 
             Module reachMod = Raven.moduleManager.getModuleByClazz(Reach.class);
+            Module aura = Raven.moduleManager.getModuleByClazz(LegitAura2.class);
 
-            if (!reachMod.isEnabled()) {
+            if (!reachMod.isEnabled() && !aura.isEnabled()) {
                 if (this.mc.playerController.extendedReach()) {
                     reach = 6.0D;
                     distanceToVec = 6.0D;

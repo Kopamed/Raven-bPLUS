@@ -107,9 +107,9 @@ public class LegitAura2 extends Module {
             int green =  255 - red;
             int rgb = new Color(red, green, 0).getRGB();
             Utils.HUD.drawBoxAroundEntity(target, 2, 0, 0, rgb, false);
+            for(EntityPlayer p : pTargets)
+    			Utils.HUD.drawBoxAroundEntity(p, 2, 0, 0, 0x800000FF, false);
         }
-        for(EntityPlayer p : pTargets)
-			Utils.HUD.drawBoxAroundEntity(p, 2, 0, 0, 0xFF0000FF, false);
     }
 
     @Subscribe

@@ -89,7 +89,6 @@ import keystrokesmod.client.module.modules.render.Radar;
 import keystrokesmod.client.module.modules.render.Tracers;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.modules.world.ChatLogger;
-import keystrokesmod.client.module.modules.world.Scaffold;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
@@ -190,7 +189,6 @@ public class ModuleManager {
         addModule(new Radar());
         addModule(new AutoSoup());
         addModule(new CursorTrail());
-        addModule(new Scaffold());
 
         //addModule(new SpeedTest());
         //addModule(new LegitAura());
