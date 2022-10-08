@@ -1,6 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
 import java.awt.Color;
+import java.util.Comparator;
+import java.util.List;
 
 import org.lwjgl.input.Mouse;
 
@@ -13,11 +15,14 @@ import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.Utils.Player;
+import keystrokesmod.client.utils.collection.SortValue;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -35,7 +40,9 @@ public class LegitAura2 extends Module {
     private EntityPlayer target;
     private SliderSetting rotationDistance, fov, reach;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, raytrace;
+    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival;
+    private List<EntityPlayer> pTargets;
+    private ComboSetting sortMode;
     private CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn;
     private long leftDownTime, leftUpTime, leftk, leftl;
@@ -52,6 +59,7 @@ public class LegitAura2 extends Module {
         this.registerSetting(disableOnTp = new TickSetting("Disable after tp", true));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", true));
+        this.registerSetting(sortMode = new ComboSetting("Sort mode", SortMode.Distance));
     }
 
     @Subscribe
@@ -61,17 +69,18 @@ public class LegitAura2 extends Module {
         	return;
         }
         Mouse.poll();
-        EntityPlayer pTarget = Utils.Player.getClosestPlayer((float) rotationDistance.getInput());
-        //Utils.Player.sendMessageToSelf(!(!mouseDown.isToggled() || Mouse.isButtonDown(0)) + "");
+        pTargets = Utils.Player.getClosePlayers((float) rotationDistance.getInput());
+        pTargets.removeIf(player -> !(isValidTarget(player)));
+        SortMode sm = (SortMode) sortMode.getMode();
+        EntityPlayer pTarget = pTargets.isEmpty() ? null : pTargets.stream().min(Comparator.comparingDouble(target -> sm.sv.value(target))).get();
+        pTargets.remove(pTarget);
         if(
-                (pTarget == null)
-                || AntiBot.bot(pTarget)
-                || (mc.currentScreen != null)
+        		(pTarget == null)
+        		|| (mc.currentScreen != null)
                 || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
                 || !coolDown.hasFinished()
                 || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
-                || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)
-                || !Utils.Player.fov(pTarget, (float) fov.getInput())) {
+                || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
             target = null;
             prevYaw = yaw;
             prevPitch = pitch;
@@ -99,11 +108,13 @@ public class LegitAura2 extends Module {
             int rgb = new Color(red, green, 0).getRGB();
             Utils.HUD.drawBoxAroundEntity(target, 2, 0, 0, rgb, false);
         }
+        for(EntityPlayer p : pTargets)
+			Utils.HUD.drawBoxAroundEntity(p, 2, 0, 0, 0xFF0000FF, false);
     }
 
     @Subscribe
     public void packetEvent(PacketEvent e) {
-        if((e.getPacket() instanceof S08PacketPlayerPosLook) && mouseDown.isToggled() && (coolDown.getTimeLeft() < 2000)) {
+        if((e.getPacket() instanceof S08PacketPlayerPosLook) && disableOnTp.isToggled() && (coolDown.getTimeLeft() < 2000)) {
             coolDown.setCooldown(2000);
             coolDown.start();
         }
@@ -111,15 +122,11 @@ public class LegitAura2 extends Module {
 
     @Subscribe
     public void move(MoveInputEvent e) {
-    	if(target == null)
-    		return;
     	e.setYaw(yaw);
     }
 
     @Subscribe
     public void lookEvent(LookEvent e) {
-    	if(target == null)
-    		return;
     	e.setPrevYaw(prevYaw);
     	e.setPrevPitch(prevPitch);
     	e.setYaw(yaw);
@@ -178,5 +185,33 @@ public class LegitAura2 extends Module {
 
         this.leftUpTime = System.currentTimeMillis() + delay;
         this.leftDownTime = (System.currentTimeMillis() + (delay / 2L)) - Utils.Java.rand().nextInt(10);
+    }
+
+    public double getReach() {
+    	return reach.getInput();
+    }
+
+    private boolean isValidTarget(EntityPlayer ep) {
+    	return (
+                (ep != null)
+                && !AntiBot.bot(ep)
+                && (ep != mc.thePlayer)
+                && Utils.Player.fov(ep, (float) fov.getInput()));
+    }
+
+    public enum SortMode {
+    	Distance(player -> mc.thePlayer.getDistanceToEntity(player)),
+    	Hurttime(player -> (float) player.hurtTime),
+    	Fov(Player::fovToEntity);
+
+    	private final SortValue sv;
+
+    	private SortMode(SortValue sv) {
+    		this.sv = sv;
+    	}
+
+    	public SortValue getSortValue() {
+    		return sv;
+    	}
     }
 }

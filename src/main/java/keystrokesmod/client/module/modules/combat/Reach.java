@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.combat;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -10,7 +11,7 @@ public class Reach extends Module {
     public static TickSetting weapon_only;
     public static TickSetting moving_only;
     public static TickSetting sprint_only;
-   // public static LegitAura2 la;
+    public static LegitAura2 la;
 
     public Reach() {
         super("Reach", ModuleCategory.combat);
@@ -19,31 +20,28 @@ public class Reach extends Module {
         this.registerSetting(moving_only = new TickSetting("Moving only", false));
         this.registerSetting(sprint_only = new TickSetting("Sprint only", false));
     }
-    
+
     @Override
     public void postApplyConfig() {
-       // la = (LegitAura2) Raven.moduleManager.getModuleByClazz(LegitAura2.class);
+       la = (LegitAura2) Raven.moduleManager.getModuleByClazz(LegitAura2.class);
     }
 
     public static double getReach() {
-        //if(la.isEnabled()) 
-        //    return Utils.Client.ranModuleVal(la.reach, Utils.Java.rand());
+        if(la.isEnabled())
+            return la.getReach();
 
         double normal = mc.playerController.extendedReach()? 5 : 3;
 
-        if (!Utils.Player.isPlayerInGame())
+        if (!Utils.Player.isPlayerInGame() || (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon()))
             return normal;
 
-        if (weapon_only.isToggled() && !Utils.Player.isPlayerHoldingWeapon())
-            return normal;
-
-        if (moving_only.isToggled() && (double) mc.thePlayer.moveForward == 0.0D
-                && (double) mc.thePlayer.moveStrafing == 0.0D)
+        if (moving_only.isToggled() && ((double) mc.thePlayer.moveForward == 0.0D)
+                && ((double) mc.thePlayer.moveStrafing == 0.0D))
             return normal;
 
         if (sprint_only.isToggled() && !mc.thePlayer.isSprinting())
             return normal;
-        
+
         return Utils.Client.ranModuleVal(reach, Utils.Java.rand()) + (mc.playerController.extendedReach()? 2 : 0);
     }
 }

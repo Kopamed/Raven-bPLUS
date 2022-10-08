@@ -14,20 +14,20 @@ import net.minecraft.world.World;
 @Mixin(EntityLivingBase.class)
 public abstract class MxinEntityLivingBase extends Entity {
 
+	public MxinEntityLivingBase(World worldIn) {
+		super(worldIn);
+	}
+
 	@Shadow
 	public float rotationYawHead;
 
 	@Shadow
 	public float prevRotationYawHead;
 
-	public MxinEntityLivingBase(World worldIn) {
-		super(worldIn);
-	}
-
-    /**
-     * @author mc code
-     * @reason lookevent
-     */
+	/**
+	 * @author mc code
+	 * @reason lookevent
+	 */
 	@Override
 	@Overwrite
     public Vec3 getLook(float partialTicks)

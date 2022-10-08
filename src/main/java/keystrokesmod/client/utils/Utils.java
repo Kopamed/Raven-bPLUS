@@ -450,7 +450,7 @@ public class Utils {
             if (mc.theWorld == null)
                 return null;
             Iterator entities;
-            entities = mc.theWorld.loadedEntityList.iterator();
+            entities = mc.theWorld.playerEntities.iterator();
             EntityPlayer cplayer = null;
 
             while (entities.hasNext()) {
@@ -465,6 +465,18 @@ public class Utils {
             }
 
             return cplayer;
+        }
+
+        public static List<EntityPlayer> getClosePlayers(double dis) {
+            if (mc.theWorld == null)
+                return null;
+            List<EntityPlayer> players = new ArrayList<>();
+
+            for(EntityPlayer player : mc.theWorld.playerEntities)
+            	if(mc.thePlayer.getDistanceToEntity(player) < dis)
+            		players.add(player);
+
+            return players;
         }
     }
 
