@@ -28,8 +28,7 @@ public class GuiModule extends Module {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
-        if(Raven.debugger)
-			this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));   
+        this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
         this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
         this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
@@ -86,8 +85,9 @@ public class GuiModule extends Module {
     @Override
 	public void onEnable() {
         if (Utils.Player.isPlayerInGame() && ((mc.currentScreen != Raven.clickGui) || (mc.currentScreen != Raven.kvCompactGui)))
-			if(Raven.debugger) {
+			if(betagui.isToggled()) {
                 mc.displayGuiScreen(Raven.kvCompactGui);
+                Raven.kvCompactGui.initGui();
                 Raven.kvCompactGui.initGui();
             } else {
                 mc.displayGuiScreen(Raven.clickGui);
@@ -192,7 +192,7 @@ public class GuiModule extends Module {
                 new Color(27, 25, 26), // disabledBottomRGB
                 new Color(255, 255, 255), // disabledTextRGB
                 new Color(27, 25, 26) // backgroundRGBW
-                ), 
+                ),
         PlusPlus( // name
                 false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
                 // categoryBackground

@@ -58,4 +58,13 @@ public abstract class KvComponent {
     public int getX() {
         return x;
     }
+
+    public void keyTyped(char t, int k) {
+
+    }
+
+	public void scroll(float i) {
+		y += i;
+	}
+
 }

@@ -3,13 +3,17 @@ package keystrokesmod.client.clickgui.kv.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.clickgui.kv.KvCompactGui;
 import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.kv.KvSection;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.Module.ModuleCategory;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 
 public class KvModuleSection extends KvSection {
 
@@ -18,10 +22,12 @@ public class KvModuleSection extends KvSection {
     private List<KvComponent> currentComponents = new ArrayList<KvComponent>(); // settings/modules
     private List<KvComponent> allCurrentComponents = new ArrayList<KvComponent>(); // settings/modules + categories
     public static final int padding = 5;
+    public static int categoryScroll, moduleScroll;
     public KvModuleComponent openModule;
     public KvCategoryComponent currentCategory;
-    public int leftSectionWidth;
     public static KvModuleSection moduleSec;
+    private int mouseX, mouseY, leftSectionWidth
+    			,categoryX, categoryWidth, categoryY, categoryHeight, moduleX, moduleY, moduleWidth, moduleHeight;
 
     public KvModuleSection() {
         super("Modules");
@@ -45,27 +51,32 @@ public class KvModuleSection extends KvSection {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    	this.mouseX = mouseX;
+    	this.mouseY = mouseY;
         super.drawScreen(mouseX, mouseY, partialTicks);
         // vertical boarder
         Gui.drawRect(containerX + leftSectionWidth, containerY + (containerHeight / 6),
                 containerX + (containerWidth / 4) + 1, containerY + containerHeight, Utils.Client.rainbowDraw(1, 0));
 
         // drawing categories
-        // note i need to do this
-        // note i hate scissor
-        // GL11.glPushMatrix();
-        // GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        // GL11.glScissor(mouseY, mouseY, mouseY, mouseY);
+        int sf = new ScaledResolution(Raven.mc).getScaleFactor();
+
+        GL11.glScissor(categoryX * sf, (categoryY - (containerHeight / 6))* sf, categoryWidth * sf, categoryHeight * sf);
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
         for (KvCategoryComponent categoryComponent : topCategories)
             categoryComponent.draw(mouseX, mouseY);
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
         // drawing modules/settings
         if(openModule != null) {
             openModule.drawOpen(mouseX, mouseY);
             return;
         }
+        GL11.glScissor(moduleX * sf, (moduleY - (containerHeight / 6))* sf, moduleWidth * sf, moduleHeight * sf);
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
         for (KvComponent module : currentComponents)
             module.draw(mouseX, mouseY);
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
     }
 
     @Override
@@ -73,6 +84,9 @@ public class KvModuleSection extends KvSection {
     	//wtf did i do here i cant even remember
         if (super.mouseClicked(mouseX, mouseY, mouseButton))
             return true;
+        for (KvComponent component : currentCategories)
+			if (component.mouseDown(mouseX, mouseY, mouseButton))
+					return true;
         if(openModule != null)
 			try {
         	openModule.clicked(mouseButton, mouseX, mouseY);
@@ -81,8 +95,8 @@ public class KvModuleSection extends KvSection {
         		e.printStackTrace(); // lol
         	}
         for (KvComponent component : allCurrentComponents)
-            if (component.mouseDown(mouseX, mouseY, mouseButton))
-                return true;
+        	if (component.mouseDown(mouseX, mouseY, mouseButton))
+        		return true;
         return false;
     }
 
@@ -94,35 +108,44 @@ public class KvModuleSection extends KvSection {
 
     public void refreshCategories() {
         currentCategories.clear();
-        int categoryHeight = 0;
+        int offset = 0;
+        categoryX = containerX;
+        categoryY = containerY + (containerHeight / 6);
+        categoryWidth = containerWidth / 4;
+        categoryHeight =  (containerHeight/6) * 5;
         for (KvCategoryComponent categoryComponent : topCategories) {
-            categoryComponent.setCoords(containerX + padding,containerY + (containerHeight / 6) + padding + categoryHeight);
-            categoryComponent.setDimensions(containerWidth / 4, containerHeight / 12);
+            categoryComponent.setCoords(containerX + padding, categoryY + padding + offset);
+            categoryComponent.setDimensions(categoryWidth, (containerHeight / 12));
 
             currentCategories.add(categoryComponent);
-            categoryHeight += categoryComponent.getHeight();
+            offset += categoryComponent.getHeight();
 
             if (categoryComponent.isOpen())
                 for (KvCategoryComponent childCategoryComponent : categoryComponent.getChildCategorys()) {
-                    childCategoryComponent.setCoords(containerX + (2 * padding),containerY + (containerHeight / 6) + padding + categoryHeight);
-                    childCategoryComponent.setDimensions(containerWidth / 4, containerHeight / 12);
+                    childCategoryComponent.setCoords(containerX + (2 * padding), categoryY + padding + offset);
+                    childCategoryComponent.setDimensions(categoryWidth, containerHeight / 12);
 
                     currentCategories.add(childCategoryComponent);
-                    categoryHeight += childCategoryComponent.getHeight();
+                    offset += childCategoryComponent.getHeight();
                 }
         }
     }
 
     public void refreshModules() {
+    	Utils.Player.sendMessageToSelf(moduleY + "");
         currentComponents.clear();
         int xOffSet = 0;
         int yOffSet = 0;
         int iterations = 0;
+        moduleX = containerX + leftSectionWidth + padding;
+        moduleY = containerY + (containerHeight/6);
+        moduleWidth = containerWidth - leftSectionWidth;
+        moduleHeight = (containerY + containerHeight) - moduleY;
         for (KvModuleComponent module : currentCategory.getModules()) {
             iterations++;
 
-            module.setCoords(containerX + leftSectionWidth + padding + xOffSet,containerY + (containerHeight / 6) + padding + yOffSet);
-            module.setDimensions((containerWidth - leftSectionWidth - (6 * padding)) / 3, (containerWidth - leftSectionWidth - (4 * padding)) / 3);
+            module.setCoords(moduleX + xOffSet, moduleY + padding + yOffSet);
+            module.setDimensions((moduleWidth - (6 * padding)) / 3, (containerWidth - leftSectionWidth - (4 * padding)) / 3);
 
             xOffSet += (containerWidth - (containerWidth / 4)) / 3;
             currentComponents.add(module);
@@ -137,6 +160,7 @@ public class KvModuleSection extends KvSection {
 
     public void setOpenmodule(KvModuleComponent component) {
     	openModule = component;
+    	moduleScroll = 0;
     	if(openModule != null)
         component.setBoxCoords(
         			leftSectionWidth + KvCompactGui.containerX,
@@ -155,6 +179,32 @@ public class KvModuleSection extends KvSection {
     public void mouseReleased(int x, int y, int button) {
     	for (KvComponent component : allCurrentComponents)
 			component.mouseReleased(x, y, button);
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+    	if(openModule != null)
+			openModule.keyTyped(t, k);
+    }
+
+    @Override
+    public void scroll(float i) {
+    	//if((mouseX > containerX) && (mouseX < (containerX + containerWidth)) && (mouseY > containerY) && (mouseY < (containerY + containerHeight)))
+		//	moduleScroll += i;
+    	if(
+    			((mouseX > categoryX) && (mouseX < (categoryX + categoryWidth)) && (mouseY > categoryY) && (mouseY < (categoryY + categoryHeight)))
+
+    			&& ((currentCategories.get(currentCategories.size() - 1).getY() > categoryY) || (i > 0))) {
+    			categoryScroll += i;
+
+			if(categoryScroll > 0) categoryScroll = 0;
+
+    	} else if(((mouseX > moduleX) && (mouseX < (moduleX + moduleWidth)) && (mouseY > moduleY) && (mouseY < (moduleY + moduleHeight)))
+    			&& ((currentComponents.get(currentComponents.size() - 1 ).getY() > moduleY) || (i > 0))) {
+    		moduleScroll += i;
+    		if(moduleScroll > 0) moduleScroll = 0;
+    		if((openModule != null) && (openModule.maxScroll() > moduleScroll)) moduleScroll = openModule.maxScroll();
+    	}
     }
 
 }

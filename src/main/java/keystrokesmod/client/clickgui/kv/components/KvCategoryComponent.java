@@ -7,7 +7,6 @@ import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.Module.ModuleCategory;
-import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.gui.Gui;
 
@@ -17,6 +16,7 @@ public class KvCategoryComponent extends KvComponent {
     private final List<KvCategoryComponent> childCategories;
     private final List<KvModuleComponent> modules;
 	private boolean open;
+	private int actualY;
 
     public KvCategoryComponent(ModuleCategory category) {
         this.category = category;
@@ -33,6 +33,7 @@ public class KvCategoryComponent extends KvComponent {
 
     @Override
     public void draw(int mouseX, int mouseY) {
+    	y = (int) (actualY + KvModuleSection.categoryScroll);
 		int color = KvModuleSection.moduleSec.currentCategory == this ? 0xFFFFFF00: isMouseOver(mouseX, mouseY) ? 0xA000FF00 : 0xFF00FF00;
 		FontUtil.normal.drawStringWithShadow(category.getName(), x, y, color);
 
@@ -46,9 +47,10 @@ public class KvCategoryComponent extends KvComponent {
 
     @Override
 	public void clicked(int button, int x, int y) {
-		Utils.Player.sendMessageToSelf(this.category.name());
     	switch(button) {
     		case 0:
+    			KvModuleSection.moduleSec.setOpenmodule(null);
+    			KvModuleSection.moduleSec.setCurrentCategory(this);
     			KvModuleSection.moduleSec.setCurrentCategory(this);
     			break;
     		case 1:
@@ -58,6 +60,12 @@ public class KvCategoryComponent extends KvComponent {
 				}
 				break;
     	}
+    }
+
+    @Override
+	public void setCoords(int x, int y) {
+        this.x = x;
+        this.actualY = y;
     }
 
 	public boolean isOpen() {

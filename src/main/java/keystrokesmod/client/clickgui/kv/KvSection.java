@@ -71,4 +71,12 @@ public class KvSection {
 		return ((x > sectionX) && (x < (sectionX + width)) && (y > sectionY) && (y < (sectionY + height)));
 	}
 
+	public void keyTyped(char t, int k) {
+
+	}
+
+	public void scroll(float i) {
+
+	}
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.utils.RenderUtils;
@@ -13,6 +14,7 @@ import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 
 public class KvModuleComponent extends KvComponent{
@@ -26,11 +28,14 @@ public class KvModuleComponent extends KvComponent{
     			settingX2, settingY2, settingWidth2, settingHeight2,
     			titleBoxX, titleBoxY, titleBoxWidth, titleBoxHeight,
     			settingsBoxX, settingsBoxY, settingsBoxWidth, settingsBoxHeight,
-    			nameHeight;
+    			nameHeight, bindBoxY, bindBoxHeight, halfSettingsBoxWidth,
+    			rx, ry;
     private List<KvComponent> settings = new ArrayList<KvComponent>();
+    private KvBindComponent bindComponent;
 
     public KvModuleComponent(Module module) {
         this.module = module;
+        bindComponent = new KvBindComponent(module);
         moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
         for(Setting setting : module.getSettings())
 			try {
@@ -42,6 +47,17 @@ public class KvModuleComponent extends KvComponent{
     @Override
     public void draw(int mouseX, int mouseY) {
         //sorry sigma
+    	y = ry + KvModuleSection.moduleScroll;
+        toggleX = x;
+        toggleY = y + (int) ((3 * height) / 3.8);
+        toggleWidth = width - (int) (width/3.8);
+        toggleHeight = (int) (height - ((3 * height) / 3.8));
+        settingX = x + toggleWidth;
+        settingY = toggleY;
+        settingWidth = width - toggleWidth;
+        settingHeight = toggleHeight + 1;
+        nameHeight = height - toggleHeight - FontUtil.normal.getHeight() - 1;
+
         RenderUtils.drawRoundedRect(x, y, x + width, y + height, 12, 0xA0000000);
         RenderUtils.drawRoundedRect(toggleX, toggleY + 1, toggleX + toggleWidth, toggleY + toggleHeight + 1,12, module.isEnabled() ? 0xFF00FF00 : 0xFFFF0000, new boolean[] {false, true, false, false});
         RenderUtils.drawRoundedOutline(x, y, x + width, y + height, 12, 2, Utils.Client.rainbowDraw(1, 0));
@@ -62,6 +78,19 @@ public class KvModuleComponent extends KvComponent{
     }
 
     public void drawOpen(int mouseX, int mouseY) {
+        //bind + enable/disablebutton
+        RenderUtils.drawRoundedRect(
+                settingsBoxX,
+                bindBoxY,
+                settingsBoxX + halfSettingsBoxWidth,
+                bindBoxY + bindBoxHeight,
+                8,
+                module.isEnabled() ? 0xFF00FF00 : 0xFFFF0000,
+                new boolean[] {false, true, false, false});
+        Gui.drawRect(settingsBoxX, bindBoxY, settingsBoxX + settingsBoxWidth, bindBoxY + 1, Utils.Client.rainbowDraw(1, 0));
+        Minecraft.getMinecraft().fontRendererObj.drawString(module.isEnabled() ? "Enabled" : "Disabled", settingsBoxX + (halfSettingsBoxWidth/4), (bindBoxY + (bindBoxHeight/2)) - (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2), 0xFF000000);
+        bindComponent.draw(mouseX, mouseY);
+
         //title box
         RenderUtils.drawBorderedRoundedRect(
                 titleBoxX,
@@ -74,7 +103,7 @@ public class KvModuleComponent extends KvComponent{
         FontUtil.normal.drawString(module.getName(), titleBoxX + 2, titleBoxY + (titleBoxHeight/2), 0xFFFFFFFF);
         Minecraft.getMinecraft().getTextureManager().bindTexture(settingIcon);
 
-      //settings icon
+        //settings icon
         Gui.drawModalRectWithCustomSizedTexture(settingX2, settingY2, 0, 0, settingWidth2, settingHeight2, settingWidth2, settingHeight2);
 
         //settings box
@@ -89,8 +118,26 @@ public class KvModuleComponent extends KvComponent{
                 new boolean[] {false, true, true, false});
 
         //settings
+        int yOffset = KvModuleSection.padding;
+        int xOffset = KvModuleSection.padding;
+        int i = 0;
+        for(KvComponent component : settings) {
+        	i++;
+        	component.setCoords(settingsBoxX + xOffset, settingsBoxY + yOffset + KvModuleSection.moduleScroll);
+        	component.setDimensions((settingsBoxWidth/2) - (KvModuleSection.padding * 2), 12);
+        	yOffset += component.getHeight() + 2;
+        	if(i == (settings.size()/2)) {
+        		yOffset = KvModuleSection.padding;
+        		xOffset = settingsBoxWidth/2;
+        	}
+        }
+        int sf = new ScaledResolution(Raven.mc).getScaleFactor();
+        GL11.glScissor(settingsBoxX * sf, (titleBoxY - ((titleBoxHeight - bindBoxHeight) + (KvModuleSection.padding * 3)))* sf, settingsBoxWidth * sf, (settingsBoxHeight - bindBoxHeight) * sf);
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
         for(KvComponent component : settings)
 			component.draw(mouseX, mouseY);
+        	//fucked lol should have done this before
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
     }
 
 
@@ -114,17 +161,8 @@ public class KvModuleComponent extends KvComponent{
 
     @Override
     public void setCoords(int x, int y) {
-        this.x = x;
-        this.y = y;
-        toggleX = x;
-        toggleY = y + (int) ((3 * height) / 3.8);
-        toggleWidth = width - (int) (width/3.8);
-        toggleHeight = (int) (height - ((3 * height) / 3.8));
-        settingX = x + toggleWidth;
-        settingY = toggleY;
-        settingWidth = width - toggleWidth;
-        settingHeight = toggleHeight + 1;
-        nameHeight = height - toggleHeight - FontUtil.normal.getHeight() - 1;
+        rx = x;
+        ry = y;
     }
 
     public void setBoxCoords(int x, int y, int width, int height) {
@@ -143,31 +181,28 @@ public class KvModuleComponent extends KvComponent{
         settingsBoxWidth = titleBoxWidth - (KvModuleSection.padding * 2);
         settingsBoxHeight = height - titleBoxHeight - (KvModuleSection.padding * 2);
 
-        int yOffset = KvModuleSection.padding;
-        int xOffset = KvModuleSection.padding;
-        int i = 0;
-        for(KvComponent component : settings) {
-        	i++;
-        	component.setCoords(settingsBoxX + xOffset, settingsBoxY + yOffset);
-        	component.setDimensions((settingsBoxWidth/2) - (KvModuleSection.padding * 2), 12);
-        	yOffset += component.getHeight() + 2;
-        	if(i == (settings.size()/2)) {
-        		yOffset = KvModuleSection.padding;
-        		xOffset = settingsBoxWidth/2;
-        	}
-        }
-    }
+        bindBoxHeight = height/7;
+        bindBoxY = (settingsBoxY + settingsBoxHeight) - bindBoxHeight;
+        halfSettingsBoxWidth = settingsBoxWidth/2;
 
-    @Override
-    public void setDimensions(int width, int height) {
-        this.width = width;
-        this.height = height;
+        bindComponent.setCoords(settingsBoxX + halfSettingsBoxWidth, bindBoxY);
+        bindComponent.setDimensions(halfSettingsBoxWidth, bindBoxHeight);
+
     }
 
     @Override
     public void mouseReleased(int x, int y, int button) {
     	for(KvComponent component : settings)
 			component.mouseReleased(x, y, button);
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+    	bindComponent.keyTyped(t, k);
+    }
+
+    public int maxScroll() {
+    	return settings.isEmpty() ? 0 : (int) -(settings.size()/2) * settings.get(0).getHeight();
     }
 
 }

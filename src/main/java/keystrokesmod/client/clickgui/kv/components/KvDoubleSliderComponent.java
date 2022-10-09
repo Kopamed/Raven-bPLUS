@@ -67,7 +67,6 @@ public class KvDoubleSliderComponent extends KvComponent {
         //percentageAcross = (float) ((percentageAcross * (setting.getMax())) + (setting.getMin() * (1 - percentageAcross)));
         float percentangeMax = (float) ((setting.getInputMax() - setting.getMin())/(setting.getMax() - setting.getMin())) + 0.01f;
         float percentangeMin = (float) ((setting.getInputMin() - setting.getMin())/(setting.getMax() - setting.getMin()));
-        Utils.Player.sendMessageToSelf(percentageAcross + " " + percentangeMax + " " + percentangeMin);
         helping = Math.abs(percentageAcross - percentangeMax) < Math.abs(percentageAcross - percentangeMin) ? Helping.Max : Helping.Min;
     }
 

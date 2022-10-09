@@ -1,9 +1,13 @@
 package keystrokesmod.client.clickgui.kv;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.input.Mouse;
+
 import keystrokesmod.client.clickgui.kv.components.KvModuleSection;
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.Gui;
@@ -86,4 +90,31 @@ public class KvCompactGui extends GuiScreen {
 	public void setCurrentSection(KvSection section) {
 		currentSection = section;
     }
+
+	@Override
+	public void keyTyped(char t, int k) throws IOException {
+		super.keyTyped(t, k);
+		currentSection.keyTyped(t, k);
+	}
+
+    @Override
+	public void handleMouseInput() throws IOException {
+        super.handleMouseInput();
+        int i = Mouse.getEventDWheel();
+        i = Integer.compare(i, 0);
+        currentSection.scroll(i * 5f);
+    }
+
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
+
+
+    @Override
+	public void onGuiClosed() {
+        Raven.configManager.save();
+        Raven.clientConfig.saveConfig();
+    }
+
 }
