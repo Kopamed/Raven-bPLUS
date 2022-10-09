@@ -144,19 +144,21 @@ public class KvModuleComponent extends KvComponent{
 
     @Override
 	public void clicked(int mouseButton, int x, int y) {
-    	System.out.println("b");
     	if(KvModuleSection.moduleSec.openModule != null) {
     		if ((x > settingX2) && (x < (settingX2 + settingWidth2)) && (y > settingY2) && (y < (settingY2 + settingHeight2))) {
     			KvModuleSection.moduleSec.setOpenmodule(null);
     			return;
     		}
+    		if ((x > settingsBoxX) && (x < (settingsBoxX + halfSettingsBoxWidth)) && (y > bindBoxY) && (y < (bindBoxY + bindBoxHeight)))
+    			module.toggle();
+    		bindComponent.mouseDown(x, y, mouseButton);
     		for(KvComponent component : settings)
 				component.mouseDown(x, y, mouseButton);
         }
 
 		else if ((x > settingX) && (x < (settingX + settingWidth)) && (y > settingY) && (y < (settingY + settingHeight)))
 			KvModuleSection.moduleSec.setOpenmodule(this);
-		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > toggleY) && (y < (toggleY + toggleHeight)))
+		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > bindBoxY) && (y < (bindBoxY + bindBoxHeight)))
 			module.toggle();
     }
 

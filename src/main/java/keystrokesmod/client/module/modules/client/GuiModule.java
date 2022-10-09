@@ -24,6 +24,8 @@ public class GuiModule extends Module {
     private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB,
     disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
 
+    public static int guiScale;
+
     public GuiModule() {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
@@ -86,16 +88,20 @@ public class GuiModule extends Module {
 	public void onEnable() {
         if (Utils.Player.isPlayerInGame() && ((mc.currentScreen != Raven.clickGui) || (mc.currentScreen != Raven.kvCompactGui)))
 			if(betagui.isToggled()) {
-                mc.displayGuiScreen(Raven.kvCompactGui);
+			    guiScale = mc.gameSettings.guiScale;
+			    mc.gameSettings.guiScale = 3;
+				mc.displayGuiScreen(Raven.kvCompactGui);
                 Raven.kvCompactGui.initGui();
-                Raven.kvCompactGui.initGui();
-            } else {
+                Raven.kvCompactGui.initGui(); //no idea why this works
+			}
+			else {
                 mc.displayGuiScreen(Raven.clickGui);
                 Raven.clickGui.initMain();
             }
 
         this.disable();
     }
+
 
     private static Preset getPresetMode() {
         return (Preset) preset.getMode();

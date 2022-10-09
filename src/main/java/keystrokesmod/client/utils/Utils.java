@@ -482,6 +482,10 @@ public class Utils {
 
     public static class Client {
 
+        public static float smoothPercent(float percent) {
+            return percent = (float) ((0.5f * (Math.sin(Math.toRadians(180f * (percent - 0.5f)))))+ 0.5f);
+        }
+
         public static boolean isThrowableItem(ItemStack is) {
             Item i = is.getItem();
             return (i instanceof ItemEgg) || (i instanceof ItemEnderEye) || (i instanceof ItemEnderPearl)

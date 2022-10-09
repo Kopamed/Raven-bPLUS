@@ -132,7 +132,6 @@ public class KvModuleSection extends KvSection {
     }
 
     public void refreshModules() {
-    	Utils.Player.sendMessageToSelf(moduleY + "");
         currentComponents.clear();
         int xOffSet = 0;
         int yOffSet = 0;
