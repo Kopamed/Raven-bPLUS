@@ -22,7 +22,6 @@ import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.Utils.Player;
-import keystrokesmod.client.utils.collection.SortValue;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -214,4 +213,10 @@ public class LegitAura2 extends Module {
     		return sv;
     	}
     }
+
+    @FunctionalInterface
+    private interface SortValue {
+        Float value(EntityPlayer player);
+    }
+
 }

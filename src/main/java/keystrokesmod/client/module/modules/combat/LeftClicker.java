@@ -374,7 +374,6 @@ public class LeftClicker extends Module {
 
     public enum SoundMode {
     	click,
-    	bubble,
     	g3032,
     	g502,
     	gpro,

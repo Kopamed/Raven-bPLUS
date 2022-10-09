@@ -25,8 +25,8 @@ public class KvTickComponent extends KvComponent {
     @Override
 	public void draw(int mouseX, int mouseY) {
         float percent = Utils.Client.smoothPercent((setting.isToggled() ?  timer.getTimeLeft() : timer.getElapsedTime())/(float) timer.getCooldownTime());
-        int green = (int) (percent * 255);
-        int red = 255 - green;
+        int red = (int) (percent * 255);
+        int green = 255 - red;
         final int colour = new Color(red, green, 0).getRGB();
         float offSet = percent * 5;
         int fh = (Raven.mc.fontRendererObj.FONT_HEIGHT/2) + 1;
