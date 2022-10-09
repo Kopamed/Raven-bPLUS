@@ -47,6 +47,7 @@ public class KvModuleComponent extends KvComponent{
     @Override
     public void draw(int mouseX, int mouseY) {
         //sorry sigma
+    	x = rx;
     	y = ry + KvModuleSection.moduleScroll;
         toggleX = x;
         toggleY = y + (int) ((3 * height) / 3.8);
