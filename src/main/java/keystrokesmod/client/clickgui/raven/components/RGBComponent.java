@@ -1,10 +1,12 @@
 package keystrokesmod.client.clickgui.raven.components;
 
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
+import keystrokesmod.client.module.setting.impl.RGBSetting.NSColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import org.lwjgl.opengl.GL11;
 
 public class RGBComponent implements Component {
 
@@ -22,6 +24,7 @@ public class RGBComponent implements Component {
     private boolean mouseDown;
     private Helping mode;
     private static RGBComponent helping;
+    private NSColor colorMode;
 
     public RGBComponent(RGBSetting setting, ModuleComponent module, int moduleStartY) {
         this.setting = setting;
@@ -32,38 +35,52 @@ public class RGBComponent implements Component {
 
     @Override
     public void draw() {
-        Gui.drawRect(this.module.category.getX() + boxMargin,
-                this.module.category.getY() + this.moduleStartY + textSize,
-                this.module.category.getX() - boxMargin + this.module.category.getWidth(),
-                this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
-        int[] drawColor = { 0xffff0000, 0xff00ff00, 0xff0000ff };
-        for (int i = 0; i < 3; i++) {
-            int color = (int) ((this.barWidth * this.setting.getColor(i) / 255f) + this.module.category.getX()
-                    + boxMargin);
-            Gui.drawRect(color, this.module.category.getY() + this.moduleStartY + textSize - 1,
-                    color + (color % 2 == 0 ? 2 : 1),
-                    this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, drawColor[i]);
+        if(colorMode == NSColor.Staic) {
+            Gui.drawRect(this.module.category.getX() + boxMargin,
+                    this.module.category.getY() + this.moduleStartY + textSize,
+                    (this.module.category.getX() - boxMargin) + this.module.category.getWidth(),
+                    this.module.category.getY() + this.moduleStartY + textSize + boxHeight, -12302777);
+            int[] drawColor = { 0xffff0000, 0xff00ff00, 0xff0000ff };
+            for (int i = 0; i < 3; i++) {
+                int color = (int) (((this.barWidth * this.setting.getColor(i)) / 255f) + this.module.category.getX()
+                + boxMargin);
+                Gui.drawRect(color, (this.module.category.getY() + this.moduleStartY + textSize) - 1,
+                        color + ((color % 2) == 0 ? 2 : 1),
+                        this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1, drawColor[i]);
+            }
+            GL11.glPushMatrix();
+            GL11.glScaled(0.5D, 0.5D, 0.5D);
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(
+                    this.setting.getName() + ": " + this.setting.getRed() + ", " + this.setting.getGreen() + ", "
+                            + this.setting.getBlue(),
+                            (float) ((int) ((float) (this.module.category.getX() + 4) * 2.0F)),
+                            (float) ((int) ((float) (this.module.category.getY() + this.moduleStartY + 3) * 2.0F)), -1);
+            GL11.glPopMatrix();
+            return;
         }
+
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(
-                this.setting.getName() + ": " + this.setting.getRed() + ", " + this.setting.getGreen() + ", "
-                        + this.setting.getBlue(),
-                (float) ((int) ((float) (this.module.category.getX() + 4) * 2.0F)),
-                (float) ((int) ((float) (this.module.category.getY() + this.moduleStartY + 3) * 2.0F)), -1);
+        Minecraft.getMinecraft().fontRendererObj.drawString(
+                colorMode.name(),
+                (float) ((this.module.category.getX() + 4) * 2),
+                (float) ((this.module.category.getY() + this.moduleStartY + 5) * 2),
+                colorMode.getColor(),
+                false);
         GL11.glPopMatrix();
+
     }
 
     @Override
     public void update(int mousePosX, int mousePosY) {
-        this.barWidth = this.module.category.getWidth() - boxMargin * 2;
-        if (helping != null && helping != this)
+        this.barWidth = this.module.category.getWidth() - (boxMargin * 2);
+        if ((helping != null) && (helping != this))
             return;
-        if ((this.mouseDown) && ((mousePosX > this.module.category.getX() + boxMargin
-                && mousePosX < (this.module.category.getX() + this.module.category.getWidth() - boxMargin)
-                && mousePosY > this.module.category.getY() + this.moduleStartY
-                && mousePosY < this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1)
-                || mode != Helping.NONE)) {
+        if ((this.mouseDown) && (((mousePosX > (this.module.category.getX() + boxMargin))
+                && (mousePosX < ((this.module.category.getX() + this.module.category.getWidth()) - boxMargin))
+                && (mousePosY > (this.module.category.getY() + this.moduleStartY))
+                && (mousePosY < (this.module.category.getY() + this.moduleStartY + textSize + boxHeight + 1)))
+                || (mode != Helping.NONE))) {
             float mouseP = (mousePosX - this.module.category.getX() - boxMargin) / (float) barWidth;
             mouseP = mouseP > 0 ? mouseP < 1 ? mouseP : 1 : 0;
             // Utils.Player.sendMessageToSelf(mode.name());
@@ -89,17 +106,18 @@ public class RGBComponent implements Component {
 
         } else {
             mode = Helping.NONE;
-            if (helping == this) {
+            if (helping == this)
                 helping = null;
-            }
         }
     }
 
     @Override
     public void mouseDown(int x, int y, int b) {
-        if (this.i(x, y) && b == 0 && this.module.po) {
-            this.mouseDown = true;
-        }
+        if (this.i(x, y) && this.module.po)
+            if(b == 0)
+                this.mouseDown = true;
+            else if(b == 1)
+                colorMode.next();
     }
 
     @Override
@@ -126,12 +144,11 @@ public class RGBComponent implements Component {
     private int getTick(float p) {
         int r = 0;
         float c = 1;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
             if (Math.abs((this.setting.getColor(i) / 255f) - p) < c) {
                 r = i;
                 c = Math.abs((this.setting.getColor(i) / 255f) - p);
             }
-        }
         return r;
     }
 
@@ -148,17 +165,17 @@ public class RGBComponent implements Component {
             return id;
         }
     }
-    
+
     @Override
     public int getY() {
         return moduleStartY;
     }
 
     public boolean i(int x, int y) {
-        return x > this.module.category.getX() 
-                && x < this.module.category.getX() + this.module.category.getWidth()
-                && y > this.moduleStartY 
-                && y < this.moduleStartY + 32;
+        return (x > this.module.category.getX())
+                && (x < (this.module.category.getX() + this.module.category.getWidth()))
+                && (y > this.moduleStartY)
+                && (y < (this.moduleStartY + 32));
     }
 
 }

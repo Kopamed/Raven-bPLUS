@@ -4,14 +4,19 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.utils.CoolDown;
+import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class CategoryComponent {
@@ -29,6 +34,8 @@ public class CategoryComponent {
     private boolean visable = true;
     public int scrollheight;
     private int categoryHeight;
+    public float tPercent;
+    private CoolDown timer = new CoolDown(1);
 
     public CategoryComponent(Module.ModuleCategory category) {
         this.categoryName = category;
@@ -69,16 +76,14 @@ public class CategoryComponent {
 
     public void setX(int n) {
         this.x = n;
-        if (Raven.clientConfig != null) {
+        if (Raven.clientConfig != null)
             Raven.clientConfig.saveConfig();
-        }
     }
 
     public void setY(int y) {
         this.y = y;
-        if (Raven.clientConfig != null) {
+        if (Raven.clientConfig != null)
             Raven.clientConfig.saveConfig();
-        }
     }
 
     public void mousePressed(boolean d) {
@@ -99,41 +104,78 @@ public class CategoryComponent {
 
     public void setOpened(boolean on) {
         this.categoryOpened = on;
-
-        if (Raven.clientConfig != null) {
+        timer.setCooldown(500);
+        timer.start();
+        if (Raven.clientConfig != null)
             Raven.clientConfig.saveConfig();
-        }
     }
 
     public void rf() {
-        Minecraft mc = Minecraft.getMinecraft();
         if (!visable)
             return;
         this.width = 92;
-        if (!this.getModules().isEmpty() && this.categoryOpened) {
-            categoryHeight = 0;
 
+        Minecraft mc = Minecraft.getMinecraft();
+
+        if (!this.getModules().isEmpty()) {
+            categoryHeight = 0;
+            tPercent = Utils.Client.smoothPercent(categoryOpened ?  timer.getElapsedTime()/(float) timer.getCooldownTime() : timer.getTimeLeft()/(float) timer.getCooldownTime());
             Component moduleRenderManager;
-            for (Iterator moduleInCategoryIterator = this.getModules().iterator(); moduleInCategoryIterator
-                    .hasNext(); categoryHeight += moduleRenderManager.getHeight()) {
-                moduleRenderManager = (Component) moduleInCategoryIterator.next();
-            }
+            for (Iterator moduleInCategoryIterator = this.getModules().iterator();
+                    moduleInCategoryIterator.hasNext();
+                    categoryHeight += moduleRenderManager.getHeight()) moduleRenderManager = (Component) moduleInCategoryIterator.next();
+            categoryHeight = (int) (categoryHeight * tPercent);
+
+            int sf = new ScaledResolution(mc).getScaleFactor();
+            GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_SCISSOR_TEST);
+            RenderUtils.glScissor(
+                    this.x - 1,
+                    this.y,
+                    this.x + this.width + 1,
+                    this.y + this.bh + categoryHeight);
 
             // drawing the background for every module in the category
-            Color bgColor = moduleOpened ? GuiModule.getCategoryBackgroundColor()
-                    : GuiModule.getSettingBackgroundColor();
-            net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1,
-                    this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
-            // 1000000 character lines make me want to kill myself
+            int bgColor = moduleOpened ? GuiModule.getCategoryBackgroundRGB()
+                    : GuiModule.getSettingBackgroundRGB();
+
+            if(!GuiModule.isRoundedToggled())
+                Gui.drawRect(
+                        this.x - 1,
+                        this.y,
+                        this.x + this.width + 1,
+                        this.y + this.bh + categoryHeight,
+                        bgColor);
+            else RenderUtils.drawRoundedRect(
+                    this.x - 1,
+                    this.y,
+                    this.x + this.width + 1,
+                    this.y + this.bh + categoryHeight,
+                    12,
+                    bgColor
+                    );
         }
 
-        if (GuiModule.isCategoryBackgroundToggled()) { // any reason for this to be gl fuckery instead of a drawrect
-                                                       // except making code look broken?
-            Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-                    GuiModule.getBackgroundRGB());
+        if (GuiModule.isBoarderToggled()) {
+            if(!GuiModule.isRoundedToggled())
+                Gui.drawRect(
+                        (this.x) - 1,
+                        this.y,
+                        (this.x + this.width) + 1,
+                        (this.y + this.bh + 3),
+                        GuiModule.getBackgroundRGB());
+            else RenderUtils.drawRoundedOutline(
+                    (this.x) - 1,
+                    this.y,
+                    (this.x + this.width) + 1,
+                    this.y + this.bh + categoryHeight,
+                    12,
+                    2,
+                    GuiModule.getBoarderColour()
+                    );
             GlStateManager.resetColor();
-        }
 
+        }
         // category name
         int colorCN;
         switch (GuiModule.getCNColor()) {
@@ -152,18 +194,25 @@ public class CategoryComponent {
 
         }
 
-        if (GuiModule.useCustomFont()) {
+        if (GuiModule.useCustomFont())
             FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2),
                     (float) (this.y + 4), colorCN);
-        } else {
+        else
             mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2),
                     (float) (this.y + 4), colorCN, false);
-        }
 
         if (!this.n4m) {
-            mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float) (this.x + marginX),
-                    (float) ((double) this.y + marginY), Color.white.getRGB(), false);
-            if (this.categoryOpened && !this.getModules().isEmpty()) {
+
+            int red = (int) (tPercent * 255);
+            int green = 255 - red;
+            final int colour = new Color(red, green, 0).getRGB();
+            mc.fontRendererObj.drawString(
+                    this.categoryOpened ? "-" : "+", (float) (this.x + marginX),
+                            (float) (((double) this.y + marginY) - 2),
+                            colour,
+                            false);
+
+            if (tPercent > 0) {
                 Iterator var5 = this.getModules().iterator();
 
                 while (var5.hasNext()) {
@@ -173,6 +222,8 @@ public class CategoryComponent {
             }
 
         }
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+        GL11.glPopMatrix();
     }
 
     public void updateModules() {
@@ -217,54 +268,51 @@ public class CategoryComponent {
         }
 
     }
-    
+
     public void scroll(float ss) {
-        if(ss > 0 || (getActualHeight() + ss) > 100 ) {
+        if((ss > 0) || ((getActualHeight() + ss) > 100) )
             scrollheight += ss;
-        }
-        if(scrollheight <= 0) {
+        if(scrollheight <= 0)
             r3nd3r();
-        } else {
+        else
             scrollheight = 0;
-        }
     }
 
     public boolean i(int x, int y) {
-        return x >= this.x + 92 - 13 && x <= this.x + this.width && (float) y >= (float) this.y + 2.0F
-                && y <= this.y + this.bh + 1;
+        return (x >= ((this.x + 92) - 13)) && (x <= (this.x + this.width)) && ((float) y >= ((float) this.y + 2.0F))
+                && (y <= (this.y + this.bh + 1));
     }
 
     public boolean mousePressed(int x, int y) {
-        return x >= this.x + 77 
-                && x <= this.x + this.width - 6 
-                && (float) y >= (float) this.y + 2.0F
-                && y <= this.y + this.bh + 1;
+        return (x >= (this.x + 77))
+                && (x <= ((this.x + this.width) - 6))
+                && ((float) y >= ((float) this.y + 2.0F))
+                && (y <= (this.y + this.bh + 1));
     }
 
     public boolean insideArea(int x, int y) {
-        return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.bh;
+        return (x >= this.x) && (x <= (this.x + this.width)) && (y >= this.y) && (y <= (this.y + this.bh));
     }
-    
-    public boolean insideAllArea(int x, int y) {                     
-         return x >= this.x 
-                && x <= this.x + this.width 
-                && y >= this.y
-                && y <= this.y + this.getActualHeight() - this.scrollheight;
+
+    public boolean insideAllArea(int x, int y) {
+        return (x >= this.x)
+                && (x <= (this.x + this.width))
+                && (y >= this.y)
+                && (y <= ((this.y + this.getActualHeight()) - this.scrollheight));
     }
 
     public String getName() {
         return String.valueOf(getModules());
     }
-    
+
     public int getHeight() {
         return this.bh;
     }
-    
+
     public int getActualHeight() {
         int h = this.bh + 16 + categoryHeight;
-        for(Component c : getModules()) {
+        for(Component c : getModules())
             h += c.getHeight();
-        }
         return h;
     }
 

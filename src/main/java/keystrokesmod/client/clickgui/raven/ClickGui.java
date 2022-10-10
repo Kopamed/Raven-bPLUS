@@ -160,9 +160,8 @@ public class ClickGui extends GuiScreen {
 			if (category.isVisable()) {
                 category.rf();
                 category.up(x, y);
-
                 for (Component module : category.getModules())
-					module.update(x, y);
+                    module.update(x, y);
             }
 
         // PLAYER

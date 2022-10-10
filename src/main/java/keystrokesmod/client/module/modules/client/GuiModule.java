@@ -1,7 +1,5 @@
 package keystrokesmod.client.module.modules.client;
 
-import java.awt.Color;
-
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -9,6 +7,7 @@ import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.ColorM;
 import keystrokesmod.client.utils.Utils;
 
 public class GuiModule extends Module {
@@ -19,7 +18,7 @@ public class GuiModule extends Module {
 
     private static TickSetting categoryBackground, cleanUp, reset, usePreset, rainbowNotification, notifications, betagui,
 
-    matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, useCustomFont;
+    matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, useCustomFont, roundedCorners, swing, boarder;
 
     private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB,
     disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
@@ -60,7 +59,10 @@ public class GuiModule extends Module {
         this.registerSetting(rainbowNotification = new TickSetting("Rainbow Notifications", true));
         this.registerSetting(reset = new TickSetting("Reset position", false));
         this.registerSetting(usePreset = new TickSetting("Use preset", true));
-        this.registerSetting(preset = new ComboSetting("Preset", Preset.Vape));
+        this.registerSetting(roundedCorners = new TickSetting("Rounded corners", true));
+        this.registerSetting(swing = new TickSetting("Swing", true));
+        this.registerSetting(boarder = new TickSetting("boarder", true));
+        this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
     }
 
     @Override
@@ -107,8 +109,10 @@ public class GuiModule extends Module {
         return (Preset) preset.getMode();
     }
 
+    // sgimas going to tell me theres a better way to do this isnt he
+
     public static int getBackgroundOpacity() {
-        return usePreset.isToggled() ? getPresetMode().backgroundOpacity : (int) (backgroundOpacity.getInput() * 2.55);
+        return usePreset.isToggled() ? 0 : (int) (backgroundOpacity.getInput() * 2.55);
     }
 
     public static boolean isCategoryBackgroundToggled() {
@@ -127,52 +131,109 @@ public class GuiModule extends Module {
         return usePreset.isToggled() ? getPresetMode().useCustomFont : useCustomFont.isToggled();
     }
 
+    public static int getEnabledTopRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().enabledTopRGB.color(delay) : enabledTopRGB.getRGB();
+    }
+
     public static int getEnabledTopRGB() {
-        return usePreset.isToggled() ? getPresetMode().enabledTopRGB.getRGB() : enabledTopRGB.getRGB();
+        return getEnabledTopRGB(0);
+    }
+
+    public static int getEnabledBottomRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().enabledBottomRGB.color(delay) : enabledBottomRGB.getRGB();
     }
 
     public static int getEnabledBottomRGB() {
-        return usePreset.isToggled() ? getPresetMode().enabledBottomRGB.getRGB() : enabledBottomRGB.getRGB();
+        return getEnabledBottomRGB(0);
+    }
+
+    public static int getEnabledTextRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().enabledTextRGB.color(delay) : enabledTextRGB.getRGB();
     }
 
     public static int getEnabledTextRGB() {
-        return usePreset.isToggled() ? getPresetMode().enabledTextRGB.getRGB() : enabledTextRGB.getRGB();
+        return getEnabledTextRGB(0);
+    }
+
+    public static int getDisabledTopRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().disabledTopRGB.color(delay) : disabledTopRGB.getRGB();
     }
 
     public static int getDisabledTopRGB() {
-        return usePreset.isToggled() ? getPresetMode().disabledTopRGB.getRGB() : disabledTopRGB.getRGB();
+        return getDisabledTopRGB(0);
+    }
+
+    public static int getDisabledBottomRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().disabledBottomRGB.color(delay) : disabledBottomRGB.getRGB();
     }
 
     public static int getDisabledBottomRGB() {
-        return usePreset.isToggled() ? getPresetMode().disabledBottomRGB.getRGB() : disabledBottomRGB.getRGB();
+        return getDisabledBottomRGB(0);
+    }
+
+    public static int getDisabledTextRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().disabledTextRGB.color(0) : disabledTextRGB.getRGB();
     }
 
     public static int getDisabledTextRGB() {
-        return usePreset.isToggled() ? getPresetMode().disabledTextRGB.getRGB() : disabledTextRGB.getRGB();
+        return getDisabledTextRGB(0);
+    }
+
+    public static int getBackgroundRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().backgroundRGB.color(delay) : backgroundRGB.getRGB();
     }
 
     public static int getBackgroundRGB() {
-        return usePreset.isToggled() ? getPresetMode().backgroundRGB.getRGB() : backgroundRGB.getRGB();
+        return getBackgroundRGB(0);
     }
 
-    public static Color getSettingBackgroundColor() {
-        return usePreset.isToggled() ? getPresetMode().settingBackgroundRGB
-                : new Color(settingBackgroundRGB.getRed(), settingBackgroundRGB.getGreen(),
-                        settingBackgroundRGB.getBlue(), (int) getBackgroundOpacity());
+    public static int getSettingBackgroundRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().settingBackgroundRGB.color(delay) : settingBackgroundRGB.getRGB();
     }
 
-    public static Color getCategoryBackgroundColor() {
-        return usePreset.isToggled() ? getPresetMode().categoryBackgroundRGB
-                : new Color(categoryBackgroundRGB.getRed(), categoryBackgroundRGB.getGreen(),
-                        categoryBackgroundRGB.getBlue(), (int) getBackgroundOpacity());
+    public static int getSettingBackgroundRGB() {
+        return getSettingBackgroundRGB(0);
+    }
+
+
+    public static int getCategoryBackgroundRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().categoryBackgroundRGB.color(delay) : categoryBackgroundRGB.getRGB();
+    }
+
+    public static int getCategoryBackgroundRGB() {
+        return getCategoryBackgroundRGB(0);
+    }
+
+    public static int getCategoryNameRGB(int delay) {
+        return usePreset.isToggled() ? getPresetMode().categoryNameRGB.color(delay) : categoryNameRGB.getRGB();
     }
 
     public static int getCategoryNameRGB() {
-        return usePreset.isToggled() ? getPresetMode().categoryNameRGB.getRGB() : categoryNameRGB.getRGB();
+        return getCategoryNameRGB(0);
+    }
+
+    public static int getBoarderColour(int delay) {
+        return usePreset.isToggled() ? getPresetMode().boarderColor.color(delay) : categoryNameRGB.getRGB();
+    }
+
+    public static int getBoarderColour() {
+        return getBoarderColour(0);
     }
 
     public static CNColor getCNColor() {
         return usePreset.isToggled() ? getPresetMode().cnColor : (CNColor) cnColor.getMode();
+    }
+
+    public static boolean isSwingToggled() {
+        return usePreset.isToggled() ? getPresetMode().swing : swing.isToggled();
+    }
+
+    public static boolean isRoundedToggled() {
+        return usePreset.isToggled() ? getPresetMode().swing : roundedCorners.isToggled();
+    }
+
+    public static boolean isBoarderToggled() {
+        return boarder.isToggled() ? getPresetMode().swing : swing.isToggled();
     }
 
     public static boolean rainbowNotification() {
@@ -184,7 +245,7 @@ public class GuiModule extends Module {
     }
 
     public enum Preset {
-        Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+       /* Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
                 // categoryBackground
                 CNColor.STATIC, // just leave this
                 // new Color(red, green, blue, alpha (optional out of 255 default is 255))
@@ -197,40 +258,44 @@ public class GuiModule extends Module {
                 new Color(27, 25, 26), // disabledTopRGB
                 new Color(27, 25, 26), // disabledBottomRGB
                 new Color(255, 255, 255), // disabledTextRGB
-                new Color(27, 25, 26) // backgroundRGBW
-                ),
+                new Color(27, 25, 26), // backgroundRGBW
+                false, //rounded
+                false //swing
+                ), */
         PlusPlus( // name
                 false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                // categoryBackground
                 CNColor.STATIC, // just leave this
-                // new Color(red, green, blue, alpha (optional out of 255 default is 255))
-                new Color(255, 255, 255), // categoryNameRGB
-                new Color(176, 103, 255, 153), // settingBackgroundRGB
-                new Color(176, 103, 255, 153), // categoryBackgroundRGB
-                new Color(0, 0, 0), // enabledTopRGB
-                new Color(0, 0, 0), // enabledBottomRGB
-                new Color(255, 0, 194), // enabledTextRGB
-                new Color(0, 0, 0), // disabledTopRGB
-                new Color(0, 0, 0), // disabledBottomRGB
-                new Color(255, 255, 255), // disabledTextRGB
-                new Color(173, 0, 233) // backgroundRGB
+                in -> 0xFFFFFFFF, // categoryNameRGB
+                in -> 0x99b067ff, // settingBackgroundRGB
+                in -> 0x99b067ff, // categoryBackgroundRGB
+                in -> 0xFF000000, // enabledTopRGB
+                in -> 0xFF000000, // enabledBottomRGB
+                in -> 0xFFFFFFFF, // enabledTextRGB
+                in -> 0xFF000000, // disabledTopRGB
+                in -> 0xFF000000, // disabledBottomRGB
+                in -> 0xffff0c02, // disabledTextRGB
+                in -> 0xFFad0e09, // backgroundRGB
+                true, //rounded
+                true, //swing
+                true, //boarder
+                (in -> Utils.Client.astolfoColorsDraw(14, 10))//boarderColor
                 );
 
-        public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground;
-        public int backgroundOpacity;
-        public Color categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
-        enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB;
+        public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
+        public ColorM categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
+        enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, boarderColor;
         public CNColor cnColor;
 
-        private Preset(boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
-                boolean categoryBackground, CNColor cnColor, Color categoryNameRGB, Color settingBackgroundRGB,
-                Color categoryBackgroundRGB, Color enabledTopRGB, Color enabledBottomRGB, Color enabledTextRGB,
-                Color disabledTopRGB, Color disabledBottomRGB, Color disabledTextRGB, Color backgroundRGB) {
+        private Preset(
+                boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
+                boolean categoryBackground, CNColor cnColor, ColorM categoryNameRGB, ColorM settingBackgroundRGB,
+                ColorM categoryBackgroundRGB, ColorM enabledTopRGB, ColorM enabledBottomRGB, ColorM enabledTextRGB,
+                ColorM disabledTopRGB, ColorM disabledBottomRGB, ColorM disabledTextRGB, ColorM backgroundRGB,
+                boolean roundedCorners, boolean swing, boolean boarder, ColorM boarderColor) {
             this.showGradientEnabled = showGradientEnabled;
             this.showGradientDisabled = showGradientDisabled;
             this.useCustomFont = useCustomFont;
             this.categoryBackground = categoryBackground;
-            this.backgroundOpacity = backgroundOpacity;
             this.categoryNameRGB = categoryNameRGB;
             this.settingBackgroundRGB = settingBackgroundRGB;
             this.categoryBackgroundRGB = categoryBackgroundRGB;
@@ -242,9 +307,15 @@ public class GuiModule extends Module {
             this.disabledTextRGB = disabledTextRGB;
             this.backgroundRGB = backgroundRGB;
             this.cnColor = cnColor;
+            this.roundedCorners = roundedCorners;
+            this.swing = swing;
+            this.boarder = boarder;
+            this.boarderColor = boarderColor;
         }
 
     }
+
+
 
     public enum CNColor {
         RAINBOW, STATIC

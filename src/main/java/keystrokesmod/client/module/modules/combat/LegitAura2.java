@@ -37,9 +37,12 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 public class LegitAura2 extends Module {
 
     private EntityPlayer target;
+
     private SliderSetting rotationDistance, fov, reach;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival;
+    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
+    private ComboSetting blockMode;
+
     private List<EntityPlayer> pTargets;
     private ComboSetting sortMode;
     private CoolDown coolDown = new CoolDown(1);
@@ -58,7 +61,10 @@ public class LegitAura2 extends Module {
         this.registerSetting(disableOnTp = new TickSetting("Disable after tp", true));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", true));
+        this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
         this.registerSetting(sortMode = new ComboSetting("Sort mode", SortMode.Distance));
+        this.registerSetting(blockMode = new ComboSetting("Block mode", BlockMode.NONE));
+        this.registerSetting(cps);
     }
 
     @Subscribe
@@ -100,6 +106,13 @@ public class LegitAura2 extends Module {
     }
 
     @Subscribe
+    public void onTick(keystrokesmod.client.event.impl.TickEvent e) {
+        BlockMode m = (BlockMode) blockMode.getMode();
+        if((m == BlockMode.FUCKY) && (mc.thePlayer.prevSwingProgress < mc.thePlayer.swingProgress))
+            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
+    }
+
+    @Subscribe
     public void renderWorldLast(ForgeEvent fe) {
         if((fe.getEvent() instanceof RenderWorldLastEvent) && (target != null)) {
             int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
@@ -121,6 +134,7 @@ public class LegitAura2 extends Module {
 
     @Subscribe
     public void move(MoveInputEvent e) {
+        if(!fixMovement.isToggled()) return;
     	e.setYaw(yaw);
     }
 
@@ -217,6 +231,11 @@ public class LegitAura2 extends Module {
     @FunctionalInterface
     private interface SortValue {
         Float value(EntityPlayer player);
+    }
+
+    public enum BlockMode {
+        NONE,
+        FUCKY;
     }
 
 }

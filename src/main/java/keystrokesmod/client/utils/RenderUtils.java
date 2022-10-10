@@ -10,9 +10,11 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
+import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -77,6 +79,17 @@ public class RenderUtils {
 		GL11.glDisable(3042);
 		GL11.glEnable(2929);
 	}
+
+	public static void glScissor(int x, int y, int width, int height) {
+	    int scale = new ScaledResolution(Raven.mc).getScaleFactor();
+        GL11.glScissor(
+                0,//(Raven.mc.displayHeight - ((((y/width) - width)) * scale)),
+                (Raven.mc.displayHeight - ((((y/height) + height)) * scale)),
+                Raven.mc.displayWidth, //(width + x) * scale,
+                (height + y) * scale);
+
+	}
+
 
 	public static void drawRect(double d0, double d1, double d2, double d3, int i) {
 		double d4;

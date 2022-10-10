@@ -9,6 +9,9 @@ import keystrokesmod.client.clickgui.kv.components.KvRgbComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.utils.ColorM;
+import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.Utils.Client;
 
 public class RGBSetting extends Setting {
 
@@ -107,9 +110,37 @@ public class RGBSetting extends Setting {
         this.colour = colour.clone();
     }
 
+
 	@Override
 	public Class<? extends KvComponent> getComponentType() {
 		return KvRgbComponent.class;
 	}
 
+	public enum NSColor {
+	    Staic(d -> 0xFFFFFFFF), //Placeholder
+	    Rainbow(d -> Utils.Client.rainbowDraw(1, d)),
+	    Astolfo(d -> Utils.Client.astolfoColorsDraw(10, 14, d)),
+	    Kv(Client::customDraw);
+	    //Hurttime(-> (float) player.hurtTime),
+	    //Fov(fovToEntity);
+
+	    private final ColorM c;
+
+	    private NSColor(ColorM c) {
+	        this.c = c;
+	    }
+
+	    public int getColor() {
+	        return c.color(0);
+	    }
+
+	    public int getColor(int delay) {
+            return c.color(delay);
+        }
+
+        private static NSColor[] vals = values();
+        public NSColor next() {
+            return vals[(this.ordinal()+1) % vals.length];
+        }
+	}
 }

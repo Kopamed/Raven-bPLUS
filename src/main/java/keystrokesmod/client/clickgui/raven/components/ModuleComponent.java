@@ -42,8 +42,8 @@ public class ModuleComponent implements Component {
         // ill fix this later but cannot be fked rn
         ArrayList<Component> newSettings = new ArrayList<Component>();
         int y = o + 12;
-        if (!mod.getSettings().isEmpty()) {
-            for (Setting v : mod.getSettings()) {
+        if (!mod.getSettings().isEmpty())
+            for (Setting v : mod.getSettings())
                 if (v instanceof SliderSetting) {
                     SliderSetting n = (SliderSetting) v;
                     SliderComponent s = new SliderComponent(n, this, y);
@@ -75,28 +75,25 @@ public class ModuleComponent implements Component {
                     newSettings.add(s);
                     y += 12;
                 }
-            }
-        }
         if (mod.isBindable())
             newSettings.add(new BindComponent(this, y));
         settings = newSettings;
-        if (po) {
+        if (po)
             this.category.r3nd3r();
-        }
     }
 
+    @Override
     public void setComponentStartAt(int n) {
         this.o = n;
         int y = this.o + 16 + category.scrollheight;
 
         for (Component c : this.settings) {
             c.setComponentStartAt(y);
-            if (c instanceof SliderComponent || c instanceof RangeSliderComponent || c instanceof RGBComponent) {
+            if ((c instanceof SliderComponent) || (c instanceof RangeSliderComponent) || (c instanceof RGBComponent))
                 y += 16;
-            } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent
-                    || c instanceof BindComponent) {
+            else if ((c instanceof TickComponent) || (c instanceof DescriptionComponent) || (c instanceof ModeComponent)
+                    || (c instanceof BindComponent))
                 y += 12;
-            }
         }
     }
 
@@ -145,40 +142,38 @@ public class ModuleComponent implements Component {
         f();
     }
 
+    @Override
     public void draw() {
         ScaledResolution sr =  new ScaledResolution(Minecraft.getMinecraft());
         sf = sr.getScaleFactor();
-        if (GuiModule.showGradientEnabled() && mod.isEnabled()) {
+        if (GuiModule.showGradientEnabled() && mod.isEnabled())
             v((float) this.category.getX(), (float) (this.category.getY() + this.o),
                     (float) (this.category.getX() + this.category.getWidth()),
                     (float) (this.category.getY() + 15 + this.o), GuiModule.getEnabledTopRGB(),
                     GuiModule.getEnabledBottomRGB());
-        } else if (GuiModule.showGradientDisabled() && !mod.isEnabled()) {
+        else if (GuiModule.showGradientDisabled() && !mod.isEnabled())
             v((float) this.category.getX(), (float) (this.category.getY() + this.o),
                     (float) (this.category.getX() + this.category.getWidth()),
                     (float) (this.category.getY() + 15 + this.o), GuiModule.getDisabledTopRGB(),
                     GuiModule.getDisabledBottomRGB());
-        }
         GL11.glPushMatrix();
         // module text button
         int button_rgb;
-        if (this.mod.isEnabled()) {
+        if (this.mod.isEnabled())
             button_rgb = GuiModule.getEnabledTextRGB();
-        } else if (this.mod.canBeEnabled()) {
+        else if (this.mod.canBeEnabled())
             button_rgb = GuiModule.getDisabledTextRGB();
-        } else {
+        else
             button_rgb = new Color(102, 102, 102).getRGB();
-        }
-        if (GuiModule.useCustomFont()) {
+        if (GuiModule.useCustomFont())
             FontUtil.normal.drawCenteredString(this.mod.getName(),
-                    (float) (this.category.getX() + this.category.getWidth() / 2),
+                    (float) (this.category.getX() + (this.category.getWidth() / 2)),
                     (float) (this.category.getY() + this.o + 4), button_rgb);
-        } else {
+        else
             Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.mod.getName(),
-                    (float) (this.category.getX() + this.category.getWidth() / 2
-                            - Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2),
+                    (float) ((this.category.getX() + (this.category.getWidth() / 2))
+                            - (Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.mod.getName()) / 2)),
                     (float) (this.category.getY() + this.o + 4), button_rgb);
-        }
         GL11.glPopMatrix();
 
         if (this.po && !this.settings.isEmpty()) {
@@ -189,56 +184,51 @@ public class ModuleComponent implements Component {
                     (sr.getScaledHeight() - category.getY() - getHeight() - category.getHeight()) * sf, //wtf bruh
                     category.getWidth() * sf,
                     (getHeight() - o - 4)* sf);
-            for (Component c : this.settings) {
+            for (Component c : this.settings)
                 c.draw();
-            }
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
             GL11.glPopMatrix();
         }
     }
 
+    @Override
     public int getHeight() {
-        if (!this.po) {
+        if (!this.po)
             return 16;
-        } else {
-            int h = 16;
+        int h = 16;
 
-            for (Component c : this.settings) {
-                if (c instanceof SliderComponent || c instanceof RangeSliderComponent || c instanceof RGBComponent) {
-                    h += 16;
-                } else if (c instanceof TickComponent || c instanceof DescriptionComponent || c instanceof ModeComponent
-                        || c instanceof BindComponent) {
-                    h += 12;
-                }
-            }
-            h += category.scrollheight;
-            return h;
-        }
+        for (Component c : this.settings)
+            if ((c instanceof SliderComponent) || (c instanceof RangeSliderComponent) || (c instanceof RGBComponent))
+                h += 16;
+            else if ((c instanceof TickComponent) || (c instanceof DescriptionComponent) || (c instanceof ModeComponent)
+                    || (c instanceof BindComponent))
+                h += 12;
+        h += category.scrollheight;
+        return h;
     }
 
+    @Override
     public void update(int mousePosX, int mousePosY) {
-        if (!this.settings.isEmpty()) {
-            for (Component c : this.settings) {
+        if (!this.settings.isEmpty())
+            for (Component c : this.settings)
                 c.update(mousePosX, mousePosY);
-            }
-        }
     }
 
+    @Override
     public void mouseDown(int x, int y, int b) {
-        if (mod.canBeEnabled()) {
-            if (this.ii(x, y) && b == 0) {
+        if (mod.canBeEnabled())
+            if (this.ii(x, y) && (b == 0)) {
                 this.mod.toggle();
                 Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
             }
-        }
 
-        if (this.ii(x, y) && b == 1) {
+        if (this.ii(x, y) && (b == 1)) {
             if (!po) {
                 if (!this.settings.isEmpty()) {
                     this.category.loadSpecificModule(this);
                     po = true;
                 }
-            } else if (po) {
+            } else {
                 po = false;
                 this.category.moduleOpened = false;
                 this.category.scrollheight = 0;
@@ -246,34 +236,33 @@ public class ModuleComponent implements Component {
             this.category.r3nd3r();
             Raven.mc.thePlayer.playSound("gui.button.press", 1, 1);
         }
-        
-        
-        for (Component c : this.settings) {
+
+
+        for (Component c : this.settings)
             if(c.getY() > getY())
             c.mouseDown(x, y, b);
-        }
 
     }
 
+    @Override
     public void mouseReleased(int x, int y, int m) {
-        for (Component c : this.settings) {
+        for (Component c : this.settings)
             c.mouseReleased(x, y, m);
             // updateSettings();
-        }
 
     }
 
+    @Override
     public void keyTyped(char t, int k) {
-        for (Component c : this.settings) {
+        for (Component c : this.settings)
             c.keyTyped(t, k);
-        }
     }
 
     public boolean ii(int x, int y) {
-        return x > this.category.getX() && x < this.category.getX() + this.category.getWidth()
-                && y > this.category.getY() + this.o && y < this.category.getY() + 16 + this.o;
+        return (x > this.category.getX()) && (x < (this.category.getX() + this.category.getWidth()))
+                && (y > (this.category.getY() + this.o)) && (y < (this.category.getY() + 16 + this.o));
     }
-    
+
     @Override
     public int getY() {
         return this.category.getY() + this.o + 4;

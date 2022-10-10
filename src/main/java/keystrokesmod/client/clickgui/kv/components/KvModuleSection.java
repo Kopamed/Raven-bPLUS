@@ -61,7 +61,8 @@ public class KvModuleSection extends KvSection {
         // drawing categories
         int sf = new ScaledResolution(Raven.mc).getScaleFactor();
 
-        GL11.glScissor(categoryX * sf, (categoryY - (containerHeight / 6))* sf, categoryWidth * sf, categoryHeight * sf);
+        GL11.glScissor(
+                categoryX * sf, (categoryY - (containerHeight / 6))* sf, categoryWidth * sf, categoryHeight * sf);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         for (KvCategoryComponent categoryComponent : topCategories)
             categoryComponent.draw(mouseX, mouseY);
