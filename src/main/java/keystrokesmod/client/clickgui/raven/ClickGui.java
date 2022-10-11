@@ -2,8 +2,6 @@ package keystrokesmod.client.clickgui.raven;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -23,13 +21,10 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 
 public class ClickGui extends GuiScreen {
     private ScheduledFuture<?> sf;
-    private Timer aT;
-    private Timer aL;
-    private Timer aE;
-    private Timer aR;
+    private Timer aT, aL, aE, aR;
     private final ArrayList<CategoryComponent> categoryList;
-    public final Terminal terminal;
     private int mouseX, mouseY;
+    public final Terminal terminal;
 
     public static int binding;
 
@@ -38,18 +33,14 @@ public class ClickGui extends GuiScreen {
         this.categoryList = new ArrayList<>();
         Module.ModuleCategory[] values;
         int categoryAmount = (values = Module.ModuleCategory.values()).length;
-
+        int xOffSet = 5;
+        int yOffSet = 5;
         for (int category = 0; category < categoryAmount; ++category) {
             Module.ModuleCategory moduleCategory = values[category];
             CategoryComponent currentModuleCategory = new CategoryComponent(moduleCategory);
-            currentModuleCategory.setVisable(currentModuleCategory.categoryName.isShownByDefault());
+            currentModuleCategory.visable = (currentModuleCategory.categoryName.isShownByDefault());
             categoryList.add(currentModuleCategory);
-        }
-        int xOffSet = 5;
-        int yOffSet = 5;
-        for (CategoryComponent category : categoryList) {
-            category.setX(xOffSet);
-            category.setY(yOffSet);
+            currentModuleCategory.setCoords(xOffSet, yOffSet);
             xOffSet = xOffSet + 100;
             if (xOffSet > 400) {
                 xOffSet = 5;
@@ -60,25 +51,10 @@ public class ClickGui extends GuiScreen {
         terminal.setSize((int) (92 * 1.5), (int) ((92 * 1.5) * 0.75));
     }
 
-    public void resetSort() {
-        int xOffSet = 5;
-        int yOffSet = 5;
-        for (CategoryComponent category : categoryList) {
-            category.setX(xOffSet);
-            category.setY(yOffSet);
-            xOffSet = xOffSet + 100;
-            if (xOffSet > (this.width - 100)) {
-                xOffSet = 5;
-                yOffSet += this.height / 3;
-            }
-        }
-    }
-
     public void initMain() {
         (this.aT = this.aE = this.aR = new Timer(500.0F)).start();
         this.sf = Raven.getExecutor().schedule(() -> (this.aL = new Timer(650.0F)).start(), 650L,
                 TimeUnit.MILLISECONDS);
-
     }
 
     @Override
@@ -89,7 +65,7 @@ public class ClickGui extends GuiScreen {
     @Override
 	public void drawScreen(int x, int y, float p) {
     	super.drawScreen(x, y, p);
-        mouseX = x; mouseY = y;
+    	mouseX = x; mouseY = y;
         Version clientVersion = Raven.versionManager.getClientVersion();
         Version latestVersion = Raven.versionManager.getLatestVersion();
 
@@ -156,13 +132,7 @@ public class ClickGui extends GuiScreen {
                     quarterScreenHeight + 38, Utils.Client.customDraw(0));
         }
 
-        for (CategoryComponent category : categoryList)
-			if (category.isVisable()) {
-                category.rf();
-                category.up(x, y);
-                for (Component module : category.getModules())
-                    module.update(x, y);
-            }
+        visableCategoryList().forEach(category -> category.draw(x, y));
 
         // PLAYER
         GuiInventory.drawEntityOnScreen((this.width + 15) - this.aE.getValueInt(0, 40, 2),
@@ -175,79 +145,22 @@ public class ClickGui extends GuiScreen {
 
     @Override
 	public void mouseClicked(int x, int y, int mouseButton) throws IOException {
-        Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
-
         terminal.mouseDown(x, y, mouseButton);
-        if (terminal.overPosition(x, y))
-            return;
-
-        while (true) {
-            CategoryComponent category;
-            do
-				do {
-                    if (!btnCat.hasNext())
-						return;
-                    category = btnCat.next();
-                    if ((category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y)
-                            && (mouseButton == 0))) {
-                        category.mousePressed(true);
-                        category.xx = x - category.getX();
-                        category.yy = y - category.getY();
-                        break;
-                    }
-
-                    if ((category.mousePressed(x, y) && (mouseButton == 0))
-                            || (category.insideArea(x, y) && (mouseButton == 1))) {
-                        category.setOpened(!category.isOpened());
-                        mc.thePlayer.playSound("gui.button.press", 1, 1);
-                        break;
-                    }
-
-                    if (category.i(x, y) && (mouseButton == 0)) {
-                        category.cv(!category.p());
-                        break;
-                    }
-                } while (!category.isOpened());
-			while (category.getModules().isEmpty());
-            try {
-                for (Component c : category.getModules())
-					c.mouseDown(x, y, mouseButton);
-            } catch (ConcurrentModificationException e) {
+        for(CategoryComponent category : visableCategoryList())
+            if(category.mouseDown(x, y, mouseButton)) {
+                mc.thePlayer.playSound("gui.button.press", 1, 1);
+                return;
             }
-        }
     }
 
     @Override
-	public void mouseReleased(int x, int y, int s) {
-        terminal.mouseReleased(x, y, s);
+	public void mouseReleased(int x, int y, int mouseButton) {
+        terminal.mouseReleased(x, y, mouseButton);
         if (terminal.overPosition(x, y))
             return;
 
-        if (s == 0) {
-            Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
+        visableCategoryList().forEach(category -> {if(category.mouseDown(x, y, mouseButton))return;});
 
-            CategoryComponent c4t;
-            while (btnCat.hasNext()) {
-                c4t = btnCat.next();
-                c4t.mousePressed(false);
-            }
-
-            btnCat = visableCategoryList().iterator();
-
-            while (true) {
-                do
-					do {
-                        if (!btnCat.hasNext())
-							return;
-
-                        c4t = btnCat.next();
-                    } while (!c4t.isOpened());
-				while (c4t.getModules().isEmpty());
-
-                for (Component c : c4t.getModules())
-					c.mouseReleased(x, y, s);
-            }
-        }
         if (Raven.clientConfig != null)
 			Raven.clientConfig.saveConfig();
     }
@@ -255,50 +168,26 @@ public class ClickGui extends GuiScreen {
     @Override
 	public void keyTyped(char t, int k) {
         terminal.keyTyped(t, k);
-        if ((k == 1) && (binding <= 0))
-			this.mc.displayGuiScreen(null);
-		else {
-            Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
-
-            while (true) {
-                CategoryComponent cat;
-                do
-					do {
-                        if (!btnCat.hasNext())
-							return;
-
-                        cat = btnCat.next();
-                    } while (!cat.isOpened());
-				while (cat.getModules().isEmpty());
-
-                for (Component c : cat.getModules())
-					c.keyTyped(t, k);
-            }
-        }
+        visableCategoryList().forEach(category -> category.keyTyped(t, k));
+        if (k == 1)
+            Raven.mc.displayGuiScreen(null);
     }
 
     @Override
 	public void handleMouseInput() throws IOException {
         super.handleMouseInput();
-        for (CategoryComponent c : visableCategoryList())
-			if (c.insideAllArea(mouseX, mouseY)) {
-                int i = Mouse.getEventDWheel();
-                i = Integer.compare(i, 0);
-                c.scroll(i * 5f);
-            }
+        int i = Mouse.getEventDWheel() * 5;
+        visableCategoryList().forEach(category -> {
+            if(category.isMouseOver(mouseX, mouseY))
+                category.scroll(i);
+            });
     }
 
     @Override
 	public void onGuiClosed() {
-        this.aL = null;
-        if (this.sf != null) {
-            this.sf.cancel(true);
-            this.sf = null;
-        }
+        visableCategoryList().forEach(CategoryComponent::guiClosed);
         Raven.configManager.save();
         Raven.clientConfig.saveConfig();
-
-        binding = 0;
     }
 
     @Override
@@ -319,7 +208,21 @@ public class ClickGui extends GuiScreen {
 
     public ArrayList<CategoryComponent> visableCategoryList() {
         ArrayList<CategoryComponent> newList = (ArrayList<CategoryComponent>) categoryList.clone();
-        newList.removeIf(obj -> !obj.isVisable());
+        newList.removeIf(obj -> !obj.visable);
         return newList;
+    }
+
+    public void resetSort() {
+        int xOffSet = 5;
+        int yOffSet = 5;
+        for(CategoryComponent category : categoryList) {
+            category.setCoords(xOffSet, yOffSet);
+            xOffSet = xOffSet + 100;
+            if (xOffSet > 400) {
+                xOffSet = 5;
+                yOffSet += 120;
+            }
+        }
+
     }
 }

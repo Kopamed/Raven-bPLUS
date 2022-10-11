@@ -69,10 +69,8 @@ public class GuiModule extends Module {
     public void guiButtonToggled(TickSetting setting) {
         if (setting == cleanUp) {
             cleanUp.disable();
-            for (CategoryComponent cc : Raven.clickGui.getCategoryList()) {
-                cc.setX(((cc.getX() / 50) * 50) + ((cc.getX() % 50) > 25 ? 50 : 0));
-                cc.setY(((cc.getY() / 50) * 50) + ((cc.getY() % 50) > 25 ? 50 : 0));
-            }
+            for (CategoryComponent cc : Raven.clickGui.getCategoryList())
+                cc.setCoords(((cc.getX() / 50) * 50) + ((cc.getX() % 50) > 25 ? 50 : 0), ((cc.getY() / 50) * 50) + ((cc.getY() % 50) > 25 ? 50 : 0));
         } else if (setting == matchTopWBottomEnabled) {
             matchTopWBottomEnabled.disable();
             enabledTopRGB.setColors(enabledBottomRGB.getColors());

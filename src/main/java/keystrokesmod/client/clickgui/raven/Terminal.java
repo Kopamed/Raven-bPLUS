@@ -1,17 +1,18 @@
 package keystrokesmod.client.clickgui.raven;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.utils.CoolDown;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.util.ArrayList;
-
-public class Terminal implements Component {
+public class Terminal {
     private int x;
     private int y;
     private int width;
@@ -72,7 +73,6 @@ public class Terminal implements Component {
         this.hidden = true;
     }
 
-    @Override
     public void draw() {
         if (hidden)
             return;
@@ -84,15 +84,15 @@ public class Terminal implements Component {
         double margin = (int) ((barHeight - desiredTextSize) * 0.8);
         float textY = (float) ((y + margin) * coordFactor);
         float textX = (float) ((x + margin) * coordFactor);
-        float buttonX = (float) ((x + width - margin - fr.getStringWidth(opened ? "-" : "+")) * coordFactor);
+        float buttonX = (float) (((x + width) - margin - fr.getStringWidth(opened ? "-" : "+")) * coordFactor);
 
         int cursorX = 0;
         int cursorY = 0;
 
         float outStartX = (float) ((x + margin + border));
-        float outFinishX = (float) ((x + width - (margin + border)));
+        float outFinishX = (float) (((x + width) - (margin + border)));
         float outStartY = (float) ((y + barHeight + margin));
-        float outFinishY = (float) ((y + height - margin - border));
+        float outFinishY = (float) (((y + height) - margin - border));
 
         float maxTextWidth = outFinishX - outStartX;
         int maxLines = Math.floorDiv((int) (outFinishY - outStartY), (int) (desiredTextSize + margin));
@@ -112,11 +112,11 @@ public class Terminal implements Component {
 
             Gui.drawRect(x, y + barHeight, x + border, y + height, 0xff2D3742);
 
-            Gui.drawRect(x + width, y + barHeight, x + width - border, y + height, 0xff2D3742);
+            Gui.drawRect(x + width, y + barHeight, (x + width) - border, y + height, 0xff2D3742);
 
-            Gui.drawRect(x, y + height - border, x + width, y + height, 0xff2D3742);
+            Gui.drawRect(x, (y + height) - border, x + width, y + height, 0xff2D3742);
 
-            Gui.drawRect(x + width - resizeButtonSize, y + height - resizeButtonSize, x + width, y + height,
+            Gui.drawRect((x + width) - resizeButtonSize, (y + height) - resizeButtonSize, x + width, y + height,
                     new Color(79, 104, 158).getRGB());
         }
 
@@ -137,9 +137,8 @@ public class Terminal implements Component {
                 currentLine = currentOut.get(j);
                 String[] splitUpLine = splitUpLine(currentLine, maxTextWidth, scaleFactor);
                 for (int i = splitUpLine.length - 1; i >= 0; i--) {
-                    if (linesPrinted >= maxLines) {
+                    if (linesPrinted >= maxLines)
                         break;
-                    }
                     finalOut.add(splitUpLine[i]);
                     linesPrinted++;
                 }
@@ -162,23 +161,18 @@ public class Terminal implements Component {
 
         }
         GL11.glPopMatrix();
-        if (opened) {
+        if (opened)
             Gui.drawRect(cursorX, cursorY, cursorX + 1, (int) (cursorY + desiredTextSize), 0xffffffff);
-        }
     }
 
     private String[] splitUpLine(String currentLine, float maxTextWidth, double scaleSize) {
-        if (fr.getStringWidth(currentLine) * scaleSize <= maxTextWidth) {
+        if ((fr.getStringWidth(currentLine) * scaleSize) <= maxTextWidth)
             return new String[] { currentLine };
-        } else {
-            for (int i = currentLine.length(); i >= 0; i--) {
-                String newLine = currentLine.substring(0, i);
-                if (fr.getStringWidth(newLine) * scaleSize <= maxTextWidth) {
-                    return mergeArray(new String[] { newLine },
-                            splitUpLine(currentLine.substring(i), maxTextWidth, scaleSize));
-                }
-            }
-
+        for (int i = currentLine.length(); i >= 0; i--) {
+            String newLine = currentLine.substring(0, i);
+            if ((fr.getStringWidth(newLine) * scaleSize) <= maxTextWidth)
+                return mergeArray(new String[] { newLine },
+                        splitUpLine(currentLine.substring(i), maxTextWidth, scaleSize));
         }
         return new String[] { "" };
     }
@@ -191,7 +185,6 @@ public class Terminal implements Component {
         return ArrayUtils.addAll(arr1, arr2);
     }
 
-    @Override
     public void update(int x, int y) {
         if (hidden)
             return;
@@ -206,81 +199,78 @@ public class Terminal implements Component {
         }
     }
 
-    @Override
     public void mouseDown(int x, int y, int b) {
         focused = false;
         if (hidden)
             return;
-        if (overToggleButton(x, y) && b == 0) {
+        if (overToggleButton(x, y) && (b == 0))
             this.opened = !opened;
-        } else if (overBar(x, y)) {
+        else if (overBar(x, y)) {
             if (b == 0) {
                 dragging = true;
                 mouseStartDragX = x;
                 mouseStartDragY = y;
                 windowStartDragX = this.x;
                 windowStartDragY = this.y;
-            } else if (b == 1) {
+            } else if (b == 1)
                 this.opened = !opened;
-            }
-        } else if (overResize(x, y) && b == 0) {
+        } else if (overResize(x, y) && (b == 0))
             this.resizing = true;
-        } else if (overWindow(x, y) && b == 0) {
+        else if (overWindow(x, y) && (b == 0))
             this.focused = true;
-        }
     }
 
-    @Override
     public void mouseReleased(int x, int y, int m) {
         if (hidden)
             return;
-        if (dragging) {
+        if (dragging)
             dragging = false;
-        } else if (resizing) {
+        else if (resizing)
             resizing = false;
-        }
     }
 
-    @Override
     public void keyTyped(char t, int k) {
         if (!focused)
             return;
 
-        if (k == 28) { // enter
+        switch (k) {
+        case 28:
             out.add(prefix + inputText);
             proccessInput();
             inputText = "";
             backCharsCursor = 0;
-        } else if (k == 14) { // backspace
-            if (inputText.substring(0, inputText.length() - backCharsCursor).length() > 0) {
-                if (backCharsCursor == 0) {
+            break;
+        case 14:
+            if (inputText.substring(0, inputText.length() - backCharsCursor).length() > 0)
+                if (backCharsCursor == 0)
                     inputText = inputText.substring(0, inputText.length() - 1);
-                } else {
+                else {
                     String deletable = inputText.substring(0, inputText.length() - backCharsCursor);
                     String appendable = inputText.substring(inputText.length() - backCharsCursor);
-                    if (deletable.length() > 0) {
+                    if (deletable.length() > 0)
                         deletable = deletable.substring(0, deletable.length() - 1);
-                    }
                     inputText = deletable + appendable;
                 }
-            }
-        } else if (k == 15) { // tab
+            break;
+        case 15:
             addCharToInput("    ");
-        } else if (k == 203) {
-            if (backCharsCursor < inputText.length()) {
+            break;
+        case 203:
+            if (backCharsCursor < inputText.length())
                 backCharsCursor++;
-            }
-        } else if (k == 205) {
-            if (backCharsCursor > 0) {
+            break;
+        case 205:
+            if (backCharsCursor > 0)
                 backCharsCursor--;
-            }
-        } else {
-            if (!containsElement(acceptableKeycodes, k)) {
+            break;
+        default: {
+            if (!containsElement(acceptableKeycodes, k))
                 return;
-            }
             String e = String.valueOf(t);
             if (!e.isEmpty())
                 addCharToInput(e);
+            break;
+        }
         }
         // up arrow 200
         // down 208
@@ -292,17 +282,16 @@ public class Terminal implements Component {
     }
 
     private boolean containsElement(int[] acceptableKeycodes, int k) {
-        for (int i : acceptableKeycodes) {
+        for (int i : acceptableKeycodes)
             if (i == k)
                 return true;
-        }
         return false;
     }
 
     private void addCharToInput(String e) {
-        if (backCharsCursor == 0) {
+        if (backCharsCursor == 0)
             inputText += e;
-        } else {
+        else {
             String deletable = inputText.substring(0, inputText.length() - backCharsCursor);
             String appendable = inputText.substring(inputText.length() - backCharsCursor);
             inputText = deletable + e + appendable;
@@ -310,7 +299,7 @@ public class Terminal implements Component {
     }
 
     private void proccessInput() {
-        if (!inputText.isEmpty()) {
+        if (!inputText.isEmpty())
             try {
                 String command = inputText.split(" ")[0];
                 boolean hasArgs = inputText.contains(" ");
@@ -319,16 +308,12 @@ public class Terminal implements Component {
                 Raven.commandManager.executeCommand(command, args);
             } catch (IndexOutOfBoundsException fuck) {
             }
-
-        }
     }
 
-    @Override
     public void setComponentStartAt(int n) {
 
     }
 
-    @Override
     public int getHeight() {
         return height;
     }
@@ -340,22 +325,22 @@ public class Terminal implements Component {
     }
 
     public boolean overBar(int x, int y) {
-        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + barHeight;
+        return (x >= this.x) && (x <= (this.x + width)) && (y >= this.y) && (y <= (this.y + barHeight));
     }
 
     public boolean overWindow(int x, int y) {
         if (!opened)
             return false;
-        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
+        return (x >= this.x) && (x <= (this.x + width)) && (y >= this.y) && (y <= (this.y + height));
     }
 
     public boolean overResize(int x, int y) {
-        return x >= this.x + width - resizeButtonSize && x <= this.x + width && y >= this.y + height - resizeButtonSize
-                && y <= this.y + height;
+        return (x >= ((this.x + width) - resizeButtonSize)) && (x <= (this.x + width)) && (y >= ((this.y + height) - resizeButtonSize))
+                && (y <= (this.y + height));
     }
 
     public boolean overToggleButton(int x, int y) {
-        return x >= this.x + width - barHeight && x <= this.x + width && y >= this.y && y <= this.y + barHeight;
+        return (x >= ((this.x + width) - barHeight)) && (x <= (this.x + width)) && (y >= this.y) && (y <= (this.y + barHeight));
     }
 
     public void setLocation(int x, int y) {

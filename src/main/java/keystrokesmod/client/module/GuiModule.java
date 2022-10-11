@@ -15,12 +15,12 @@ public class GuiModule extends Module {
 
     @Override
     public void onEnable() {
-        Raven.clickGui.getCategoryComponent(moduleCategory).setVisable(true);
+        Raven.clickGui.getCategoryComponent(moduleCategory).visable = true;
     }
 
     @Override
     public void onDisable() {
-        Raven.clickGui.getCategoryComponent(moduleCategory).setVisable(false);
+        Raven.clickGui.getCategoryComponent(moduleCategory).visable = false;
     }
 
     public ModuleCategory getGuiCategory() {

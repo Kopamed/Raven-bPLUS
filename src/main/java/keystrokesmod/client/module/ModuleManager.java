@@ -205,7 +205,6 @@ public class ModuleManager {
     public void removeModuleByName(String s) {
         Module m = getModuleByName(s);
         modules.remove(m);
-        m.component.category.r3nd3r();
     }
 
     // prefer using getModuleByClazz();

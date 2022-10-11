@@ -1,11 +1,11 @@
 package keystrokesmod.client.module.modules.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import keystrokesmod.client.config.Config;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module.ModuleCategory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConfigModuleManager {
 
@@ -17,20 +17,17 @@ public class ConfigModuleManager {
 
     public void updater(ArrayList<Config> cfgs) {
         try {
-            for (Config cfg : cfgs) {
+            for (Config cfg : cfgs)
                 if (!hasModule(cfg.getName())) {
                     ConfigModule m = new ConfigModule(cfg.getName());
                     modules.add(m);
-                    if (Raven.configManager.getConfig() == cfg) {
+                    if (Raven.configManager.getConfig() == cfg)
                         m.setToggled(true);
-                    }
                 }
-            }
         } catch (NullPointerException omgwoawsocoolandedgy) {
             omgwoawsocoolandedgy.printStackTrace();
         }
         Raven.clickGui.getCategoryComponent(ModuleCategory.config).updateModules();
-        Raven.clickGui.getCategoryComponent(ModuleCategory.config).r3nd3r();
     }
 
     public List<ConfigModule> getConfigModules() {

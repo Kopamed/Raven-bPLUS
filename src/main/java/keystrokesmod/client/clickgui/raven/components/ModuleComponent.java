@@ -1,43 +1,29 @@
 package keystrokesmod.client.clickgui.raven.components;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.client.GuiModule;
-import keystrokesmod.client.module.setting.Setting;
-import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
-import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
-import keystrokesmod.client.module.setting.impl.RGBSetting;
-import keystrokesmod.client.module.setting.impl.SliderSetting;
-import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.utils.font.FontUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 
-public class ModuleComponent implements Component {
+public class ModuleComponent extends Component {
     public Module mod;
     public CategoryComponent category;
     public int o;
     private ArrayList<Component> settings;
     public boolean po;
     private static int sf;
+    private static int height = 20;
 
-    public ModuleComponent(Module mod, CategoryComponent p, int o) {
+    public ModuleComponent(Module mod, CategoryComponent p) {
         this.mod = mod;
         this.category = p;
         this.o = o;
         this.settings = new ArrayList<>();
         this.po = false;
         mod.setModuleComponent(this);
-        updateSettings();
+        //updateSettings();
     }
-
+ /*
     public void updateSettings() {
         // ill fix this later but cannot be fked rn
         ArrayList<Component> newSettings = new ArrayList<Component>();
@@ -183,7 +169,7 @@ public class ModuleComponent implements Component {
                     category.getX() * sf,
                     (sr.getScaledHeight() - category.getY() - getHeight() - category.getHeight()) * sf, //wtf bruh
                     category.getWidth() * sf,
-                    (getHeight() - o - 4)* sf);
+                    ((category.getHeight() +  - o) - 4)* sf);
             for (Component c : this.settings)
                 c.draw();
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
@@ -266,5 +252,5 @@ public class ModuleComponent implements Component {
     @Override
     public int getY() {
         return this.category.getY() + this.o + 4;
-    }
+    } */
 }

@@ -104,8 +104,8 @@ public class ClientConfig {
             final JsonObject catData = new JsonObject();
             catData.addProperty("X", cat.getX());
             catData.addProperty("Y", cat.getY());
-            catData.addProperty("visable", cat.isVisable());
-            catData.addProperty("opened", cat.isOpened());
+            catData.addProperty("visable", cat.visable);
+            catData.addProperty("opened", cat.categoryOpened);
             data.add(cat.categoryName.name(), catData);
         }
         return data;
@@ -154,13 +154,12 @@ public class ClientConfig {
     private void loadClickGuiCoords(JsonObject data) {
         for (final CategoryComponent cat : Raven.clickGui.getCategoryList()) {
             final JsonObject catData = data.get(cat.categoryName.name()).getAsJsonObject();
-            cat.setX(catData.get("X").getAsInt());
-            cat.setY(catData.get("Y").getAsInt());
+            cat.setCoords(catData.get("X").getAsInt(), catData.get("Y").getAsInt());
             cat.setOpened(catData.get("opened").getAsBoolean());
             if (cat.categoryName != ModuleCategory.category) {
-                final boolean visable = cat.categoryName == ModuleCategory.category
+                final boolean visable = (cat.categoryName == ModuleCategory.category)
                         || catData.get("visable").getAsBoolean();
-                cat.setVisable(visable);
+                cat.visable = visable;
                 Raven.moduleManager.guiModuleManager.getModuleByModuleCategory(cat.categoryName).setToggled(visable);
             }
         }

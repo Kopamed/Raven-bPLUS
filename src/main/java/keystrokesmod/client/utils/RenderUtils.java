@@ -83,9 +83,9 @@ public class RenderUtils {
 	public static void glScissor(int x, int y, int width, int height) {
 	    int scale = new ScaledResolution(Raven.mc).getScaleFactor();
         GL11.glScissor(
-                0,//(Raven.mc.displayHeight - ((((y/width) - width)) * scale)),
+                x * scale,
                 (Raven.mc.displayHeight - ((((y/height) + height)) * scale)),
-                Raven.mc.displayWidth, //(width + x) * scale,
+                width * scale,
                 (height + y) * scale);
 
 	}
