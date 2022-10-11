@@ -3,55 +3,47 @@ package keystrokesmod.client.module.setting.impl;
 import com.google.gson.JsonObject;
 
 import keystrokesmod.client.clickgui.kv.KvComponent;
-import keystrokesmod.client.clickgui.kv.components.KvDescriptionComponent;
+import keystrokesmod.client.clickgui.kv.components.KvTickComponent;
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.clickgui.raven.components.DescriptionComponent;
+import keystrokesmod.client.clickgui.raven.components.ButtonComponent;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
 
-public class DescriptionSetting extends Setting {
-    private String desc;
-    private final String defaultDesc;
+public class ButtonSetting extends Setting {
 
-    public DescriptionSetting(String t) {
-        super(t);
-        this.desc = t;
-        this.defaultDesc = t;
+    private final String name;
+
+    public ButtonSetting(String name) {
+        super(name);
+        this.name = name;
     }
 
-    public String getDesc() {
-        return this.desc;
-    }
-
-    public void setDesc(String t) {
-        this.desc = t;
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override
     public void resetToDefaults() {
-        this.desc = defaultDesc;
+
     }
 
     @Override
     public JsonObject getConfigAsJson() {
         JsonObject data = new JsonObject();
         data.addProperty("type", getSettingType());
-        data.addProperty("value", getDesc());
         return data;
     }
 
     @Override
     public String getSettingType() {
-        return "desc";
+        return "button";
     }
 
     @Override
     public void applyConfigFromJson(JsonObject data) {
-        if (!data.get("type").getAsString().equals(getSettingType()))
-            return;
 
-        setDesc(data.get("value").getAsString());
     }
 
     @Override
@@ -61,11 +53,13 @@ public class DescriptionSetting extends Setting {
 
     @Override
     public Class<? extends SettingComponent> getRavenComponentType() {
-        return DescriptionComponent.class;
+        return ButtonComponent.class;
     }
 
-	@Override
-	public Class<? extends KvComponent> getComponentType() {
-		return KvDescriptionComponent.class;
-	}
+
+    @Override
+    public Class<? extends KvComponent> getComponentType() {
+        return KvTickComponent.class;
+    }
+
 }

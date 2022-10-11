@@ -8,6 +8,8 @@ import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.kv.components.KvRgbComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.RGBComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.utils.ColorM;
 import keystrokesmod.client.utils.Utils;
@@ -115,6 +117,11 @@ public class RGBSetting extends Setting {
 	public Class<? extends KvComponent> getComponentType() {
 		return KvRgbComponent.class;
 	}
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return RGBComponent.class;
+    }
 
 	public enum NSColor {
 	    Staic(d -> 0xFFFFFFFF), //Placeholder

@@ -2,6 +2,7 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import org.lwjgl.opengl.GL11;
@@ -20,30 +21,25 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public class CategoryComponent extends Component {
     public ArrayList<ModuleComponent> modulesInCategory = new ArrayList<>();
-    public ModuleComponent OpenComponent;
+    private ModuleComponent openComponent;
     public Module.ModuleCategory categoryName;
-    public boolean moduleOpened, categoryOpened, inUse;
+    public boolean categoryOpened, inUse, dragging;
     public boolean visable = true;
-    public int scrollheight;
+    public int scrollheight, dragX, dragY;
+    public int aHeight = 13;
 
     private CoolDown timer = new CoolDown(1);
     public float tPercent;
 
-    private final int bh = 13;
     private final int marginX = 80;
     private final int marginY = 3;
-    private final static int width = 92;
 
     public CategoryComponent(Module.ModuleCategory category) {
         categoryName = category;
-        Raven.moduleManager.getModulesInCategory(category)
-                .forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
-        modulesInCategory
-                .sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
-    }
-
-    public void loadSpecificModule(ModuleComponent component) {
-        OpenComponent = component;
+        setDimensions(92, aHeight);
+        Raven.moduleManager.getModulesInCategory(category).forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
+        modulesInCategory.sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
+        Collections.reverse(modulesInCategory);
     }
 
     @Override
@@ -65,56 +61,55 @@ public class CategoryComponent extends Component {
     public void draw(int mouseX, int mouseY) {
         if (!visable)
             return;
-
         Minecraft mc = Minecraft.getMinecraft();
+        tPercent = Utils.Client.smoothPercent(categoryOpened ? timer.getElapsedTime() / (float) timer.getCooldownTime() : timer.getTimeLeft() / (float) timer.getCooldownTime());
 
-        tPercent = Utils.Client.smoothPercent(categoryOpened ? timer.getElapsedTime() / (float) timer.getCooldownTime()
-                : timer.getTimeLeft() / (float) timer.getCooldownTime());
+        int newheight = openComponent == null ? modulesInCategory.size() * modulesInCategory.get(0).getHeight() : openComponent.getHeight();
+        setDimensions(width, aHeight + (int) (newheight * tPercent));
 
-        height = 0;
-        modulesInCategory.forEach(module -> height += module.getHeight());
-        height = (int) (height * tPercent);
+        //dragging bit
+        if(dragging)
+            setCoords(mouseX + dragX, mouseY + dragY);
 
         // background
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        RenderUtils.glScissor(x - 1, y, x + width + 1, y + bh + height);
-        int bgColor = moduleOpened ? GuiModule.getCategoryBackgroundRGB() : GuiModule.getSettingBackgroundRGB();
-        if (!GuiModule.isRoundedToggled())
-            Gui.drawRect(x - 1, y, x + width + 1, y + bh + height, bgColor);
-        else
-            RenderUtils.drawRoundedRect(x - 1, y, x + width + 1, y + bh + height,
-                    12, bgColor);
+        RenderUtils.glScissor(x - 1, y, x2 + 1, y2 + 1);
+        int bgColor = openComponent != null ? GuiModule.getCategoryBackgroundRGB() : GuiModule.getSettingBackgroundRGB();
+        if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, bgColor);
+        else RenderUtils.drawRoundedRect(x, y, x2, y2, 12, bgColor);
 
         // boarder
         if (GuiModule.isBoarderToggled()) {
-            if (!GuiModule.isRoundedToggled())
-                Gui.drawRect(x - 1, y, x + width + 1, y + bh + 3,
-                        GuiModule.getBackgroundRGB());
-            else
-                RenderUtils.drawRoundedOutline(x - 1, y, x + width + 1,
-                        y + bh + height, 12, 3, GuiModule.getBoarderColour());
+            if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getBoarderColour());
+            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getBoarderColour());
             GlStateManager.resetColor();
         }
+
         // category name
-        if (GuiModule.useCustomFont())
-            FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4),
-                    GuiModule.getCategoryBackgroundRGB());
-        else
-            mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4),
-                    GuiModule.getCategoryBackgroundRGB(), false);
+        if (GuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), GuiModule.getCategoryBackgroundRGB());
+        else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4),GuiModule.getCategoryBackgroundRGB(), false);
 
         // +/- bit
         int red = (int) (tPercent * 255);
         int green = 255 - red;
         final int colour = new Color(red, green, 0).getRGB();
-        GL11.glColor4f(1f, 1f, 1f, 1f);
-        mc.fontRendererObj.drawString(categoryOpened ? "-" : "+", x + marginX, y + marginY, 0xFFFFFFFF,
-                false);
+        mc.fontRendererObj.drawString(categoryOpened ? "-" : "+", x + marginX, y + marginY, colour, false);
 
         // drawing modules
         if (tPercent > 0)
-            modulesInCategory.forEach(module -> module.draw(mouseX, mouseY));
+            if(openComponent != null) {
+                openComponent.setCoords(x, y + aHeight);
+                openComponent.draw(mouseX, mouseY);
+            } else {
+                int yOffset = 0;
+                for(ModuleComponent module : modulesInCategory) {
+                    module.setCoords(x, y + aHeight + yOffset);
+                    module.draw(mouseX, mouseY);
+                    //Utils.Player.sendMessageToSelf(yOffset);
+                    yOffset += module.getHeight();
+                }
+            }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
@@ -122,27 +117,59 @@ public class CategoryComponent extends Component {
 
     @Override
     public void scroll(float ss) {
-        if (OpenComponent != null)
-            OpenComponent.scroll(ss);
+        if (openComponent != null)
+            openComponent.scroll(ss);
     }
 
-    public void clicked() {
-        System.out.println("clicked");
-        if (overExpandButton())
+    @Override
+    public void clicked(int x, int y, int button) {
+        if (overExpandButton(x, y)) {
             setOpened(!categoryOpened);
+            return;
+        } if (overName(x, y)) {
+            dragX = this.x - x;
+            dragY = this.y - y;
+            dragging = true;
+            return;
+        }
+        if(openComponent == null)
+            for(ModuleComponent module : modulesInCategory) {
+                if(module.mouseDown(x, y, button))
+                    return;
+            }
+        else
+            openComponent.mouseDown(x, y, button);
+    }
+
+    @Override
+    public void mouseReleased(int x, int y, int button) {
+        dragging = false;
+        modulesInCategory.forEach(module -> module.mouseReleased(x, y, button));
     }
 
 
     public void updateModules() {
         modulesInCategory.clear();
-        Raven.moduleManager.getModulesInCategory(categoryName)
-                .forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
-        modulesInCategory
-                .sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
+        Raven.moduleManager.getModulesInCategory(categoryName).forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
+        modulesInCategory.sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
+        Collections.reverse(modulesInCategory);
     }
 
-    public boolean overExpandButton() {
-        return (x > (x + marginX)) && (x < (x + width)) && (y > y) && (y < (y + height));
+    public boolean overExpandButton(int mouseX, int mouseY) {
+        return (mouseX > (x + marginX)) && (mouseX < (x + width)) && (mouseY > y) && (mouseY < (y + aHeight));
+    }
+
+    public boolean overName(int mouseX, int mouseY) {
+        return ((mouseX > (x)) && (mouseX < (x2)) && (mouseY > y) && (mouseY < (y + aHeight)));
+    }
+
+
+    public void setOpenModule(ModuleComponent component) {
+        openComponent = component;
+    }
+
+    public ModuleComponent getOpenModule() {
+        return openComponent;
     }
 
 }

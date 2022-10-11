@@ -6,6 +6,8 @@ import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.kv.components.KvTickComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
+import keystrokesmod.client.clickgui.raven.components.TickComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class TickSetting extends Setting {
@@ -74,6 +76,11 @@ public class TickSetting extends Setting {
 
     public void setEnabled(boolean b) {
         this.isEnabled = b;
+    }
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return TickComponent.class;
     }
 
 	@Override

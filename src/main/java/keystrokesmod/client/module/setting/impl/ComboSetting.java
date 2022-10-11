@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.kv.components.KvComboComponent;
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.components.ComboComponent;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class ComboSetting<T extends Enum<?>> extends Setting {
@@ -83,4 +85,9 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
 	public Class<? extends KvComponent> getComponentType() {
 		return KvComboComponent.class;
 	}
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return ComboComponent.class;
+    }
 }

@@ -23,7 +23,7 @@ public class ClickGui extends GuiScreen {
     private ScheduledFuture<?> sf;
     private Timer aT, aL, aE, aR;
     private final ArrayList<CategoryComponent> categoryList;
-    private int mouseX, mouseY;
+    public static int mouseX, mouseY;
     public final Terminal terminal;
 
     public static int binding;
@@ -147,10 +147,8 @@ public class ClickGui extends GuiScreen {
 	public void mouseClicked(int x, int y, int mouseButton) throws IOException {
         terminal.mouseDown(x, y, mouseButton);
         for(CategoryComponent category : visableCategoryList())
-            if(category.mouseDown(x, y, mouseButton)) {
-                mc.thePlayer.playSound("gui.button.press", 1, 1);
+            if(category.mouseDown(x, y, mouseButton))
                 return;
-            }
     }
 
     @Override
@@ -159,7 +157,7 @@ public class ClickGui extends GuiScreen {
         if (terminal.overPosition(x, y))
             return;
 
-        visableCategoryList().forEach(category -> {if(category.mouseDown(x, y, mouseButton))return;});
+        visableCategoryList().forEach(category -> category.mouseReleased(x, y, mouseButton));
 
         if (Raven.clientConfig != null)
 			Raven.clientConfig.saveConfig();
@@ -209,6 +207,7 @@ public class ClickGui extends GuiScreen {
     public ArrayList<CategoryComponent> visableCategoryList() {
         ArrayList<CategoryComponent> newList = (ArrayList<CategoryComponent>) categoryList.clone();
         newList.removeIf(obj -> !obj.visable);
+        //newList.forEach(a -> Utils.Player.sendMessageToSelf(a.categoryName.getName()));
         return newList;
     }
 

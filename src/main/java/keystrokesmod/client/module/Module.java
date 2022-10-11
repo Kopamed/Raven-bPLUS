@@ -197,6 +197,9 @@ public class Module {
             this.enable();
     }
 
+    public void guiButtonToggled(Setting b) {
+    }
+
     public void guiButtonToggled(TickSetting b) {
     }
 
@@ -241,11 +244,11 @@ public class Module {
     public boolean isClientConfig() {
         return clientConfig;
     }
-    
+
     public boolean isRegistered() {
         return registered;
     }
-    
+
     public void unRegister() {
         if(registered) {
             registered = false;
@@ -280,11 +283,11 @@ public class Module {
             this.topCategory = topCategory;
             this.name = name;
         }
-        
+
         public void addChildCategory(ModuleCategory moduleCategory) {
             childCategories.add(moduleCategory);
         }
-        
+
         public List<ModuleCategory> getChildCategories() {
             return childCategories;
         }

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 
 import javax.imageio.ImageIO;
 
@@ -13,46 +12,15 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.HUD;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class RenderUtils {
-
-	public static void stopDrawing() {
-		GL11.glDisable(3042);
-		GL11.glEnable(3553);
-		GL11.glDisable(2848);
-		GL11.glDisable(3042);
-		GL11.glEnable(2929);
-	}
-
-	public static void startDrawing() {
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glEnable(GL11.GL_LINE_SMOOTH);
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-
-		try {
-			Method m = ReflectionHelper.findMethod(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer,
-					new String[] { "func_78479_a", "setupCameraTransform" }, float.class, int.class);
-
-			m.setAccessible(true);
-			m.invoke(Minecraft.getMinecraft().entityRenderer, Utils.Client.getTimer().renderPartialTicks, 0);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 
 	public static Color blend(Color color, Color color1, double d0) {
 		float f = (float) d0;
@@ -67,18 +35,6 @@ public class RenderUtils {
 				(afloat[2] * f) + (afloat1[2] * f1));
 	}
 
-	public static void drawImage(ResourceLocation image, float x, float y, float width, float height) {
-		GL11.glDisable(2929);
-		GL11.glEnable(3042);
-		GL11.glDepthMask(false);
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
-		Utils.mc.getTextureManager().bindTexture(image);
-		Gui.drawModalRectWithCustomSizedTexture((int) x, (int) y, 0.0f, 0.0f, (int) width, (int) height, width, height);
-		GL11.glDepthMask(true);
-		GL11.glDisable(3042);
-		GL11.glEnable(2929);
-	}
 
 	public static void glScissor(int x, int y, int width, int height) {
 	    int scale = new ScaledResolution(Raven.mc).getScaleFactor();
@@ -271,7 +227,6 @@ public class RenderUtils {
             bf = ImageIO.read(ravenLogoInputStream);
             return Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation("raven",new DynamicTexture(bf));
         } catch (IOException | IllegalArgumentException | NullPointerException noway) {
-            //noway.printStackTrace();
             return new ResourceLocation("null");
         }
 	}

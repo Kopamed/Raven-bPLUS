@@ -23,7 +23,7 @@ public abstract class Component {
 
     public boolean mouseDown(int x, int y, int button) {
         if (isMouseOver(x, y)) {
-            clicked(button, x, y);
+            clicked(x, y, button);
             return true;
         }
         return false;
@@ -32,13 +32,15 @@ public abstract class Component {
     public void setCoords(int x, int y) {
         this.x = x;
         this.y = y;
-        this.y2 = y + height;
+        x2 = x + width;
+        y2 = y + height;
     }
 
     public void setDimensions(int width, int height) {
         this.width = width;
         this.height = height;
-        this.y2 = y + height;
+        x2 = x + width;
+        y2 = y + height;
     }
 
     public boolean isMouseOver(int x, int y) {

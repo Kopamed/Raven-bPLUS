@@ -9,6 +9,8 @@ import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.kv.components.KvSliderComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
+import keystrokesmod.client.clickgui.raven.components.SliderComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class SliderSetting extends Setting {
@@ -101,4 +103,9 @@ public class SliderSetting extends Setting {
 	public Class<? extends KvComponent> getComponentType() {
 		return KvSliderComponent.class;
 	}
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return SliderComponent.class;
+    }
 }
