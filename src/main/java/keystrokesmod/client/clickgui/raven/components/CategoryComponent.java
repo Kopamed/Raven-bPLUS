@@ -25,14 +25,19 @@ public class CategoryComponent extends Component {
     public Module.ModuleCategory categoryName;
     public boolean categoryOpened, inUse, dragging;
     public boolean visable = true;
-    public int scrollheight, dragX, dragY, prevHeight, diffHeight;
+    public int scrollheight, dragX, dragY, prevHeight, diffHeight, bottomX, bottomY;
+    public double theta, velo = 0.1;
     public int aHeight = 13;
 
     private CoolDown timer = new CoolDown(500);
     public float tPercent;
 
-    private final int marginX = 80;
-    private final int marginY = 3;
+    private final int marginX = 80
+                    ,marginY = 3;
+
+    private final float gravity = 0.9f,
+                    friction = 0.7f;
+
 
     public CategoryComponent(Module.ModuleCategory category) {
         categoryName = category;
@@ -40,6 +45,12 @@ public class CategoryComponent extends Component {
         Raven.moduleManager.getModulesInCategory(category).forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
         modulesInCategory.sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
         Collections.reverse(modulesInCategory);
+    }
+
+    public void initGui() {
+        Utils.Player.sendMessageToSelf("a");
+        bottomX = x + (width/2);
+        bottomY = y + (height/2);
     }
 
     @Override
@@ -65,13 +76,48 @@ public class CategoryComponent extends Component {
         if(dragging)
             setCoords(mouseX + dragX, mouseY + dragY);
 
-        // background
+        //swing bit VERY BROKEN
         GL11.glPushMatrix();
+        if(GuiModule.isSwingToggled() && GuiModule.isSwingToggled()) { //to make it not work
+            int topX = x + (width/2),
+                topY = y + (height/2);
+
+            double d = Math.sqrt(Math.pow((topX - bottomX), 2) + Math.pow((topY - bottomY), 2));
+            theta = Math.acos(Math.toRadians(
+                            ((2 * Math.pow(height,2)) + (Math.pow(d, 2)))
+                            /
+                            (2 * height * height)
+                            ));
+
+            velo = velo + (theta * gravity);
+            double ntheta = theta + (velo * friction);
+            bottomX = x - (int) (Math.sin(Math.toRadians(ntheta)) * height);
+            bottomY = y - (int) (Math.cos(Math.toRadians(ntheta)) * height);
+            //Utils.Player.sendMessageToSelf(velo + "");
+            //GL11.glRotated(ntheta, ntheta, ntheta, 0);
+
+        }
+
+        // background
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         RenderUtils.glScissor(x - 1, y, x2 + 1, y2 + 1);
         int bgColor = openComponent != null ? GuiModule.getCategoryBackgroundRGB() : GuiModule.getSettingBackgroundRGB();
         if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, bgColor);
         else RenderUtils.drawRoundedRect(x, y, x2, y2, 12, bgColor);
+
+        // drawing modules
+        if (categoryOpened || (tPercent < 1))
+            if(openComponent != null) {
+                openComponent.setCoords(x, y + aHeight);
+                openComponent.draw(mouseX, mouseY);
+            } else {
+                int yOffset = 0;
+                for(ModuleComponent module : modulesInCategory) {
+                    module.setCoords(x, y + aHeight + yOffset);
+                    module.draw(mouseX, mouseY);
+                    yOffset += module.getHeight();
+                }
+            }
 
         // boarder
         if (GuiModule.isBoarderToggled()) {
@@ -90,20 +136,6 @@ public class CategoryComponent extends Component {
         final int colour = new Color(red, green, 0).getRGB();
         mc.fontRendererObj.drawString(categoryOpened ? "-" : "+", x + marginX, y + marginY, colour, false);
 
-        // drawing modules
-        if (categoryOpened || (tPercent < 1))
-            if(openComponent != null) {
-                openComponent.setCoords(x, y + aHeight);
-                openComponent.draw(mouseX, mouseY);
-            } else {
-                int yOffset = 0;
-                for(ModuleComponent module : modulesInCategory) {
-                    module.setCoords(x, y + aHeight + yOffset);
-                    module.draw(mouseX, mouseY);
-                    yOffset += module.getHeight();
-                }
-            }
-
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
 
@@ -115,10 +147,11 @@ public class CategoryComponent extends Component {
             } else {
                 for(ModuleComponent moduleComponent : modulesInCategory)
                     newHeight += moduleComponent.getHeight();
-                newHeight += 3;
+                //newHeight += 3;
             }
         }
 
+        // this is supposed to be a smoother open/close thingo
         /*tPercent = 1 - Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
         if(prevHeight != newHeight) {
             Utils.Player.sendMessageToSelf(newHeight + "");

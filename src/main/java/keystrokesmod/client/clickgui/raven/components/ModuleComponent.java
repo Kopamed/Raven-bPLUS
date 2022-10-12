@@ -10,7 +10,9 @@ import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.font.FontUtil;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class ModuleComponent extends Component {
     public Module mod;
@@ -81,13 +83,26 @@ public class ModuleComponent extends Component {
         f();
     }
 
+    public static void vr(float x, float y, float x1, float y1, int t, int b) {
+        RenderUtils.drawRoundedRect(x, y, x1, y1, 12, t, new boolean[] {false,true,true,false} );
+    }
+
     @Override
     public void draw(int mouseX, int mouseY) {
 
         //background
-        //Utils.Player.sendMessageToSelf(GuiModule.useCustomFont() + "");
-        if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB(), GuiModule.getEnabledTopRGB());
-        if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB(), GuiModule.getDisabledTopRGB());
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+        if((category.getOpenModule() == this) || ((category.modulesInCategory.indexOf(this) + 1) != category.modulesInCategory.size())) {
+            if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB(((y2 - category.getY())) * 20), GuiModule.getEnabledTopRGB((y - category.getY()) * 20));
+            if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB((y2 - category.getY()) * 20), GuiModule.getDisabledTopRGB((y - category.getY()) * 20));
+        } else {
+            //Utils.Player.sendMessageToSelf("b");
+            if (GuiModule.showGradientEnabled() && mod.isEnabled()) vr(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB(((y2 - category.getY())) * 20), GuiModule.getEnabledTopRGB((y - category.getY()) * 20));
+            if (GuiModule.showGradientDisabled() && !mod.isEnabled()) vr(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB((y2 - category.getY()) * 20), GuiModule.getDisabledTopRGB((y - category.getY()) * 20));
+        }
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
 
         //name
         int button_rgb = mod.isEnabled() ? GuiModule.getEnabledTextRGB() : this.mod.canBeEnabled() ? GuiModule.getDisabledTextRGB() : 0xFF999999;
@@ -120,7 +135,7 @@ public class ModuleComponent extends Component {
                 mod.toggle();
                 return;
             }
-            else if ((b == 1) && !settings.isEmpty()) {
+            else if ((b == 1) && !mod.getSettings().isEmpty()) {
                 category.setOpenModule(category.getOpenModule() == this ? null : this);
                 int yOffset = 0;
                 if(category.getOpenModule() == this) {
@@ -133,8 +148,8 @@ public class ModuleComponent extends Component {
                         yOffset += bind.getHeight();
                     }
                     setDimensions(width, aHeight + yOffset + 3);
-                }
-                setDimensions(category.getWidth(), aHeight + yOffset + 3);
+                } else
+                    setDimensions(category.getWidth(), aHeight);
                 return;
             }
 

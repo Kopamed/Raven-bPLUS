@@ -61,6 +61,7 @@ public class ClickGui extends GuiScreen {
     @Override
 	public void initGui() {
         super.initGui();
+        categoryList.forEach(CategoryComponent::initGui);
     }
 
     @Override

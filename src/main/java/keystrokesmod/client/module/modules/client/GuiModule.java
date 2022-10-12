@@ -4,24 +4,15 @@ import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.RGBSetting;
-import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.ColorM;
 import keystrokesmod.client.utils.Utils;
 
 public class GuiModule extends Module {
 
-    private static SliderSetting backgroundOpacity;
+    private static ComboSetting preset;
 
-    private static ComboSetting preset, cnColor;
-
-    private static TickSetting categoryBackground, cleanUp, reset, usePreset, rainbowNotification, notifications, betagui,
-
-    matchTopWBottomEnabled, matchTopWBottomDisabled, showGradientEnabled, showGradientDisabled, useCustomFont, roundedCorners, swing, boarder;
-
-    private static RGBSetting enabledTopRGB, enabledBottomRGB, enabledTextRGB, disabledTopRGB, disabledBottomRGB,
-    disabledTextRGB, backgroundRGB, settingBackgroundRGB, categoryBackgroundRGB, categoryNameRGB;
+    private static TickSetting cleanUp, reset, betagui, rainbowNotification, notifications;
 
     public static int guiScale;
 
@@ -30,38 +21,10 @@ public class GuiModule extends Module {
         withKeycode(54);
 
         this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
-        this.registerSetting(enabledTopRGB = new RGBSetting("EnabledTopRGB", 0, 200, 50));
-        this.registerSetting(enabledBottomRGB = new RGBSetting("EnabledBottomRGB", 0, 200, 50));
-        this.registerSetting(enabledTextRGB = new RGBSetting("EnabledTextRGB", 0, 200, 50));
-
-        this.registerSetting(disabledTopRGB = new RGBSetting("DisabledTopRGB", 0, 200, 50));
-        this.registerSetting(disabledBottomRGB = new RGBSetting("DisabledBottomRGB", 0, 200, 50));
-        this.registerSetting(disabledTextRGB = new RGBSetting("DisabledTextRGB", 0, 200, 50));
-
-        this.registerSetting(backgroundRGB = new RGBSetting("BackgroundRGB", 0, 0, 0));
-        this.registerSetting(settingBackgroundRGB = new RGBSetting("SettingBackgroundRGB", 0, 0, 0));
-        this.registerSetting(categoryBackgroundRGB = new RGBSetting("CategoryBackgroundRGB", 0, 0, 0));
-
-        this.registerSetting(cnColor = new ComboSetting("Category Name Color", CNColor.STATIC));
-        this.registerSetting(categoryNameRGB = new RGBSetting("CategoryNameRGB", 255, 255, 255));
-
-        this.registerSetting(matchTopWBottomEnabled = new TickSetting("Match Top enabled w/ bottom enabled", false));
-        this.registerSetting(matchTopWBottomDisabled = new TickSetting("Match Top enabled w/ bottom disabled", false));
-
-        this.registerSetting(showGradientDisabled = new TickSetting("Show gradient when disabled", true));
-        this.registerSetting(showGradientEnabled = new TickSetting("Show gradient when enabled", true));
-
-        this.registerSetting(backgroundOpacity = new SliderSetting("Background Opacity %", 43.0D, 0.0D, 100.0D, 1.0D));
-        this.registerSetting(categoryBackground = new TickSetting("Category Background", true));
-        this.registerSetting(useCustomFont = new TickSetting("Smooth Font (BROKEN DONT USE)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
-        this.registerSetting(notifications = new TickSetting("Notifications", true));
-        this.registerSetting(rainbowNotification = new TickSetting("Rainbow Notifications", true));
         this.registerSetting(reset = new TickSetting("Reset position", false));
-        this.registerSetting(usePreset = new TickSetting("Use preset", true));
-        this.registerSetting(roundedCorners = new TickSetting("Rounded corners", true));
-        this.registerSetting(swing = new TickSetting("Swing", true));
-        this.registerSetting(boarder = new TickSetting("boarder", true));
+        this.registerSetting(notifications = new TickSetting("Notifications", false));
+        this.registerSetting(rainbowNotification = new TickSetting("Reset position", false));
         this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
     }
 
@@ -71,12 +34,6 @@ public class GuiModule extends Module {
             cleanUp.disable();
             for (CategoryComponent cc : Raven.clickGui.getCategoryList())
                 cc.setCoords(((cc.getX() / 50) * 50) + ((cc.getX() % 50) > 25 ? 50 : 0), ((cc.getY() / 50) * 50) + ((cc.getY() % 50) > 25 ? 50 : 0));
-        } else if (setting == matchTopWBottomEnabled) {
-            matchTopWBottomEnabled.disable();
-            enabledTopRGB.setColors(enabledBottomRGB.getColors());
-        } else if (setting == matchTopWBottomDisabled) {
-            matchTopWBottomDisabled.disable();
-            disabledTopRGB.setColors(disabledBottomRGB.getColors());
         } else if (setting == reset) {
             reset.disable();
             Raven.clickGui.resetSort();
@@ -85,16 +42,16 @@ public class GuiModule extends Module {
     }
 
     @Override
-	public void onEnable() {
+    public void onEnable() {
         if (Utils.Player.isPlayerInGame() && ((mc.currentScreen != Raven.clickGui) || (mc.currentScreen != Raven.kvCompactGui)))
-			if(betagui.isToggled()) {
-			    guiScale = mc.gameSettings.guiScale;
-			    mc.gameSettings.guiScale = 3;
-				mc.displayGuiScreen(Raven.kvCompactGui);
+            if(betagui.isToggled()) {
+                guiScale = mc.gameSettings.guiScale;
+                mc.gameSettings.guiScale = 3;
+                mc.displayGuiScreen(Raven.kvCompactGui);
                 Raven.kvCompactGui.initGui();
                 Raven.kvCompactGui.initGui(); //no idea why this works
-			}
-			else {
+            }
+            else {
                 mc.displayGuiScreen(Raven.clickGui);
                 Raven.clickGui.initMain();
             }
@@ -109,28 +66,24 @@ public class GuiModule extends Module {
 
     // sgimas going to tell me theres a better way to do this isnt he
 
-    public static int getBackgroundOpacity() {
-        return usePreset.isToggled() ? 0 : (int) (backgroundOpacity.getInput() * 2.55);
-    }
-
     public static boolean isCategoryBackgroundToggled() {
-        return usePreset.isToggled() ? getPresetMode().categoryBackground : categoryBackground.isToggled();
+        return getPresetMode().categoryBackground;
     }
 
     public static boolean showGradientEnabled() {
-        return usePreset.isToggled() ? getPresetMode().showGradientEnabled : showGradientEnabled.isToggled();
+        return getPresetMode().showGradientEnabled;
     }
 
     public static boolean showGradientDisabled() {
-        return usePreset.isToggled() ? getPresetMode().showGradientDisabled : showGradientDisabled.isToggled();
+        return  getPresetMode().showGradientDisabled;
     }
 
     public static boolean useCustomFont() {
-        return usePreset.isToggled() ? getPresetMode().useCustomFont : useCustomFont.isToggled();
+        return  getPresetMode().useCustomFont;
     }
 
     public static int getEnabledTopRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().enabledTopRGB.color(delay) : enabledTopRGB.getRGB();
+        return  getPresetMode().enabledTopRGB.color(delay);
     }
 
     public static int getEnabledTopRGB() {
@@ -138,7 +91,7 @@ public class GuiModule extends Module {
     }
 
     public static int getEnabledBottomRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().enabledBottomRGB.color(delay) : enabledBottomRGB.getRGB();
+        return  getPresetMode().enabledBottomRGB.color(delay);
     }
 
     public static int getEnabledBottomRGB() {
@@ -146,7 +99,7 @@ public class GuiModule extends Module {
     }
 
     public static int getEnabledTextRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().enabledTextRGB.color(delay) : enabledTextRGB.getRGB();
+        return  getPresetMode().enabledTextRGB.color(delay);
     }
 
     public static int getEnabledTextRGB() {
@@ -154,7 +107,7 @@ public class GuiModule extends Module {
     }
 
     public static int getDisabledTopRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().disabledTopRGB.color(delay) : disabledTopRGB.getRGB();
+        return  getPresetMode().disabledTopRGB.color(delay);
     }
 
     public static int getDisabledTopRGB() {
@@ -162,7 +115,7 @@ public class GuiModule extends Module {
     }
 
     public static int getDisabledBottomRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().disabledBottomRGB.color(delay) : disabledBottomRGB.getRGB();
+        return  getPresetMode().disabledBottomRGB.color(delay);
     }
 
     public static int getDisabledBottomRGB() {
@@ -170,7 +123,7 @@ public class GuiModule extends Module {
     }
 
     public static int getDisabledTextRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().disabledTextRGB.color(0) : disabledTextRGB.getRGB();
+        return  getPresetMode().disabledTextRGB.color(0);
     }
 
     public static int getDisabledTextRGB() {
@@ -178,7 +131,7 @@ public class GuiModule extends Module {
     }
 
     public static int getBackgroundRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().backgroundRGB.color(delay) : backgroundRGB.getRGB();
+        return  getPresetMode().backgroundRGB.color(delay);
     }
 
     public static int getBackgroundRGB() {
@@ -186,7 +139,7 @@ public class GuiModule extends Module {
     }
 
     public static int getSettingBackgroundRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().settingBackgroundRGB.color(delay) : settingBackgroundRGB.getRGB();
+        return  getPresetMode().settingBackgroundRGB.color(delay);
     }
 
     public static int getSettingBackgroundRGB() {
@@ -195,7 +148,7 @@ public class GuiModule extends Module {
 
 
     public static int getCategoryBackgroundRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().categoryBackgroundRGB.color(delay) : categoryBackgroundRGB.getRGB();
+        return  getPresetMode().categoryBackgroundRGB.color(delay);
     }
 
     public static int getCategoryBackgroundRGB() {
@@ -203,7 +156,7 @@ public class GuiModule extends Module {
     }
 
     public static int getCategoryNameRGB(int delay) {
-        return usePreset.isToggled() ? getPresetMode().categoryNameRGB.color(delay) : categoryNameRGB.getRGB();
+        return  getPresetMode().categoryNameRGB.color(delay);
     }
 
     public static int getCategoryNameRGB() {
@@ -211,7 +164,7 @@ public class GuiModule extends Module {
     }
 
     public static int getBoarderColour(int delay) {
-        return usePreset.isToggled() ? getPresetMode().boarderColor.color(delay) : categoryNameRGB.getRGB();
+        return  getPresetMode().boarderColor.color(delay);
     }
 
     public static int getBoarderColour() {
@@ -219,19 +172,19 @@ public class GuiModule extends Module {
     }
 
     public static CNColor getCNColor() {
-        return usePreset.isToggled() ? getPresetMode().cnColor : (CNColor) cnColor.getMode();
+        return  getPresetMode().cnColor;
     }
 
     public static boolean isSwingToggled() {
-        return usePreset.isToggled() ? getPresetMode().swing : swing.isToggled();
+        return  getPresetMode().swing;
     }
 
     public static boolean isRoundedToggled() {
-        return usePreset.isToggled() ? getPresetMode().swing : roundedCorners.isToggled();
+        return  getPresetMode().swing;
     }
 
     public static boolean isBoarderToggled() {
-        return boarder.isToggled() ? getPresetMode().swing : swing.isToggled();
+        return  getPresetMode().boarder;
     }
 
     public static boolean rainbowNotification() {
@@ -243,7 +196,7 @@ public class GuiModule extends Module {
     }
 
     public enum Preset {
-       /* Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+        /* Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
                 // categoryBackground
                 CNColor.STATIC, // just leave this
                 // new Color(red, green, blue, alpha (optional out of 255 default is 255))
@@ -260,24 +213,61 @@ public class GuiModule extends Module {
                 false, //rounded
                 false //swing
                 ), */
+        Vape( // name
+                        true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+                        CNColor.STATIC, // just leave this
+                        in -> 0xFFFFFFFE, // categoryNameRGB
+                        in -> 0x99808080, // settingBackgroundRGB
+                        in -> 0x99808080, // categoryBackgroundRGB
+                        in -> -12876693, // enabledTopRGB
+                        in -> -12876693, // enabledBottomRGB
+                        in -> 0xFFFFFFFE, // enabledTextRGB
+                        in -> 0xFF000000, // disabledTopRGB
+                        in -> 0xFF000000, // disabledBottomRGB
+                        in -> 0xFFFFFFFE, // disabledTextRGB
+                        in -> 0x99808080, // backgroundRGB
+                        true, //rounded
+                        true, //swing
+                        false, //boarder
+                        (in -> -12876693)//boarderColor
+                        ),
+
         PlusPlus( // name
-                false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                CNColor.STATIC, // just leave this
-                in -> 0xFFFFFFFE, // categoryNameRGB
-                in -> 0x99b0b0b0, // settingBackgroundRGB
-                in -> 0x99b0b0b0, // categoryBackgroundRGB
-                in -> 0xFF000000, // enabledTopRGB
-                in -> 0xFF000000, // enabledBottomRGB
-                in -> 0xFFFFFFFE, // enabledTextRGB
-                in -> 0xFF000000, // disabledTopRGB
-                in -> 0xFF000000, // disabledBottomRGB
-                in -> 0xffff0c02, // disabledTextRGB
-                in -> 0x99b0b0b0, // backgroundRGB
-                true, //rounded
-                true, //swing
-                true, //boarder
-                (in -> Utils.Client.astolfoColorsDraw(14, 10))//boarderColor
-                );
+                        true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+                        CNColor.STATIC, // just leave this
+                        in -> 0xFFFFFFFE, // categoryNameRGB
+                        in -> -15001318, // settingBackgroundRGB
+                        in -> -15001318, // categoryBackgroundRGB
+                        in -> Utils.Client.rainbowDraw(2, in), // enabledTopRGB
+                        in -> Utils.Client.rainbowDraw(2, in), // enabledBottomRGB
+                        in -> 0xFFFFFFFE, // enabledTextRGB
+                        in -> 0xFF000000, // disabledTopRGB
+                        in -> 0xFF000000, // disabledBottomRGB
+                        in -> 0xFFFFFFFE, // disabledTextRGB
+                        in -> 0x99808080, // backgroundRGB
+                        true, //rounded
+                        true, //swing
+                        true, //boarder
+                        (in -> Utils.Client.astolfoColorsDraw(in, 10))//boarderColor
+                        ),
+        RainBow( // name
+                        true, true, false, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
+                        CNColor.STATIC, // just leave this
+                        in -> 0xFFFFFFFE, // categoryNameRGB
+                        in -> 0x99808080, // settingBackgroundRGB
+                        in -> 0x99808080, // categoryBackgroundRGB
+                        in -> Utils.Client.rainbowDraw(2, in), // enabledTopRGB
+                        in -> Utils.Client.rainbowDraw(2, in), // enabledBottomRGB
+                        in -> 0xFFFFFFFE, // enabledTextRGB
+                        in -> Utils.Client.rainbowDraw(2, in), // disabledTopRGB
+                        in -> Utils.Client.rainbowDraw(2, in), // disabledBottomRGB
+                        in -> 0xffff0c02, // disabledTextRGB
+                        in -> 0x99808080, // backgroundRGB
+                        true, //rounded
+                        true, //swing
+                        true, //boarder
+                        (in -> Utils.Client.astolfoColorsDraw(14, 10))//boarderColor
+                        );
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
         public ColorM categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
@@ -285,11 +275,11 @@ public class GuiModule extends Module {
         public CNColor cnColor;
 
         private Preset(
-                boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
-                boolean categoryBackground, CNColor cnColor, ColorM categoryNameRGB, ColorM settingBackgroundRGB,
-                ColorM categoryBackgroundRGB, ColorM enabledTopRGB, ColorM enabledBottomRGB, ColorM enabledTextRGB,
-                ColorM disabledTopRGB, ColorM disabledBottomRGB, ColorM disabledTextRGB, ColorM backgroundRGB,
-                boolean roundedCorners, boolean swing, boolean boarder, ColorM boarderColor) {
+                        boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
+                        boolean categoryBackground, CNColor cnColor, ColorM categoryNameRGB, ColorM settingBackgroundRGB,
+                        ColorM categoryBackgroundRGB, ColorM enabledTopRGB, ColorM enabledBottomRGB, ColorM enabledTextRGB,
+                        ColorM disabledTopRGB, ColorM disabledBottomRGB, ColorM disabledTextRGB, ColorM backgroundRGB,
+                        boolean roundedCorners, boolean swing, boolean boarder, ColorM boarderColor) {
             this.showGradientEnabled = showGradientEnabled;
             this.showGradientDisabled = showGradientDisabled;
             this.useCustomFont = useCustomFont;
