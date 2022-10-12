@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
@@ -137,6 +138,7 @@ public class ClickGui extends GuiScreen {
         visableCategoryList().forEach(category -> category.draw(x, y));
 
         // PLAYER
+        GL11.glColor4f(1f, 1f, 1f, 1f);
         GuiInventory.drawEntityOnScreen((this.width + 15) - this.aE.getValueInt(0, 40, 2),
                 this.height - 19 - this.fontRendererObj.FONT_HEIGHT, 40, (float) (this.width - 25 - x),
                 (float) (this.height - 50 - y), this.mc.thePlayer);

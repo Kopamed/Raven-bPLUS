@@ -25,7 +25,7 @@ public class CategoryComponent extends Component {
     public Module.ModuleCategory categoryName;
     public boolean categoryOpened, inUse, dragging;
     public boolean visable = true;
-    public int scrollheight, dragX, dragY, prevHeight, diffHeight, bottomX, bottomY;
+    public int scrollheight, dragX, dragY, heightCheck, deltaHeight, prevHeight, bottomX, bottomY;
     public double theta, velo = 0.1;
     public int aHeight = 13;
 
@@ -162,13 +162,16 @@ public class CategoryComponent extends Component {
 
         setDimensions(width, aHeight + (int) (newHeight + (diffHeight * tPercent))); */
 
-        if(prevHeight != newHeight) {
-            prevHeight = newHeight;
+        if(heightCheck != newHeight) {
+            prevHeight = heightCheck;
+            deltaHeight = newHeight - heightCheck;
+            heightCheck = newHeight;
             timer.setCooldown(500);
             timer.start();
         }
         tPercent = Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
-        setDimensions(width, aHeight + (int) (newHeight * tPercent));
+        System.out.println(aHeight + " " + prevHeight + " " + (int) (deltaHeight * tPercent) + " " + newHeight);
+        setDimensions(width, aHeight + prevHeight + (int) (deltaHeight * tPercent));
     }
 
     @Override
