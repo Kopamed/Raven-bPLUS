@@ -263,16 +263,16 @@ public class GuiModule extends Module {
         PlusPlus( // name
                 false, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
                 CNColor.STATIC, // just leave this
-                in -> 0xFFFFFFFF, // categoryNameRGB
-                in -> 0x99b067ff, // settingBackgroundRGB
-                in -> 0x99b067ff, // categoryBackgroundRGB
+                in -> 0xFFFFFFFE, // categoryNameRGB
+                in -> 0x99b0b0b0, // settingBackgroundRGB
+                in -> 0x99b0b0b0, // categoryBackgroundRGB
                 in -> 0xFF000000, // enabledTopRGB
                 in -> 0xFF000000, // enabledBottomRGB
-                in -> 0xFFFFFFFF, // enabledTextRGB
+                in -> 0xFFFFFFFE, // enabledTextRGB
                 in -> 0xFF000000, // disabledTopRGB
                 in -> 0xFF000000, // disabledBottomRGB
                 in -> 0xffff0c02, // disabledTextRGB
-                in -> 0xFFad0e09, // backgroundRGB
+                in -> 0x99b0b0b0, // backgroundRGB
                 true, //rounded
                 true, //swing
                 true, //boarder

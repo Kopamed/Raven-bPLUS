@@ -24,12 +24,16 @@ public class KvTickComponent extends KvComponent {
 
     @Override
 	public void draw(int mouseX, int mouseY) {
+
+        int x = this.x + 5;
+
         float percent = Utils.Client.smoothPercent((setting.isToggled() ?  timer.getTimeLeft() : timer.getElapsedTime())/(float) timer.getCooldownTime());
         int red = (int) (percent * 255);
         int green = 255 - red;
         final int colour = new Color(red, green, 0).getRGB();
         float offSet = percent * 5;
         int fh = (Raven.mc.fontRendererObj.FONT_HEIGHT/2) + 1;
+
         RenderUtils.drawBorderedRoundedRect(x, y + fh, x + 15, y + height, 4, 2, Utils.Client.rainbowDraw(1, 0), 0xFF000000);
         RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + 10 + offSet, y + height, 4, 2, Utils.Client.rainbowDraw(1, 0), colour);
         GL11.glPushMatrix();

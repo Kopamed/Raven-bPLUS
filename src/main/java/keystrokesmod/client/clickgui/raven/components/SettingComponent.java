@@ -13,7 +13,6 @@ public abstract class SettingComponent extends Component {
     public SettingComponent(Setting setting, ModuleComponent moduleComponent) {
         this.setting = setting;
         this.moduleComponent = moduleComponent;
-        setDimensions(moduleComponent.getWidth(), 14);
     }
 
     public void hideComponent() {

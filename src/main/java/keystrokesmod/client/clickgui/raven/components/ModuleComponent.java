@@ -16,7 +16,7 @@ public class ModuleComponent extends Component {
     public Module mod;
     public CategoryComponent category;
     public ArrayList<SettingComponent> settings = new ArrayList<>();
-    public BindComponent bind = new BindComponent(this);
+    public BindComponent bind;
     public int aHeight = 20;
 
     public ModuleComponent(Module mod, CategoryComponent p) {
@@ -27,8 +27,11 @@ public class ModuleComponent extends Component {
             Class<? extends SettingComponent> clazz = setting.getRavenComponentType();
             try {
                 settings.add(clazz.getDeclaredConstructor(Setting.class, this.getClass()).newInstance(setting, this));
-            } catch (Exception e) {e.printStackTrace();};
+            } catch (Exception e) {
+                System.out.println(clazz);
+            };
         });
+        bind = new BindComponent(this);
         setDimensions(p.getWidth(), aHeight);
     }
 
@@ -89,7 +92,7 @@ public class ModuleComponent extends Component {
         //name
         int button_rgb = mod.isEnabled() ? GuiModule.getEnabledTextRGB() : this.mod.canBeEnabled() ? GuiModule.getDisabledTextRGB() : 0xFF999999;
         GL11.glPushMatrix();
-        if (GuiModule.useCustomFont()) FontUtil.normal.drawCenteredStringWithShadow(mod.getName(), x + (width/2), y + (aHeight/2), button_rgb);
+        if (GuiModule.useCustomFont()) FontUtil.normal.drawCenteredSmoothString(mod.getName(), x + (width/2), y + (aHeight/2), button_rgb);
         else Raven.mc.fontRendererObj.drawString(mod.getName(), (x + (width/2)) - (Raven.mc.fontRendererObj.getStringWidth(mod.getName())/2), y + (aHeight/2), button_rgb, true);
         GL11.glPopMatrix();
 
@@ -101,21 +104,54 @@ public class ModuleComponent extends Component {
                 setting.draw(mouseX, mouseY);
                 yOffset += setting.getHeight();
             }
-            setDimensions(width, aHeight + yOffset);
+            if(mod.isBindable()) {
+                bind.setCoords(x, y + aHeight + yOffset);
+                bind.draw(mouseX, mouseY);
+                yOffset += bind.getHeight();
+            }
+            setDimensions(width, aHeight + yOffset + 3);
         }
     }
 
     @Override
     public void clicked(int x, int y, int b) {
-        if(b == 0) {
-            if(insideNameArea(x, y))
+        if(insideNameArea(x, y))
+            if(b == 0) {
                 mod.toggle();
-        } else if(b == 1)
-            if(!settings.isEmpty() && insideNameArea(x, y)) {
-                category.setOpenModule(category.getOpenModule() == this ? null : this);
-                setDimensions(category.getWidth(), aHeight);
+                return;
             }
+            else if ((b == 1) && !settings.isEmpty()) {
+                category.setOpenModule(category.getOpenModule() == this ? null : this);
+                int yOffset = 0;
+                if(category.getOpenModule() == this) {
+                    for(SettingComponent setting : settings) {
+                        setting.setCoords(x, y + aHeight + yOffset);
+                        yOffset += setting.getHeight() + 2;
+                    }
+                    if(mod.isBindable()) {
+                        bind.setCoords(x, y + aHeight + yOffset);
+                        yOffset += bind.getHeight();
+                    }
+                    setDimensions(width, aHeight + yOffset + 3);
+                }
+                setDimensions(category.getWidth(), aHeight + yOffset + 3);
+                return;
+            }
+
+        if(category.getOpenModule() == this) settings.forEach(setting -> setting.mouseDown(x, y, b));
+        bind.mouseDown(x, y, b);
     }
+
+    @Override
+    public void mouseReleased(int x, int y, int b) {
+        if(category.getOpenModule() == this) settings.forEach(setting -> setting.mouseReleased(x, y, b));
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+        bind.keyTyped(t,k);
+    }
+
 
     public boolean insideNameArea(int mouseX, int mouseY) {
         return ((mouseX > (x)) && (mouseX < (x2)) && (mouseY > y) && (mouseY < (y + aHeight)));

@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.clickgui.kv.components.KvDoubleSliderComponent;
 import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.clickgui.raven.components.ComboComponent;
+import keystrokesmod.client.clickgui.raven.components.DoubleSliderComponent;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
@@ -123,6 +123,6 @@ public class DoubleSliderSetting extends Setting {
 
     @Override
     public Class<? extends SettingComponent> getRavenComponentType() {
-        return ComboComponent.class;
+        return DoubleSliderComponent.class;
     }
 }

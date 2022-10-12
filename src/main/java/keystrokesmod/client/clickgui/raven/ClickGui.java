@@ -23,6 +23,7 @@ public class ClickGui extends GuiScreen {
     private ScheduledFuture<?> sf;
     private Timer aT, aL, aE, aR;
     private final ArrayList<CategoryComponent> categoryList;
+    private CategoryComponent lastCategory;
     public static int mouseX, mouseY;
     public final Terminal terminal;
 
@@ -147,8 +148,10 @@ public class ClickGui extends GuiScreen {
 	public void mouseClicked(int x, int y, int mouseButton) throws IOException {
         terminal.mouseDown(x, y, mouseButton);
         for(CategoryComponent category : visableCategoryList())
-            if(category.mouseDown(x, y, mouseButton))
+            if(category.mouseDown(x, y, mouseButton)) {
+                lastCategory = category;
                 return;
+            }
     }
 
     @Override
@@ -166,9 +169,13 @@ public class ClickGui extends GuiScreen {
     @Override
 	public void keyTyped(char t, int k) {
         terminal.keyTyped(t, k);
-        visableCategoryList().forEach(category -> category.keyTyped(t, k));
-        if (k == 1)
+        if(lastCategory != null)
+            lastCategory.keyTyped(t, k);
+        if (k == 1) {
             Raven.mc.displayGuiScreen(null);
+            Raven.configManager.save();
+            Raven.clientConfig.saveConfig();
+        }
     }
 
     @Override

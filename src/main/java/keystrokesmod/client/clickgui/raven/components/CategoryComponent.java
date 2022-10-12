@@ -25,10 +25,10 @@ public class CategoryComponent extends Component {
     public Module.ModuleCategory categoryName;
     public boolean categoryOpened, inUse, dragging;
     public boolean visable = true;
-    public int scrollheight, dragX, dragY;
+    public int scrollheight, dragX, dragY, prevHeight, diffHeight;
     public int aHeight = 13;
 
-    private CoolDown timer = new CoolDown(1);
+    private CoolDown timer = new CoolDown(500);
     public float tPercent;
 
     private final int marginX = 80;
@@ -51,8 +51,6 @@ public class CategoryComponent extends Component {
 
     public void setOpened(boolean on) {
         categoryOpened = on;
-        timer.setCooldown(500);
-        timer.start();
         if (Raven.clientConfig != null)
             Raven.clientConfig.saveConfig();
     }
@@ -62,10 +60,6 @@ public class CategoryComponent extends Component {
         if (!visable)
             return;
         Minecraft mc = Minecraft.getMinecraft();
-        tPercent = Utils.Client.smoothPercent(categoryOpened ? timer.getElapsedTime() / (float) timer.getCooldownTime() : timer.getTimeLeft() / (float) timer.getCooldownTime());
-
-        int newheight = openComponent == null ? modulesInCategory.size() * modulesInCategory.get(0).getHeight() : openComponent.getHeight();
-        setDimensions(width, aHeight + (int) (newheight * tPercent));
 
         //dragging bit
         if(dragging)
@@ -87,7 +81,7 @@ public class CategoryComponent extends Component {
         }
 
         // category name
-        if (GuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), GuiModule.getCategoryBackgroundRGB());
+        if (GuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), GuiModule.getCategoryNameRGB());
         else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4),GuiModule.getCategoryBackgroundRGB(), false);
 
         // +/- bit
@@ -97,7 +91,7 @@ public class CategoryComponent extends Component {
         mc.fontRendererObj.drawString(categoryOpened ? "-" : "+", x + marginX, y + marginY, colour, false);
 
         // drawing modules
-        if (tPercent > 0)
+        if (categoryOpened || (tPercent < 1))
             if(openComponent != null) {
                 openComponent.setCoords(x, y + aHeight);
                 openComponent.draw(mouseX, mouseY);
@@ -106,13 +100,42 @@ public class CategoryComponent extends Component {
                 for(ModuleComponent module : modulesInCategory) {
                     module.setCoords(x, y + aHeight + yOffset);
                     module.draw(mouseX, mouseY);
-                    //Utils.Player.sendMessageToSelf(yOffset);
                     yOffset += module.getHeight();
                 }
             }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
+
+        int newHeight = 0;
+
+        if(categoryOpened) {
+            if(openComponent != null) {
+                newHeight = openComponent.getHeight();
+            } else {
+                for(ModuleComponent moduleComponent : modulesInCategory)
+                    newHeight += moduleComponent.getHeight();
+                newHeight += 3;
+            }
+        }
+
+        /*tPercent = 1 - Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
+        if(prevHeight != newHeight) {
+            Utils.Player.sendMessageToSelf(newHeight + "");
+            diffHeight = prevHeight - newHeight;
+            prevHeight = newHeight;
+            timer.start();
+        }
+
+        setDimensions(width, aHeight + (int) (newHeight + (diffHeight * tPercent))); */
+
+        if(prevHeight != newHeight) {
+            prevHeight = newHeight;
+            timer.setCooldown(500);
+            timer.start();
+        }
+        tPercent = Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
+        setDimensions(width, aHeight + (int) (newHeight * tPercent));
     }
 
     @Override
@@ -145,6 +168,13 @@ public class CategoryComponent extends Component {
     public void mouseReleased(int x, int y, int button) {
         dragging = false;
         modulesInCategory.forEach(module -> module.mouseReleased(x, y, button));
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+        if(openComponent == null)
+            return;
+        openComponent.keyTyped(t,k);
     }
 
 
