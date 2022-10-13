@@ -66,7 +66,7 @@ public class RGBComponent extends SettingComponent {
         }
 
         @Override
-        public void clicked(int button, int mouseX, int mouseY) {
+        public void clicked(int mouseX, int mouseY, int button) {
             mouseDown = true;
             float percentageAcross = (mouseX - x) / (float) width;
             int r = 0;

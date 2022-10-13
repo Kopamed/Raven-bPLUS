@@ -20,6 +20,7 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
 
         this.currentOption = defaultOption;
         this.defaultOption = defaultOption;
+
         try {
             this.options = (T[]) defaultOption.getClass().getMethod("values").invoke(null);
         } catch (Exception e) {

@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -32,11 +33,24 @@ public class AutoSoup extends Module {
         super("AutoSoup", ModuleCategory.combat);
         this.registerSetting(delay = new DoubleSliderSetting("delay(ms)", 50, 100, 0, 200, 1));
         this.registerSetting(coolDown = new DoubleSliderSetting("cooldown(ms)", 1000, 1200, 0, 5000, 1));
-        this.registerSetting(invWait = new DoubleSliderSetting("invWait(ms)", 50, 100, 0, 200, 1));
-        this.registerSetting(invCoolDown = new DoubleSliderSetting("refill delay(ms)", 50, 100, 0, 200, 1));
         this.registerSetting(health = new SliderSetting("health", 7, 0, 20, 0.1));
         this.registerSetting(invConsume = new TickSetting("consume in inv", false));
         this.registerSetting(autoRefill = new TickSetting("auto refil", true));
+        this.registerSetting(invWait = new DoubleSliderSetting("invWait(ms)", 50, 100, 0, 200, 1));
+        this.registerSetting(invCoolDown = new DoubleSliderSetting("refill delay(ms)", 50, 100, 0, 200, 1));
+    }
+
+    @Override
+    public void postApplyConfig() {
+        guiButtonToggled(autoRefill);
+    }
+
+    @Override
+    public void guiButtonToggled(Setting b) {
+        if(b == autoRefill) {
+            invWait.hideComponent(autoRefill.isToggled());
+            invCoolDown.hideComponent(autoRefill.isToggled());
+        }
     }
 
     @Subscribe

@@ -20,7 +20,7 @@ public class ComboComponent extends SettingComponent {
     public void draw(int mouseX, int mouseY) {
 
         int x = this.x + 5;
-        setDimensions(moduleComponent.getWidth(), 14);
+        setDimensions(moduleComponent.getWidth(), 7);
 
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);

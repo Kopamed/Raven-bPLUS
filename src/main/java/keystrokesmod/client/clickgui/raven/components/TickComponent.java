@@ -17,7 +17,7 @@ public class TickComponent extends SettingComponent {
 
     private TickSetting setting;
     private CoolDown timer = new CoolDown(1);
-    private final int buttonWidth = 15;
+    private final int buttonWidth = 13;
 
     public TickComponent(Setting setting, ModuleComponent category) {
         super(setting, category);
@@ -27,7 +27,7 @@ public class TickComponent extends SettingComponent {
     @Override
     public void draw(int mouseX, int mouseY) {
 
-        setDimensions(moduleComponent.getWidth() - 10, 14);
+        setDimensions(moduleComponent.getWidth() - 10, 11);
         int x = this.x + 5;
 
         float percent = Utils.Client.smoothPercent((setting.isToggled() ?  timer.getElapsedTime() : timer.getTimeLeft())/(float) timer.getCooldownTime());
@@ -37,8 +37,8 @@ public class TickComponent extends SettingComponent {
         float offSet = (percent * buttonWidth)/3;
         int fh = (Raven.mc.fontRendererObj.FONT_HEIGHT/2) + 1;
 
-        RenderUtils.drawBorderedRoundedRect(x, y + fh, x + buttonWidth, y + height, 7, 2, GuiModule.getBoarderColour(), 0xFF000000);
-        RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + ((buttonWidth/3)*2) + offSet, y + height, 7, 2, GuiModule.getBoarderColour(), colour);
+        RenderUtils.drawBorderedRoundedRect(x, y + fh, x + buttonWidth, y + height, height/2, 2, GuiModule.getBoarderColour(), 0xFF000000);
+        RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + ((buttonWidth/3)*2) + offSet, y + height, height/2, 2, GuiModule.getBoarderColour(), colour);
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
         Minecraft.getMinecraft().fontRendererObj.drawString(

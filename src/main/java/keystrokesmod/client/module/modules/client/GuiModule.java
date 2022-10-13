@@ -259,11 +259,11 @@ public class GuiModule extends Module {
                         in -> -15001318, // categoryBackgroundRGB
                         in -> Utils.Client.rainbowDraw(2, in), // enabledTopRGB
                         in -> Utils.Client.rainbowDraw(2, in), // enabledBottomRGB
-                        in -> 0xFFFFFFFE, // enabledTextRGB
+                        in -> 0xFF000000, // enabledTextRGB
                         in -> 0xFF000000, // disabledTopRGB
                         in -> 0xFF000000, // disabledBottomRGB
                         in -> 0xFFFFFFFE, // disabledTextRGB
-                        in -> 0x99808080, // backgroundRGB
+                        in -> 0xFF808080, // backgroundRGB
                         true, //rounded
                         true, //swing
                         true, //boarder

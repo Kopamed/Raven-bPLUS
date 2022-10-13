@@ -53,6 +53,11 @@ public class CategoryComponent extends Component {
     }
 
     @Override
+    public void guiClosed() {
+        heightCheck = 0;
+    }
+
+    @Override
     public void setCoords(int x, int y) {
         super.setCoords(x, y);
         if (Raven.clientConfig != null)
@@ -70,6 +75,26 @@ public class CategoryComponent extends Component {
         if (!visable)
             return;
         Minecraft mc = Minecraft.getMinecraft();
+        //smooth height moving
+        int newHeight = 0;
+        if(categoryOpened) {
+            if(openComponent != null) {
+                newHeight = openComponent.getHeight();
+            } else {
+                for(ModuleComponent moduleComponent : modulesInCategory)
+                    newHeight += moduleComponent.getHeight();
+            }
+        }
+
+        if(heightCheck != newHeight) {
+            prevHeight = heightCheck;
+            deltaHeight = newHeight - heightCheck;
+            heightCheck = newHeight;
+            timer.setCooldown(500);
+            timer.start();
+        }
+        tPercent = Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
+        setDimensions(width, aHeight + prevHeight + (int) (deltaHeight * tPercent));
 
         //dragging bit
         if(dragging)
@@ -92,7 +117,6 @@ public class CategoryComponent extends Component {
             double ntheta = theta + (velo * friction);
             bottomX = x - (int) (Math.sin(Math.toRadians(ntheta)) * height);
             bottomY = y - (int) (Math.cos(Math.toRadians(ntheta)) * height);
-
         }
 
         // background
@@ -138,27 +162,6 @@ public class CategoryComponent extends Component {
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
-
-        int newHeight = 0;
-
-        if(categoryOpened) {
-            if(openComponent != null) {
-                newHeight = openComponent.getHeight();
-            } else {
-                for(ModuleComponent moduleComponent : modulesInCategory)
-                    newHeight += moduleComponent.getHeight();
-            }
-        }
-
-        if(heightCheck != newHeight) {
-            prevHeight = heightCheck;
-            deltaHeight = newHeight - heightCheck;
-            heightCheck = newHeight;
-            timer.setCooldown(500);
-            timer.start();
-        }
-        tPercent = Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
-        setDimensions(width, aHeight + prevHeight + (int) (deltaHeight * tPercent));
     }
 
     @Override

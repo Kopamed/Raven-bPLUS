@@ -2,6 +2,7 @@ package keystrokesmod.client.module.modules.combat;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.combat.aura.KillAura;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -11,7 +12,7 @@ public class Reach extends Module {
     public static TickSetting weapon_only;
     public static TickSetting moving_only;
     public static TickSetting sprint_only;
-    public static LegitAura2 la;
+    public static KillAura la;
 
     public Reach() {
         super("Reach", ModuleCategory.combat);
@@ -23,12 +24,12 @@ public class Reach extends Module {
 
     @Override
     public void postApplyConfig() {
-       la = (LegitAura2) Raven.moduleManager.getModuleByClazz(LegitAura2.class);
+       la = (KillAura) Raven.moduleManager.getModuleByClazz(KillAura.class);
     }
 
     public static double getReach() {
         if(la.isEnabled())
-            return la.getReach();
+            return KillAura.reach.getInput();
 
         double normal = mc.playerController.extendedReach()? 5 : 3;
 

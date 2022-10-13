@@ -11,8 +11,8 @@ import com.google.common.base.Predicates;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.HitBox;
-import keystrokesmod.client.module.modules.combat.LegitAura2;
 import keystrokesmod.client.module.modules.combat.Reach;
+import keystrokesmod.client.module.modules.combat.aura.KillAura;
 import keystrokesmod.client.module.modules.render.Fullbright;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -68,7 +68,7 @@ public class MixinEntityRenderer {
 
 
             Module reachMod = Raven.moduleManager.getModuleByClazz(Reach.class);
-            Module aura = Raven.moduleManager.getModuleByClazz(LegitAura2.class);
+            Module aura = Raven.moduleManager.getModuleByClazz(KillAura.class);
 
             if (!reachMod.isEnabled() && !aura.isEnabled()) {
                 if (this.mc.playerController.extendedReach()) {

@@ -1,5 +1,6 @@
 package keystrokesmod.client.module;
 
+import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 
 public class GuiModule extends Module {
@@ -15,7 +16,9 @@ public class GuiModule extends Module {
 
     @Override
     public void onEnable() {
-        Raven.clickGui.getCategoryComponent(moduleCategory).visable = true;
+        CategoryComponent cc = Raven.clickGui.getCategoryComponent(moduleCategory);
+        cc.initGui();
+        cc.visable = true;
     }
 
     @Override

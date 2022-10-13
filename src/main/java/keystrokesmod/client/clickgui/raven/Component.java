@@ -3,7 +3,7 @@ package keystrokesmod.client.clickgui.raven;
 public abstract class Component {
 
     protected int x, y, x2, y2, width, height;
-    public boolean visable;
+    public boolean visable = true;
 
     public void draw(int mouseX, int mouseY) {
 

@@ -29,7 +29,7 @@ public abstract class MxinEntityLivingBase extends Entity {
 	 * @reason lookevent
 	 */
 	@Override
-	@Overwrite
+    @Overwrite
     public Vec3 getLook(float partialTicks)
     {
     	LookEvent e = new LookEvent(rotationPitch, prevRotationPitch, rotationYawHead, prevRotationYawHead);

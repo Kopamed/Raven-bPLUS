@@ -13,6 +13,7 @@ public abstract class SettingComponent extends Component {
     public SettingComponent(Setting setting, ModuleComponent moduleComponent) {
         this.setting = setting;
         this.moduleComponent = moduleComponent;
+        setting.setComponent(this);
     }
 
     public void hideComponent() {
@@ -24,5 +25,4 @@ public abstract class SettingComponent extends Component {
         if(moduleComponent.settings.contains(this) && hidden) moduleComponent.settings.remove(this);
         else if (!hidden) moduleComponent.settings.add(this);
     }
-
 }

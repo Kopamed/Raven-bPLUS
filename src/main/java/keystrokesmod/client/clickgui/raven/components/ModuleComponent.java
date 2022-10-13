@@ -93,8 +93,8 @@ public class ModuleComponent extends Component {
         //background
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
-        if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB((((y + aHeight) - category.getY())) * 20), GuiModule.getEnabledTopRGB((y - category.getY()) * 20));
-        if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB(((y + aHeight)  - category.getY()) * 20), GuiModule.getDisabledTopRGB((y - category.getY()) * 20));
+        if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB((((y + aHeight))) * 20), GuiModule.getEnabledTopRGB((y) * 20));
+        if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB(((y + aHeight)) * 20), GuiModule.getDisabledTopRGB((y) * 20));
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
 
@@ -109,6 +109,7 @@ public class ModuleComponent extends Component {
         if(category.getOpenModule() == this) {
             int yOffset = 0;
             for(SettingComponent setting : settings) {
+                if(!setting.visable) continue;
                 setting.setCoords(x, y + aHeight + yOffset);
                 setting.draw(mouseX, mouseY);
                 yOffset += setting.getHeight() + 3;
