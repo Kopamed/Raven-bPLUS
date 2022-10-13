@@ -1,120 +1,62 @@
 package keystrokesmod.client.clickgui.raven.components;
 
-import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.module.setting.impl.SliderSetting;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.utils.RenderUtils;
+import net.minecraft.client.Minecraft;
 
-public class SliderComponent implements Component {
-    private final SliderSetting v;
-    private final ModuleComponent p;
-    private int o;
-    private int x;
-    private int y;
-    private boolean d;
-    private double w;
-    private final int msl = 84;
+public class SliderComponent extends SettingComponent {
 
-    public SliderComponent(SliderSetting v, ModuleComponent b, int o) {
-        this.v = v;
-        this.p = b;
-        this.x = b.category.getX() + b.category.getWidth();
-        this.y = b.category.getY() + b.o;
-        this.o = o;
+    private SliderSetting setting;
+    private boolean mouseDown;
+
+    public SliderComponent(Setting setting, ModuleComponent category) {
+        super(setting, category);
+        this.setting = (SliderSetting) setting;
     }
 
-    public void draw() {
-        net.minecraft.client.gui.Gui.drawRect(this.p.category.getX() + 4, this.p.category.getY() + this.o + 11,
-                this.p.category.getX() + 4 + this.p.category.getWidth() - 8, this.p.category.getY() + this.o + 15,
-                -12302777);
-        int l = this.p.category.getX() + 4;
-        int r = this.p.category.getX() + 4 + (int) this.w;
-        if (r - l > 84) {
-            r = l + 84;
+    @Override
+    public void draw(int mouseX, int mouseY) {
+
+        setDimensions(moduleComponent.getWidth() - 10, 14);
+        int x = this.x + 5;
+
+        //moving the bars
+        if(mouseDown) {
+            float p = (mouseX - x) / (float) (width);
+            setting.setValue((float) ((p * (setting.getMax())) + (setting.getMin() * (1 - p))));
         }
 
-        net.minecraft.client.gui.Gui.drawRect(l, this.p.category.getY() + this.o + 11, r,
-                this.p.category.getY() + this.o + 15,
-                Color.getHSBColor((float) (System.currentTimeMillis() % 11000L) / 11000.0F, 0.75F, 0.9F).getRGB());
+        //name + input
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.v.getName() + ": " + this.v.getInput(),
-                (float) ((int) ((float) (this.p.category.getX() + 4) * 2.0F)),
-                (float) ((int) ((float) (this.p.category.getY() + this.o + 3) * 2.0F)), -1);
+        Minecraft.getMinecraft().fontRendererObj.drawString(
+                setting.getName() + ": " + setting.getInput(),
+                (float) (x * 2),
+                (float) (y * 2),
+                0xFEFFFFFF,
+                false);
         GL11.glPopMatrix();
-    }
 
-    public void setComponentStartAt(int n) {
-        this.o = n;
-    }
-
-    @Override
-    public int getHeight() {
-        return 0;
-    }
-
-    public void update(int mousePosX, int mousePosY) {
-        this.y = this.p.category.getY() + this.o;
-        this.x = this.p.category.getX();
-        double d = Math.min(this.p.category.getWidth() - 8, Math.max(0, mousePosX - this.x));
-        this.w = (double) (this.p.category.getWidth() - 8) * (this.v.getInput() - this.v.getMin())
-                / (this.v.getMax() - this.v.getMin());
-        if (this.d) {
-            if (d == 0.0D) {
-                this.v.setValue(this.v.getMin());
-            } else {
-                double n = r(d / (double) (this.p.category.getWidth() - 8) * (this.v.getMax() - this.v.getMin())
-                        + this.v.getMin(), 2);
-                this.v.setValue(n);
-            }
-        }
-
-    }
-
-    private static double r(double v, int p) {
-        if (p < 0) {
-            return 0.0D;
-        } else {
-            BigDecimal bd = new BigDecimal(v);
-            bd = bd.setScale(p, RoundingMode.HALF_UP);
-            return bd.doubleValue();
-        }
-    }
-
-    public void mouseDown(int x, int y, int b) {
-        if (this.u(x, y) && b == 0 && this.p.po) {
-            this.d = true;
-        }
-
-        if (this.i(x, y) && b == 0 && this.p.po) {
-            this.d = true;
-        }
-    }
-
-    public void mouseReleased(int x, int y, int m) {
-        this.d = false;
+        //bars
+        int percentWidth = (int) (width * ((setting.getInput() - setting.getMin())/(setting.getMax() - setting.getMin())));
+        int boxY = y + (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2) + 1;
+        int boxHeight = height - (boxY - y);
+        RenderUtils.drawBorderedRoundedRect(x, boxY , x + width, (boxY + boxHeight) , 7, 2, GuiModule.getBoarderColour(), 0x20FFFFFF);
+        RenderUtils.drawBorderedRoundedRect(x, boxY , x + percentWidth, (boxY + boxHeight), percentWidth > 7 ? 7 : percentWidth, 2, 0xFFA020F0, 0x90FFFFFF);
     }
 
     @Override
-    public void keyTyped(char t, int k) {
-
+    public void clicked(int button, int x, int y) {
+        mouseDown = true;
     }
 
-    public boolean u(int x, int y) {
-        return x > this.x && x < this.x + this.p.category.getWidth() / 2 + 1 && y > this.y && y < this.y + 16;
-    }
-
-    public boolean i(int x, int y) {
-        return x > this.x + this.p.category.getWidth() / 2 && x < this.x + this.p.category.getWidth() && y > this.y
-                && y < this.y + 16;
-    }
-    
     @Override
-    public int getY() {
-        return y;
+    public void mouseReleased(int x, int y, int button) {
+        mouseDown = false;
     }
+
 }

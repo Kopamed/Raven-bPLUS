@@ -1,8 +1,13 @@
 package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvDescriptionComponent;
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.components.DescriptionComponent;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class DescriptionSetting extends Setting {
@@ -53,4 +58,14 @@ public class DescriptionSetting extends Setting {
     public Component createComponent(ModuleComponent moduleComponent) {
         return null;
     }
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return DescriptionComponent.class;
+    }
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvDescriptionComponent.class;
+	}
 }

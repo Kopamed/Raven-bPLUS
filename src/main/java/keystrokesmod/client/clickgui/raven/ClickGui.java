@@ -1,5 +1,13 @@
 package keystrokesmod.client.clickgui.raven;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -12,24 +20,13 @@ import keystrokesmod.client.utils.version.Version;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
-import org.lwjgl.input.Mouse;
-
 public class ClickGui extends GuiScreen {
     private ScheduledFuture<?> sf;
-    private Timer aT;
-    private Timer aL;
-    private Timer aE;
-    private Timer aR;
+    private Timer aT, aL, aE, aR;
     private final ArrayList<CategoryComponent> categoryList;
+    private CategoryComponent lastCategory;
+    public static int mouseX, mouseY;
     public final Terminal terminal;
-    private int mouseX, mouseY;
 
     public static int binding;
 
@@ -38,18 +35,14 @@ public class ClickGui extends GuiScreen {
         this.categoryList = new ArrayList<>();
         Module.ModuleCategory[] values;
         int categoryAmount = (values = Module.ModuleCategory.values()).length;
-
+        int xOffSet = 5;
+        int yOffSet = 5;
         for (int category = 0; category < categoryAmount; ++category) {
             Module.ModuleCategory moduleCategory = values[category];
             CategoryComponent currentModuleCategory = new CategoryComponent(moduleCategory);
-            currentModuleCategory.setVisable(currentModuleCategory.categoryName.isShownByDefault());
+            currentModuleCategory.visable = (currentModuleCategory.categoryName.isShownByDefault());
             categoryList.add(currentModuleCategory);
-        }
-        int xOffSet = 5;
-        int yOffSet = 5;
-        for (CategoryComponent category : categoryList) {
-            category.setX(xOffSet);
-            category.setY(yOffSet);
+            currentModuleCategory.setCoords(xOffSet, yOffSet);
             xOffSet = xOffSet + 100;
             if (xOffSet > 400) {
                 xOffSet = 5;
@@ -60,33 +53,22 @@ public class ClickGui extends GuiScreen {
         terminal.setSize((int) (92 * 1.5), (int) ((92 * 1.5) * 0.75));
     }
 
-    public void resetSort() {
-        int xOffSet = 5;
-        int yOffSet = 5;
-        for (CategoryComponent category : categoryList) {
-            category.setX(xOffSet);
-            category.setY(yOffSet);
-            xOffSet = xOffSet + 100;
-            if (xOffSet > this.width - 100) {
-                xOffSet = 5;
-                yOffSet += this.height / 3;
-            }
-        }
-    }
-
     public void initMain() {
         (this.aT = this.aE = this.aR = new Timer(500.0F)).start();
         this.sf = Raven.getExecutor().schedule(() -> (this.aL = new Timer(650.0F)).start(), 650L,
                 TimeUnit.MILLISECONDS);
-
     }
 
-    public void initGui() {
+    @Override
+	public void initGui() {
         super.initGui();
+        categoryList.forEach(CategoryComponent::initGui);
     }
 
-    public void drawScreen(int x, int y, float p) {
-        mouseX = x; mouseY = y;
+    @Override
+	public void drawScreen(int x, int y, float p) {
+    	super.drawScreen(x, y, p);
+    	mouseX = x; mouseY = y;
         Version clientVersion = Raven.versionManager.getClientVersion();
         Version latestVersion = Raven.versionManager.getLatestVersion();
 
@@ -94,7 +76,7 @@ public class ClickGui extends GuiScreen {
         int quarterScreenHeight = this.height / 4;
         int halfScreenWidth = this.width / 2;
         int w_c = 30 - this.aT.getValueInt(0, 30, 3);
-        this.drawCenteredString(this.fontRendererObj, "r", halfScreenWidth + 1 - w_c, quarterScreenHeight - 25,
+        this.drawCenteredString(this.fontRendererObj, "r", (halfScreenWidth + 1) - w_c, quarterScreenHeight - 25,
                 Utils.Client.rainbowDraw(2L, 1500L));
         this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15,
                 Utils.Client.rainbowDraw(2L, 1200L));
@@ -116,32 +98,28 @@ public class ClickGui extends GuiScreen {
             int rows = 1;
             for (int i = Raven.updateText.length - 1; i >= 0; i--) {
                 String up = Raven.updateText[i];
-                if (GuiModule.useCustomFont()) {
-                    FontUtil.normal.drawSmoothString(up, halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2,
-                            this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin,
+                if (GuiModule.useCustomFont())
+					FontUtil.normal.drawSmoothString(up, halfScreenWidth - (this.fontRendererObj.getStringWidth(up) / 2),
+                            this.height - (this.fontRendererObj.FONT_HEIGHT * rows) - margin,
                             Utils.Client.astolfoColorsDraw(10, 28, speed));
-                } else {
-                    mc.fontRendererObj.drawStringWithShadow(up,
-                            halfScreenWidth - this.fontRendererObj.getStringWidth(up) / 2,
-                            this.height - this.fontRendererObj.FONT_HEIGHT * rows - margin,
+				else
+					mc.fontRendererObj.drawStringWithShadow(up,
+                            halfScreenWidth - (this.fontRendererObj.getStringWidth(up) / 2),
+                            this.height - (this.fontRendererObj.FONT_HEIGHT * rows) - margin,
                             Utils.Client.astolfoColorsDraw(10, 28, speed));
-                }
                 rows++;
                 margin += 2;
             }
-        } else {
-            if (GuiModule.useCustomFont()) {
-                FontUtil.normal.drawSmoothString(
-                        "Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
-                        this.height - 3 - mc.fontRendererObj.FONT_HEIGHT,
-                        Utils.Client.astolfoColorsDraw(10, 14, speed));
-            } else {
-                mc.fontRendererObj.drawStringWithShadow(
-                        "Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
-                        this.height - 3 - mc.fontRendererObj.FONT_HEIGHT,
-                        Utils.Client.astolfoColorsDraw(10, 14, speed));
-            }
-        }
+        } else if (GuiModule.useCustomFont())
+			FontUtil.normal.drawSmoothString(
+		            "Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
+		            this.height - 3 - mc.fontRendererObj.FONT_HEIGHT,
+		            Utils.Client.astolfoColorsDraw(10, 14, speed));
+		else
+			mc.fontRendererObj.drawStringWithShadow(
+		            "Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
+		            this.height - 3 - mc.fontRendererObj.FONT_HEIGHT,
+		            Utils.Client.astolfoColorsDraw(10, 14, speed));
 
         this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38,
                 Utils.Client.customDraw(0));
@@ -151,25 +129,17 @@ public class ClickGui extends GuiScreen {
         int animationProggress;
         if (this.aL != null) {
             animationProggress = this.aL.getValueInt(0, 20, 2);
-            this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + animationProggress,
+            this.drawHorizontalLine(halfScreenWidth - 10, (halfScreenWidth - 10) + animationProggress,
                     quarterScreenHeight - 29, Utils.Client.customDraw(0));
-            this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress,
+            this.drawHorizontalLine(halfScreenWidth + 10, (halfScreenWidth + 10) - animationProggress,
                     quarterScreenHeight + 38, Utils.Client.customDraw(0));
         }
 
-        for (CategoryComponent category : categoryList) {
-            if (category.isVisable()) {
-                category.rf();
-                category.up(x, y);
-
-                for (Component module : category.getModules()) {
-                    module.update(x, y);
-                }
-            }
-        }
+        visableCategoryList().forEach(category -> category.draw(x, y));
 
         // PLAYER
-        GuiInventory.drawEntityOnScreen(this.width + 15 - this.aE.getValueInt(0, 40, 2),
+        GL11.glColor4f(1f, 1f, 1f, 1f);
+        GuiInventory.drawEntityOnScreen((this.width + 15) - this.aE.getValueInt(0, 40, 2),
                 this.height - 19 - this.fontRendererObj.FONT_HEIGHT, 40, (float) (this.width - 25 - x),
                 (float) (this.height - 50 - y), this.mc.thePlayer);
 
@@ -177,138 +147,59 @@ public class ClickGui extends GuiScreen {
         terminal.draw();
     }
 
-    public void mouseClicked(int x, int y, int mouseButton) throws IOException {
-        Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
-
+    @Override
+	public void mouseClicked(int x, int y, int mouseButton) throws IOException {
         terminal.mouseDown(x, y, mouseButton);
-        if (terminal.overPosition(x, y))
-            return;
-
-        while (true) {
-            CategoryComponent category;
-            do {
-                do {
-                    if (!btnCat.hasNext()) {
-                        return;
-                    }
-                    category = btnCat.next();
-                    if ((category.insideArea(x, y) && !category.i(x, y) && !category.mousePressed(x, y)
-                            && mouseButton == 0)) {
-                        category.mousePressed(true);
-                        category.xx = x - category.getX();
-                        category.yy = y - category.getY();
-                        break;
-                    }
-
-                    if ((category.mousePressed(x, y) && mouseButton == 0)
-                            || (category.insideArea(x, y) && mouseButton == 1)) {
-                        category.setOpened(!category.isOpened());
-                        mc.thePlayer.playSound("gui.button.press", 1, 1);
-                        break;
-                    }
-
-                    if (category.i(x, y) && mouseButton == 0) {
-                        category.cv(!category.p());
-                        break;
-                    }
-                } while (!category.isOpened());
-            } while (category.getModules().isEmpty());
-            try {
-                for (Component c : category.getModules()) {
-                    c.mouseDown(x, y, mouseButton);
-                }
-            } catch (ConcurrentModificationException e) {
+        for(CategoryComponent category : visableCategoryList())
+            if(category.mouseDown(x, y, mouseButton)) {
+                lastCategory = category;
+                return;
             }
-        }
     }
 
-    public void mouseReleased(int x, int y, int s) {
-        terminal.mouseReleased(x, y, s);
+    @Override
+	public void mouseReleased(int x, int y, int mouseButton) {
+        terminal.mouseReleased(x, y, mouseButton);
         if (terminal.overPosition(x, y))
             return;
 
-        if (s == 0) {
-            Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
+        visableCategoryList().forEach(category -> category.mouseReleased(x, y, mouseButton));
 
-            CategoryComponent c4t;
-            while (btnCat.hasNext()) {
-                c4t = btnCat.next();
-                c4t.mousePressed(false);
-            }
+        if (Raven.clientConfig != null)
+			Raven.clientConfig.saveConfig();
+    }
 
-            btnCat = visableCategoryList().iterator();
-
-            while (true) {
-                do {
-                    do {
-                        if (!btnCat.hasNext()) {
-                            return;
-                        }
-
-                        c4t = btnCat.next();
-                    } while (!c4t.isOpened());
-                } while (c4t.getModules().isEmpty());
-
-                for (Component c : c4t.getModules()) {
-                    c.mouseReleased(x, y, s);
-                }
-            }
-        }
-        if (Raven.clientConfig != null) {
+    @Override
+	public void keyTyped(char t, int k) {
+        terminal.keyTyped(t, k);
+        if(lastCategory != null)
+            lastCategory.keyTyped(t, k);
+        if (k == 1) {
+            Raven.mc.displayGuiScreen(null);
+            Raven.configManager.save();
             Raven.clientConfig.saveConfig();
         }
     }
 
-    public void keyTyped(char t, int k) {
-        terminal.keyTyped(t, k);
-        if (k == 1 && binding <= 0) {
-            this.mc.displayGuiScreen(null);
-        } else {
-            Iterator<CategoryComponent> btnCat = visableCategoryList().iterator();
-
-            while (true) {
-                CategoryComponent cat;
-                do {
-                    do {
-                        if (!btnCat.hasNext()) {
-                            return;
-                        }
-
-                        cat = btnCat.next();
-                    } while (!cat.isOpened());
-                } while (cat.getModules().isEmpty());
-
-                for (Component c : cat.getModules()) {
-                    c.keyTyped(t, k);
-                }
-            }
-        }
-    }
-    
-    public void handleMouseInput() throws IOException {
+    @Override
+	public void handleMouseInput() throws IOException {
         super.handleMouseInput();
-        for (CategoryComponent c : visableCategoryList()) {
-            if (c.insideAllArea(mouseX, mouseY)) {
-                int i = Mouse.getEventDWheel();
-                i = Integer.compare(i, 0);
-                c.scroll(i * 5f);
-            }
-        }
+        int i = Mouse.getEventDWheel() * 5;
+        visableCategoryList().forEach(category -> {
+            if(category.isMouseOver(mouseX, mouseY))
+                category.scroll(i);
+            });
     }
 
-    public void onGuiClosed() {
-        this.aL = null;
-        if (this.sf != null) {
-            this.sf.cancel(true);
-            this.sf = null;
-        }
+    @Override
+	public void onGuiClosed() {
+        visableCategoryList().forEach(CategoryComponent::guiClosed);
         Raven.configManager.save();
         Raven.clientConfig.saveConfig();
-
-        binding = 0;
     }
 
-    public boolean doesGuiPauseGame() {
+    @Override
+	public boolean doesGuiPauseGame() {
         return false;
     }
 
@@ -317,16 +208,29 @@ public class ClickGui extends GuiScreen {
     }
 
     public CategoryComponent getCategoryComponent(ModuleCategory mCat) {
-        for (CategoryComponent cc : categoryList) {
-            if (cc.categoryName == mCat)
+        for (CategoryComponent cc : categoryList)
+			if (cc.categoryName == mCat)
                 return cc;
-        }
         return null;
     }
 
     public ArrayList<CategoryComponent> visableCategoryList() {
         ArrayList<CategoryComponent> newList = (ArrayList<CategoryComponent>) categoryList.clone();
-        newList.removeIf(obj -> !obj.isVisable());
+        newList.removeIf(obj -> !obj.visable);
         return newList;
+    }
+
+    public void resetSort() {
+        int xOffSet = 5;
+        int yOffSet = 5;
+        for(CategoryComponent category : categoryList) {
+            category.setCoords(xOffSet, yOffSet);
+            xOffSet = xOffSet + 100;
+            if (xOffSet > 400) {
+                xOffSet = 5;
+                yOffSet += 120;
+            }
+        }
+
     }
 }

@@ -1,11 +1,19 @@
 package keystrokesmod.client.module.setting.impl;
 
+import java.awt.Color;
+
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvRgbComponent;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.RGBComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
-
-import java.awt.*;
+import keystrokesmod.client.utils.ColorM;
+import keystrokesmod.client.utils.Utils;
+import keystrokesmod.client.utils.Utils.Client;
 
 public class RGBSetting extends Setting {
 
@@ -24,9 +32,8 @@ public class RGBSetting extends Setting {
 
     @Override
     public void resetToDefaults() {
-        for (int i = 0; i <= colour.length; i++) {
-            this.colour[i] = this.defaultColour[i];
-        }
+        for (int i = 0; i <= colour.length; i++)
+			this.colour[i] = this.defaultColour[i];
     }
 
     @Override
@@ -96,6 +103,7 @@ public class RGBSetting extends Setting {
     }
 
     public void setColor(int colour, int value) {
+    	value = value > 255 ? 255 : value < 0 ? 0 : value;
         this.colour[colour] = value;
         this.colorRGB = new Color(this.colour[0], this.colour[1], this.colour[2]).getRGB();
     }
@@ -104,4 +112,42 @@ public class RGBSetting extends Setting {
         this.colour = colour.clone();
     }
 
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvRgbComponent.class;
+	}
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return RGBComponent.class;
+    }
+
+	public enum NSColor {
+	    Staic(d -> 0xFFFFFFFF), //Placeholder
+	    Rainbow(d -> Utils.Client.rainbowDraw(1, d)),
+	    Astolfo(d -> Utils.Client.astolfoColorsDraw(10, 14, d)),
+	    Kv(Client::customDraw);
+	    //Hurttime(-> (float) player.hurtTime),
+	    //Fov(fovToEntity);
+
+	    private final ColorM c;
+
+	    private NSColor(ColorM c) {
+	        this.c = c;
+	    }
+
+	    public int getColor() {
+	        return c.color(0);
+	    }
+
+	    public int getColor(int delay) {
+            return c.color(delay);
+        }
+
+        private static NSColor[] vals = values();
+        public NSColor next() {
+            return vals[(this.ordinal()+1) % vals.length];
+        }
+	}
 }

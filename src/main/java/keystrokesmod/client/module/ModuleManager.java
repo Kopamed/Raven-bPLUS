@@ -15,6 +15,8 @@ import keystrokesmod.client.module.modules.client.Terminal;
 import keystrokesmod.client.module.modules.client.UpdateCheck;
 import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.modules.combat.AutoBlock;
+import keystrokesmod.client.module.modules.combat.AutoGHead;
+import keystrokesmod.client.module.modules.combat.AutoSoup;
 import keystrokesmod.client.module.modules.combat.AutoWeapon;
 import keystrokesmod.client.module.modules.combat.BlockHit;
 import keystrokesmod.client.module.modules.combat.ClickAssist;
@@ -22,12 +24,12 @@ import keystrokesmod.client.module.modules.combat.DelayRemover;
 import keystrokesmod.client.module.modules.combat.HitBox;
 import keystrokesmod.client.module.modules.combat.JumpReset;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
-import keystrokesmod.client.module.modules.combat.LegitAura2;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.combat.STap;
 import keystrokesmod.client.module.modules.combat.ShiftTap;
 import keystrokesmod.client.module.modules.combat.Velocity;
 import keystrokesmod.client.module.modules.combat.WTap;
+import keystrokesmod.client.module.modules.combat.aura.KillAura;
 import keystrokesmod.client.module.modules.config.ConfigSettings;
 import keystrokesmod.client.module.modules.hotkey.Armour;
 import keystrokesmod.client.module.modules.hotkey.Blocks;
@@ -59,6 +61,7 @@ import keystrokesmod.client.module.modules.other.Disabler;
 import keystrokesmod.client.module.modules.other.FakeChat;
 import keystrokesmod.client.module.modules.other.MiddleClick;
 import keystrokesmod.client.module.modules.other.NameHider;
+import keystrokesmod.client.module.modules.other.Spin;
 import keystrokesmod.client.module.modules.other.WaterBucket;
 import keystrokesmod.client.module.modules.player.AutoArmour;
 import keystrokesmod.client.module.modules.player.AutoJump;
@@ -178,7 +181,13 @@ public class ModuleManager {
         addModule(new Parkour());
         addModule(new Disabler());
         addModule(new JumpReset());
-        //addModule(new LegitAura2());
+        addModule(new KillAura());
+        addModule(new Spin());
+        addModule(new AutoGHead());
+        //addModule(new Radar());
+        addModule(new AutoSoup());
+        //addModule(new CursorTrail());
+
         //addModule(new SpeedTest());
         //addModule(new LegitAura());
         //addModule(new TargetHUD());
@@ -194,7 +203,6 @@ public class ModuleManager {
     public void removeModuleByName(String s) {
         Module m = getModuleByName(s);
         modules.remove(m);
-        m.component.category.r3nd3r();
     }
 
     // prefer using getModuleByClazz();
@@ -203,10 +211,9 @@ public class ModuleManager {
         if (!initialized)
             return null;
 
-        for (Module module : modules) {
-            if (module.getName().replaceAll(" ", "").equalsIgnoreCase(name) || module.getName().equalsIgnoreCase(name))
+        for (Module module : modules)
+			if (module.getName().replaceAll(" ", "").equalsIgnoreCase(name) || module.getName().equalsIgnoreCase(name))
                 return module;
-        }
         return null;
     }
 
@@ -214,10 +221,9 @@ public class ModuleManager {
         if (!initialized)
             return null;
 
-        for (Module module : modules) {
-            if (module.getClass().equals(c))
+        for (Module module : modules)
+			if (module.getClass().equals(c))
                 return module;
-        }
         return null;
     }
 
@@ -237,11 +243,9 @@ public class ModuleManager {
     public List<Module> getConfigModules() {
         List<Module> modulesOfC = new ArrayList<>();
 
-        for (Module mod : getModules()) {
-            if (!mod.isClientConfig()) {
-                modulesOfC.add(mod);
-            }
-        }
+        for (Module mod : getModules())
+			if (!mod.isClientConfig())
+				modulesOfC.add(mod);
 
         return modulesOfC;
     }
@@ -249,11 +253,9 @@ public class ModuleManager {
     public List<Module> getClientConfigModules() {
         List<Module> modulesOfCC = new ArrayList<>();
 
-        for (Module mod : getModules()) {
-            if (mod.isClientConfig()) {
-                modulesOfCC.add(mod);
-            }
-        }
+        for (Module mod : getModules())
+			if (mod.isClientConfig())
+				modulesOfCC.add(mod);
 
         return modulesOfCC;
     }
@@ -261,11 +263,9 @@ public class ModuleManager {
     public List<Module> getModulesInCategory(Module.ModuleCategory categ) {
         ArrayList<Module> modulesOfCat = new ArrayList<>();
 
-        for (Module mod : getModules()) {
-            if (mod.moduleCategory().equals(categ)) {
-                modulesOfCat.add(mod);
-            }
-        }
+        for (Module mod : getModules())
+			if (mod.moduleCategory().equals(categ))
+				modulesOfCat.add(mod);
 
         return modulesOfCat;
     }
@@ -290,23 +290,18 @@ public class ModuleManager {
 
     public int getLongestActiveModule(FontRenderer fr) {
         int length = 0;
-        for (Module mod : modules) {
-            if (mod.isEnabled()) {
-                if (fr.getStringWidth(mod.getName()) > length) {
-                    length = fr.getStringWidth(mod.getName());
-                }
-            }
-        }
+        for (Module mod : modules)
+			if (mod.isEnabled())
+				if (fr.getStringWidth(mod.getName()) > length)
+					length = fr.getStringWidth(mod.getName());
         return length;
     }
 
     public int getBoxHeight(FontRenderer fr, int margin) {
         int length = 0;
-        for (Module mod : modules) {
-            if (mod.isEnabled()) {
-                length += fr.FONT_HEIGHT + margin;
-            }
-        }
+        for (Module mod : modules)
+			if (mod.isEnabled())
+				length += fr.FONT_HEIGHT + margin;
         return length;
     }
 

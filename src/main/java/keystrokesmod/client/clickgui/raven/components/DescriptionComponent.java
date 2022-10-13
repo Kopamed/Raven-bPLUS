@@ -1,69 +1,35 @@
 package keystrokesmod.client.clickgui.raven.components;
 
-import keystrokesmod.client.clickgui.raven.Component;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import keystrokesmod.client.module.setting.Setting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import net.minecraft.client.Minecraft;
 
-public class DescriptionComponent implements Component {
-    private final int c = (new Color(226, 83, 47)).getRGB();
-    private final DescriptionSetting desc;
-    private final ModuleComponent p;
-    private int o;
+public class DescriptionComponent extends SettingComponent {
 
-    public DescriptionComponent(DescriptionSetting desc, ModuleComponent b, int o) {
-        this.desc = desc;
-        this.p = b;
-        int x = b.category.getX() + b.category.getWidth();
-        int y = b.category.getY() + b.o;
-        this.o = o;
+    private DescriptionSetting setting;
+
+    public DescriptionComponent(Setting setting, ModuleComponent category) {
+        super(setting, category);
+        this.setting = (DescriptionSetting) setting;
     }
 
-    public void draw() {
+    @Override
+    public void draw(int mouseX, int mouseY) {
+
+        int x = this.x + 5;
+        setDimensions(moduleComponent.getWidth(), 7);
+
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
         Minecraft.getMinecraft().fontRendererObj.drawString(
-                this.desc.getDesc(),
-                (float) ((this.p.category.getX() + 4) * 2),
-                (float) ((this.p.category.getY() + this.o + 4) * 2),
-                this.c,
-                true);
+                setting.getDesc(),
+                (float) (x * 2),
+                (float) ((y + (height/2)) * 2),
+                0xFFA020F0,
+                false);
         GL11.glPopMatrix();
     }
 
-    @Override
-    public void update(int mousePosX, int mousePosY) {
-
-    }
-
-    @Override
-    public void mouseDown(int x, int y, int b) {
-
-    }
-
-    @Override
-    public void mouseReleased(int x, int y, int m) {
-
-    }
-
-    @Override
-    public void keyTyped(char t, int k) {
-
-    }
-
-    public void setComponentStartAt(int n) {
-        this.o = n;
-    }
-
-    @Override
-    public int getHeight() {
-        return 0;
-    }
-    
-    @Override
-    public int getY() {
-        return (this.p.category.getY() + this.o + 4) * 2;
-    }
 }

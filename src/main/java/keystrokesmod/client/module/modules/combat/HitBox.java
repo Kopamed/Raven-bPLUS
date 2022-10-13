@@ -1,9 +1,9 @@
 package keystrokesmod.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.ForgeEvent;
-import keystrokesmod.client.event.impl.Render2DEvent;
-import keystrokesmod.client.event.impl.TickEvent;
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
@@ -14,18 +14,8 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.util.List;
 
 public class HitBox extends Module {
     public static SliderSetting a;
@@ -33,12 +23,13 @@ public class HitBox extends Module {
     private static MovingObjectPosition mv;
 
     public HitBox() {
-        super("HitBox", ModuleCategory.combat);
-        this.registerSetting(new DescriptionSetting("Temporarily don't work due to issues."));
-        this.registerSetting(a = new SliderSetting("Multiplier", 1.2D, 1.0D, 5.0D, 0.05D));
-        this.registerSetting(b = new TickSetting("Show new hitbox", false));
+        super("HitBoxes", ModuleCategory.combat);
+        this.registerSetting(new DescriptionSetting("Changed from multiplier to extra blocks!"));
+        this.registerSetting(a = new SliderSetting("Extra Blocks", 0.2D, 0.05D, 2.0D, 0.05D));
+        this.registerSetting(b = new TickSetting("Vertical", false));
     }
 
+    /*
     @Subscribe
     public void onRenderWorldLast(ForgeEvent fe) {
         if (fe.getEvent() instanceof RenderWorldLastEvent) {
@@ -53,23 +44,25 @@ public class HitBox extends Module {
         }
     }
 
+     */
+
     public static double exp(Entity en) {
         Module hitBox = Raven.moduleManager.getModuleByClazz(HitBox.class);
-        return (hitBox != null && hitBox.isEnabled() && !AntiBot.bot(en)) ? a.getInput() : 1.0D;
+        return ((hitBox != null) && hitBox.isEnabled() && !AntiBot.bot(en)) ? a.getInput() : 0D;
     }
 
     private void rh(Entity e, Color c) {
         if (e instanceof EntityLivingBase) {
-            double x = e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks
+            double x = (e.lastTickPosX + ((e.posX - e.lastTickPosX) * (double) Utils.Client.getTimer().renderPartialTicks))
                     - mc.getRenderManager().viewerPosX;
-            double y = e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks
+            double y = (e.lastTickPosY + ((e.posY - e.lastTickPosY) * (double) Utils.Client.getTimer().renderPartialTicks))
                     - mc.getRenderManager().viewerPosY;
-            double z = e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) Utils.Client.getTimer().renderPartialTicks
+            double z = (e.lastTickPosZ + ((e.posZ - e.lastTickPosZ) * (double) Utils.Client.getTimer().renderPartialTicks))
                     - mc.getRenderManager().viewerPosZ;
             float ex = (float) ((double) e.getCollisionBorderSize() * a.getInput());
             AxisAlignedBB bbox = e.getEntityBoundingBox().expand(ex, ex, ex);
-            AxisAlignedBB axis = new AxisAlignedBB(bbox.minX - e.posX + x, bbox.minY - e.posY + y,
-                    bbox.minZ - e.posZ + z, bbox.maxX - e.posX + x, bbox.maxY - e.posY + y, bbox.maxZ - e.posZ + z);
+            AxisAlignedBB axis = new AxisAlignedBB((bbox.minX - e.posX) + x, (bbox.minY - e.posY) + y,
+                    (bbox.minZ - e.posZ) + z, (bbox.maxX - e.posX) + x, (bbox.maxY - e.posY) + y, (bbox.maxZ - e.posZ) + z);
             GL11.glBlendFunc(770, 771);
             GL11.glEnable(3042);
             GL11.glDisable(3553);

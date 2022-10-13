@@ -1,13 +1,12 @@
 package keystrokesmod.client.utils.font;
 
-import keystrokesmod.client.module.modules.HUD;
-
-import java.awt.*;
+import java.awt.Font;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("NonAtomicOperationOnVolatileField")
+import keystrokesmod.client.module.modules.HUD;
+
 public class FontUtil {
     public static volatile int completed;
 
@@ -23,9 +22,9 @@ public class FontUtil {
         Font font = null;
 
         try {
-            if (locationMap.containsKey(location)) {
-                font = locationMap.get(location).deriveFont(Font.PLAIN, size);
-            } else {
+            if (locationMap.containsKey(location))
+				font = locationMap.get(location).deriveFont(Font.PLAIN, size);
+			else {
                 InputStream is = HUD.class.getResourceAsStream("/assets/keystrokes/fonts/" + location);
                 assert is != null;
                 font = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -62,14 +61,13 @@ public class FontUtil {
             completed++;
         }).start();
 
-        while (!hasLoaded()) {
-            try {
+        while (!hasLoaded())
+			try {
                 // noinspection BusyWait
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
 
         normal = new FontRenderer(normal_, true, true);
         two = new FontRenderer(normal_, true, true);

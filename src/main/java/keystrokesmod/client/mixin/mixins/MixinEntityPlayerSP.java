@@ -1,6 +1,12 @@
 package keystrokesmod.client.mixin.mixins;
 
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
 import com.mojang.authlib.GameProfile;
+
 import keystrokesmod.client.event.EventTiming;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
@@ -19,10 +25,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(priority = 995, value = EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
@@ -34,7 +36,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         super(p_i45074_1_, p_i45074_2_);
     }
 
-    @Shadow
+    @Override
+	@Shadow
     public abstract void setSprinting(boolean p_setSprinting_1_);
 
     @Shadow
@@ -48,11 +51,13 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     @Shadow
     public MovementInput movementInput;
 
-    @Shadow
+    @Override
+	@Shadow
     protected abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_,
             double p_pushOutOfBlocks_5_);
 
-    @Shadow
+    @Override
+	@Shadow
     public abstract void sendPlayerAbilities();
 
     @Shadow
@@ -75,7 +80,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     @Final
     public NetHandlerPlayClient sendQueue;
 
-    @Shadow
+    @Override
+	@Shadow
     public abstract boolean isSneaking();
 
     @Shadow
@@ -103,26 +109,24 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
         boolean flag = this.isSprinting();
         if (flag != this.serverSprintState) {
-            if (flag) {
-                this.sendQueue
+            if (flag)
+				this.sendQueue
                         .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
-            } else {
-                this.sendQueue
+			else
+				this.sendQueue
                         .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SPRINTING));
-            }
 
             this.serverSprintState = flag;
         }
 
         boolean flag1 = this.isSneaking();
         if (flag1 != this.serverSneakState) {
-            if (flag1) {
-                this.sendQueue
+            if (flag1)
+				this.sendQueue
                         .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SNEAKING));
-            } else {
-                this.sendQueue
+			else
+				this.sendQueue
                         .addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SNEAKING));
-            }
 
             this.serverSneakState = flag1;
         }
@@ -138,21 +142,20 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             double d2 = e.getZ() - this.lastReportedPosZ;
             double d3 = e.getYaw() - this.lastReportedYaw;
             double d4 = e.getPitch() - this.lastReportedPitch;
-            boolean flag2 = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.positionUpdateTicks >= 20;
-            boolean flag3 = d3 != 0.0D || d4 != 0.0D;
+            boolean flag2 = (((d0 * d0) + (d1 * d1) + (d2 * d2)) > 9.0E-4D) || (this.positionUpdateTicks >= 20);
+            boolean flag3 = (d3 != 0.0D) || (d4 != 0.0D);
             if (this.ridingEntity == null) {
-                if (flag2 && flag3) {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(e.getX(), e.getY(),
+                if (flag2 && flag3)
+					this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(e.getX(), e.getY(),
                             e.getZ(), e.getYaw(), e.getPitch(), e.isOnGround()));
-                } else if (flag2) {
-                    this.sendQueue.addToSendQueue(
+				else if (flag2)
+					this.sendQueue.addToSendQueue(
                             new C03PacketPlayer.C04PacketPlayerPosition(e.getX(), e.getY(), e.getZ(), e.isOnGround()));
-                } else if (flag3) {
-                    this.sendQueue.addToSendQueue(
+				else if (flag3)
+					this.sendQueue.addToSendQueue(
                             new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), e.getPitch(), e.isOnGround()));
-                } else {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer(e.isOnGround()));
-                }
+				else
+					this.sendQueue.addToSendQueue(new C03PacketPlayer(e.isOnGround()));
             } else {
                 this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D,
                         this.motionZ, e.getYaw(), e.getPitch(), e.isOnGround()));
@@ -183,55 +186,47 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
      * @author mc code
      * @reason i tried other ways of doing this, nothing else worked
      */
-    @Overwrite
+    @Override
+	@Overwrite
     public void onLivingUpdate() {
         if (this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;
-            if (this.sprintingTicksLeft == 0) {
-                this.setSprinting(false);
-            }
+            if (this.sprintingTicksLeft == 0)
+				this.setSprinting(false);
         }
 
-        if (this.sprintToggleTimer > 0) {
-            --this.sprintToggleTimer;
-        }
+        if (this.sprintToggleTimer > 0)
+			--this.sprintToggleTimer;
 
         this.prevTimeInPortal = this.timeInPortal;
         if (this.inPortal) {
-            if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame()) {
-                this.mc.displayGuiScreen(null);
-            }
+            if ((this.mc.currentScreen != null) && !this.mc.currentScreen.doesGuiPauseGame())
+				this.mc.displayGuiScreen(null);
 
-            if (this.timeInPortal == 0.0F) {
-                this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"),
-                        this.rand.nextFloat() * 0.4F + 0.8F));
-            }
+            if (this.timeInPortal == 0.0F)
+				this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"),
+                        (this.rand.nextFloat() * 0.4F) + 0.8F));
 
             this.timeInPortal += 0.0125F;
-            if (this.timeInPortal >= 1.0F) {
-                this.timeInPortal = 1.0F;
-            }
+            if (this.timeInPortal >= 1.0F)
+				this.timeInPortal = 1.0F;
 
             this.inPortal = false;
         } else if (this.isPotionActive(Potion.confusion)
-                && this.getActivePotionEffect(Potion.confusion).getDuration() > 60) {
+                && (this.getActivePotionEffect(Potion.confusion).getDuration() > 60)) {
             this.timeInPortal += 0.006666667F;
-            if (this.timeInPortal > 1.0F) {
-                this.timeInPortal = 1.0F;
-            }
+            if (this.timeInPortal > 1.0F)
+				this.timeInPortal = 1.0F;
         } else {
-            if (this.timeInPortal > 0.0F) {
-                this.timeInPortal -= 0.05F;
-            }
+            if (this.timeInPortal > 0.0F)
+				this.timeInPortal -= 0.05F;
 
-            if (this.timeInPortal < 0.0F) {
-                this.timeInPortal = 0.0F;
-            }
+            if (this.timeInPortal < 0.0F)
+				this.timeInPortal = 0.0F;
         }
 
-        if (this.timeUntilPortal > 0) {
-            --this.timeUntilPortal;
-        }
+        if (this.timeUntilPortal > 0)
+			--this.timeUntilPortal;
 
         Module noSlow = Raven.moduleManager.getModuleByClazz(NoSlow.class);
         Module sprint = Raven.moduleManager.getModuleByClazz(Sprint.class);
@@ -256,77 +251,68 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             }
         }
 
-        this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
-                this.posZ + (double) this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
-                this.posZ - (double) this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
-                this.posZ - (double) this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D,
-                this.posZ + (double) this.width * 0.35D);
-        boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
+        this.pushOutOfBlocks(this.posX - ((double) this.width * 0.35D), this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ + ((double) this.width * 0.35D));
+        this.pushOutOfBlocks(this.posX - ((double) this.width * 0.35D), this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ - ((double) this.width * 0.35D));
+        this.pushOutOfBlocks(this.posX + ((double) this.width * 0.35D), this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ - ((double) this.width * 0.35D));
+        this.pushOutOfBlocks(this.posX + ((double) this.width * 0.35D), this.getEntityBoundingBox().minY + 0.5D,
+                this.posZ + ((double) this.width * 0.35D));
+        boolean flag3 = ((float) this.getFoodStats().getFoodLevel() > 6.0F) || this.capabilities.allowFlying;
         if (this.onGround && !flag1 && !flag2
-                && (this.movementInput.moveForward >= f || (sprint.isEnabled() && Sprint.multiDir.isToggled()
-                        && (movementInput.moveForward != 0 || movementInput.moveStrafe != 0)))
+                && ((this.movementInput.moveForward >= f) || (sprint.isEnabled() && Sprint.multiDir.isToggled()
+                        && ((movementInput.moveForward != 0) || (movementInput.moveStrafe != 0))))
                 && !this.isSprinting() && flag3 && (!this.isUsingItem() || noSlow.isEnabled())
                 && (!this.isPotionActive(Potion.blindness)
-                        || (sprint.isEnabled() && Sprint.ignoreBlindness.isToggled()))) {
-            if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.isKeyDown()) {
-                this.sprintToggleTimer = 7;
-            } else {
-                this.setSprinting(true);
-            }
-        }
+                        || (sprint.isEnabled() && Sprint.ignoreBlindness.isToggled())))
+			if ((this.sprintToggleTimer <= 0) && !this.mc.gameSettings.keyBindSprint.isKeyDown())
+				this.sprintToggleTimer = 7;
+			else
+				this.setSprinting(true);
 
         if (!this.isSprinting()
-                && (this.movementInput.moveForward >= f || (sprint.isEnabled() && Sprint.multiDir.isToggled()
-                        && (movementInput.moveForward != 0 || movementInput.moveStrafe != 0)))
+                && ((this.movementInput.moveForward >= f) || (sprint.isEnabled() && Sprint.multiDir.isToggled()
+                        && ((movementInput.moveForward != 0) || (movementInput.moveStrafe != 0))))
                 && flag3 && (!this.isUsingItem() || noSlow.isEnabled())
                 && (!this.isPotionActive(Potion.blindness)
                         || (sprint.isEnabled() && Sprint.ignoreBlindness.isToggled()))
-                && this.mc.gameSettings.keyBindSprint.isKeyDown()) {
-            this.setSprinting(true);
-        }
+                && this.mc.gameSettings.keyBindSprint.isKeyDown())
+			this.setSprinting(true);
 
         if (this.isSprinting() && (((sprint.isEnabled() && Sprint.multiDir.isToggled())
-                ? !(movementInput.moveForward != 0 || movementInput.moveStrafe != 0)
-                : this.movementInput.moveForward < f) || this.isCollidedHorizontally || !flag3)) {
-            this.setSprinting(false);
-        }
+                ? !((movementInput.moveForward != 0) || (movementInput.moveStrafe != 0))
+                : this.movementInput.moveForward < f) || this.isCollidedHorizontally || !flag3))
+			this.setSprinting(false);
 
-        if (this.capabilities.allowFlying) {
-            if (this.mc.playerController.isSpectatorMode()) {
+        if (this.capabilities.allowFlying)
+			if (this.mc.playerController.isSpectatorMode()) {
                 if (!this.capabilities.isFlying) {
                     this.capabilities.isFlying = true;
                     this.sendPlayerAbilities();
                 }
-            } else if (!flag && this.movementInput.jump) {
-                if (this.flyToggleTimer == 0) {
-                    this.flyToggleTimer = 7;
-                } else {
+            } else if (!flag && this.movementInput.jump)
+				if (this.flyToggleTimer == 0)
+					this.flyToggleTimer = 7;
+				else {
                     this.capabilities.isFlying = !this.capabilities.isFlying;
                     this.sendPlayerAbilities();
                     this.flyToggleTimer = 0;
                 }
-            }
-        }
 
         if (this.capabilities.isFlying && this.isCurrentViewEntity()) {
-            if (this.movementInput.sneak) {
-                this.motionY -= this.capabilities.getFlySpeed() * 3.0F;
-            }
+            if (this.movementInput.sneak)
+				this.motionY -= this.capabilities.getFlySpeed() * 3.0F;
 
-            if (this.movementInput.jump) {
-                this.motionY += this.capabilities.getFlySpeed() * 3.0F;
-            }
+            if (this.movementInput.jump)
+				this.motionY += this.capabilities.getFlySpeed() * 3.0F;
         }
 
         if (this.isRidingHorse()) {
             if (this.horseJumpPowerCounter < 0) {
                 ++this.horseJumpPowerCounter;
-                if (this.horseJumpPowerCounter == 0) {
-                    this.horseJumpPower = 0.0F;
-                }
+                if (this.horseJumpPowerCounter == 0)
+					this.horseJumpPower = 0.0F;
             }
 
             if (flag && !this.movementInput.jump) {
@@ -337,15 +323,13 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
                 this.horseJumpPower = 0.0F;
             } else if (flag) {
                 ++this.horseJumpPowerCounter;
-                if (this.horseJumpPowerCounter < 10) {
-                    this.horseJumpPower = (float) this.horseJumpPowerCounter * 0.1F;
-                } else {
-                    this.horseJumpPower = 0.8F + 2.0F / (float) (this.horseJumpPowerCounter - 9) * 0.1F;
-                }
+                if (this.horseJumpPowerCounter < 10)
+					this.horseJumpPower = (float) this.horseJumpPowerCounter * 0.1F;
+				else
+					this.horseJumpPower = 0.8F + ((2.0F / (float) (this.horseJumpPowerCounter - 9)) * 0.1F);
             }
-        } else {
-            this.horseJumpPower = 0.0F;
-        }
+        } else
+			this.horseJumpPower = 0.0F;
 
         super.onLivingUpdate();
         if (this.onGround && this.capabilities.isFlying && !this.mc.playerController.isSpectatorMode()) {

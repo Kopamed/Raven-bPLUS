@@ -1,18 +1,16 @@
 package keystrokesmod.client.module;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
 import com.google.gson.JsonObject;
 
-import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.Setting;
-import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.notifications.NotificationRenderer;
 import net.minecraft.client.Minecraft;
 
@@ -32,7 +30,7 @@ public class Module {
 
     private String description = "";
 
-    private boolean registered;
+    protected boolean registered;
 
     public void guiUpdate() {
 
@@ -69,12 +67,11 @@ public class Module {
     public JsonObject getConfigAsJson() {
         JsonObject settings = new JsonObject();
 
-        for (Setting setting : this.settings) {
+        for (Setting setting : this.settings)
             if (setting != null) {
                 JsonObject settingData = setting.getConfigAsJson();
                 settings.add(setting.settingName, settingData);
             }
-        }
 
         JsonObject data = new JsonObject();
         data.addProperty("enabled", enabled);
@@ -92,11 +89,9 @@ public class Module {
                 this.keycode = data.get("keycode").getAsInt();
             setToggled(data.get("enabled").getAsBoolean());
             JsonObject settingsData = data.get("settings").getAsJsonObject();
-            for (Setting setting : getSettings()) {
-                if (settingsData.has(setting.getName())) {
+            for (Setting setting : getSettings())
+                if (settingsData.has(setting.getName()))
                     setting.applyConfigFromJson(settingsData.get(setting.getName()).getAsJsonObject());
-                }
-            }
             this.showInHud = data.get("showInHud").getAsBoolean();
         } catch (NullPointerException ignored) {
 
@@ -109,14 +104,12 @@ public class Module {
     }
 
     public void keybind() {
-        if (this.keycode != 0 && this.canBeEnabled()) {
+        if ((this.keycode != 0) && this.canBeEnabled())
             if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
                 this.toggle();
                 this.isToggled = true;
-            } else if (!Keyboard.isKeyDown(this.keycode)) {
+            } else if (!Keyboard.isKeyDown(this.keycode))
                 this.isToggled = false;
-            }
-        }
     }
 
     public boolean canBeEnabled() {
@@ -148,11 +141,10 @@ public class Module {
     }
 
     public void setToggled(boolean enabled) {
-        if (enabled) {
+        if (enabled)
             enable();
-        } else {
+        else
             disable();
-        }
     }
 
     public boolean isBindable() {
@@ -168,15 +160,18 @@ public class Module {
     }
 
     public Setting getSettingByName(String name) {
-        for (Setting setting : this.settings) {
+        for (Setting setting : this.settings)
             if (setting.getName().equalsIgnoreCase(name))
                 return setting;
-        }
         return null;
     }
 
     public void registerSetting(Setting Setting) {
         this.settings.add(Setting);
+    }
+
+    public void registerSettings(Setting... settings) {
+        Collections.addAll(this.settings, settings);
     }
 
     public void setVisableInHud(boolean vis) {
@@ -198,20 +193,14 @@ public class Module {
     }
 
     public void toggle() {
-        if (this.enabled) {
+        if (this.enabled)
             this.disable();
-        } else {
+        else
             this.enable();
-        }
     }
 
-    public void guiButtonToggled(TickSetting b) {
-    }
+    public void guiButtonToggled(Setting b) {
 
-    public void guiButtonToggled(ComboSetting b) {
-    }
-
-    public void guiButtonToggled(TickSetting b, Component c) {
     }
 
     public int getKeycode() {
@@ -226,9 +215,8 @@ public class Module {
         this.keycode = defualtKeyCode;
         this.setToggled(defaultEnabled);
 
-        for (Setting setting : this.settings) {
+        for (Setting setting : this.settings)
             setting.resetToDefaults();
-        }
     }
 
     public void setModuleComponent(ModuleComponent component) {
@@ -251,6 +239,18 @@ public class Module {
         return clientConfig;
     }
 
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void unRegister() {
+        if(registered) {
+            registered = false;
+            Raven.eventBus.unregister(this);
+            onDisable();
+        }
+    }
+
     public enum ModuleCategory {
         category(true, null, "Raven B++"),
         combat(false, category, "Combat"),
@@ -271,18 +271,17 @@ public class Module {
         private List<ModuleCategory> childCategories = new ArrayList<ModuleCategory>();
 
         ModuleCategory(boolean defaultShown, ModuleCategory topCategory, String name) {
-            if(topCategory != null) {
+            if(topCategory != null)
                 topCategory.addChildCategory(this);
-            }
             this.defaultShown = defaultShown;
             this.topCategory = topCategory;
             this.name = name;
         }
-        
+
         public void addChildCategory(ModuleCategory moduleCategory) {
             childCategories.add(moduleCategory);
         }
-        
+
         public List<ModuleCategory> getChildCategories() {
             return childCategories;
         }

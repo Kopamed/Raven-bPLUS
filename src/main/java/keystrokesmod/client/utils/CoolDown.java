@@ -12,17 +12,14 @@ public class CoolDown {
     public void start() {
         this.start = System.currentTimeMillis();
         checkedFinish = false;
-        // Utils.Player.sendMessageToSelf("Time started " + lasts/1000);
     }
 
     public boolean hasFinished() {
-        // Utils.Player.sendMessageToSelf("Time finished");
-        return System.currentTimeMillis() >= start + lasts;
+        return System.currentTimeMillis() >= (start + lasts);
     }
 
     public boolean firstFinish() {
-        if (System.currentTimeMillis() >= start + lasts && !checkedFinish) {
-            // Utils.Player.sendMessageToSelf("Time finished");
+        if ((System.currentTimeMillis() >= (start + lasts)) && !checkedFinish) {
             checkedFinish = true;
             return true;
         }
@@ -30,15 +27,20 @@ public class CoolDown {
     }
 
     public void setCooldown(long time) {
-        // Utils.Player.sendMessageToSelf("Set cooldown to " + time);
         this.lasts = time;
     }
 
+    public long getCooldownTime() {
+        return lasts;
+    }
+
     public long getElapsedTime() {
-        return System.currentTimeMillis() - this.start;
+        long et = System.currentTimeMillis() - this.start;
+        return et > lasts ? lasts : et;
     }
 
     public long getTimeLeft() {
-        return lasts - (System.currentTimeMillis() - start);
+        long tl = lasts - (System.currentTimeMillis() - start);
+        return tl < 0 ? 0 : tl;
     }
 }

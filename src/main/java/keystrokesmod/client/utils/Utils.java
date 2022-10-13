@@ -113,7 +113,7 @@ public class Utils {
                 Vec3 vec3 = entity.getPositionEyes(partialTicks);
 
                 if (objectMouseOver != null)
-					distanceToVec = objectMouseOver.hitVec.distanceTo(vec3);
+                    distanceToVec = objectMouseOver.hitVec.distanceTo(vec3);
 
                 Vec3 vec31 = entity.getLook(partialTicks);
                 Vec3 vec32 = vec3.addVector(vec31.xCoord * reach, vec31.yCoord * reach, vec31.zCoord * reach);
@@ -121,7 +121,7 @@ public class Utils {
 
                 float f = 1.0F;
                 List<Entity> list = mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * reach,
-                                vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
+                        vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
                         Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
                 double d2 = distanceToVec;
 
@@ -138,7 +138,7 @@ public class Utils {
                     } else if (movingobjectposition != null) {
                         double d3 = vec3.distanceTo(movingobjectposition.hitVec);
                         if ((d3 < d2) || (d2 == 0.0D))
-							if ((entity1 == entity.ridingEntity) && !entity.canRiderInteract()) {
+                            if ((entity1 == entity.ridingEntity) && !entity.canRiderInteract()) {
                                 if (d2 == 0.0D) {
                                     pointedEntity = entity1;
                                     vec33 = movingobjectposition.hitVec;
@@ -157,7 +157,7 @@ public class Utils {
                 }
 
                 if ((pointedEntity != null) && ((d2 < distanceToVec) || (objectMouseOver == null)))
-					objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
+                    objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
 
                 return objectMouseOver;
             }
@@ -280,7 +280,7 @@ public class Utils {
                 if (itemInSlot == null)
                     continue;
                 for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values())
-					if (mooommHelp.getAmount() > damage) {
+                    if (mooommHelp.getAmount() > damage) {
                         damage = mooommHelp.getAmount();
                         index = slot;
                     }
@@ -294,41 +294,25 @@ public class Utils {
             if (itemInSlot == null)
                 return -1;
             for (AttributeModifier mooommHelp : itemInSlot.getAttributeModifiers().values())
-				return mooommHelp.getAmount();
+                return mooommHelp.getAmount();
             return -1;
         }
 
         public static ArrayList<Integer> playerWearingArmor() {
             ArrayList<Integer> wearingArmor = new ArrayList<>();
             for (int armorPiece = 0; armorPiece < 4; armorPiece++)
-				if (mc.thePlayer.getCurrentArmor(armorPiece) != null)
-					switch (armorPiece) {
-					case 0:
-						wearingArmor.add(3);
-						break;
-					case 1:
-						wearingArmor.add(2);
-						break;
-					case 2:
-						wearingArmor.add(1);
-						break;
-					case 3:
-						wearingArmor.add(0);
-						break;
-					default:
-						break;
-					}
-
+                if (mc.thePlayer.getCurrentArmor(armorPiece) != null)
+                    wearingArmor.add(3 - armorPiece);
             return wearingArmor;
         }
 
         public static int getBlockAmountInCurrentStack(int currentItem) {
             if (mc.thePlayer.inventory.getStackInSlot(currentItem) == null)
-				return 0;
-			ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(currentItem);
-			if (itemStack.getItem() instanceof ItemBlock)
-				return itemStack.stackSize;
-			return 0;
+                return 0;
+            ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(currentItem);
+            if (itemStack.getItem() instanceof ItemBlock)
+                return itemStack.stackSize;
+            return 0;
         }
 
         /**
@@ -380,15 +364,15 @@ public class Utils {
             } else {
                 if (forward != 0.0D) {
                     if (strafe > 0.0D)
-						yaw += (float) (forward > 0.0D ? -45 : 45);
-					else if (strafe < 0.0D)
-						yaw += (float) (forward > 0.0D ? 45 : -45);
+                        yaw += (float) (forward > 0.0D ? -45 : 45);
+                    else if (strafe < 0.0D)
+                        yaw += (float) (forward > 0.0D ? 45 : -45);
 
                     strafe = 0.0D;
                     if (forward > 0.0D)
-						forward = 1.0D;
-					else if (forward < 0.0D)
-						forward = -1.0D;
+                        forward = 1.0D;
+                    else if (forward < 0.0D)
+                        forward = -1.0D;
                 }
 
                 double rad = Math.toRadians(yaw + 90.0F);
@@ -404,7 +388,7 @@ public class Utils {
             float yaw = mc.thePlayer.rotationYaw;
 
             if((forward == 0) && (strafe == 0))
-				return yaw;
+                return yaw;
 
             boolean reversed = forward < 0.0f;
             float strafingYaw = 90.0f *
@@ -423,20 +407,20 @@ public class Utils {
         public static float correctRotations() {
             float yw = mc.thePlayer.rotationYaw;
             if (mc.thePlayer.moveForward < 0.0F)
-				yw += 180.0F;
+                yw += 180.0F;
 
             float f;
             if (mc.thePlayer.moveForward < 0.0F)
-				f = -0.5F;
-			else if (mc.thePlayer.moveForward > 0.0F)
-				f = 0.5F;
-			else
-				f = 1.0F;
+                f = -0.5F;
+            else if (mc.thePlayer.moveForward > 0.0F)
+                f = 0.5F;
+            else
+                f = 1.0F;
 
             if (mc.thePlayer.moveStrafing > 0.0F)
-				yw -= 90.0F * f;
+                yw -= 90.0F * f;
             if (mc.thePlayer.moveStrafing < 0.0F)
-				yw += 90.0F * f;
+                yw += 90.0F * f;
 
             // what
             yw *= 0.017453292F;
@@ -452,9 +436,9 @@ public class Utils {
             EntityPlayerSP p = mc.thePlayer;
             int armSwingEnd = p.isPotionActive(Potion.digSpeed)
                     ? 6 - (1 + p.getActivePotionEffect(Potion.digSpeed).getAmplifier())
-                    : (p.isPotionActive(Potion.digSlowdown)
-                            ? 6 + ((1 + p.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2)
-                            : 6);
+                            : (p.isPotionActive(Potion.digSlowdown)
+                                    ? 6 + ((1 + p.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2)
+                                            : 6);
             if (!p.isSwingInProgress || (p.swingProgressInt >= (armSwingEnd / 2)) || (p.swingProgressInt < 0)) {
                 p.swingProgressInt = -1;
                 p.isSwingInProgress = true;
@@ -466,7 +450,7 @@ public class Utils {
             if (mc.theWorld == null)
                 return null;
             Iterator entities;
-            entities = mc.theWorld.loadedEntityList.iterator();
+            entities = mc.theWorld.playerEntities.iterator();
             EntityPlayer cplayer = null;
 
             while (entities.hasNext()) {
@@ -482,9 +466,25 @@ public class Utils {
 
             return cplayer;
         }
+
+        public static List<EntityPlayer> getClosePlayers(double dis) {
+            if (mc.theWorld == null)
+                return null;
+            List<EntityPlayer> players = new ArrayList<>();
+
+            for(EntityPlayer player : mc.theWorld.playerEntities)
+            	if(mc.thePlayer.getDistanceToEntity(player) < dis)
+            		players.add(player);
+
+            return players;
+        }
     }
 
     public static class Client {
+
+        public static float smoothPercent(float percent) {
+            return percent = (float) ((0.5f * (Math.sin(Math.toRadians(180f * (percent - 0.5f)))))+ 0.5f);
+        }
 
         public static boolean isThrowableItem(ItemStack is) {
             Item i = is.getItem();
@@ -503,15 +503,15 @@ public class Utils {
             }
 
             for (NetworkPlayerInfo ergy43d : yes)
-				if (!mmmm.contains(ergy43d))
-					mmmm.add(ergy43d);
+                if (!mmmm.contains(ergy43d))
+                    mmmm.add(ergy43d);
 
             return mmmm;
         }
 
         public static boolean othersExist() {
             for (Entity wut : mc.theWorld.getLoadedEntityList())
-				if (wut instanceof EntityPlayer)
+                if (wut instanceof EntityPlayer)
                     return true;
             return false;
         }
@@ -576,8 +576,8 @@ public class Utils {
         public static boolean autoClickerClicking() {
             Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
             if ((autoClicker != null) && autoClicker.isEnabled())
-			 return autoClicker.isEnabled() && Mouse.isButtonDown(0);
-              // System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
+                return autoClicker.isEnabled() && Mouse.isButtonDown(0);
+            // System.currentTimeMillis() - mouseManager.leftClickTimer < 300L;
             return false;
         }
 
@@ -605,13 +605,25 @@ public class Utils {
         public static int astolfoColorsDraw(int yOffset, int yTotal, float speed) {
             float hue = (float) (System.currentTimeMillis() % (int) speed) + ((yTotal - yOffset) * 9);
             while (hue > speed)
-				hue -= speed;
+                hue -= speed;
             hue /= speed;
             if (hue > 0.5)
-				hue = 0.5F - (hue - 0.5f);
+                hue = 0.5F - (hue - 0.5f);
             hue += 0.5F;
             return Color.HSBtoRGB(hue, 0.5f, 1F);
         }
+
+        public static int otherAstolfoColorsDraw(int yOffset, int yTotal) {
+            float hue = (float) (System.currentTimeMillis() % (int) 2900F) + ((yTotal - yOffset) * 9);
+            while (hue > 2900F)
+                hue -= 2900F;
+            hue /= 2900F;
+            if (hue > 0.5)
+                hue = 0.5F - (hue - 0.5f);
+            hue += 0.5F;
+            return Color.HSBtoRGB(0.3f, hue, 1F);
+        }
+
 
         public static int astolfoColorsDraw(int yOffset, int yTotal) {
             return astolfoColorsDraw(yOffset, yTotal, 2900F);
@@ -628,19 +640,19 @@ public class Utils {
             }
 
             while (hue > speed)
-				hue -= speed;
+                hue -= speed;
             hue /= speed;
             if (hue > 2)
-				hue = 2F - (hue - 2f);
+                hue = 2F - (hue - 2f);
             hue += 2F;
 
             float current = (System.currentTimeMillis() % speed) + ((yOffset + yTotal) * 9);
 
             while (current > speed)
-				current -= speed;
+                current -= speed;
             current /= speed;
             if (current > 2)
-				current = 2F - (current - 2f);
+                current = 2F - (current - 2f);
             current += 2F;
 
             return Color.HSBtoRGB((current / (current - yTotal)) + current, 1f, 1F);
@@ -670,7 +682,7 @@ public class Utils {
         public static boolean openWebpage(URI uri) {
             Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
             if ((desktop != null) && desktop.isSupported(Desktop.Action.BROWSE))
-				try {
+                try {
                     desktop.browse(uri);
                     return true;
                 } catch (Exception e) {
@@ -702,39 +714,39 @@ public class Utils {
         public static List<String> getPlayersFromScoreboard() {
             List<String> lines = new ArrayList<>();
             if (mc.theWorld == null)
-				return lines;
-			Scoreboard scoreboard = mc.theWorld.getScoreboard();
-			if (scoreboard != null) {
-			    ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
-			    if (objective != null) {
-			        Collection<Score> scores = scoreboard.getSortedScores(objective);
-			        List<Score> list = new ArrayList<>();
-			        Iterator<Score> var5 = scores.iterator();
+                return lines;
+            Scoreboard scoreboard = mc.theWorld.getScoreboard();
+            if (scoreboard != null) {
+                ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
+                if (objective != null) {
+                    Collection<Score> scores = scoreboard.getSortedScores(objective);
+                    List<Score> list = new ArrayList<>();
+                    Iterator<Score> var5 = scores.iterator();
 
-			        Score score;
-			        while (var5.hasNext()) {
-			            score = var5.next();
-			            if ((score != null) && (score.getPlayerName() != null)
-			                    && !score.getPlayerName().startsWith("#"))
-							list.add(score);
-			        }
+                    Score score;
+                    while (var5.hasNext()) {
+                        score = var5.next();
+                        if ((score != null) && (score.getPlayerName() != null)
+                                && !score.getPlayerName().startsWith("#"))
+                            list.add(score);
+                    }
 
-			        if (list.size() > 15)
-						scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));
-					else
-						scores = list;
+                    if (list.size() > 15)
+                        scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));
+                    else
+                        scores = list;
 
-			        var5 = scores.iterator();
+                    var5 = scores.iterator();
 
-			        while (var5.hasNext()) {
-			            score = var5.next();
-			            ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
-			            lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
-			        }
+                    while (var5.hasNext()) {
+                        score = var5.next();
+                        ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
+                        lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
+                    }
 
-			    }
-			}
-			return lines;
+                }
+            }
+            return lines;
         }
 
         public static String reformat(String txt) {
@@ -762,7 +774,7 @@ public class Utils {
 
         public static int indexOf(String key, String[] wut) {
             for (int o = 0; o < wut.length; o++)
-				if (wut[o].equals(key))
+                if (wut[o].equals(key))
                     return o;
             return -1;
         }
@@ -777,9 +789,9 @@ public class Utils {
 
         public static double round(double n, int d) {
             if (d == 0)
-				return (double) Math.round(n);
-			double p = Math.pow(10.0D, d);
-			return (double) Math.round(n * p) / p;
+                return (double) Math.round(n);
+            double p = Math.pow(10.0D, d);
+            return (double) Math.round(n * p) / p;
         }
 
         public static String str(String s) {
@@ -787,8 +799,8 @@ public class Utils {
             StringBuilder v = new StringBuilder();
 
             for (char c : n)
-				if ((c < 127) && (c > 20))
-					v.append(c);
+                if ((c < 127) && (c > 20))
+                    v.append(c);
 
             return v.toString();
         }
@@ -810,7 +822,7 @@ public class Utils {
             StringBuilder finalString = new StringBuilder(wtf[0]);
 
             for (int i = 1; i < wtf.length; i++)
-				finalString.append(okwaht).append(wtf[i]);
+                finalString.append(okwaht).append(wtf[i]);
 
             return finalString.toString();
         }
@@ -861,7 +873,7 @@ public class Utils {
             } catch (IOException ignored) {
             } finally {
                 if (con != null)
-					con.disconnect();
+                    con.disconnect();
 
             }
 
@@ -870,7 +882,7 @@ public class Utils {
 
         private static String getTextFromConnection(HttpURLConnection connection) {
             if (connection != null)
-				try {
+                try {
                     BufferedReader bufferedReader = new BufferedReader(
                             new InputStreamReader(connection.getInputStream()));
 
@@ -880,7 +892,7 @@ public class Utils {
 
                         String input;
                         while ((input = bufferedReader.readLine()) != null)
-							stringBuilder.append(input);
+                            stringBuilder.append(input);
 
                         String res = stringBuilder.toString();
                         connection.disconnect();
@@ -938,14 +950,14 @@ public class Utils {
                     throw microsoftMoment;
                 } finally {
                     if (outputStream != null)
-						if (occuredErrors != null)
-							try {
+                        if (occuredErrors != null)
+                            try {
                                 outputStream.close();
                             } catch (Throwable var48) {
                                 occuredErrors.addSuppressed(var48);
                             }
-						else
-							outputStream.close();
+                        else
+                            outputStream.close();
 
                 }
 
@@ -995,7 +1007,7 @@ public class Utils {
             String u = "";
             String r = URLS.getTextFromURL("https://api.mojang.com/users/profiles/minecraft/" + n);
             if (!r.isEmpty())
-				try {
+                try {
                     u = r.split("d\":\"")[1].split("\"")[0];
                 } catch (ArrayIndexOutOfBoundsException var4) {
                 }
@@ -1009,10 +1021,10 @@ public class Utils {
 
             String c = URLS.getTextFromURL("https://api.hypixel.net/player?key=" + URLS.hypixelApiKey + "&uuid=" + u);
             if (c.isEmpty())
-				return null;
-			if (c.equals("{\"success\":true,\"player\":null}"))
-				s[0] = -1;
-			else {
+                return null;
+            if (c.equals("{\"success\":true,\"player\":null}"))
+                s[0] = -1;
+            else {
                 JsonObject d;
                 try {
                     JsonObject pr = parseJson(c).getAsJsonObject("player");
@@ -1058,7 +1070,7 @@ public class Utils {
                     s[2] = getValueAsInt(d, "current_winstreak_mode_op_duel");
                 }
             }
-			return s;
+            return s;
         }
 
         public static JsonObject parseJson(String json) {
@@ -1103,7 +1115,7 @@ public class Utils {
                 GL11.glColor4d(r, g, b, a);
                 RenderGlobal.drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D));
                 if (shade)
-					dbb(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D), r, g, b);
+                    dbb(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D), r, g, b);
 
                 GL11.glEnable(3553);
                 GL11.glEnable(2929);
@@ -1123,7 +1135,7 @@ public class Utils {
                         - mc.getRenderManager().viewerPosZ;
                 float d = (float) expand / 40.0F;
                 if ((e instanceof EntityPlayer) && damage && (((EntityPlayer) e).hurtTime != 0))
-					color = Color.RED.getRGB();
+                    color = Color.RED.getRGB();
 
                 GlStateManager.pushMatrix();
                 if (type == 3) {
@@ -1170,10 +1182,10 @@ public class Utils {
                         net.minecraft.client.gui.Gui.drawRect(i + 1, 0, i + 4, b, hc);
                         GlStateManager.enableDepth();
                     } else if (type == 6)
-						d3p(x, y, z, 0.699999988079071D, 45, 1.5F, color, color == 0);
-					else {
+                        d3p(x, y, z, 0.699999988079071D, 45, 1.5F, color, color == 0);
+                    else {
                         if (color == 0)
-							color = Client.rainbowDraw(2L, 0L);
+                            color = Client.rainbowDraw(2L, 0L);
 
                         float a = (float) ((color >> 24) & 255) / 255.0F;
                         float r = (float) ((color >> 16) & 255) / 255.0F;
@@ -1188,10 +1200,10 @@ public class Utils {
                             d2p(0.0D, 95.0D, 10, 3, Color.black.getRGB());
 
                             for (i = 0; i < 6; ++i)
-								d2p(0.0D, 95 + (10 - i), 3, 4, Color.black.getRGB());
+                                d2p(0.0D, 95 + (10 - i), 3, 4, Color.black.getRGB());
 
                             for (i = 0; i < 7; ++i)
-								d2p(0.0D, 95 + (10 - i), 2, 4, color);
+                                d2p(0.0D, 95 + (10 - i), 2, 4, color);
 
                             d2p(0.0D, 95.0D, 8, 3, color);
                             GlStateManager.enableDepth();
@@ -1209,9 +1221,9 @@ public class Utils {
                             GL11.glLineWidth(2.0F);
                             GL11.glColor4f(r, g, b, a);
                             if (type == 1)
-								RenderGlobal.drawSelectionBoundingBox(axis);
-							else if (type == 2)
-								dbb(axis, r, g, b);
+                                RenderGlobal.drawSelectionBoundingBox(axis);
+                            else if (type == 2)
+                                dbb(axis, r, g, b);
 
                             GL11.glEnable(3553);
                             GL11.glEnable(2929);
@@ -1391,7 +1403,7 @@ public class Utils {
                             Client.astolfoColorsDraw((int) colourParam1, (int) colourControl), rect);
                     leftOffset += fontRenderer.getCharWidth(c);
                     if (c != ' ')
-						colourControl -= 90L;
+                        colourControl -= 90L;
                 }
             }
 
@@ -1405,16 +1417,16 @@ public class Utils {
 
             if (marginY < halfHeight) {
                 if (marginX < halfWidth)
-					positionMode = PositionMode.UPLEFT;
+                    positionMode = PositionMode.UPLEFT;
                 if (marginX > halfWidth)
-					positionMode = PositionMode.UPRIGHT;
+                    positionMode = PositionMode.UPRIGHT;
             }
 
             if (marginY > halfHeight) {
                 if (marginX < halfWidth)
-					positionMode = PositionMode.DOWNLEFT;
+                    positionMode = PositionMode.DOWNLEFT;
                 if (marginX > halfWidth)
-					positionMode = PositionMode.DOWNRIGHT;
+                    positionMode = PositionMode.DOWNRIGHT;
             }
 
             return positionMode;
@@ -1436,7 +1448,7 @@ public class Utils {
             for (int i = 0; i < sides; ++i) {
                 double angle = ((6.283185307179586D * (double) i) / (double) sides) + Math.toRadians(180.0D);
                 worldrenderer.pos(x + (Math.sin(angle) * (double) radius), y + (Math.cos(angle) * (double) radius), 0.0D)
-                        .endVertex();
+                .endVertex();
             }
 
             tessellator.draw();
@@ -1459,7 +1471,7 @@ public class Utils {
             GL11.glDepthMask(false);
             GL11.glLineWidth(lineWidth);
             if (!chroma)
-				GL11.glColor4f(r, g, b, a);
+                GL11.glColor4f(r, g, b, a);
 
             GL11.glBegin(1);
             long d = 0L;
@@ -1470,7 +1482,7 @@ public class Utils {
                 if (chroma) {
                     if ((i % 2) != 0) {
                         if (i == 47)
-							d = hed;
+                            d = hed;
 
                         d += ed;
                     }

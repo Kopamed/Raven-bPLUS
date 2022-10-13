@@ -1,8 +1,13 @@
 package keystrokesmod.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
+
+import keystrokesmod.client.clickgui.kv.KvComponent;
+import keystrokesmod.client.clickgui.kv.components.KvComboComponent;
 import keystrokesmod.client.clickgui.raven.Component;
+import keystrokesmod.client.clickgui.raven.components.ComboComponent;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
+import keystrokesmod.client.clickgui.raven.components.SettingComponent;
 import keystrokesmod.client.module.setting.Setting;
 
 public class ComboSetting<T extends Enum<?>> extends Setting {
@@ -15,6 +20,7 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
 
         this.currentOption = defaultOption;
         this.defaultOption = defaultOption;
+
         try {
             this.options = (T[]) defaultOption.getClass().getMethod("values").invoke(null);
         } catch (Exception e) {
@@ -46,10 +52,9 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
             return;
 
         String bruh = data.get("value").getAsString();
-        for (T opt : options) {
+        for (T opt : options)
             if (opt.toString().equals(bruh))
                 setMode(opt);
-        }
     }
 
     @Override
@@ -66,11 +71,24 @@ public class ComboSetting<T extends Enum<?>> extends Setting {
     }
 
     public void nextMode() {
-        for (int i = 0; i < options.length; i++) {
-            if (options[i] == currentOption) {
-                currentOption = options[(i + 1) % (options.length)];
-                return;
-            }
-        }
+        currentOption = options[(currentOption.ordinal() + 1) % (options.length)];
+    }
+
+    public void prevMode() {
+        currentOption = options[currentOption.ordinal() == 0 ? options.length - 1 : currentOption.ordinal() - 1];
+    }
+
+    public T getPrevMode() {
+        return options[currentOption.ordinal() == 0 ? options.length - 1 : currentOption.ordinal() - 1];
+    }
+
+	@Override
+	public Class<? extends KvComponent> getComponentType() {
+		return KvComboComponent.class;
+	}
+
+    @Override
+    public Class<? extends SettingComponent> getRavenComponentType() {
+        return ComboComponent.class;
     }
 }

@@ -31,24 +31,24 @@ public class SlyPort extends Module {
     }
 
     @Override
-	public void onEnable() {
+    public void onEnable() {
         Entity en = this.ge();
         if (en != null)
-			this.tp(en);
+            this.tp(en);
 
         this.disable();
     }
 
     private void tp(Entity en) {
         if (b.isToggled())
-			mc.thePlayer.playSound("mob.endermen.portal", 1.0F, 1.0F);
+            mc.thePlayer.playSound("mob.endermen.portal", 1.0F, 1.0F);
 
         Vec3 vec = en.getLookVec();
         double x = en.posX - (vec.xCoord * 2.5D);
         double z = en.posZ - (vec.zCoord * 2.5D);
         mc.thePlayer.setPosition(x, mc.thePlayer.posY, z);
         if (e.isToggled())
-			Utils.Player.aim(en, 0.0F);
+            Utils.Player.aim(en, 0.0F);
 
     }
 
@@ -61,17 +61,17 @@ public class SlyPort extends Module {
         while (true) {
             Entity ent;
             do
-				do
-					do
-						do {
+                do
+                    do
+                        do {
                             if (!var6.hasNext())
-								return en;
+                                return en;
 
                             ent = (Entity) var6.next();
                         } while (ent == mc.thePlayer);
-					while (!(ent instanceof EntityLivingBase));
-				while (((EntityLivingBase) ent).deathTime != 0);
-			while (d.isToggled() && !(ent instanceof EntityPlayer));
+                    while (!(ent instanceof EntityLivingBase));
+                while (((EntityLivingBase) ent).deathTime != 0);
+            while (d.isToggled() && !(ent instanceof EntityPlayer));
 
             if (!AntiBot.bot(ent)) {
                 double d = mc.thePlayer.getDistanceSqToEntity(ent);

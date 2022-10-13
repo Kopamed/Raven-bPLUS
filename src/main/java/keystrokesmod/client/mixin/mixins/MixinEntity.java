@@ -1,5 +1,13 @@
 package keystrokesmod.client.mixin.mixins;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
 import keystrokesmod.client.event.impl.MoveInputEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -21,14 +29,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
-import org.lwjgl.input.Keyboard;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 
 @Mixin(priority = 995, value = Entity.class)
 public abstract class MixinEntity {
@@ -163,15 +163,15 @@ public abstract class MixinEntity {
 
             Minecraft mc = Minecraft.getMinecraft();
 
-            if ((Object) this == mc.thePlayer && mc.thePlayer.onGround) {
+            if (((Object) this == mc.thePlayer) && mc.thePlayer.onGround) {
                 Module safeWalk = Raven.moduleManager.getModuleByClazz(SafeWalk.class);
 
-                if (safeWalk != null && safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
+                if ((safeWalk != null) && safeWalk.isEnabled() && !SafeWalk.doShift.isToggled()) {
                     flag = true;
 
                     if (SafeWalk.blocksOnly.isToggled()) {
                         ItemStack i = mc.thePlayer.getHeldItem();
-                        if (i == null || !(i.getItem() instanceof ItemBlock)) {
+                        if ((i == null) || !(i.getItem() instanceof ItemBlock)) {
                             flag = mc.thePlayer.isSneaking(); // this used to cause issues, sorry!
                                                               // - sigmaclientwastaken
                         }
@@ -179,14 +179,14 @@ public abstract class MixinEntity {
 
                     // this took 30 seconds
                     if (SafeWalk.lookDown.isToggled()) {
-                        if (mc.thePlayer.rotationPitch < SafeWalk.pitchRange.getInputMin()
-                                || mc.thePlayer.rotationPitch > SafeWalk.pitchRange.getInputMax()) {
+                        if ((mc.thePlayer.rotationPitch < SafeWalk.pitchRange.getInputMin())
+                                || (mc.thePlayer.rotationPitch > SafeWalk.pitchRange.getInputMax())) {
                             flag = mc.thePlayer.isSneaking();
                         }
                     }
 
                     if(SafeWalk.shawtyMoment.isToggled()) {
-                        if(mc.thePlayer.movementInput.moveForward > 0 && mc.thePlayer.movementInput.moveStrafe == 0) {
+                        if((mc.thePlayer.movementInput.moveForward > 0) && (mc.thePlayer.movementInput.moveStrafe == 0)) {
                             flag = mc.thePlayer.isSneaking();
                         }
                     }
@@ -200,11 +200,11 @@ public abstract class MixinEntity {
 
             if (flag) {
                 double d6;
-                for (d6 = 0.05D; p_moveEntity_1_ != 0.0D && this.worldObj
+                for (d6 = 0.05D; (p_moveEntity_1_ != 0.0D) && this.worldObj
                         .getCollidingBoundingBoxes(((Entity) ((Object) this)),
                                 this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, 0.0D))
                         .isEmpty(); d3 = p_moveEntity_1_) {
-                    if (p_moveEntity_1_ < d6 && p_moveEntity_1_ >= -d6) {
+                    if ((p_moveEntity_1_ < d6) && (p_moveEntity_1_ >= -d6)) {
                         p_moveEntity_1_ = 0.0D;
                     } else if (p_moveEntity_1_ > 0.0D) {
                         p_moveEntity_1_ -= d6;
@@ -213,11 +213,11 @@ public abstract class MixinEntity {
                     }
                 }
 
-                for (; p_moveEntity_5_ != 0.0D && this.worldObj
+                for (; (p_moveEntity_5_ != 0.0D) && this.worldObj
                         .getCollidingBoundingBoxes(((Entity) ((Object) this)),
                                 this.getEntityBoundingBox().offset(0.0D, -1.0D, p_moveEntity_5_))
                         .isEmpty(); d5 = p_moveEntity_5_) {
-                    if (p_moveEntity_5_ < d6 && p_moveEntity_5_ >= -d6) {
+                    if ((p_moveEntity_5_ < d6) && (p_moveEntity_5_ >= -d6)) {
                         p_moveEntity_5_ = 0.0D;
                     } else if (p_moveEntity_5_ > 0.0D) {
                         p_moveEntity_5_ -= d6;
@@ -226,12 +226,12 @@ public abstract class MixinEntity {
                     }
                 }
 
-                for (; p_moveEntity_1_ != 0.0D && p_moveEntity_5_ != 0.0D
+                for (; (p_moveEntity_1_ != 0.0D) && (p_moveEntity_5_ != 0.0D)
                         && this.worldObj
                                 .getCollidingBoundingBoxes(((Entity) ((Object) this)),
                                         this.getEntityBoundingBox().offset(p_moveEntity_1_, -1.0D, p_moveEntity_5_))
                                 .isEmpty(); d5 = p_moveEntity_5_) {
-                    if (p_moveEntity_1_ < d6 && p_moveEntity_1_ >= -d6) {
+                    if ((p_moveEntity_1_ < d6) && (p_moveEntity_1_ >= -d6)) {
                         p_moveEntity_1_ = 0.0D;
                     } else if (p_moveEntity_1_ > 0.0D) {
                         p_moveEntity_1_ -= d6;
@@ -240,7 +240,7 @@ public abstract class MixinEntity {
                     }
 
                     d3 = p_moveEntity_1_;
-                    if (p_moveEntity_5_ < d6 && p_moveEntity_5_ >= -d6) {
+                    if ((p_moveEntity_5_ < d6) && (p_moveEntity_5_ >= -d6)) {
                         p_moveEntity_5_ = 0.0D;
                     } else if (p_moveEntity_5_ > 0.0D) {
                         p_moveEntity_5_ -= d6;
@@ -261,7 +261,7 @@ public abstract class MixinEntity {
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, p_moveEntity_3_, 0.0D));
-            boolean flag1 = this.onGround || d4 != p_moveEntity_3_ && d4 < 0.0D;
+            boolean flag1 = this.onGround || ((d4 != p_moveEntity_3_) && (d4 < 0.0D));
 
             AxisAlignedBB axisalignedbb13;
             Iterator var55;
@@ -278,7 +278,7 @@ public abstract class MixinEntity {
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, 0.0D, p_moveEntity_5_));
-            if (this.stepHeight > 0.0F && flag1 && (d3 != p_moveEntity_1_ || d5 != p_moveEntity_5_)) {
+            if ((this.stepHeight > 0.0F) && flag1 && ((d3 != p_moveEntity_1_) || (d5 != p_moveEntity_5_))) {
                 double d11 = p_moveEntity_1_;
                 double d7 = p_moveEntity_3_;
                 double d8 = p_moveEntity_5_;
@@ -344,8 +344,8 @@ public abstract class MixinEntity {
                 }
 
                 axisalignedbb14 = axisalignedbb14.offset(0.0D, 0.0D, d19);
-                double d20 = d15 * d15 + d16 * d16;
-                double d10 = d18 * d18 + d19 * d19;
+                double d20 = (d15 * d15) + (d16 * d16);
+                double d10 = (d18 * d18) + (d19 * d19);
                 if (d20 > d10) {
                     p_moveEntity_1_ = d15;
                     p_moveEntity_5_ = d16;
@@ -365,7 +365,7 @@ public abstract class MixinEntity {
                 }
 
                 this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, p_moveEntity_3_, 0.0D));
-                if (d11 * d11 + d8 * d8 >= p_moveEntity_1_ * p_moveEntity_1_ + p_moveEntity_5_ * p_moveEntity_5_) {
+                if (((d11 * d11) + (d8 * d8)) >= ((p_moveEntity_1_ * p_moveEntity_1_) + (p_moveEntity_5_ * p_moveEntity_5_))) {
                     p_moveEntity_1_ = d11;
                     p_moveEntity_3_ = d7;
                     p_moveEntity_5_ = d8;
@@ -376,9 +376,9 @@ public abstract class MixinEntity {
             this.worldObj.theProfiler.endSection();
             this.worldObj.theProfiler.startSection("rest");
             this.resetPositionToBB();
-            this.isCollidedHorizontally = d3 != p_moveEntity_1_ || d5 != p_moveEntity_5_;
+            this.isCollidedHorizontally = (d3 != p_moveEntity_1_) || (d5 != p_moveEntity_5_);
             this.isCollidedVertically = d4 != p_moveEntity_3_;
-            this.onGround = this.isCollidedVertically && d4 < 0.0D;
+            this.onGround = this.isCollidedVertically && (d4 < 0.0D);
             this.isCollided = this.isCollidedHorizontally || this.isCollidedVertically;
             int i = MathHelper.floor_double(this.posX);
             int j = MathHelper.floor_double(this.posY - 0.20000000298023224D);
@@ -387,7 +387,7 @@ public abstract class MixinEntity {
             Block block1 = this.worldObj.getBlockState(blockpos).getBlock();
             if (block1.getMaterial() == Material.air) {
                 Block block = this.worldObj.getBlockState(blockpos.down()).getBlock();
-                if (block instanceof BlockFence || block instanceof BlockWall || block instanceof BlockFenceGate) {
+                if ((block instanceof BlockFence) || (block instanceof BlockWall) || (block instanceof BlockFenceGate)) {
                     block1 = block;
                     blockpos = blockpos.down();
                 }
@@ -406,7 +406,7 @@ public abstract class MixinEntity {
                 block1.onLanded(this.worldObj, ((Entity) ((Object) this)));
             }
 
-            if (this.canTriggerWalking() && !flag && this.ridingEntity == null) {
+            if (this.canTriggerWalking() && !flag && (this.ridingEntity == null)) {
                 double d12 = this.posX - d0;
                 double d13 = this.posY - d1;
                 double d14 = this.posZ - d2;
@@ -414,27 +414,27 @@ public abstract class MixinEntity {
                     d13 = 0.0D;
                 }
 
-                if (block1 != null && this.onGround) {
+                if ((block1 != null) && this.onGround) {
                     block1.onEntityCollidedWithBlock(this.worldObj, blockpos, ((Entity) ((Object) this)));
                 }
 
                 this.distanceWalkedModified = (float) ((double) this.distanceWalkedModified
-                        + (double) MathHelper.sqrt_double(d12 * d12 + d14 * d14) * 0.6D);
+                        + ((double) MathHelper.sqrt_double((d12 * d12) + (d14 * d14)) * 0.6D));
                 this.distanceWalkedOnStepModified = (float) ((double) this.distanceWalkedOnStepModified
-                        + (double) MathHelper.sqrt_double(d12 * d12 + d13 * d13 + d14 * d14) * 0.6D);
-                if (this.distanceWalkedOnStepModified > (float) this.nextStepDistance
-                        && block1.getMaterial() != Material.air) {
+                        + ((double) MathHelper.sqrt_double((d12 * d12) + (d13 * d13) + (d14 * d14)) * 0.6D));
+                if ((this.distanceWalkedOnStepModified > (float) this.nextStepDistance)
+                        && (block1.getMaterial() != Material.air)) {
                     this.nextStepDistance = (int) this.distanceWalkedOnStepModified + 1;
                     if (this.isInWater()) {
-                        float f = MathHelper.sqrt_double(this.motionX * this.motionX * 0.20000000298023224D
-                                + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224D)
+                        float f = MathHelper.sqrt_double((this.motionX * this.motionX * 0.20000000298023224D)
+                                + (this.motionY * this.motionY) + (this.motionZ * this.motionZ * 0.20000000298023224D))
                                 * 0.35F;
                         if (f > 1.0F) {
                             f = 1.0F;
                         }
 
                         this.playSound(this.getSwimSound(), f,
-                                1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                                1.0F + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F));
                     }
 
                     this.playStepSound(blockpos, block1);
@@ -464,8 +464,8 @@ public abstract class MixinEntity {
                 this.fire = -this.fireResistance;
             }
 
-            if (flag2 && this.fire > 0) {
-                this.playSound("random.fizz", 0.7F, 1.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+            if (flag2 && (this.fire > 0)) {
+                this.playSound("random.fizz", 0.7F, 1.6F + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F));
                 this.fire = -this.fireResistance;
             }
 
@@ -489,7 +489,7 @@ public abstract class MixinEntity {
         fric = e.getFriction();
         float yaw = e.getYaw();
 
-        float f = strafe * strafe + forward * forward;
+        float f = (strafe * strafe) + (forward * forward);
 
         if (f >= 1.0E-4F) {
             f = MathHelper.sqrt_float(f);
@@ -500,10 +500,10 @@ public abstract class MixinEntity {
             f = fric / f;
             strafe *= f;
             forward *= f;
-            float f1 = MathHelper.sin(yaw * 3.1415927F / 180.0F);
-            float f2 = MathHelper.cos(yaw * 3.1415927F / 180.0F);
-            this.motionX += strafe * f2 - forward * f1;
-            this.motionZ += forward * f2 + strafe * f1;
+            float f1 = MathHelper.sin((yaw * 3.1415927F) / 180.0F);
+            float f2 = MathHelper.cos((yaw * 3.1415927F) / 180.0F);
+            this.motionX += (strafe * f2) - (forward * f1);
+            this.motionZ += (forward * f2) + (strafe * f1);
         }
 
     }

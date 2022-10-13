@@ -2,282 +2,230 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
+
+import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.utils.CoolDown;
+import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class CategoryComponent {
-    public ArrayList<Component> modulesInCategory = new ArrayList<>();
-    public ArrayList<Component> moduleInCategory = new ArrayList<>();
+public class CategoryComponent extends Component {
+    public ArrayList<ModuleComponent> modulesInCategory = new ArrayList<>();
+    private ModuleComponent openComponent;
     public Module.ModuleCategory categoryName;
-    public boolean moduleOpened, categoryOpened, inUse;
-    private int width, x, y;
-    private final int bh;
-    public int xx, yy, chromaSpeed;
-    public boolean n4m, pin;
-    public String pvp;
-    private final double marginY;
-    private final double marginX;
-    private boolean visable = true;
-    public int scrollheight;
-    private int categoryHeight;
+    public boolean categoryOpened, inUse, dragging;
+    public boolean visable = true;
+    public int scrollheight, dragX, dragY, heightCheck, deltaHeight, prevHeight, bottomX, bottomY;
+    public double theta, velo = 0.1;
+    public int aHeight = 13;
+
+    private CoolDown timer = new CoolDown(500);
+    public float tPercent;
+
+    private final int marginX = 80
+                    ,marginY = 3;
+
+    private final float gravity = 0.9f,
+                    friction = 0.7f;
+
 
     public CategoryComponent(Module.ModuleCategory category) {
-        this.categoryName = category;
-        this.width = 92;
-        this.x = 5;
-        this.y = 5;
-        this.bh = 13;
-        this.xx = 0;
-        this.categoryOpened = false;
-        this.inUse = false;
-        this.chromaSpeed = 3;
-        this.marginX = 80;
-        this.marginY = 4.5;
-        loadAllModules();
+        categoryName = category;
+        setDimensions(92, aHeight);
+        Raven.moduleManager.getModulesInCategory(category).forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
+        modulesInCategory.sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
+        Collections.reverse(modulesInCategory);
     }
 
-    public void loadAllModules() {
-        this.modulesInCategory.clear();
-        int tY = this.bh + 3;
-        for (Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3
-                .hasNext(); tY += 16) {
-            Module mod = var3.next();
-            ModuleComponent b = new ModuleComponent(mod, this, tY);
-            this.modulesInCategory.add(b);
-        }
-        moduleOpened = false;
+    public void initGui() {
+        bottomX = x + (width/2);
+        bottomY = y + (height/2);
     }
 
-    public void loadSpecificModule(Component component) {
-        moduleInCategory.clear();
-        moduleInCategory.add(component);
-        moduleOpened = true;
+    @Override
+    public void guiClosed() {
+        heightCheck = 0;
     }
 
-    public ArrayList<Component> getModules() {
-        return moduleOpened ? moduleInCategory : this.modulesInCategory;
-    }
-
-    public void setX(int n) {
-        this.x = n;
-        if (Raven.clientConfig != null) {
+    @Override
+    public void setCoords(int x, int y) {
+        super.setCoords(x, y);
+        if (Raven.clientConfig != null)
             Raven.clientConfig.saveConfig();
-        }
-    }
-
-    public void setY(int y) {
-        this.y = y;
-        if (Raven.clientConfig != null) {
-            Raven.clientConfig.saveConfig();
-        }
-    }
-
-    public void mousePressed(boolean d) {
-        this.inUse = d;
-    }
-
-    public boolean p() {
-        return this.pin;
-    }
-
-    public void cv(boolean on) {
-        this.pin = on;
-    }
-
-    public boolean isOpened() {
-        return this.categoryOpened;
     }
 
     public void setOpened(boolean on) {
-        this.categoryOpened = on;
-
-        if (Raven.clientConfig != null) {
+        categoryOpened = on;
+        if (Raven.clientConfig != null)
             Raven.clientConfig.saveConfig();
-        }
     }
 
-    public void rf() {
-        Minecraft mc = Minecraft.getMinecraft();
+    @Override
+    public void draw(int mouseX, int mouseY) {
         if (!visable)
             return;
-        this.width = 92;
-        if (!this.getModules().isEmpty() && this.categoryOpened) {
-            categoryHeight = 0;
-
-            Component moduleRenderManager;
-            for (Iterator moduleInCategoryIterator = this.getModules().iterator(); moduleInCategoryIterator
-                    .hasNext(); categoryHeight += moduleRenderManager.getHeight()) {
-                moduleRenderManager = (Component) moduleInCategoryIterator.next();
+        Minecraft mc = Minecraft.getMinecraft();
+        //smooth height moving
+        int newHeight = 0;
+        if(categoryOpened) {
+            if(openComponent != null) {
+                newHeight = openComponent.getHeight();
+            } else {
+                for(ModuleComponent moduleComponent : modulesInCategory)
+                    newHeight += moduleComponent.getHeight();
             }
-
-            // drawing the background for every module in the category
-            Color bgColor = moduleOpened ? GuiModule.getCategoryBackgroundColor()
-                    : GuiModule.getSettingBackgroundColor();
-            net.minecraft.client.gui.Gui.drawRect(this.x - 1, this.y, this.x + this.width + 1,
-                    this.y + this.bh + categoryHeight + 4, bgColor.getRGB());
-            // 1000000 character lines make me want to kill myself
         }
 
-        if (GuiModule.isCategoryBackgroundToggled()) { // any reason for this to be gl fuckery instead of a drawrect
-                                                       // except making code look broken?
-            Gui.drawRect((this.x - 2), this.y, (this.x + this.width + 2), (this.y + this.bh + 3),
-                    GuiModule.getBackgroundRGB());
+        if(heightCheck != newHeight) {
+            prevHeight = heightCheck;
+            deltaHeight = newHeight - heightCheck;
+            heightCheck = newHeight;
+            timer.setCooldown(500);
+            timer.start();
+        }
+        tPercent = Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
+        setDimensions(width, aHeight + prevHeight + (int) (deltaHeight * tPercent));
+
+        //dragging bit
+        if(dragging)
+            setCoords(mouseX + dragX, mouseY + dragY);
+
+        //swing bit VERY BROKEN
+        GL11.glPushMatrix();
+        if(GuiModule.isSwingToggled() && GuiModule.isSwingToggled()) { //to make it not work
+            int topX = x + (width/2),
+                topY = y + (height/2);
+
+            double d = Math.sqrt(Math.pow((topX - bottomX), 2) + Math.pow((topY - bottomY), 2));
+            theta = Math.acos(Math.toRadians(
+                            ((2 * Math.pow(height,2)) + (Math.pow(d, 2)))
+                            /
+                            (2 * height * height)
+                            ));
+
+            velo = velo + (theta * gravity);
+            double ntheta = theta + (velo * friction);
+            bottomX = x - (int) (Math.sin(Math.toRadians(ntheta)) * height);
+            bottomY = y - (int) (Math.cos(Math.toRadians(ntheta)) * height);
+        }
+
+        // background
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+        RenderUtils.glScissor(x - 1, y, x2 + 1, y2 + 1);
+        int bgColor = openComponent != null ? GuiModule.getCategoryBackgroundRGB() : GuiModule.getSettingBackgroundRGB();
+        if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, bgColor);
+        else RenderUtils.drawRoundedRect(x, y, x2, y2, 12, bgColor);
+
+        // drawing modules
+        if (categoryOpened || (tPercent < 1))
+            if(openComponent != null) {
+                openComponent.setCoords(x, y + aHeight);
+                openComponent.draw(mouseX, mouseY);
+            } else {
+                int yOffset = 0;
+                for(ModuleComponent module : modulesInCategory) {
+                    module.setCoords(x, y + aHeight + yOffset);
+                    module.draw(mouseX, mouseY);
+                    yOffset += module.getHeight();
+                }
+            }
+
+        // boarder
+        if (GuiModule.isBoarderToggled()) {
+            if(isMouseOver(mouseX, mouseY)) {
+                if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getCategoryOutlineColor2());
+                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getCategoryOutlineColor2());
+            } else if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getCategoryOutlineColor1());
+            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getCategoryOutlineColor1());
             GlStateManager.resetColor();
         }
 
         // category name
-        int colorCN;
-        switch (GuiModule.getCNColor()) {
+        if (GuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), GuiModule.getCategoryNameRGB());
+        else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4),GuiModule.getCategoryBackgroundRGB(), false);
 
-        case STATIC:
-            colorCN = GuiModule.getCategoryNameRGB();
-            break;
+        // +/- bit
+        int red = (int) (tPercent * 255);
+        int green = 255 - red;
+        final int colour = new Color(red, green, 0).getRGB();
+        mc.fontRendererObj.drawString(categoryOpened ? "-" : "+", x + marginX, y + marginY, colour, false);
 
-        case RAINBOW:
-            colorCN = Color.getHSBColor((float) (System.currentTimeMillis() % (7500L / (long) this.chromaSpeed))
-                    / (7500.0F / (float) this.chromaSpeed), 1.0F, 1.0F).getRGB();
-            break;
-
-        default:
-            throw new RuntimeException("if this happens, im coming to your house (you broke my code)");
-
-        }
-
-        if (GuiModule.useCustomFont()) {
-            FontUtil.two.drawSmoothString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2),
-                    (float) (this.y + 4), colorCN);
-        } else {
-            mc.fontRendererObj.drawString(this.n4m ? this.pvp : this.categoryName.getName(), (float) (this.x + 2),
-                    (float) (this.y + 4), colorCN, false);
-        }
-
-        if (!this.n4m) {
-            mc.fontRendererObj.drawString(this.categoryOpened ? "-" : "+", (float) (this.x + marginX),
-                    (float) ((double) this.y + marginY), Color.white.getRGB(), false);
-            if (this.categoryOpened && !this.getModules().isEmpty()) {
-                Iterator var5 = this.getModules().iterator();
-
-                while (var5.hasNext()) {
-                    Component c2 = (Component) var5.next();
-                    c2.draw();
-                }
-            }
-
-        }
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+        GL11.glPopMatrix();
     }
+
+    @Override
+    public void scroll(float ss) {
+        if (openComponent != null)
+            openComponent.scroll(ss);
+    }
+
+    @Override
+    public void clicked(int x, int y, int button) {
+        if (overExpandButton(x, y)) {
+            setOpened(!categoryOpened);
+            return;
+        } if (overName(x, y)) {
+            dragX = this.x - x;
+            dragY = this.y - y;
+            dragging = true;
+            return;
+        }
+        if(openComponent == null)
+            for(ModuleComponent module : modulesInCategory) {
+                if(module.mouseDown(x, y, button))
+                    return;
+            }
+        else
+            openComponent.mouseDown(x, y, button);
+    }
+
+    @Override
+    public void mouseReleased(int x, int y, int button) {
+        dragging = false;
+        modulesInCategory.forEach(module -> module.mouseReleased(x, y, button));
+    }
+
+    @Override
+    public void keyTyped(char t, int k) {
+        if(openComponent == null)
+            return;
+        openComponent.keyTyped(t,k);
+    }
+
 
     public void updateModules() {
-        int tY = this.bh + 3;
-        this.modulesInCategory.clear();
-        for (Iterator<Module> var3 = Raven.moduleManager.getModulesInCategory(this.categoryName).iterator(); var3
-                .hasNext(); tY += 16) {
-            Module mod = var3.next();
-            ModuleComponent b = new ModuleComponent(mod, this, tY);
-            this.modulesInCategory.add(b);
-        }
+        modulesInCategory.clear();
+        Raven.moduleManager.getModulesInCategory(categoryName).forEach(module -> modulesInCategory.add(new ModuleComponent(module, this)));
+        modulesInCategory.sort(Comparator.comparingDouble(module -> FontUtil.normal.getStringWidth(module.mod.getName())));
+        Collections.reverse(modulesInCategory);
     }
 
-    public void r3nd3r() {
-        int o = this.bh + 3;
-
-        Component c;
-        ModuleComponent d;
-        for (Iterator var2 = this.getModules().iterator(); var2.hasNext(); o += c.getHeight()) {
-            c = (Component) var2.next();
-            c.setComponentStartAt(o);
-        }
-
+    public boolean overExpandButton(int mouseX, int mouseY) {
+        return (mouseX > (x + marginX)) && (mouseX < (x + width)) && (mouseY > y) && (mouseY < (y + aHeight));
     }
 
-    public int getX() {
-        return this.x;
+    public boolean overName(int mouseX, int mouseY) {
+        return ((mouseX > (x)) && (mouseX < (x2)) && (mouseY > y) && (mouseY < (y + aHeight)));
     }
 
-    public int getY() {
-        return this.y;
+
+    public void setOpenModule(ModuleComponent component) {
+        openComponent = component;
     }
 
-    public int getWidth() {
-        return this.width;
+    public ModuleComponent getOpenModule() {
+        return openComponent;
     }
 
-    public void up(int x, int y) {
-        if (this.inUse) {
-            this.setX(x - this.xx);
-            this.setY(y - this.yy);
-        }
-
-    }
-    
-    public void scroll(float ss) {
-        if(ss > 0 || (getActualHeight() + ss) > 100 ) {
-            scrollheight += ss;
-        }
-        if(scrollheight <= 0) {
-            r3nd3r();
-        } else {
-            scrollheight = 0;
-        }
-    }
-
-    public boolean i(int x, int y) {
-        return x >= this.x + 92 - 13 && x <= this.x + this.width && (float) y >= (float) this.y + 2.0F
-                && y <= this.y + this.bh + 1;
-    }
-
-    public boolean mousePressed(int x, int y) {
-        return x >= this.x + 77 
-                && x <= this.x + this.width - 6 
-                && (float) y >= (float) this.y + 2.0F
-                && y <= this.y + this.bh + 1;
-    }
-
-    public boolean insideArea(int x, int y) {
-        return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.bh;
-    }
-    
-    public boolean insideAllArea(int x, int y) {                     
-         return x >= this.x 
-                && x <= this.x + this.width 
-                && y >= this.y
-                && y <= this.y + this.getActualHeight() - this.scrollheight;
-    }
-
-    public String getName() {
-        return String.valueOf(getModules());
-    }
-    
-    public int getHeight() {
-        return this.bh;
-    }
-    
-    public int getActualHeight() {
-        int h = this.bh + 16 + categoryHeight;
-        for(Component c : getModules()) {
-            h += c.getHeight();
-        }
-        return h;
-    }
-
-    public void setLocation(int parseInt, int parseInt1) {
-        this.x = parseInt;
-        this.y = parseInt1;
-    }
-
-    public void setVisable(boolean vis) {
-        this.visable = vis;
-    }
-
-    public boolean isVisable() {
-        return visable;
-    }
 }
