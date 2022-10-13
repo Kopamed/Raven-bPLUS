@@ -613,6 +613,18 @@ public class Utils {
             return Color.HSBtoRGB(hue, 0.5f, 1F);
         }
 
+        public static int otherAstolfoColorsDraw(int yOffset, int yTotal) {
+            float hue = (float) (System.currentTimeMillis() % (int) 2900F) + ((yTotal - yOffset) * 9);
+            while (hue > 2900F)
+                hue -= 2900F;
+            hue /= 2900F;
+            if (hue > 0.5)
+                hue = 0.5F - (hue - 0.5f);
+            hue += 0.5F;
+            return Color.HSBtoRGB(0.3f, hue, 1F);
+        }
+
+
         public static int astolfoColorsDraw(int yOffset, int yTotal) {
             return astolfoColorsDraw(yOffset, yTotal, 2900F);
         }

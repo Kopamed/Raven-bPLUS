@@ -48,7 +48,6 @@ public class CategoryComponent extends Component {
     }
 
     public void initGui() {
-        Utils.Player.sendMessageToSelf("a");
         bottomX = x + (width/2);
         bottomY = y + (height/2);
     }
@@ -93,8 +92,6 @@ public class CategoryComponent extends Component {
             double ntheta = theta + (velo * friction);
             bottomX = x - (int) (Math.sin(Math.toRadians(ntheta)) * height);
             bottomY = y - (int) (Math.cos(Math.toRadians(ntheta)) * height);
-            //Utils.Player.sendMessageToSelf(velo + "");
-            //GL11.glRotated(ntheta, ntheta, ntheta, 0);
 
         }
 
@@ -121,8 +118,11 @@ public class CategoryComponent extends Component {
 
         // boarder
         if (GuiModule.isBoarderToggled()) {
-            if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getBoarderColour());
-            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getBoarderColour());
+            if(isMouseOver(mouseX, mouseY)) {
+                if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getCategoryOutlineColor2());
+                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getCategoryOutlineColor2());
+            } else if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getCategoryOutlineColor1());
+            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getCategoryOutlineColor1());
             GlStateManager.resetColor();
         }
 
@@ -147,20 +147,8 @@ public class CategoryComponent extends Component {
             } else {
                 for(ModuleComponent moduleComponent : modulesInCategory)
                     newHeight += moduleComponent.getHeight();
-                //newHeight += 3;
             }
         }
-
-        // this is supposed to be a smoother open/close thingo
-        /*tPercent = 1 - Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
-        if(prevHeight != newHeight) {
-            Utils.Player.sendMessageToSelf(newHeight + "");
-            diffHeight = prevHeight - newHeight;
-            prevHeight = newHeight;
-            timer.start();
-        }
-
-        setDimensions(width, aHeight + (int) (newHeight + (diffHeight * tPercent))); */
 
         if(heightCheck != newHeight) {
             prevHeight = heightCheck;
@@ -170,7 +158,6 @@ public class CategoryComponent extends Component {
             timer.start();
         }
         tPercent = Utils.Client.smoothPercent(timer.getElapsedTime() / (float) timer.getCooldownTime());
-        System.out.println(aHeight + " " + prevHeight + " " + (int) (deltaHeight * tPercent) + " " + newHeight);
         setDimensions(width, aHeight + prevHeight + (int) (deltaHeight * tPercent));
     }
 

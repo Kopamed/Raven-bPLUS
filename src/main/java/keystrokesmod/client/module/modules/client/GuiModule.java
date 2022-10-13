@@ -3,6 +3,7 @@ package keystrokesmod.client.module.modules.client;
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.ColorM;
@@ -29,7 +30,7 @@ public class GuiModule extends Module {
     }
 
     @Override
-    public void guiButtonToggled(TickSetting setting) {
+    public void guiButtonToggled(Setting setting) {
         if (setting == cleanUp) {
             cleanUp.disable();
             for (CategoryComponent cc : Raven.clickGui.getCategoryList())
@@ -171,6 +172,22 @@ public class GuiModule extends Module {
         return getBoarderColour(0);
     }
 
+    public static int getCategoryOutlineColor1(int delay) {
+        return  getPresetMode().categoryOutlineColor.color(delay);
+    }
+
+    public static int getCategoryOutlineColor1() {
+        return getCategoryOutlineColor1(0);
+    }
+
+    public static int getCategoryOutlineColor2(int delay) {
+        return  getPresetMode().categoryOutlineColor2.color(delay);
+    }
+
+    public static int getCategoryOutlineColor2() {
+        return getCategoryOutlineColor2(0);
+    }
+
     public static CNColor getCNColor() {
         return  getPresetMode().cnColor;
     }
@@ -229,7 +246,9 @@ public class GuiModule extends Module {
                         true, //rounded
                         true, //swing
                         false, //boarder
-                        (in -> -12876693)//boarderColor
+                        in -> -12876693,
+                        in -> -12876693,
+                        in -> Utils.Client.otherAstolfoColorsDraw(in, 10)
                         ),
 
         PlusPlus( // name
@@ -248,30 +267,14 @@ public class GuiModule extends Module {
                         true, //rounded
                         true, //swing
                         true, //boarder
-                        (in -> Utils.Client.astolfoColorsDraw(in, 10))//boarderColor
-                        ),
-        RainBow( // name
-                        true, true, false, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                        CNColor.STATIC, // just leave this
-                        in -> 0xFFFFFFFE, // categoryNameRGB
-                        in -> 0x99808080, // settingBackgroundRGB
-                        in -> 0x99808080, // categoryBackgroundRGB
-                        in -> Utils.Client.rainbowDraw(2, in), // enabledTopRGB
-                        in -> Utils.Client.rainbowDraw(2, in), // enabledBottomRGB
-                        in -> 0xFFFFFFFE, // enabledTextRGB
-                        in -> Utils.Client.rainbowDraw(2, in), // disabledTopRGB
-                        in -> Utils.Client.rainbowDraw(2, in), // disabledBottomRGB
-                        in -> 0xffff0c02, // disabledTextRGB
-                        in -> 0x99808080, // backgroundRGB
-                        true, //rounded
-                        true, //swing
-                        true, //boarder
-                        (in -> Utils.Client.astolfoColorsDraw(14, 10))//boarderColor
+                        in -> 0xFFFFFFFE,
+                        in -> Utils.Client.astolfoColorsDraw(in, 10),
+                        in -> Utils.Client.otherAstolfoColorsDraw(in, 10)
                         );
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
         public ColorM categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
-        enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, boarderColor;
+        enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, boarderColor, categoryOutlineColor, categoryOutlineColor2;
         public CNColor cnColor;
 
         private Preset(
@@ -279,7 +282,7 @@ public class GuiModule extends Module {
                         boolean categoryBackground, CNColor cnColor, ColorM categoryNameRGB, ColorM settingBackgroundRGB,
                         ColorM categoryBackgroundRGB, ColorM enabledTopRGB, ColorM enabledBottomRGB, ColorM enabledTextRGB,
                         ColorM disabledTopRGB, ColorM disabledBottomRGB, ColorM disabledTextRGB, ColorM backgroundRGB,
-                        boolean roundedCorners, boolean swing, boolean boarder, ColorM boarderColor) {
+                        boolean roundedCorners, boolean swing, boolean boarder, ColorM boarderColor, ColorM categoryOutlineColor, ColorM categoryOutlineColor2) {
             this.showGradientEnabled = showGradientEnabled;
             this.showGradientDisabled = showGradientDisabled;
             this.useCustomFont = useCustomFont;
@@ -299,6 +302,8 @@ public class GuiModule extends Module {
             this.swing = swing;
             this.boarder = boarder;
             this.boarderColor = boarderColor;
+            this.categoryOutlineColor = categoryOutlineColor;
+            this.categoryOutlineColor2 = categoryOutlineColor2;
         }
 
     }

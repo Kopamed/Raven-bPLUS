@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class ComboComponent extends SettingComponent {
 
@@ -23,6 +24,7 @@ public class ComboComponent extends SettingComponent {
 
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
+        GlStateManager.resetColor();
         int width = (int) (Minecraft.getMinecraft().fontRendererObj.getStringWidth(this.setting.getName() + ": ") * 0.5);
         Minecraft.getMinecraft().fontRendererObj.drawString(
                 setting.getName() + ":",
@@ -43,9 +45,10 @@ public class ComboComponent extends SettingComponent {
     @Override
     public void clicked(int mouseX, int mouseY, int button) {
         if(button == 0)
-        setting.nextMode();
+            setting.nextMode();
         else if(button == 1)
-        setting.prevMode();
+            setting.prevMode();
+        moduleComponent.mod.guiButtonToggled(setting);
     }
 
 }

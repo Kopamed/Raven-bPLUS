@@ -6,7 +6,6 @@ import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.utils.RenderUtils;
-import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 public class DoubleSliderComponent extends SettingComponent {
@@ -71,7 +70,6 @@ public class DoubleSliderComponent extends SettingComponent {
         //percentageAcross = (float) ((percentageAcross * (setting.getMax())) + (setting.getMin() * (1 - percentageAcross)));
         float percentangeMax = (float) ((setting.getInputMax() - setting.getMin())/(setting.getMax() - setting.getMin())) + 0.01f;
         float percentangeMin = (float) ((setting.getInputMin() - setting.getMin())/(setting.getMax() - setting.getMin()));
-        Utils.Player.sendMessageToSelf(percentageAcross + "  " + percentangeMin + "  " +  percentangeMax);
         helping = Math.abs(percentageAcross - percentangeMax) < Math.abs(percentageAcross - percentangeMin) ? Helping.Max : Helping.Min;
     }
 

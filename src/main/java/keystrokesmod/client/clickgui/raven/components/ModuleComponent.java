@@ -93,14 +93,8 @@ public class ModuleComponent extends Component {
         //background
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
-        if((category.getOpenModule() == this) || ((category.modulesInCategory.indexOf(this) + 1) != category.modulesInCategory.size())) {
-            if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB(((y2 - category.getY())) * 20), GuiModule.getEnabledTopRGB((y - category.getY()) * 20));
-            if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB((y2 - category.getY()) * 20), GuiModule.getDisabledTopRGB((y - category.getY()) * 20));
-        } else {
-            //Utils.Player.sendMessageToSelf("b");
-            if (GuiModule.showGradientEnabled() && mod.isEnabled()) vr(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB(((y2 - category.getY())) * 20), GuiModule.getEnabledTopRGB((y - category.getY()) * 20));
-            if (GuiModule.showGradientDisabled() && !mod.isEnabled()) vr(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB((y2 - category.getY()) * 20), GuiModule.getDisabledTopRGB((y - category.getY()) * 20));
-        }
+        if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB((((y + aHeight) - category.getY())) * 20), GuiModule.getEnabledTopRGB((y - category.getY()) * 20));
+        if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB(((y + aHeight)  - category.getY()) * 20), GuiModule.getDisabledTopRGB((y - category.getY()) * 20));
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
 
@@ -117,7 +111,7 @@ public class ModuleComponent extends Component {
             for(SettingComponent setting : settings) {
                 setting.setCoords(x, y + aHeight + yOffset);
                 setting.draw(mouseX, mouseY);
-                yOffset += setting.getHeight();
+                yOffset += setting.getHeight() + 3;
             }
             if(mod.isBindable()) {
                 bind.setCoords(x, y + aHeight + yOffset);

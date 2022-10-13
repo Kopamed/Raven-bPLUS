@@ -217,7 +217,6 @@ public class ClickGui extends GuiScreen {
     public ArrayList<CategoryComponent> visableCategoryList() {
         ArrayList<CategoryComponent> newList = (ArrayList<CategoryComponent>) categoryList.clone();
         newList.removeIf(obj -> !obj.visable);
-        //newList.forEach(a -> Utils.Player.sendMessageToSelf(a.categoryName.getName()));
         return newList;
     }
 

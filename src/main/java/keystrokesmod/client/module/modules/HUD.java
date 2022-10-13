@@ -15,6 +15,7 @@ import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.FakeHud;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -79,9 +80,13 @@ public class HUD extends Module {
     }
 
     @Override
-	public void guiButtonToggled(ComboSetting b) {
+	public void guiButtonToggled(Setting b) {
         if (b == logoMode)
             setUpLogo();
+        else if (b == editPosition) {
+            editPosition.disable();
+            mc.displayGuiScreen(new EditHudPositionScreen());
+        }
     }
 
     public boolean logoLoaded() {
@@ -98,17 +103,8 @@ public class HUD extends Module {
         Raven.moduleManager.sort();
     }
 
-    @Override
-	public void guiButtonToggled(TickSetting b) {
-        if (b == editPosition) {
-            editPosition.disable();
-            mc.displayGuiScreen(new EditHudPositionScreen());
-        }
-    }
-
     @Subscribe
     public void onRender2D(Render2DEvent ev) {
-        ;
         if (Utils.Player.isPlayerInGame()) {
             if ((mc.currentScreen != null) || mc.gameSettings.showDebugInfo)
 				return;

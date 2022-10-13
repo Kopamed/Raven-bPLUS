@@ -10,7 +10,6 @@
         "MixinEntityRenderer",
         "MixinFontRenderer",
         "MixinGuiMainMenu",
-        "MixinGuiScreen",
         "MixinGuiUtilRenderComponents",
         "MixinMinecraft",
         "MixinNetworkManager",

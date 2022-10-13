@@ -1,6 +1,7 @@
 package keystrokesmod.client.module.modules.render;
 
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.utils.Utils;
@@ -15,6 +16,11 @@ public class Fullbright extends Module {
         super("Fullbright", ModuleCategory.render);
         this.registerSetting(mode = new ComboSetting("Mode", Mode.GAMMA));
         this.registerSetting(new DescriptionSetting("No more darkness!"));
+    }
+
+    @Override
+    public void postApplyConfig() {
+        onEnable();
     }
 
     @Override
@@ -48,7 +54,7 @@ public class Fullbright extends Module {
     }
 
     @Override
-    public void guiButtonToggled(ComboSetting b) {
+    public void guiButtonToggled(Setting b) {
         if (b == mode) {
             revertChanges((Mode) mode.getPrevMode());
             onEnable();

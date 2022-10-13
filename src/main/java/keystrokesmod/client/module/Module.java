@@ -7,12 +7,9 @@ import org.lwjgl.input.Keyboard;
 
 import com.google.gson.JsonObject;
 
-import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.Setting;
-import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.notifications.NotificationRenderer;
 import net.minecraft.client.Minecraft;
 
@@ -198,15 +195,7 @@ public class Module {
     }
 
     public void guiButtonToggled(Setting b) {
-    }
 
-    public void guiButtonToggled(TickSetting b) {
-    }
-
-    public void guiButtonToggled(ComboSetting b) {
-    }
-
-    public void guiButtonToggled(TickSetting b, Component c) {
     }
 
     public int getKeycode() {

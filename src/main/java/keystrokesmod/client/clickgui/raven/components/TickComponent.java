@@ -30,9 +30,9 @@ public class TickComponent extends SettingComponent {
         setDimensions(moduleComponent.getWidth() - 10, 14);
         int x = this.x + 5;
 
-        float percent = Utils.Client.smoothPercent((setting.isToggled() ?  timer.getTimeLeft() : timer.getElapsedTime())/(float) timer.getCooldownTime());
-        int red = (int) (percent * 255);
-        int green = 255 - red;
+        float percent = Utils.Client.smoothPercent((setting.isToggled() ?  timer.getElapsedTime() : timer.getTimeLeft())/(float) timer.getCooldownTime());
+        int green = (int) (percent * 255);
+        int red = 255 - green;
         final int colour = new Color(red, green, 0).getRGB();
         float offSet = (percent * buttonWidth)/3;
         int fh = (Raven.mc.fontRendererObj.FONT_HEIGHT/2) + 1;
@@ -56,7 +56,7 @@ public class TickComponent extends SettingComponent {
         timer.setCooldown(500);
         timer.start();
         setting.toggle();
-        Utils.Player.sendMessageToSelf(setting.isToggled() + "");
+        moduleComponent.mod.guiButtonToggled(setting);
     }
 
 }
