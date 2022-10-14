@@ -40,7 +40,7 @@ public class KillAura extends Module {
 
     public static SliderSetting rotationDistance, fov, reach;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
+    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement, scream;
     private ComboSetting blockMode;
 
     private List<EntityPlayer> pTargets;
@@ -64,6 +64,7 @@ public class KillAura extends Module {
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
         this.registerSetting(sortMode = new ComboSetting("Sort mode", SortMode.Distance));
         this.registerSetting(blockMode = new ComboSetting("Block mode", BlockMode.NONE));
+        this.registerSetting(scream = new TickSetting("Scream", false));
     }
 
     @Subscribe
@@ -146,6 +147,7 @@ public class KillAura extends Module {
 
     @Subscribe
     public void lookEvent(LookEvent e) {
+        if(scream.isToggled()) Utils.Player.sendMessageToSelf("I WANMT TO KMS");
         e.setPrevYaw(prevYaw);
         e.setPrevPitch(prevPitch);
         e.setYaw(yaw);
