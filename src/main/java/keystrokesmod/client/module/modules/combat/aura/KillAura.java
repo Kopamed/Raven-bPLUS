@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Comparator;
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.google.common.eventbus.Subscribe;
@@ -16,7 +17,6 @@ import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -26,7 +26,6 @@ import keystrokesmod.client.utils.Utils.Player;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
@@ -55,7 +54,6 @@ public class KillAura extends Module {
 
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
-        this.registerSetting(new DescriptionSetting(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "Does not work with patcher"));
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
         this.registerSetting(rotationDistance = new SliderSetting("Rotation Range", 3.5, 3, 6, 0.05));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
@@ -93,6 +91,10 @@ public class KillAura extends Module {
             prevPitch = pitch;
             yaw = mc.thePlayer.rotationYaw;
             pitch = mc.thePlayer.rotationPitch;
+            if (!Mouse.isButtonDown(0)) {
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
+                Utils.Client.setMouseButtonState(0, false);
+            }
             //need to add smooth rotations here
             return;
         }
@@ -149,23 +151,22 @@ public class KillAura extends Module {
     }
 
     private void ravenClick() {
-        if (!Mouse.isButtonDown(0)) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-            Utils.Client.setMouseButtonState(0, false);
-        }
-        if (Mouse.isButtonDown(0))
-            this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
+        this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
     }
 
     public void leftClickExecute(int key) {
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
+                if(Keyboard.isKeyDown(mc.gameSettings.keyBindUseItem.getKeyCode()))
+                    KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();
                 Utils.Client.setMouseButtonState(0, true);
                 leftDown = false;
             } else if (System.currentTimeMillis() > this.leftDownTime) {
+                if(Mouse.isButtonDown(1))
+                    KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
                 KeyBinding.setKeyBindState(key, false);
                 leftDown = true;
                 Utils.Client.setMouseButtonState(0, false);

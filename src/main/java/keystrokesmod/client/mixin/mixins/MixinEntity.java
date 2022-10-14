@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import keystrokesmod.client.event.impl.LookEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -28,6 +29,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 @Mixin(priority = 995, value = Entity.class)
@@ -128,7 +130,20 @@ public abstract class MixinEntity {
     @Shadow
     public int fireResistance;
 
-    @Shadow public float rotationYaw;
+    @Shadow
+    public float rotationYaw;
+
+    @Shadow
+    public float rotationPitch;
+
+    @Shadow
+    public float prevRotationPitch;
+
+    @Shadow
+    public float prevRotationYaw;
+
+    @Shadow
+    public abstract Vec3 getVectorForRotation(float pitch, float yaw);
 
     /**
      * @author mc code
@@ -507,4 +522,23 @@ public abstract class MixinEntity {
         }
 
     }
+
+    /**
+     * @author mc code
+     * @reason lookevent
+     */
+    @Overwrite
+    public Vec3 getLook(float partialTicks)
+    {
+        LookEvent e = new LookEvent(rotationPitch, prevRotationPitch, rotationYaw, prevRotationYaw);
+        if((Object) this == Minecraft.getMinecraft().thePlayer)
+            Raven.eventBus.post(e);
+
+        if (partialTicks == 1.0F)
+            return this.getVectorForRotation(e.getPitch(), e.getYaw());
+        float f = e.getPrevPitch() + ((e.getPitch() - e.getPrevPitch()) * partialTicks);
+        float f1 = e.getPrevYaw() + ((e.getYaw() - e.getPrevYaw()) * partialTicks);
+        return this.getVectorForRotation(f, f1);
+    }
+
 }

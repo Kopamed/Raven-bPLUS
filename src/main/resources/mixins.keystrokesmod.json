@@ -13,7 +13,6 @@
         "MixinGuiUtilRenderComponents",
         "MixinMinecraft",
         "MixinNetworkManager",
-        "MxinEntityLivingBase"
     ],
     "client": [
         "IMinecraft"
