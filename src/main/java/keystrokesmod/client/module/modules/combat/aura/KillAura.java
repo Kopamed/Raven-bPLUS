@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Comparator;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.google.common.eventbus.Subscribe;
@@ -70,9 +69,9 @@ public class KillAura extends Module {
     @Subscribe
     public void onUpdate(UpdateEvent e) {
         if(!Utils.Player.isPlayerInGame()) {
-            yaw = mc.thePlayer.rotationYaw;
             return;
         }
+        try {
         Mouse.poll();
         pTargets = Utils.Player.getClosePlayers((float) rotationDistance.getInput());
         pTargets.removeIf(player -> !(isValidTarget(player)));
@@ -107,6 +106,9 @@ public class KillAura extends Module {
         pitch = i[1] + 4f;
         e.setYaw(yaw);
         e.setPitch(pitch);
+        } catch(Exception xe) {
+            xe.printStackTrace();
+        }
     }
 
     @Subscribe
@@ -157,8 +159,8 @@ public class KillAura extends Module {
     public void leftClickExecute(int key) {
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
-                if(Keyboard.isKeyDown(mc.gameSettings.keyBindUseItem.getKeyCode()))
-                    KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+                if(mc.thePlayer.isUsingItem())
+                    mc.thePlayer.stopUsingItem();
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();
