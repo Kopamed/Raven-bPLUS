@@ -13,7 +13,12 @@ public class LookEvent extends Event {
 		this.prevYaw = prevYaw;
 	}
 
-	public float getPitch() {
+	public LookEvent(float pitch, float yaw) {
+	    this.pitch = pitch;
+	    this.yaw = yaw;
+    }
+
+    public float getPitch() {
 		return pitch;
 	}
 

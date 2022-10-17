@@ -1,7 +1,6 @@
 package keystrokesmod.client.module.modules.combat.aura;
 
 import java.awt.Color;
-import java.util.Comparator;
 import java.util.List;
 
 import org.lwjgl.input.Mouse;
@@ -9,19 +8,20 @@ import org.lwjgl.input.Mouse;
 import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.impl.ForgeEvent;
+import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.event.impl.LookEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
 import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.modules.client.Targets;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
-import keystrokesmod.client.utils.Utils.Player;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -38,78 +38,63 @@ public class KillAura extends Module {
 
     private EntityPlayer target;
 
-    public static SliderSetting rotationDistance, fov, reach;
+    public static SliderSetting rotationDistance, fov, reach, rps;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement, scream;
+    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
     private ComboSetting blockMode;
 
     private List<EntityPlayer> pTargets;
     private ComboSetting sortMode;
     private CoolDown coolDown = new CoolDown(1);
-    private boolean leftDown, leftn;
+    private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
     private float yaw, pitch, prevYaw, prevPitch;
     private double leftm;
+    private float lrtt;
 
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
+        this.registerSetting(new DescriptionSetting("Set targets in Client->Targets"));
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
-        this.registerSetting(rotationDistance = new SliderSetting("Rotation Range", 3.5, 3, 6, 0.05));
+        this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
-        this.registerSetting(fov = new SliderSetting("Fov", 30, 0, 360, 1));
         this.registerSetting(onlySurvival = new TickSetting("Only Survival", true));
         this.registerSetting(disableOnTp = new TickSetting("Disable after tp", true));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", true));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
-        this.registerSetting(sortMode = new ComboSetting("Sort mode", SortMode.Distance));
         this.registerSetting(blockMode = new ComboSetting("Block mode", BlockMode.NONE));
-        this.registerSetting(scream = new TickSetting("Scream", false));
     }
 
     @Subscribe
-    public void onUpdate(UpdateEvent e) {
-        if(!Utils.Player.isPlayerInGame()) {
-            return;
-        }
-        try {
+    public void gameLoopEvent(GameLoopEvent e) {
         Mouse.poll();
-        pTargets = Utils.Player.getClosePlayers((float) rotationDistance.getInput());
-        pTargets.removeIf(player -> !(isValidTarget(player)));
-        SortMode sm = (SortMode) sortMode.getMode();
-        EntityPlayer pTarget = pTargets.isEmpty() ? null : pTargets.stream().min(Comparator.comparingDouble(target -> sm.sv.value(target))).get();
-        pTargets.remove(pTarget);
+        EntityPlayer pTarget = Targets.getTarget();
         if(
-                (pTarget == null)
-                || (mc.currentScreen != null)
-                || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
-                || !coolDown.hasFinished()
-                || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
-                || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
+                        (pTarget == null)
+                        || (mc.currentScreen != null)
+                        || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
+                        || !coolDown.hasFinished()
+                        || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
+                        || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
             target = null;
-            prevYaw = yaw;
-            prevPitch = pitch;
-            yaw = mc.thePlayer.rotationYaw;
-            pitch = mc.thePlayer.rotationPitch;
-            if (!Mouse.isButtonDown(0)) {
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-                Utils.Client.setMouseButtonState(0, false);
-            }
-            //need to add smooth rotations here
+            rotate(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, true);
             return;
         }
         target = pTarget;
         ravenClick();
-        prevYaw = yaw;
-        prevPitch = pitch;
         float[] i = Utils.Player.getTargetRotations(target, 0);
-        yaw = i[0];
-        pitch = i[1] + 4f;
+        locked = false;
+        rotate(i[0], i[1], false);
+    }
+
+    @Subscribe
+    public void onUpdate(UpdateEvent e) {
+        if(!Utils.Player.isPlayerInGame() || locked) {
+            return;
+        }
         e.setYaw(yaw);
         e.setPitch(pitch);
-        } catch(Exception xe) {
-            xe.printStackTrace();
-        }
     }
 
     @Subscribe
@@ -124,11 +109,19 @@ public class KillAura extends Module {
         if((fe.getEvent() instanceof RenderWorldLastEvent) && (target != null)) {
             int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
             int green =  255 - red;
-            int rgb = new Color(red, green, 0).getRGB();
+            final int rgb = new Color(red, green, 0).getRGB();
             Utils.HUD.drawBoxAroundEntity(target, 2, 0, 0, rgb, false);
             for(EntityPlayer p : pTargets)
                 Utils.HUD.drawBoxAroundEntity(p, 2, 0, 0, 0x800000FF, false);
         }
+    }
+
+    public void rotate(float yaw, float pitch, boolean e) {
+      /* float yawd = this.yaw - yaw;
+       float pitchd = this.pitch - pitch;
+       if(Math.abs(yawd) > rps.getInput()/20) */
+       this.yaw = yaw;
+       this.pitch = pitch;
     }
 
     @Subscribe
@@ -141,13 +134,13 @@ public class KillAura extends Module {
 
     @Subscribe
     public void move(MoveInputEvent e) {
-        if(!fixMovement.isToggled()) return;
+        if(!fixMovement.isToggled() || locked) return;
         e.setYaw(yaw);
     }
 
     @Subscribe
     public void lookEvent(LookEvent e) {
-        if(scream.isToggled()) Utils.Player.sendMessageToSelf("I WANMT TO KMS");
+        if(locked) return;
         e.setPrevYaw(prevYaw);
         e.setPrevPitch(prevPitch);
         e.setYaw(yaw);
@@ -163,7 +156,6 @@ public class KillAura extends Module {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
                 if(mc.thePlayer.isUsingItem())
                     mc.thePlayer.stopUsingItem();
-                KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();
                 Utils.Client.setMouseButtonState(0, true);
@@ -171,7 +163,6 @@ public class KillAura extends Module {
             } else if (System.currentTimeMillis() > this.leftDownTime) {
                 if(Mouse.isButtonDown(1))
                     KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
-                KeyBinding.setKeyBindState(key, false);
                 leftDown = true;
                 Utils.Client.setMouseButtonState(0, false);
             }
@@ -211,38 +202,15 @@ public class KillAura extends Module {
         return reach.getInput();
     }
 
-    private boolean isValidTarget(EntityPlayer ep) {
-        return (
-                (ep != null)
-                && !AntiBot.bot(ep)
-                && (ep != mc.thePlayer)
-                && Utils.Player.fov(ep, (float) fov.getInput()));
-    }
-
-    public enum SortMode {
-        Distance(player -> mc.thePlayer.getDistanceToEntity(player)),
-        Hurttime(player -> (float) player.hurtTime),
-        Fov(Player::fovToEntity);
-
-        private final SortValue sv;
-
-        private SortMode(SortValue sv) {
-            this.sv = sv;
-        }
-
-        public SortValue getSortValue() {
-            return sv;
-        }
-    }
-
-    @FunctionalInterface
-    private interface SortValue {
-        Float value(EntityPlayer player);
-    }
-
     public enum BlockMode {
         NONE,
         FUCKY;
+    }
+
+    private enum RotatingState {
+        SYNC,
+        TARGET,
+        TTS;
     }
 
 }

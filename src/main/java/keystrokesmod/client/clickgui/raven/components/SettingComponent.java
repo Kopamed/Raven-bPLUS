@@ -17,12 +17,10 @@ public abstract class SettingComponent extends Component {
     }
 
     public void hideComponent() {
-        if(moduleComponent.settings.contains(this)) moduleComponent.settings.remove(this);
-        else moduleComponent.settings.add(this);
+        visable = !visable;
     }
 
-    public void hideComponent(boolean hidden) {
-        if(moduleComponent.settings.contains(this) && hidden) moduleComponent.settings.remove(this);
-        else if (!hidden) moduleComponent.settings.add(this);
+    public void hideComponent(boolean visable) {
+        this.visable = visable;
     }
 }

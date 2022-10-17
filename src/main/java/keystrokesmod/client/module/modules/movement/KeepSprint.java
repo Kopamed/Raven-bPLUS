@@ -36,18 +36,13 @@ public class KeepSprint extends Module {
 
             mc.thePlayer.motionX *= val;
             mc.thePlayer.motionZ *= val;
-
-            if (sprint.isToggled()) {
-                mc.thePlayer.setSprinting(false);
-            }
         } else {
             dist = (100.0D - (double) ((float) b.getInput())) / 100.0D;
             mc.thePlayer.motionX *= dist;
             mc.thePlayer.motionZ *= dist;
-
-            if (sprint.isToggled()) {
-                mc.thePlayer.setSprinting(false);
-            }
+        }
+        if (sprint.isToggled()) {
+            mc.thePlayer.setSprinting(false);
         }
 
     }

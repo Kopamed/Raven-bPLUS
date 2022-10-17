@@ -148,7 +148,7 @@ public class ModuleComponent extends Component {
                 return;
             }
 
-        if(category.getOpenModule() == this) settings.forEach(setting -> setting.mouseDown(x, y, b));
+        if(category.getOpenModule() == this) settings.forEach(setting -> {if(setting.visable);setting.mouseDown(x, y, b);});
         bind.mouseDown(x, y, b);
     }
 

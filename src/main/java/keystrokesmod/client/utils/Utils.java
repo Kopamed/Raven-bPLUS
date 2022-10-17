@@ -204,6 +204,10 @@ public class Utils {
             return ((((double) (mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D) + 540.0D) % 360.0D) - 180.0D;
         }
 
+        public static float fovFromEntityf(Entity en) {
+            return (float) (((((float) (mc.thePlayer.rotationYaw - fovToEntity(en)) % 360.0D) + 540.0D) % 360.0D) - 180.0D);
+        }
+
         public static float fovToEntity(Entity ent) {
             double x = ent.posX - mc.thePlayer.posX;
             double z = ent.posZ - mc.thePlayer.posZ;
@@ -304,6 +308,13 @@ public class Utils {
                 if (mc.thePlayer.getCurrentArmor(armorPiece) != null)
                     wearingArmor.add(3 - armorPiece);
             return wearingArmor;
+        }
+
+        public static boolean isPlayerNaked(EntityPlayer en) {
+            for (int armorPiece = 0; armorPiece < 4; armorPiece++)
+                if (en.getCurrentArmor(armorPiece) == null)
+                    return true;
+            return false;
         }
 
         public static int getBlockAmountInCurrentStack(int currentItem) {

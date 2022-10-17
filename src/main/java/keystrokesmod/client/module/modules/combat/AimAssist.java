@@ -1,7 +1,6 @@
 package keystrokesmod.client.module.modules.combat;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.lwjgl.input.Mouse;
@@ -11,8 +10,9 @@ import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.ForgeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.modules.client.Targets;
 import keystrokesmod.client.module.modules.player.RightClicker;
-import keystrokesmod.client.module.modules.world.AntiBot;
+import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -20,8 +20,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -38,28 +36,21 @@ public class AimAssist extends Module {
     public static TickSetting aimInvis;
     public static TickSetting breakBlocks;
     public static TickSetting blatantMode;
-    public static TickSetting ignoreFriends;
-    public static TickSetting ignoreNaked;
     public static ArrayList<Entity> friends = new ArrayList<>();
 
     public AimAssist() {
         super("AimAssist", ModuleCategory.combat);
-
+        this.registerSetting(new DescriptionSetting("Set targets in Client->Targets"));
         this.registerSetting(speedYaw = new SliderSetting("Speed 1 (yaw)", 45.0D, 5.0D, 100.0D, 1.0D));
         this.registerSetting(complimentYaw = new SliderSetting("Speed 2 (yaw)", 15.0D, 2D, 97.0D, 1.0D));
         this.registerSetting(speedPitch = new SliderSetting("Speed 1 (pitch)", 45.0D, 5.0D, 100.0D, 1.0D));
         this.registerSetting(complimentPitch = new SliderSetting("Speed 2 (pitch)", 15.0D, 2D, 97.0D, 1.0D));
         this.registerSetting(pitchOffSet = new SliderSetting("pitchOffSet (blocks)", 4D, -2, 2, 0.050D));
-        this.registerSetting(fov = new SliderSetting("FOV", 90.0D, 15.0D, 360.0D, 1.0D));
-        this.registerSetting(distance = new SliderSetting("Distance", 4.5D, 1.0D, 10.0D, 0.1D));
         this.registerSetting(clickAim = new TickSetting("Click aim", true));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", true));
-        this.registerSetting(ignoreFriends = new TickSetting("Ignore Friends", true));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
-        this.registerSetting(aimInvis = new TickSetting("Aim invis", false));
         this.registerSetting(blatantMode = new TickSetting("Blatant mode", false));
         this.registerSetting(aimPitch = new TickSetting("Aim pitch", false));
-        this.registerSetting(ignoreNaked = new TickSetting("Ignore naked", false));
     }
 
     @Subscribe
@@ -123,50 +114,8 @@ public class AimAssist extends Module {
         }
     }
 
-    public static boolean isAFriend(Entity entity) {
-        if (entity == mc.thePlayer)
-            return true;
-
-        for (Entity wut : friends)
-            if (wut.equals(entity))
-                return true;
-        try {
-            EntityPlayer bruhentity = (EntityPlayer) entity;
-            if (Raven.debugger) {
-                Utils.Player.sendMessageToSelf(
-                        "unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
-
-                Utils.Player.sendMessageToSelf(
-                        "susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
-                Utils.Player.sendMessageToSelf(
-                        "substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
-            }
-            if (mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName()
-                    .getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2)))
-                return true;
-        } catch (Exception fhwhfhwe) {
-            if (Raven.debugger)
-                Utils.Player.sendMessageToSelf(fhwhfhwe.getMessage());
-        }
-
-        return false;
-    }
-
     public Entity getEnemy() {
-        int fov = (int) AimAssist.fov.getInput();
-        List<EntityPlayer> var2 = mc.theWorld.playerEntities;
-        for (EntityPlayer en : var2)
-            if(
-                    (ignoreFriends.isToggled() || !isAFriend(en))
-                    && (en != mc.thePlayer)
-                    && (aimInvis.isToggled() || !en.isInvisible())
-                    && (mc.thePlayer.getDistanceToEntity(en) < distance.getInput())
-                    && (!AntiBot.bot(en))
-                    && (Utils.Player.fov(en, fov))
-                    && (!ignoreNaked.isToggled() || ((en.getCurrentArmor(3) == null) && (en.getCurrentArmor(2) == null) && (en.getCurrentArmor(1) == null) && (en.getCurrentArmor(0) == null)))
-                    )
-                return en;
-        return null;
+       return Targets.getTarget();
     }
 
     public static void addFriend(Entity entityPlayer) {
@@ -177,7 +126,7 @@ public class AimAssist extends Module {
         boolean found = false;
         for (Entity entity : mc.theWorld.getLoadedEntityList())
             if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name))
-                if (!isAFriend(entity)) {
+                if (!Targets.isAFriend(entity)) {
                     addFriend(entity);
                     found = true;
                 }

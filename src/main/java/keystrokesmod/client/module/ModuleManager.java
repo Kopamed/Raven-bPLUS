@@ -11,6 +11,7 @@ import keystrokesmod.client.module.modules.client.FPSSpoofer;
 import keystrokesmod.client.module.modules.client.FakeHud;
 import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.module.modules.client.SelfDestruct;
+import keystrokesmod.client.module.modules.client.Targets;
 import keystrokesmod.client.module.modules.client.Terminal;
 import keystrokesmod.client.module.modules.client.UpdateCheck;
 import keystrokesmod.client.module.modules.combat.AimAssist;
@@ -43,8 +44,6 @@ import keystrokesmod.client.module.modules.minigames.BridgeInfo;
 import keystrokesmod.client.module.modules.minigames.DuelsStats;
 import keystrokesmod.client.module.modules.minigames.MurderMystery;
 import keystrokesmod.client.module.modules.minigames.SumoFences;
-import keystrokesmod.client.module.modules.minigames.Sumo.SumoBot;
-import keystrokesmod.client.module.modules.minigames.Sumo.SumoClicker;
 import keystrokesmod.client.module.modules.movement.AutoHeader;
 import keystrokesmod.client.module.modules.movement.Boost;
 import keystrokesmod.client.module.modules.movement.Fly;
@@ -176,8 +175,6 @@ public class ModuleManager {
         addModule(new Projectiles());
         addModule(new FakeHud());
         addModule(new ConfigSettings());
-        addModule(new SumoBot());
-        addModule(new SumoClicker());
         addModule(new Parkour());
         addModule(new Disabler());
         addModule(new JumpReset());
@@ -186,6 +183,7 @@ public class ModuleManager {
         addModule(new AutoGHead());
         //addModule(new Radar());
         addModule(new AutoSoup());
+        addModule(new Targets());
         //addModule(new CursorTrail());
 
         //addModule(new SpeedTest());

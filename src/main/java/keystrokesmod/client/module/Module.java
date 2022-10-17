@@ -121,6 +121,8 @@ public class Module {
     }
 
     public void enable() {
+        if(!canBeEnabled())
+            return;
         this.enabled = true;
         this.onEnable();
         if (enabled && !registered) {
@@ -131,6 +133,8 @@ public class Module {
     }
 
     public void disable() {
+        if(!canBeEnabled())
+            return;
         this.enabled = false;
         if (registered) {
             Raven.eventBus.unregister(this);
@@ -141,6 +145,8 @@ public class Module {
     }
 
     public void setToggled(boolean enabled) {
+        if(!canBeEnabled())
+            return;
         if (enabled)
             enable();
         else
