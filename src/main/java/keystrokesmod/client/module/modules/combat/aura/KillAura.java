@@ -117,9 +117,6 @@ public class KillAura extends Module {
     }
 
     public void rotate(float yaw, float pitch, boolean e) {
-      /* float yawd = this.yaw - yaw;
-       float pitchd = this.pitch - pitch;
-       if(Math.abs(yawd) > rps.getInput()/20) */
        this.yaw = yaw;
        this.pitch = pitch;
     }
