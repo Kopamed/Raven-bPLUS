@@ -1,5 +1,11 @@
 # Contributor Covenant Code of Conduct
 
+
+# This is now discontinued 
+
+if you want to make any large contributions dm me after creating a fork
+
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
